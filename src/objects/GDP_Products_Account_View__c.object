@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>GDP_Products_Account_View_Compact</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>GDP_Products_Account_View_Compact</fullName>
+        <fields>Name</fields>
+        <fields>Agency_Status_Code__c</fields>
+        <label>GDP Products - Account View Compact</label>
+    </compactLayouts>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AIMS_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>AIMS ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Accreditation_Class__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Accreditation_Class__r.Class__r.Name</formula>
+        <label>Accreditation Class</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accredited_By__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By__r.Definition__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accredited By</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_Code__c + CASS_Number__c + Check_Digit__c</formula>
+        <label>Agency Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Status_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Value(Related_Accreditation_Class__r.Status__r.Code__c)</formula>
+        <label>Agency Status Code</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Accreditation_Class__r.Status__r.Name</formula>
+        <label>Agency Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airline_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Code</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BSP_CASS_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>BSP/CASS Code</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CASS_Number_Xref__c</fullName>
+        <externalId>false</externalId>
+        <label>CASS Number Xref</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CASS_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>CASS Number</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Check_Digit__c</fullName>
+        <externalId>false</externalId>
+        <label>Check Digit</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>City__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Address_City__c</formula>
+        <label>City</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_ISO_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Address_ISO_Country_Code__c</formula>
+        <label>Country ISO Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Address_Country_Name__c</formula>
+        <label>Country Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Address</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDP_Opt_In__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>GDP Opt In</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <externalId>true</externalId>
+        <label>IATA Code</label>
+        <length>11</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Incorporation_Type__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Incorporation Type</label>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Last_Date_of_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Date of Update</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Legal_Name_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Name 1</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legal_Name_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Name 2</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legal_Name_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Legal Name 3</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legal_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>TRIM(Legal_Name_1__c + &apos; &apos; + Legal_Name_2__c + &apos; &apos; + Legal_Name_3__c)</formula>
+        <label>Legal Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>License_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>License Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Related_GDP_Address__r.Address_Type__c, &apos;Location&apos;) , Related_GDP_Address__r.Address__c, &apos;&apos;)</formula>
+        <label>Location Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Type__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Location Type</label>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View (GDP Reference Table)</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Manager_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Manager First Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Manager Last Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Account_AIMS_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Account: AIMS ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Account_WebStar_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Parent Account: WebStar ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_GDP_Account_View__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The head office of this agency</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The head office of this agency</inlineHelpText>
+        <label>Parent GDP Account View</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Passenger_And_Cargo__c</fullName>
+        <externalId>false</externalId>
+        <label>Passenger And Cargo</label>
+        <length>1</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Preferred_Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Preferred Language</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Profit_Center__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Profit_Center__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Profit Center</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Purge_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Purge Flag</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Related_Accreditation_Class__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Related Accreditation Class</label>
+        <referenceTo>Accreditation__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_GDP_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>GDP Address</label>
+        <referenceTo>GDP_Address__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_Main_Phone__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The main phone of the agency</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The main phone of the agency</inlineHelpText>
+        <label>Related Main Phone</label>
+        <referenceTo>GDP_Phone__c</referenceTo>
+        <relationshipLabel>GDP Products - Accounts View</relationshipLabel>
+        <relationshipName>GDP_Products_Accounts_View</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>State_Province_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Address_State_Code__c</formula>
+        <label>State/Province Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State_Province__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Address_State_Name__c</formula>
+        <label>State/Province</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sub_Continent__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Sub_Continent__c</formula>
+        <label>Sub Continent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TTY__c</fullName>
+        <externalId>false</externalId>
+        <label>TTY</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tax_ID_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax ID 1</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tax_ID_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax ID 2</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ticketing_Agent_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Ticketing Agent First Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ticketing_Agent_Last_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Ticketing Agent Last Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trading_Name_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Trading Name 1</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trading_Name_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Trading Name 2</label>
+        <length>32</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trading_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>TRIM(Trading_Name_1__c + &apos; &apos; + Trading_Name_2__c)</formula>
+        <label>Trading Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>WebStar_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>WebStar ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Website__c</fullName>
+        <externalId>false</externalId>
+        <label>Website</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Zip_Postal_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Related_GDP_Address__r.Address_Type__c, &apos;Location&apos;) , Related_GDP_Address__r.Address_Postal_Code__c, &apos;&apos;)</formula>
+        <label>Zip/Postal Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>GDP Products - Account View</label>
+    <listViews>
+        <fullName>Agencies_USA</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>State_Province_Code__c</columns>
+        <columns>Accredited_By__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Country_ISO_Code__c</field>
+            <operation>equals</operation>
+            <value>US</value>
+        </filters>
+        <filters>
+            <field>Agency_Status_Code__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>0</value>
+        </filters>
+        <label>Agencies USA</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Agency_by_Country</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Code__c</columns>
+        <columns>Sub_Continent__c</columns>
+        <columns>Country_ISO_Code__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>State_Province_Code__c</columns>
+        <columns>Email_Address__c</columns>
+        <columns>Related_Accreditation_Class__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Country_ISO_Code__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Agency_Status_Code__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>4</value>
+        </filters>
+        <label>Agency by Country</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Agency_Code__c</columns>
+        <columns>Incorporation_Type__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>Parent_GDP_Account_View__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_Accreditation_Class__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>AIMS_ID__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>WebStar_ID__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All- Clean</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_AIMS</fullName>
+        <columns>Agency_Code__c</columns>
+        <columns>NAME</columns>
+        <columns>City__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>AIMS_ID__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All AIMS</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Legal Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GDP Products - Accounts View</pluralLabel>
+    <recordTypes>
+        <fullName>GDP</fullName>
+        <active>true</active>
+        <description>Used for GDP Live Applications</description>
+        <label>GDP</label>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Agency_Status_Code__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Agency_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Agency_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Country_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Accredited_By__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Accreditation_Class__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

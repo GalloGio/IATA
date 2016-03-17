@@ -1,0 +1,54 @@
+<apex:component >
+<script language="javascript">
+//Set the number of days before your cookie should expire
+var ExpireDays = 1;
+qstr = document.location.search;
+qstr = qstr.substring(1,qstr.length);
+function SetCookieExactTarget(cookieName,cookieValue,nDays)
+{
+ var today = new Date();
+ var expire = new Date();
+ //if (nDays==null || nDays==0) nDays=1;
+ //expire.setTime(today.getTime() + 3600000*24*nDays);
+ expire.setDate(today.getDate() + nDays);
+ //document.cookie = cookieName + "=" + escape(cookieValue) + "; expires=" + expire.toGMTString() + "; path=/";
+ document.cookie = cookieName + "=" + escape(cookieValue) + "; expires=" + expire.toUTCString() + "; path=/";
+}
+  
+   	thevars = qstr.split("&");
+    for(i=0;i<thevars.length;i++)
+    {
+        cookiecase = thevars[i].split("=");
+        switch(cookiecase[0])
+        {
+            case "e":
+                e = cookiecase[1];
+                SetCookieExactTarget("EmailAddr",e,ExpireDays);
+                break;
+            case "j":
+                j = cookiecase[1];
+                SetCookieExactTarget("JobID",j,ExpireDays);
+                break;
+            case "l":
+                l = cookiecase[1];
+                SetCookieExactTarget("ListID",l,ExpireDays);
+                break
+            case "jb":
+                jb = cookiecase[1];
+                SetCookieExactTarget("BatchID",jb,ExpireDays);
+                break;
+            case "u":
+                u = cookiecase[1];
+                SetCookieExactTarget("UrlID",u,ExpireDays);
+                break;
+            case "mid":
+                mid = cookiecase[1];
+                SetCookieExactTarget("MemberID",mid,ExpireDays);
+                break;
+            default:
+                break;
+        }
+    }
+
+</script>
+</apex:component>

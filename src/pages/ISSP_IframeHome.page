@@ -1,0 +1,8 @@
+<apex:page showHeader="false" sidebar="false">
+<script>
+window.top.location.href = '/ISSP_Homepage?mid=M0S1';
+</script>
+<div style="padding-top:45px">
+<apex:image id="loadingImage" value="{!$Resource.IataLoadingImage}" width="300px"/>
+</div>
+</apex:page>

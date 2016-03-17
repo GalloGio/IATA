@@ -1,0 +1,227 @@
+<apex:page standardController="Case" extensions="AirlineSFundsManagementController">
+	<apex:pageMessages />
+	
+	<script>		
+		function ExportToCSV() {
+			window.top.location = "{!$Label.SF_Base_URL}/apex/AirlineSuspensionFMExportCSV?id={!c.Id}";			
+		}
+	</script>
+	
+	<apex:form >
+		<apex:pageBlock >
+			<apex:outputPanel style="display: inline; width:48%; float: left;" id="AmountsHeldTable">
+				<h2>Amounts held by IATA in favour of {!asrecord.Airline_Name__c}</h2>
+				
+				<apex:pageBlockTable value="{!lstHeldFMLines}" var="FMLine">
+					
+					<apex:column style="width: 80px;">
+	                    <apex:facet name="header">Actions</apex:facet>
+	                    
+	                    <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+                    	&nbsp;
+                    	<apex:commandLink value="Edit" action="{!EditLine}" rerender="AmountsHeldTable" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+                    	
+                    	<apex:commandLink value="Save" action="{!SaveLine}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+                    	&nbsp;
+                    	<apex:commandLink value="Cancel" action="{!CancelEdit}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+	            	</apex:column>
+	            	
+	            	<apex:column rendered="{!IF(isEditMode, false, true)}">
+	            		<apex:facet name="header"></apex:facet>
+	            		
+	            		
+            			<a href="/{!FMLine.Id}" target="_blank"><img src="/img/icon/documents16.png" /></a>
+            			
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Reported by</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Reported_by__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Reported_by__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Curr.</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.CurrencyIsoCode}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.CurrencyIsoCode}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Amounts held</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Amount__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Amount__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Estimated in USD</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Estimated_in_USD__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Estimated_in_USD__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Location</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Remarks__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Remarks__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column rendered="{!IF(isEditMode, false, true)}">
+	            		<apex:facet name="header"></apex:facet>	            		
+	            		<span class="helpButton" id="FMLine{!FMLine.Id}-_help"><img src="/img/alohaSkin/help_orange.png" class="helpOrb" /></span>
+            			<script>sfdcPage.setHelp('FMLine{!FMLine.Id}','{!JSENCODE(FMLine.Comments__c)}');</script>
+	            	</apex:column>
+	            	
+				</apex:pageBlockTable>
+				
+				<apex:commandButton action="{!AddNewHeldLine}" value="Add New Line" rendered="{!IF(isEditMode, false, true)}" />
+				
+			</apex:outputPanel>
+			
+			<apex:outputPanel style="display: inline; width:48%; float: right;" id="AmountsDueTable">
+				<h2>Amounts due by {!asrecord.Airline_Name__c}</h2>
+				
+				<apex:pageBlockTable value="{!lstDueFMLines}" var="FMLine">
+					
+					<apex:column style="width: 80px;">
+	                    <apex:facet name="header">Actions</apex:facet>
+	                    
+	                    <apex:commandLink value="Del" action="{!DeleteLine}" onclick="if(!confirm('Are you sure you want to delete this line?')){return false};" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+                    	&nbsp;
+                    	<apex:commandLink value="Edit" action="{!EditLine}" rerender="AmountsDueTable" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+                    	
+                    	<apex:commandLink value="Save" action="{!SaveLine}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+                    	&nbsp;
+                    	<apex:commandLink value="Cancel" action="{!CancelEdit}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" >
+                    		<apex:param name="IdConcerned" value="{!FMLine.Id}" assignTo="{!IdConcerned}"/>
+                    	</apex:commandLink>
+	            	</apex:column>
+	            	
+	            	<apex:column rendered="{!IF(isEditMode, false, true)}">
+	            		<apex:facet name="header"></apex:facet>
+	            		
+	            		<a href="/{!FMLine.Id}" target="_blank"><apex:image value="/img/icon/documents16.png" /></a>
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Reported by</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Reported_by__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Reported_by__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Curr.</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.CurrencyIsoCode}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.CurrencyIsoCode}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Amounts held</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Amount__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Amount__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Estimated in USD</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Estimated_in_USD__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Estimated_in_USD__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column >
+	            		<apex:facet name="header">Location</apex:facet>
+	            		
+	            		<apex:inputField value="{!FMLine.Remarks__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), true, false)}" style="width: 90%;" />
+            			<apex:outputField value="{!FMLine.Remarks__c}" rendered="{!IF(AND(isEditMode, IdConcerned==FMLine.Id), false, true)}" />
+	            	</apex:column>
+	            	
+	            	<apex:column rendered="{!IF(isEditMode, false, true)}">
+	            		<apex:facet name="header"></apex:facet>	            		
+	            		<span class="helpButton" id="FMLine{!FMLine.Id}-_help"><img src="/img/alohaSkin/help_orange.png" class="helpOrb" /></span>
+            			<script>sfdcPage.setHelp('FMLine{!FMLine.Id}','{!JSENCODE(FMLine.Comments__c)}');</script>
+	            	</apex:column>
+	            	
+				</apex:pageBlockTable>
+				
+				<apex:commandButton action="{!AddNewDueLine}" value="Add New Line" rendered="{!IF(isEditMode, false, true)}" />
+				
+			</apex:outputPanel>
+			
+			<apex:outputPanel style="display: block; clear:both; margin-left: 30%; padding-top: 20px;">
+				
+				<apex:commandButton onclick="ExportToCSV();" value="Export to CSV" rendered="{!IF(isEditMode, false, true)}" />
+				<apex:commandButton action="{!RefreshEstimatedValues}" value="Refresh Estimated Values in USD" rendered="{!IF(isEditMode, false, true)}" />
+                
+			</apex:outputPanel>
+			
+		</apex:pageBlock>
+		
+		<apex:outputPanel style="display: block; width: 100%;">
+			
+			<apex:outputPanel style="display: inline; width:48%; float: left;">
+				<p style="font-weight: bold;">Total amount held estimated in USD: 
+					<apex:outputText value="{0, number, #,##0.00}">
+						<apex:param value="{!asrecord.Total_amount_held__c}" />
+					</apex:outputText>
+				</p>
+			</apex:outputPanel>
+			
+			<apex:outputPanel style="display: inline; width:48%; float: right;" id="AmountsDueTable">
+				<p style="font-weight: bold;">Total amount due estimated in USD: 
+					<apex:outputText value="{0, number, #,##0.00}">
+						<apex:param value="{!asrecord.Total_amount_due__c}" />
+					</apex:outputText>
+				</p>
+				<p style="font-weight: bold;">Net amount due {! IF(asrecord.Net_amount_due__c < 0, "by", "to")} {!asrecord.Airline_Name__c} in USD: 
+					<apex:outputText value="{0, number, #,##0.00}">
+						<apex:param value="{! ABS(asrecord.Net_amount_due__c) }" />
+					</apex:outputText>
+				</p>
+			</apex:outputPanel>
+			
+			<apex:outputPanel style="display: block; width: 100%; clear: both;">
+				<p>
+					<apex:outputLabel value="Statement of Account Date: " for="soa_date_{!IF(isEditCommentsMode, 'in', 'out')}" style="font-weight:bold;" />
+					<apex:inputField value="{!asrecord.Statement_of_Account_Date__c}" id="soa_date_in" rendered="{!IF(isEditCommentsMode, true, false)}" />
+					<apex:outputField value="{!asrecord.Statement_of_Account_Date__c}" id="soa_date_out" rendered="{!IF(isEditCommentsMode, false, true)}" />
+				</p>
+				
+				<p>
+					<apex:outputLabel value="Comments: " for="comments_{!IF(isEditCommentsMode, 'in', 'out')}" style="font-weight:bold;" /><br/>
+					<apex:inputField value="{!asrecord.Comments__c}" id="comments_in" rendered="{!IF(isEditCommentsMode, true, false)}" style="width: 90%;" />
+	       			<apex:outputField value="{!asrecord.Comments__c}" id="comments_out" rendered="{!IF(isEditCommentsMode, false, true)}" />
+       			</p>
+       			
+				<apex:outputPanel style="display: block; width: 100%;">
+					<apex:commandButton action="{!EditComments}" value="Edit" rendered="{!IF(isEditCommentsMode, false, true)}" />
+					
+					<apex:commandButton action="{!CancelEditComments}" value="Cancel" rendered="{!IF(isEditCommentsMode, true, false)}" />
+					<apex:commandButton action="{!SaveComments}" value="Save" rendered="{!IF(isEditCommentsMode, true, false)}" />
+				</apex:outputPanel>
+			</apex:outputPanel>
+			
+               
+		</apex:outputPanel>
+		
+	</apex:form>
+</apex:page>

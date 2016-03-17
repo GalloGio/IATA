@@ -1,0 +1,650 @@
+<apex:page renderAs="pdf" controller="ISSP_APProcess" applyHtmlTag="false" showHeader="false">
+
+<apex:stylesheet value="{!URLFOR($Resource.ISSP_AP_CSS)}"/>
+
+<div class="header">
+    <div><apex:image width="100%" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
+</div>
+
+<div class="footer">
+    <table border="0" width="100%">
+        <tr>
+            <td width="33%" align="left">
+                {!CASE(MONTH(TODAY()),
+                1, "January",
+                2, "February",
+                3, "March",
+                4, "April",
+                5, "May",
+                6, "June",
+                7, "July",
+                8, "August",
+                9, "September",
+                10, "October",
+                11, "November",
+                12, "December",
+                "None")}&nbsp;{!YEAR(TODAY())}
+            </td>
+            <td width="33%" align="center">
+                <a href="http://www.iata.org">www.iata.org</a>
+            </td>
+            <td width="33%" align="right">
+                Page <span class="pagenumber"/> of <span class="pagecount"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="content">
+
+    <div style="page-break-after:always;" class="bluefont">
+        <br/><br/>
+        <h2>BSP PARTICIPATION JOINING FORM � AIRLINE</h2>
+        <p>Thank you for your interest in expanding your IATA BSP participation.</p>
+        <p>This form must be fully completed <u>and submitted</u>on-line.</p>
+        <p>By agreeing with the Terms and Conditions, the Airline representative submitting this form confirms that it is authorized to do so and accepts the charges and fees related to the Airline  participation in IATA Settlement Systems as per the applicable Passenger and/or Cargo Agency Resolutions.</p>
+        <p>We would like to draw your attention that you shall refer to the country requirements to participate in the designated operation available on the 1st page of this package. </p>
+        <p>Should you wish to participate in several countries within the same BSP, one form per country is required.</p>
+        <p>Note: A Glossary of Terms is provided at the end of the document.</p>
+    </div>
+
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td colspan="3" class="bluebg">
+                <p class="whitetext">1. Participation in BSP</p>
+                <p class="whitetext2">This section refers to participation in BSP, the type of participation and Contact Person</p></td>
+            </tr>
+            <tr>
+                <td class="label">BSP country your Airline wishes to participate in:</td>
+                <td colspan="2">{!apCountry}</td>
+            </tr>
+            <tr>
+                <td class="label">Desired commencement date (mm/dd/yyyy):</td>
+                <td colspan="2">
+                    <apex:outputText value="{0, date, MM/dd/yyyy}" rendered="{!NOT(ISNULL(newForm.Desired_commencment_date__c))}">
+                        <apex:param value="{!newForm.Desired_commencment_date__c}" />
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Type of participation desired by your Airline?:</td>
+                <td colspan="2">{!newForm.Type_of_participation_desired__c}</td>
+            </tr>
+            <tr>
+                <td rowspan="6" width="30%" class="label">Contact person responsible for this BSP application</td>
+                <td width="20%" class="label">Social Title (Mr./Mrs):</td>
+                <td width="50%">{!newForm.Contact_Resp_Salutation__c}</td>
+            </tr>
+            <tr>
+                <td class="label">First name:</td>
+                <td>{!newForm.Contact_Resp_F_Name__c}</td>
+            </tr>           
+            <tr>
+                <td class="label">Last name:</td>
+                <td>{!newForm.Contact_Resp_L_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="label">Job Title:</td>
+                <td>{!newForm.Contact_Resp_Job_Title__c}</td>
+            </tr>           
+            <tr>
+                <td class="label">Email address:</td>
+                <td>{!newForm.Contact_Resp_Email__c}</td>
+            </tr>
+            <tr>
+                <td class="label">Phone number including country code:</td>
+                <td>{!newForm.Contact_Resp_Phone__c}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="2">
+                <p class="whitetext">2. Airline information</p>
+                <p class="whitetext2">This section refers to the airline main information. It is important that you type both names correctly and your VAT / Tax number</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Legal Name of your Airline:</td>
+                <td width="70%">{!hqAccount.Name}</td>
+            </tr>
+            <tr>
+                <td class="label">Trade Name of your Airline:</td>
+                <td>{!strParentTradeName}</td>
+            </tr>
+            <tr>
+                <td class="label">Airline Designator<br/>(2 digit alphanumeric code):</td>
+                <td>{!strParentDesignator}</td>
+            </tr>
+            <tr>
+                <td class="label">Airline Accounting Code<br/>(3 digit code):</td>
+                <td>{!strParentIATACode}</td>
+            </tr>
+            <tr>
+                <td class="label">Is your Airline a member of IATA?:</td>
+                <td>{!strParentMembershipStatus}</td>
+            </tr>
+            
+            <tr>
+                <td class="label">Airline Registered Head Office Address:</td>
+                <td>{!strParentBillingStreet}<br/>{!strParentBillingCity},&nbsp;{!strParentBillingCode}<br/>{!strParentBillingState},&nbsp;{!strParentBillingCountry}</td>
+            </tr>
+            <tr>
+                <td class="label">Is your Airline registered in {!apcountry} under a different name?:</td>
+                <td>{!newForm.Airline_Registered_under_other_name__c}</td>
+            </tr>
+            <tr>
+                <td class="label">VAT/Tax number in your home country:</td>
+                <td>{!newForm.VAT_Tax_number_in_your_home_country__c}</td>
+            </tr>
+            <tr>
+                <td class="label">Airline's Local address in BSP {!apcountry}:
+                </td>
+                <td><apex:outputField value="{!newForm.BSP_Local_address__c}" /><br/><apex:outputField value="{!newForm.BSP_Local_Zip_Code__c}" />,&nbsp;<apex:outputField value="{!newForm.BSP_Local_City__c}" /></td>
+            </tr>
+            <apex:outputText rendered="{!NOT(apcountryisocode='BR')}">
+            <tr>
+                <td class="label" width="45%">Airline's {!CASE(apcountryisocode, "EC", "VAT/RUC:", "VE", "RIF", "VAT/Tax")} number in BSP {!apcountry}:</td>
+                <td>{!newForm.BSP_Country_VAT_Tax_number__c}</td>
+            </tr>
+            	<apex:outputText rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}">
+                	<td class="label">Your airline's {!CASE(apcountryisocode,'EC','VAT/RUC','RIF')} Status</td>
+                    <td colspan="2">{!newForm.Airline_s_Fiscal_Status__c}</td>
+            	</apex:outputText>
+            <tr>
+                <td class="label">{!CASE(apcountryisocode, "CR", "Please indicate your airline&#39;s Fiscal ID / cédula juridica", "Please specify other TAX Identification:")}</td>
+                <td>{!newForm.Other_TAX_Identification__c}</td>
+            </tr>
+            </apex:outputText>
+            
+            <apex:outputText rendered="{!apcountryisocode='CO'}">
+                <tr>
+            		<td class="label">Name appearing in the RUT</td>
+                	<td colspan="2">{!newForm.Name_Appearing_in_VAT__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Type of Contributor applicable to your Airline</td>
+                	<td colspan="2">{!newForm.Colombia_Type_of_Contributor__c}</td>
+                </tr>
+           	</apex:outputText>
+            
+            
+            <tr>
+                <td class="label">Is your airline an online carrier in the BSP concerned of application?:</td>
+                <td>{!newForm.Online_carrier_in_the_BSP_country__c}</td>
+            </tr>
+            <tr>
+                <td class="label">Please indicate the flights the airline operates in the BSP concerned of application:</td>
+                <td>{!newForm.Flights_operated_in_the_BSP_country__c}</td>
+            </tr>
+            <apex:outputText rendered="{!apcountryisocode='CY'}">
+            <tr>
+                <td class="label">Please advise if your airline is a Turkey based Airline:</td>
+                <td>{!newForm.Cyprus_Turkey_based_Airline__c}</td>
+            </tr>
+            </apex:outputText>    
+        </table>
+    </div>
+
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="3">
+                <p class="whitetext">3. Contact information</p>
+                <p class="whitetext2">In this section we need the different contacts to communicate to our stakeholders. Having the right contact will benefit the Airline and IATA in future communications. The E-Ticketing Provider (ETSP) contact will be sent for their records.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="bluebg2 whitetext" colspan="3">&#8658;&nbsp;To be communicated to ETSP</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%" rowspan="4">Contact Person</td>
+                <td class="label" width="20%">Social Title (Mr. / Mrs.):</td>
+                <td width="50%">{!newForm.ETSP_Contact_Salutation__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">First Name:</td>
+                <td width="50%">{!newForm.ETSP_Contact_F_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">Last name:</td>
+                <td width="50%">{!newForm.ETSP_Contact_L_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">Job Title:</td>
+                <td width="50%">{!newForm.ETSP_Contact_Job_Title__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Physical Address:</td>
+                <td colspan="2"><apex:outputField value="{!newForm.ETSP_Contact_Address__c}" /></td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Telephone Number (with country code):</td>
+                <td colspan="2">{!newForm.ETSP_Contact_Phone__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Fax Number (with country code):</td>
+                <td colspan="2">{!newForm.ETSP_Contact_Fax__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">E-mail Address:</td>
+                <td colspan="2">{!newForm.ETSP_Contact_Email__c}</td>
+            </tr>
+            <tr>
+                <td class="bluebg2 whitetext" colspan="3">&#8658;&nbsp;Finance / Administration Contact Data</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%" rowspan="4">Finance / Administration   Contact Person &amp; Title</td>
+                <td class="label" width="20%">Social Title (Mr. / Mrs.):</td>
+                <td width="50%">{!newForm.Fin_Adm_Contact__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">First Name:</td>
+                <td width="50%">{!newForm.Fin_Adm_Contact_F_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">Last Name:</td>
+                <td width="50%">{!newForm.Fin_Adm_Contact_L_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">Job Title:</td>
+                <td width="50%">{!newForm.Fin_Adm_Contact_Job_Title__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Telephone Number (with country code):</td>
+                <td colspan="2">{!newForm.Fin_Adm_Contact_Phone__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Physical Address (To appear on the billing reports):</td>
+                <td colspan="2"><apex:outputField value="{!newForm.Fin_Adm_Contact_Address__c}" /><br/>{!newForm.Fin_Adm_Contact_City__c}<br/>{!newForm.Fin_Adm_Contact_Country__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">E-mail address:</td>
+                <td colspan="2">{!newForm.Fin_Adm_Contact_Email__c}</td>
+            </tr>
+            <tr>
+                <td class="bluebg2 whitetext" colspan="3">&#8658;&nbsp;BSPLink/ASD(for China)<br/>
+                (To appear as registered user in BSPLink/ASD(for China) and for contact details in ADMs/ACMs). If not provided, Finance details will appear.</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%" rowspan="2">Contact Person</td>
+                <td class="label" width="20%">First Name:</td>
+                <td width="50%">{!newForm.BSPLink_ASD_China_Contact__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="20%">Last Name:</td>
+                <td width="50%">{!newForm.BSPLink_ASD_China_Contact_L_Name__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Telephone Number (with country code):</td>
+                <td colspan="2">{!newForm.BSPLink_ASD_China_Contact_Phone__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">E-mail address:</td>
+                <td colspan="2">{!newForm.BSPLink_ASD_China_Contact_Email__c}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="2">
+                <p class="whitetext">4.  Product Subscriptions(more information in the Glossary of this form)
+                </p>
+                <p class="whitetext2">In this section you can find the standard products offered by the BSP</p></td>
+            </tr>
+            <tr>
+                <td class="label" width="50%">Does your Airline wish to receive HOT files?:<br/>
+                (please also specify the frequency of HOT files)
+                </td>
+                <td width="50%">{!newForm.Receive_HOT_files__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%">In which format do you want the HOT files delivered?:</td>
+                <td width="50%">{!newForm.Hot_files_delivery_format__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%"><u>BSPlink:</u> What BSPlink access level does your Airline require?:</td>
+                <td width="50%">{!newForm.BSPLink_access_level_requested__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%"><u>Commission Control:</u> Does your Airline wish to participate in any Commission Control?:<br/>
+                * If YES, please contact IATA for details
+                </td>
+            <td width="50%">{!newForm.Participate_in_any_Commission_Control__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%"><u>Net Remit:</u> Does your Airline wish to participate in any Net Remit scheme?:<br/>
+                * If YES, please contact IATA for details
+                </td>
+                <td width="50%">{!newForm.Participate_in_any_Remit_scheme__c}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="5">
+                <p class="whitetext">5.  Credit Card Processing Information</p>
+                <p class="whitetext2">In this section, if your airline accepts credit card transactions, please fill in the information. Please note that if you accept credit cards but do not wish to participate in the BSP ECCB, we will instruct our DPC to send you a file to your BSPLink inbox. It will be your responsibility to send this information to your bank or credit card acquirer.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Does your Airline accept Payment Cards for BSP ticket issuance by Travel Agents?:</td>
+                <td colspan="4">{!newForm.Accept_payment_Cards_for_BSP_ticket__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Which Card brand does your Airline accept for BSP ticket issuance by Travel Agents?:</td>
+                <td colspan="4">{!newForm.Card_brand_accepted_for_BSP_ticket__c}</td>
+            </tr>
+            <apex:outputText rendered="{!apcountryisocode='KR'}">
+            <tr>
+                <td class="label" width="30%">Does your Airline wish to participate in the local credit card billing and settlement scheme at this time?:</td>
+                <td colspan="4">{!newForm.Local_CC_Settlement_Scheme__c}</td>
+            </tr>
+            </apex:outputText>
+            <tr>
+                <td class="label" width="30%">Does your Airline wish to join BSP Electronic Credit Card Billing Scheme (ECCB), where BSP produces card clearing files and forwards them to your Acquirer or processor?:</td>
+                <td colspan="4">{!newForm.Join_BSP_ECCB__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%" rowspan="8">If yes, please provide Merchant number for each card brand accepted and the name of your acquirer or processor to which BSP shall send the data for your card sales:</td>
+                <td class="label"><b>Card Brand:</b></td>
+                <td class="label"><b>Merchant Category Code (MCC):</b></td>
+                <td class="label"><b>Merchant Number:</b></td>
+                <td class="label"><b>Name of Acquirer or Processor:</b></td>
+            </tr>
+            <tr>
+                <td>VISA</td>
+                <td>{!IF(BLANKVALUE(newForm.Visa_Name_of_Acquirer_or_Processor__c,"") == "","","VI")}</td>
+                <td>{!IF(BLANKVALUE(newForm.Visa_Merchant_Number__c,"") == "","N/A",newForm.Visa_Merchant_Number__c)}</td>
+                <td>{!IF(BLANKVALUE(newForm.Visa_Name_of_Acquirer_or_Processor__c,"") == "","N/A",newForm.Visa_Name_of_Acquirer_or_Processor__c)}</td>
+            </tr>
+            <tr>
+                <td>American Express</td>
+                <td>{!IF(BLANKVALUE(newForm.American_Express_Name_of_Acquirer__c,"") == "","","AX")}</td>
+                <td>{!IF(BLANKVALUE(newForm.American_Express_Merchant_Number__c,"") == "","N/A",newForm.American_Express_Merchant_Number__c)}</td>
+                <td>{!IF(BLANKVALUE(newForm.American_Express_Name_of_Acquirer__c,"") == "","N/A",newForm.American_Express_Name_of_Acquirer__c)}</td>
+            </tr>
+            <tr>
+                <td>Diners</td>
+                <td>{!IF(BLANKVALUE(newForm.Diners_Name_of_Acquirer__c,"") == "","","DC")}</td>
+                <td>{!IF(BLANKVALUE(newForm.Diners_Merchant_Number__c,"") == "","N/A",newForm.Diners_Merchant_Number__c)}</td>
+                <td>{!IF(BLANKVALUE(newForm.Diners_Name_of_Acquirer__c,"") == "","N/A",newForm.Diners_Name_of_Acquirer__c)}</td>
+            </tr>
+            <tr>
+                <td>Master Card</td>
+                <td>{!IF(BLANKVALUE(newForm.Master_Card_Name_of_Acquirer__c,"") == "","","CA")}</td>
+                <td>{!IF(BLANKVALUE(newForm.Master_Card_Merchant_Number__c,"") == "","N/A",newForm.Master_Card_Merchant_Number__c)}</td>
+                <td>{!IF(BLANKVALUE(newForm.Master_Card_Name_of_Acquirer__c,"") == "","N/A",newForm.Master_Card_Name_of_Acquirer__c)}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </div>
+    
+    <apex:outputText rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="2">
+                <p class="whitetext">6. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jur�dicas', 'Local VAT - RFC #')}</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">{!CASE(apcountryisocode, 'BR','CNPJ', 'RFC')} # to be entered in IATA Systems</td>
+                <td>{!newForm.BSP_Country_VAT_Tax_number__c}</td>
+            </tr>
+            <apex:outputText rendered="{!apcountryisocode='BR'}">
+            <tr>
+                <td class="label" width="30%">Does the CNPJ # provided correspond with the Bank Beneficiary Account Holder?</td>
+                <td>{!newForm.AP_BR_BankBeneficiary_Account_Holder__c}</td>   
+            </tr>
+        	</apex:outputText>
+            <tr>
+                <td class="label" width="30%">Address to be inserted in IATA systems</td>
+                <td>{!newForm.AP_BR_Address_To_Insert__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Does the supplied address correspond with the CNPJ # provided?</td>
+                <td>{!newForm.AP_BR_Address_CNP__c}</td>
+            </tr>
+        	<apex:outputText rendered="{!OR(apcountryisocode='BR')}">
+            <tr>
+                <td class="label" colspan="2">Please enclose:<br/><br/>
+                1) A copy of the CNPJ Certification<br/>
+                2) The ANAC Authorization or Publication provided by the Offical Gazetta
+                </td>
+            </tr>
+            </apex:outputText>
+        </table>
+     </div>
+    </apex:outputText>
+    
+    <apex:outputText rendered="{!apcountryisocode='AR'}">
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="2">
+                <p class="whitetext">6. Additional Information - Clave Bancaria Unificada (CBU)</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Please provide your CBU</td>
+                <td>{!newForm.Clave_Bancaria_Unificada_CBU__c}</td>
+            </tr>
+            <tr>
+                <td class="label" colspan="2">Please provide copies of the following documents:<br/><br/>
+                    	a.	Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina. If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.<br/><br/>
+						b.	Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).  If you are joining the BSP through a GSA, the GSA�s fiscal ID number/CUIT will be accepted.<br/><br/>
+						c.	Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.  If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.
+                </td>
+            </tr>
+        </table>
+     </div>
+    </apex:outputText>
+    
+    <apex:outputText rendered="{!apcountryisocode='CA'}">
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="2">
+                <p class="whitetext">6. Local VAT Information</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">Does your Airline have a direct/principal office in Canada?</td>
+                <td>{!newForm.Canada_Has_Principal_Office__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">If YES, please identify the provincial location by providing the GST/HST/QST information as applicable?</td>
+                <td>{!newForm.Canada_Provincial_Offices__c}</td>
+            </tr>
+            <tr>
+                <td class="label" width="30%">GST/HST/QST information</td>
+                <td>{!newForm.Canada_LocalVAT_Info__c}</td>
+            </tr>
+    	</table>
+     	</div>
+    </apex:outputText>
+    
+    <apex:outputText rendered="{!apcountryisocode='CO'}">
+    <div style="page-break-after:always;">
+        <table class="aptable" width="100%" >
+            <tr>
+                <td class="bluebg" colspan="2">
+                <p class="whitetext">6. Additional Information - ICA Taxes</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" colspan="2">Cities where the Industry and Commerce Tax (ICA) percentage applies:
+                </td>
+            </tr>
+            <tr>
+            	<td class="label"><b>City</b></td>
+            	<td class="label"><b>ICA Percentage</b></td>
+            </tr>
+            <apex:repeat value="{!cityListWithValue}" var="city" >
+            	<tr>
+            		<td>{!city.city}</td>
+            		<td>{!city.percentage} %</td>
+            	</tr>
+            </apex:repeat>
+        </table>
+     </div>
+    </apex:outputText>
+    
+    <div style="page-break-after:always;">
+        <table class="aptable">
+            <tr>
+                <td class="bluebg" colspan="2">
+                    <apex:outputText rendered="{!AND(NOT(apcountryisocode='BR'),NOT(apcountryisocode='AR'))}"><p class="whitetext">6. Bank Mandate</p></apex:outputText>
+                    <apex:outputText rendered="{!OR(apcountryisocode='BR',apcountryisocode='AR',apcountryisocode='CO')}"><p class="whitetext">7. Bank Mandate</p></apex:outputText>
+                <p class="whitetext2">The Airline needs to provide a Bank Account Mandate to IATA, so that the BSP proceedings can be settled. The bank account must either be:<br/>1-  an ICCS account (for cross border transfers) <br/>2-    or a local bank account in the ISS country and currency of settlement. <br/><br/>Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements, it can delay the joining process.</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" colspan="2">ICCS</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%">Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market, if available?:<br/>
+                If YES, please coordinate directly with ICCS through info.iccs@iata.org.<br/>
+                Please ensure the ICCS documents are submitted directly to ICCS Geneva. <br/>
+                Note that the joining process will only start once the ICCS agreement is countersigned by IATA.
+                </td>
+                <td width="50%">{!IF(newForm.Airline_wish_to_join_ICCS__c == 'Yes','Yes','N/A')}</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%">For more information on ICCS go to www.iata.org/iccs<br/>
+                If NO, please submit a Local Bank Account in the BSP country and currency (refer to next item):
+                </td>
+                <td width="50%">{!IF(newForm.Airline_wish_to_join_ICCS__c == 'Yes','N/A','No')}</td>
+            </tr>
+            
+            <apex:outputText rendered="{!apcountryisocode='UA'}">
+            	<tr>
+                	<td class="label" width="50%">Beneficiary Registration Code/ Local Registration Number (EDRPOU):</td>
+                	<td width="50%">{!newForm.BSP_UA_LocalReg_Number_EDRPOU__c}</td>
+            	</tr>
+                <tr>
+                	<td class="label" width="50%">Bank code (MFO):</td>
+                	<td width="50%">{!newForm.BSP_UA_BankCode_MFO__c}</td>
+            	</tr> 
+            </apex:outputText>
+                
+            <tr>
+                <td class="bluebg3 whitetext" colspan="2">Local Bank Account:</td>
+            </tr>
+            <tr>
+                <td class="label" width="50%" colspan="2">Please complete and submit the Bank Mandate as per attached instructions and template<br/><br/>
+                NB: For countries/operations with dual currencies, please submit separate bank mandates for each currency
+                <apex:outputText rendered="{!apCountryISOCode='BO'}">
+                  <br/><br/><b>NB:</b>&nbsp;If you choose only one currency that travel agents may use to issue tickets, please inform your travel agents accordingly.  However, please note that GDSs do not have the capability to restrict ticketing to only one currency.
+                </apex:outputText>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="page-break-after:always;">
+        <p><b>Should this BSP participation Joining form refer to more than one country, please indicate all the applicable countries:</b></p>
+        <p>By signing the present form herein below I, the undersigned, hereby confirm that the above information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <u>{!newCase.BSPCountry__c}</u>, and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses. <br/>
+        I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph. I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.</p>
+        <p>By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.</p>
+        <p><b>Airline Name:</b>&nbsp;<u>{!hqAccount.Name}</u></p>
+
+        <p>For and on behalf of the Airline (mandatory)</p>
+            <table style="border: 0px;">
+                <tr>
+                    <td>Signature</td><td>&nbsp;</td><td>____________________</td>
+                </tr>
+                <tr>
+                    <td>Name</td><td>&nbsp;</td><td>____________________</td>
+                </tr>
+                <tr>
+                    <td>Title</td><td>&nbsp;</td><td>____________________</td>
+                </tr>
+                <tr>
+                    <td>Place, Date</td><td>&nbsp;</td><td>____________________</td>
+                </tr>
+            </table>
+    </div>
+
+    <div class="bluefont">
+        <p class="bluefontfontbig">Contact IATA and Access Useful Information</p>
+        <p>Our regional portals have been merged to provide you with a single point of access to information: (BSP Calendars, Manuals, calendars, reporting of Standards Administrative Forms, tutorials, etc). To contact IATA or access useful information, go to www.iata.org/customer</p>
+        <br/>
+        <p class="bluefontfontbig">Important Notes</p>
+        <p class="greenfont">SIS</p>
+        <p>As part of the BSP application process it is required that you subscribe to the free version of the SIS platform to receive your invoices in electronic format from IATA. </p>
+        <br/>
+        <p><b>What is SIS?</b><br/>
+        SIS is the electronic invoicing platform that facilitates the billing and settlement process by streamlining key processes, unifying invoicing standards, and reducing paper wastes, ultimately fostering a simpler and more efficient environment for airlines and aviation business partners to engage in business.
+        </p>
+        <p><b>What does my free subscription to SIS give me access to? </b><br/>
+        The free subscription to SIS will give you access to download your payables invoices from IATA and other partners that participate in the service. You can subscribe to the free service at <a href="http://www.iata.org/services/finance/Pages/financial-tou.aspx">http://www.iata.org/services/finance/Pages/financial-tou.aspx</a>
+        </p>
+        <p><b>What if I want also to submit electronic invoices to my partners?</b><br/>
+        You can join SIS platform by signing the IS Participation Agreement. You can find the agreement and other important information related to joining process at <a href="http://www.iata.org/services/finance/sis/Pages/joining-SIS.aspx">Joining SIS</a> 
+        </p>
+        <p><b>Do you have more information on SIS?</b><br/>
+        Yes, you can visit our website at <a href="http://www.iata.org/sis">www.iata.org/sis</a> and browse around or contact SIS Operations Team <a href="mailto:sisoperations@iata.org">sisoperations@iata.org</a> with any questions you may have.  
+        </p><br/>
+        <p class="greenfont">IATA Card Services</p>
+        <p>IATA proposes a suite of card services designed to assist an Airline in managing more efficiently its card payment sales. Two integrated services, IATA CardClear and IATA CardAXS combine to allow all Airlines to take full advantage of the very unique privilege given by MasterCard Worldwide and Visa International to centralize their card sales across borders.
+        </p>
+        <p>This allows any Airline to:<br/>- Use a much reduced number of card merchant agreements: reduction of back office costs<br/>- Present larger volumes to a smaller number of acquirers: improved leverage in fee negotiation</p>
+        <p>It is only by using such services that an Airline will take full advantage of the economic benefit of card centralization.</p>
+        <p>IATA CardClear is a unique service, which allows to centralize Airline BSP card sales globally and have then delivered to any acquirer(s).  With IATA CardClear, the carrier instructs each BSP to remit the card clearing files to IATA Strategic Partner Accelya UK, a processor who will then amalgamate the various BSP remittance files and deliver a unique file to the acquirer(s) chosen by the Airline.</p>
+        <br/>
+        <p>IATA CardAXS is the card acceptance merchant agreement specially tailored for Airline business needs.  With IATA CardAXS, IATA Strategic Partner SEB provides the consolidated financial settlement of global card sales in one or several currencies, as required by the Airline an in all Visa and MasterCard supported countries and currencies.</p>
+        <p><b>Contact:</b><a href="mailto:cardservices@iata.org">cardservices@iata.org</a> for more information, or go online to <a href="http://www.iata.org/services/finance/Pages/cardaxs.aspx">http://www.iata.org/services/finance/Pages/cardaxs.aspx</a>.</p>
+        <p class="greenfont">HOT (Hand-Off Tape) file</p>
+        <p>Upon request by a BSP Airline, the data processing centre will prepare the issued ticket transaction data in the form of electronic media called Airline Accounting/Sales Data (Hand-off Tape-HOT). This contains all accountable transactions from all Agents in a BSP, for each set period, for each BSP Airline.
+        </p>
+        <p class="greenfont">iiNet</p>
+        <p>This is a method of file transfer and is the most comprehensive, flexible and reliable electronic data exchange and data distribution service available. More details can be found on:<br/><a href="http://www.iata.org/iinet">www.iata.org/iinet</a>
+        </p>
+        <p class="greenfont">BSPlink</p>
+        <p>BSPlink is the global interface for travel agents and airlines to access the IATA Billing and Settlement Plan (BSP). It is a system that automates the processes between Airline and Agents by providing secure access to file download and other features 24 hours a day, 7 days a week.</p>        
+        <p>An airline can authorize and process refunds, issue ADMs and ACMs, manage Ticketing Authorities and access BSP billing reports and online sales reports - all via BSPlink!</p><br/>
+        <p>BSPlink Enhanced and Head Office Main User access brings a lot of extra functionality to airlines facilitating daily BSP operations. Click here for more information regarding BSPlink: <a href="http://www.iata.org/bsplink">www.iata.org/bsplink</a></p>
+        <p>Access BSPlink through <a href="http://www.bsplink.iata.org">www.bsplink.iata.org</a></p>
+        <p class="greenfont">ASD (Air Service Desk) (China)</p>
+        <p>ASD is an industry interface for the community including travel agents, airlines and IATA partners to access IATA IDFS business in China. It is a system that automates the processes by providing secure access to file exchange and other features 24 hours a day, 7 days a week.</p>      
+        <p>Airlines and agents can communicate online and get the business notices timely from mail and SMS. An airline can authorize and process refunds, issue ADMs and ACMs, manage Ticketing Authorities and access BSP billing reports and online sales reports. An agent can cooperate with Airlines, IATA, DPC in terms of TKT application, V-MPD, Refund...etc.</p>
+        <p>Furthermore, ASD is IATA owned software serving airlines free of charge in BSP China.  For more information please visit ASD page at <a href="http://www.iata-asd.com">www.iata-asd.com</a></p>
+        <p class="greenfont">IBCS - IATA BSP Consolidator System</p>
+        <p>The IATA BSP Consolidator System (IBCS) is a partnership between IATA and General Sales Agents (GSA) organizations that have a global reach. IBCS provides an alternative for airlines in BSPs in marginal markets, by allowing BSP membership on a variable cost basis.</p>        
+        <p>The IBCS system complements the normal BSP participation model. It allows both large and small carriers with lower volumes in a particular BSP market to gain the benefits of a BSP, but without the comparatively high upfront joining fee. The offset is a higher processing fee for each transaction. For more information, please visit IBCS page at <a href="http://www.iata.org/ibcs">www.iata.org/ibcs</a></p>
+        <p class="greenfont">ICCS - IATA Currency Clearance Service</p>
+        <p><b>Simplifying the business of airline treasury.</b></p>     
+        <p>ICCS is the global cash management service that enables airline Treasurers to centrally control and repatriate their world-wide sales funds. It is currently used by over 260 airlines of varying sizes and had a throughput in 2010 of USD29 billion . For more information, please visit ICCS page <a href="http://www.iata.org/iccs">www.iata.org/iccs</a></p>
+    </div>  
+</div>
+
+
+</apex:page>

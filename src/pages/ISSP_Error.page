@@ -1,0 +1,88 @@
+<apex:page controller="vfExceptionPage" showHeader="false"
+    sidebar="false" standardStylesheets="false" cache="false">
+
+    <head>
+<style type="text/css">
+tr.errorMessage{
+	height:60px;
+	font-family: "Calibri";
+color: rgb(48, 115, 172);
+font-size: 30px;
+font-weight: bold;
+}
+
+</style>
+<script type="text/javascript"
+    src="{!urlfor($Resource.Bowser,'/bowser-master/bowser.min.js')}"></script>
+
+<script>
+    function checkBrowserVersion(label) {
+        if (bowser.msie && bowser.version < 9)
+            alert(label);
+    }
+</script>
+
+<link rel="stylesheet"
+    href="{!urlfor($Resource.IIS_Portal, '/css/login.css')}"
+    type="text/css" />
+
+
+
+
+    </head>
+
+    <apex:composition template="ISS_Template">
+
+        <apex:define name="body">
+            <div class="page_login">
+                <div id="header">
+                    <a href="/"><img alt="IATA"
+                        src="{!urlfor($Resource.IIS_Portal, '/images/logo.jpg')}"
+                        border="0" /></a>
+                    <div>
+                        <a href="https://portal.iata.org/ISSP_Login"
+                            style="color: rgb(48, 115, 172);">
+                            {!$Label.IFAP_Home_Page_Title_4}</a>
+                    </div>
+                </div>
+                
+                <center>
+                    <table>
+	                    <tr class="errorMessage" >
+	                		<td><b>Unexpected Error</b></td>
+	                	</tr>
+	                	
+                    	<!--  
+                    	<tr style="align:left">
+                    	<apex:image id="unexpectedErrorImage" value="{!$Resource.batatas}" />
+                    	</tr>
+                    	-->
+                    	<tr>
+                            <td>
+                            Dear customer,<br />
+                            <br /> We're sorry, an unexpected error has occurred.<br /> If
+                                this error persists please contact us by accessing the IATA
+                                portal at <a
+                                href="http://www.iata.org/customer-portal/Pages/index.aspx">www.iata.org/cs</a>.<br />
+                                Once logged in click on the 'Contact Support' tab on top of your screen and select 'Ask a Question'.<br />
+                            <br /> Best regards,<br />
+                            <br /> IATA Customer Service
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+
+                <div id="footer">
+                    <ul style="width: 100% !important;">
+                        <c:ISSP_CustomFooter />
+                    </ul>
+                </div>
+                <p></p>
+                <p></p>
+            </div>
+
+        </apex:define>
+    </apex:composition>
+
+
+</apex:page>

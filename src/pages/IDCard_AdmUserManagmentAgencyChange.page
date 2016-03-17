@@ -1,0 +1,307 @@
+<apex:page setup="false" docType="html" cache="false"  language="{!Language}"  title="IATA/IATAN ID Card Online Platform"       sidebar="false" showHeader="false" controller="IDCard_AdmUserManagmentAgencyChangeCtrl" action="{!rediredctoToLogin}">
+            <meta http-equiv="Cache-Control" content="no-store" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <title>IATA/IATAN ID Card Online Platform</title>
+            <c:Loading />
+        <c:IDCard_HeaderComponent />
+         
+      <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
+      <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>
+      <apex:includeScript value="/soap/ajax/24.0/connection.js"/>
+      <apex:includeScript value="/soap/ajax/24.0/apex.js"/>
+      <style>
+           .pendingApplicationTable td, .pendingApplicationTable th {padding:0.5em;}
+           
+            body .tabLink   {
+               text-decoration: bold;
+               font-size: 18px;
+               color: #0c4177;
+               margin:10px;
+               padding:10px;
+               height:40px;
+               border-bottom: solid 1px #0c4177;
+               //float:left;
+               
+           }
+             body .tabLink  a {
+               text-decoration: bold;
+               font-size: 18px;
+               color: #0c4177;
+               
+           }
+           
+           body .tabLink a:hover {
+               text-decoration: bold;
+
+               color: #0c4177;
+           }
+            body  a:hover {
+               text-decoration: bold;
+
+               color: #333435;
+           }
+       </style>
+       
+       <div id="page_wrapper">
+           <div class="HeaderIMGSmall"> 
+                <apex:form forceSSL="true" id="formSF">
+               <table width="80%">
+                   <tr>
+     
+                    
+                       <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+                        <td>
+                        <div class="select-style">
+                          <apex:actionRegion >
+                             <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+                             <apex:selectOptions value="{!LangItems}" />
+                             <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+                             </apex:selectList>
+                          </apex:actionRegion>
+                        </div>
+                    </td>
+                    <td><c:IDCard_logoutComponent /></td>
+                    </tr>
+               </table>
+               </apex:form>
+               <h1>{!$Label.IDCard_Landing_Title}</h1>
+           </div>
+           <div class="background" style="min-height:600px;background-color:#C9E5FF">
+                <div class="tabs">
+                    <ul class="tab-links" style="margin-bottom:0px;">
+                        <li class="active"><a href="{! pagesurl['prefix']}/IDCard_AdmUserList" >
+                            {!$Label.IDCard_PortalPage_MenuuserManagment}
+                        </a>  </li>
+                        <li ><a href="{! pagesurl['prefix']}/IDCard_AdmPendingOps"  >{!$Label.IDCard_PortalPage_MenuPendingOps}</a></li>
+                        <li class="active"><a href="{! pagesurl['prefix']}/IDCard_PaymentManagment" >
+                        {!$Label.IDCard_PortalPage_MenuPaymentSlip}
+                      </a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                        <center><h1>{!$Label.IDCard_KA_ChangeAgency_Title}</h1></center> <br/><br/>
+                        <apex:outputPanel id="messages">
+                            <apex:pageMessages id="Msgs2" escape="false" />
+                        </apex:outputPanel>
+                        
+                        <!-- Form to add new Item -->
+                        
+                        <div >
+                            <apex:outputPanel id="searchForm">
+                            <apex:form forceSSL="true"  rendered="{!ISNULL(theChosenOne)}"> 
+                            
+                            <h2>{!$Label.IDCard_KA_ChangeAgency_step1_title}</h2> <br/> <br/>
+                            <table >
+                                <tr>
+                                    <td>{!$ObjectType.Contact.fields.UIR__c.Label}:</td>
+                                    <td><apex:inputField value="{!searched.UIR__c}"  /></td>
+                                    <td>{!$Label.IDCard_KA_ChangeAgency_VerNum}:</td>
+                                    <td><apex:inputField value="{!searched.VER_Number_2__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <td>{!$ObjectType.Contact.fields.LastName.Label}:</td>
+                                    <td><apex:inputField required="true" value="{!searched.LastName}"  /></td>
+                                    <td>{!$ObjectType.Contact.fields.Date_of_Birth__c.Label} [MM/DD/YYYY]:</td>
+                                    <td><apex:inputField required="true" value="{!searched.Date_of_Birth__c}"  label="{!$ObjectType.Contact.fields.Date_of_Birth__c.Label}"/></td>
+                                </tr>
+                                    
+                                <tr>
+                                    <!--<td>{!$Label.IDCard_KA_ChangeAgency_IATACode}:</td>
+                                    <td><apex:inputText required="true" value="{!IataCode}" /></td>-->
+                                    <td colspan="4" align="right"><!-- <button value="Search" onclick="search4Contact($('#searchverNum').val(),$('#searchIataCode').val())" >Search</button> -->
+                                        <apex:commandButton action="{!search4Contact}"  value="Search" status="Loading">
+                                            <apex:actionSupport event="onclick" reRender="CHECKform,messages" >
+                                                <!-- <apex:param name="verNum" value="" assignTo="{!verNum}"/>
+                                                <apex:param name="iataCode" value="" assignTo="{!iataCode}"/> -->
+                                            </apex:actionSupport>
+                                        </apex:commandButton>
+                                    </td>
+                                </tr>
+                            </table> 
+                                
+                                <!-- 
+                            <apex:actionFunction action="{!search4Contact}" name="DeleteProject" reRender="CHECKform,messages" >
+                                <apex:param name="verNum" value="" assignTo="{!verNum}"/>
+                                <apex:param name="iataCode" value="" assignTo="{!iataCode}"/>
+                            </apex:actionFunction>
+                             -->
+                            
+                            </apex:form>
+                            </apex:outputPanel>
+                            
+                        </div>
+                       
+                         <!-- temp item to add -->
+                        <div >
+                            
+                            <apex:form forceSSL="true" id="CHECKform">
+                                  
+                                 <apex:outputPanel rendered="{!(currentRecordssize>0)}" >
+                                  
+                                     <h2>{!$Label.IDCard_KA_ChangeAgency_Step2_title}</h2><br/> <br/>
+                                     <table>
+                                        <apex:repeat value="{!currentRecords}" var="key">
+                                        <tr>
+                                            <td rowspan="4">
+                                                <img src="{!$Label.IDCard_CroppingTool}/images/{!currentRecords[key].Photo}" style="height:120px; width:90px;"/>
+                                            </td>
+                                            
+                                            
+                                            <td><b>Ver Number:&nbsp;&nbsp;</b> <apex:outputText value="{!currentRecords[key].verNum}" /></td>
+                                            <td><b>Name:&nbsp;&nbsp;</b> <apex:outputText value="{!currentRecords[key].previousContact.Name}" /></td>
+                                        </tr><tr>
+                                            <td><b>Previous IATA Code:&nbsp;&nbsp;</b> <apex:outputText value="{!currentRecords[key].previousContact.IATA_Code__c}" /></td>
+                                            <td><b>Package 1:&nbsp;&nbsp;</b> 
+                                                <apex:selectList value="{!currentRecords[key].packageTravel1}"  size="1">
+                                                    <apex:selectOptions value="{!packages}"/>
+                                                </apex:selectList>
+                                            </td>
+                                        </tr><tr>
+                                            <td><b>New IATA Code:&nbsp;&nbsp;</b>
+                                                <apex:selectList value="{!currentRecords[key].newIataCode}"  size="1" rendered="{!NOT(moreThan1000Iatacodes)}"  styleclass="drawRedBar">
+                                                    <apex:selectOptions value="{!IATAcodes}"/>
+                                                </apex:selectList>
+						                       <apex:inputText value="{!currentRecords[key].newIataCode}" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar"/>
+						                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            
+                                            <td><b>Package 2:&nbsp;&nbsp;</b>
+                                                <apex:selectList value="{!currentRecords[key].packageTravel2}"  size="1">
+                                                    <apex:selectOptions value="{!packages}"/>
+                                                </apex:selectList>
+                                            </td>
+                                        </tr>
+                                        	<td><b>{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Month__c.Label}:&nbsp;&nbsp;</b>
+                                                <apex:selectList value="{!currentRecords[key].startmonth}"  size="1"  styleclass="drawRedBar">
+                                                    <apex:selectOptions value="{!months}"/>
+                                                </apex:selectList>
+                                            </td>
+                                            <td><b>{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Year__c.Label}:&nbsp;&nbsp;</b>
+                                                <apex:inputText value="{!currentRecords[key].startyear}"  styleclass="drawRedBar" id="year" />
+                                            </td>
+                                        
+                                        <tr> 
+                                        </tr><tr>   
+                                            <td> 
+                                                <apex:commandButton action="{!confirmContact}"  value="{!$Label.IDCard_KA_ChangeAgency_Confirm}" reRender="CHECKform,messages,imageForm,searchForm">
+                                                    <apex:param name="addid" assignTo="{!addid}" value="{!currentRecords[key].VERnum}" />
+                                                </apex:commandButton>
+                                            </td>
+                                            
+                                        </tr>
+                                        </apex:repeat>
+                                    </table>
+                                    <script>
+										/*$.each($(".drawRedBar"),function(){
+											$(this).parent().prepend('<div class="requiredInput"><div class="requiredBlock"></div></div>');
+											$(this).appendTo($(this).parent().find(".requiredInput"));
+										});	
+										stopLoading();*/
+									</script>
+                                 </apex:outputPanel>
+					
+                            </apex:form>
+                        </div>
+                        
+                        
+                        
+                        
+                        <div >
+                            <apex:form forceSSL="true" id="imageForm">
+                                
+                                 <apex:outputPanel rendered="{!NOT(ISNULL(theChosenOne)) && success}">
+                                 <h2>{!$Label.IDCard_KA_ChangeAgency_step3}</h2> <br/> <br/>
+                                    <table>
+                                        <tr>
+                                            <td rowspan="4">
+                                                <img src="{!$Label.IDCard_CroppingTool}/images/{!theChosenOne.Photo}" style="height:120px; width:90px;"/>
+                                            </td>
+                                            <td><b>Ver Number:&nbsp;&nbsp;</b> <apex:outputText value="{!theChosenOne.verNum}" /></td>
+                                        </tr><tr>
+                                            <td><b>Name:&nbsp;&nbsp;</b> <apex:outputText value="{!theChosenOne.previousContact.FirstName} {!theChosenOne.previousContact.LastName}" /></td>
+                                        </tr><tr>
+                                            <td><b>New IATA Code:&nbsp;&nbsp;</b>
+                                                <apex:outputText value="{!theChosenOne.newIataCode}"  />
+                                            </td>
+                                        </tr><tr>   
+                                            <td>
+                                            <a href="{! pagesurl['prefix']}/IDCard_AdmUserManagmentPicture?VER={!ImageLink}&fromAgencyChange=true"  style="color:black"
+                                                          styleClass="myLink"  >
+                                               <img src="{!URLFOR($Resource.jquerytools,'/images/plus.png')}" class="myCmd" />
+                                                   {!$Label.IDCard_Update_Picture}
+                                           </a>
+                                            </td>
+                                            <td>
+                                                <apex:commandButton action="{!Complete}"  value="OK" reRender="CHECKform,messages,LISTform,searchForm,imageForm" />
+                                            </td>                                       
+                                        </tr>
+                                    </table>
+                                    
+                                    
+                                    
+                                    
+                                </apex:outputPanel>
+                                
+                            </apex:form>
+                            
+                            
+                            
+                            
+                        </div>
+                        
+                        <br/><br/>
+                        <apex:form >
+                        <apex:commandButton value="Back" action="{!Cancel}" />
+                        </apex:form>
+                        
+                        
+                        
+                    </div> <!-- END CONTENT -->
+           </div> 
+        </div>
+           <style>
+            .myLink{opacity:0.8;text-decoration:none;}
+            .myLink:hover{color:black;text-decoration:bold underline;opacity:1}
+            .myCmd{height:1.5em;width:1.5em;margin-left:2em;opacity:0.8;vertical-align:middle;}
+            .myPgCmd{height:1em;width:1em;margin-left:1em;margin-right:2em;opacity:0.8;
+                    vertical-align:middle;font-size:1.5em;text-decoration: none;}
+            .myPage input{width:12em;}
+            #newEditPanel .myBtn {margin-left:0.5em;margin-right:0.5em;}
+            #newEditPanel {text-align:center}
+            #newEditPanel input{width:12em}
+            #newEditPanel .detailList{margin-left:auto;margin-right:auto;}
+            #ImportPanel {text-align:center;}
+            .dttd {
+            border-bottom: 1px solid #cccccc;
+            }
+            .myLink.myPgCmd.mybtnDisabled{opacity:0.4; cursor:default;}
+            .myLink.myPgCmd.mybtnDisabled:hover{opacity:0.4; cursor:default;}
+        </style>
+         <script>
+	    $(document).ready(function() {          
+    
+	        //-----EDIT THE NEXT TWO LINES-----
+	        var startYear=1930; //replace 1930 with whatever year you want to start with;
+	        var endYear=2000; //replace 2034 with whatever year you want to end with;
+	    
+	        //-----EDIT BELLOW HERE AT YOUR OWN RISK-----
+	        var optionsString='';
+	    
+	        if(startYear<endYear){
+	            //Loops through each date and renders the string for an option tag and addes it to the Optrionsstring variable
+	            for(i=startYear;i<endYear+1;i++){
+	                optionsString += "<option value=\""+i+"\">"+i+"</option>";
+	            }
+	    
+	            //Replace the innerHTML of the calendar picker year select tag with the Optionsstring we constructed.
+	            $('#calYearPicker').html(optionsString);
+	        }
+	    });
+	    </script>  
+         <c:IDCard_footerComponent />
+</apex:page>

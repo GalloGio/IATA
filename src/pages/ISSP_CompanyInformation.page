@@ -1,0 +1,306 @@
+<apex:page controller="ISSP_PersonalInformation" extensions="ISSP_PersonalInformationWithoutSharing"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+ <html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+    <div class="container">
+        
+        <c:ISSP_CustomNavigation />
+        <div class="panel panel-primary">
+            <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">{!$Label.ISSP_Registration_MyCompany}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}" >
+                    <strong>Error: </strong>
+                    <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                        <p> {!er}</p>
+                    </apex:repeat>
+                </div>
+                <div class="row">
+                    <!-- My Company panel  -->
+                    <div class="col-md-6">
+                        <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                            <div class="row">
+                                <label class="lbl col-lg-5" for="exampleInputEmail1">{!$ObjectType.Account.fields.Name.Label}</label>
+                                <div class="col-lg-7">
+                                    {!con.Account.Name}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <apex:outputPanel rendered="{!con.Account.TradeName__c  != null}" layout="block">
+                                    <label class="lbl col-lg-5">{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!con.Account.TradeName__c}
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <!-- end row -->
+                           
+                                <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                    <div class="row">
+                                        <label class="lbl col-lg-5">{!$ObjectType.Account.fields.Airline_designator__c.Label}</label>
+                                        <div class="col-lg-7">{!con.Account.Airline_designator__c}</div>
+                                     </div>
+                                     <!-- end row -->
+                                    <div class="row">
+                                        <label class="lbl col-lg-5">{!$ObjectType.Account.fields.ICAO_designator__c.Label}</label>
+                                        <div class="col-lg-7">{!con.Account.ICAO_designator__c}</div>
+                                     </div>
+                                     <!-- end row -->
+                                </apex:outputText>
+                           
+             
+                            <div class="row">
+                                <apex:outPutPanel layout="block" rendered="{!con.Account.Status__c != 'New application pending'}">
+                                    <label class="lbl col-lg-5">{!$ObjectType.Account.fields.IATACode__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        <div>{!con.Account.IATACode__c} </div>
+                                    </div>
+                                </apex:outPutPanel>
+                            </div>
+                            
+                            <div class="row">
+                                <apex:outputPanel rendered="{!con.Account.Sector__c != null}" layout="block">
+                                    <label class="lbl col-lg-5">{!$ObjectType.Account.fields.Sector__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!con.Account.Sector__c}
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <!-- end row -->
+                            <div class="row">
+                                <apex:outputPanel rendered="{!con.Account.Category__c!= null}" layout="block">
+                                    <label class="lbl col-lg-5">{!$ObjectType.Account.fields.Category__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!con.Account.Category__c}
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            <!-- end row -->
+                            
+                            <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                <div class="row">
+                                    <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Field_Head_Office__c.Label}" />
+                                    <div class="col-lg-7"><apex:outPutField value="{!con.Account.Field_Head_Office__c}"/></div>
+                                </div>    
+                             </apex:outputText>
+                                
+                             <apex:outputText rendered="{!isIATAAgencyAcct}">
+                                  <div class="row">
+                                    <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Location_Type__c.Label}" />
+                                    <div class="col-lg-7"><apex:outPutField value="{!con.Account.Location_Type__c}"/></div>
+                                  </div>
+                                 </apex:outputText>
+                            
+                            <apex:outputText rendered="{!isIATAAirlineAcct}">
+                                <div class="row">
+                                <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Membership_status__c.Label}" />
+                                    <div class="col-lg-7">
+                                        <apex:outPutField value="{!con.Account.Membership_status__c}"/>
+                                    </div>
+                             </div>
+                        </apex:outputText>
+                        
+                        <div class="row">    
+                            <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Phone.Label}" />
+                            <div class="col-lg-7">
+                                    <apex:outPutField value="{!con.Account.Phone}"/>
+                            </div>
+                         </div>
+                            
+                         <div class="row">   
+                            <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Fax.Label}" />
+                            <div class="col-lg-7">
+                                    <apex:outPutField value="{!con.Account.Fax}"/>
+                            </div>
+                         </div>
+                           
+                            <div class="row">
+                                <label class="lbl col-lg-5">{!$ObjectType.Account.fields.IATA_ISO_Country__c.Label}</label>
+                                <div class="col-lg-7">
+                                    <div>{!con.Account.IATA_ISO_Country__r.Name}</div>
+                                </div>
+                </div>
+                            <!-- end row -->
+                            <div class="row">
+                                <label class="lbl col-lg-5">{!$label.ISSP_CompanyAddressInformation}</label>
+                                <div class="col-lg-7">
+                                    {!con.Account.BillingStreet}<br/>
+                                    {!con.Account.BillingCity} 
+                                    {!con.Account.BillingPostalCode}<br/>
+                                    {!con.Account.BillingState}<br/>
+                                    
+                                     {!con.Account.BillingCountry}<br/>
+                                    
+                                </div>
+                            </div>
+                            <!-- end row --> 
+                            
+                            <!-- DTULLO 20160202. Add DDS Section -->
+                            <apex:outputPanel rendered="{!AND(bIsAdmin, con.Account.DDS_Status__c=='Opt-Out')}">
+	                            <div class="row">
+	                            	<apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.DDS_Status__c.Label}" />
+	                                <div class="col-lg-7">
+	                                	<apex:outPutField value="{!con.Account.DDS_Status__c}"/>
+	                                </div>
+	                            </div>
+	                            <div class="row">
+	                            	<apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.DDS_Last_Update_Date__c.Label}" />
+	                                <div class="col-lg-7">
+	                                	<apex:outPutField value="{!con.Account.DDS_Last_Update_Date__c}"/>&nbsp;
+	                                	<apex:outputLink value="/ISSP_ChangeDDS_OI">{!$Label.ISSP_Opt_In}</apex:outputLink>
+	                                </div>
+	                            </div>
+	                        </apex:outputPanel>
+                            <!-- end row --> 
+                            
+                            
+                            <apex:outputpanel rendered="{!isValidatedAirlineUser}">
+                                <div class="row">
+                                    <label class="lbl col-lg-5">{!$ObjectType.Contact.fields.Airline_Credit_Risk_Manager__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        {!ValidatedAirlineUser_Str}
+                                    </div>
+                                </div>
+                            </apex:outputpanel>
+                        </div>
+                        <!-- end panel -->
+                    </div>
+                    <!-- end col -->
+                    <div class="col-md-6 col-sm-12">
+                      <div class="panel-body form-horizontal" style="padding-top: 0px;" >
+                          <apex:outputText rendered="{!showIrregularities}">
+                           <div class="row">
+                           
+                                    <label class="lbl col-lg-8">{!$Label.ISSP_Homepage_Irregularities}</label> 
+                                <div class="col-lg-4">
+                                    <span class="{!if(noirr=='0',"badge ","badge redbadge")}">{!blankvalue(noirr,"0")}</span>
+                                    
+                               </div>
+                            </div>
+                           
+                          <div class="row">
+                              <div style="display:{!if(noirr=='0' || noirr=='',"none","block")}" class="col-md-12">
+                                       <i>{!$Label.ISSP_PageDescription_ISSP_CompanyInformation}</i> 
+                                    </div>
+                          </div>
+                             
+                          <hr />
+                          </apex:outputText>
+                           <apex:outputText rendered="{!if(OpenDebts!='',true,false)}">
+                           <b><apex:outputText escape="false" value="{!$Label.ISSP_outstanding_invoices}"/> </b>
+                          </apex:outputText>
+                          
+                          <hr />
+                             
+                          <apex:outputText rendered="{!if(FinSubmission!='',true,false)}">
+                          <div class="row">
+                                <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
+                                <div class="col-md-7">
+                                   {!FinSubmission}
+                                </div>
+                             </div>
+                          </apex:outputText> 
+                     <apex:outputPanel rendered="{!ifapName != ''}">
+                        <div class="row">
+                            <label class="lbl col-lg-4 ">{!$Label.ISSP_IFAP_Name}</label>
+                            <div class="col-lg-8">{!ifapName}</div>
+                        </div>
+                     
+                     <hr />
+                     
+                        <div class="row">
+                            <label class="lbl col-lg-4">{!$Label.ISSP_IFAP_Email}</label>
+                            <div class="col-lg-8">{!ifapEmail}</div>
+                        </div>
+                             
+                        <div class="row">
+                            
+                            <div class="col-lg-8">
+                                <apex:form >
+                                    <apex:commandButton action="{!AssignIFAPContact}" styleclass="btn btn_iata_primary btn-block" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/>
+                                </apex:form>
+                            </div>
+                        </div>
+                    
+                </apex:outputPanel>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!--- end row -->
+                <!-- Admin information for Active users -->
+                <apex:outputPanel rendered="{!AND(portalAdmins.size>0, theUserContact.User_Portal_Status__c != 'Pending Approval')}">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="blueback">{!$Label.ISSP_Homepage_Portal_Delegates_Administrators}</h5>
+                                <table class="table table-hover">
+                                    <div style="margin-left: 100px;">
+                                        <apex:repeat value="{!portalAdmins}" var="admin">
+                                            <tr>
+                                                <td>
+                                                    <apex:outputText value="({0}) {1} {2} ">
+                                                        <apex:param value="{!admin.TeamMemberRole}"/>
+                                                        <apex:param value="{!admin.User.Contact.Salutation}"/>
+                                                        <apex:param value="{!admin.User.Contact.Name}"/>
+                                                    </apex:outputText>
+                                                </td>
+                                                <td>
+                                                    <apex:outputField value="{!admin.User.Contact.Email}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:outputText value=" {0}">
+                                                        <apex:param value="{!admin.User.Contact.Account.BillingCountry}"/>
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                            <!-- AEF -->
+                                            <div style="display:none;">
+                                                <apex:outputField value="{!admin.User.Contact.AccountId}" />
+                                            </div>
+                                        </apex:repeat>
+                                    </div>
+                                </table>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <!-- Admin information for Pending Approval users -->
+                <apex:outputPanel rendered="{!AND(portalAdmins.size>0, theUserContact.User_Portal_Status__c == 'Pending Approval')}">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="blueback">{!$Label.ISSP_Homepage_Portal_Delegates_Administrators}</h5>
+                                <table class="table table-hover">
+                                    <div style="margin-left: 100px;">
+                                        <apex:repeat value="{!portalAdmins}" var="admin">
+                                            <tr>
+                                                <td>
+                                                    <apex:outputText value="({0}) {1} {2} ">
+                                                        <apex:param value="{!admin.TeamMemberRole}"/>
+                                                        <apex:param value="{!admin.User.Contact.Salutation}"/>
+                                                        <apex:param value="{!admin.User.Contact.Name}"/>
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </div>
+                                </table>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    </div>
+                </apex:outputPanel>
+               
+                <!-- end My Company panel  -->
+            </div>
+            <!-- end panel body -->
+        </div>
+        <!-- end  div class="panel panel-primary"-->
+          <c:ISSP_CustomFooter />
+    </div>
+     </body>
+    </html>
+</apex:page>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Private</cacheControl>
+    <contentType>application/x-javascript</contentType>
+    <description>http://benalman.com/projects/jquery-postmessage-plugin/
+
+Used to exchange data between the IDCard visualforce page and the IDCardCroppingTool</description>
+</StaticResource>

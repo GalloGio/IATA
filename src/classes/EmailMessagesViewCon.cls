@@ -1,0 +1,138 @@
+public class EmailMessagesViewCon {
+
+    public transient List<EmailMessage> emails {get; set;}
+    public Case cse {get; set;}
+    public Boolean EmailsAvailable{get;set;}
+    
+    //jfo
+    public transient List<Archived_Message__c> archivedMessages {get; set;}
+    public transient List<Archived_Attachment__c> archivedAttachments {get; set;}
+    public transient List<Attachment> sfdcAttachments {get; set;}
+    public transient Map<String,String> emailsTasksStatus {get; set;}
+    public transient Map<String,EmailMessage> originalEmail {get; set;}
+    public transient List<Tracked_Email__c> trackedEmails {get; set;}
+    public boolean hasAttachment  {get; set;}
+
+    
+
+    public EmailMessagesViewCon (ApexPages.StandardController controller) {
+        
+        EmailsAvailable = false;
+        try{
+            if(!Test.isRunningTest()) {
+                controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c' });
+            }
+            this.cse= (Case)controller.getRecord();
+            loadEmails();
+            loadAttachments();
+       }
+       catch(Exception e){
+            String temp = ApexPages.currentPage().getParameters().get('fieldValue');
+            this.cse = [Select id, Status,CaseNumber, BSPCountry__c, ContactId, RecordType.DeveloperName from Case where id = :temp];
+            system.debug('ERROR Exception while creating controller '+e.getMessage());
+       }
+    }
+    
+    private void loadAttachments(){
+        archivedAttachments  = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id  , BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c FROM Archived_Attachment__c where Case__c= :this.cse.Id ];
+          //load attchament linked directly to this case
+        sfdcAttachments =  [SELECT Id, ParentId, OwnerId, Name, CreatedById, LastModifiedDate, BodyLength FROM Attachment where ParentId = :this.cse.Id];
+        if(archivedAttachments!=null)
+            hasAttachment = (archivedAttachments.size() + sfdcAttachments.size())>0;
+        else hasAttachment = false;
+    }
+    
+    public String getACaseId(){
+        return this.cse.Id;
+    }
+    
+    private void loadEmails(){
+        originalEmail = new Map<String,EmailMessage>();
+        //load records related to case
+        this.archivedMessages = [SELECT  Name,EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c =:this.cse.Id ];
+        
+        Map<String,Archived_Message__c> tmpArchivedMessages = new Map<String,Archived_Message__c>();
+        for(Archived_Message__c a:archivedMessages )
+            tmpArchivedMessages .put(a.EmailMessage__c,a);
+        
+        //load tracked emails
+        this.trackedEmails = [SELECT ToContact__c, Html_Body__c, Subject__c, Status__c, CreatedById, CreatedDate, Id FROM Tracked_Email__c where Case__c =:this.cse.Id ];
+        
+        //load Email activity status to print it in view  using a map: em.Activity --> Stirng
+        List<String> l = new List<String>();  
+        this.emails = new List<EmailMessage>();
+                 
+        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId, BccAddress, CcAddress, CreatedById, CreatedDate, IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers, LastModifiedById, LastModifiedDate, MessageDate, Subject, SystemModstamp, TextBody, ToAddress FROM EmailMessage where ParentId = :cse.id order by CreatedDate desc ];
+        emailsTasksStatus = new Map<String,String>();
+        for(EmailMessage e:tmpEmails  ) {
+           if(!tmpArchivedMessages .containsKey(e.Id))
+               emails.add(e);
+           else
+               originalEmail.put(e.Id,e);
+           
+        }
+        try {
+            EmailsAvailable  = (archivedMessages.size() + trackedEmails.size() + emails.size())>0;
+        }catch(Exception e){
+            EmailsAvailable = true;
+        }
+        if(this.emails==null)
+            this.emails= new List<EmailMessage>();
+    }
+    
+    public Case getCse(){
+        return this.cse;
+    }
+    
+    
+    public List<EmailMessage> getEmails(){
+    
+        if(this.emails==null)loadEmails();        
+     
+        return emails;
+    }
+    /*
+    public Boolean getShowSendTrackedEmailButton() {
+        try {
+            Profile admin = [Select Id From Profile where name = 'System Administrator' limit 1];
+            if ( admin.Id == UserInfo.getProfileId() ) {
+                Id saamRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+                Id financialReviewRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
+                return cse.Region__c == 'Europe' && cse.CaseArea__c == 'Risk Management Process' && (cse.RecordTypeId == saamRt || cse.RecordTypeId == financialReviewRt);
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    */
+    public Boolean getShowSendTrackedEmailButton() {
+        try {
+            Profile admin = [Select Id From Profile where name = 'System Administrator' limit 1];
+            set<Id> setAlloweUsers = new set<Id>();
+            for (String userId: Label.Signaturit_Allowed_Users.split(';') ) {
+                try {
+                    setAlloweUsers .add( Id.valueOf(userId) );
+                } catch (Exception e) {
+                     System.debug('ERROR adding allowed Signaturit user, check Label.Signaturit_Allowed_Users : ' + userId);
+                }
+            }
+
+            if ( admin.Id == UserInfo.getProfileId() || setAlloweUsers.contains(UserInfo.getUserId()) ) {
+                // if account is SAAM, Region has to be Europe and caseArea = Risk Management Process
+                Id saamRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+                if (cse.RecordTypeId == saamRt) {
+                    return cse.Region__c == 'Europe' && cse.CaseArea__c == 'Risk Management Process';
+                }
+                // if account is IATA Financial Review, only Region has to be Europe
+                Id financialReviewRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
+                if (cse.RecordTypeId == financialReviewRt) {
+                    return cse.Region__c == 'Europe';
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}

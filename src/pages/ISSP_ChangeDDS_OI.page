@@ -1,0 +1,60 @@
+<!--  Page used for optin only -->
+
+<apex:page controller="ISSP_ChangeDDS_Ctrl" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+	<html>
+	<head>
+		<c:ISSP_Header_sansJQuery />
+	</head>
+		<body>
+			<div class="container">
+				<c:ISSP_CustomNavigation />
+				<c:Loading />
+				<div class="panel panel-primary">
+					<div class="panel-heading head_panel_green">
+		                <h3 class="panel-title">{!$Label.ISSP_ChangeDDS}</h3>
+		            </div>
+		            
+		            <div class="panel-body">
+		            	<apex:form >
+							<apex:outputPanel id="messages" >
+								<apex:pageMessages />
+							</apex:outputPanel>
+							
+							<apex:outputPanel rendered="{!AND(bHasAccnt, bIsAdmin, bAccntValid, bCountryEnabled, !bHasOptIn)}">
+								<apex:outputPanel rendered="{!!bSaved}">
+									<div class="row">
+										<div class="col-md-6"> 
+				                            <div class="row">
+				                                <div class="col-lg-8">
+				                                	<apex:outputLabel value="{!$Label.ISSP_DDS_BTN_OPTOIN}" rendered="{!bHasOptOut}"/>
+				                                </div>
+				                                <div class="col-lg-4">
+				                                	<apex:commandButton styleclass="btn_iata btn-success btn_save editMode" action="{!SaveAccnt}"  value="{!$Label.ISSP_Confirm}"  id="btnSave"/>&nbsp;
+				                                	<apex:commandButton styleclass="btn_iata btn-danger btn_cancel editMode" action="{!goToHP}"  value="{!$Label.ISSP_Cancel}"  id="btnCancel"/>
+				                                </div>
+				                            </div>
+										</div>
+									</div>
+								</apex:outputPanel>
+								
+								<apex:outputPanel rendered="{!bSaved}">
+									<apex:outputLabel value="{!$Label.ISSP_DDS_OPTIN_Confirm}" rendered="{!bHasOptOut}"/>
+									<br/>
+									<apex:outputLink value="/" id="GoToHP">{!$Label.ISSP_GoTo_Homepage}</apex:outputLink>
+									<br/>
+									<a href="#" onClick="javascript:window.print();">{!$Label.ISSP_DDS_Print}</a>
+								</apex:outputPanel>
+							</apex:outputPanel>
+							
+							<apex:outputPanel rendered="{!OR(!bHasAccnt, !bIsAdmin, !bAccntValid, !bCountryEnabled, bHasOptIn)}">
+								<apex:outputLabel value="{!$Label.ISSP_Not_Authorized}"/>
+							</apex:outputPanel>
+						</apex:form>
+		            </div>
+				</div>
+
+				<c:ISSP_CustomFooter />
+			</div>
+		</body>
+	</html>
+</apex:page>

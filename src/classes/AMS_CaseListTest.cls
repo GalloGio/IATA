@@ -1,0 +1,124 @@
+@isTest
+private class AMS_CaseListTest {
+    
+    @testSetup static void setup(){
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.triggerOnCaseNSerRen = true;
+
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+
+        Account acc1 = new Account(Name='Test Account1', IATAcode__c = '12345678');
+        insert acc1;
+        
+        AMS_Agency__c a = new AMS_Agency__c(Account__c=acc1.Id, Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test Agency', IATAcode__c = '1234567', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency', Legacy_External_ID__c = '12345678', Legacy_System__c = 'AIMS');
+        insert a;
+
+        Account acc = [select id from Account];
+
+        Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
+
+        Contact co1 = new Contact(AccountId = acc.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com',
+                                    Financial_Assessment_Contact__c = false);
+        insert co1;
+
+        Case c1 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
+        Case c2 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Accreditation Process');
+        Case c3 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
+        Case c4 = new Case(recordTypeId = caseRT.get('ProcessEuropeSCE'), accountid = acc.id, ContactId = co1.id, CaseArea__c = 'Risk Management Process');
+        Case c5 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id);
+        Case c6 = new Case(recordTypeId = caseRT.get('SIDRA'), ContactId = co1.id, accountid = acc.id);
+        Case c7 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id);
+        Case c8 = new Case(recordTypeId = caseRT.get('CasesMENA'), ContactId = co1.id, accountid = acc.id);
+        Case c9 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
+        Case c10 = new Case(recordTypeId = caseRT.get('InternalCasesEuropeSCE'), ContactId = co1.id, accountid = acc.id);
+
+        List<Case> listOfCases = new List<Case>();
+        listOfCases.add(c1);
+        listOfCases.add(c2);
+        listOfCases.add(c3);
+        listOfCases.add(c4);
+        listOfCases.add(c5);
+        listOfCases.add(c6);
+        listOfCases.add(c7);
+        listOfCases.add(c8);
+        listOfCases.add(c9);
+        listOfCases.add(c10);
+
+        insert listOfCases;
+
+        c2.Status = 'Closed';
+        c4.Status = 'Closed';
+        c6.Status = 'Closed';
+        c8.Status = 'Closed';
+        c9.Status = 'Closed';
+        c10.Status = 'Closed';
+
+        c2.OwnerId = UserInfo.getUserId();
+        c4.OwnerId = UserInfo.getUserId();
+        c6.OwnerId = UserInfo.getUserId();
+        c8.OwnerId = UserInfo.getUserId();
+        c9.OwnerId = UserInfo.getUserId();
+        c10.OwnerId = UserInfo.getUserId();
+        
+        update listOfCases;
+
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+        TransformationHelper.triggerOnCaseNSerRen = false;
+    }
+
+    @isTest static void test_CaseList() {
+    	
+        PageReference pageRef = Page.AMS_DemoCaseListPage;
+        Test.setCurrentPageReference(pageRef);
+
+        AMS_Agency__c ag = [select id from AMS_Agency__c];
+
+        ApexPages.CurrentPage().getparameters().put('pid', ag.id);
+        ApexPages.StandardController sc = new ApexPages.standardController(ag);
+
+        Test.startTest();
+        AMS_DemoCaseList sic = new AMS_DemoCaseList(sc);
+        sic.getItems();
+        sic.radioSelectAction();
+        List<Case> cases = new List<Case>();
+        cases = sic.getSIDRACases();
+        system.assertEquals(1,cases.size());
+        cases = sic.getAccreditationCases();
+        system.assertEquals(1,cases.size());
+        cases = sic.getCustomerServiceCases();
+        system.assertEquals(1,cases.size());
+        cases = sic.getAgencyRiskManagementCases();
+        system.assertEquals(1,cases.size());
+
+        sic.filterAccreditation = 'Closed';
+        sic.filterSidra = 'Closed';
+        sic.filterCustomerService = 'Closed';
+        sic.filterAgencyRiskManagement = 'Closed';
+        cases = sic.getSIDRACases();
+        system.assertEquals(1,cases.size());
+        cases = sic.getAccreditationCases();
+        system.assertEquals(1,cases.size());
+        cases = sic.getCustomerServiceCases();
+        system.assertEquals(1,cases.size());
+        cases = sic.getAgencyRiskManagementCases();
+        system.assertEquals(1,cases.size());
+
+        sic.filterAccreditation = 'All';
+        sic.filterSidra = 'All';
+        sic.filterCustomerService = 'All';
+        sic.filterAgencyRiskManagement = 'All';
+        cases = sic.getSIDRACases();
+        system.assertEquals(2,cases.size());
+        cases = sic.getAccreditationCases();
+        system.assertEquals(2,cases.size());
+        cases = sic.getCustomerServiceCases();
+        system.assertEquals(2,cases.size());
+        cases = sic.getAgencyRiskManagementCases();
+        system.assertEquals(2,cases.size());
+        Test.stopTest();
+    }
+}

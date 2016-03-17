@@ -1,0 +1,320 @@
+<apex:component controller="vfIECGADAgencyDetailsComponent" access="global" allowDML="true" rendered="true">
+    <apex:attribute name="GDPAccountID" type="String" description="The ID of the GDP Products - Account View object to display" assignTo="{!sAgencyID}" />
+    <apex:componentBody >
+
+        <script>
+            function hideParentAgencyPopup() {
+                var popupDiv = this.document.getElementById('parentAgencyPopup');
+                popupDiv.style.display = 'none';
+            }
+
+            function showParentAgencyPopup() {
+                var popupDiv = this.document.getElementById('parentAgencyPopup');
+                popupDiv.style.display = '';
+            }
+        </script>
+        <style>
+            .notAvailable {
+                font-style: italic;
+                text-transform: none;
+            }
+            #register .box .informationTable td:nth-child(2) {
+		    width: 315px !important;
+			}
+			#register .box .informationTable td:nth-child(2n+1) {
+			width: 126px !important;
+			}
+			td{
+			vertical-align: middle !important;
+			}
+
+        </style>
+
+        <apex:outputpanel id="panelAgencyResult2Columns" rendered="{!oAgency!=null}" layout="block" style="text-align:left;">
+            <h2>Agency Details Screen</h2>
+            
+
+			<h3 style="margin-top:40px;">Agency Information</h3>
+            
+          <table class="informationTable" style="width: 103%;">
+                <tr>
+                    <td >IATA Numeric Code</td>
+                    <td >
+                        <apex:outputText value="{!oAgency.Agency_Code__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Agency_Code__c==''}" />
+                    </td>
+                    
+                    <td >Sub-Continent</td>
+                    <td>
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.Sub_Continent__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Sub_Continent__c==''}" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td >Legal Name</td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.Legal_Name__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Legal_Name__c==''}" />
+                    </td>
+                    
+                    <td >Country</td>
+                    <td class="address">
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.Country_Name__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Country_Name__c==''}" />
+                        <apex:image style="position:absolute;" value="{!URLFOR($Resource.IECFlags48, 'flags48/' + LOWER(oAgency.Country_ISO_Code__c)  + '.png')}" rendered="{!oAgency.Country_ISO_Code__c != null}" />
+                    </td>                   
+                </tr>
+                
+                <tr>
+                    
+                    <td >Trading Name</td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.Trading_Name__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Trading_Name__c==''}" />
+                    </td>                    
+                    
+                    <td >
+                        <apex:outputText value="State/Province" rendered="{!oAgency.Country_ISO_Code__c == 'CA' || oAgency.Country_ISO_Code__c == 'US' || oAgency.Country_ISO_Code__c == 'AU'}" />
+                    </td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.State_Province__c}" rendered="{!oAgency.Country_ISO_Code__c == 'CA' || oAgency.Country_ISO_Code__c == 'US' || oAgency.Country_ISO_Code__c == 'AU'}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.State_Province__c=='' && (oAgency.Country_ISO_Code__c == 'CA' || oAgency.Country_ISO_Code__c == 'US' || oAgency.Country_ISO_Code__c == 'AU')}" />
+                    </td>                   
+                </tr>
+
+				 <tr>
+		              <td colspan="2" style="padding-bottom:0;">
+		              	  <h3 style="margin-top:30px;">Contact Details</h3>
+		              </td>
+		              <td colspan="2" style="padding-bottom:0;">
+		              	  <h3 style="margin-top:30px;">Accreditation Details</h3>
+		              </td>
+	            </tr>
+                
+                <tr>
+                    <td >Location Address</td>
+                    <td >
+                        <apex:outputField styleClass="addressUppercase" value="{!oAgency.Location_Address__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Location_Address__c==''}" />
+                    </td>
+                    <td >Approval Date</td>
+                    <td >
+                        <apex:outputText value="{0,date,dd MMM yyyy}" rendered="{!oAgency.Related_Accreditation_Class__r.Date__c != null}">
+                            <apex:param value="{!oAgency.Related_Accreditation_Class__r.Date__c}" />
+                        </apex:outputText>
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Related_Accreditation_Class__r.Date__c==null}" />
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>City</td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.City__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.City__c==''}" />
+                    </td>
+                    <td >Program</td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!UPPER(oAgency.Related_Accreditation_Class__r.Class__r.Name)}" rendered="{!oAgency.Related_Accreditation_Class__r.Class__r != null && NOT(oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != '')}" />
+                        <apex:outputPanel rendered="{!oAgency.Related_Accreditation_Class__r.Class__r != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oAgency.Related_Accreditation_Class__r.Class__r.Definition__c != ''}">
+                            <span class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Related_Accreditation_Class__r.Class__r.Definition__c}">{!UPPER(oAgency.Related_Accreditation_Class__r.Class__r.Name)}</span>
+                        </apex:outputPanel>
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Related_Accreditation_Class__c==null || oAgency.Related_Accreditation_Class__r.Class__c==null}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td >Postal Code</td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.Zip_Postal_Code__c}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Zip_Postal_Code__c==''}" />
+                    </td>
+                    <td >Site Type</td>
+                    <td >
+                        <apex:outputText value="{!oAgency.Location_Type__r.Name}" rendered="{!oAgency.Location_Type__r != null && NOT(oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != '')}" />
+                        <apex:outputPanel rendered="{!oAgency.Location_Type__r != null && oAgency.Location_Type__r.Definition__c != null && oAgency.Location_Type__r.Definition__c != ''}">
+                            <span style="text-transform: uppercase;" class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oAgency.Location_Type__r.Definition__c}">{!oAgency.Location_Type__r.Name}</span>
+                        </apex:outputPanel>
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Location_Type__r == null || oAgency.Location_Type__r.Name == null}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Phone Number</td>
+                    <td >
+                        <apex:outputText styleClass="addressUppercase" value="{!oAgency.Related_Main_Phone__r.Name}" />
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Related_Main_Phone__r.Name==''}" />
+                    </td>
+                    <td>
+                        <apex:outputText value="Parent Agency" rendered="{!oAgency.Parent_GDP_Account_View__c != null && oAgency.Location_Type__r.Code__c=='BR'}" />
+                    </td>
+                    <td>
+                        <apex:commandLink styleClass="results -pageLink" id="linkViewParent" action="{!loadParentAgency}" value="View" oncomplete="showParentAgencyPopup()" rendered="{!oAgency.Parent_GDP_Account_View__c != null && oAgency.Location_Type__r.Code__c=='BR'}" rerender="panelParentPopup">
+                            <apex:param name="parentAgencyID" value="{!oAgency.Parent_GDP_Account_View__c}" assignTo="{!sParentAgencyID}" />
+                        </apex:commandLink>
+                    </td>
+                </tr>
+                <tr>
+                    <td >Email</td>
+                    <td >
+                        <apex:outputLink styleClass="results -pageLink" value="mailto:{!oAgency.Email_Address__c}">{!oAgency.Email_Address__c}</apex:outputLink>
+                        <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Email_Address__c==''}" />
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+
+        </apex:outputpanel>
+
+
+
+<!-------- Parent ------------------------------------------->
+        <apex:outputPanel id="panelParentPopup">
+            <div id="parentAgencyPopup" style="display: none;">
+                <div class="checkout-popupBackground">
+                </div>
+                <div class="checkout-popup" style="width: 939px; left: 36%; height: 615px; border-color: #1ebec8; left: 0; margin-left: auto; margin-right: auto; right: 0;">
+                
+                    <apex:outputPanel rendered="{!oParentAgency != null}">
+                        
+                        <h2 style="margin-top: 20px;margin-left: 25px;"> Parent Agency Details Screen</h2>
+                        
+                        
+                        
+                        <table  class="informationTable" border="1" style="width:100%; margin-left: 25px;">
+                        <h3 style="margin-top:40px; margin-left: 25px;">Agency Information</h3>
+                           
+                            <tr>
+                                <td class="agencyDetail -label" style="width: 137px !important;">IATA Numeric Code</td>
+                                <td class="agencyDetail -valueLeft">
+                                    <apex:outputText value="{!oParentAgency.Agency_Code__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Agency_Code__c==''}" />
+                                </td>
+                                <td class="agencyDetail -labelRight" >Sub-Continent</td>
+                                <td class="agencyDetail -valueRight" style=" width: 175px;">
+                                    <apex:outputText styleClass="addressUppercase" value="{!oParentAgency.Sub_Continent__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Sub_Continent__c==''}" />
+                                </td>
+                                <td class="agencyDetail -flag">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="agencyDetail -label">Legal Name</td>
+                                <td class="agencyDetail -value">
+                                    <apex:outputText style="text-transform: uppercase;" value="{!oParentAgency.Legal_Name__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oAgency.Legal_Name__c==''}" />
+                                </td>
+                                <td class="agencyDetail -labelRight">Country</td>
+                                <td class="agencyDetail -vvalueRight">
+                                    <apex:outputText styleClass="addressUppercase" value="{!oParentAgency.Country_Name__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Country_Name__c==''}" />
+                                </td>
+                                <td>
+                                    <apex:image styleClass="agencyDetailFlag" style="position:absolute;top: 25px !important;right: 60px;" value="{!URLFOR($Resource.IECFlags48, 'flags48/' + LOWER(oParentAgency.Country_ISO_Code__c)  + '.png')}" rendered="{!oParentAgency.Country_ISO_Code__c != null}" />
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td class="agencyDetail -label">Trading Name</td>
+                                <td class="agencyDetail -valueLeft">
+                                    <apex:outputText style="text-transform: uppercase;" value="{!oParentAgency.Trading_Name__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Trading_Name__c==''}" />
+                                </td>                                
+                                <td class="agencyDetail -labelRight">
+                                    <apex:outputText value="State/Province" rendered="{!oParentAgency.Country_ISO_Code__c == 'CA' || oParentAgency.Country_ISO_Code__c == 'US' || oParentAgency.Country_ISO_Code__c == 'AU'}" />
+                                </td>
+                                <td class="agencyDetail -valueRight" colspan="2">
+                                    <apex:outputText styleClass="addressUppercase" value="{!oParentAgency.State_Province__c}" rendered="{!oParentAgency.Country_ISO_Code__c == 'CA' || oParentAgency.Country_ISO_Code__c == 'US' || oParentAgency.Country_ISO_Code__c == 'AU'}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.State_Province__c=='' && (oParentAgency.Country_ISO_Code__c == 'CA' || oParentAgency.Country_ISO_Code__c == 'US' || oParentAgency.Country_ISO_Code__c == 'AU')}" />
+                                </td>
+                            </tr>
+      
+      
+				            <tr>
+					              <td colspan="2" style="padding-bottom:0;">
+					             	   <h3 style="margin-top:30px;">Contact Details</h3>
+					              </td>
+					              <td colspan="2" style="padding-bottom:0;">
+					              	  <h3 style="margin-top:30px;">Accreditation Details</h3>
+					              </td>
+				            </tr>
+                            
+                            <tr>
+                                <td class="agencyDetail -label">Address</td>
+                                <td class="agencyDetail -valueLeft">
+                                    <apex:outputField styleClass="addressUppercase" value="{!oParentAgency.Location_Address__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Location_Address__c==''}" />
+                                </td>
+                                <td class="agencyDetail -labelRight">Approval Date</td>
+                                <td class="agencyDetail -valueRight">
+                                    <apex:outputText value="{0,date,dd MMM yyyy}" rendered="{!oParentAgency.Related_Accreditation_Class__r.Date__c != null}">
+                                        <apex:param value="{!oParentAgency.Related_Accreditation_Class__r.Date__c}" />
+                                    </apex:outputText>
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Related_Accreditation_Class__r.Date__c==null}" />
+                                </td>
+                                <td class="agencyDetail -flag">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="agencyDetail -label">City</td>
+                                <td class="agencyDetail -valueLeft">
+                                    <apex:outputText styleClass="addressUppercase" value="{!oParentAgency.City__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.City__c==''}" />
+                                </td>
+                                <td class="agencyDetail -labelRight">Program</td>
+                                <td class="agencyDetail -valueRight" colspan="2">
+                                    <apex:outputText value="{!oParentAgency.Related_Accreditation_Class__r.Class__r.Name}" rendered="{!oParentAgency.Related_Accreditation_Class__r.Class__r != null && NOT(oParentAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oParentAgency.Related_Accreditation_Class__r.Class__r.Definition__c != '')}" />
+                                    <apex:outputPanel rendered="{!oParentAgency.Related_Accreditation_Class__r.Class__r != null && oParentAgency.Related_Accreditation_Class__r.Class__r.Definition__c != null && oParentAgency.Related_Accreditation_Class__r.Class__r.Definition__c != ''}">
+                                        <span style="text-transform: uppercase;" class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oParentAgency.Related_Accreditation_Class__r.Class__r.Definition__c}">{!oParentAgency.Related_Accreditation_Class__r.Class__r.Name}</span>
+                                    </apex:outputPanel>
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Related_Accreditation_Class__c == null || oParentAgency.Related_Accreditation_Class__r.Class__r.Name==null || oParentAgency.Related_Accreditation_Class__r.Class__r.Name==''}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="agencyDetail -label">Postal Code</td>
+                                <td class="agencyDetail -valueLeft">
+                                    <apex:outputText styleClass="addressUppercase" value="{!oParentAgency.Zip_Postal_Code__c}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Zip_Postal_Code__c==''}" />
+                                </td>
+                                <td class="agencyDetail -labelRight">Site Type</td>
+                                <td class="agencyDetail -valueRight" colspan="2">
+                                    <apex:outputText value="{!oParentAgency.Location_Type__r.Name}" rendered="{!oParentAgency.Location_Type__r != null && NOT(oParentAgency.Location_Type__r.Definition__c != null && oParentAgency.Location_Type__r.Definition__c != '')}" />
+                                    <apex:outputPanel rendered="{!oParentAgency.Location_Type__r != null && oParentAgency.Location_Type__r.Definition__c != null && oParentAgency.Location_Type__r.Definition__c != ''}">
+                                        <span style="text-transform: uppercase;" class="features simptip-position-right simptip-movable simptip-color" data-tooltip="{!oParentAgency.Location_Type__r.Definition__c}">{!oParentAgency.Location_Type__r.Name}</span>
+                                    </apex:outputPanel>
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Location_Type__r == null || oParentAgency.Location_Type__r.Name == null || oParentAgency.Location_Type__r.Name == ''}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="agencyDetail -label">Phone Number</td>
+                                <td class="agencyDetail -valueLeft">
+                                    <apex:outputText value="{!oParentAgency.Related_Main_Phone__r.Name}" />
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Related_Main_Phone__r.Name==''}" />
+                                </td>
+                               <td></td>
+                               <td></td>
+                            </tr>
+                            <tr>
+                             <td class="agencyDetail -labelRight">Email</td>
+                                <td class="agencyDetail -valueRight">
+                                    <apex:outputLink styleClass="results -pageLink" value="mailto:{!oParentAgency.Email_Address__c}">{!oParentAgency.Email_Address__c}</apex:outputLink>
+                                    <apex:outputText styleClass="notAvailable" value="Not Available" rendered="{!oParentAgency.Email_Address__c==''}" />
+                                </td>
+                                <td class="agencyDetail -flag">&nbsp;</td>
+                                <td></td>
+                                <td></td>                            
+                            </tr>
+                        </table>
+  
+                
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!oParentAgency == null}">
+                       No Parent Agency found. Please contact support.
+                    </apex:outputPanel>
+                    <div style="width:100%; text-align: center">
+                        <apex:commandButton style="width: 200px;margin-left: 360px;margin-top: 35px; background: #737d87;" id="hideutton" styleClass="customButton small" value="Close" onclick="hideParentAgencyPopup();return false;" />
+                    </div>
+                </div>
+            </div>
+            
+        </apex:outputPanel>
+
+    </apex:componentBody>
+</apex:component>

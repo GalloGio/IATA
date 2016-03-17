@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>CSS team projects/enhancements</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Area_name__c</fullName>
+        <description>Area that project, enhancement is related to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Area that project, enhancement is related to</inlineHelpText>
+        <label>Area_name</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Customer Portal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDP/Products</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Knowledge Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mass-Communication</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salesforce Architecture Recommendations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salesforce Enhancements</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salesforce Projects</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>BRD_in_place__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>BRD created</description>
+        <externalId>false</externalId>
+        <inlineHelpText>BRD created</inlineHelpText>
+        <label>BRD in place</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Business_Contacts__c</fullName>
+        <description>Responsible contacts from the business side (3 names max)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Responsible contacts from the business side (3 names max)</inlineHelpText>
+        <label>Business Contacts</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>CSS_Team_Member__c</fullName>
+        <description>Team Member name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Team Member name</inlineHelpText>
+        <label>CSS Team Member</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Gabriel Oueidat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jefferson Simoes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manuel Garcia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Snjezana Ivancan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Young Park</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ITS_Contacts__c</fullName>
+        <description>Responsible contact from ITS side</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Responsible contact from ITS side</inlineHelpText>
+        <label>ITS Contacts</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>ITS_involved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>ITS involvment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>ITS involvment</inlineHelpText>
+        <label>ITS involved</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Item_Description__c</fullName>
+        <description>Short description of project/enhancement</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Short description of project/enhancement</inlineHelpText>
+        <label>Item Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Item_Ending_Date__c</fullName>
+        <description>Planned ending date of project/enhancement</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Planned ending date of project/enhancement</inlineHelpText>
+        <label>Item Ending Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Item_Starting_Date__c</fullName>
+        <description>Planned beginning date of project/enhancement</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Planned beginning date of project/enhancement</inlineHelpText>
+        <label>Item Starting Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Item_Status__c</fullName>
+        <description>Project/enhancement status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Project/enhancement status</inlineHelpText>
+        <label>Item Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finished</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finished partially</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not started yet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Item_name__c</fullName>
+        <description>Project/enhancement name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Project/enhancement name</inlineHelpText>
+        <label>Item_name</label>
+        <picklist>
+            <controllingField>Area_name__c</controllingField>
+            <picklistValues>
+                <fullName>Knowledge Management</fullName>
+                <controllingFieldValues>Knowledge Management</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mass-Communication</fullName>
+                <controllingFieldValues>Mass-Communication</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Portal (SSO) POC phase</fullName>
+                <controllingFieldValues>Customer Portal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Portal - additional languages</fullName>
+                <controllingFieldValues>Customer Portal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salesforce Governance</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Account &amp; Contact Structure</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accounts and Contacts Clean</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tool for tracking the impact of changes in Salesforce</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security &amp; SSP</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Storage issues</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New users/profiles/roles/permissions</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Case field clean-up and potential move of fields to new objects</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Real time KPIs in SF and Performance management</fullName>
+                <controllingFieldValues>Salesforce Architecture Recommendations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salesforce DPC alignment (BSP, CASS)</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Salesforce-SAP connection</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Enhanced Monthly Report</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Country Manager Client Scorecard</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SIDRA eDefault</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>eBulletin project</fullName>
+                <controllingFieldValues>Mass-Communication</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chatter for Local Offices and Governance</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Auto assignment of cases</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project 100% communications through Salesforce</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SEDA implementation</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SF attachments</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Participation</fullName>
+                <controllingFieldValues>Salesforce Projects</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IFAP</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Enhanced Complaint</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SIDRA cases tracking for recurrent small amounts</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Auto selection of “from” address when email is sent from a case</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Flagging account with last SIDRA case created</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Surveys sent tracking at contact level</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SAAM Cases – Change Request Proof of Concept</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Multiple communication within SF</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>eFAX through Salesforce</fullName>
+                <controllingFieldValues>Salesforce Enhancements</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>External web form/Creation of case for Airline Participation</fullName>
+                <controllingFieldValues>Customer Portal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FormAssembly to replace Customer Portal</fullName>
+                <controllingFieldValues>Customer Portal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <controllingFieldValues>Others</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDP/Products</fullName>
+                <controllingFieldValues>GDP/Products</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status_comment__c</fullName>
+        <externalId>false</externalId>
+        <label>Status comment</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>CSS Tracking</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>CSS_view1</fullName>
+        <columns>NAME</columns>
+        <columns>Item_name__c</columns>
+        <columns>Area_name__c</columns>
+        <columns>CSS_Team_Member__c</columns>
+        <columns>Item_Starting_Date__c</columns>
+        <columns>Item_Ending_Date__c</columns>
+        <columns>Item_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>CSS view1</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>ITEM - {0000}</displayFormat>
+        <label>CSS Tracking Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>CSS Tracking</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

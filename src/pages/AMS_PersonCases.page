@@ -1,0 +1,85 @@
+<apex:page standardController="AMS_Person__c" extensions="AMS_PersonCasesController" tabStyle="Case">
+
+    <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
+    <apex:includeScript value="/support/console/34.0/integration.js"/>
+ 
+    <style type="text/css">
+        a:link {text-decoration: underline;}
+        a:visited {text-decoration: none}
+        a:active {text-decoration: none}
+        a:hover {text-decoration: underline; color: #015ba7;}
+    </style>
+    
+    <script>
+        function openSubtab(subtabUrl, subTabTitle)
+        {
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result)
+            {            
+                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);    
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        }
+    </script>
+    
+    <apex:form >
+        <apex:pageblock id="CustomList"  Title="Cases">                      
+        <apex:facet name="header">
+           <div class="pbHeader">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="pbTitle">
+                                <img src="/img/icon/cases32.png" class="relatedListIcon" style="width:24px; display:block; margin-left:0;" />
+                                <h3>&nbsp;Cases</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </apex:facet>
+            <div style="height: 200px; overflow-y:auto; display:{!IF(casesAvailable,'block','none')}">
+                <table class="list" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr class="headerRow">
+                            <th class=" zen-deemphasize" scope="col">Case</th>
+                            <th class=" zen-deemphasize" scope="col">Subject</th>
+                            <th class=" zen-deemphasize" scope="col">Date/Time Opened</th>
+                            <th class=" zen-deemphasize" scope="col">Status</th>
+                            <th class=" zen-deemphasize" scope="col">Account Name</th>
+                            <th class=" zen-deemphasize" scope="col">Owner</th>
+                        </tr>
+                        <apex:repeat var="case" value="{!cases}">
+                            <tr class="dataRow even ">
+                                <td class=" dataCell " scope="row">
+                                    <a onClick="openSubtab('/{!case.Id}', '{!case.CaseNumber}')" href="#">{!case.CaseNumber}</a>
+                                </td>
+                                <td class=" dataCell ">
+                                    <a onClick="openSubtab('/{!case.Id}', '{!case.CaseNumber}')"  href="#">    
+                                        {!if((case.Subject==null || case.Subject==''),'No Subject',case.Subject)}
+                                    </a>
+                                </td>
+                                <td class=" dataCell ">
+                                    <apex:outputText value="{0, date, mm/dd/yyyy hh:mm a}">
+                                        <apex:param value="{!case.CreatedDate}" /> 
+                                    </apex:outputText>
+                                </td>
+                                <td class=" dataCell ">
+                                    {!case.Status}
+                                </td>
+                                <td class=" dataCell ">
+                                    <a onClick="openSubtab('/{!case.AccountId}', '{!case.Account.Name}')" href="#">{!case.Account.Name}</a>
+                                </td>
+                                <td class=" dataCell ">
+                                    <a onClick="openSubtab('/{!case.OwnerId}', '{!case.Owner.Name}')" href="#">{!case.Owner.Name}</a>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </div>
+        <apex:outputLabel value="No Cases available" rendered="{!casesAvailable==false}" styleClass="noRowsHeader"></apex:outputLabel>   
+    </apex:pageblock>
+    </apex:form>
+</apex:page>

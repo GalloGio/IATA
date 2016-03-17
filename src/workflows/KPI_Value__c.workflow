@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>KPI_Final_reminder_on_deadline</fullName>
+        <description>KPI - Final reminder on deadline</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Responsible__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/KPI_Final_reminder_to_Responsible_Person</template>
+    </alerts>
+    <alerts>
+        <fullName>KPI_Send_email_to_responsible_person_to_update_the_KPI_value</fullName>
+        <description>KPI - Send email to responsible person to update the KPI value</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Responsible__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/KPI_Notification_to_Responsible_Person</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>KPI_N_A_after_3_days_of_the_deadline</fullName>
+        <field>Not_Available__c</field>
+        <literalValue>1</literalValue>
+        <name>KPI N/A after 3 days of the deadline</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KPI_Reminder_sent</fullName>
+        <field>Reminder_sent_to_responsible__c</field>
+        <formula>NOW()</formula>
+        <name>KPI - Reminder sent</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>KPI N%2FA after 3 days of the deadline</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>KPI_Value__c.Deadline__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Percentage__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.KPI_Value__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>KPI_N_A_after_3_days_of_the_deadline</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>KPI_Value__c.Deadline__c</offsetFromField>
+            <timeLength>3</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>KPI-Final email to responsible</fullName>
+        <actions>
+            <name>KPI_Final_reminder_on_deadline</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>((1 AND 2) OR (3 AND 4)) AND 5</booleanFilter>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Type__c</field>
+            <operation>equals</operation>
+            <value>Number</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.KPI_Value__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Type__c</field>
+            <operation>equals</operation>
+            <value>Percentage</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Percentage__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.Deadline__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <description>KPI-Send final reminder to responsible on deadline</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>KPI-Send email to responsible</fullName>
+        <active>true</active>
+        <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Type__c</field>
+            <operation>equals</operation>
+            <value>Number</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.KPI_Value__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Type__c</field>
+            <operation>equals</operation>
+            <value>Percentage</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KPI_Value__c.Value_Percentage__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>KPI-Send email to responsible on due date if the value is empty</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>KPI_Send_email_to_responsible_person_to_update_the_KPI_value</name>
+                <type>Alert</type>
+            </actions>
+            <actions>
+                <name>KPI_Reminder_sent</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>KPI_Value__c.Deadline__c</offsetFromField>
+            <timeLength>-3</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+</Workflow>

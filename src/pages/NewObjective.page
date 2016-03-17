@@ -1,0 +1,3 @@
+<apex:page standardcontroller="Objective__c" extensions="NewObjectiveController" action="{!redirect}" >
+
+</apex:page>

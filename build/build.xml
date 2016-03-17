@@ -1,0 +1,94 @@
+<project name="Retrieve and Deploy SFDC metadata" default="deployEmptyCheckOnly" basedir=".." xmlns:sf="antlib:com.salesforce">
+    <taskdef uri="antlib:com.salesforce"
+        resource="com/salesforce/antlib.xml"
+        classpath="${basedir}/build/ant-salesforce.jar"/>
+ 
+    <property file="${basedir}/build/build.properties"/>
+    <property environment="env"/>
+ 
+    <target name="getCode">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/package.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+    </target>
+ 
+    <target name="deployCode">
+      <echo level="info">Performing the deploy</echo>
+      <sf:deploy
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/deploy"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+ 
+	
+    <target name="deployLabelsFix">
+      <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
+      <sf:deploy
+      	autoUpdatePackage = "true"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/labelsfix"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+	
+    <target name="speficDeploy">
+      <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
+      <sf:deploy
+      	autoUpdatePackage = "true"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/deploy"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+	
+
+    <target name="deployEmptyCheckOnly">
+      <echo level="info">Testing the deploy</echo>
+      <sf:deploy
+          checkOnly="true"
+          logType="Debugonly"
+          username="${sfdc.username}"
+          password="${sfdc.password}"
+          serverurl="${sfdc.serverurl}"
+          deployRoot="${basedir}/src"
+          pollWaitMillis="${sfdc.pollWaitMillis}"
+          maxPoll="${sfdc.maxPoll}" 
+      	testLevel="RunLocalTests"  />
+    </target>
+	
+	
+	
+    <target name="undeployCode">
+        <echo level="info">Undeploying code</echo>
+        <sf:deploy
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        maxPoll="${sfdc.maxPoll}"
+        rollbackOnError="true"
+        allowMissingFiles="false"
+        autoUpdatePackage="false"
+        ignoreWarnings="true"
+        logType="Debugonly"
+        purgeOnDelete="true"
+        deployroot="${basedir}/removecodepkg" />
+    </target>    	
+	
+	
+	
+	
+ 
+</project>

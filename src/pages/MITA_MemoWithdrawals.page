@@ -1,0 +1,69 @@
+<apex:page renderas="PDF" controller="MITA_MemorandumsCtrl" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" >
+	<html>
+		<head>
+			<style>
+				@page{page-size:A4}
+				body{text-align:center;}
+				
+				table.headerTable td{ vertical-align: text-top; text-align: left;}
+				
+				table.airlinesTable{ }
+				table.airlinesTable th{padding:0.5em; }
+				table.airlinesTable td{padding:0.5em; }
+			</style>
+		</head>
+		
+		<body>
+			<img src="{!URLFOR($Resource.AP_PDF_Header)}" />
+		
+			<h3>MEMORANDUM</h3>
+			<h3>ADMIN/INTERLINE/{!memorandumNumber}</h3>
+			
+			<table class="headerTable">
+				<tr>
+					<td>TO:</td>
+					<td>
+						All Members<br/>
+						Non-IATA Parties to the IATA Multilateral Interline Traffic Agreements - Passenger and Cargo,<br/>
+						Interline Traffic Participation Agreement – Passenger (MITA One-Way) and Intermodal Interline<br/>
+						Traffic Agreement - Passenger (Intermodal MITA).<br/>
+					</td>
+				</tr>
+				<tr>
+					<td>FROM: </td>
+					<td>IATA MITA<br/></td>
+				</tr>
+				<tr>
+					<td>DATE: </td>
+					<td>FROM <apex:outputField value="{!fromDate.Effective_date__c}" /> TO <apex:outputField value="{!toDate.Effective_date__c}" /><br/></td>
+				</tr>
+				<tr>
+					<td>SUBJECT: </td>
+					<td style="font-weight:bold; text-decoration:underline">NOTICE OF INDIVIDUAL WITHDRAWALS ACTIONED<br/></td>
+				</tr>
+			
+			</table>
+			<br/><br/>
+
+			<apex:pageBlock >
+				<table class="airlinesTable">
+					<tr style="border:1px solid black">
+						<th>Carrier Withdrawing</th>
+						<th>With Respect to Carrier</th>
+						<th>Agreement(s)</th>
+						<th>Withdrawal Date</th>
+					</tr>
+					<apex:repeat value="{!WithdrawalsAgreements}" var="agr">
+					<tr>
+						<td><apex:outputField value="{!agr.Airline_1__r.Name}" /></td>
+						<td><apex:outputField value="{!agr.Airline_2__r.Name}" /></td>
+						<td><apex:outputField value="{!agr.Agreement_type__c}" /></td>
+						<td><apex:outputField value="{!agr.Cancellation_date__c}" /></td>
+					</tr>
+					</apex:repeat>
+				</table>
+				
+			</apex:pageBlock>
+		</body>
+	</html>
+</apex:page>

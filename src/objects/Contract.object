@@ -1,0 +1,1065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Activate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ChangeStatus</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Terminate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AccountId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ActivatedById</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ActivatedDate</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Activity_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity Number</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Advertising_Material_Deadline__c</fullName>
+        <externalId>false</externalId>
+        <label>Advertising Material Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BillingAddress</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Billing_Terms__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Terms</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Booking_value__c</fullName>
+        <description>This field represents the booking value of the contract. This is equal to the amount of the opportuntiy that created the contract and includes the value of both RCRM and non-RCRM products. Used by the RCRM project.</description>
+        <externalId>false</externalId>
+        <label>Total Contract Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Budget_Section__c</fullName>
+        <externalId>false</externalId>
+        <label>Budget Section</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CCF_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>CCF Amount</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>CCF_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>CCF Number</label>
+        <length>250</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CompanySignedDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>CompanySignedId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ContractTerm</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Contract_Auto_Number__c</fullName>
+        <displayFormat>C-{YYYY}{MM}{DD}-{00000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Contract AutoNumber</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Notes__c</fullName>
+        <description>This field is a text area where the contract owner can add contract-related information.</description>
+        <externalId>false</externalId>
+        <label>Contract Notes</label>
+        <length>4096</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Contract_Renewal_Cycle_in_months__c</fullName>
+        <description>This represents the duration of the future renewal cycle. Might not be equal to the duration of the current cycle.</description>
+        <externalId>false</externalId>
+        <label>Contract Renewal Cycle (in months)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract_Renewal__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract Renewal</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Auto</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>CurrencyIsoCode</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Current_Cycle_End_Date__c</fullName>
+        <description>This field represents the end date of the contract’s current cycle.</description>
+        <externalId>false</externalId>
+        <label>Current Cycle End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Current_Cycle_Start_Date__c</fullName>
+        <description>This field represents the starting date of the contract’s current cycle.</description>
+        <externalId>false</externalId>
+        <label>Current Cycle Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Current_Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Represents the opportunity that last modified the contract (either created it, or updated it for a renewal). Used in the RCRM project.</description>
+        <externalId>false</externalId>
+        <label>Current Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Contracts</relationshipLabel>
+        <relationshipName>Contracts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CustomerSignedDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>CustomerSignedId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CustomerSignedTitle</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>IATA_Contract_Share__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Third_Party__c,&quot;Flight Scape&quot;), 0.75, 
+IF(ISPICKVAL(Third_Party__c, &quot;Accomodations Plus International&quot;), 0.5, 
+IF(ISPICKVAL(Third_Party__c, &quot;Airports Council International&quot;), 0.25,
+IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
+1))))</formula>
+        <label>IATA Contract Share</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Contract_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>CCF_Amount__c  *  IATA_Contract_Share__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Contract Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>IsMine__c</fullName>
+        <description>Used for filtering purposes in list views, for the RCRM project. Field is TRUE if the contract &quot;is linked&quot; to the current user, FALSE otherwise. This returns true if the user is either the owner or the RCRM Product Manager of the contract.</description>
+        <externalId>false</externalId>
+        <formula>AND (
+  RecordType.DeveloperName = &apos;RCRM_Contract&apos;,
+  OR (
+    $User.Id = OwnerId ,
+    $User.Id = RCRM_Product_Manager__c 
+  )
+)</formula>
+        <label>IsMine</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Number_of_times_renewed__c</fullName>
+        <description>Used by the RCRM project to count the number of times a contract has been renewed. For new contracts, this field has a value of 0.</description>
+        <externalId>false</externalId>
+        <label>Number of times renewed</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OwnerExpirationNotice</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Terms__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Terms</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Immediate Payment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Clearing House</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Net 30 Days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Net 60 Days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Net 90 Days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Placement__c</fullName>
+        <description>Used only for Advertising contracts (Insertion Orders). Describes the placement of the Ad in the publication.</description>
+        <externalId>false</externalId>
+        <label>Placement</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Family__c</fullName>
+        <description>Used by the RCRM project to store info on the product family that is being sold through the contract.</description>
+        <externalId>false</externalId>
+        <label>Product Family</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Publication__c</fullName>
+        <description>Only used for Advertising contracts (Insertion Orders). Name of the publication in which the advertisement will be placed.</description>
+        <externalId>false</externalId>
+        <label>Publication</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCRM_Product_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used for the RCRM project. Represents the product manager for the RCRM products being sold through the contract. Used to set the visibility on the contract control buttons (renewal, cancellation).</description>
+        <externalId>false</externalId>
+        <label>RCRM Product Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Contracts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Region of the customer, taken from the ISO Country field on the customer account. Used by the RCRM project.</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Account.IATA_ISO_Country__r.Region__c )</formula>
+        <label>Account Region</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Renewal_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Renewal Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Renewed as-is</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Replaced by a new contract</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not renewed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal process started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Replaces a previous contract</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_under_Sales_Responsibility__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether it is the Sales Manager or the Product Manager who will handle the renewal of the contract. Used by the RCRM project.</description>
+        <externalId>false</externalId>
+        <label>Renewal under Sales Responsibility</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Replaces_contract__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the old contract that this contract record is replacing. Used for the RCRM project.</description>
+        <externalId>false</externalId>
+        <label>Replaces Contract</label>
+        <referenceTo>Contract</referenceTo>
+        <relationshipLabel>Replaced by Contract</relationshipLabel>
+        <relationshipName>Replaced_by_Contract</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SAP_Contract_Number__c</fullName>
+        <description>Stores the contract number assigned by the SAP platform. Used by the RCRM project.</description>
+        <externalId>false</externalId>
+        <label>SAP Contract Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShippingAddress</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Space_Reservation_Deadline__c</fullName>
+        <externalId>false</externalId>
+        <label>Space Reservation Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SpecialTerms</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>StartDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Status</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Approval Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Activated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status_formula__c</fullName>
+        <description>Used to display a dynamically calculated status: &quot;Expired&quot; status for contracts after their End Date has passed, &quot;Canceled&quot; for canceled contracts or the value of the standard Status field otherwise.</description>
+        <externalId>false</externalId>
+        <formula>IF (
+  ISPICKVAL( Renewal_Status__c, &apos;Canceled&apos;),
+  &apos;Canceled&apos;,
+  IF (
+    AND (
+      NOT ( ISBLANK ( Current_Cycle_End_Date__c ) ),
+      Current_Cycle_End_Date__c &lt; TODAY()
+    ),
+    &apos;Expired&apos;,
+    TEXT( Status)
+  )
+)</formula>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Third_Party_Involved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Third Party Involvement</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Third_Party__c</fullName>
+        <externalId>false</externalId>
+        <label>Third Party</label>
+        <picklist>
+            <controllingField>Third_Party_Involved__c</controllingField>
+            <picklistValues>
+                <fullName>Flight Scape</fullName>
+                <controllingFieldValues>checked</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airports Council International</fullName>
+                <controllingFieldValues>checked</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Berlitz</fullName>
+                <controllingFieldValues>checked</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accomodations Plus International</fullName>
+                <controllingFieldValues>checked</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Revenue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expense</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <listViews>
+        <fullName>AllActivatedContracts</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTRACT.STATUS_CODE</field>
+            <operation>equals</operation>
+            <value>A</value>
+        </filters>
+        <label>All Activated Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>CorporateServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AllContracts</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>CorporateServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AllDraftContracts</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTRACT.STATUS_CODE</field>
+            <operation>equals</operation>
+            <value>D</value>
+        </filters>
+        <label>All Draft Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <roleAndSubordinates>CorporateServices</roleAndSubordinates>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AllInApprovalContracts</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTRACT.STATUS_CODE</field>
+            <operation>equals</operation>
+            <value>P</value>
+        </filters>
+        <label>All In Approval Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>CorporateServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MyActivatedContracts</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>CONTRACT.STATUS_CODE</field>
+            <operation>equals</operation>
+            <value>A</value>
+        </filters>
+        <label>My Activated Contracts</label>
+    </listViews>
+    <listViews>
+        <fullName>MyDraftContracts</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>CONTRACT.STATUS_CODE</field>
+            <operation>equals</operation>
+            <value>D</value>
+        </filters>
+        <label>My Draft Contracts</label>
+    </listViews>
+    <listViews>
+        <fullName>MyInApprovalContracts</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>CONTRACT.STATUS_CODE</field>
+            <operation>equals</operation>
+            <value>P</value>
+        </filters>
+        <label>My In Approval Contracts</label>
+    </listViews>
+    <listViews>
+        <fullName>RCRM_Contracts_under_My_Supervision</fullName>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>Product_Family__c</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>CONTRACT.END_DATE</columns>
+        <columns>CONTRACT.STATUS</columns>
+        <columns>Renewal_Status__c</columns>
+        <columns>CORE.USERS.LAST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CONTRACT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Contract.RCRM_Contract</value>
+        </filters>
+        <filters>
+            <field>IsMine__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>RCRM Contracts under My Supervision</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>StrategicPartnershipContracts</fullName>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>CONTRACT.START_DATE</columns>
+        <columns>CONTRACT.END_DATE</columns>
+        <columns>CONTRACT.STATUS</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Budget_Section__c</field>
+            <operation>contains</operation>
+            <value>368</value>
+        </filters>
+        <label>Strategic Partnership Contracts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>MACSStrategicPartnerships</group>
+        </sharedTo>
+    </listViews>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Advertising_Order_Insertion</fullName>
+        <active>false</active>
+        <description>Record Type to track IO&apos;s for the Advertising LOB in MACS</description>
+        <label>Advertising Order Insertion</label>
+        <picklistValues>
+            <picklist>Contract_Renewal__c</picklist>
+            <values>
+                <fullName>Auto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Terms__c</picklist>
+            <values>
+                <fullName>Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Immediate Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 30 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 60 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 90 Days</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Activated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Approval Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party__c</picklist>
+            <values>
+                <fullName>Accomodations Plus International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports Council International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Berlitz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Scape</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Expense</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>MACS_General</fullName>
+        <active>true</active>
+        <description>Used for all LOBs except Advertising</description>
+        <label>MACS - General</label>
+        <picklistValues>
+            <picklist>Contract_Renewal__c</picklist>
+            <values>
+                <fullName>Auto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Terms__c</picklist>
+            <values>
+                <fullName>Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Immediate Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 30 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 60 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 90 Days</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Activated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Approval Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party__c</picklist>
+            <values>
+                <fullName>Accomodations Plus International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports Council International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Berlitz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Scape</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Expense</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RCRM_Contract</fullName>
+        <active>true</active>
+        <description>Used for products from the scope of the RCRM project</description>
+        <label>RCRM Contract</label>
+        <picklistValues>
+            <picklist>Contract_Renewal__c</picklist>
+            <values>
+                <fullName>Auto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Terms__c</picklist>
+            <values>
+                <fullName>Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Immediate Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 30 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 60 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 90 Days</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Renewal_Status__c</picklist>
+            <values>
+                <fullName>Renewal process started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Replaces a previous contract</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Activated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Approval Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party__c</picklist>
+            <values>
+                <fullName>Accomodations Plus International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports Council International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Berlitz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Scape</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Expense</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>CONTRACT.CONTRACT_NUMBER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CONTRACT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>SALES.ACCOUNT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CONTRACT.STATUS</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT.CONTRACT_NUMBER</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CONTRACT.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CORE.USERS.ALIAS</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CONTRACT.CONTRACT_NUMBER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CONTRACT.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>CONTRACT.CONTRACT_NUMBER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CONTRACT.NAME</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <webLinks>
+        <fullName>APXTConga4__Conga_Mail_Merge</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>false</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>450</height>
+        <isResizable>false</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Merge</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Contract.Id}</url>
+        <width>625</width>
+    </webLinks>
+    <webLinks>
+        <fullName>APXTConga4__Conga_Merge</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>false</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>450</height>
+        <isResizable>false</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Merge</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Contract.Id}</url>
+        <width>625</width>
+    </webLinks>
+    <webLinks>
+        <fullName>ENZ__AttachFTP</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>350</height>
+        <isResizable>false</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Attach (FTP)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.enzigma.com/sforce/ftp/Attach.aspx?FieldName=ENZ__Contract__c&amp;FieldValue={!Contract.Id}&amp;OrgID={!Organization.Id}&amp;SFUrl={!API.Partner_Server_URL_70}&amp;SFSessionID={!API.Session_ID}</url>
+        <width>500</width>
+    </webLinks>
+</CustomObject>

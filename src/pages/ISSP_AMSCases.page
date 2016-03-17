@@ -1,0 +1,58 @@
+<apex:page controller="ISSP_AMS_Accreditation"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           >
+<html>
+        <c:ISSP_Header ></c:ISSP_Header>    
+        <body>
+    
+    <div class="container">   
+        <c:ISSP_CustomNavigation />
+    <h3>{!$Label.ISSP_AMS_Step0_SAA}</h3>
+    
+    <apex:image value="/img/msg_icons/info24.png" style="vertical-align:middle;margin-right:5px;float:left" />
+    <div style="margin-bottom:6px;padding-left:24px">
+        <apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro}" escape="false"/>
+    </div>
+    <apex:pageBlock rendered="{!IsNotEmpty}">
+         <apex:pageBlockButtons location="top" style="Width:100%">
+             <apex:form >
+                 <center><apex:commandButton styleclass="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AMS_Step0_New_Application}"/></center>
+            </apex:form>
+        </apex:pageBlockButtons>
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <apex:pageBlockTable value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table">
+            <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}">
+              <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2">{!MyAMSCases.CaseNumber}</apex:outputLink>
+            </apex:column>
+            <apex:column value="{!MyAMSCases.Account.Name}"/>
+            <apex:column headerValue="{!$Label.ISSP_CountryConcerned}" value="{!MyAMSCases.Country_concerned_by_the_query__c}"/>
+            <apex:column value="{!MyAMSCases.Subject}"/>
+            <apex:column value="{!MyAMSCases.Portal_Case_Status__c}"/>
+            <apex:column value="{!MyAMSCases.CreatedDate}"/>
+            </apex:pageBlockTable>
+            </div>
+        </div>
+        
+    </apex:pageBlock>
+   
+    <apex:pageBlock rendered="{!IsEmpty}" mode="maindetail">
+    <div align="center" style="color:#00AEEF; padding-bottom:1cm;padding-top:1cm;">
+    <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="92"/><br/>
+    <h3>{!$Label.ISSP_AMS_No_Pending}</h3>
+    <h3 style="color:#FFAE00"><a href="/ISSP_AMS_Accreditation?retURL=/ISSP_AMSCases">{!$Label.ISSP_AMS_Create_New}</a></h3>
+    </div>
+    </apex:pageBlock>
+    
+    <c:ISSP_CustomFooter />
+</div><!-- end container-->
+        
+  </body>  
+</html>
+</apex:page>

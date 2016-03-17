@@ -1,0 +1,99 @@
+<apex:page cache="false" sidebar="false" language="en"  showHeader="false" standardStylesheets="false">
+  <Title>Customers</Title>
+  <c:IECSiteHeader />
+  
+ 
+  <div id="aboutus">
+  <!----------  Carousel Static Start -------- -->
+  <div class="carouselWrapper static">
+
+    <div class="gradient"></div>
+
+    <div class="carousel">
+      <ul class="carousel__list">
+
+        <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome})">
+         <div class="autoAdjustMargin">
+            <div class="carousel__slide-wrapper">              
+              
+              <h2 class="carousel__slide-text -heading"><span>Global Data Products</span><br/>Distribution solutions for the travel industry</h2>
+              <br/>
+              <a class="carousel__slide-anchor customButton" href="mailto:globaldata@iata.org?subject=eCommerce">Contact us</a>
+              
+            </div>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+    </div>
+<!----------  Carousel Static END -------- -->
+
+
+
+
+
+
+ <div class="content-container tab" style="margin-top:50px;">
+
+  <div class="content-container tab products">
+    <div class="tab-container">
+
+    	<div class="tab-container__cell -selected" id="overview-tab">
+      	<div class="tab-container__text-area full_width">
+      		<h2 class="tab-container__text -heading">Customers</h2>
+
+<!--       		<p class="tab-container__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor <a href="#">bacon</a> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.</p> -->
+
+<!--           <h3>Cum sociis natoque penatibus et magnis dis parturient H3</h3> -->
+
+<!--           <h4>Nascetur ridiculus mus H4</h4> -->
+          
+          
+            <table width="100%">
+			      <tr>
+					  <td align="center"><img alt="IATA" src="{!$Resource.ComingSoon}" /></td>
+			      </tr>
+			  </table>
+			 
+
+
+        </div>
+  	   </div>
+
+
+    </div>
+  	</div>
+  </div>
+
+</div>
+
+ 
+ 
+ 
+  <!-- ************************************ -->
+  <!-- Companies using global data products -->
+  
+   <div class="bigBg gray4">
+    <div class="content-container">
+      <div class="callout-banner big">
+        <div class="rightDiv">       
+            
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust1.png" />
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust2.png" />
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust3.png" />
+
+        
+        </div>
+        <h2 class="callout-banner__header">Companies using <br/><span>Global Data <br/> Products</span></h2>
+      </div>
+    </div>
+  </div>
+  
+  
+	
+	<!-- ************************************ -->
+
+ 
+  <c:IECSiteFooter />
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="Archived_Message__c" TabStyle="EMailMessage" >
+    <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
+
+    <c:Archived_Message_View_Compoment messageId="{!Archived_Message__c.Id}"></c:Archived_Message_View_Compoment>
+    <c:Archive_Attachment_List_Component messageId="{!Archived_Message__c.Id}"></c:Archive_Attachment_List_Component>
+    <script>
+        
+        var uri = document.referrer;
+        var id = uri.queryKey['q'];
+        //resizes the frame holding the sControl to make up for odd dimensions
+        var sframe = parent.document.getElementById(id); //get id of iframe from parent
+        if (navigator.userAgent.indexOf("Firefox") != -1) { 
+            var nHeight = document.body.scrollHeight+100; 
+        } else { 
+            var nHeight = document.body.scrollHeight; //use the returned height of sControl frame
+        }
+        sframe.style.height = nHeight+"px"; 
+        alert("frame siwe ="+ document.body.scrollHeight);
+    </script> 
+    
+</apex:page>
