@@ -1,4 +1,6 @@
 # Compiled source #
+src/codePackage.xml
+src/objectPackage.xml
 .project
 src/profiles/Admin.profile
 Referenced Packages/
