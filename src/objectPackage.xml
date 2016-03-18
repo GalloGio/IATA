@@ -54,5 +54,15 @@
         <members>*</members>
         <name>CustomTab</name>
     </types>
+		 <types>
+        <members>*</members>
+        <name>CustomLabel</name>
+    </types>
+    <types>    
+        <members>*</members>
+        <name>Translations</name>
+    </types>
+	
+	
     <version>31.0</version>
 </Package>
