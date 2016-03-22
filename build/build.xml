@@ -2,10 +2,160 @@
     <taskdef uri="antlib:com.salesforce"
         resource="com/salesforce/antlib.xml"
         classpath="${basedir}/build/ant-salesforce.jar"/>
- 
+  <taskdef
+         resource="net/sf/antcontrib/antlib.xml"
+        classpath="${basedir}/build/ant-contrib/ant-contrib-1.0b3.jar"/>
+
+
+
     <property file="${basedir}/build/build.properties"/>
     <property environment="env"/>
- 
+
+
+<target name="checkCodeFolder">
+  <condition property="deldir">
+    <available file="${basedir}/Code" type="dir"/>
+  </condition>
+ </target>
+
+ <target name="deldir"    depends="checkCodeFolder" if="deldir"  >
+        <echo level="info">deleting  ${basedir}/Code </echo>
+
+  <delete includeEmptyDirs="true">
+   <fileset dir="${basedir}/Code">
+    
+   </fileset>
+</delete>
+ </target>
+
+
+<target name="deployObjectFolder"> 
+  <echo level="info">creating new folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${object.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${object.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/objectPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCode" />
+       <antcallback target="deployLabelFolder" />
+  
+  </target> 
+
+
+<target name="deployLabelFolder"> 
+  <echo level="info">creating new folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${labelsTranslation.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${labelsTranslation.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/labelPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCode" />
+      <antcallback target="deployCodeFolder" />
+  </target> 
+
+
+
+
+<target name="deployCodeFolder"> 
+  <echo level="info">creating new folder</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${code.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${code.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCode" />
+  
+  </target> 
+
+
+
+
+
+    <target name="getObject">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/objectPackage.xml" />
+
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+        <antcallback target="getLabel" />
+    </target>
+
+
+
+    <target name="getLabel">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/labelPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getCode" />
+    </target>
+
+
     <target name="getCode">
       <echo level="info">Retrieving the server's version of code</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
@@ -14,26 +164,57 @@
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        unpackaged="src/package.xml"/>
+        unpackaged="src/codePackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+<antcallback target="bulkRetrieveEmailTemplate" />
+
     </target>
+
  
+
+  
+<target name="bulkRetrieveEmailTemplate">
+ <echo level="info">Retrieving the emailtemplates</echo>
+ 
+   <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+
+      <for list="${listEmailTemplateFolders}" param="param" >
+        <sequential>
+     <sf:bulkRetrieve
+              username="${sfdc.username}"
+                password="${sfdc.password}"
+                serverurl="${sfdc.serverurl}"
+                metadataType="EmailTemplate"
+                  retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+                 containingFolder="@{param}"
+       />
+       </sequential>
+     </for>
+
+   <delete file="${basedir}/${sfdc.retrieveTarget}/package.xml"/>
+   <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+</target>
+
+
     <target name="deployCode">
       <echo level="info">Performing the deploy</echo>
       <sf:deploy
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
-        deployRoot="${basedir}/deploy"
+        deployRoot="${basedir}/Code"
         pollWaitMillis="${sfdc.pollWaitMillis}"
         maxPoll="${sfdc.maxPoll}"/>
     </target>
  
-	
+  
     <target name="deployLabelsFix">
       <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
       <sf:deploy
-      	autoUpdatePackage = "true"
+        autoUpdatePackage = "true"
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
@@ -41,11 +222,11 @@
         pollWaitMillis="${sfdc.pollWaitMillis}"
         maxPoll="${sfdc.maxPoll}"/>
     </target>
-	
-    <target name="speficDeploy">
+  
+    <target name="specificDeploy">
       <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
       <sf:deploy
-      	autoUpdatePackage = "true"
+        autoUpdatePackage = "true"
         username="${sfdc.username}"
         password="${sfdc.password}"
         serverurl="${sfdc.serverurl}"
@@ -53,24 +234,9 @@
         pollWaitMillis="${sfdc.pollWaitMillis}"
         maxPoll="${sfdc.maxPoll}"/>
     </target>
-	
+  
 
-    <target name="deployEmptyCheckOnly">
-      <echo level="info">Testing the deploy</echo>
-      <sf:deploy
-          checkOnly="true"
-          logType="Debugonly"
-          username="${sfdc.username}"
-          password="${sfdc.password}"
-          serverurl="${sfdc.serverurl}"
-          deployRoot="${basedir}/src"
-          pollWaitMillis="${sfdc.pollWaitMillis}"
-          maxPoll="${sfdc.maxPoll}" 
-      	testLevel="RunLocalTests"  />
-    </target>
-	
-	
-	
+  
     <target name="undeployCode">
         <echo level="info">Undeploying code</echo>
         <sf:deploy
@@ -85,10 +251,6 @@
         logType="Debugonly"
         purgeOnDelete="true"
         deployroot="${basedir}/removecodepkg" />
-    </target>    	
-	
-	
-	
-	
- 
+    </target> 
+
 </project>
