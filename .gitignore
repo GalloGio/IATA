@@ -1,6 +1,6 @@
 # Compiled source #
-src/codePackage.xml
-src/objectPackage.xml
+#src/codePackage.xml
+#src/objectPackage.xml
 .project
 src/profiles/Admin.profile
 Referenced Packages/
@@ -59,3 +59,4 @@ SfApexDocLog.txt
 src/layouts/Case-IDFS InvoiceWorks %28Customer Portal%29.layout
 src/layouts/User-SIS User Layout.layout
 src/layouts/User-TTBS User Layout.layout
+config/*
