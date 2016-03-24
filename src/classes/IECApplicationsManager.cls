@@ -233,6 +233,12 @@ public without sharing class IECApplicationsManager {
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_PAL)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'C\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_ASL)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'K\', \'G\', \'X\', \'K\')');
         
             // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
             if (Test.isRunningTest())
