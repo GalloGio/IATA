@@ -112,6 +112,9 @@ global class IECConstants {
 	public static final string ProductCategory_SF_CACFREE = 'CACFREE';
 	public static final string ProductCategory_SF_CACPRO = 'CACPRO';
 	public static final string ProductCategory_SF_CACWEB = 'CACWEB';
+	public static final string ProductCategory_SF_PAL = 'PAL';
+	public static final string ProductCategory_SF_CAL = 'CAL';
+	public static final string ProductCategory_SF_ASL = 'ASL';
 	public static final string ProductCategory_SF_GSS = 'GSS';
 	public static final string ProductCategory_SF_MDP = 'MDP';
 	public static final string ProductCategory_SF_GAD = 'GAD';

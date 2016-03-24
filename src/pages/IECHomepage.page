@@ -107,9 +107,6 @@ $(function() {
  
  </script>
  
- 
-
-        
   <apex:variable value="{!$User}" var="u" rendered="{!isUserLoggedIn && bHasAnyProdAccess}">
   
   <a class="available-services-toggle__anchor available-services-a" href="javascript:void();">
@@ -125,32 +122,78 @@ $(function() {
       		<div class="available-services">
         		<ul >
 	          		
-	          		<apex:outputpanel id="panelAccessCACPro" layout="none" rendered="{!bProdAccessCACPro}">
-	         			<li class="available-services__item">
-	         				<a href="{!$Page.IECCAC}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}cac_mini.gif"/> <h3 style="color :white;" >CheckACode Professional</h3></a>
-	         			</li>
-	          		</apex:outputpanel>	          		
-	         		<apex:outputpanel id="panelAccessGAD" layout="none" rendered="{!bProdAccessGAD}">
-	          			<li class="available-services__item">
-	          				<a href="{!$Page.IECGAD}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gad_mini.gif"/><h3 style="color :white;">Global Agency Directory</h3></a>
-	          			</li>
-	          		</apex:outputpanel>
-	          		<apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
-	          			<li class="available-services__item">
-	          				<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
-	          			</li>
-	          		</apex:outputpanel>
-	          		<apex:outputpanel id="panelAccessGSS" layout="none" rendered="{!bProdAccessGSS}">
-	         			<li class="available-services__item">
-	         				<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gss_mini.gif"/><h3 style="color :white;">Global Systems Solutions</h3></a>
-	         			</li>
-	          		</apex:outputpanel>
-	         		<apex:outputpanel id="panelAccessMDP" layout="none" rendered="{!bProdAccessMDP}">
-						<li class="available-services__item">
-							<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">Marketing Data Package</h3></a>
-						</li>
-	          		</apex:outputpanel>
-	          		
+	          		<apex:form id="navigateForm">
+		          		<apex:outputpanel id="panelAccessCACPro" layout="none" rendered="{!bProdAccessCACPro}">
+		         			<li class="available-services__item">
+		         				<a href="{!$Page.IECCAC}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}cac_mini.gif"/> <h3 style="color :white;" >CheckACode Professional</h3></a>
+		         			</li>
+		          		</apex:outputpanel>	          		
+		         		<apex:outputpanel id="panelAccessGAD" layout="none" rendered="{!bProdAccessGAD}">
+		          			<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gad_mini.gif"/><h3 style="color :white;">Global Agency Directory</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/> 
+			                        <apex:param name="sProductCode" value="GAD" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+		          			</li>
+		          		</apex:outputpanel>
+		          		<apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
+		          			<li class="available-services__item">
+		          				<a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
+		          			</li>
+		          		</apex:outputpanel>
+		          		<apex:outputpanel id="panelAccessGSS" layout="none" rendered="{!bProdAccessGSS}">
+		         			<li class="available-services__item">
+		         				<apex:commandLink action="{!NavigateTo}">
+		         					<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gss_mini.gif"/><h3 style="color :white;">Global Systems Solutions</h3>
+			                        <apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="GSS" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+		         			</li>
+		          		</apex:outputpanel>
+		         		<apex:outputpanel id="panelAccessMDP" layout="none" rendered="{!bProdAccessMDP}">
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">Marketing Data Package</h3>
+									<apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="MDP" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- PAL -->
+		         		<apex:outputpanel id="panelAccessPAL" layout="none" rendered="{!bProdAccessPAL}"> <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Passenger Agency List</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="PAL" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- PAL end -->
+<!-- CAL -->
+		         		<apex:outputpanel id="panelAccessCAL" layout="none" rendered="{!bProdAccessCAL}"> <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Cargo Agency List</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="CAL" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- CAL end -->
+<!-- ASL -->
+		         		<apex:outputpanel id="panelAccessASL" layout="none" rendered="{!bProdAccessASL}"> <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Airline Sales Agency List</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="ASL" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- ASL end -->
+	          		</apex:form>
         		</ul>
       		</div>
    	
