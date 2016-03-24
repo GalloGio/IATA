@@ -14,6 +14,7 @@ public without sharing class vfIECGADResult extends IECPageController {
     public vfIECSavedFilters 		ctrSavedFilters     {get; set;}
 
 	public String sParamIECApplicationFiltersID {get; set;}
+    public String sParamIECApplicationLimitToIDs {get; set;} // Added by Mathieu Beausoleil
 	public String sIECApplicationFiltersID {get; set;}
 	public IEC_Application_Filter__c oApplicationFilters { get; private set; }
 	public List<GDP_Products_Account_View__c> lstAgencies { get; private set; }
@@ -167,6 +168,7 @@ public without sharing class vfIECGADResult extends IECPageController {
 
 
 				sParamIECApplicationFiltersID = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
+                sParamIECApplicationLimitToIDs = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_LIMITTOIDS); // Added by Mathieu Beausoleil
 
 				// Validate that there is parameter passed to the page
 				if (String.isBlank(sParamIECApplicationFiltersID)) {
@@ -186,6 +188,11 @@ public without sharing class vfIECGADResult extends IECPageController {
 
 					// run the search
 					lstAgencies = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oApplicationFilters, IECConstants.ProductCategory_SF_GAD, loggedCustomer);
+                    // if list of ids available, use it
+                    if (!String.isBlank(sParamIECApplicationLimitToIDs)) {
+                    	sParamIECApplicationLimitToIDs = IECUtil.DecodeDecryptParameter(sParamIECApplicationLimitToIDs);
+                    	IECApplicationsManager.cachedAgencyIds = sParamIECApplicationLimitToIDs.split(',');
+                    }
 
 				
 					//Update usage counter (UI Only)

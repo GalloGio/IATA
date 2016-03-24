@@ -220,6 +220,7 @@ public without sharing class vfIECGAD extends IECPageController {
         
 		Pagereference pgRef = Page.IECGADResult;
 		pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter.Id));
+        pgRef.getParameters().put(IECConstants.PARAM_LIMITTOIDS, IECUtil.EncryptEncodeParameter(String.join(IECApplicationsManager.cachedAgencyIds, ','))); // Added by Mathieu Beausoleil
 		pgRef.setRedirect(true);
 		return pgRef;
 	}

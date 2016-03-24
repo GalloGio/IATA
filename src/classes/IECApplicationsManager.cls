@@ -1,4 +1,5 @@
 public without sharing class IECApplicationsManager {
+    public static List<Id> cachedAgencyIds;
     
     /**
      * Returns true if the provided agency is valid (status >= 4)
@@ -214,148 +215,164 @@ public without sharing class IECApplicationsManager {
         String sQueryFields;
         
         if(bReturnAllFields)
-        	 sQueryFields = 'SELECT Agency_Code__c, Agency_Status__c, IATA_Code__c, Name, Agency_Status_Code__c, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Email_Address__c'
-                                + ', Incorporation_Type__c, Legal_Name__c, Location_Type__r.Name, Parent_GDP_Account_View__c, Trading_Name__c, City__c, Zip_Postal_Code__c, Related_Accreditation_Class__r.Class__r.Name'
-                                + ', Sub_Continent__c, Country_Name__c, Related_Accreditation_Class__r.Class__r.Definition__c, Related_Accreditation_Class__r.Class__r.Code__c, State_Province__c, Related_Accreditation_Class__c' 
-                                + ' FROM GDP_Products_Account_View__c';
+             sQueryFields = 'SELECT Account_View__c, Account_View__r.Id, Account_View__r.Agency_Code__c, Account_View__r.Agency_Status__c, Account_View__r.IATA_Code__c, Account_View__r.Name, Account_View__r.Agency_Status_Code__c, Account_View__r.Airline_Code__c, Account_View__r.BSP_CASS_Code__c, Account_View__r.CASS_Number__c, Account_View__r.Email_Address__c'
+                                + ', Account_View__r.Incorporation_Type__c, Account_View__r.Legal_Name__c, Account_View__r.Location_Type__r.Name, Account_View__r.Parent_GDP_Account_View__c, Account_View__r.Trading_Name__c, Account_View__r.City__c, Account_View__r.Zip_Postal_Code__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Name'
+                                + ', Account_View__r.Sub_Continent__c, Account_View__r.Country_Name__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Definition__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Code__c, Account_View__r.State_Province__c, Account_View__r.Related_Accreditation_Class__c' 
+                                + ' FROM GDP_Products_Account_Snapshot__c';
         else
-       		 sQueryFields = 'SELECT Id FROM GDP_Products_Account_View__c';
+             sQueryFields = 'SELECT Account_View__r.Id FROM GDP_Products_Account_Snapshot__c';
     
-                                
-                                
-        String sQueryWhere = ' WHERE Agency_Status_Code__c >= 4';
+    
+        String sQueryWhere = '';
+        List<String> sQueryWhereClauses = new List<String>();
+        if (cachedAgencyIds == null) {
+            // if GAD, filter out the Cargo agencies
+            if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
+                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
+                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
         
-        // if GAD, filter out the Cargo agencies
-        if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
-            || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
-            || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
-            sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')';
-        else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
-            sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')';
-        
-        // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
-        if (Test.isRunningTest())
-            sQueryWhere += ' AND AIMS_ID__c LIKE \'' + IECTestUtil.TEST_CLASS_AIMSID + '%\'';
-        
-        /////////////////////
-        // Agency location
-        
-        // sub-continent
-        if (String.isNotblank(oAdvancedFilters.Sub_Continent__c) && oAdvancedFilters.Sub_Continent__c != 'All') {
-            sQueryWhere += ' AND Sub_Continent__c = \'' + oAdvancedFilters.Sub_Continent__c + '\'';
-        }
-        
-        // country
-        if (String.isNotblank(oAdvancedFilters.Country__c) && oAdvancedFilters.Country__c != '(All)' && oAdvancedFilters.Country__c != 'All') {
-            sQueryWhere += ' AND Country_ISO_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Country__c);
-        }
-        
-        // state/province
-        if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
-            sQueryWhere += ' AND State_Province_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.State__c);
-        }
-        
-        // City
-        if (String.isNotblank(oAdvancedFilters.City__c)) {
-            sQueryWhere += ' AND City__c';
-            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
-                sQueryWhere += ' = \'' + oAdvancedFilters.City__c + '\'';
-            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
-                sQueryWhere += ' LIKE \'' + oAdvancedFilters.City__c + '%\'';
-            else
-                sQueryWhere += ' LIKE \'%' + oAdvancedFilters.City__c + '%\'';
-        }
-        
-        // Zip/postal code
-        if (String.isNotblank(oAdvancedFilters.Zip_Code__c)) {
-            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
-                sQueryWhere += ' AND Zip_Postal_Code__c = \'' + oAdvancedFilters.Zip_Code__c + '\'';
-            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
-                sQueryWhere += ' AND Zip_Postal_Code__c LIKE \'' + oAdvancedFilters.Zip_Code__c + '%\'';
-            else
-                sQueryWhere += ' AND Zip_Postal_Code__c LIKE \'%' + oAdvancedFilters.Zip_Code__c + '%\'';
-        }
-        
-        /////////////////
-        // IATA Code
-        
-        if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
-            if (oAdvancedFilters.IATA_Code__c.length() == 7)
-                sQueryWhere += ' AND IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'';
-            else if (oAdvancedFilters.IATA_Code__c.length() == 8) {
-                String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
-                String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
-                sQueryWhere += ' AND IATA_Code__c = \'' + sIATACode + '\' AND Check_Digit__c = \'' + sCheckCode + '\'';
-            }
-            // simulate Starts With
-            else
-                sQueryWhere += ' AND IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'';
-        }
-        
-        //////////////////
-        // Agency name
-        
-        if (String.isNotblank(oAdvancedFilters.Agency_Name__c)) {
-                                                   
-            // define operator
-            String sAgencyNameOperatorAndValue;
-            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
-                sAgencyNameOperatorAndValue = ' = \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '\'';
-            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
-                sAgencyNameOperatorAndValue = ' LIKE \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
-            else
-                sAgencyNameOperatorAndValue = ' LIKE \'%' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
-                
-            // define
-            if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.TradingName)
-                sQueryWhere += ' AND Trading_Name__c' + sAgencyNameOperatorAndValue;
-            else if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
-                sQueryWhere += ' AND Legal_Name__c' + sAgencyNameOperatorAndValue;
-            else
-                sQueryWhere += ' AND (Trading_Name__c' + sAgencyNameOperatorAndValue + ' OR Legal_Name__c' + sAgencyNameOperatorAndValue + ')';
-        }
-        
-        
-        ////////////////
-        // Agency Type
-        
-        // Hierarchy
-        if (String.isNotblank(oAdvancedFilters.Hierarchy__c) && oAdvancedFilters.Hierarchy__c != 'All') {
-            sQueryWhere += ' AND Location_Type__r.Name IN ' + addSingleQuotesToListedValues('(' + oAdvancedFilters.Hierarchy__c.replaceAll(';', ', ') + ')');
-        }
-
-        // Agency Program
-        if (String.isNotblank(oAdvancedFilters.Agency_Program__c)) {
+            // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
+            if (Test.isRunningTest())
+                sQueryWhereClauses.add('AIMS_ID__c LIKE \'' + IECTestUtil.TEST_CLASS_AIMSID + '%\'');
             
-            // if Agency program is All, look at the Area of Activity
-            if ((oAdvancedFilters.Agency_Program__c == '(All)' || oAdvancedFilters.Agency_Program__c == 'All') && oAdvancedFilters.Area_of_Activity__c != 'All') {
-                List<String> lstAgencyProgramCodes = getAgencyProgramCodesByAreaOfActivity(oAdvancedFilters.Area_of_Activity__c);
-                sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c IN ' + addSingleQuotesToListedValues('(' + String.join(lstAgencyProgramCodes, ', ') + ')') + ' AND Related_Accreditation_Class__r.Class__r.Table__c = \'ORGCLASS\'';
+            /////////////////////
+            // Agency location
+            
+            // sub-continent
+            if (String.isNotblank(oAdvancedFilters.Sub_Continent__c) && oAdvancedFilters.Sub_Continent__c != 'All') {
+                sQueryWhereClauses.add('Sub_Continent__c = \'' + oAdvancedFilters.Sub_Continent__c + '\'');
             }
-            else if (oAdvancedFilters.Agency_Program__c != '(All)' && oAdvancedFilters.Agency_Program__c != 'All')
-                sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Agency_Program__c) + ' AND Related_Accreditation_Class__r.Class__r.Table__c = \'ORGCLASS\'';
+            
+            // country
+            if (String.isNotblank(oAdvancedFilters.Country__c) && oAdvancedFilters.Country__c != '(All)' && oAdvancedFilters.Country__c != 'All') {
+                sQueryWhereClauses.add('Country_ISO_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Country__c));
+            }
+            
+            // state/province
+            if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
+                sQueryWhereClauses.add('State_Province_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.State__c));
+            }
+            
+            // City
+            if (String.isNotblank(oAdvancedFilters.City__c)) {
+                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+                    sQueryWhereClauses.add('City__c = \'' + oAdvancedFilters.City__c + '\'');
+                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                    sQueryWhereClauses.add('City__c LIKE \'' + oAdvancedFilters.City__c + '%\'');
+                else
+                    sQueryWhereClauses.add('City__c LIKE \'%' + oAdvancedFilters.City__c + '%\'');
+            }
+            
+            // Zip/postal code
+            if (String.isNotblank(oAdvancedFilters.Zip_Code__c)) {
+                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+                    sQueryWhereClauses.add('Zip_Postal_Code__c = \'' + oAdvancedFilters.Zip_Code__c + '\'');
+                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                    sQueryWhereClauses.add('Zip_Postal_Code__c LIKE \'' + oAdvancedFilters.Zip_Code__c + '%\'');
+                else
+                    sQueryWhereClauses.add('Zip_Postal_Code__c LIKE \'%' + oAdvancedFilters.Zip_Code__c + '%\'');
+            }
+            
+            /////////////////
+            // IATA Code
+            
+            if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
+                if (oAdvancedFilters.IATA_Code__c.length() == 7)
+                    sQueryWhereClauses.add('IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'');
+                else if (oAdvancedFilters.IATA_Code__c.length() == 8) {
+                    String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
+                    String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
+                    sQueryWhereClauses.add('IATA_Code__c = \'' + sIATACode + '\' AND Check_Digit__c = \'' + sCheckCode + '\'');
+                }
+                // simulate Starts With
+                else
+                    sQueryWhereClauses.add('IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
+            }
+            
+            //////////////////
+            // Agency name
+            
+            if (String.isNotblank(oAdvancedFilters.Agency_Name__c)) {
+                                                       
+                // define operator
+                String sAgencyNameOperatorAndValue;
+                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+                    sAgencyNameOperatorAndValue = ' = \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '\'';
+                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                    sAgencyNameOperatorAndValue = ' LIKE \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
+                else
+                    sAgencyNameOperatorAndValue = ' LIKE \'%' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
+                    
+                // define
+                if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.TradingName)
+                    sQueryWhereClauses.add('Trading_Name__c' + sAgencyNameOperatorAndValue);
+                else if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
+                    sQueryWhereClauses.add('Legal_Name__c' + sAgencyNameOperatorAndValue);
+                else
+                    sQueryWhereClauses.add('(Trading_Name__c' + sAgencyNameOperatorAndValue + ' OR Legal_Name__c' + sAgencyNameOperatorAndValue + ')');
+            }
+            
+            
+            ////////////////
+            // Agency Type
+            
+            // Hierarchy
+            if (String.isNotblank(oAdvancedFilters.Hierarchy__c) && oAdvancedFilters.Hierarchy__c != 'All') {
+                sQueryWhereClauses.add('Location_Type_Name__c IN ' + addSingleQuotesToListedValues('(' + oAdvancedFilters.Hierarchy__c.replaceAll(';', ', ') + ')'));
+            }
+
+            // Agency Program
+            if (String.isNotblank(oAdvancedFilters.Agency_Program__c)) {
+                
+                // if Agency program is All, look at the Area of Activity
+                if ((oAdvancedFilters.Agency_Program__c == '(All)' || oAdvancedFilters.Agency_Program__c == 'All') && oAdvancedFilters.Area_of_Activity__c != 'All') {
+                    List<String> lstAgencyProgramCodes = getAgencyProgramCodesByAreaOfActivity(oAdvancedFilters.Area_of_Activity__c);
+                    sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN ' + addSingleQuotesToListedValues('(' + String.join(lstAgencyProgramCodes, ', ') + ')') + ' AND Related_Accreditation_Class_Table__c = \'ORGCLASS\'');
+                }
+                else if (oAdvancedFilters.Agency_Program__c != '(All)' && oAdvancedFilters.Agency_Program__c != 'All')
+                    sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Agency_Program__c) + ' AND Related_Accreditation_Class_Table__c = \'ORGCLASS\'');
+            }
+
+            if (sQueryWhereClauses.size() > 0) {
+                sQueryWhere = ' WHERE ' + String.join(sQueryWhereClauses, ' AND ');
+            }
+            
+            //////////////////
+            // Agency Profile
+            
+            // (future development)
+        } else { // Added by Mathieu Beausoleil
+            System.debug(cachedAgencyIds);
+            sQueryWhere = ' WHERE Account_View__c in :cachedAgencyIds';
         }
-        
-        //////////////////
-        // Agency Profile
-        
-        // (future development)
-        
         
         //////////////////////////////
         // Order By Agency Name 
         // (Trading by default, or Legal if filtered by)
         
         // define
-        if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
-            sQueryWhere += ' ORDER BY Legal_Name__c ASC';
-        else
-            sQueryWhere += ' ORDER BY Trading_Name__c ASC';
+
+        if(bReturnAllFields) {
+            if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
+                sQueryWhere += ' ORDER BY Legal_Name__c ASC';
+            else
+                sQueryWhere += ' ORDER BY Trading_Name__c ASC';
+        }
         
+        sQueryWhere += ' LIMIT ' + String.valueOf(vfIECGAD.MAX_RESULTS + 1);
         system.debug('ALEX - getAgencyByAdvancedFilters query: ' + sQueryFields + sQueryWhere);
         
-        // execute the query
-        return Database.query(sQueryFields + sQueryWhere);
+        List<GDP_Products_Account_View__c> results = new List<GDP_Products_Account_View__c>();
+        for(GDP_Products_Account_Snapshot__c aSnapshot : Database.query(sQueryFields + sQueryWhere)) {
+            if (aSnapshot.Account_View__c == null) continue;
+
+            results.add(aSnapshot.Account_View__r);
+        }
+
+        return results;
     }
     
     /**
@@ -1108,17 +1125,25 @@ public without sharing class IECApplicationsManager {
     public static Integer getNumberOfResultsByAppFilterID(IECCustomer oCustomer, String sApplicationFilterID, String sProductCategoryCode) {
         IEC_Application_Filter__c oAppFilter = LoadFilterById(sApplicationFilterID);
         
-        if (oAppFilter == null)
+        if (oAppFilter == null) {
             throw new IECApplicationException('Application filter not found for id ' + sApplicationFilterID);
-            
+        }
+
+
         List<GDP_Products_Account_View__c> lstAccounts = getAgencyByAdvancedFilters(oAppFilter, sProductCategoryCode,false);
-        
-        // if result size == 0 or > 250, track usage here since the customer won't be redirected to the result page
-        if (lstAccounts == null || lstAccounts.size() == 0)
+
+        if (lstAccounts == null || lstAccounts.size() == 0) {
             trackAndConsumeUsage(oCustomer, sProductCategoryCode, IECConstants.IECUsageTrackerSearchTarget_Agency, IECConstants.IECUsageTrackerSearchStatus_Fail);
-        else if (lstAccounts.size() > vfIECGAD.MAX_RESULTS)
+        } else if (lstAccounts.size() > vfIECGAD.MAX_RESULTS) {
             trackAndConsumeUsage(oCustomer, sProductCategoryCode, IECConstants.IECUsageTrackerSearchTarget_Agency, IECConstants.IECUsageTrackerSearchStatus_Success);
-        
+        }
+
+        Map<Id, GDP_Products_Account_View__c> lstAccountsMap = new Map<Id, GDP_Products_Account_View__c>();
+        System.debug(lstAccounts);
+        lstAccountsMap.putAll(lstAccounts);
+        Set<Id> lstAccountsIds = lstAccountsMap.keySet();
+        cachedAgencyIds = new List<Id>(lstAccountsIds);
+
         return (lstAccounts == null ? 0 : lstAccounts.size());
     }
     
