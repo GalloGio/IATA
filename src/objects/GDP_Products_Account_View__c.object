@@ -312,6 +312,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Location_Type_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Location_Type__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Type__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -415,6 +426,28 @@
         <label>Purge Flag</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Related_Accreditation_Class_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Accreditation_Class__r.Class__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Related Accreditation Class Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Related_Accreditation_Class_Table__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Accreditation_Class__r.Class__r.Table__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Related Accreditation Class Table</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Related_Accreditation_Class__c</fullName>

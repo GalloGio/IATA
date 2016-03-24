@@ -415,7 +415,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                     options.add(new SelectOption('All', 'All'));
                     for(IEC_Agency_Type__c agType : lstAgencyProgram)
                         options.add(new SelectOption(agType.Agency_Program_Code__c, agType.Agency_Program__c));
-                }
+                    }
                 else
                     options.add(new SelectOption('None', '--None--'));
             }
@@ -505,6 +505,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         
     Pagereference pgRef = Page.IECGADResult;
     pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter.Id));
+        pgRef.getParameters().put(IECConstants.PARAM_LIMITTOIDS, IECUtil.EncryptEncodeParameter(String.join(IECApplicationsManager.cachedAgencyIds, ','))); // Added by Mathieu Beausoleil
     pgRef.setRedirect(true);
     return pgRef;
   }

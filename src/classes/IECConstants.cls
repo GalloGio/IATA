@@ -19,6 +19,7 @@ global class IECConstants {
 	public static final string PARAM_PAYMENT_ID = 			'payid';
 	public static final string PARAM_RESETPASSWORD =		'respw';
 	public static final string PARAM_APPFILTER_ID =			'appfid';
+	public static final string PARAM_LIMITTOIDS =			'limittoids'; // Added by Mathieu Beausoleil
 	
 	//Get customer types constants
 	public static final string PARAM_CUSTOMERTYPE_AIRLINE = 		'Airline';
