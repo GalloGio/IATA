@@ -1,4 +1,5 @@
 <apex:component layout="none">
+   <apex:attribute name="ProductLine" description="Product Line" type="String" required="false"/>
    
  
      <h3>Search Options</h3>

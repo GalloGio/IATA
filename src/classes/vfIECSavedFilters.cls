@@ -21,6 +21,9 @@ public without sharing class vfIECSavedFilters {
         lstSavedFilters = new List<IEC_Application_Filter__c>();
     }	
     
+    public void loadFilters(String ProductLine) {
+        lstSavedFilters = IECApplicationsManager.LoadFilterByContact(ProductLine, loggedCustomer.RelatedContact.Id, false);      
+    }
     public void loadFilters() {
 		lstSavedFilters = IECApplicationsManager.LoadFilterByContact(loggedCustomer.RelatedContact.Id, false);   	
     }

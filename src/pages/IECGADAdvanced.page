@@ -1,11 +1,11 @@
-<apex:page title="Global Agency Directory" controller="vfIECGADAdvanced" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
-    <title>Global Agency Directory</title>
+<apex:page title="{!PageTitle}" controller="vfIECGADAdvanced" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>{!PageTitle}</title>
 
       <div class="gdpwrapper">
     
     <div class="gdpbody">
 
-    <c:IECAppHeader applicationTitle="Global Agency Directory" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+    <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
 
     <link rel="stylesheet" type="text/css" href="https://harvesthq.github.io/chosen/chosen.css" />
     <script type="text/javascript" src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
@@ -152,7 +152,7 @@
                 <apex:outputpanel id="panelAccess" layout="block" rendered="{!ctrSubsInfo.hasPageAccess}">
                     <div class="box register large">
                         <div class="header" style="margin-top: 18px;">
-                            <p>Global Agency Directory</p>
+                            <p>{!PageTitle}</p>
                         </div>
                         <div class="content">
                       	   <h2>Advanced Search</h2>

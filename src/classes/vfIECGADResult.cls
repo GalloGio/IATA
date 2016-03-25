@@ -26,6 +26,18 @@ public without sharing class vfIECGADResult extends IECPageController {
 	public String sSelectedAgencyId { get; set; }
 	public Map<String, String> mapListIndexAndAgencyID { get; private set; }
 	public Map<String, String> mapAreaOfActivityByCode {get; private set;}
+    public String PageTitle        {
+        public get {
+            if (PageTitle == null) {
+                if (sProductCode =='GAD') PageTitle='Global Agency Directory';
+                else if (sProductCode =='PAL') PageTitle='Passenger Agency List';
+                else if (sProductCode =='CAL') PageTitle='Cargo Agency List';
+                else if (sProductCode =='ASL') PageTitle='Airline Sales Agency List';
+            }
+            return PageTitle;
+        }
+        private set;
+    }
 
 	public Boolean bPreviousPageIsEnabled {
 		get {
@@ -91,8 +103,20 @@ public without sharing class vfIECGADResult extends IECPageController {
 	
 	public String sProductCode {
 		get {
-			return IECConstants.ProductCategory_SF_GAD;
+            if (sProductCode == null) {
+                Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
+                if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
+        			sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
+                    storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
+                } else if (storedIECProductCode != null) {
+                    sProductCode = (String)storedIECProductCode.getValue();
 		}
+                
+                ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
+		}
+            return sProductCode;
+	}
+        private set;
 	}
 
 	/**
@@ -106,7 +130,7 @@ public without sharing class vfIECGADResult extends IECPageController {
         //Initilize subscription component        
         ctrSubsInfo = new vfIECSubscriptionInfo(); 
         ctrSubsInfo.loggedCustomer = loggedCustomer;
-        ctrSubsInfo.sApplicationName = IECConstants.ProductCategory_SF_GAD;
+        ctrSubsInfo.sApplicationName = sProductCode;
         
         ctrSavedFilters = new vfIECSavedFilters();
         ctrSavedFilters.loggedCustomer = loggedCustomer;   
@@ -164,7 +188,7 @@ public without sharing class vfIECGADResult extends IECPageController {
 					return Page.IECUnauthorized;
 
                 //Load Saved filters
-                ctrSavedFilters.loadFilters();
+                ctrSavedFilters.loadFilters(sProductCode);
 
 
 				sParamIECApplicationFiltersID = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
@@ -187,7 +211,7 @@ public without sharing class vfIECGADResult extends IECPageController {
 					}
 
 					// run the search
-					lstAgencies = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oApplicationFilters, IECConstants.ProductCategory_SF_GAD, loggedCustomer);
+                    lstAgencies = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oApplicationFilters, sProductCode, loggedCustomer); 
                     // if list of ids available, use it
                     if (!String.isBlank(sParamIECApplicationLimitToIDs)) {
                     	sParamIECApplicationLimitToIDs = IECUtil.DecodeDecryptParameter(sParamIECApplicationLimitToIDs);

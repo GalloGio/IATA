@@ -16,6 +16,18 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
     public boolean bDisplayError      {get; set;}
     public String sErrorMessage        {get; set;}
     public boolean bDisableState        {get; set;}
+    public String PageTitle        {
+        public get {
+            if (PageTitle == null) {
+                if (sProductCode =='GAD') PageTitle='Global Agency Directory';
+                else if (sProductCode =='PAL') PageTitle='Passenger Agency List';
+                else if (sProductCode =='CAL') PageTitle='Cargo Agency List';
+                else if (sProductCode =='ASL') PageTitle='Airline Sales Agency List';
+            }
+            return PageTitle;
+        }
+        private set;
+    }
     public boolean bLoadLocationFilter, bLoadTypeFilter;
     
     private Set<String> setSubContinent;
@@ -86,8 +98,20 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
   
   public String sProductCode {
     get {
-      return IECConstants.ProductCategory_SF_GAD;
+            if (sProductCode == null) {
+                Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
+                if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
+        			sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
+                    storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
+                } else if (storedIECProductCode != null) {
+                    sProductCode = (String)storedIECProductCode.getValue();
     }
+                
+                ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
+            }
+            return sProductCode;
+    }
+        private set;
   }
     
     /**
@@ -97,7 +121,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         //Initilize subscription component        
         ctrSubsInfo = new vfIECSubscriptionInfo(); 
         ctrSubsInfo.loggedCustomer = loggedCustomer;
-        ctrSubsInfo.sApplicationName = IECConstants.ProductCategory_SF_GAD;
+        ctrSubsInfo.sApplicationName = sProductCode;
         
         ctrSavedFilters = new vfIECSavedFilters();
         ctrSavedFilters.loggedCustomer = loggedCustomer;   
@@ -132,7 +156,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
           return Page.IECUnauthorized;
                 
                 //Load Saved filters
-                ctrSavedFilters.loadFilters();
+                ctrSavedFilters.loadFilters(sProductCode);
                 
                 sParamFilterId = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
 
@@ -169,6 +193,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                 filter.Related_Contact__c = loggedCustomer.RelatedContact.Id;
         filter.System_Generated__c = false;
         filter.Filter_Type__c = 'Advanced';
+                filter.Product_Line__c=sProductCode;
         
                 insert filter;
                 
@@ -177,7 +202,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                 if (pgRef == null)
                   delete filter;
                 else
-                  ctrSavedFilters.loadFilters();
+                  ctrSavedFilters.loadFilters(sProductCode);
                 
                 return pgRef;
             }               
@@ -458,9 +483,9 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         throw new IECApplicationException(Label.IEC_Error_One_Filter_Required);
       
       CleanupFilterBeforeSave();
-
       if (filter.Id == null) {
-        List<IEC_Application_Filter__c> sysFilter = IECApplicationsManager.LoadFilterByContact(loggedCustomer.RelatedContact.Id, true);
+        List<IEC_Application_Filter__c> sysFilter = IECApplicationsManager.LoadFilterByContact(sProductCode, loggedCustomer.RelatedContact.Id, true);
+        
 
         if (sysFilter.size() > 0)
         {
@@ -471,11 +496,13 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         filter.System_Generated__c = true;
         filter.Filter_Type__c = 'Advanced';
         filter.IATA_Code__c = '';
+        filter.Product_Line__c = sProductCode;
         upsert filter;
       }
       else {
         //just in case iata code is entered in basic search this will clear it
         filter.IATA_Code__c = '';
+        filter.Product_Line__c = sProductCode;
         update filter;
       }
       return NavigateToResult();
@@ -490,7 +517,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
   private PageReference NavigateToResult() {
     
     //check if records returned is more than 250 or zero
-        Integer searchCount = IECApplicationsManager.getNumberOfResultsByAppFilterID(loggedCustomer, filter.Id, IECConstants.ProductCategory_SF_GAD);
+        Integer searchCount = IECApplicationsManager.getNumberOfResultsByAppFilterID(loggedCustomer, filter.Id, sProductCode);
         
         if (searchCount > vfIECGAD.MAX_RESULTS) {
         bDisplayError = true;

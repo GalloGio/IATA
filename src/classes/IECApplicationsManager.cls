@@ -960,16 +960,32 @@ public without sharing class IECApplicationsManager {
      * @param idContact Id of the Contact
      * @return Saved filter list
      */
-    public static List<IEC_Application_Filter__c> LoadFilterByContact(Id idContact, Boolean bSystemGenerated) {
+    public static List<IEC_Application_Filter__c> LoadFilterByContact(String ProductLine, Id idContact, Boolean bSystemGenerated) {
+        String NullProductLine=null;
+        if (ProductLine!='GAD') NullProductLine=ProductLine;
         try {
             List<IEC_Application_Filter__c> lstFilters =
-                [SELECT Agency_Name__c, Agency_Name_Search_Condition__c, Agency_Name_Search_Type__c
-                    , Agency_Program__c, Area_of_Activity__c, City__c, City_Search_Type__c
-                    , Filter_Name__c, Hierarchy__c, Related_Contact__c, Sub_Continent__c, Zip_Code__c
-                    , Zip_Code_Search_Type__c, Country__c, State__c, Filter_Type__c, System_Generated__c
+                [SELECT Agency_Name__c
+                    , Agency_Name_Search_Condition__c
+                    , Agency_Name_Search_Type__c
+                    , Agency_Program__c
+                    , Area_of_Activity__c
+                    , City__c
+                    , City_Search_Type__c
+                    , Filter_Name__c, Hierarchy__c
+                    , Related_Contact__c
+                    , Sub_Continent__c
+                    , Zip_Code__c
+                    , Zip_Code_Search_Type__c
+                    , Country__c
+                    , State__c
+                    , Filter_Type__c
+                    , System_Generated__c
+                    , Product_Line__c
                 FROM IEC_Application_Filter__c
                 WHERE Related_Contact__c = :idContact
                     AND System_Generated__c = :bSystemGenerated
+                    AND (Product_Line__c=:ProductLine OR Product_Line__c = :NullProductLine)
                 ORDER BY CreatedDate];
             
             return lstFilters;
@@ -978,6 +994,14 @@ public without sharing class IECApplicationsManager {
             throw new IECApplicationException('Could not load filters with Contact ID: ' + idContact + ' for the following error: ' + e.getMessage());
         }
         return null;
+    }
+     /**
+     * Get a list of saved filters used for the application searching 
+     * @param idContact Id of the Contact
+     * @return Saved filter list
+     */
+    public static List<IEC_Application_Filter__c> LoadFilterByContact( Id idContact, Boolean bSystemGenerated) {
+        return LoadFilterByContact('GAD', idContact, bSystemGenerated);
     }
     
     /**

@@ -206,7 +206,7 @@
 	
 	                <apex:outputPanel id="menuComponent2" rendered="{!bShowSearchOptions}">
 	                    <div class="inner tab2">
-	                        <c:IECSearchOptions />
+                        <c:IECSearchOptions ProductLine="{!sProductCode}" />
 	                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
 	                    </div>
 	                </apex:outputPanel>
