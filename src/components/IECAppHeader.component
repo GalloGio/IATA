@@ -185,7 +185,7 @@
             <table class="customTabs">
                 <tr>
                     <td>
-                        <apex:commandLink rel="tab1" onclick="changeToShowTab('menuComponent1'); return false;" value="{!if (applicationCode == 'GSS' || applicationCode == 'MDP', 'Service Overview', 'Service Details')}" styleClass="customButton lastElm active" />
+                        <apex:commandLink rel="tab1" onclick="changeToShowTab('menuComponent1'); return false;" value="Service Details" styleClass="customButton lastElm active" />
                     </td>
                     <td>
                         <apex:commandLink rel="tab2" onclick="changeToShowTab('menuComponent2'); return false;" value="Search Options" rendered="{!showSearchOptions != null && showSearchOptions && NOT(bShowSearchOptions)}" styleClass="customButton lastElm" />
