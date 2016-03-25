@@ -105,7 +105,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                     storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
                 } else if (storedIECProductCode != null) {
                     sProductCode = (String)storedIECProductCode.getValue();
-    }
+                }
                 
                 ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
             }
@@ -385,12 +385,25 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
             Set<String> setAreaofActivity = new Set<String>();
             for (IEC_Agency_Type__c agencyType :
                 [SELECT Area_of_Activity__c
+                        ,Agency_Program_Code__c
                 FROM IEC_Agency_Type__c]) {
+                if (sProductCode == 'GAD' && agencyType.Agency_Program_Code__c=='C') continue;
+                if (sProductCode == 'PAL' && !(agencyType.Agency_Program_Code__c=='P' 
+                                            || agencyType.Agency_Program_Code__c=='D'
+                                            ))  continue;
+                if (sProductCode == 'CAL' && agencyType.Agency_Program_Code__c!='C') continue;
+                if (sProductCode == 'ASL' && !(agencyType.Agency_Program_Code__c=='M'
+                                            || agencyType.Agency_Program_Code__c=='X'
+                                            || agencyType.Agency_Program_Code__c=='K'
+                                            || agencyType.Agency_Program_Code__c=='G'
+                                            ))  continue;
                 setAreaofActivity.add(agencyType.Area_of_Activity__c);
             }
 
             if (setAreaofActivity.size() > 0) {
-                options.add(new SelectOption('All', 'All'));
+                if (sProductCode == 'GAD') options.add(new SelectOption('All', 'All'));
+                if (sProductCode == 'ASL') options.add(new SelectOption('All', 'All'));
+                
                 // Sort the area of activity list options alphabetically
                 List<String> lstAreaofActivity = new List<String>();
                 lstAreaofActivity.addAll(setAreaofActivity);
@@ -439,8 +452,21 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                     bDisableState = false;
                     options.add(new SelectOption('All', 'All'));
                     for(IEC_Agency_Type__c agType : lstAgencyProgram)
+                    {
+                        //if (sProductCode == 'CAL') continue;
+                        if (sProductCode == 'PAL' && !(agType.Agency_Program_Code__c=='D' 
+                                            || agType.Agency_Program_Code__c=='P'
+                                            ))  continue;       
+                        if (sProductCode == 'ASL' && filter.Area_of_Activity__c == 'All' 
+                                                 && (agType.Agency_Program_Code__c=='C' 
+                                                     || agType.Agency_Program_Code__c=='D'
+                                                     || agType.Agency_Program_Code__c=='P'
+                                                     || agType.Agency_Program_Code__c=='T'
+                                                     || agType.Agency_Program_Code__c=='V'
+                                                     )) continue;                                           
                         options.add(new SelectOption(agType.Agency_Program_Code__c, agType.Agency_Program__c));
                     }
+                }
                 else
                     options.add(new SelectOption('None', '--None--'));
             }
@@ -469,7 +495,8 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
             Agency_Name_Search_Condition__c = 'Both'
             , Area_of_Activity__c = 'All'
             , Hierarchy__c = 'All'
-            , Sub_Continent__c = 'All');
+            , Sub_Continent__c = 'All'
+            , Product_Line__c = sProductCode);
     }
     
     /**
