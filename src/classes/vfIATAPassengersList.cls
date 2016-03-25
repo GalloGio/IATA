@@ -219,7 +219,7 @@ public with sharing class vfIATAPassengersList extends IECPageController{
                 
                 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess();
+                ctrSubsInfo.validateAccess(new Set<String>{'PAL', 'ASL', 'CAL'});
                 
                 // if no access, redirect to the unauthorized page
                 if (!ctrSubsInfo.hasPageAccess)

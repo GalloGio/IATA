@@ -149,7 +149,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                 validUserProfile();
                 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(); 
+                ctrSubsInfo.validateAccess(new Set<String>{'GAD', 'PAL', 'ASL', 'CAL'}); 
                 
                 // if no access, redirect to the unauthorized page
         if (!ctrSubsInfo.hasPageAccess)

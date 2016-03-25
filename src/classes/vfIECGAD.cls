@@ -64,7 +64,7 @@ public without sharing class vfIECGAD extends IECPageController {
                     storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
                 } else if (storedIECProductCode != null) {
                     sProductCode = (String)storedIECProductCode.getValue();
-		}
+                }
                 
                 ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
             }
@@ -114,7 +114,7 @@ public without sharing class vfIECGAD extends IECPageController {
                 
                 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(); 
+                ctrSubsInfo.validateAccess(new Set<String>{'GAD', 'PAL', 'ASL', 'CAL'}); 
                 
                 // if no access, redirect to the unauthorized page
 				if (!ctrSubsInfo.hasPageAccess)

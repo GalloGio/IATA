@@ -110,14 +110,14 @@ public without sharing class vfIECGADResult extends IECPageController {
                     storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
                 } else if (storedIECProductCode != null) {
                     sProductCode = (String)storedIECProductCode.getValue();
-		}
+                }
                 
                 ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
 		}
             return sProductCode;
 	}
         private set;
-	}
+    }
 
 	/**
 	 * Constructor
@@ -181,7 +181,7 @@ public without sharing class vfIECGADResult extends IECPageController {
 				validUserProfile();
 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(); 
+                ctrSubsInfo.validateAccess(new Set<String>{'GAD', 'CAL', 'PAL', 'ASL'}); 
                 
                 // if no access, redirect to the unauthorized page
 				if (!ctrSubsInfo.hasPageAccess)
