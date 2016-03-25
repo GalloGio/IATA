@@ -144,12 +144,20 @@ public without sharing class vfIECGAD extends IECPageController {
 			Pattern isnumbers = Pattern.Compile('^[0-9]+$');
 			Matcher numMatch = isnumbers.matcher(filter.IATA_Code__c);
 
+            if (sProductCode != 'CAL') {
 			if(!numMatch.Matches()
 				|| filter.IATA_Code__c.length() > 8
 				|| filter.IATA_Code__c.length() < 7){
 				addErrorMessage('IATA Code format must only be 7 or 8 digits');
 				return null;
 			}
+            } else {
+                if(!numMatch.Matches()
+                    || filter.IATA_Code__c.length() == 11){
+                    addErrorMessage('IATA Code format must only be 11 digits');
+                    return null;
+                }
+            }
 
             // reset all fields   
             resetFilter();             
