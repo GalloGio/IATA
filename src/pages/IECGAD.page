@@ -192,7 +192,8 @@
                                         <a href="IECGADAdvanced" class="customButton lastElm searchButton" style="width:380px;">Advanced Search &nbsp;></a>
                                     </td>
                                     <td>
-                                        <a href="IECGADMaps" class="customButton lastElm searchButton" style="width:380px;">Interactive Statistics &nbsp;></a>
+                                        <apex:commandLink value="Interactive Statistics >" style="width:380px;" styleClass="customButton lastElm searchButton"  action="{!URLFOR($Page.IECGADMaps)}" rendered="{!IF(sProductCode == 'PAL' || sProductCode == 'CAL' || sProductCode == 'ASL', false, true)}" />
+                                        <apex:commandLink value="Statistics >" style="width:380px;" styleClass="customButton lastElm searchButton"  action="{!URLFOR($Page.IATAPassengersList)}" rendered="{!IF(sProductCode == 'PAL' || sProductCode == 'CAL' || sProductCode == 'ASL', true, false)}" />
                                     </td>
                                 </tr>
                             </table>
