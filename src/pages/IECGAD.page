@@ -128,7 +128,7 @@
 
                                     <td>
                                         <div class="customInputLabelIn lastElm" style="width:330px;">
-                                            <apex:inputtext onkeypress="return isNumberKey(event)" id="txtCode" value="{!filter.IATA_Code__c}" maxlength="8" />
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" id="txtCode" value="{!filter.IATA_Code__c}" maxlength="{!IF(sProductCode != 'CAL', 8, 11)}" />
                                         </div>
                                     </td>
 
