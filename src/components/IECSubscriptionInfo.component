@@ -14,7 +14,7 @@
     
     </script>
 
-    <apex:attribute name="infoController"  description="Subscription Info Contrller" type="vfIECSubscriptionInfo" required="true"/>
+	<apex:attribute name="infoController"  description="Subscription Info Controller" type="vfIECSubscriptionInfo" required="true"/>
     
          <h3>Service details</h3>
         

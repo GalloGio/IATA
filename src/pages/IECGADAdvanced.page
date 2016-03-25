@@ -158,9 +158,11 @@
                       	   <h2>Advanced Search</h2>
                             <p class="descText" style="margin-top:17px;font-weight:300;">Find IATA Agencies using any combination of search criteria. Search criteria are cumulative unless otherwise specified.</p>
 
+                            <apex:outputText id="errorPanel">
                             <div class="errorPanel">
                                 <apex:pageMessages escape="no" />
                             </div>
+                            </apex:outputText>
 
                             <div class="searchBlock">
                                 <h2>Agency Location</h2>
@@ -338,7 +340,7 @@
                                         <apex:commandButton id="btnSave" styleClass="customButton small" style="background:#737d87;width:283px;" value="Save Filter" onclick="saveFilterPopup('');return false;" reRender="errorMessage,panelAccess" />
                                     </td>
                                     <td>
-                                        <apex:commandButton id="btnSearch" styleClass="customButton small" style="width:284px;" value="Search Agencies" action="{!searchAgencies}" onclick="changeCursorProgress(this); increaseUssage();" oncomplete="changeCursorDefault(this)" reRender="errorMessage" />
+                                        <apex:commandButton id="btnSearch" styleClass="customButton small" style="width:284px;" value="Search Agencies" action="{!searchAgencies}" onclick="changeCursorProgress(this); increaseUssage();" oncomplete="changeCursorDefault(this)" reRender="errorMessage,errorPanel" />
                                     </td>
                                 </tr>
                             </table>
