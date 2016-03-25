@@ -233,6 +233,12 @@ public without sharing class IECApplicationsManager {
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_PAL)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'P\', \'D\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'C\')');
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_ASL)
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'K\', \'G\', \'X\', \'K\')');
         
             // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
             if (Test.isRunningTest())
@@ -954,16 +960,32 @@ public without sharing class IECApplicationsManager {
      * @param idContact Id of the Contact
      * @return Saved filter list
      */
-    public static List<IEC_Application_Filter__c> LoadFilterByContact(Id idContact, Boolean bSystemGenerated) {
+    public static List<IEC_Application_Filter__c> LoadFilterByContact(String ProductLine, Id idContact, Boolean bSystemGenerated) {
+        String NullProductLine=null;
+        if (ProductLine!='GAD') NullProductLine=ProductLine;
         try {
             List<IEC_Application_Filter__c> lstFilters =
-                [SELECT Agency_Name__c, Agency_Name_Search_Condition__c, Agency_Name_Search_Type__c
-                    , Agency_Program__c, Area_of_Activity__c, City__c, City_Search_Type__c
-                    , Filter_Name__c, Hierarchy__c, Related_Contact__c, Sub_Continent__c, Zip_Code__c
-                    , Zip_Code_Search_Type__c, Country__c, State__c, Filter_Type__c, System_Generated__c
+                [SELECT Agency_Name__c
+                    , Agency_Name_Search_Condition__c
+                    , Agency_Name_Search_Type__c
+                    , Agency_Program__c
+                    , Area_of_Activity__c
+                    , City__c
+                    , City_Search_Type__c
+                    , Filter_Name__c, Hierarchy__c
+                    , Related_Contact__c
+                    , Sub_Continent__c
+                    , Zip_Code__c
+                    , Zip_Code_Search_Type__c
+                    , Country__c
+                    , State__c
+                    , Filter_Type__c
+                    , System_Generated__c
+                    , Product_Line__c
                 FROM IEC_Application_Filter__c
                 WHERE Related_Contact__c = :idContact
                     AND System_Generated__c = :bSystemGenerated
+                    AND (Product_Line__c=:ProductLine OR Product_Line__c = :NullProductLine)
                 ORDER BY CreatedDate];
             
             return lstFilters;
@@ -972,6 +994,14 @@ public without sharing class IECApplicationsManager {
             throw new IECApplicationException('Could not load filters with Contact ID: ' + idContact + ' for the following error: ' + e.getMessage());
         }
         return null;
+    }
+     /**
+     * Get a list of saved filters used for the application searching 
+     * @param idContact Id of the Contact
+     * @return Saved filter list
+     */
+    public static List<IEC_Application_Filter__c> LoadFilterByContact( Id idContact, Boolean bSystemGenerated) {
+        return LoadFilterByContact('GAD', idContact, bSystemGenerated);
     }
     
     /**

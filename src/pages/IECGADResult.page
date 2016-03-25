@@ -1,10 +1,10 @@
-<apex:page title="Global Agency Directory - result" cache="false" controller="vfIECGADResult" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+<apex:page title="{!PageTitle} - result" cache="false" controller="vfIECGADResult" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
 
        <div class="gdpwrapper">
     
     <div class="gdpbody">
 
-    <c:IECAppHeader applicationTitle="Global Agency Directory" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+    <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
 
     <c:IECApp_Tootip />
 
@@ -115,7 +115,7 @@
 
           <div class="box register large">
 		        <div class="header" style="margin-top: 18px;">
-		         <p>Global Agency Directory</p>
+                 <p>{!PageTitle}</p>
 		        </div>
 		         
 		        <div class="content">
