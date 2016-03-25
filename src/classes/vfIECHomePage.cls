@@ -1,6 +1,5 @@
 public with sharing class vfIECHomePage extends IECPageController {
   	public String sURLProdCACPro 	{get; set;}
-	public String sURLProdCACWeb 	{get; set;}
 	public String sURLProdGAD	 	{get; set;}
 	public String sURLProdGSS 		{get; set;}
 	public String sURLProdMDP		{get; set;}
@@ -11,6 +10,9 @@ public with sharing class vfIECHomePage extends IECPageController {
 	public Boolean bProdAccessGSS 		{get; set;}
 	public Boolean bProdAccessMDP		{get; set;}
 	public Boolean bProdAccessEBro 		{get; set;}
+    public Boolean bProdAccessPAL      {get; set;}
+    public Boolean bProdAccessCAL      {get; set;}
+    public Boolean bProdAccessASL      {get; set;}
 
 	public Boolean bHasAnyProdAccess {
 		get {
@@ -18,7 +20,10 @@ public with sharing class vfIECHomePage extends IECPageController {
 				|| bProdAccessGAD
 				|| bProdAccessGSS
 				|| bProdAccessMDP
-				|| bProdAccessEBro;
+				|| bProdAccessEBro
+                || bProdAccessPAL
+                || bProdAccessCAL
+                || bProdAccessASL;
 		}
 	}
 
@@ -27,13 +32,15 @@ public with sharing class vfIECHomePage extends IECPageController {
 			return IECUserManager.isUserLoggedIn();
 		}
 	}
+	
+	public String sPageName {get; set;}
+	public String sProductCode {get; set;}
 
 	/**
 	 * Constructor
 	 */
 	public vfIECHomePage() {
 		sURLProdCACPro = IEC_Settings__c.getOrgDefaults().Prod_CACPro__c;
-		sURLProdCACWeb = IEC_Settings__c.getOrgDefaults().Prod_CACWeb__c;
 		sURLProdGAD 	= IEC_Settings__c.getOrgDefaults().Prod_GAD__c;
 		sURLProdGSS 	= IEC_Settings__c.getOrgDefaults().Prod_GSS__c;
 		sURLProdMDP 	= IEC_Settings__c.getOrgDefaults().Prod_MDP__c;
@@ -49,9 +56,20 @@ public with sharing class vfIECHomePage extends IECPageController {
 			
 		  	bProdAccessCACPro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CACPRO) != -1);
 			bProdAccessGAD = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GAD) != -1);
-			bProdAccessGSS = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GSS) != -1);
+			bProdAccessGSS = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GSS) != -1); 
 			bProdAccessMDP = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_MDP) != -1);
 			bProdAccessEBro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_EBROADCAST) != -1);
+		  	bProdAccessPAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_PAL) != -1);
+		  	bProdAccessCAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CAL) != -1);
+		  	bProdAccessASL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_ASL) != -1);
+         
 		}		
+	}
+	
+	public PageReference NavigateTo() {
+		Pagereference pgRef = new PageReference('/iec/' + sPageName);
+        pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(sProductCode));
+		pgRef.setRedirect(true);
+		return pgRef;
 	}
 }

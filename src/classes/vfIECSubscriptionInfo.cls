@@ -39,6 +39,17 @@ public without sharing class vfIECSubscriptionInfo {
 		get {return oSubscription == null ? null : oSubscription.Zuora__SubscriptionEndDate__c;} }
 		
 	
+    
+    public Boolean validateAccess(Set<String> allowedApplicationName) {
+        if (!allowedApplicationName.contains(sApplicationName)) {
+            sDenyReason = Label.IEC_Error_No_Application_Access;
+            hasPageAccess = false;
+            
+            return false;
+        }
+        
+        return validateAccess();
+    }
 	public Boolean validateAccess() {
 		
 		sDenyReason = '';
