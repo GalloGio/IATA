@@ -102,6 +102,18 @@ module.exports = function(grunt) {
 
             runAllTests: false,
           }
+        },
+        preprod: {
+          options: {
+            serverurl: localConfig.salesforce.preprod.serverurl || localConfig.salesforce._default_.serverurl,
+            user: localConfig.salesforce.preprod.username || (localConfig.salesforce._default_.username + '.preprod'),
+            pass: localConfig.salesforce.preprod.password || localConfig.salesforce._default_.password,
+            token: localConfig.salesforce.preprod.token || localConfig.salesforce._default_.token,
+            existingPackage: true,
+            root: 'build/preprod',
+
+            runAllTests: false,
+          }
         }
       }
 
