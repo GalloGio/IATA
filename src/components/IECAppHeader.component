@@ -200,24 +200,24 @@
             
             <apex:outputPanel id="menuComponent" styleClass="menuComponent"> 
 	            <apex:outputPanel id="menuComponent1" style="{!IF(bShowSubscriptioninfo,'display:block;', 'display:none;')}">
-	                    <div class="inner tab1">
+                    <div class="inner tab1">
 	                        <c:IECSubscriptionInfo infoController="{!subInfoController}"  />
-	                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
-	                    </div>
-	                </apex:outputPanel>
+                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
+	                </div>
+	            </apex:outputPanel>
                 <apex:outputPanel id="menuComponent2" style="{!IF(bShowSearchOptions,'display:block;', 'display:none;')}">
-	                    <div class="inner tab2">
+                    <div class="inner tab2">
                         <c:IECSearchOptions ProductLine="{!sProductCode}" />
-	                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
-	                    </div>
-	                </apex:outputPanel>
-	
+                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
+                    </div>
+                </apex:outputPanel>
+                
                 <apex:outputPanel id="menuComponent3" style="{!IF(bShowSavedFilters,'display:block;', 'display:none;')}">
-	                    <div class="inner tab3">
-	                        <c:IECSavedFilters filtersController="{!savedFiltersController}"  />
-	                        <a  class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
-	                    </div>
-	                </apex:outputPanel>
+                    <div class="inner tab3">
+                        <c:IECSavedFilters filtersController="{!savedFiltersController}"  />
+                        <a  class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
+                    </div>
+                </apex:outputPanel>
 	                
             </apex:outputPanel>
 

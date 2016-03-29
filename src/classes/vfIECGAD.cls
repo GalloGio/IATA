@@ -145,12 +145,12 @@ public without sharing class vfIECGAD extends IECPageController {
 			Matcher numMatch = isnumbers.matcher(filter.IATA_Code__c);
 
             if (sProductCode != 'CAL') {
-			if(!numMatch.Matches()
-				|| filter.IATA_Code__c.length() > 8
-				|| filter.IATA_Code__c.length() < 7){
-				addErrorMessage('IATA Code format must only be 7 or 8 digits');
-				return null;
-			}
+			    if(!numMatch.Matches()
+			    	|| filter.IATA_Code__c.length() > 8
+			    	|| filter.IATA_Code__c.length() < 7){
+			    	addErrorMessage('IATA Code format must only be 7 or 8 digits');
+			    	return null;
+			    }
             } else {
                 if(!numMatch.Matches()
                     || filter.IATA_Code__c.length() == 11){
@@ -204,7 +204,7 @@ public without sharing class vfIECGAD extends IECPageController {
                 filter.System_Generated__c = true;
                 filter.Zip_Code__c = '';
                 filter.Zip_Code_Search_Type__c ='';    
-      filter.Product_Line__c = sProductCode;
+      			filter.Product_Line__c = sProductCode;
   }
   
   

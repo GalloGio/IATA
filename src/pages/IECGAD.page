@@ -5,7 +5,6 @@
     
     <div class="gdpbody">
     <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
-    
     <script>
 
         function isNumberKey(evt) {

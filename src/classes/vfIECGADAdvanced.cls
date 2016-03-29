@@ -191,8 +191,8 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
               CleanupFilterBeforeSave();
                 filter.Id = null;
                 filter.Related_Contact__c = loggedCustomer.RelatedContact.Id;
-        filter.System_Generated__c = false;
-        filter.Filter_Type__c = 'Advanced';
+        		filter.System_Generated__c = false;
+        		filter.Filter_Type__c = 'Advanced';
                 filter.Product_Line__c=sProductCode;
         
                 insert filter;

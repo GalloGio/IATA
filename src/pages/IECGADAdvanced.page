@@ -159,9 +159,9 @@
                             <p class="descText" style="margin-top:17px;font-weight:300;">Find IATA Agencies using any combination of search criteria. Search criteria are cumulative unless otherwise specified.</p>
 
                             <apex:outputText id="errorPanel">
-                            <div class="errorPanel">
-                                <apex:pageMessages escape="no" />
-                            </div>
+                            	<div class="errorPanel">
+                            	    <apex:pageMessages escape="no" />
+                            	</div>
                             </apex:outputText>
 
                             <div class="searchBlock">
