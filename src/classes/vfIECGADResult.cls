@@ -151,22 +151,34 @@ public without sharing class vfIECGADResult extends IECPageController {
         
    	}
    	
-   	private void fillAreOfActivityMap() {
-   		
-   		mapAreaOfActivityByCode = new Map<String, String>();
-   		mapAreaOfActivityByCode.put('D', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('E', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('K', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('N', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('O', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('F', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('P', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('T', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('S', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('V', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('G', 'General Sales Agent');
-   		mapAreaOfActivityByCode.put('M', 'Airline Sales Office');
-   	}
+    private void fillAreOfActivityMap() {
+        mapAreaOfActivityByCode = new Map<String, String>();
+        if (sProductCode == 'ASL') {
+            mapAreaOfActivityByCode.put('M', 'Member Sales Offices');
+            mapAreaOfActivityByCode.put('G', 'General Sales Agents');
+            mapAreaOfActivityByCode.put('X', 'Handling Agents and Shipping Lines');
+            mapAreaOfActivityByCode.put('K', 'Combined Airlines Ticket Office CATO');
+        } else if (sProductCode == 'CAL') {
+            mapAreaOfActivityByCode.put('C', 'Cargo');
+        } else if (sProductCode == 'PAL') {
+            mapAreaOfActivityByCode.put('P', 'Passenger');
+            mapAreaOfActivityByCode.put('D', 'Domestic');
+        } else {
+            mapAreaOfActivityByCode.put('D', 'Travel Agency');
+            mapAreaOfActivityByCode.put('E', 'Travel Agency');
+            mapAreaOfActivityByCode.put('K', 'Travel Agency');
+            mapAreaOfActivityByCode.put('N', 'Travel Agency');
+            mapAreaOfActivityByCode.put('O', 'Travel Agency');
+            mapAreaOfActivityByCode.put('F', 'Travel Agency');
+            mapAreaOfActivityByCode.put('P', 'Travel Agency');
+            mapAreaOfActivityByCode.put('T', 'Travel Agency');
+            mapAreaOfActivityByCode.put('S', 'Travel Agency');
+            mapAreaOfActivityByCode.put('V', 'Travel Agency');
+            mapAreaOfActivityByCode.put('G', 'General Sales Agent');
+            mapAreaOfActivityByCode.put('M', 'Airline Sales Office');
+            mapAreaOfActivityByCode.put('X', 'Airline Sales Office');
+        }
+    }
    	
    	/**
    	 * Triggered once the page is loaded

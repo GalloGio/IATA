@@ -47,6 +47,7 @@ module.exports = function(grunt) {
               'GDP_Products_Account_View__c.Location_Type_Name__c',
               'GDP_Products_Account_View__c.Related_Accreditation_Class_Code__c',
               'GDP_Products_Account_View__c.Related_Accreditation_Class_Table__c',
+              'GDP_Products_Account_Snapshot__c.Agency_Code__c',
             ],
             ApexComponent: [
               'IECSearchOptions',
@@ -98,7 +99,7 @@ module.exports = function(grunt) {
             pass: localConfig.salesforce.troisb.password || localConfig.salesforce._default_.password,
             token: localConfig.salesforce.troisb.token || localConfig.salesforce._default_.token,
             existingPackage: true,
-            root: '../../src/',
+            root: 'build/3b',
 
             runAllTests: false,
           }

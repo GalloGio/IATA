@@ -26,6 +26,7 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
                     Related_Accreditation_Class_Code__c = gpav.Related_Accreditation_Class_Code__c,
                     Location_Type_Name__c = gpav.Location_Type_Name__c,
                     Legal_Name__c = gpav.Legal_Name__c,
+                    Agency_Code__c = gpav.Agency_Code__c,
                     IATA_Code__c = gpav.IATA_Code__c,
                     Country_ISO_Code__c = gpav.Country_ISO_Code__c,
                     City__c = gpav.City__c,
@@ -68,7 +69,7 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 	}
 
 	global void execute(SchedulableContext sc) {
-		String query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c, Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) From GDP_Products_Account_View__c';
+		String query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Agency_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c, Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) From GDP_Products_Account_View__c';
 		Database.executeBatch(new SchdlGDPProductsAccountSnapshotCleanup(query));
 	}
 

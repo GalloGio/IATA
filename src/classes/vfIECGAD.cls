@@ -145,18 +145,17 @@ public without sharing class vfIECGAD extends IECPageController {
 			Matcher numMatch = isnumbers.matcher(filter.IATA_Code__c);
 
             if (sProductCode != 'CAL') {
-			    if(!numMatch.Matches()
-			    	|| filter.IATA_Code__c.length() > 8
-			    	|| filter.IATA_Code__c.length() < 7){
-			    	addErrorMessage('IATA Code format must only be 7 or 8 digits');
-			    	return null;
-			    }
-            } else {
-                if(!numMatch.Matches()
-                    || filter.IATA_Code__c.length() == 11){
-                    addErrorMessage('IATA Code format must only be 11 digits');
-                    return null;
-                }
+				if(!numMatch.Matches()
+					|| filter.IATA_Code__c.length() > 8
+				|| filter.IATA_Code__c.length() < 7){
+					addErrorMessage('IATA Code format must only be 7 or 8 digits');
+					return null;
+				}
+            } else if(!numMatch.Matches()
+                || filter.IATA_Code__c.length() > 11
+                || filter.IATA_Code__c.length() < 7){
+                addErrorMessage('IATA Agency Code format must only be between 7 and 11 digits');
+                return null;
             }
 
             // reset all fields   

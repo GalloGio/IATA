@@ -238,7 +238,7 @@ public without sharing class IECApplicationsManager {
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL)
                 sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'C\')');
             else if (sProductCategoryCode == IECConstants.ProductCategory_SF_ASL)
-                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'K\', \'G\', \'X\', \'K\')');
+                sQueryWhereClauses.add('Related_Accreditation_Class_Code__c IN (\'M\', \'G\', \'X\', \'K\')');
         
             // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
             if (Test.isRunningTest())
@@ -286,16 +286,21 @@ public without sharing class IECApplicationsManager {
             // IATA Code
             
             if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
-                if (oAdvancedFilters.IATA_Code__c.length() == 7)
-                    sQueryWhereClauses.add('IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'');
-                else if (oAdvancedFilters.IATA_Code__c.length() == 8) {
-                    String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
-                    String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
-                    sQueryWhereClauses.add('IATA_Code__c = \'' + sIATACode + '\' AND Check_Digit__c = \'' + sCheckCode + '\'');
+                if (sProductCategoryCode == IECConstants.ProductCategory_SF_CAL) {
+                	sQueryWhereClauses.add('Agency_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
+                } else {
+                    if (oAdvancedFilters.IATA_Code__c.length() == 7) {
+                        sQueryWhereClauses.add('IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'');
+                    } else if (oAdvancedFilters.IATA_Code__c.length() == 8) {
+                        String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
+                        String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
+                        sQueryWhereClauses.add('IATA_Code__c = \'' + sIATACode + '\' AND Check_Digit__c = \'' + sCheckCode + '\'');
+                    }
+                    // simulate Starts With
+                    else {
+                    	sQueryWhereClauses.add('IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
+                    }
                 }
-                // simulate Starts With
-                else
-                    sQueryWhereClauses.add('IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'');
             }
             
             //////////////////
@@ -351,7 +356,6 @@ public without sharing class IECApplicationsManager {
             
             // (future development)
         } else { // Added by Mathieu Beausoleil
-            System.debug(cachedAgencyIds);
             sQueryWhere = ' WHERE Account_View__c in :cachedAgencyIds';
         }
         
