@@ -338,6 +338,19 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Product_Line__c</fullName>
+        <defaultValue>&apos;GAD&apos;</defaultValue>
+        <description>Product Line to create isolation between GAD, PAL, CAL ASL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product Line to create isolation between GAD, PAL, CAL ASL</inlineHelpText>
+        <label>Product Line</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>IEC Application Filter</label>
     <listViews>
         <fullName>All</fullName>
