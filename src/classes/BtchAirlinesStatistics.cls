@@ -1,6 +1,7 @@
 Global class BtchAirlinesStatistics implements database.batchable<Sobject>,Database.Stateful
 {
     global Map<String, GDP_Airlines_Statistic__c> amap = new Map<String, GDP_Airlines_Statistic__c>();
+    global DateTime LastUpdate = System.Now();
     
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
@@ -75,7 +76,7 @@ Global class BtchAirlinesStatistics implements database.batchable<Sobject>,Datab
             stats.CS__c = 0;
             amap.put(key, stats);
          }
-
+         stats.Last_Update__c=LastUpdate;
          
          if (code=='AO') stats.AO__c += 1;
          if (code=='SA') stats.SA__c += 1;
@@ -109,7 +110,7 @@ Global class BtchAirlinesStatistics implements database.batchable<Sobject>,Datab
         
      List<GDP_Airlines_Statistic__c> slist = new List<GDP_Airlines_Statistic__c>();
      
-     slist = [Select Id From GDP_Airlines_Statistic__c Where LastModifiedDate<>TODAY];
+     slist = [Select Id From GDP_Airlines_Statistic__c Where Last_Update__c!=:LastUpdate];
      
      if (slist.Size()>0) delete slist;
      

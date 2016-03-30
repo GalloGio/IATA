@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
   var localConfig = grunt.file.readJSON('../../../config.json');
+  var changeset = grunt.file.readJSON('changeset.json');
 
   // Project configuration.
   grunt.initConfig({
@@ -19,49 +20,7 @@ module.exports = function(grunt) {
             retrieveTarget: 'build/iec'
           },
 
-          pkg: {
-            ApexClass: [
-              'vfIECGAD',
-              'BtchAirlinesStatistics',
-              'vfIECGADAdvanced',
-              'IECApplicationsManager',
-              'vfIECSavedFilters',
-              'vfIATAPassengersList',
-              'vfIECGADResult',
-              'vfIECGADMaps',
-              'Test_SchdlGDPProdAccountSnapshotCleanup',
-              'vfIECHomePage',
-              'vfIECAppHeaderComponent',
-              'IECConstants',
-              'IECSubscriptionManager',
-              'vfIECSubscriptionInfo',
-              'IECPageController',
-              'SchdlGDPProductsAccountSnapshotCleanup',
-            ],
-            CustomObject: [
-              'GDP_Airlines_Statistic__c',
-              'GDP_Products_Account_Snapshot__c',
-            ],
-            CustomField: [
-              'IEC_Application_Filter__c.Product_Line__c',
-              'GDP_Products_Account_View__c.Location_Type_Name__c',
-              'GDP_Products_Account_View__c.Related_Accreditation_Class_Code__c',
-              'GDP_Products_Account_View__c.Related_Accreditation_Class_Table__c',
-              'GDP_Products_Account_Snapshot__c.Agency_Code__c',
-            ],
-            ApexComponent: [
-              'IECSearchOptions',
-              'IECAppHeader',
-              'IECSubscriptionInfo',
-            ],
-            ApexPage: [
-              'IECGAD',
-              'IATAPassengersList',
-              'IECGADAdvanced',
-              'IECGADResult',
-              'IECHomepage',
-            ]
-          }
+          pkg: changeset
         },
 
         projecttroisb: {
@@ -70,9 +29,11 @@ module.exports = function(grunt) {
             user: localConfig.salesforce.troisb.username || (localConfig.salesforce._default_.username + '.3b'),
             pass: localConfig.salesforce.troisb.password || localConfig.salesforce._default_.password,
             token: localConfig.salesforce.troisb.token || localConfig.salesforce._default_.token,
-            retrieveTarget: 'build/3b',
-            existingPackage: true
-          }
+            retrieveTarget: '../../src',
+            //existingPackage: true
+          },
+
+          pkg: changeset
         },
 
         preprod: {
@@ -82,8 +43,10 @@ module.exports = function(grunt) {
             pass: localConfig.salesforce.preprod.password || localConfig.salesforce._default_.password,
             token: localConfig.salesforce.preprod.token || localConfig.salesforce._default_.token,
             retrieveTarget: 'build/preprod',
-            existingPackage: true
-          }
+            //existingPackage: true
+          },
+
+          pkg: changeset
         }
       },
       antdeploy:{
@@ -99,7 +62,7 @@ module.exports = function(grunt) {
             pass: localConfig.salesforce.troisb.password || localConfig.salesforce._default_.password,
             token: localConfig.salesforce.troisb.token || localConfig.salesforce._default_.token,
             existingPackage: true,
-            root: 'build/3b',
+            root: '../../src',
 
             runAllTests: false,
           }

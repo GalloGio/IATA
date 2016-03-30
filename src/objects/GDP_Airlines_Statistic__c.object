@@ -251,6 +251,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Last_Update__c</fullName>
+        <description>Last Update Statistics</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last Update Statistics</inlineHelpText>
+        <label>Last Update</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>SA__c</fullName>
         <defaultValue>0</defaultValue>
         <description>SA Counter</description>
