@@ -1,9 +1,7 @@
 global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Database.Batchable<sObject> {
-	global final String query;
+    global static final String query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Agency_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c, Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) From GDP_Products_Account_View__c';
 
-	global SchdlGDPProductsAccountSnapshotCleanup(String q) {
-		query = q;
-	}
+	global SchdlGDPProductsAccountSnapshotCleanup() {}
 
 	global Database.QueryLocator start(Database.BatchableContext BC){
 		return Database.getQueryLocator(query);
@@ -70,11 +68,8 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 	}
 
 	global void execute(SchedulableContext sc) {
-		String query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Agency_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c, Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) From GDP_Products_Account_View__c';
-		Database.executeBatch(new SchdlGDPProductsAccountSnapshotCleanup(query));
+		Database.executeBatch(new SchdlGDPProductsAccountSnapshotCleanup());
 	}
-
-	public SchdlGDPProductsAccountSnapshotCleanup() {}
 
 	public static void schedule(String sch) {
 

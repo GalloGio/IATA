@@ -346,6 +346,9 @@ private class IECApplicationsManager_tst {
             insert oGDPAddress1;
             oGDPAccount1.Related_GDP_Address__c = oGDPAddress1.Id;
             update oGDPAccount1;
+            SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
+            List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+            bat.execute(null, gpav);
 
             IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
             oFilter.Sub_Continent__c = 'Some sub-continent';
@@ -364,6 +367,9 @@ private class IECApplicationsManager_tst {
     
             oGDPAccount2.Related_GDP_Address__c = oGDPAddress2.Id;
             update oGDPAccount2;
+            bat = new SchdlGDPProductsAccountSnapshotCleanup();
+            gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+            bat.execute(null, gpav);
             
             for (GDP_Products_Account_View__c g : [SELECT City__c, Sub_Continent__c, Country_ISO_Code__c FROM GDP_Products_Account_View__c WHERE ID IN (:oGDPAccount1.Id, :oGDPAccount2.Id)]){
                 System.debug('SSS: City__c: ' + g.City__c + ', Sub_Continent__c: ' + g.Sub_Continent__c + ', Country_ISO_Code__c: ' + g.Country_ISO_Code__c);
@@ -385,6 +391,9 @@ private class IECApplicationsManager_tst {
 
             oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
             update oGDPAccount3;
+            bat = new SchdlGDPProductsAccountSnapshotCleanup();
+            gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+            bat.execute(null, gpav);
             
             oFilter = new IEC_Application_Filter__c(); // reset filter
             oFilter.Zip_Code__c = '0H 0';

@@ -84,12 +84,8 @@ public class Test_SchdlGDPProdAccountSnapshotCleanup
 		List<GDP_Products_Account_Snapshot__c> existingSnapshotRecords = [Select Id,Account_View__c 
                                                                           from GDP_Products_Account_Snapshot__c];
         system.assertEquals(existingSnapshotRecords.size(), 0, 'There should not be any records present in this table '+existingSnapshotRecords.size());
-        string query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, '+
-                       'Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c,'+
-                       ' Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) '+
-                       'From GDP_Products_Account_View__c';
 		Test.startTest();
-			database.executebatch(new SchdlGDPProductsAccountSnapshotCleanup(query));
+			database.executebatch(new SchdlGDPProductsAccountSnapshotCleanup());
         Test.stopTest();
        
         // Check if any records have been inserted into the table now
@@ -140,11 +136,7 @@ public class Test_SchdlGDPProdAccountSnapshotCleanup
         }
         
         Test.startTest();
-        	string query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, '+
-                       'Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c,'+
-                       ' Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) '+
-                       'From GDP_Products_Account_View__c';
-        	database.executebatch(new SchdlGDPProductsAccountSnapshotCleanup(query));
+      	database.executebatch(new SchdlGDPProductsAccountSnapshotCleanup());
         Test.stopTest();
         
         List<GDP_Products_Account_Snapshot__c> updatedSnapshotRecords = [Select Id,IATA_Code__c,Account_View__r.IATA_Code__c 
@@ -201,11 +193,7 @@ public class Test_SchdlGDPProdAccountSnapshotCleanup
         }
         
         Test.startTest();
-        	string query = 'Select Zip_Postal_Code__c, Id, Agency_Status_Code__c, Trading_Name__c, Sub_Continent__c, State_Province_Code__c, '+
-                       'Related_Accreditation_Class_Table__c, Related_Accreditation_Class_Code__c, Location_Type_Name__c, Legal_Name__c, IATA_Code__c,'+
-                       ' Country_ISO_Code__c, City__c, Check_Digit__c, AIMS_ID__c, (Select Id From GDP_Products_Accounts_Snapshot__r) '+
-                       'From GDP_Products_Account_View__c';
-        	database.executebatch(new SchdlGDPProductsAccountSnapshotCleanup(query));
+      	database.executebatch(new SchdlGDPProductsAccountSnapshotCleanup());
         Test.stopTest();
         
         List<GDP_Products_Account_Snapshot__c> updatedSnapshotRecords = [Select Id,IATA_Code__c,Account_View__r.IATA_Code__c 

@@ -15,7 +15,9 @@
     "IECSubscriptionManager",
     "vfIECSubscriptionInfo",
     "IECPageController",
-    "SchdlGDPProductsAccountSnapshotCleanup"
+    "SchdlGDPProductsAccountSnapshotCleanup",
+    "vfIECGADResult_tst",
+    "IECApplicationsManager_tst"
   ],
   "CustomObject": [
     "GDP_Airlines_Statistic__c",

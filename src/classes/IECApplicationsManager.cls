@@ -455,24 +455,28 @@ public without sharing class IECApplicationsManager {
             List<IEC_Product_Access__c> lstAccess = getListProductAccessByContactByProductCategory(iCustomerId, sProductCategoryCode);
             
             // find the oldest Product Access object that still has usage left (if not unlimited). Will be used to consume usage from.
-            for (IEC_Product_Access__c prodAccess : lstAccess) {
-                if (prodAccess.Usage_Unlimited__c
-                    || prodAccess.Usage_Qty_consumed__c == null
-                    || prodAccess.Usage_Qty_consumed__c < prodAccess.Usage_Qty_Start__c) {
-                    oProductAccess = prodAccess;
-                    break;
+            if(!lstAccess.isEmpty() || lstAccess != null){
+                for (IEC_Product_Access__c prodAccess : lstAccess) {
+                    if (prodAccess.Usage_Unlimited__c
+                        || prodAccess.Usage_Qty_consumed__c == null
+                        || prodAccess.Usage_Qty_consumed__c < prodAccess.Usage_Qty_Start__c) {
+                        oProductAccess = prodAccess;
+                        break;
+                    }
                 }
             }
     
             // find the latest subscription history
-            IEC_Subscription_History__c oSubHist = IECSubscriptionManager.getSubscriptionHistoryByName(oProductAccess.Subscription_Number__c);
-            
-            Contact relatedContact = IECUserManager.getContactById(iCustomerId);
-            // track global usage
-            trackLiveUsage(sProductCategoryCode, sStatusOfSearch, sSearchTarget, relatedContact, oSubHist);
-            
-            // consume subscription usage of customer
-            incrementUsageCounterByProductAccess(oProductAccess, 1);
+            if(oProductAccess != null){
+                IEC_Subscription_History__c oSubHist = IECSubscriptionManager.getSubscriptionHistoryByName(oProductAccess.Subscription_Number__c);
+                
+                Contact relatedContact = IECUserManager.getContactById(iCustomerId);
+                // track global usage
+                trackLiveUsage(sProductCategoryCode, sStatusOfSearch, sSearchTarget, relatedContact, oSubHist);
+                
+                // consume subscription usage of customer
+                incrementUsageCounterByProductAccess(oProductAccess, 1);
+            }
         }
         catch (Exception ex) {
             system.debug('Cannot track and consume usage for customer contact id ' + iCustomerId + ' Product Category: ' + sProductCategoryCode + ' Exception: ' + ex.getMessage());
