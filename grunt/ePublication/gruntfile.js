@@ -95,10 +95,20 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['antretrieve', 'antdeploy']);
 
 // change 3
-};};
+};
 
 
 /*
 hello
 
-world*/
+world
+
+
+foo
+
+bar
+
+
+
+
+*/
