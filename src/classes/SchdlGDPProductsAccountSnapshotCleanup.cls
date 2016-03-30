@@ -63,6 +63,7 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		String[] toAddresses = new String[] {a.CreatedBy.Email};
 		mail.setToAddresses(toAddresses);
+        mail.setCcAddresses(new List<String>{'debonol@iata.org'});
 		mail.setSubject('SchdlGDPProductsAccountSnapshotCleanup Status: ' + a.Status);
 		mail.setPlainTextBody('The batch Apex job processed ' + a.TotalJobItems + ' batches with '+ a.NumberOfErrors + ' failures.');
 		Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
@@ -78,7 +79,7 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 	public static void schedule(String sch) {
 
 		if (sch == null) {
-			sch = '0 0 12 * * ?';
+			sch = '0 0 3 * * ?';
 		}
 
 		String jobID = System.schedule('Snapshot Cleanup', sch, new SchdlGDPProductsAccountSnapshotCleanup());
