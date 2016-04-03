@@ -80,17 +80,61 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>CAC_Subscription_Detail__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>CAC Subscription Detail</label>
+        <referenceTo>CAC_Subscription_Detail__c</referenceTo>
+        <relationshipLabel>IEC Compiled Usage Tracker</relationshipLabel>
+        <relationshipName>IEC_Compiled_Usage_Tracker</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Hash_Value__c</fullName>
         <description>Hash generated from a set of values. Used for compiling the live usage into daily usage.</description>
         <externalId>false</externalId>
-        <formula>TEXT(YEAR(Date__c))+TEXT(MONTH(Date__c))+TEXT(DAY(Date__c))+TEXT(Related_Application__c)
-+BLANKVALUE(Related_Client__c, &apos;Anonymous&apos;)+TEXT(Validation_Type__c)+TEXT(Validation_Result__c)</formula>
+        <formula>IF(
+    TEXT(Related_Application__c) == &apos;CACSWS&apos; ||
+    TEXT(Related_Application__c) == &apos;CACEWS&apos;,
+        TEXT(YEAR(Date__c))+
+        LPAD(TEXT(MONTH(Date__c)), 2, &apos;0&apos;)+
+        LPAD(TEXT(DAY(Date__c)), 2, &apos;0&apos;)+
+        BLANKVALUE(CAC_Subscription_Detail__c, &apos;Anonymous&apos;)+
+        TEXT(Validation_Type__c)+
+        TEXT(Validation_Result__c)
+    ,
+        TEXT(YEAR(Date__c))+
+        TEXT(MONTH(Date__c))+
+        TEXT(DAY(Date__c))+
+        TEXT(Related_Application__c)+
+        BLANKVALUE(Related_Client__c, &apos;Anonymous&apos;)+
+        TEXT(Validation_Type__c)+
+        TEXT(Validation_Result__c)
+)</formula>
         <inlineHelpText>Hash generated from a set of values. Used for compiling the live usage into daily usage.</inlineHelpText>
         <label>Hash Value</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_API_Call_Per_Month__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Maximum API Calls Per Month allowed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Maximum API Calls Per Month allowed</inlineHelpText>
+        <label>Max API Call Per Month</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -110,6 +154,14 @@
             </picklistValues>
             <picklistValues>
                 <fullName>GAD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CACSWS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CACEWS</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>

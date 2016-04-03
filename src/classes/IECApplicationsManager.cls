@@ -1,3 +1,9 @@
+/*
+ * IECApplicationsManager 
+ * Change log:
+ *  20160324-sl: change getListProductAccessByContactByProductCategory/getListProductAccessByContactBySubscriptionNumber to use getSubscriptionEvergreenNameListByBillingContactId
+ * 
+ */
 public without sharing class IECApplicationsManager {
     
     /**
@@ -26,7 +32,7 @@ public without sharing class IECApplicationsManager {
      * @return If agent and associated agency is valid: an ID Card
      *         If agent existed but is no longer valid (or agency): an ID Card with an empty status
      *         If agent not found: null
-     */
+     */ 
     private static ID_Card__c getAgentByVerCode(String verCode) {
 
         if (String.isBlank(verCode)) return null;
@@ -95,8 +101,8 @@ public without sharing class IECApplicationsManager {
                     AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
         }
         else {
-        	CASSCode = CASSCode.trim();
-        	
+            CASSCode = CASSCode.trim();
+            
             lstAgency = 
                 [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
                     g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
@@ -142,7 +148,7 @@ public without sharing class IECApplicationsManager {
         system.debug('** - getAgencyByAgencyCode: agencyCode = ' + agencyCode + ', checkCode = ' + checkCode + ', CASSCode = ' + CASSCode);
         
         if (checkCode != null && checkCode != '') {
-        	checkCode = checkCode.trim();
+            checkCode = checkCode.trim();
             
             if (CASSCode == null || CASSCode == '') {
                 //No CASS Code --> Query for IATA + Check codes
@@ -205,10 +211,10 @@ public without sharing class IECApplicationsManager {
      * @return A list of GDP_Products_Account_View__c objects
      */
     private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode) {
-    	return getAgencyByAdvancedFilters(oAdvancedFilters, sProductCategoryCode, true);
+        return getAgencyByAdvancedFilters(oAdvancedFilters, sProductCategoryCode, true);
     }
-     
-    private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode, Boolean bReturnAllFields ) {
+    
+    private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode, Boolean bReturnAllFields) {
 
 
         String sQueryFields;
@@ -221,125 +227,125 @@ public without sharing class IECApplicationsManager {
         else
        		 sQueryFields = 'SELECT Id FROM GDP_Products_Account_View__c';
     
-                                
-                                
+    
+    
         String sQueryWhere = ' WHERE Agency_Status_Code__c >= 4';
         
-        // if GAD, filter out the Cargo agencies
-        if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
-            || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
-            || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
+            // if GAD, filter out the Cargo agencies
+            if (sProductCategoryCode == IECConstants.ProductCategory_SF_CACFREE
+                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACPRO
+                || sProductCategoryCode == IECConstants.ProductCategory_SF_CACWEB)
             sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\')';
-        else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
+            else if (sProductCategoryCode == IECConstants.ProductCategory_SF_GAD)
             sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN (\'A\', \'I\', \'L\', \'Q\', \'R\', \'U\', \'Y\', \'Z\', \'C\', \'X\')';
-        
-        // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
-        if (Test.isRunningTest())
+            
+            // if a test is running, only return GDP_Products_Account_View__c created in a test class with the test flag in the AIMS ID field
+            if (Test.isRunningTest())
             sQueryWhere += ' AND AIMS_ID__c LIKE \'' + IECTestUtil.TEST_CLASS_AIMSID + '%\'';
-        
-        /////////////////////
-        // Agency location
-        
-        // sub-continent
-        if (String.isNotblank(oAdvancedFilters.Sub_Continent__c) && oAdvancedFilters.Sub_Continent__c != 'All') {
+            
+            /////////////////////
+            // Agency location
+            
+            // sub-continent
+            if (String.isNotblank(oAdvancedFilters.Sub_Continent__c) && oAdvancedFilters.Sub_Continent__c != 'All') {
             sQueryWhere += ' AND Sub_Continent__c = \'' + oAdvancedFilters.Sub_Continent__c + '\'';
-        }
-        
-        // country
-        if (String.isNotblank(oAdvancedFilters.Country__c) && oAdvancedFilters.Country__c != '(All)' && oAdvancedFilters.Country__c != 'All') {
+            }
+            
+            // country
+            if (String.isNotblank(oAdvancedFilters.Country__c) && oAdvancedFilters.Country__c != '(All)' && oAdvancedFilters.Country__c != 'All') {
             sQueryWhere += ' AND Country_ISO_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Country__c);
-        }
-        
-        // state/province
-        if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
+            }
+            
+            // state/province
+            if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
             sQueryWhere += ' AND State_Province_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.State__c);
-        }
-        
-        // City
-        if (String.isNotblank(oAdvancedFilters.City__c)) {
+            }
+            
+            // City
+            if (String.isNotblank(oAdvancedFilters.City__c)) {
             sQueryWhere += ' AND City__c';
-            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
                 sQueryWhere += ' = \'' + oAdvancedFilters.City__c + '\'';
-            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.City_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
                 sQueryWhere += ' LIKE \'' + oAdvancedFilters.City__c + '%\'';
-            else
+                else
                 sQueryWhere += ' LIKE \'%' + oAdvancedFilters.City__c + '%\'';
-        }
-        
-        // Zip/postal code
-        if (String.isNotblank(oAdvancedFilters.Zip_Code__c)) {
-            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+            }
+            
+            // Zip/postal code
+            if (String.isNotblank(oAdvancedFilters.Zip_Code__c)) {
+                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
                 sQueryWhere += ' AND Zip_Postal_Code__c = \'' + oAdvancedFilters.Zip_Code__c + '\'';
-            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Zip_Code_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
                 sQueryWhere += ' AND Zip_Postal_Code__c LIKE \'' + oAdvancedFilters.Zip_Code__c + '%\'';
-            else
+                else
                 sQueryWhere += ' AND Zip_Postal_Code__c LIKE \'%' + oAdvancedFilters.Zip_Code__c + '%\'';
-        }
-        
-        /////////////////
-        // IATA Code
-        
-        if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
+            }
+            
+            /////////////////
+            // IATA Code
+            
+            if (String.isNotBlank(oAdvancedFilters.IATA_Code__c)) {
             if (oAdvancedFilters.IATA_Code__c.length() == 7)
                 sQueryWhere += ' AND IATA_Code__c = \'' + oAdvancedFilters.IATA_Code__c + '\'';
             else if (oAdvancedFilters.IATA_Code__c.length() == 8) {
-                String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
-                String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
+                        String sIATACode = oAdvancedFilters.IATA_Code__c.substring(0,7);
+                        String sCheckCode = oAdvancedFilters.IATA_Code__c.substring(7,8);
                 sQueryWhere += ' AND IATA_Code__c = \'' + sIATACode + '\' AND Check_Digit__c = \'' + sCheckCode + '\'';
-            }
-            // simulate Starts With
+                    }
+                    // simulate Starts With
             else
                 sQueryWhere += ' AND IATA_Code__c LIKE \'' + oAdvancedFilters.IATA_Code__c + '%\'';
-        }
-        
-        //////////////////
-        // Agency name
-        
-        if (String.isNotblank(oAdvancedFilters.Agency_Name__c)) {
-                                                   
-            // define operator
-            String sAgencyNameOperatorAndValue;
-            if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
-                sAgencyNameOperatorAndValue = ' = \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '\'';
-            else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
-                sAgencyNameOperatorAndValue = ' LIKE \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
-            else
-                sAgencyNameOperatorAndValue = ' LIKE \'%' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
-                
-            // define
-            if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.TradingName)
-                sQueryWhere += ' AND Trading_Name__c' + sAgencyNameOperatorAndValue;
-            else if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
-                sQueryWhere += ' AND Legal_Name__c' + sAgencyNameOperatorAndValue;
-            else
-                sQueryWhere += ' AND (Trading_Name__c' + sAgencyNameOperatorAndValue + ' OR Legal_Name__c' + sAgencyNameOperatorAndValue + ')';
-        }
-        
-        
-        ////////////////
-        // Agency Type
-        
-        // Hierarchy
-        if (String.isNotblank(oAdvancedFilters.Hierarchy__c) && oAdvancedFilters.Hierarchy__c != 'All') {
-            sQueryWhere += ' AND Location_Type__r.Name IN ' + addSingleQuotesToListedValues('(' + oAdvancedFilters.Hierarchy__c.replaceAll(';', ', ') + ')');
-        }
-
-        // Agency Program
-        if (String.isNotblank(oAdvancedFilters.Agency_Program__c)) {
-            
-            // if Agency program is All, look at the Area of Activity
-            if ((oAdvancedFilters.Agency_Program__c == '(All)' || oAdvancedFilters.Agency_Program__c == 'All') && oAdvancedFilters.Area_of_Activity__c != 'All') {
-                List<String> lstAgencyProgramCodes = getAgencyProgramCodesByAreaOfActivity(oAdvancedFilters.Area_of_Activity__c);
-                sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c IN ' + addSingleQuotesToListedValues('(' + String.join(lstAgencyProgramCodes, ', ') + ')') + ' AND Related_Accreditation_Class__r.Class__r.Table__c = \'ORGCLASS\'';
             }
-            else if (oAdvancedFilters.Agency_Program__c != '(All)' && oAdvancedFilters.Agency_Program__c != 'All')
+            
+            //////////////////
+            // Agency name
+            
+            if (String.isNotblank(oAdvancedFilters.Agency_Name__c)) {
+                                                       
+                // define operator
+                String sAgencyNameOperatorAndValue;
+                if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.ExactMatch)
+                    sAgencyNameOperatorAndValue = ' = \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '\'';
+                else if (IECConstants.parseGADSearchTypeToEnum(oAdvancedFilters.Agency_Name_Search_Type__c) == IECConstants.GADSearchType.StartsWith)
+                    sAgencyNameOperatorAndValue = ' LIKE \'' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
+                else
+                    sAgencyNameOperatorAndValue = ' LIKE \'%' + String.escapeSingleQuotes(oAdvancedFilters.Agency_Name__c) + '%\'';
+                    
+                // define
+                if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.TradingName)
+                sQueryWhere += ' AND Trading_Name__c' + sAgencyNameOperatorAndValue;
+                else if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
+                sQueryWhere += ' AND Legal_Name__c' + sAgencyNameOperatorAndValue;
+                else
+                sQueryWhere += ' AND (Trading_Name__c' + sAgencyNameOperatorAndValue + ' OR Legal_Name__c' + sAgencyNameOperatorAndValue + ')';
+            }
+            
+            
+            ////////////////
+            // Agency Type
+            
+            // Hierarchy
+            if (String.isNotblank(oAdvancedFilters.Hierarchy__c) && oAdvancedFilters.Hierarchy__c != 'All') {
+            sQueryWhere += ' AND Location_Type__r.Name IN ' + addSingleQuotesToListedValues('(' + oAdvancedFilters.Hierarchy__c.replaceAll(';', ', ') + ')');
+            }
+
+            // Agency Program
+            if (String.isNotblank(oAdvancedFilters.Agency_Program__c)) {
+                
+                // if Agency program is All, look at the Area of Activity
+                if ((oAdvancedFilters.Agency_Program__c == '(All)' || oAdvancedFilters.Agency_Program__c == 'All') && oAdvancedFilters.Area_of_Activity__c != 'All') {
+                    List<String> lstAgencyProgramCodes = getAgencyProgramCodesByAreaOfActivity(oAdvancedFilters.Area_of_Activity__c);
+                sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c IN ' + addSingleQuotesToListedValues('(' + String.join(lstAgencyProgramCodes, ', ') + ')') + ' AND Related_Accreditation_Class__r.Class__r.Table__c = \'ORGCLASS\'';
+                }
+                else if (oAdvancedFilters.Agency_Program__c != '(All)' && oAdvancedFilters.Agency_Program__c != 'All')
                 sQueryWhere += ' AND Related_Accreditation_Class__r.Class__r.Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.Agency_Program__c) + ' AND Related_Accreditation_Class__r.Class__r.Table__c = \'ORGCLASS\'';
-        }
-        
-        //////////////////
-        // Agency Profile
-        
-        // (future development)
+            }
+            
+            //////////////////
+            // Agency Profile
+            
+            // (future development)
         
         
         //////////////////////////////
@@ -347,10 +353,10 @@ public without sharing class IECApplicationsManager {
         // (Trading by default, or Legal if filtered by)
         
         // define
-        if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
-            sQueryWhere += ' ORDER BY Legal_Name__c ASC';
-        else
-            sQueryWhere += ' ORDER BY Trading_Name__c ASC';
+            if (IECConstants.parseGADAgencyNameSearchByToEnum(oAdvancedFilters.Agency_Name_Search_Condition__c) == IECConstants.GADAgencyNameSearchBy.LegalName)
+                sQueryWhere += ' ORDER BY Legal_Name__c ASC';
+            else
+                sQueryWhere += ' ORDER BY Trading_Name__c ASC';
         
         system.debug('ALEX - getAgencyByAdvancedFilters query: ' + sQueryFields + sQueryWhere);
         
@@ -413,7 +419,7 @@ public without sharing class IECApplicationsManager {
      * @param sStatusOfSearch Success or Fail (use IECConstants.IECUsageTrackerSearchStatus_Fail or IECConstants.IECUsageTrackerSearchStatus_Success)
      */          
     private static void trackAndConsumeUsage(IECCustomer oCustomer, String sProductCategoryCode, String sSearchTarget, String sStatusOfSearch) {
-    	trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
+        trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
     }
     
     //moved to a future method to reduce query time and optimize the returned result speed
@@ -428,25 +434,25 @@ public without sharing class IECApplicationsManager {
             List<IEC_Product_Access__c> lstAccess = getListProductAccessByContactByProductCategory(iCustomerId, sProductCategoryCode);
             
             // find the oldest Product Access object that still has usage left (if not unlimited). Will be used to consume usage from.
-            for (IEC_Product_Access__c prodAccess : lstAccess) {
-                if (prodAccess.Usage_Unlimited__c
-                    || prodAccess.Usage_Qty_consumed__c == null
-                    || prodAccess.Usage_Qty_consumed__c < prodAccess.Usage_Qty_Start__c) {
-                    oProductAccess = prodAccess;
-                    break;
+                for (IEC_Product_Access__c prodAccess : lstAccess) {
+                    if (prodAccess.Usage_Unlimited__c
+                        || prodAccess.Usage_Qty_consumed__c == null
+                        || prodAccess.Usage_Qty_consumed__c < prodAccess.Usage_Qty_Start__c) {
+                        oProductAccess = prodAccess;
+                        break;
+                    }
                 }
-            }
     
             // find the latest subscription history
-            IEC_Subscription_History__c oSubHist = IECSubscriptionManager.getSubscriptionHistoryByName(oProductAccess.Subscription_Number__c);
-            
-            Contact relatedContact = IECUserManager.getContactById(iCustomerId);
-            // track global usage
-            trackLiveUsage(sProductCategoryCode, sStatusOfSearch, sSearchTarget, relatedContact, oSubHist);
-            
-            // consume subscription usage of customer
-            incrementUsageCounterByProductAccess(oProductAccess, 1);
-        }
+                IEC_Subscription_History__c oSubHist = IECSubscriptionManager.getSubscriptionHistoryByName(oProductAccess.Subscription_Number__c);
+                
+                Contact relatedContact = IECUserManager.getContactById(iCustomerId);
+                // track global usage
+                trackLiveUsage(sProductCategoryCode, sStatusOfSearch, sSearchTarget, relatedContact, oSubHist);
+                
+                // consume subscription usage of customer
+                incrementUsageCounterByProductAccess(oProductAccess, 1);
+            }
         catch (Exception ex) {
             system.debug('Cannot track and consume usage for customer contact id ' + iCustomerId + ' Product Category: ' + sProductCategoryCode + ' Exception: ' + ex.getMessage());
             throw new IECApplicationException('Cannot track and consume usage for customer contact id ' + iCustomerId + ' Product Category: ' + sProductCategoryCode, ex);
@@ -684,7 +690,7 @@ public without sharing class IECApplicationsManager {
                 }
                 else {
                     oProductAccess.Usage_Qty_Start__c = null;
-                    oProductAccess.Usage_Qty_Left__c = null;
+                    oProductAccess.Usage_Qty_Left__c = null; 
                     oProductAccess.Usage_Unlimited__c = true;
                 }
             }
@@ -733,7 +739,24 @@ public without sharing class IECApplicationsManager {
                 ORDER BY Effective_End_Date__c];
     }
     
-    /** 
+    /**
+     * Returns the list of Product Access that are currently effective for a Subscription Number, for a given Contact
+     * @param idContact ID of the Contact associated to the customer
+     * @param sSubscriptionNumber
+     */
+    public static List<IEC_Product_Access__c> getListProductAccessByContactBySubscriptionNumber(Id idContact, String sSubscriptionNumber) {
+        return [SELECT Id, Active__c, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Usage_Qty_consumed__c
+                , Effective_Start_Date__c, Effective_End_Date__c, Subscription_Number__c
+                FROM IEC_Product_Access__c
+                WHERE Effective_Start_Date__c <= Today
+                    AND Effective_End_Date__c >= Today
+                    AND Active__c = true
+                    AND Related_Contact__c = :idContact
+                    AND Subscription_Number__c = :sSubscriptionNumber
+                ORDER BY Effective_End_Date__c];
+    }
+    
+    /**
      * Checks whether contact has access to a specific ProductCategory
      * @param idContact Id of the Contact in question
      * @param ProductCategory Product Category that needs checking
@@ -749,6 +772,40 @@ public without sharing class IECApplicationsManager {
             return -1;
         
         List<IEC_Product_Access__c> lstAccess = getListProductAccessByContactByProductCategory(idContact, sProductCategory);
+
+        if (lstAccess.size() > 0) {
+            integer iUsageCount= 0;
+            
+            for (IEC_Product_Access__c access : lstAccess) {
+                // Stop counting and return unlimited
+                if (access.Usage_Unlimited__c)
+                    return -999;
+                
+                iUsageCount +=  (Integer)access.Usage_Qty_Left__c;
+            }
+
+            return iUsageCount;
+        }
+        else
+            return -1;
+    }
+    
+    /** 
+     * Checks whether contact has access to a specific Subscription
+     * @param idContact Id of the Contact in question
+     * @param sSubscriptionName Subscription Number that needs checking
+     * @return Number indicating whether user has access to the product category
+     *    -999: User has access to the service with unlimited usage
+     *      -1: User has no access to the service
+     *       0: User has access to the service but no usage available
+     *     >=1: User has access to the service and the returned number is the remaining usage count
+     * @ASSUMPTION: All subscription will count towards the same user and usage will be added as one counter per contact, not per subscription
+     */
+    public static integer ContactHasAccessToSubscriptionName(Id idContact, String sSubscriptionName) {
+        if (idContact == null || String.isBlank(sSubscriptionName))
+            return -1;
+        
+        List<IEC_Product_Access__c> lstAccess = getListProductAccessByContactBySubscriptionNumber(idContact, sSubscriptionName);
 
         if (lstAccess.size() > 0) {
             integer iUsageCount= 0;
@@ -910,6 +967,45 @@ public without sharing class IECApplicationsManager {
     }
     
     /**
+     * Returns the Effective End Date of the selected subscription
+     * @param sSubscriptionName The Subscription Number
+     * @return The Effective End Date of the specified subscription
+     */
+    public static Date getEnddateOfSubscriptionName(String sSubscriptionName) {
+
+        if (String.isBlank(sSubscriptionName)) throw new IECApplicationException('sSubscriptionName cannot be null');
+            
+        // get the list of Product Access for subscription number
+        List<IEC_Product_Access__c> lstAccess =
+            [SELECT Id, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Effective_End_Date__c
+            FROM IEC_Product_Access__c
+            WHERE Effective_Start_Date__c <= Today
+                AND Effective_End_Date__c >= Today
+                AND Active__c = true
+                AND Subscription_Number__c = :sSubscriptionName];
+        
+        if (lstAccess == null || lstAccess.size() == 0)
+            return null;
+            
+        Datetime dtSubscriptionEndDate = lstAccess.get(0).Effective_End_Date__c;
+        return (dtSubscriptionEndDate != null ? dtSubscriptionEndDate.date() : null);
+    }
+    
+    /**
+     * Returns the number of days between today and the end date of the subscription
+     * @param sSubscriptionName The Subscription Number
+     * @return The number of days left
+     */
+    public static integer getDaysLeftForAccessBySubscriptionName(String sSubscriptionName) {
+
+        if (String.isBlank(sSubscriptionName)) throw new IECApplicationException('sSubscriptionName cannot be null');
+
+        Date dtSubscriptionEndDate = getEnddateOfSubscriptionName(sSubscriptionName);
+
+        return (dtSubscriptionEndDate != null ? Date.today().daysBetween(dtSubscriptionEndDate) : 0);
+    }
+    
+    /**
      * Get a saved filters used for the application searching 
      * @param sFilter Id of the filter
      * @return Saved filter
@@ -937,16 +1033,33 @@ public without sharing class IECApplicationsManager {
      * @param idContact Id of the Contact
      * @return Saved filter list
      */
-    public static List<IEC_Application_Filter__c> LoadFilterByContact(Id idContact, Boolean bSystemGenerated) {
+    public static List<IEC_Application_Filter__c> LoadFilterByContact(String ProductLine, Id idContact, Boolean bSystemGenerated) {
+        String NullProductLine=null;
+        if (ProductLine!='GAD') NullProductLine=ProductLine;
         try {
+            
             List<IEC_Application_Filter__c> lstFilters =
-                [SELECT Agency_Name__c, Agency_Name_Search_Condition__c, Agency_Name_Search_Type__c
-                    , Agency_Program__c, Area_of_Activity__c, City__c, City_Search_Type__c
-                    , Filter_Name__c, Hierarchy__c, Related_Contact__c, Sub_Continent__c, Zip_Code__c
-                    , Zip_Code_Search_Type__c, Country__c, State__c, Filter_Type__c, System_Generated__c
+                [SELECT Agency_Name__c
+                    , Agency_Name_Search_Condition__c
+                    , Agency_Name_Search_Type__c
+                    , Agency_Program__c
+                    , Area_of_Activity__c
+                    , City__c
+                    , City_Search_Type__c
+                    , Filter_Name__c, Hierarchy__c
+                    , Related_Contact__c
+                    , Sub_Continent__c
+                    , Zip_Code__c
+                    , Zip_Code_Search_Type__c
+                    , Country__c
+                    , State__c
+                    , Filter_Type__c
+                    , System_Generated__c
+                    , Product_Line__c
                 FROM IEC_Application_Filter__c
                 WHERE Related_Contact__c = :idContact
                     AND System_Generated__c = :bSystemGenerated
+                    AND (Product_Line__c=:ProductLine OR Product_Line__c = :NullProductLine)
                 ORDER BY CreatedDate];
             
             return lstFilters;
@@ -955,6 +1068,14 @@ public without sharing class IECApplicationsManager {
             throw new IECApplicationException('Could not load filters with Contact ID: ' + idContact + ' for the following error: ' + e.getMessage());
         }
         return null;
+    }
+     /**
+     * Get a list of saved filters used for the application searching 
+     * @param idContact Id of the Contact
+     * @return Saved filter list
+     */
+    public static List<IEC_Application_Filter__c> LoadFilterByContact( Id idContact, Boolean bSystemGenerated) {
+        return LoadFilterByContact('GAD', idContact, bSystemGenerated);
     }
     
     /**
@@ -1110,15 +1231,15 @@ public without sharing class IECApplicationsManager {
         
         if (oAppFilter == null)
             throw new IECApplicationException('Application filter not found for id ' + sApplicationFilterID);
-            
+
         List<GDP_Products_Account_View__c> lstAccounts = getAgencyByAdvancedFilters(oAppFilter, sProductCategoryCode,false);
-        
+
         // if result size == 0 or > 250, track usage here since the customer won't be redirected to the result page
         if (lstAccounts == null || lstAccounts.size() == 0)
             trackAndConsumeUsage(oCustomer, sProductCategoryCode, IECConstants.IECUsageTrackerSearchTarget_Agency, IECConstants.IECUsageTrackerSearchStatus_Fail);
         else if (lstAccounts.size() > vfIECGAD.MAX_RESULTS)
             trackAndConsumeUsage(oCustomer, sProductCategoryCode, IECConstants.IECUsageTrackerSearchTarget_Agency, IECConstants.IECUsageTrackerSearchStatus_Success);
-        
+
         return (lstAccounts == null ? 0 : lstAccounts.size());
     }
     

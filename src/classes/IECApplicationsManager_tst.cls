@@ -146,56 +146,251 @@ private class IECApplicationsManager_tst {
         insert oSubscriptionHist;
     }
 
-    /*static testMethod void testCreateProductAccess() {
-        setupData();
-        try {
-            // Prepare data
-            Account oAccount = IECTestUtil.createSampleAccount();
-            insert oAccount;
-            
-            Contact oContact = IECTestUtil.createSampleContact(oAccount);
-            insert oContact;
-            
-            Datetime dtStartDate = Datetime.now();
-            Datetime dtEndDate = dtStartDate.addYears(1);
-            String sZuoraSubscriptionId = 'a0asd0f76sda60sfd87';
-            
-            IECApplicationsManager.createProductAccess(oContact, oProductRatePlanInfo.Id, dtStartDate, dtEndDate, sZuoraSubscriptionId);
-            
-            // query
-            List<IEC_Product_Access__c> lstProductAccess = [SELECT Id, Related_Contact__c, Related_Rate_Plan_Info__c, Usage_qty__c, Usage_Unlimited__c, Status__c 
-                                                            , Zuora_Subscription_Id__c, Effective_Start_Date__c, Effective_End_Date__c
-                                                            FROM IEC_Product_Access__c
-                                                            WHERE Zuora_Subscription_Id__c =: sZuoraSubscriptionId];
-            
-            system.assert(lstProductAccess.size() > 0, 'A IEC_Product_Access__c should be found');
-            
-            IEC_Product_Access__c oProductAccess = lstProductAccess.get(0);
-            system.assertEquals(oContact.Id, oProductAccess.Related_Contact__c, 'The contact should match');
-            system.assertEquals(oProductRatePlanInfo.Id, oProductAccess.Related_Rate_Plan_Info__c, 'The Product Rate Plan Info should match');
-            system.assertEquals(SUB_USAGE_QTY, oProductAccess.Usage_qty__c, 'The Usage qty should match');
-            system.assertEquals(false, oProductAccess.Usage_Unlimited__c, 'The Unlimited flag should match');
-            system.assertEquals(IECConstants.IEC_Product_Access_Status_Active, oProductAccess.Status__c, 'The status should be Active');
-        }
-        catch (Exception ex) {
-            system.assert(false, 'testCreateProductAccess should not throw any exception');
-        }
-    }*/
-    
-    static testMethod void testAgencyStatus() {
+
+
+
+
+
+ @isTest(SeeAllData=true)
+    static void testCustomerSearch2Pre() {
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+        List<IEC_Product_Access__c> lstProductAccess = null;
+        List<GDP_Products_Account_View__c> lstSearchResult = null;
+        ID_Card__c oSearchedIDCard = null;
+        Integer iUsageAccess;
         
-        try {
-            setupData();
+
+test.startTest();
+        List<RecordType> rtypes = [Select Name, Id 
+                                    From RecordType
+                                    where sObjectType='Account'
+                                        and Name = 'Agency'
+                                        and isActive = true];
+        
+      /*  oAgencyAccount = IECTestUtil.createSampleAccount();
+        oAgencyAccount.Name = AGENCY1_NAME;
+        oAgencyAccount.IATACode__c = AGENCY1_CODE;
+        oAgencyAccount.Status__c = 'Approved';
+        oAgencyAccount.RecordTypeId = rtypes.get(0).Id;
+        insert oAgencyAccount;*/
+
+        oRefAgencyStatus = IECTestUtil.createSampleGDPReferenceTableEntry('4', 'Valid');
+        insert oRefAgencyStatus;
+
+        oRefIncorporationType = IECTestUtil.createSampleGDPReferenceTableEntry('i', 'Incorporated');
+        insert oRefIncorporationType;
+
+
+        oRefLocationType = IECTestUtil.createSampleGDPReferenceTableEntry('HO', 'Head Office');
+        insert oRefLocationType;
+
+        oGDPAccount1 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
+        oGDPAccount1.Check_Digit__c = AGENCY_CHECK_DIGIT;
+        insert oGDPAccount1;
+
+
+
+
+        oAccreditation1 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount1, 'GDP');
+        oAccreditation1.Status__c = oRefAgencyStatus.Id;
+        insert oAccreditation1;
+        oGDPAccount1.Related_Accreditation_Class__c = oAccreditation1.Id;
+        update oGDPAccount1;
+
+      oIDCard = IECTestUtil.createSampleIDCard('John', 'Doe', AGENT_VER_NUMBER, AGENCY1_NAME, AGENCY1_CODE, 'Printed/Delivered');
+        oIDCard.Valid_To_Date__c = Date.today().addYears(1);
+        oIDCard.Valid_From_Date__c = Date.today();
+        insert oIDCard;
+        oAccount = IECTestUtil.createSampleAccount();
+        insert oAccount;
+        
+        oContact = IECTestUtil.createSampleContact(oAccount);
+        insert oContact;
+        User u = IECTestUtil.createSampleUser(oContact);
+        test.stopTest();  
+
+        System.runAs(u) {
+        
+            // Test #2 - search for unknown agency
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode('4444444', null, null, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
             
-            system.assert(IECApplicationsManager.isAgencyActive(AGENCY1_CODE) == true, 'The test agency should be active');
-            system.assert(IECApplicationsManager.isAgencyActive('6543218') == false, 'The test agency should not be active');
+            // usage should be consumed (even if no results)
+            lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
+            
+            //futuremethod
+            //system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 1, 'Product Access should reflect 1 search consumption');
+            
+            // Test #3 - search for a known agency
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode(AGENCY1_CODE, null, null, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult != null && lstSearchResult.size() == 1, 'The Agency should be found');
+            
+            // usage should be consumed
+            lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
+            
+            //system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 2, 'Product Access should reflect 2 search consumption');
+            
+            // make sure the search was tracked in the global counter
+           /* List<IEC_Usage_Tracker_Live__c> lstTracker = 
+                [SELECT Counter__c, Search_Status__c, Search_Target__c, Related_Application_Type__c, RelatedContact__c 
+                 FROM IEC_Usage_Tracker_Live__c
+                 WHERE RelatedContact__c = :oContact.Id
+                    AND Search_Status__c = :IECConstants.IECUsageTrackerSearchStatus_Success
+                    AND Search_Target__c = :IECConstants.IECUsageTrackerSearchTarget_Agency
+                    AND Related_Application_Type__c = :IECConstants.ProductCategory_SF_CACPRO];*/
+           // system.assert(lstTracker != null && lstTracker.size() > 0, 'There should be at least 1 IEC_Usage_Tracker_Live__c created');
+            
+            // Test #4 - search for invalid ID Card
+            oSearchedIDCard = IECApplicationsManager.customerSearchAgentByVER('3213211', IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(oSearchedIDCard == null, 'The ID Card should not be found for unknown VER number');
+            
+            // Test #5 - search for valid ID Card
+            oSearchedIDCard = IECApplicationsManager.customerSearchAgentByVER(AGENT_VER_NUMBER, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(oSearchedIDCard != null, 'The ID Card should be found');
+            // Test #6 - search for a known agency with a check code
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode(AGENCY1_CODE, null, AGENCY_CHECK_DIGIT, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult != null && lstSearchResult.size() == 1, 'The Agency should be found');
+            
+            ///////////////////////
+            // GAD Advanced search
+            // Test #7 - search for unknown sub-continent
+            // create some filter for unkown sub-continent
+            IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
+            insert oISOCountry;
+            GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
+            insert oGEODetail;
+            GDP_Address__c oGDPAddress1 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount1, oISOCountry, null, oGEODetail);
+            oGDPAddress1.Address_City__c = 'BOYA';
+            insert oGDPAddress1;
+            oGDPAccount1.Related_GDP_Address__c = oGDPAddress1.Id;
+            update oGDPAccount1;
+
+
+
+            IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
+            oFilter.Sub_Continent__c = 'Some sub-continent';
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No agency should be found');
+            // Test #8 - search for known sub-continent
+            
+            
+      //      throw new transformationException('oFilter.sub-continent ' + oGEODetail.Sub_Continent__c);
+
+
+
+
+//list<GDP_Products_Account_View__c> GDPs = (list<GDP_Products_Account_View__c>)database.query(sQueryFields);
+
+//throw new  transformationException('GDP_Products_Account_View__cs   ' +GDPs);
+
+            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter,
+                                                IECConstants.ProductCategory_SF_CACPRO,
+                                                 IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult != null
+                             && lstSearchResult.size() == 1 && 
+                             oGDPAccount1.Id == lstSearchResult.get(0).Id,
+                              'The Agency #1 should be found based on sub-continent');
+
+            // Test #9 - search by multiple filters with 2 agencies having the same city, country and sub-continent
+
+            //account 2 - start
+                oGDPAccount2 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
+                oGDPAccount1.Check_Digit__c = AGENCY_CHECK_DIGIT;
+                insert oGDPAccount2;
+
+                oAccreditation2 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount2, 'GDP');
+                oAccreditation2.Status__c = oRefAgencyStatus.Id;
+                insert oAccreditation2;
+                oGDPAccount2.Related_Accreditation_Class__c = oAccreditation2.Id;
+                update oGDPAccount2;
+
+            //account 2 - end
+
+            //GDP_Geo_Detail__c 2 - start
+                    
+                GDP_Geo_Detail__c oGEODetail2 = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
+                insert oGEODetail2;
+                GDP_Address__c oGDPAddress2 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount2, oISOCountry, null, oGEODetail2);
+                oGDPAddress2.Address_City__c = 'BOYA_2';
+                insert oGDPAddress2;
+                oGDPAccount2.Related_GDP_Address__c = oGDPAddress2.Id;
+                update oGDPAccount2;
+
+            //GDP_Geo_Detail__c 2 - end 
+
+            for (GDP_Products_Account_View__c g : [SELECT City__c, Sub_Continent__c, Country_ISO_Code__c FROM GDP_Products_Account_View__c WHERE ID IN (:oGDPAccount1.Id)]){
+                System.debug('SSS: City__c: ' + g.City__c + ', Sub_Continent__c: ' + g.Sub_Continent__c + ', Country_ISO_Code__c: ' + g.Country_ISO_Code__c);
+            }
+            
+            oFilter = new IEC_Application_Filter__c(); // reset filter
+            oFilter.City__c = oGDPAddress1.Address_City__c;
+            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
+            oFilter.Country__c = oGDPAddress1.Address_ISO_Country_Code__c;
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult != null && lstSearchResult.size() == 2, '2 agencies should be found based on sub-continent and city');
+            
+            for (GDP_Products_Account_View__c oAgency : lstSearchResult)
+                system.assert(oAgency.Id == oGDPAccount1.Id || oAgency.Id == oGDPAccount2.Id, 'Agency #1 and #2 should be found');
+
+            // Test #10 - search by zip/postal code with search type contains
+          }
+      }
+      
+
+   static void testCustomerSearch3Pre() {  
+            //account 3 - start
+            List<GDP_Products_Account_View__c> lstSearchResult = null;
+                 IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
+                insert oISOCountry;
+                GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
+                insert oGEODetail;
+                oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
+                oGDPAccount3.Check_Digit__c = AGENCY_CHECK_DIGIT;
+
+                insert oGDPAccount3;
+
+                oAccreditation3 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount3, 'GDP');
+                oAccreditation3.Status__c = oRefAgencyStatus.Id;
+                insert oAccreditation3;
+                oGDPAccount3.Related_Accreditation_Class__c = oAccreditation3.Id;
+                update oGDPAccount3;
+            //account 3 - end
+
+            GDP_Address__c oGDPAddress3 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount3, oISOCountry, null, oGEODetail);
+            oGDPAddress3.Address_Postal_Code__c = 'H0H 0H0';
+            oGDPAddress3.Address_Type__c = 'Location';
+            oGDPAddress3.Address_City__c = 'BOYA';
+            insert oGDPAddress3;
+
+            oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
+            update oGDPAccount3;
+
+            IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
+            oFilter.Zip_Code__c = '0H 0';
+            oFilter.City__c = oGDPAddress3.Address_City__c;
+            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
+            oFilter.Country__c = oGDPAddress3.Address_ISO_Country_Code__c;
+
+
+            
+
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+
+            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount3.Id == lstSearchResult.get(0).Id, 'The Agency #3 should be found based on the zip/postal code');
+            // 
+            // Test #11 - search by agency trade name (starts with) and city (exact match)
+            oFilter = new IEC_Application_Filter__c(); // reset filter
+            oFilter.Agency_Name__c = 'Chillwave Agency';
+            oFilter.Agency_Name_Search_Condition__c = IECConstants.GADAgencyNameSearchBy.TradingName.name();
+            oFilter.Agency_Name_Search_Type__c = IECConstants.GADSearchType.StartsWith.name();
+            oFilter.City__c = oGDPAddress3.Address_City__c;
+            oFilter.City_Search_Type__c = IECConstants.GADSearchType.ExactMatch.name();
+
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
         }
-        catch (Exception ex) {
-            system.assert(false, 'testAgencyStatus() should not throw any exception');
-        }
-    }
-    
-    @isTest(SeeAllData=true)
+     @isTest(SeeAllData=true)
     static void testLiveUsageTracking() {
         setupData();
         
@@ -254,153 +449,6 @@ private class IECApplicationsManager_tst {
             system.assertEquals(0, IECApplicationsManager.getDaysLeftForAccessByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_GAD), 'Should have 0 days left for a product not purchased');
         //}
 
-    }
-    
-    @isTest(SeeAllData=true)
-    static void testCustomerSearch() {
-        
-        List<IEC_Product_Access__c> lstProductAccess = null;
-        List<GDP_Products_Account_View__c> lstSearchResult = null;
-        ID_Card__c oSearchedIDCard = null;
-        Integer iUsageAccess;
-        
-        setupData();
-        
-        Test.startTest();
-            
-        initSubscription();
-        
-        // Test #0 - User has no Product Access as of now
-        lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-        system.assert(lstProductAccess == null || lstProductAccess.size() == 0, 'User should not have any Product Access object for CACPRO');
-        
-        iUsageAccess = IECApplicationsManager.ContactHasAccessToProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-        system.assertEquals(-1, iUsageAccess, 'Usage Access return should be -1 (no access)');
-        
-        // trigger the Product Access creation 
-        update oSubscription;
-        
-        Test.stopTest();
-        
-        // Test #1 - User should have 1 Product Access as of now
-        lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-        system.assert(lstProductAccess != null && lstProductAccess.size() == 1, 'User should have 1 Product Access object for CACPRO');
-        system.assertEquals(0, lstProductAccess.get(0).Usage_Qty_consumed__c, 'Quantity consumed should be 0');
-        
-        iUsageAccess = IECApplicationsManager.ContactHasAccessToProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-        system.assert(iUsageAccess >= 1, 'Usage Access return should be >=1 (has access)');
-        
-        User u = IECTestUtil.createSampleUser(oContact);
-        System.runAs(u) {
-        
-            // Test #2 - search for unknown agency
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode('4444444', null, null, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No Agency should be found');
-            
-            // usage should be consumed (even if no results)
-            lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-            //futuremethod
-            //system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 1, 'Product Access should reflect 1 search consumption');
-            
-            // Test #3 - search for a known agency
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode(AGENCY1_CODE, null, null, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 1, 'The Agency should be found');
-            
-            // usage should be consumed
-            lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-            //system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 2, 'Product Access should reflect 2 search consumption');
-            
-            // make sure the search was tracked in the global counter
-            List<IEC_Usage_Tracker_Live__c> lstTracker = 
-                [SELECT Counter__c, Search_Status__c, Search_Target__c, Related_Application_Type__c, RelatedContact__c 
-                 FROM IEC_Usage_Tracker_Live__c
-                 WHERE RelatedContact__c = :oContact.Id
-                    AND Search_Status__c = :IECConstants.IECUsageTrackerSearchStatus_Success
-                    AND Search_Target__c = :IECConstants.IECUsageTrackerSearchTarget_Agency
-                    AND Related_Application_Type__c = :IECConstants.ProductCategory_SF_CACPRO];
-           // system.assert(lstTracker != null && lstTracker.size() > 0, 'There should be at least 1 IEC_Usage_Tracker_Live__c created');
-            
-            // Test #4 - search for invalid ID Card
-            oSearchedIDCard = IECApplicationsManager.customerSearchAgentByVER('3213211', IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(oSearchedIDCard == null, 'The ID Card should not be found for unknown VER number');
-            
-            // Test #5 - search for valid ID Card
-            oSearchedIDCard = IECApplicationsManager.customerSearchAgentByVER(AGENT_VER_NUMBER, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(oSearchedIDCard != null, 'The ID Card should be found');
-            
-            // Test #6 - search for a known agency with a check code
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByIATACode(AGENCY1_CODE, null, AGENCY_CHECK_DIGIT, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 1, 'The Agency should be found');
-            
-            
-            ///////////////////////
-            // GAD Advanced search
-            // Test #7 - search for unknown sub-continent
-            // create some filter for unkown sub-continent
-            IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
-            insert oISOCountry;
-            GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
-            insert oGEODetail;
-            GDP_Address__c oGDPAddress1 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount1, oISOCountry, null, oGEODetail);
-            oGDPAddress1.Address_City__c = 'BOYA';
-            insert oGDPAddress1;
-            oGDPAccount1.Related_GDP_Address__c = oGDPAddress1.Id;
-            update oGDPAccount1;
-
-            IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
-            oFilter.Sub_Continent__c = 'Some sub-continent';
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult == null || lstSearchResult.size() == 0, 'No agency should be found');
-            
-            // Test #8 - search for known sub-continent
-            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #1 should be found based on sub-continent');
-            
-            // Test #9 - search by multiple filters with 2 agencies having the same city, country and sub-continent
-            GDP_Address__c oGDPAddress2 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount2, oISOCountry, null, oGEODetail);
-            oGDPAddress2.Address_City__c = 'BOYA';
-            insert oGDPAddress2;
-    
-            oGDPAccount2.Related_GDP_Address__c = oGDPAddress2.Id;
-            update oGDPAccount2;
-            
-            for (GDP_Products_Account_View__c g : [SELECT City__c, Sub_Continent__c, Country_ISO_Code__c FROM GDP_Products_Account_View__c WHERE ID IN (:oGDPAccount1.Id, :oGDPAccount2.Id)]){
-                System.debug('SSS: City__c: ' + g.City__c + ', Sub_Continent__c: ' + g.Sub_Continent__c + ', Country_ISO_Code__c: ' + g.Country_ISO_Code__c);
-            }
-            
-            oFilter = new IEC_Application_Filter__c(); // reset filter
-            oFilter.City__c = oGDPAddress1.Address_City__c;
-            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-            oFilter.Country__c = oGDPAddress1.Address_ISO_Country_Code__c;
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 2, '2 agencies should be found based on sub-continent and city');
-            for (GDP_Products_Account_View__c oAgency : lstSearchResult)
-                system.assert(oAgency.Id == oGDPAccount1.Id || oAgency.Id == oGDPAccount2.Id, 'Agency #1 and #2 should be found');
-
-            // Test #10 - search by zip/postal code with search type contains
-            GDP_Address__c oGDPAddress3 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount3, oISOCountry, null, oGEODetail);
-            oGDPAddress3.Address_Postal_Code__c = 'H0H 0H0';
-            insert oGDPAddress3;
-
-            oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
-            update oGDPAccount3;
-            
-            oFilter = new IEC_Application_Filter__c(); // reset filter
-            oFilter.Zip_Code__c = '0H 0';
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount3.Id == lstSearchResult.get(0).Id, 'The Agency #3 should be found based on the zip/postal code');
-            
-            // Test #11 - search by agency trade name (starts with) and city (exact match)
-            oFilter = new IEC_Application_Filter__c(); // reset filter
-            oFilter.Agency_Name__c = 'Chilly Cheese';
-            oFilter.Agency_Name_Search_Condition__c = IECConstants.GADAgencyNameSearchBy.TradingName.name();
-            oFilter.Agency_Name_Search_Type__c = IECConstants.GADSearchType.StartsWith.name();
-            oFilter.City__c = oGDPAddress2.Address_City__c;
-            oFilter.City_Search_Type__c = IECConstants.GADSearchType.ExactMatch.name();
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount2.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
-        }
     }
     
     @isTest(SeeAllData=true)
@@ -486,4 +534,5 @@ private class IECApplicationsManager_tst {
         oFilter = new IEC_Application_Filter__c();
         system.assertEquals(true, IECApplicationsManager.isApplicationFilterEmpty(oFilter), 'The filter should be considered empty');
     }
+
 }

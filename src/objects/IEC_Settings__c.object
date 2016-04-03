@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>Hierarchy</customSettingsType>
-    <customSettingsVisibility>Public</customSettingsVisibility>
     <description>Settings for the IEC project</description>
     <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>CAC_Web_Service_API_Gateway__c</fullName>
+        <description>The API Gateway Key to retrieve the usage and perform all kind of action like apply credit, suspend service...</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The API Gateway Key to retrieve the usage and perform all kind of action like apply credit, suspend service...</inlineHelpText>
+        <label>CAC Web Service API Gateway</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CAC_Web_Service_Usage_Url__c</fullName>
+        <description>Url to retrieve the usage from RDS mysql database</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Url to retrieve the usage from RDS mysql database</inlineHelpText>
+        <label>CAC Web Service Usage Url</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SchdlCACWSUsageUpdate_Class_ID__c</fullName>
+        <description>CACWSUsageUpdate Class Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>CACWSUsageUpdate Class Name</inlineHelpText>
+        <label>SchdlCACWSUsageUpdate Class ID</label>
+        <length>18</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Account_Owner_Id__c</fullName>
         <defaultValue>&quot;00520000002MSDBAA4&quot;</defaultValue>
@@ -334,4 +369,5 @@
         <type>Url</type>
     </fields>
     <label>IEC Settings</label>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -34,19 +34,6 @@ module.exports = function(grunt) {
           },
 
           pkg: changeset
-        },
-
-        preprod: {
-          options: {
-            serverurl: localConfig.salesforce.preprod.serverurl || localConfig.salesforce._default_.serverurl,
-            user: localConfig.salesforce.preprod.username || (localConfig.salesforce._default_.username + '.preprod'),
-            pass: localConfig.salesforce.preprod.password || localConfig.salesforce._default_.password,
-            token: localConfig.salesforce.preprod.token || localConfig.salesforce._default_.token,
-            retrieveTarget: 'build/preprod',
-            //existingPackage: true
-          },
-
-          pkg: changeset
         }
       },
       antdeploy:{
