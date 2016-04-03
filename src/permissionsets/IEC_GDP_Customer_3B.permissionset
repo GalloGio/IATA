@@ -137,6 +137,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SchdlIECClearLoadLogs_tst</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SchdlIECGDPReplication</apexClass>
         <enabled>false</enabled>
     </classAccesses>

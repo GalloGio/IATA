@@ -52,7 +52,6 @@
               "GDP_File_Delivery__c.Quantity_of_file_in_delivery__c",
               "GDP_File_Delivery__c.Status__c",
               "GDP_File_Delivery__c.Subscription__c",
-              "GDP_File_Delivery__c.Subscription_Product_Charge__c",
               "GDP_File_Delivery__c.Technical_Contact_Email__c",
               "GDP_File_Delivery__c.Technical_Contact_Name__c",
               "GDP_File_Description__c.Atom__c",
@@ -197,6 +196,7 @@
               "GDP_File_Production__c.Size__c"
             ],
             "ApexClass": [
+              "SchdlIECClearLoadLogs_tst",
               "BtchCACWSUsageUpdate",
               "BtchDeltaFileCleanup",
               "BtchGDPReplicate_tst",
@@ -354,7 +354,6 @@
               "IECApp_CSS",
               "IECApp_Tootip",
               "IECAppHeader",
-              "IECGADAgencyDetails",
               "IECGSSMenu",
               "IECSubscriptionInfo"
             ],

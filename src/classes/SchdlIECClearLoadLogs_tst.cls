@@ -17,6 +17,9 @@ private class SchdlIECClearLoadLogs_tst {
 			, IEC_Web_Service_Username__c = 'Test'
 			, SchdlIECCompileUsage_Class_ID__c = 'Test'
 			, Server_API_URL__c = 'Test'
+			, CAC_Web_Service_API_Gateway__c = 'Test'
+			, CAC_Web_Service_Usage_Url__c = 'Test'
+			, SchdlCACWSUsageUpdate_Class_ID__c = 'Test'
 			, Error_Log_Keep_Duration__c = 6);
 
 		IEC_Error_Log__c e1 = new IEC_Error_Log__c();
