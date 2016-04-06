@@ -47,7 +47,12 @@
                 <field>Related_GDP_Products_Account_View__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Account__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -87,6 +92,14 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Airline_Name__c</fields>
+        <fields>Territory_Description__c</fields>
+        <fields>Territory_ISO_Country__c</fields>
+        <fields>Territory_State_Abbreviation__c</fields>
+        <relatedList>GSA_Territory__c.Related_Accreditation__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

@@ -909,4 +909,13 @@ public with sharing class IECTestUtil {
         List<Profile> lstProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator - automated processes'];
         return (lstProfile.isEmpty() ? null : lstProfile.get(0).Id) + '' + ((bIgnoreCurrentUserProfile == null || !bIgnoreCurrentUserProfile) ? ',' + Userinfo.getProfileId() : '');
     }
+    
+    public static GDP_File_Description__c CreateSampleGDPFileDescription(String sClass, String sFrequency, String sProductType) {
+        return new GDP_File_Description__c (
+          Name = 'Test File Description-' + (Math.random()*1000000000)
+          , Class__c = sClass
+          , Frequency__c = sFrequency
+          , Product_Type__c = sProductType
+        );
+    }
 }

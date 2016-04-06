@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>GDP_Products_Account_View_Compact</compactLayoutAssignment>
     <compactLayouts>
         <fullName>GDP_Products_Account_View_Compact</fullName>
@@ -59,6 +60,158 @@
     <enableReports>true</enableReports>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AgRef__c</fullName>
+        <description>Output &quot;GDP&apos; if null (US Agencies) else. Trim out the trailing GDP</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(AIMS_ID__c), &quot;GDP&quot;,
+IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_ID__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AgRef</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AgXRef__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
+                             &apos;&apos;, 
+  Parent_GDP_Account_View__r.AgRef__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AgXRef</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Status_Code_Interpreted__c</fullName>
+        <description>Agency Status Code for non-Member  0 or 9</description>
+        <externalId>false</externalId>
+        <formula>if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3,
+9,
+0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Agency Status Code Interpreted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Area__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Area</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Eth2__c</fullName>
+        <description>Reserved   left blank</description>
+        <externalId>false</externalId>
+        <formula>&quot;  &quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Eth2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Eth3__c</fullName>
+        <description>Reserved   left blank</description>
+        <externalId>false</externalId>
+        <formula>&quot;  &quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Eth3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GSS_MDP_Sort_Key_Formula__c</fullName>
+        <description>String formula field used to allow sorting for GSS and MDP master file generation. 
+This field is for system use  related to the GDP_REST_Payload, and GDP_File_Descripton.Order_By
+Please ensure the key is unique.
+The length is the total of the original fields (Area, Country_Code, Legal_Name, Id, plus separators).</description>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c 
++ &apos;:&apos; 
++ Related_GDP_Address__r.Address_ISO_Country_Code__c 
++ &apos;:&apos; 
++ Legal_Name_1__c + Legal_Name_2__c + Legal_Name_3__c 
++ &apos;:&apos; 
++ Id</formula>
+        <inlineHelpText>Key string used for sorting in GSS and MDP file generation. This field is for system use only.</inlineHelpText>
+        <label>GSS_MDP Sort Key Formula</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>XArea__c</fullName>
+        <description>Cross-reference Area 1, 2 or 3.</description>
+        <externalId>false</externalId>
+        <formula>IF
+(ISBLANK(Parent_GDP_Account_View__c), 
+                             Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c, 
+  Parent_GDP_Account_View__r.Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>XArea</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>XIATACass__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
+                             CASS_Number__c, 
+  Parent_GDP_Account_View__r.CASS_Number__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>XIATACass</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>XIATAChk__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
+                             Check_Digit__c, 
+  Parent_GDP_Account_View__r.Check_Digit__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>XIATAChk</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>XIATACode__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
+                             IATA_Code__c, 
+  Parent_GDP_Account_View__r.IATA_Code__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>XIATACode</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>AIMS_ID__c</fullName>
         <caseSensitive>false</caseSensitive>

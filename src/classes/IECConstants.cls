@@ -35,7 +35,7 @@ global class IECConstants {
 	public static final string PARAM_SHOWMAPSEMAILS =	 			'se';
 	public static final string PARAM_SHOWMAPSFLAGS = 				'sf';
 
-
+	
 	
 	// Custom Labels: Error
 	public static string Error_InvalidProductCode = Label.IEC_Error_InvalidProductCode;
@@ -129,6 +129,7 @@ global class IECConstants {
 	
 	// Product Category in Zuora
 	public static final string ProductCategory_Zuora_CAC = 'CheckACode Professional';
+	public static final string ProductCategory_Zuora_CACWEB = 'CheckACode Web Service';    
 	public static final string ProductCategory_Zuora_GSS = 'Global System Solutions';
 	public static final string ProductCategory_Zuora_MDP = 'Marketing Data Package';
 	public static final string ProductCategory_Zuora_GAD = 'Global Agency Directory';
@@ -237,7 +238,7 @@ global class IECConstants {
 			return IEC_Settings__c.getOrgDefaults().InvoiceTemplate_Bank_Transfer_Zuora_ID__c;
 		}
 	}
-	
+
 	public static String InvoiceTemplate_Credit_Card_ZuoraID {
 		get {
 			return IEC_Settings__c.getOrgDefaults().InvoiceTemplate_Credit_Card_Zuora_ID__c;

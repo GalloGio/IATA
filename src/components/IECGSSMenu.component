@@ -1,0 +1,125 @@
+<apex:component access="global" allowDML="true" rendered="true" controller="vcIECAppMenu">
+    <apex:attribute name="disableMenu" description="Disable Side Menu" type="boolean" default="false"/>
+    <apex:attribute name="SubscriptionNumber" description="Subscription Number selected from landing page" type="string" assignTo="{!sSubscriptionNumber}" />
+    <apex:attribute name="ProductCode" description="Product code to define which application currently working on" type="string" assignTo="{!sProductCode}" />
+
+    <div class="tabs">
+        <apex:outputPanel layout="none" rendered="{!NOT(disableMenu)}">
+            <ul class="closed">
+                <li>
+                    <apex:commandLink action="{!NavigateTo}" value="All Subscriptions">
+                        <apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+                <li class="heading">
+                    <div class="account-icon" />
+                    Service Details
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfddetail', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="View Details">
+                        <apex:param name="sPageName" value="IECFDDetail" assignTo="{!sPageName}"/>
+                    </apex:commandLink> 
+                </li>
+                <li class="heading">
+                    <div class="getmore-icon" />
+                    File Delivery
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfdcalendar', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="File Delivery Calendar">
+                        <apex:param name="sPageName" value="IECFDCalendar" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfdfilename', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="File Naming Convention">
+                        <apex:param name="sPageName" value="IECFDFileName" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfdhist', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="File Delivery History">
+                        <apex:param name="sPageName" value="IECFDHist" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+                <!-- li class="heading">
+                    <div class="security-icon" />
+                    Delivery Options
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfdtriggerfile', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="Trigger File">
+                        <apex:param name="sPageName" value="IECFDTriggerFile" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li -->
+                <li class="heading">
+                    <div class="security-icon" />
+                    File Retrieval
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfdfilerecipientdetail', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="File Recipient Details">
+                        <apex:param name="sPageName" value="IECFDFileRecipientDetail" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfdiinet', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="IINET Account Information">
+                        <apex:param name="sPageName" value="IECFDIINET" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+                <li class="heading">
+                    <div class="payment-icon"/>
+                    Documentation
+                </li>
+                <li class="{!IF(LOWER($CurrentPage.Name) == 'iecfddoc', 'selected', '')}">
+                    <apex:commandLink action="{!NavigateTo}" value="Technical Documents">
+                        <apex:param name="sPageName" value="IECFDDoc" assignTo="{!sPageName}"/>
+                    </apex:commandLink>
+                </li>
+            </ul>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!disableMenu}">
+            <ul class="closed">
+                <li class="heading">
+                    <div class="account-icon" />
+                    Service Details
+                </li>
+                <li>
+                    <a href="">View Details</a>
+                </li>
+                <li class="heading">
+                    <div class="getmore-icon" />
+                    File Delivery
+                </li>
+                <li>
+                    <a href="">File Delivery Calendar</a>
+                </li>
+                <li>
+                    <a href="">File Naming Convention</a>
+                </li>
+                <li>
+                    <a href="">File Delivery History</a>
+                </li>
+                <!-- li class="heading">
+                    <div class="security-icon" />
+                    Delivery Options
+                </li>
+                <li>
+                    <a href="">Trigger File</a>
+                </li-->
+                <li class="heading">
+                    <div class="security-icon" />
+                    File Retrieval
+                </li>
+                <li>
+                    <a href="">File Recipient Details</a>
+                </li>               
+                <li>
+                    <a href="">IINET Account Information</a>
+                </li>
+                <li class="heading">
+                    <div class="payment-icon"/>
+                    Documentation
+                </li>
+                <li>
+                    <a href="">Technical Documents</a>
+                </li>
+            </ul>
+        </apex:outputPanel>
+    </div>
+</apex:component>

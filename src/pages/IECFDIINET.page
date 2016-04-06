@@ -1,0 +1,132 @@
+<apex:page title="{!sApplicationTitle} - iiNet Details" controller="vfIECGSSFileRecipientDetail" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>{!sApplicationTitle} - iiNet Details</title>
+    <div class="gdpwrapper">
+        <div class="gdpbody">
+            <c:IECAppHeader applicationTitle="{!sApplicationTitleUpperCase}" applicationCode="{!sProductCode}" subInfoController="{!ctrSubsInfo}" showSearchOptions="false" showLastOfUpdate="false" />
+            
+            <c:IECApp_Tootip />
+            <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'profile.css')}" />
+            <style>
+                .features {
+                border-bottom: 1px dashed #1ebec8;
+                }
+                #register .row .settings-item {
+                    width: auto !important;
+                }
+                #register .box .informationTable td span {
+                color: black;
+                }
+                #register .box.register a.customButton {
+                    color: white;
+                    text-decoration: none;
+                }
+            </style>
+            <apex:form id="GSSTriggerForm" forcessl="true">
+                <!-- Content panel controlling the access to the application -->
+                <apex:outputpanel id="panelAccess" layout="block" rendered="{!ctrSubsInfo.hasPageAccess}">
+                    <table class="tableHolder">
+                        <tr>
+                            <td class="menu-Panel">
+                                <c:IECGSSMenu SubscriptionNumber="{!subscriptionObj.Name}" ProductCode="{!sProductCode}"/>
+                            </td>
+                            <td class="account-Panel">
+                                <div class="content-container">
+                                    <div id="register">
+                                        <!--  form entry box -->
+
+                                        <div class="box register fit1024">
+                                            <div class="header">
+                                                <p>iiNet Details</p>
+                                            </div>
+                                            <div class="content" style="min-height:350px; padding: 10px;">
+                                                <div class="subscriptionInfos" >
+                                                
+                                                    <h2>iiNet Configuration</h2>
+                                                    <div class="row" style="margin-top:15px;">
+                                                        <div class="settings-item" style="width: auto;">
+                                                            <table border="0" bgcolor="#FFFFFF" style="width: 100%">
+                                                                <tbody class="rich-table-tbody">
+   
+                                                                    <tr>
+                                                                        <td class="summaryLabel">File Recipient iiNET account:</td>
+                                                                        <td class="summaryData">{!sFileRecipientiiNet}</td>
+                                                                    </tr>
+                                                                    <br/>
+                                                                    <tr>
+                                                                        <td>    
+                                                                            <br/>                                                                   
+                                                                        </td>                                                                       
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="summaryLabel">iiNet Link:</td>
+                                                                        <td class="summaryData">    
+                                                                        <!--
+                                                                        <button type="button" onclick="https://iata-s.iinet.org/"  target="_blank"  style="width:125px;display:inline-block;" rendered="{!bViewMode}" >
+                                                                            iiNET
+                                                                        </button>-->
+                                                                            <apex:outputLink id="iiNETButton" 
+                                                                            styleClass="customButton lastElm" 
+                                                                            style="width:125px;display:inline-block;" 
+                                                                            value="https://iata-s.iinet.org/" 
+                                                                            target="_blank"
+                                                                            rendered="{!bViewMode}" >
+                                                                            iiNET 
+                                                                            </apex:outputLink>
+                                                                                                                                                
+                                                                        </td>
+                                                                    </tr>                                                                    
+                                                                    <tr>
+                                                                        <td>    
+                                                                            <br/>                                                                   
+                                                                        </td>                                                                       
+                                                                        <td></td>
+                                                                    </tr>
+                                                                
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <h2>IINET products and services</h2>
+                                                    <div class="row" style="margin-top:15px;">
+                                                        <div class="settings-item" >
+                                                            <table border="0" bgcolor="#FFFFFF" style="width: 100%">
+                                                                <tbody class="rich-table-tbody">
+   
+                                                                    <tr>
+                                                                        <td class="summaryLabel">
+                                                                        Ghetto ipsizzle get down get down sit amizzle, go to hizzle adipiscing uhuh ... 
+                                                                        yih!. Nullizzle brizzle velizzle, aliquet volutpizzle, funky fresh quis, fizzle vel, black. Pellentesque 
+                                                                        im in the shizzle tortor. Sheezy erizzle. Sure at dolor dapibus away tempizzle boom shackalack. 
+                                                                        Dang pellentesque nibh izzle dope. Vestibulum sheezy tortor. Pellentesque eleifend rhoncizzle boofron. 
+                                                                        For sure crazy platea dictumst. Rizzle dapibizzle. I saw beyonces tizzles and my pizzle went crizzle 
+                                                                        tellizzle urna, gizzle fo shizzle, mattis izzle, eleifend vitae, nunc. Bizzle suscipizzle. Boom shackalack 
+                                                                        yippiyo velit sizzle purus.
+                                                                        </td>   
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>                                                                      
+                                                </div>
+                                                
+                                                 
+                                            </div>
+                                        </div>
+                                        <div class="clear"></div>                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="footter"> </div>
+                </apex:outputpanel>
+                <!-- Content panel without access to the application -->
+                <apex:outputpanel id="panelNotAccess" layout="block" rendered="{!NOT(ctrSubsInfo.hasPageAccess)}" />
+            </apex:form>
+        </div>
+        <!-- GDP Footer -->
+        <c:IECGDPFooter />
+    </div>
+</apex:page>

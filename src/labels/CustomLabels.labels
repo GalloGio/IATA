@@ -3208,6 +3208,13 @@ and
         <value>The Default payment method has been successfully updated.</value>
     </labels>
     <labels>
+        <fullName>IEC_Confirm_SaveSuccessful</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_Confirm_SaveSuccessful</shortDescription>
+        <value>Settings have been saved successfully.</value>
+    </labels>
+    <labels>
         <fullName>IEC_Error_AcceptTermAndCondition</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3369,6 +3376,13 @@ and
         <value>The Email is invalid</value>
     </labels>
     <labels>
+        <fullName>IEC_Error_InvalidFileNameFormat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_Error_InvalidFileNameFormat</shortDescription>
+        <value>Invalid file name format for field {0}. Can only use Alpha-numeric characters and &apos;.&apos;</value>
+    </labels>
+    <labels>
         <fullName>IEC_Error_InvalidPageParameter</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3416,6 +3430,13 @@ and
         <protected>false</protected>
         <shortDescription>IEC_Error_MustLogin</shortDescription>
         <value>You must be logged in order to proceed.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_Error_Must_Select_Subscription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Error Must Select Subscription</shortDescription>
+        <value>You must select a subscription from the application landing page before navigating to the subscription details.</value>
     </labels>
     <labels>
         <fullName>IEC_Error_No_Application_Access</fullName>

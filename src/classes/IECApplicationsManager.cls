@@ -1,3 +1,9 @@
+/*
+ * IECApplicationsManager 
+ * Change log:
+ *  20160324-sl: change getListProductAccessByContactByProductCategory/getListProductAccessByContactBySubscriptionNumber to use getSubscriptionEvergreenNameListByBillingContactId
+ * 
+ */
 public without sharing class IECApplicationsManager {
     public static List<Id> cachedAgencyIds;
     
@@ -27,7 +33,7 @@ public without sharing class IECApplicationsManager {
      * @return If agent and associated agency is valid: an ID Card
      *         If agent existed but is no longer valid (or agency): an ID Card with an empty status
      *         If agent not found: null
-     */
+     */ 
     private static ID_Card__c getAgentByVerCode(String verCode) {
 
         if (String.isBlank(verCode)) return null;
@@ -96,8 +102,8 @@ public without sharing class IECApplicationsManager {
                     AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
         }
         else {
-        	CASSCode = CASSCode.trim();
-        	
+            CASSCode = CASSCode.trim();
+            
             lstAgency = 
                 [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
                     g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
@@ -143,7 +149,7 @@ public without sharing class IECApplicationsManager {
         system.debug('** - getAgencyByAgencyCode: agencyCode = ' + agencyCode + ', checkCode = ' + checkCode + ', CASSCode = ' + CASSCode);
         
         if (checkCode != null && checkCode != '') {
-        	checkCode = checkCode.trim();
+            checkCode = checkCode.trim();
             
             if (CASSCode == null || CASSCode == '') {
                 //No CASS Code --> Query for IATA + Check codes
@@ -206,10 +212,10 @@ public without sharing class IECApplicationsManager {
      * @return A list of GDP_Products_Account_View__c objects
      */
     private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode) {
-    	return getAgencyByAdvancedFilters(oAdvancedFilters, sProductCategoryCode, true);
+        return getAgencyByAdvancedFilters(oAdvancedFilters, sProductCategoryCode, true);
     }
-     
-    private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode, Boolean bReturnAllFields ) {
+    
+    private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode, Boolean bReturnAllFields) {
 
 
         String sQueryFields;
@@ -440,7 +446,7 @@ public without sharing class IECApplicationsManager {
      * @param sStatusOfSearch Success or Fail (use IECConstants.IECUsageTrackerSearchStatus_Fail or IECConstants.IECUsageTrackerSearchStatus_Success)
      */          
     private static void trackAndConsumeUsage(IECCustomer oCustomer, String sProductCategoryCode, String sSearchTarget, String sStatusOfSearch) {
-    	trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
+        trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
     }
     
     //moved to a future method to reduce query time and optimize the returned result speed
@@ -715,7 +721,7 @@ public without sharing class IECApplicationsManager {
                 }
                 else {
                     oProductAccess.Usage_Qty_Start__c = null;
-                    oProductAccess.Usage_Qty_Left__c = null;
+                    oProductAccess.Usage_Qty_Left__c = null; 
                     oProductAccess.Usage_Unlimited__c = true;
                 }
             }
@@ -764,7 +770,24 @@ public without sharing class IECApplicationsManager {
                 ORDER BY Effective_End_Date__c];
     }
     
-    /** 
+    /**
+     * Returns the list of Product Access that are currently effective for a Subscription Number, for a given Contact
+     * @param idContact ID of the Contact associated to the customer
+     * @param sSubscriptionNumber
+     */
+    public static List<IEC_Product_Access__c> getListProductAccessByContactBySubscriptionNumber(Id idContact, String sSubscriptionNumber) {
+        return [SELECT Id, Active__c, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Usage_Qty_consumed__c
+                , Effective_Start_Date__c, Effective_End_Date__c, Subscription_Number__c
+                FROM IEC_Product_Access__c
+                WHERE Effective_Start_Date__c <= Today
+                    AND Effective_End_Date__c >= Today
+                    AND Active__c = true
+                    AND Related_Contact__c = :idContact
+                    AND Subscription_Number__c = :sSubscriptionNumber
+                ORDER BY Effective_End_Date__c];
+    }
+    
+    /**
      * Checks whether contact has access to a specific ProductCategory
      * @param idContact Id of the Contact in question
      * @param ProductCategory Product Category that needs checking
@@ -780,6 +803,40 @@ public without sharing class IECApplicationsManager {
             return -1;
         
         List<IEC_Product_Access__c> lstAccess = getListProductAccessByContactByProductCategory(idContact, sProductCategory);
+
+        if (lstAccess.size() > 0) {
+            integer iUsageCount= 0;
+            
+            for (IEC_Product_Access__c access : lstAccess) {
+                // Stop counting and return unlimited
+                if (access.Usage_Unlimited__c)
+                    return -999;
+                
+                iUsageCount +=  (Integer)access.Usage_Qty_Left__c;
+            }
+
+            return iUsageCount;
+        }
+        else
+            return -1;
+    }
+    
+    /** 
+     * Checks whether contact has access to a specific Subscription
+     * @param idContact Id of the Contact in question
+     * @param sSubscriptionName Subscription Number that needs checking
+     * @return Number indicating whether user has access to the product category
+     *    -999: User has access to the service with unlimited usage
+     *      -1: User has no access to the service
+     *       0: User has access to the service but no usage available
+     *     >=1: User has access to the service and the returned number is the remaining usage count
+     * @ASSUMPTION: All subscription will count towards the same user and usage will be added as one counter per contact, not per subscription
+     */
+    public static integer ContactHasAccessToSubscriptionName(Id idContact, String sSubscriptionName) {
+        if (idContact == null || String.isBlank(sSubscriptionName))
+            return -1;
+        
+        List<IEC_Product_Access__c> lstAccess = getListProductAccessByContactBySubscriptionNumber(idContact, sSubscriptionName);
 
         if (lstAccess.size() > 0) {
             integer iUsageCount= 0;
@@ -941,6 +998,45 @@ public without sharing class IECApplicationsManager {
     }
     
     /**
+     * Returns the Effective End Date of the selected subscription
+     * @param sSubscriptionName The Subscription Number
+     * @return The Effective End Date of the specified subscription
+     */
+    public static Date getEnddateOfSubscriptionName(String sSubscriptionName) {
+
+        if (String.isBlank(sSubscriptionName)) throw new IECApplicationException('sSubscriptionName cannot be null');
+            
+        // get the list of Product Access for subscription number
+        List<IEC_Product_Access__c> lstAccess =
+            [SELECT Id, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Effective_End_Date__c
+            FROM IEC_Product_Access__c
+            WHERE Effective_Start_Date__c <= Today
+                AND Effective_End_Date__c >= Today
+                AND Active__c = true
+                AND Subscription_Number__c = :sSubscriptionName];
+        
+        if (lstAccess == null || lstAccess.size() == 0)
+            return null;
+            
+        Datetime dtSubscriptionEndDate = lstAccess.get(0).Effective_End_Date__c;
+        return (dtSubscriptionEndDate != null ? dtSubscriptionEndDate.date() : null);
+    }
+    
+    /**
+     * Returns the number of days between today and the end date of the subscription
+     * @param sSubscriptionName The Subscription Number
+     * @return The number of days left
+     */
+    public static integer getDaysLeftForAccessBySubscriptionName(String sSubscriptionName) {
+
+        if (String.isBlank(sSubscriptionName)) throw new IECApplicationException('sSubscriptionName cannot be null');
+
+        Date dtSubscriptionEndDate = getEnddateOfSubscriptionName(sSubscriptionName);
+
+        return (dtSubscriptionEndDate != null ? Date.today().daysBetween(dtSubscriptionEndDate) : 0);
+    }
+    
+    /**
      * Get a saved filters used for the application searching 
      * @param sFilter Id of the filter
      * @return Saved filter
@@ -972,6 +1068,7 @@ public without sharing class IECApplicationsManager {
         String NullProductLine=null;
         if (ProductLine!='GAD') NullProductLine=ProductLine;
         try {
+            
             List<IEC_Application_Filter__c> lstFilters =
                 [SELECT Agency_Name__c
                     , Agency_Name_Search_Condition__c
