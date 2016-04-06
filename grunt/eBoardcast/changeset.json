@@ -1,5 +1,16 @@
 {
-	"CustomObject": [
-		"*"
+	"ApexPage": [
+		"IECHomepage",
+		"IECEBroadcastLayout",
+		"IECEBroadcast",
+		"IECEBroadcastCampaign"
+	],
+	"ApexClass": [
+		"IECConstants",
+		"vfIECEBroadcast",
+		"VfIECSiteHeaderComponent"
+	],
+	"StaticResource": [
+		"eBroadcastAssets"
 	]
 }
