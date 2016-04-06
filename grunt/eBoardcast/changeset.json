@@ -1,5 +1,9 @@
 {
-	"CustomObject": [
-		"*"
+	"ApexPage": [
+		"IECEBroadcast"
+		"IECHomepage"
+	],
+	"ApexClass": [
+		"IECConstants"
 	]
 }
