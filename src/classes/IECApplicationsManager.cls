@@ -759,11 +759,12 @@ public without sharing class IECApplicationsManager {
      * @param sProductCategory
      */
     public static List<IEC_Product_Access__c> getListProductAccessByContactByProductCategory(Id idContact, String sProductCategory) {
+        List<String> evergreenSubscriptionName = getSubscriptionEvergreenNameListByBillingContactId(idContact);
         return [SELECT Id, Active__c, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Usage_Qty_consumed__c
                 , Effective_Start_Date__c, Effective_End_Date__c, Subscription_Number__c
                 FROM IEC_Product_Access__c
                 WHERE Effective_Start_Date__c <= Today
-                    AND Effective_End_Date__c >= Today
+                    AND ( Effective_End_Date__c >= Today OR Subscription_Number__c in : evergreenSubscriptionName)
                     AND Active__c = true
                     AND Related_Contact__c = :idContact
                     AND Related_Rate_Plan_Info__r.Related_Product_Information__r.Related_Product_Category__r.Name = :sProductCategory
@@ -776,11 +777,12 @@ public without sharing class IECApplicationsManager {
      * @param sSubscriptionNumber
      */
     public static List<IEC_Product_Access__c> getListProductAccessByContactBySubscriptionNumber(Id idContact, String sSubscriptionNumber) {
+        List<String> evergreenSubscriptionName = getSubscriptionEvergreenNameListByBillingContactId(idContact);
         return [SELECT Id, Active__c, Usage_Qty_Start__c, Usage_Qty_Left__c, Usage_Unlimited__c, Usage_Qty_consumed__c
                 , Effective_Start_Date__c, Effective_End_Date__c, Subscription_Number__c
                 FROM IEC_Product_Access__c
                 WHERE Effective_Start_Date__c <= Today
-                    AND Effective_End_Date__c >= Today
+                    AND ( Effective_End_Date__c >= Today OR Subscription_Number__c in : evergreenSubscriptionName)
                     AND Active__c = true
                     AND Related_Contact__c = :idContact
                     AND Subscription_Number__c = :sSubscriptionNumber
@@ -788,6 +790,25 @@ public without sharing class IECApplicationsManager {
     }
     
     /**
+     * Returns the list of Evergreen Subscription Names for a given ContactId
+     */
+    private static List<String> getSubscriptionEvergreenNameListByBillingContactId(Id idContact) {
+        List<Zuora__Subscription__c> subscriptionList = [SELECT Id, Name, Zuora__Zuora_Id__c
+                	//,  Zuora__TermSettingType__c
+                FROM Zuora__Subscription__c
+                WHERE Zuora__CustomerAccount__r.Contact__c = :idContact
+                     AND Zuora__TermSettingType__c = 'EVERGREEN'
+                ORDER BY Name];
+        List<String> subscriptionNameList = new List<String> ();
+        for (Zuora__Subscription__c zuoraSub : subscriptionList)
+        {
+            subscriptionNameList.add(zuoraSub.Name);
+        }
+        return subscriptionNameList;
+    } // end of getSubscriptionEvergreenNameListByBillingAccountId
+    
+    
+    /** 
      * Checks whether contact has access to a specific ProductCategory
      * @param idContact Id of the Contact in question
      * @param ProductCategory Product Category that needs checking

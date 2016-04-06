@@ -1,5 +1,6 @@
 public with sharing class vfIECHomePage extends IECPageController {
   	public String sURLProdCACPro 	{get; set;}
+	public String sURLProdCACWeb 	{get; set;}
 	public String sURLProdGAD	 	{get; set;}
 	public String sURLProdGSS 		{get; set;}
 	public String sURLProdMDP		{get; set;}
@@ -43,6 +44,7 @@ public with sharing class vfIECHomePage extends IECPageController {
 	 */
 	public vfIECHomePage() {
 		sURLProdCACPro = IEC_Settings__c.getOrgDefaults().Prod_CACPro__c;
+		sURLProdCACWeb = IEC_Settings__c.getOrgDefaults().Prod_CACWeb__c;
 		sURLProdGAD 	= IEC_Settings__c.getOrgDefaults().Prod_GAD__c;
 		sURLProdGSS 	= IEC_Settings__c.getOrgDefaults().Prod_GSS__c;
 		sURLProdMDP 	= IEC_Settings__c.getOrgDefaults().Prod_MDP__c;

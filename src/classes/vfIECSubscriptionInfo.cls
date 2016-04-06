@@ -47,6 +47,15 @@ public without sharing class vfIECSubscriptionInfo {
 	public Date	dtSubscriptionEndDate {
 		get {return oSubscription == null ? null : oSubscription.Zuora__SubscriptionEndDate__c;} }
 		
+    // used to define how to display subscription end date line in the pull down menu
+    public Boolean isNotEvergreen {
+        get {
+            Boolean result = true;
+            //result = (oSubscription.Zuora__SubscriptionEndDate__c != null);
+            result = (oSubscription.Zuora__TermSettingType__c != 'EVERGREEN');
+            return result;
+        }
+    } // isNotEvergreen
 	
     
     public Boolean validateAccess(Set<String> allowedApplicationName) {
