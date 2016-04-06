@@ -340,7 +340,7 @@
                                         <apex:commandButton id="btnSave" styleClass="customButton small" style="background:#737d87;width:283px;" value="Save Filter" onclick="saveFilterPopup('');return false;" reRender="errorMessage,panelAccess" />
                                     </td>
                                     <td>
-                                        <apex:commandButton id="btnSearch" styleClass="customButton small" style="width:284px;" value="Search Agencies" action="{!searchAgencies}" onclick="changeCursorProgress(this); increaseUssage();" oncomplete="changeCursorDefault(this)" reRender="errorMessage,errorPanel" />
+                                        <apex:commandButton id="btnSearch" styleClass="customButton small" style="width:284px;" value="Search Agencies" action="{!searchAgencies}" reRender="errorMessage,errorPanel" oncomplete="changeCursorDefault(this)" onclick="changeCursorProgress(this); increaseUssage();" />
                                     </td>
                                 </tr>
                             </table>
