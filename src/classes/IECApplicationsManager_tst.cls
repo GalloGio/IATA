@@ -371,8 +371,8 @@ test.startTest();
 
             oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
             update oGDPAccount3;
-            bat = new SchdlGDPProductsAccountSnapshotCleanup();
-            gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+            SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
+            List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
             bat.execute(null, gpav);
 
             IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
