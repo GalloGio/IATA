@@ -1,9 +1,16 @@
 {
 	"ApexPage": [
-		"IECEBroadcast"
-		"IECHomepage"
+		"IECHomepage",
+		"IECEBroadcastLayout",
+		"IECEBroadcast",
+		"IECEBroadcastCampaign"
 	],
 	"ApexClass": [
-		"IECConstants"
+		"IECConstants",
+		"vfIECEBroadcast",
+		"VfIECSiteHeaderComponent"
+	],
+	"StaticResource": [
+		"eBroadcastAssets"
 	]
 }
