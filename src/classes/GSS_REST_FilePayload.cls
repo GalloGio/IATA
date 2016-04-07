@@ -1,10 +1,12 @@
 @RestResource(urlMapping='/GSS/v0/FileDataAgency/*')
 /*
  * GSS_REST_FilePayload returns the data file for Agency / GDP_Products_Account_View, 
+ *  - URI Parameter:  FileSpecificationId, LastRetrievedRecordId, RequestSizeFactor
  *
  * Change log:
  *   20160212-sl: Order as defined in GDP_File_Description__c.Order_By, e.g. GSS_MDP_Sort_Key_Formula
  *   20160215-sl: Do not decode lastRetrievedRecordId back with EncodingUtil.urlDecode(), incoming parameter is already decoded
+ *   20160407-sl: Add RequestSizeFactor parameter to allow reducing limit defined by Maximum_API_Request
  *
  */
 global with sharing class GSS_REST_FilePayload {
@@ -33,6 +35,12 @@ global with sharing class GSS_REST_FilePayload {
             //lastRetrievedRecordId will be used to recall the function to get more records than the BATCH_SIZE
             //the usage of value of lastRetrieveRecordId will also depend of related GDP_File_Description__c.Product_Type__c
             String lastRetrievedRecordIdParameter = RestContext.request.params.get('LastRetrievedRecordId');
+            
+            // Get Optional RequestSizeFactor parameter, and use it to set DividerFactor
+            String RequestSizeFactorStr = RestContext.request.params.get('RequestSizeFactor');
+            Integer RequestSizeFactor = (RequestSizeFactorStr == null) ? 0 : Integer.valueOf(RequestSizeFactorStr); 
+            RequestSizeFactor = (RequestSizeFactor == null) ? 0 : RequestSizeFactor; 
+            Integer DividerFactor = Integer.valueOf(Math.pow(2, RequestSizeFactor));
             
             //TODO: Load the SQL information from File Specification
             List<GDP_File_Description__c> filespecificationlist = new List<GDP_File_Description__c>();
@@ -74,8 +82,11 @@ global with sharing class GSS_REST_FilePayload {
             {
                 
             }
-            Integer NEW_BATCH_SIZE=BATCH_SIZE;
+            // NEW_BATCH_SIZE is used to limit the number of rows requested
+            Integer NEW_BATCH_SIZE= BATCH_SIZE;
             if (filespecificationlist[0].Reference__r.Maximum_API_Request__c!=null) NEW_BATCH_SIZE=Integer.ValueOf(filespecificationlist[0].Reference__r.Maximum_API_Request__c);
+            
+            NEW_BATCH_SIZE =  Integer.valueOf(Math.floor(NEW_BATCH_SIZE / DividerFactor)) + 1;
             
             List<GDP_File_Production__c> fileproductionlist = new List<GDP_File_Production__c>();
             fileproductionlist = [Select Id,File_Specification__c, LastModifiedDate 

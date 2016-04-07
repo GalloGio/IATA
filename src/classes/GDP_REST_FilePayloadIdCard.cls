@@ -2,13 +2,15 @@
 *  REST API Service returning the content of Id Card table
 *  - Based on GSS_REST_FilePayload
 *  - External class will call getFilePayload (@HttpGet) method
-*  - URI Parameter:  FileSpecificationId, LastRetrievedRecordId
+*  - URI Parameter:  FileSpecificationId, LastRetrievedRecordId, RequestSizeFactor
 *  - Relevant requirement: GDP_File_Description__c.Payload_Procedure__c = 'IDCard' , GDP_File_Description__c.Product_Type__c = 'CAC'
 * 
 *  
 *  Change log:
 *   20151230-sl: Sonny Leman: initial version, based on GDP_REST_FilePayload.cls
 *   20160103-sl: more clean up
+*   20160407-sl: Add RequestSizeFactor parameter to allow reducing limit defined by Maximum_API_Request
+*   
 */
 
 @RestResource(urlMapping='/GSS/v0/FileDataIDCard/*')
@@ -50,6 +52,12 @@ global with sharing class GDP_REST_FilePayloadIdCard {
         //lastRetrievedRecordId will be used to recall the function to get more records than the BATCH_SIZE
         //the usage of value of lastRetrieveRecordId will also depend of related GDP_File_Description__c.Product_Type__c
         String lastRetrievedRecordIdParameter = RestContext.request.params.get('LastRetrievedRecordId');
+        
+        // Get Optional RequestSizeFactor parameter, and use it to set DividerFactor
+        String RequestSizeFactorStr = RestContext.request.params.get('RequestSizeFactor');
+        Integer RequestSizeFactor = (RequestSizeFactorStr == null) ? 0 : Integer.valueOf(RequestSizeFactorStr); 
+        RequestSizeFactor = (RequestSizeFactor == null) ? 0 : RequestSizeFactor; 
+        Integer DividerFactor = Integer.valueOf(Math.pow(2, RequestSizeFactor));
         
         //TODO: Load the SQL information from File Specification
         List<GDP_File_Description__c> fileSpecificationList = new List<GDP_File_Description__c>();
@@ -131,6 +139,7 @@ global with sharing class GDP_REST_FilePayloadIdCard {
             , lastRetrievedRecordId
             , where_Clause_SOQL
             , fileSpecificationId
+            , DividerFactor
             );
         
         
@@ -144,6 +153,7 @@ global with sharing class GDP_REST_FilePayloadIdCard {
             , String lastRetrievedRecordId
             , String where_Clause_SOQL
             , String fileSpecificationID
+            , Integer dividerFactor // should be 1 or bigger.
             )
     { 
     
@@ -207,8 +217,10 @@ global with sharing class GDP_REST_FilePayloadIdCard {
         List<ID_Card__c> myObjectRecordList = new List<ID_Card__c>(); // list of mainObject
         SOQL = String.escapeSingleQuotes(DynamicSQL); 
          
+        // NEW_BATCH_SIZE is used to limit the number of rows requested
         Integer NEW_BATCH_SIZE=BATCH_SIZE;
         if (filespecification.Reference__r.Maximum_API_Request__c!=null) NEW_BATCH_SIZE=Integer.ValueOf(filespecification.Reference__r.Maximum_API_Request__c);
+        NEW_BATCH_SIZE =  Integer.valueOf(Math.floor(NEW_BATCH_SIZE / dividerFactor)) + 1;
         
         SOQL+= Where_Last_Retrieved_Id + lastRetrievedRecordId + '\''
             + where_Clause_SOQL
