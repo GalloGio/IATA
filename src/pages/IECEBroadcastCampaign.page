@@ -59,8 +59,8 @@
                                 <div class="field-group google-analytics">
                                     <label>
                                         <div class="custom-user-input">
-                                            <input class="user-input checkbox" id="checkbox-1" type="checkbox" />
-                                            <label class="custom-checkbox" for="checkbox-1"><i class="fa fa-check"></i></label>
+                                            <apex:inputField id="Is_Google_Analytics_Tracker_Active" value="{!eBroadcast_Campaign__c.Is_Google_Analytics_Tracker_Active__c}" styleClass="user-input checkbox" />
+                                            <apex:outputLabel styleClass="custom-checkbox" for="Is_Google_Analytics_Tracker_Active"><i class="fa fa-check"></i></apex:outputLabel>
                                         </div>
                                         <span class="input-label">Google Analytics <sup>TM</sup> tracker</span>
                                     </label>

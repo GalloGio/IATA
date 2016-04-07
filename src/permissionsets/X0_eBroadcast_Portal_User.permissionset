@@ -22,6 +22,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>eBroadcast_Campaign__c.Is_Google_Analytics_Tracker_Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>eBroadcast_Campaign__c.Is_Step1_Valid__c</field>
         <readable>true</readable>
