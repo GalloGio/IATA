@@ -4,7 +4,13 @@ Deployment Notes
 Mathieu's Notes
 	IEC Site
 		+ VF Page
-			ECEBroadcast
+			IECEBroadcast
+			IECEBroadcastCampaign
+			IECEBroadcastCampaignRecipients
+	        IECEBroadcastCampaignTemplate
+	        IECEBroadcastCampaignDesign
+	        IECEBroadcastCampaignSchedule
+	        IECEBroadcastCampaignConfirm
 
 
 

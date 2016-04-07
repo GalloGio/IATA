@@ -1,0 +1,15 @@
+<apex:component >
+    <apex:attribute name="currentStepNumber" description="The current step we are displaying" type="Integer" required="true"/>
+    
+    <div class="process">
+        <ol class="list steps">
+            <li class="step step-1{!IF(currentStepNumber >= 1, ' active', '')}">Setup</li>
+            <li class="step step-2{!IF(currentStepNumber >= 2, ' active', '')}">Recipients</li>
+            <li class="step step-3{!IF(currentStepNumber >= 3, ' active', '')}">Template</li>
+            <li class="step step-4{!IF(currentStepNumber >= 4, ' active', '')}">Design</li>
+            <li class="step step-5{!IF(currentStepNumber >= 5, ' active', '')}">Schedule</li>
+            <li class="step step-6{!IF(currentStepNumber >= 6, ' active', '')}">Confirm &amp; pay</li>
+        </ol>
+    </div>
+    
+</apex:component>

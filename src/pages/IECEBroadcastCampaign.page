@@ -1,4 +1,4 @@
-<apex:page applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+<apex:page standardController="eBroadcast_Campaign__c" extensions="vfIECEBroadcastCampaign" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
 	<apex:composition template="IECEBroadcastLayout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -10,7 +10,74 @@
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
-            Waiting on template
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <c:IECEBroadcastProgressComponent currentStepNumber="{!currentStepNumber}" />
+            
+                    <h1 class="page-title">Campaign Info</h1>
+                    
+                    <apex:form >
+                        <div class="alert">
+                            <h2 class="alert-title">Account balance</h2>
+                            <div class="alert-message icon check-circle">
+                                <p>Your current account balance is <strong>50,000 emails</strong></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns medium-6">
+                                <div class="field-group">
+                                    <label>
+                                        <span class="input-label">Name your campaign</span>
+                                        <apex:inputField type="text" styleClass="user-input" value="{!eBroadcast_Campaign__c.Name}" />
+                                    </label>
+                                    <p class="input-description">Internal use only. Ex: "Newsletter Test#4"</p>
+                                </div>
+                
+                                <div class="field-group">
+                                    <label>
+                                        <span class="input-label">Email subject</span>
+                                        <apex:inputField type="text" styleClass="user-input js-remaining-characters" value="{!eBroadcast_Campaign__c.Subject__c}" html-data-target-element=".js-remaining-count" html-data-target-id="email-subject" html-data-max-length="{!$ObjectType.eBroadcast_Campaign__c.fields.Subject__c.length}" />
+                                    </label>
+                                    <div class="input-remaining">
+                                        <span class="js-remaining-count" data-id="email-subject">{!$ObjectType.eBroadcast_Campaign__c.fields.Subject__c.length}</span>
+                                    </div>
+                                    <p class="input-description">This is the email subject that your recipients will see</p>
+                                </div>
+                
+                                <div class="field-group">
+                                    <label>
+                                        <span class="input-label">From name</span>
+                                        <apex:inputField type="text" styleClass="user-input js-remaining-characters" value="{!eBroadcast_Campaign__c.From_Name__c}" html-data-target-element=".js-remaining-count" html-data-target-id="from-name" html-data-max-length="{!$ObjectType.eBroadcast_Campaign__c.fields.From_Name__c.length}" />
+                                    </label>
+                                    <div class="input-remaining">
+                                        <span class="js-remaining-count" data-id="from-name">{!$ObjectType.eBroadcast_Campaign__c.fields.From_Name__c.length}</span>
+                                    </div>
+                                    <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                                </div>
+                            </div>
+                            <div class="columns medium-6">
+                                <div class="field-group google-analytics">
+                                    <label>
+                                        <div class="custom-user-input">
+                                            <input class="user-input checkbox" id="checkbox-1" type="checkbox" />
+                                            <label class="custom-checkbox" for="checkbox-1"><i class="fa fa-check"></i></label>
+                                        </div>
+                                        <span class="input-label">Google Analytics <sup>TM</sup> tracker</span>
+                                    </label>
+                                    <apex:inputField type="text" styleClass="user-input" value="{!eBroadcast_Campaign__c.Google_Analytics_Tracking_Code__c}" />
+                                    <p class="input-description">Track clicks from your campaigns all the way to your website.</p>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="footer-actions text-right">
+                            <apex:commandLink action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
+                            <apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
+                        </div>
+                
+                    </apex:form>
+                </div>
+            </main>
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>

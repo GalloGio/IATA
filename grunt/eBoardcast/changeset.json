@@ -3,14 +3,29 @@
 		"IECHomepage",
 		"IECEBroadcastLayout",
 		"IECEBroadcast",
-		"IECEBroadcastCampaign"
+		"IECEBroadcastCampaign",
+		"IECEBroadcastCampaignRecipients",
+        "IECEBroadcastCampaignTemplate",
+        "IECEBroadcastCampaignDesign",
+        "IECEBroadcastCampaignSchedule",
+        "IECEBroadcastCampaignConfirm"
 	],
 	"ApexClass": [
 		"IECConstants",
 		"vfIECEBroadcast",
-		"VfIECSiteHeaderComponent"
+		"VfIECSiteHeaderComponent",
+		"vfIECEBroadcastCampaign"
+	],
+	"ApexComponent": [
+		"IECEBroadcastProgressComponent"
 	],
 	"StaticResource": [
 		"eBroadcastAssets"
+	],
+	"CustomObject": [
+		"eBroadcast_Campaign__c"
+	],
+	"PermissionSet": [
+		"X0_eBroadcast_Portal_User"
 	]
 }
