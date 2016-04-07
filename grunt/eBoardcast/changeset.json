@@ -14,7 +14,9 @@
 		"IECConstants",
 		"vfIECEBroadcast",
 		"VfIECSiteHeaderComponent",
-		"vfIECEBroadcastCampaign"
+		"vfIECEBroadcastCampaign",
+		"vfIECEBroadcast_Test",
+		"vfIECEBroadcast_TestSuite"
 	],
 	"ApexComponent": [
 		"IECEBroadcastProgressComponent"
