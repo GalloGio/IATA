@@ -70,7 +70,7 @@ public class vfIECEBroadcastCampaign {
     
     public PageReference pageLoad() {
         // Check if the current step is allowed and if not, redirect to the last allowed step
-		if (campaign.Maximum_Allowed_Step__c < currentStepNumber) return getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
+		if (campaign.Maximum_Allowed_Step__c < (currentStepNumber - 1)) return getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
         
         return null;
     }
