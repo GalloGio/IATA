@@ -194,6 +194,18 @@
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
+            <picklistValues>
+                <fullName>CAL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PAL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ASL</fullName>
+                <default>false</default>
+            </picklistValues>
         </picklist>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
