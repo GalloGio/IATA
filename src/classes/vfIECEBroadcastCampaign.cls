@@ -1,7 +1,10 @@
 public class vfIECEBroadcastCampaign {
     class Controller_Exception extends Exception{}
     
-    private ApexPages.StandardController con;
+    public ApexPages.StandardController con {
+        public get;
+        private set;
+    }
     
     private Map<Integer, PageReference> stepToPageReference = new Map<Integer, PageReference>{
         1 => Page.IECEBroadcastCampaign,
@@ -44,7 +47,9 @@ public class vfIECEBroadcastCampaign {
     public vfIECEBroadcastCampaign(ApexPages.StandardController stdController) {
         this.con = stdController;
         
-        stdController.addFields(new List<String>{'Maximum_Allowed_Step__c'});
+        if (!Test.isRunningTest()) {
+        	stdController.addFields(new List<String>{'Maximum_Allowed_Step__c'});
+        }
         
         this.campaign = (eBroadcast_Campaign__c)stdController.getRecord();
     }

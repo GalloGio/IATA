@@ -16,6 +16,14 @@
         <apexClass>vfIECEBroadcastCampaign</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>vfIECEBroadcast_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>vfIECEBroadcast_TestSuite</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>eBroadcast_Campaign__c.Google_Analytics_Tracking_Code__c</field>

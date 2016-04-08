@@ -19,11 +19,6 @@ public class vfIECEBroadcast extends IECPageController {
 	}
 
     public Pagereference pageLoad() {
-    	ctrSubsInfo.hasPageAccess = true; // @todo remove for security check
-    	return null; // @todo remove to check security
-
-
-
         // first check if the user is logged in
         try {
             if (IECUserManager.isUserLoggedIn() == false) {
