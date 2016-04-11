@@ -10,12 +10,14 @@
  *   - Replaced IECUtil.GetRecordTypeId calls by map to reduce SOQL calls under 100 transaction limit
  *  Sonny Leman 04/02/2016
  *   - Add testing for BtchGDPReplicateTerritories
- *
+ *  Sonny Leman 11/04/2016
+ *   - Remove TestGDPReplicateTerritories_01_GoodCase (move to other test class) to simplify using simpler data initialization
  *
  * Important note (Sonny Leman):
  *   - During the addition of test method for BtchGDPReplicateTerritories, I come to a realization that this test class was not intended to do any test, except get a high coverage.
  *   - While we tried to reduce the bad model, we are limited to the the fact that as this batch is running in cascading process with other and we avoid changing other codes.
  *   - Our suggestion is to correct this whole model. 
+ *
  **/
  
 @isTest (SeeAllData=false)
@@ -764,6 +766,7 @@ private class BtchGDPReplicate_tst {
 	
 	// ========================================================================
 	// test BtchGDPReplicateTerritories.cls
+	/*
 	static testMethod void TestGDPReplicateTerritories_01_GoodCase() {
 		System.debug('Unit Test: Start: TestGDPReplicateTerritories');
 		// set the log: the previous GDP Replication was done 4 hour before
@@ -801,7 +804,7 @@ private class BtchGDPReplicate_tst {
 		// System.assertEquals(0, iecErrorLogList02.size(), 'This should give zero error logged.'); // we cannot enforce this, as apparently some other class will generate error on purpose
 		System.debug('Unit Test: Finish: TestGDPReplicateTerritories');
 	} // end TestGDPReplicateTerritories_01_GoodCase
-	
+	*/
 	
 	static testMethod void TestGDPReplicateAccountUpdate() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccountUpdate');
