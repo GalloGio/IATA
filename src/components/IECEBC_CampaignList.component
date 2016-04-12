@@ -1,0 +1,142 @@
+<apex:component >
+    <apex:attribute name="campaigns" description="List of campaigns" type="EBC_Campaign__c[]" required="true"/>
+    <apex:attribute name="campaignsCount" description="Total number of campaigns" type="Integer" required="true"/>
+    
+    <apex:outputText rendered="{!IF(CampaignsCount > 0, true, false)}">
+        <div class="action-box text-right create-campaign">
+            <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+        </div>
+        <table class="data-table campaign">
+            <apex:repeat value="{!campaigns}" var="c">
+                <apex:variable var="iconClass" value="" rendered="{!IF(c.Status__c == 'Setup' || c.Status__c == '', true, false)}" />
+                <apex:variable var="iconClass" value="clock" rendered="{!IF(c.Status__c == 'Scheduled', true, false)}" />
+                <apex:variable var="iconClass" value="check-circle" rendered="{!IF(c.Status__c == 'Sent', true, false)}" />
+                
+                <tr>
+                    <td class="icon">
+                        <i class="icon {!iconClass}"></i>
+                    </td>
+                    <td class="name">
+                        <dl class="list campaign">
+                            <dt><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}">{!c.Name}</apex:outputLink></dt>
+                            <dd>TODO: what is this?: Regular - IP, AS &amp; LD</dd>
+                            <dt>
+                                <apex:outputText rendered="{!IF(c.Status__c == 'Setup' || c.Status__c == '', true, false)}">Setup</apex:outputText>
+                                <apex:outputText rendered="{!IF(c.Status__c == 'Scheduled', true, false)}">Scheduled for</apex:outputText>
+                                <apex:outputText rendered="{!IF(c.Status__c == 'Sent', true, false)}">Sent</apex:outputText>
+                            </dt>
+                            <dd>
+                                <apex:outputText rendered="{!IF(c.Status__c == 'Scheduled', true, false)}">{!c.Scheduled_Date__c}</apex:outputText>
+                                <apex:outputText rendered="{!IF(c.Status__c == 'Sent', true, false)}">!!todo put the sent date (or reuse the scheduled date)!!</apex:outputText>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="recipients">
+                        
+                    </td>
+                    <td class="opens">
+                    </td>
+                    <td class="clicks">
+                    </td>
+                    <td class="action">
+                        <div class="custom-user-input select">
+                            <i class="icon angle-down"></i>
+                            <select class="user-input select js-open-modal" name="" id="">
+                                <option value="actions">Actions</option>
+                                <option value="delete" data-target-modal="#js-modal-delete-campaign">Delete</option>
+                                <option value="rename" data-target-modal="#js-modal-rename-campaign">TODO: Rename</option>
+                                <option value="pause" data-target-modal="#js-modal-pause-campaign">TODO: Pause</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </apex:repeat>
+        </table>
+        <apex:outputText rendered="{!LOWER($CurrentPage.Name) == LOWER('IECEBC_Dashboard')}">
+            <div class="action-box text-right">
+                <apex:outputLink value="{!URLFOR($Page.IECEBC_CampaignList)}">View all campaigns</apex:outputLink>
+            </div>
+        </apex:outputText>
+    </apex:outputText>
+    <apex:outputText rendered="{!IF(CampaignsCount == 0, true, false)}">
+        <h3 class="lead">You have no saved campaigns</h3>
+        <p>Increase the exposure of your products &amp; services to the population of IATA travel Agencies</p>
+    </apex:outputText>
+    
+    
+    <script type="text/template" id="js-modal-delete-campaign">
+    	<div class="modal-content">
+        	<header class="modal-header">
+            	<h2 class="modal-title">Are you sure?</h2>
+            	<a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+            </header>
+            <div class="modal-body">
+                <p>You are about to delete a campaign called <strong>TODO: Campaign 1</strong>.</p>
+            </div>
+            <footer class="modal-footer">
+                <ul class="list actions">
+                    <li>
+                        <button class="text-link js-close-modal">Cancel</button>
+                    </li>
+                    <li>
+                        <a href="{!URLFOR($Action.EBC_Campaign__c.delete, 'a738E000000Cae2QAC', [retURL=$CurrentPage.URL])}" styleClass="button">Delete</a>
+                    </li>
+                </ul>
+            </footer>
+        </div>
+    </script>
+    
+    <script type="text/template" id="js-modal-rename-campaign">
+    <div class="modal-content">
+        <header class="modal-header">
+            <h2 class="modal-title">Rename Campaign</h2>
+            <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                </header>
+            <div class="modal-body">
+                <div class="field-group">
+                    <label>
+                    <span class="input-label">Rename your compaign</span>
+                    <input class="user-input" type="text">
+                        </label>
+                    <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
+                    </div>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                            <button class="text-link js-close-modal">Cancel</button>
+                            </li>
+                            <li>
+                                <button class="button">Save</button>
+                                </li>
+                                </ul>
+                                </footer>
+                                </div>
+                                </script>
+    
+    <script type="text/template" id="js-modal-pause-campaign">
+    <div class="modal-content">
+        <header class="modal-header">
+            <h2 class="modal-title">Pause Campaign</h2>
+            <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                </header>
+            <div class="modal-body">
+                <p>
+                You are about to pause a scheduled campaign called <strong>Campaign 1</strong>
+                <br>
+                    Please confirm this action.
+                    </p>
+                    </div>
+                    <footer class="modal-footer">
+                        <ul class="list actions">
+                            <li>
+                            <button class="text-link js-close-modal">Cancel</button>
+                            </li>
+                            <li>
+                                <a href=""  class="button">Pause</button>
+                                </li>
+                                </ul>
+                                </footer>
+                                </div>
+                                </script>
+</apex:component>

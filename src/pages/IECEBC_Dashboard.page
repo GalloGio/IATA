@@ -1,0 +1,109 @@
+<apex:page controller="vfIECEBC_Dashboard" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Dashboard</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content content-dashboard">
+                <div class="inner-wrapper">
+                    <h1 class="page-title">Dashboard</h1>
+                    <div class="row">
+                        <div class="main-container columns small-12 medium-8">
+                                <div class="group-container campaigns">
+                                    <h2 class="group-title">Campaigns</h2>
+                                    <c:IECEBC_CampaignList campaigns="{!campaigns}" campaignsCount="{!CampaignsCount}" />
+                                </div>
+            
+                            <apex:outputText rendered="{!IF(CampaignsCount == 0, true, false)}">
+                                <div class="action-box">
+                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+                                </div>
+                            </apex:outputText>
+            
+						</div>
+            
+                        <div class="sub-container columns small-12 medium-4">
+                            <div class="summary-box">
+                                <div class="box-body fit">
+                                    <table class="data-table zibra">
+                                        <caption>Account Summary</caption>
+                                        <tr>
+                                            <th>
+                                                <div class="item-name">Current Billing Plan</div>
+                                                <p class="item-description">Pay-As-You-Go</p>
+                                            </th>
+                                            <td>
+                                                <div class="item-value">
+                                                    <strong>$0.10</strong>
+                                                    <span class="per-unit">/email</span>
+                                                </div>
+                                                <a href="#">Upgrade to Pre-Paid plan</a>
+                                            </td>
+                                        </tr>
+                                        <tr> 
+                                            <th>
+                                                <div class="item-name">Email Balance on Account</div>
+                                            </th>
+                                            <td>
+                                                <div class="item-value">
+                                                    <strong>15, 000 emails</strong>
+                                                </div>
+                                                <a href="#">Purchase credits</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <div class="item-name">Available Add Ons</div>
+                                            </th>
+                                            <td>
+                                                <div class="item-value">
+                                                    <strong>Enhanced Reporting</strong>
+                                                </div>
+                                                <a href="#">View Add Ons Options</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="action-box text-right">
+                                        <a href="#">Manage account</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row row-mangage js-match-height">
+                        <div class="columns medium-4 group-container manage-templates">
+                            <h2 class="group-title">Manage templates and other resources</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum euismod neque ac dolor vestibulum, vitae tempor erat.</p>
+                            <div class="action">
+                                <a href="#">Manage templates</a>
+                            </div>
+                        </div>
+                        <div class="columns medium-4 group-container manage-list">
+                            <h2 class="group-title">Manage your lists and create segments</h2>
+                            <p>Praesent pellentesque ligula eu metus euismod, eu commodo lorem eleifend. Phasellus nec fringilla dui, eu fermentum.</p>
+                            <div class="action">
+                                <a href="#">Manage lists</a>
+                            </div>
+                        </div>
+                        <div class="columns medium-4 group-container view-reports">
+                            <h2 class="group-title">View how your campaigns perform</h2>
+                            <p>Nullam vitae dui vel diam accumsan aliquet id nec odio. Mauris at purus a arcu placerat lacinia. Aenean vulputate sem nisl, vitae.</p>
+                            <div class="action">
+                                <a href="#">View reports</a>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

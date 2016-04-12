@@ -141,8 +141,8 @@ $(function() {
                             <li class="available-services__item">
                               <apex:commandLink action="{!NavigateTo}">
                                 <img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">E-Broadcast</h3>
-                                <apex:param name="sPageName" value="IECEBroadcast" assignTo="{!sPageName}"/>
-                                <apex:param name="sProductCode" value="EBro" assignTo="{!sProductCode}"/>
+                                <apex:param name="sPageName" value="IECEBC_Dashboard" assignTo="{!sPageName}"/>
+                                <apex:param name="sProductCode" value="EBC" assignTo="{!sProductCode}"/>
                               </apex:commandLink>
                             </li>
                         </apex:outputpanel>

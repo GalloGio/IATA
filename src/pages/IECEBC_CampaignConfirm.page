@@ -1,0 +1,31 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Campaign - Confirm</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
+            
+                    <h1 class="page-title">Confirm</h1>
+                    
+                    <apex:form >
+                        
+                        <div class="footer-actions text-right">
+                            <apex:commandLink action="{!previous}" styleClass="button" value="Previous" />
+                            <apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" />
+                        </div>
+                    </apex:form>
+                </div>
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>

@@ -118,7 +118,7 @@ global class IECConstants {
 	public static final string ProductCategory_SF_GSS = 'GSS';
 	public static final string ProductCategory_SF_MDP = 'MDP';
 	public static final string ProductCategory_SF_GAD = 'GAD';
-	public static final string ProductCategory_SF_EBROADCAST = 'EBROADCAST';
+	public static final string ProductCategory_SF_EBROADCAST = 'EBC';
 	public static final string ProductCategory_SF_TEST = 'PCTST';
 	
 	

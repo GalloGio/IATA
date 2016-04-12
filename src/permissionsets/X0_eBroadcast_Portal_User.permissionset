@@ -5,110 +5,150 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VfIECSiteHeaderComponent</apexClass>
+        <apexClass>vfIECAppHeaderComponent</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>vfIECEBroadcast</apexClass>
+        <apexClass>vfIECEBC</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>vfIECEBroadcastCampaign</apexClass>
+        <apexClass>vfIECEBC_Campaign</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>vfIECEBroadcast_Test</apexClass>
+        <apexClass>vfIECEBC_CampaignList</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>vfIECEBroadcast_TestSuite</apexClass>
+        <apexClass>vfIECEBC_CampaignRecipient</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>vfIECEBC_Dashboard</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>vfIECEBC_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>vfIECEBC_TestSuite</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
-        <field>eBroadcast_Campaign__c.Google_Analytics_Tracking_Code__c</field>
+        <field>EBC_Campaign__c.EBC_Master_Filter__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EBC_Campaign__c.EBC_Template__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EBC_Campaign__c.Google_Analytics_Tracking_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>eBroadcast_Campaign__c.Is_Google_Analytics_Tracker_Active__c</field>
+        <field>EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Is_Step1_Valid__c</field>
+        <field>EBC_Campaign__c.Is_Step1_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Is_Step2_Valid__c</field>
+        <field>EBC_Campaign__c.Is_Step2_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Is_Step3_Valid__c</field>
+        <field>EBC_Campaign__c.Is_Step3_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Is_Step4_Valid__c</field>
+        <field>EBC_Campaign__c.Is_Step4_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Is_Step5_Valid__c</field>
+        <field>EBC_Campaign__c.Is_Step5_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Is_Step6_Valid__c</field>
+        <field>EBC_Campaign__c.Is_Step6_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>eBroadcast_Campaign__c.Maximum_Allowed_Step__c</field>
+        <field>EBC_Campaign__c.Maximum_Allowed_Step__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EBC_Campaign__c.Scheduled_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EBC_Campaign__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <label>0 - eBroadcast Portal User</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>eBroadcast_Campaign__c</object>
+        <object>EBC_Campaign__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>IECEBroadcast</apexPage>
+        <apexPage>IECEBC_Campaign</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastCampaign</apexPage>
+        <apexPage>IECEBC_CampaignConfirm</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastCampaignConfirm</apexPage>
+        <apexPage>IECEBC_CampaignDesign</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastCampaignDesign</apexPage>
+        <apexPage>IECEBC_CampaignList</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastCampaignRecipients</apexPage>
+        <apexPage>IECEBC_CampaignRecipients</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastCampaignSchedule</apexPage>
+        <apexPage>IECEBC_CampaignRecipientsCnt</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastCampaignTemplate</apexPage>
+        <apexPage>IECEBC_CampaignSchedule</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>IECEBroadcastLayout</apexPage>
+        <apexPage>IECEBC_CampaignTemplate</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>IECEBC_Dashboard</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>IECEBC_Layout</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

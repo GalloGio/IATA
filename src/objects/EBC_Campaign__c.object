@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>The Account that own this campaign</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>EBC Campaigns</relationshipLabel>
+        <relationshipName>eBroadcast_Campaigns</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Master_Filter__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Selected filter</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Selected filter</inlineHelpText>
+        <label>EBC Master Filter</label>
+        <referenceTo>EBC_Master_Filter__c</referenceTo>
+        <relationshipName>eBroadcast_Campaigns</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EBC_Template__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Template used by the campaign to perform the email blast</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Template used by the campaign to perform the email blast</inlineHelpText>
+        <label>EBC Template</label>
+        <referenceTo>EBC_Template__c</referenceTo>
+        <relationshipLabel>EBC Campaigns</relationshipLabel>
+        <relationshipName>EBC_Campaigns</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>From_Name__c</fullName>
+        <description>The Email Sender Name</description>
+        <externalId>false</externalId>
+        <label>From Name</label>
+        <length>96</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Google_Analytics_Tracking_Code__c</fullName>
+        <description>The Google Analytics code</description>
+        <externalId>false</externalId>
+        <label>Google Analytics Tracking Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Google_Analytics_Tracker_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Should the Google Analytics Tracking Code be output on the HTML template</description>
+        <externalId>false</externalId>
+        <label>Is Google Analytics Tracker Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step1_Valid__c</fullName>
+        <description>Verify if the Step 1 is valid and meet the validation.</description>
+        <externalId>false</externalId>
+        <formula>!ISBLANK(Name) &amp;&amp; !ISBLANK(From_Name__c) &amp;&amp; !ISBLANK(Subject__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step1 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step2_Valid__c</fullName>
+        <description>Verify if the Step 2 is valid and meet the validation.</description>
+        <externalId>false</externalId>
+        <formula>false &amp;&amp;  Is_Step1_Valid__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step2 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step3_Valid__c</fullName>
+        <description>Verify if the Step 3 is valid and meet the validation.</description>
+        <externalId>false</externalId>
+        <formula>true &amp;&amp;  Is_Step2_Valid__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step3 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step4_Valid__c</fullName>
+        <description>Verify if the Step 4 is valid and meet the validation.</description>
+        <externalId>false</externalId>
+        <formula>true &amp;&amp;  Is_Step3_Valid__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step4 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step5_Valid__c</fullName>
+        <description>Verify if the Step 5 is valid and meet the validation.</description>
+        <externalId>false</externalId>
+        <formula>false &amp;&amp;  Is_Step4_Valid__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step5 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step6_Valid__c</fullName>
+        <description>Verify if the Step 6 is valid and meet the validation.</description>
+        <externalId>false</externalId>
+        <formula>false &amp;&amp; Is_Step5_Valid__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step6 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Maximum_Allowed_Step__c</fullName>
+        <description>Return the furthest allowed step in the wizard based on the Is_StepX_Valid__c formulas</description>
+        <externalId>false</externalId>
+        <formula>IF(
+	Is_Step6_Valid__c,
+	7,
+	IF(
+		Is_Step5_Valid__c,
+		6,
+		IF(
+			Is_Step4_Valid__c,
+			5,
+			IF(
+				Is_Step3_Valid__c,
+				4,
+				IF(
+					Is_Step2_Valid__c,
+					3,
+					2
+				)
+			)
+		)
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Maximum Allowed Step</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scheduled_Date__c</fullName>
+        <description>The scheduled date of the campaign</description>
+        <externalId>false</externalId>
+        <label>Scheduled Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>The current status of the campaign</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Setup</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <description>The email subject of the campaign</description>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Campaign</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>eBroadcast Campaign Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Campaigns</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
