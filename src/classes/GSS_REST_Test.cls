@@ -1,3 +1,20 @@
+/**
+ * This test class test some GSS_REST classes 
+ *  - GSS_REST_Subscription: /GSS/v0/Subscriptions/*
+ *  - GSS_REST_FileSpecification: /GSS/v0/FileSpecification/*
+ *  - GSS_REST_ConfirmFileDelivery: /GSS/v0/ConfirmFileDelivery/*
+ *  - GSS_REST_FileProduction: /GSS/v0/FileProduction/*
+ *  - GSS_REST_FilePayload: /GSS/v0/FileDataAgency/
+ *  - GSS_REST_ConfirmFileProduction: /GSS/v0/ConfirmFileProduction
+ *  - GSS_REST_ErrorHandler: /GSS/v0/ExceptionHandler
+ *
+ * Original Author: Alexandre Jaimes
+ * Change log:
+ *   2016-04-11: fix and split testGetFileSpecification, add IINETUserID__c in myBillingAcct.
+ *
+ */
+
+
 @isTest (SeeAllData=false)
 global class GSS_REST_Test {
     public static IATA_ISO_Country__c myCountry;
@@ -7,18 +24,24 @@ global class GSS_REST_Test {
     public static Product_Category__c myProductCategory;
     public static Product_Information__c myProductInformation;
     public static Zuora__Subscription__c mySubscription;
+    public static Zuora__Subscription__c mySubscriptionWeekly;
     public static GDP_File_Description__c myFileDescription;
     public static GDP_File_Description__c myFileDescriptionReference;
+    public static GDP_File_Description__c myFileDescriptionDeltaDaily;
+    public static GDP_File_Description__c myFileDescriptionDeltaWeekly;
+    
     public static List<GDP_File_Fields_Description__c> myFileFieldsDescription;
     //public static Zuora__SubscriptionProductCharge__c mySubscriptionProductCharge;
     public static GSS_Subscription_Detail__c mySubscriptionDetail;
+    public static GSS_Subscription_Detail__c mySubscriptionDetailWeekly;
     
     public static list<GDP_Products_Account_View__c> GDP_Products_Account_View_list;
     public static Accreditation__c myAccreditation1;
     public static Accreditation__c myAccreditation2;
     public static Map<String,id> ReferenceMap;
     
-    
+    private static String ZUORA_SUBSCRIPTION_ID_DAILY = '22345678901234567890123456789012';
+    private static String ZUORA_SUBSCRIPTION_ID_WEEKLY = '11112222333344445555666677778888';
     
     @testSetup static void SetupTestData() {
         // setup test data method shared with all testMethods
@@ -46,7 +69,8 @@ global class GSS_REST_Test {
         myBillingAcct = new Zuora__CustomerAccount__c(
             name = myAcct.name,
             Zuora__Account__c = myAcct.Id,
-            Zuora__Zuora_Id__c = '12345678901234567890123456789012'
+            Zuora__Zuora_Id__c = '12345678901234567890123456789012',
+            IINETUserID__c = 'a10101'
         );
         Insert myBillingAcct;
         
@@ -69,16 +93,29 @@ global class GSS_REST_Test {
             Name = myAcct.name+' Subscription',
             Zuora__Account__c =myAcct.id,
             Zuora__CustomerAccount__c = myBillingAcct.Id,
-            Zuora__Zuora_Id__c = '22345678901234567890123456789012', 
+            Zuora__Zuora_Id__c = ZUORA_SUBSCRIPTION_ID_DAILY, // '22345678901234567890123456789012', 
             Zuora__SubscriptionStartDate__c = Date.today().addYears(-1),
             Zuora__SubscriptionEndDate__c = Date.today().addYears(1),
             Zuora__Status__c = 'Active'
         );
-        Insert mySubscription;
-        system.debug('mySubscription >> ' + mySubscription);
+        mySubscriptionWeekly = new Zuora__Subscription__c (
+            Name = myAcct.name+' SubscriptionWeekly',
+            Zuora__Account__c =myAcct.id,
+            Zuora__CustomerAccount__c = myBillingAcct.Id,
+            Zuora__Zuora_Id__c = ZUORA_SUBSCRIPTION_ID_WEEKLY, //'11112222333344445555666677778888', 
+            Zuora__SubscriptionStartDate__c = Date.today().addYears(-2),
+            Zuora__SubscriptionEndDate__c = Date.today().addYears(1),
+            Zuora__Status__c = 'Active'
+        );
+        List<Zuora__Subscription__c> zuoraSubscriptionList = new List<Zuora__Subscription__c>();
+        zuoraSubscriptionList.add(mySubscription);
+        zuoraSubscriptionList.add(mySubscriptionWeekly);
+        Insert zuoraSubscriptionList;
+        System.debug('zuoraSubscriptionList>>' + zuoraSubscriptionList);
         
         //Create the reference File Description
         myFileDescriptionReference = new GDP_File_Description__c(
+            Name = 'CGO1Ref',
             File_Format__c='TXT',
             Frequency__c='Daily',
             Reference__c=null,
@@ -87,12 +124,12 @@ global class GSS_REST_Test {
             Field_Label__c='',
             Description__c='Test Reference File description',
             File_Naming_Convention__c='Name'
-            
         );
         Insert myFileDescriptionReference;
         
-        //Create a file specification with file field desctiption (for GetFileSpecification)
+        //Create a file specification master, non reference
         myFileDescription = new GDP_File_Description__c(
+            Name = 'CGO1Master',
             File_Format__c='TXT',
             Frequency__c='Daily',
             Field_Label__c='',
@@ -100,13 +137,133 @@ global class GSS_REST_Test {
             Class__c='',
             Magnitude__c='Master',
             Description__c='File Description Child 1',
-            File_Naming_Convention__c='[Prefix]CGO1_Day[ddd]_[yyyy][Suffix].AD'
+            File_Naming_Convention__c='[Prefix]CGO1Master_Day[ddd]_[yyyy][Suffix].AM'
         );
         Insert myFileDescription;
         
+        //Create a file specification master, non reference
+        myFileDescriptionDeltaDaily = new GDP_File_Description__c(
+            Name = 'CGO1DeltaDaily',
+            File_Format__c='TXT',
+            Frequency__c='Daily',
+            Field_Label__c='',
+            Reference__c=myFileDescriptionReference.id,
+            Master_File_Description__c= myFileDescription.Id,
+            Class__c='',
+            Magnitude__c='Delta',
+            Description__c='File Description Delta Daily 1',
+            File_Naming_Convention__c='[Prefix]CGO1Delta_Day[ddd]_[yyyy][Suffix].AD'
+        );
+        //Create a file specification master, non reference
+        myFileDescriptionDeltaWeekly = new GDP_File_Description__c(
+            Name = 'CGO1DeltaWeekly',
+            File_Format__c='TXT',
+            Frequency__c='Weekly',
+            Field_Label__c='',
+            Reference__c=myFileDescriptionReference.id,
+            Master_File_Description__c= myFileDescription.Id,
+            Class__c='',
+            Magnitude__c='Delta',
+            Description__c='File Description Delta Weekly 2',
+            File_Naming_Convention__c='[Prefix]CGO1Delta_Weekly [ddd]_[yyyy][Suffix].AD'
+        );
+        List<GDP_File_Description__c> fileDescriptionList = new List<GDP_File_Description__c>();
+        fileDescriptionList.add(myFileDescriptionDeltaWeekly);
+        fileDescriptionList.add(myFileDescriptionDeltaDaily);
+        Insert fileDescriptionList;
+        
+        
+        // insert GDP_File_Fields_Description test data related to myFileDescriptionReference
+        insertGDPFileFieldsDescriptionTestData();
+        
+        List<GDP_File_Production__c> fileproductionlist = new List<GDP_File_Production__c>();
+        fileproductionlist.Add(new GDP_File_Production__c(File_Specification__c=myFileDescriptionReference.id,Production_Date__c=System.Today(),Status__c='Completed'));
+        fileproductionlist.Add(new GDP_File_Production__c(File_Specification__c=myFileDescription.id,Production_Date__c=System.Today(),Status__c='Completed'));
+
+        insert fileproductionlist;
+ 
+               
+        //Insert GDP_Reference_Table__c 
+        list<GDP_Reference_Table__c> Reference_TableList = new list<GDP_Reference_Table__c>();
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='0', Table__c='STATUS', System__c='WebStar', Definition__c='TERMINATED',                     Name='TERMINATED'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='1', Table__c='STATUS', System__c='WebStar', Definition__c='ONHOLD',                         Name='ONHOLD')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='2', Table__c='STATUS', System__c='WebStar', Definition__c='APPLICANT',                      Name='APPLICANT'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='3', Table__c='STATUS', System__c='WebStar', Definition__c='UNREGISTERABLE STP',             Name='UNREGISTERABLE STP'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='4', Table__c='STATUS', System__c='WebStar', Definition__c='LISTED',                         Name='LISTED'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='5', Table__c='STATUS', System__c='WebStar', Definition__c='REGISTERED',                     Name='REGISTERED')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='6', Table__c='STATUS', System__c='WebStar', Definition__c='UNDER REVIEW',                   Name='UNDER REVIEW')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='7', Table__c='STATUS', System__c='WebStar', Definition__c='Endorsed',                       Name='Endorsed')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='0', Table__c='STATUS', System__c='AIMS',    Definition__c='Terminated',                     Name='Terminated'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='1', Table__c='STATUS', System__c='AIMS',    Definition__c='1',                              Name='1')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='2', Table__c='STATUS', System__c='AIMS',    Definition__c='2',                              Name='2')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='3', Table__c='STATUS', System__c='AIMS',    Definition__c='3',                              Name='3')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='4', Table__c='STATUS', System__c='AIMS',    Definition__c='Listed',                         Name='Listed'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='5', Table__c='STATUS', System__c='AIMS',    Definition__c='Cash Basis without commission',  Name='Cash Basis without commission'));
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='6', Table__c='STATUS', System__c='AIMS',    Definition__c='Cash basis with commissions',    Name='Cash basis with commissions')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='7', Table__c='STATUS', System__c='AIMS',    Definition__c='Review',                         Name='Review')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='8', Table__c='STATUS', System__c='AIMS',    Definition__c='Accredited-Change in process',   Name='Accredited-Change in process')); 
+        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='9', Table__c='STATUS', System__c='AIMS',    Definition__c='Accredited',                     Name='Accredited')); 
+        Insert Reference_TableList;
+        
+        ReferenceMap= new map<String,id>();
+        for(GDP_Reference_Table__c gr : Reference_TableList) {
+            ReferenceMap.put(gr.Definition__c, gr.Id);
+        }
+        
+        // insert data for file records, i.e. GDP_Products_Account_View and related objects
+        insertGDPDataFileRecords();
+
+        // insert file subscription detail
+        mySubscriptionDetail = new GSS_Subscription_Detail__c(
+            Name = 'Test Subscription Detail',
+            Zuora_Subscription__c = mySubscription.Id,
+            GDP_File_Description__c=myFileDescriptionDeltaDaily.Id,
+            Calendar_Next_Submission_Date__c=System.Today(),
+            Calendar_New_Submission_Effective_Date__c=null,
+            //Calendar_Weekly_Option__c='',
+            File_Name_Applies_on__c='Zip file only',
+            File_Name_Prefix_Option__c = 'Custom',
+            File_Name_Custom_Prefix__c='Prefix',
+            File_Name_Suffix_Option__c='Custom',
+            File_Name_Custom_Suffix__c='Suffix'
+        );
+        mySubscriptionDetailWeekly = new GSS_Subscription_Detail__c(
+            Name = 'Test Subscription Detail',
+            Zuora_Subscription__c = mySubscriptionWeekly.Id,
+            GDP_File_Description__c=myFileDescriptionDeltaWeekly.Id,
+            Calendar_Next_Submission_Date__c=System.Today(),
+            Calendar_New_Submission_Effective_Date__c=null,
+            Calendar_Weekly_Option__c = System.now().format('EEEE'),
+            File_Name_Applies_on__c='Zip file only',
+            File_Name_Prefix_Option__c = 'Custom',
+            File_Name_Custom_Prefix__c='Prefix',
+            File_Name_Suffix_Option__c='Custom',
+            File_Name_Custom_Suffix__c='Suffix'
+        );
+        List<GSS_Subscription_Detail__c> subscriptionDetailList = new List<GSS_Subscription_Detail__c>();
+        subscriptionDetailList.add(mySubscriptionDetail);
+        subscriptionDetailList.add(mySubscriptionDetailWeekly);
+        Insert subscriptionDetailList;        
+        
+        GDP_File_Production__c myFileProduction = new GDP_File_Production__c(
+              Production_Date__c=System.today()
+            , Status__c='Completed'
+            , File_Specification__c=myFileDescription.Id
+            );
+            
+        insert myFileProduction;
+        
+        //test.stopTest();
+    }
+    
+    
+    
+    // GDP Test Data Definition
+    // external input: myFileDescriptionReference.Id
+    static private void insertGDPFileFieldsDescriptionTestData()
+    {
         //Create Field to have the setup for id and name
         myFileFieldsDescription = new List<GDP_File_Fields_Description__c>();
-
         
         
         myFileFieldsDescription.add(new GDP_File_Fields_Description__c(API_Name__c='Function_RecID',API_Object_Name__c='',Filter_Field_API_Name__c='',Filter_Field_Value__c='',GDP_File_Description__c=myFileDescriptionReference.id,Hidden_Column__c=FALSE,Name__c='RecID',Position__c=1,Size__c=1,Target__c='Agency',TXT_Hidden_Column__c=FALSE,Type__c='String',Visible__c=TRUE,XML_Hidden_Column__c=FALSE));
@@ -392,48 +549,17 @@ global class GSS_REST_Test {
         myFileFieldsDescription.add(new GDP_File_Fields_Description__c(API_Name__c='Territory_State_Abbreviation__c',API_Object_Name__c='GSA_Territory__c',Filter_Field_API_Name__c='Index',Filter_Field_Value__c='22',GDP_File_Description__c=myFileDescriptionReference.id,Hidden_Column__c=FALSE,Name__c='Ter22St',Position__c=1833,Size__c=6,Target__c='Airline',TXT_Hidden_Column__c=FALSE,Type__c='String',Visible__c=TRUE,XML_Hidden_Column__c=FALSE));
         myFileFieldsDescription.add(new GDP_File_Fields_Description__c(API_Name__c='Territory_Description__c',API_Object_Name__c='GSA_Territory__c',Filter_Field_API_Name__c='Index',Filter_Field_Value__c='22',GDP_File_Description__c=myFileDescriptionReference.id,Hidden_Column__c=FALSE,Name__c='Ter22Desc',Position__c=1839,Size__c=40,Target__c='Airline',TXT_Hidden_Column__c=FALSE,Type__c='String',Visible__c=TRUE,XML_Hidden_Column__c=FALSE));
         myFileFieldsDescription.add(new GDP_File_Fields_Description__c(API_Name__c='ReserveAirline',API_Object_Name__c='Reserve',Filter_Field_API_Name__c='',Filter_Field_Value__c='',GDP_File_Description__c=myFileDescriptionReference.id,Hidden_Column__c=FALSE,Name__c='ReserveAirline',Position__c=1879,Size__c=170,Target__c='Airline',TXT_Hidden_Column__c=FALSE,Type__c='String',Visible__c=TRUE,XML_Hidden_Column__c=FALSE));
-
+        
         Insert myFileFieldsDescription;
+    } // insertGDPFileFieldsDescriptionTestData
+    
+    
+    // insert records that will be part of data file, i.e.
+    // GDP_Products_Account_View and related objects
+    private static void insertGDPDataFileRecords()
+    {
         
-        
-        List<GDP_File_Production__c> fileproductionlist = new List<GDP_File_Production__c>();
-
-        fileproductionlist.Add(new GDP_File_Production__c(File_Specification__c=myFileDescriptionReference.id,Production_Date__c=System.Today(),Status__c='Completed'));
-        fileproductionlist.Add(new GDP_File_Production__c(File_Specification__c=myFileDescription.id,Production_Date__c=System.Today(),Status__c='Completed'));
-
-        insert fileproductionlist;
- 
-               
-        //Insert GDP_Reference_Table__c 
-        list<GDP_Reference_Table__c> Reference_TableList = new list<GDP_Reference_Table__c>();
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='0', Table__c='STATUS', System__c='WebStar', Definition__c='TERMINATED',                     Name='TERMINATED'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='1', Table__c='STATUS', System__c='WebStar', Definition__c='ONHOLD',                         Name='ONHOLD')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='2', Table__c='STATUS', System__c='WebStar', Definition__c='APPLICANT',                      Name='APPLICANT'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='3', Table__c='STATUS', System__c='WebStar', Definition__c='UNREGISTERABLE STP',             Name='UNREGISTERABLE STP'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='4', Table__c='STATUS', System__c='WebStar', Definition__c='LISTED',                         Name='LISTED'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='5', Table__c='STATUS', System__c='WebStar', Definition__c='REGISTERED',                     Name='REGISTERED')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='6', Table__c='STATUS', System__c='WebStar', Definition__c='UNDER REVIEW',                   Name='UNDER REVIEW')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='7', Table__c='STATUS', System__c='WebStar', Definition__c='Endorsed',                       Name='Endorsed')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='0', Table__c='STATUS', System__c='AIMS',    Definition__c='Terminated',                     Name='Terminated'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='1', Table__c='STATUS', System__c='AIMS',    Definition__c='1',                              Name='1')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='2', Table__c='STATUS', System__c='AIMS',    Definition__c='2',                              Name='2')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='3', Table__c='STATUS', System__c='AIMS',    Definition__c='3',                              Name='3')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='4', Table__c='STATUS', System__c='AIMS',    Definition__c='Listed',                         Name='Listed'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='5', Table__c='STATUS', System__c='AIMS',    Definition__c='Cash Basis without commission',  Name='Cash Basis without commission'));
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='6', Table__c='STATUS', System__c='AIMS',    Definition__c='Cash basis with commissions',    Name='Cash basis with commissions')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='7', Table__c='STATUS', System__c='AIMS',    Definition__c='Review',                         Name='Review')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='8', Table__c='STATUS', System__c='AIMS',    Definition__c='Accredited-Change in process',   Name='Accredited-Change in process')); 
-        Reference_TableList.add(new GDP_Reference_Table__c(Code__c='9', Table__c='STATUS', System__c='AIMS',    Definition__c='Accredited',                     Name='Accredited')); 
-        Insert Reference_TableList;
-        
-        ReferenceMap= new map<String,id>();
-        for(GDP_Reference_Table__c gr : Reference_TableList) {
-            ReferenceMap.put(gr.Definition__c, gr.Id);
-        }
-        //Insert data GDP_Products_Account_View__c  
-        
-        
-        test.startTest();
+        //test.startTest();
         //list of related view to be inserted outside of for loop:
         //
         //list<sObject> ObjToInsertList = new list<sObject>();
@@ -505,49 +631,49 @@ global class GSS_REST_Test {
                                                   Appointment_Date__c=Date.valueOf('2014-06-09')));
             
             
-			//Insert Account_Category__c
-			Account_Category__c myAccount_Category = new Account_Category__c(            
+            //Insert Account_Category__c
+            Account_Category__c myAccount_Category = new Account_Category__c(            
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myAccount_Category);
-			
+            ObjToInsertList.add(myAccount_Category);
+            
             //Insert Adjacent_Airport__c
-			Adjacent_Airport__c myAdjacent_Airport= new Adjacent_Airport__c(            
+            Adjacent_Airport__c myAdjacent_Airport= new Adjacent_Airport__c(            
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myAdjacent_Airport);
-
+            ObjToInsertList.add(myAdjacent_Airport);
+            
             //Insert Agency_Owner__c
-			Agency_Owner__c myAgency_Owner= new Agency_Owner__c(            
+            Agency_Owner__c myAgency_Owner= new Agency_Owner__c(            
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myAgency_Owner);
-
+            ObjToInsertList.add(myAgency_Owner);
+            
             //Insert Assoc_Affiliation_Membership__c
-			Assoc_Affiliation_Membership__c myAssoc_Affiliation_Membership= new Assoc_Affiliation_Membership__c(            
+            Assoc_Affiliation_Membership__c myAssoc_Affiliation_Membership= new Assoc_Affiliation_Membership__c(            
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myAssoc_Affiliation_Membership);
-
+            ObjToInsertList.add(myAssoc_Affiliation_Membership);
+            
             //Insert GDP_Profile_Specialization__c
-			GDP_Agency_Profile_Specialization__c myGDP_Profile_Specialization = new GDP_Agency_Profile_Specialization__c(            
+            GDP_Agency_Profile_Specialization__c myGDP_Profile_Specialization = new GDP_Agency_Profile_Specialization__c(            
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myGDP_Profile_Specialization);
-
-
+            ObjToInsertList.add(myGDP_Profile_Specialization);
+            
+            
             //Insert GDP_Phone__c
-			GDP_Phone__c myGDP_Phone = new GDP_Phone__c(            
+            GDP_Phone__c myGDP_Phone = new GDP_Phone__c(
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myGDP_Phone);			
-			
-	
+            ObjToInsertList.add(myGDP_Phone);
+            
+            
             //Insert GDS__c
-			GDS__c myGDS = new GDS__c(            
+            GDS__c myGDS = new GDS__c( 
                 Related_GDP_Products_Account_View__c =myProductAccountView.Id
             );
-			ObjToInsertList.add(myGDS);		            
+            ObjToInsertList.add(myGDS); 
             
             //Insert old GDP_Delta__c to be cleaned by batch job
             GDP_Delta__c delta = new GDP_Delta__c();
@@ -565,38 +691,10 @@ global class GSS_REST_Test {
         //Insert GDP_DeltaList;
         Update GDP_Products_Account_View_list;
         
-
-
-        
-        //ADD New Subscription Detail  
-        mySubscriptionDetail = new GSS_Subscription_Detail__c(
-            Name = 'Test Subscription Detail',
-            Zuora_Subscription__c = mySubscription.Id,
-            GDP_File_Description__c=myFileDescription.Id,
-            Calendar_Next_Submission_Date__c=System.Today(),
-            Calendar_New_Submission_Effective_Date__c=System.Today(),
-            Calendar_Weekly_Option__c='',
-            File_Name_Applies_on__c='Zip file only',
-            File_Name_Prefix_Option__c = 'Custom',
-            File_Name_Custom_Prefix__c='Prefix',
-            File_Name_Suffix_Option__c='Custom',
-            File_Name_Custom_Suffix__c='Suffix'
-        );
-        Insert mySubscriptionDetail;        
-        
-        GDP_File_Production__c myFileProduction = new GDP_File_Production__c(
-              Production_Date__c=System.today()
-			, Status__c='Completed'
-            , File_Specification__c=myFileDescription.Id
-            );
-            
-        insert myFileProduction;
-        
-        test.stopTest();
-    }
-
-
-
+    } // end of insertGDPDataFileRecords
+    
+    
+    
 /* test delta payload
  * created by Alex 18/11/2015
 */
@@ -884,9 +982,194 @@ global class GSS_REST_Test {
         */
     }
     
-    static testmethod void testGetFileSpecification(){
-        system.debug('Specification >> ' + mySubscription);       
-        String SubscriptionId= [Select Id From Zuora__Subscription__c limit 1][0].Id;
+    // =========================================================================
+    // test FileSpecification delivery for basic successful case
+    // the delivery record has not been created
+    static testmethod void testGetFileSpecification01_WillDeliver(){
+        System.debug( 'testGetFileSpecification01_WillDeliver');
+        Zuora__Subscription__c zuoraSubscription = [select Id, Name 
+                                                   from Zuora__Subscription__c 
+                                                   where Zuora__Zuora_Id__c = : ZUORA_SUBSCRIPTION_ID_DAILY 
+                                                   limit 1];
+        System.debug('Subscription: >> ' + zuoraSubscription);
+        System.assertNotEquals(null, zuoraSubscription);
+        String SubscriptionId= zuoraSubscription.Id;
+        
+        // first, ensure no delivery has been done
+        System.assertNotEquals(null, SubscriptionId);
+        List<GDP_File_Delivery__c> deliveryList = [select Id from GDP_File_Delivery__c 
+                                                   where Subscription__c = : SubscriptionId
+                                                        and Delivery_Date__c= :System.today()];
+        delete deliveryList;
+        
+        // prepare calling the REST API
+        RestRequest req = new RestRequest(); 
+        RestResponse res = new RestResponse();
+        
+        req.requestURI = '/GSS/v0/FileSpecification/';  
+        req.httpMethod = 'POST';
+        req.addHeader('SpecificationId', SubscriptionId);
+        
+        system.debug('SubscriptionId >> ' + SubscriptionId);
+        List<String> listid = new String [] { SubscriptionId };
+            
+        // ----------------------------------------------------------
+        Test.startTest();
+        
+        GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
+        req.requestBody = Blob.valueOf(json.serialize(RequestClass));
+        System.debug( 'testGetFileSpecification:requestBody:' + req.requestBody.toString());
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //1 Tests positive scenario with code 200
+        GSS_REST_FileSpecification.getActiveSubscription();
+        System.assertEquals(200, res.statusCode);
+        //System.debug('testGetFileSpecification:responseBody toString: ' + res.responseBody.toString());
+        
+        Test.stopTest();
+        // ----------------------------------------------------------
+        
+        GSS_REST_FileSpecification.FileSpecificationCls ResponseClass = new GSS_REST_FileSpecification.FileSpecificationCls();
+        
+        ResponseClass=(GSS_REST_FileSpecification.FileSpecificationCls)JSON.deserialize(
+            res.responseBody.toString(), 
+            GSS_REST_FileSpecification.FileSpecificationCls.class);
+        
+        System.debug( 'ResponseClass.FileSpecifications size:' + ResponseClass.FileSpecifications.size());
+        //System.debug( 'ResponseClass:' + ResponseClass);
+        
+        //Assert that the return object contains the filespecification
+        // it might deliver the file specification of the SubscriptionDetail or its Master file
+        String FileSpecificationId = ResponseClass.FileSpecifications[0].FileSpecificationID;
+        String SubscriptionDetailId = ResponseClass.FileSpecifications[0].SubscriptionDetailID;
+        System.debug( 'FileSpecificationID:' + FileSpecificationId);
+        System.debug( 'SubscriptionDetailId:' + SubscriptionDetailId);
+        System.assertNotEquals( null, FileSpecificationID, 'FileSpecificationID should not be null.');
+        System.assertNotEquals( null, SubscriptionDetailId, 'SubscriptionDetailId should not be null.');
+        
+        Map<Id,GDP_File_Description__c> fileSpecIdToObjectMap = new Map<Id,GDP_File_Description__c> ([Select Id, Name, Description__c 
+                                                             From GDP_File_Description__c limit 100]);
+        System.debug( 'stored file description:'+ fileSpecIdToObjectMap);
+        GDP_File_Description__c returnedFileSpec = fileSpecIdToObjectMap.get(FileSpecificationId);
+        System.debug( 'returned fileSpecification:' + returnedFileSpec);
+        System.assertNotEquals(null, returnedFileSpec, 'Returned FileSpecification not found');
+        
+    } // end of testGetFileSpecification01_WillDeliver
+    
+    
+    // =========================================================================
+    // test FileSpecification delivery for basic successful case
+    // the delivery record has not been created
+    static testmethod void testGetFileSpecification02_WillDeliverWeekly(){
+        System.debug( 'testGetFileSpecification02_WillDeliverWeekly');
+        
+        Zuora__Subscription__c zuoraSubscription = [select Id, Name 
+                                                   from Zuora__Subscription__c 
+                                                   where Zuora__Zuora_Id__c = : ZUORA_SUBSCRIPTION_ID_WEEKLY 
+                                                   limit 1];
+        System.debug('Subscription: >> ' + zuoraSubscription);
+        System.assertNotEquals(null, zuoraSubscription);
+        String SubscriptionId= zuoraSubscription.Id;
+        
+        // first, ensure no delivery has been done
+        System.assertNotEquals(null, SubscriptionId);
+        List<GDP_File_Delivery__c> deliveryList = [select Id from GDP_File_Delivery__c 
+                                                   where Subscription__c = : SubscriptionId
+                                                        and Delivery_Date__c= :System.today()];
+        delete deliveryList;
+        
+        // prepare calling the REST API
+        RestRequest req = new RestRequest(); 
+        RestResponse res = new RestResponse();
+        
+        req.requestURI = '/GSS/v0/FileSpecification/';  
+        req.httpMethod = 'POST';
+        req.addHeader('SpecificationId', SubscriptionId);
+        
+        system.debug('SubscriptionId >> ' + SubscriptionId);
+        
+        List<String> listid = new String [] { SubscriptionId };
+            
+        // ----------------------------------------------------------
+        Test.startTest();
+        
+        GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
+        req.requestBody = Blob.valueOf(json.serialize(RequestClass));
+        System.debug( 'testGetFileSpecification:requestBody:' + req.requestBody.toString());
+        
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        //1 Tests positive scenario with code 200
+        GSS_REST_FileSpecification.getActiveSubscription();
+        System.assertEquals(200, res.statusCode);
+        //System.debug('testGetFileSpecification:responseBody toString: ' + res.responseBody.toString());
+        
+        GSS_REST_FileSpecification.FileSpecificationCls ResponseClass = new GSS_REST_FileSpecification.FileSpecificationCls();
+        
+        Test.stopTest();
+        // ----------------------------------------------------------
+        
+        ResponseClass=(GSS_REST_FileSpecification.FileSpecificationCls)JSON.deserialize(
+            res.responseBody.toString(), 
+            GSS_REST_FileSpecification.FileSpecificationCls.class);
+        
+        System.debug( 'ResponseClass.FileSpecifications size:' + ResponseClass.FileSpecifications.size());
+        //System.debug( 'ResponseClass:' + ResponseClass);
+        
+        //Assert that the return object contains the filespecification
+        // it might deliver the file specification of the SubscriptionDetail or its Master file
+        String FileSpecificationId = ResponseClass.FileSpecifications[0].FileSpecificationID;
+        String SubscriptionDetailId = ResponseClass.FileSpecifications[0].SubscriptionDetailID;
+        System.debug( 'FileSpecificationID:' + FileSpecificationId);
+        System.debug( 'SubscriptionDetailId:' + SubscriptionDetailId);
+        System.assertNotEquals( null, FileSpecificationID, 'FileSpecificationID should not be null.');
+        System.assertNotEquals( null, SubscriptionDetailId, 'SubscriptionDetailId should not be null.');
+        
+        Map<Id,GDP_File_Description__c> fileSpecIdToObjectMap = new Map<Id,GDP_File_Description__c> ([Select Id, Name, Description__c 
+                                                             From GDP_File_Description__c limit 100]);
+        System.debug( 'stored file description:'+ fileSpecIdToObjectMap);
+        GDP_File_Description__c returnedFileSpec = fileSpecIdToObjectMap.get(FileSpecificationId);
+        System.debug( 'returned fileSpecification:' + returnedFileSpec);
+        System.assertNotEquals(null, returnedFileSpec, 'Returned FileSpecification not found');
+        
+    } // end of testGetFileSpecification02_WillDeliveryWeekly
+    
+    
+    // =========================================================================
+    // test FileSpecification non delivery 
+    // the delivery record have been created for all the subscription details related to this subscription
+    // Tests positive scenario with Delivery date exists for the given subscription and product and charge      
+    static testmethod void testGetFileSpecification03_WillNotDeliver(){
+        System.debug( 'testGetFileSpecification03_WillNotDeliver');
+        
+        Zuora__Subscription__c zuoraSubscription = [select Id, Name 
+                                                   from Zuora__Subscription__c 
+                                                   where Zuora__Zuora_Id__c = : ZUORA_SUBSCRIPTION_ID_WEEKLY 
+                                                   limit 1];
+        System.debug('Subscription: >> ' + zuoraSubscription);
+        System.assertNotEquals(null, zuoraSubscription);
+        String SubscriptionId= zuoraSubscription.Id;
+        System.assertNotEquals(null, SubscriptionId);
+        
+        // ensure we have all subscription detail listed in the delivery
+        List<GSS_Subscription_Detail__c> subscriptionDetailList = [select Id, Zuora_Subscription__c, GDP_File_Description__c
+                                                                  from GSS_Subscription_Detail__c
+                                                                  where Zuora_Subscription__c = : SubscriptionId];
+        List<GDP_File_Delivery__c> fileDeliveryList = new List<GDP_File_Delivery__c>();
+        for (GSS_Subscription_Detail__c subDetail : subscriptionDetailList)  
+        {
+            fileDeliveryList.add( new GDP_File_Delivery__c(
+                                    File_Specification__c= subDetail.GDP_File_Description__c,
+                                    Subscription__c=SubscriptionId,
+                                    GSS_Subscription_Detail__c= subDetail.Id,
+                                    Status__c='Completed',
+                                    Delivery_Date__c=System.today())
+                                );
+        }
+        insert fileDeliveryList;
         
         RestRequest req = new RestRequest(); 
         RestResponse res = new RestResponse();
@@ -899,66 +1182,33 @@ global class GSS_REST_Test {
         
         List<String> listid = new String [] { SubscriptionId };
             
-            GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
+        // ----------------------------------------------------------
+        Test.startTest();
+        GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
         req.requestBody = Blob.valueOf(json.serialize(RequestClass));
-        
+        System.debug( 'testGetFileSpecification:requestBody:' + req.requestBody.toString());
         
         RestContext.request = req;
         RestContext.response = res;
         
-        Test.startTest();
-        //1 Tests positive scenario with code 200
         GSS_REST_FileSpecification.getActiveSubscription();
-        System.assertEquals(200, res.statusCode);
+        system.debug('responseBody toString: ' + res.responseBody.toString());
         
         GSS_REST_FileSpecification.FileSpecificationCls ResponseClass = new GSS_REST_FileSpecification.FileSpecificationCls();
-        
-        system.debug('responseBody toString: ' + res.responseBody.toString());
         ResponseClass=(GSS_REST_FileSpecification.FileSpecificationCls)JSON.deserialize(
             res.responseBody.toString(), 
             GSS_REST_FileSpecification.FileSpecificationCls.class);
         
-        
-        //Assert that the return object contains the filespecification that was sent
-        String FileSpecificationId = ResponseClass.FileSpecifications[0].FileSpecificationID;
-        system.assertEquals([Select Id From GDP_File_Description__c Where Id=:FileSpecificationId limit 1][0].Id, FileSpecificationId);
-        
-        //Zuora__SubscriptionProductCharge__c  ProductCharge=[Select Id,Delivery_Period_Week_Day__c From Zuora__SubscriptionProductCharge__c Where GDP_File_Layout__c=:FileSpecificationId limit 1];
-        GSS_Subscription_Detail__c SubscriptionDetail = [Select Id,Calendar_Weekly_Option__c From GSS_Subscription_Detail__c Where GDP_File_Description__c=:FileSpecificationId limit 1][0];
-        system.debug('testGetFileSpecification // Subscription Detail :' + SubscriptionDetail);
-        //2 Tests positive scenario with empty list change preferences and try again with same id  
-        //ProductCharge.Delivery_Period_Week_Day__c = System.Now().format('EEEE');
-        //update ProductCharge;
-        SubscriptionDetail.Calendar_Weekly_Option__c = System.Now().format('EEEE');
-        update SubscriptionDetail;
-
-        
-        
-        ResponseClass.FileSpecifications.Clear();
-        GSS_REST_FileSpecification.getActiveSubscription();
-        system.debug('responseBody toString: ' + res.responseBody.toString());
-        ResponseClass=(GSS_REST_FileSpecification.FileSpecificationCls)JSON.deserialize(
-            res.responseBody.toString(), 
-            GSS_REST_FileSpecification.FileSpecificationCls.class);
-        
-        //3 Tests positive scenario with Delivery date exists for the given subscription and product and charge      
-        GDP_File_Delivery__c TesTDelivery = new  GDP_File_Delivery__c(
-            File_Specification__c=FileSpecificationId,
-            Subscription__c=SubscriptionId,
-            GSS_Subscription_Detail__c=SubscriptionDetail.Id,
-            Status__c='Completed',
-            Delivery_Date__c=System.Today());
-        insert TesTDelivery;
-        system.debug('GDP_File_Delivery__c >>>'+TesTDelivery);
-        
-        ResponseClass.FileSpecifications.Clear();
-        GSS_REST_FileSpecification.getActiveSubscription();
-        system.debug('responseBody toString: ' + res.responseBody.toString());
-        ResponseClass=(GSS_REST_FileSpecification.FileSpecificationCls)JSON.deserialize(
-            res.responseBody.toString(), 
-            GSS_REST_FileSpecification.FileSpecificationCls.class);
         Test.stopTest();
-    }
+        
+        System.debug( 'ResponseClass.FileSpecifications size:' + ResponseClass.FileSpecifications.size());
+        System.assertEquals(0, ResponseClass.FileSpecifications.size());
+    } // end of testGetFileSpecification03_WillNotDeliver
+    
+    
+    
+    
+    
     
     static testmethod void testGetFilePayload(){
         
@@ -1112,13 +1362,13 @@ global class GSS_REST_Test {
         GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
         System.assertEquals(400, res.statusCode);   
         
-        //Test #6 Call with bogus SubscriptionId
+        //Test #6 Call with bogus SubscriptionDetailId
         bad_requestClass.SubscriptionId=         requestClass.SubscriptionId;
         bad_requestClass.FileSpecificationId =   requestClass.FileSpecificationId ;
         bad_requestClass.SubscriptionDetailId =  requestClass.SubscriptionDetailId ;
         bad_requestClass.FailureMessage=         requestClass.FailureMessage;
         bad_requestClass.Status=                 requestClass.Status;
-        bad_requestClass.SubscriptionId = 'bogusId';
+        bad_requestClass.SubscriptionDetailId = 'bogusId';
         requestClassList.clear();
         requestClassList.add(bad_requestClass);
         system.debug('requestClassList TEST 6: ' +Json.serialize(requestClassList));
