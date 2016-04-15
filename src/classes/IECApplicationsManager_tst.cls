@@ -1,7 +1,7 @@
 /**
  * This class contains unit tests for validating the behavior of class IECApplicationsManager
  * Change log:
- *  20160415-sl: bug fix, split testCustomerSearch2 into 3 test methods and move shared data preparation out
+ *  20160415-sl: bug fix, split testCustomerSearch into 4 test methods and move shared data preparation out
  * 
  */
 @isTest
@@ -424,26 +424,20 @@ private class IECApplicationsManager_tst {
     
     // ====================================================================
     // test customer search functionality: part 4
-    // this test has been disabled before. 
+    // test search by address
     //@isTest(SeeAllData=true)
-    static void testCustomerSearch4Pre() {  
-        //account 3 - start
+    static void testCustomerSearch4_Address() {  
+        initDataForCustomerSearch();
+        System.assertNotEquals( null, oGDPAccount3.Id, 'oGDPAddress3 should have been inserted');
+        // oGDPAccount3 was created by initDataForCustomerSearch, now just update it with new address
+        
         List<GDP_Products_Account_View__c> lstSearchResult = null;
+        
+        // prepare the Address related records
         IATA_ISO_Country__c oISOCountry = IECTestUtil.CreateSampleIATAISOCountry();
         insert oISOCountry;
         GDP_Geo_Detail__c oGEODetail = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
         insert oGEODetail;
-        oGDPAccount3 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
-        oGDPAccount3.Check_Digit__c = AGENCY_CHECK_DIGIT;
-        
-        insert oGDPAccount3;
-        
-        oAccreditation3 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount3, 'GDP');
-        oAccreditation3.Status__c = oRefAgencyStatus.Id;
-        insert oAccreditation3;
-        oGDPAccount3.Related_Accreditation_Class__c = oAccreditation3.Id;
-        update oGDPAccount3;
-        //account 3 - end
         
         GDP_Address__c oGDPAddress3 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount3, oISOCountry, null, oGEODetail);
         oGDPAddress3.Address_Postal_Code__c = 'H0H 0H0';
@@ -451,31 +445,49 @@ private class IECApplicationsManager_tst {
         oGDPAddress3.Address_City__c = 'BOYA';
         insert oGDPAddress3;
         
-        oGDPAccount3.Related_GDP_Address__c = oGDPAddress3.Id;
-        update oGDPAccount3;
+        // add Address to the existing oGDPAccount3 in database
+        GDP_Products_Account_View__c oGDPAccount3New = new GDP_Products_Account_View__c( Id = oGDPAccount3.Id
+	        	, Related_GDP_Address__c = oGDPAddress3.Id);
+        update oGDPAccount3New;
         
+        // Test #10
+        // create search filter
         IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
         oFilter.Zip_Code__c = '0H 0';
         oFilter.City__c = oGDPAddress3.Address_City__c;
         oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
         oFilter.Country__c = oGDPAddress3.Address_ISO_Country_Code__c;
         
-        
-        lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-        
+        test.startTest();
+        System.runAs(oCommunityUser) {
+            // note that IECCustomer.getCurrentIECCustomer() requires the method to be called by Community User
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+        }
         system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount3.Id == lstSearchResult.get(0).Id, 'The Agency #3 should be found based on the zip/postal code');
-        // 
+         
         // Test #11 - search by agency trade name (starts with) and city (exact match)
         oFilter = new IEC_Application_Filter__c(); // reset filter
-        oFilter.Agency_Name__c = 'Chillwave Agency';
+        oFilter.Agency_Name__c = oGDPAccount3.Name.substring(5); //  AGENCY3_NAME should be longer than this
         oFilter.Agency_Name_Search_Condition__c = IECConstants.GADAgencyNameSearchBy.TradingName.name();
         oFilter.Agency_Name_Search_Type__c = IECConstants.GADSearchType.StartsWith.name();
         oFilter.City__c = oGDPAddress3.Address_City__c;
         oFilter.City_Search_Type__c = IECConstants.GADSearchType.ExactMatch.name();
         
-        lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-        system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #2 should be found based on agency name and city');
-    } // end of testCustomerSearch4Pre
+        System.runAs(oCommunityUser) {
+            // note that IECCustomer.getCurrentIECCustomer() requires the method to be called by Community User
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+        }
+        
+        test.stopTest();
+        
+        System.debug( 'Test search by City:' + oFilter.City__c 
+                     + ', Search Type: ' + oFilter.City_Search_Type__c
+                     + ', lstSearchResult:' + lstSearchResult);
+        System.assert(lstSearchResult != null && lstSearchResult.size() > 0, 'The Agency #3 should be found.');
+        System.assert(lstSearchResult != null && lstSearchResult.size() == 1 
+                      && oGDPAccount3New.Id == lstSearchResult.get(0).Id
+                      , 'The Agency #3 should be found based on agency name and city');
+    } // end of testCustomerSearch4_Address
      
     // ====================================================================
     // test testLiveUsageTracking
@@ -627,5 +639,38 @@ private class IECApplicationsManager_tst {
         system.assertEquals(true, IECApplicationsManager.isApplicationFilterEmpty(oFilter), 'The filter should be considered empty');
     } // end of testOtherStuff
     
+    // ====================================================================
+    // testOtherStuff part 2
+    // just some extra calls just to increase the coverage
+    @isTest(SeeAllData=true)
+    static void testOtherStuff2() {
+        initDataForCustomerSearch();
+        
+        Test.startTest();
+        GDP_Products_Account_View__c oGDPAccount1Search = IECApplicationsManager.getAgencyByID(oGDPAccount1.Id);
+        System.assertEquals( oGDPAccount1.Id, oGDPAccount1Search.Id, 'GDPAccount1 should have been found');
+        
+ 		IECApplicationsManager.createProductAccessOnNewSubscription( oContact.Id, oSubscription, 'INVOICE 333'); 
+        
+        Integer contactAccessProductCategoryStatusCode = IECApplicationsManager.ContactHasAccessToProductCategory( oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
+        Integer contactAccessSubscriptionStatusCode =  IECApplicationsManager.ContactHasAccessToSubscriptionName( oContact.Id, oSubscription.Name);   
+
+        List<IEC_Product_Access__c> lstProdAccessBySubs = IECApplicationsManager.getListProductAccessByContactBySubscriptionNumber(oContact.Id, oSubscription.Name);
+    	System.assertNotEquals(0, lstProdAccessBySubs.size(), 'ProductAccess By Subscription should be found.');
+            
+        List<IEC_Product_Access__c> lstProdAccessByProductCategory = IECApplicationsManager.getProductAccessByContact(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
+    	System.assertNotEquals(0, lstProdAccessByProductCategory.size(), 'ProductAccess By Product Category should be found.');
+        
+        IECApplicationsManager.adjustProductAccessOnSubscription( oContact.Id, oSubscription, 'INVOICE 333', lstProdAccessBySubs[0]); 
+        
+        List<IEC_Application_Filter__c> lstFilters = IECApplicationsManager.LoadFilterByContact( oContact.id, true) ;// test for bSystemGenerated
+        
+        System.runAs(oCommunityUser) {
+    	    Date dEndSubscriptionDate = IECApplicationsManager.getEnddateOfSubscriptionName(oSubscription.Name);
+        	Integer iDayLeftForAccess = IECApplicationsManager.getDaysLeftForAccessBySubscriptionName(oSubscription.Name);
+	    }
+        Test.stopTest();
+        
+    } // end of testOtherStuff2
     
 } // end of IECApplicationsManager_tst
