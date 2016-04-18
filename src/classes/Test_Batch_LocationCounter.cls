@@ -160,13 +160,12 @@ public class Test_Batch_LocationCounter
             system.assertEquals(true, false,' An exception occurred while inserting a sample EBC_Statistic__c record '+e.getMessage());
         }
         test.startTest();
-        	Database.executeBatch(new Batch_DeleteExistingLocationCounter(), 200);
+        	Database.executeBatch(new Batch_DeleteExistingLocationCounter(), 1);
         test.stopTest();
         List<EBC_Statistic__c> allStatistics = [Select Id,Key__c,Agency_Counter__c,City__c,Country__c,State_Province__c,Sub_Continent__c
                                                from EBC_Statistic__c];
         system.assertNotEquals(null, allStatistics,' The batch needs to add records ');
     }
-    
     private static testMethod void testSchedule()
     {
         initializeTestData();

@@ -1,10 +1,10 @@
 /**************************************************************************************************
  * @ Last Modified By: Bhargavi Rayavarapu
- * @ Last Edited Date : 2016-04-13
+ * @ Last Edited Date : 2016-04-15
  * @ Description: This batch apex when run, calculates the total number of records in different combinations of Location filers
  *  and stores each as a record in EBC_Statistic__c object
  * Currently considered Location filters are:   SUB-CONTINENT, Country, State/Province and CITY
-   Total number of combinations that are possible are : 15
+   Total number of combinations that are possible for 1 record with all 4 filters populated are : 15 
  * ************************************************************************************************/
 global class Batch_LocationCounter implements Database.Batchable<sObject>,Database.Stateful
 {
@@ -37,9 +37,14 @@ global class Batch_LocationCounter implements Database.Batchable<sObject>,Databa
         // execute the query
       	return Database.getQueryLocator(query);
    	}
-   
    	global void execute( Database.BatchableContext BC, List<GDP_Products_Account_View__c> agencyRecords)
     {
+     	LocationMap = new Map<String,Integer>();
+        KeyCountyMap = new Map<String,String>();
+        KeySubContinentMap = new Map<String,String>();
+        KeyStateProvinceMap = new Map<String,String>();
+        KeyCityMap = new Map<String,String>();
+        Set<String> keyMap = new Set<String>(); 
         // parse through the result set and add the counts to the map
     	for(GDP_Products_Account_View__c parser : agencyRecords)
         {
@@ -63,6 +68,7 @@ global class Batch_LocationCounter implements Database.Batchable<sObject>,Databa
                 {
                     agencyCounter = LocationMap.get(filterCombination);
                 }
+                keyMap.add(filterCombination);
                 LocationMap.put(filterCombination,agencyCounter+1);
             }
       	}
@@ -70,10 +76,8 @@ global class Batch_LocationCounter implements Database.Batchable<sObject>,Databa
         Map<String,Integer> existingKeyValues = new Map<String,Integer>();
         Map<String,Id> existingIdKeyValues = new Map<String,Id>();
         List<EBC_Statistic__c> otherPossibleLocationFilters = new List<EBC_Statistic__c>();
-        
-        List<EBC_Statistic__c> newRecords = [Select Id,Key__c,Agency_Counter__c
-               								 from EBC_Statistic__c];
-        
+        String tempQuery = 'Select Id,Key__c,Agency_Counter__c from EBC_Statistic__c where Key__c in: keyMap Limit 10000';
+        List<EBC_Statistic__c> newRecords = database.query(tempQuery);
         for(EBC_Statistic__c parser: newRecords)
         {
             existingKeyValues.put(parser.Key__c,Integer.valueOf(parser.Agency_Counter__c));
@@ -88,7 +92,7 @@ global class Batch_LocationCounter implements Database.Batchable<sObject>,Databa
             if(null != existingIdKeyValues && existingIdKeyValues.containsKey(keyValue))
             {
                 newPossibleLocationFilter.Id = existingIdKeyValues.get(keyValue);
-            	newPossibleLocationFilter.Agency_Counter__c = existingKeyValues.get(keyValue);
+            	newPossibleLocationFilter.Agency_Counter__c = existingKeyValues.get(keyValue) + LocationMap.get(keyValue);
             }
             newPossibleLocationFilter.Sub_Continent__c = KeySubContinentMap.get(keyValue);
             newPossibleLocationFilter.Country__c = KeyCountyMap.get(keyValue);
