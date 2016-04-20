@@ -46,7 +46,7 @@ global class GSS_REST_Test {
     
     private static final String FILE_DESCRIPTION_NAME_NON_REFERENCE_DELTA_DAILY_01 = 'CGO1DeltaDaily';
     
-    @testSetup static void SetupTestData() {
+    @testSetup public static void SetupTestData() {
         // setup test data method shared with all testMethods
  
         //Create iso code for account creation
@@ -1439,7 +1439,6 @@ global class GSS_REST_Test {
         
         //Assert that the return object contains the filespecification that was sent
         //system.assertEquals(ResponseClass.FileProductions[0].FileSpecificationID, FileSpecificationId);
-       
         
         ResponseClass.FileProductions.Clear();
         GSS_REST_FileProduction.getFiletoProduce();
@@ -1454,6 +1453,9 @@ global class GSS_REST_Test {
     // additional calls to supporting methods in GSS_REST_FileProduction
     // simply added to increase coverage and ensure those little methods callable
     static testmethod void testGetFileProduction01_OtherCalls(){
+        
+        Test.startTest();
+        
         GSS_REST_FileProduction.FieldStructureCls fieldStruct = new GSS_REST_FileProduction.FieldStructureCls();
         // call public String ExtractField(Integer TypeList, String ObjectName)
         fieldStruct.ExtractField(0, 'Account');
@@ -1492,8 +1494,7 @@ global class GSS_REST_Test {
         // this actually should be called when calling GSS_REST_FileProduction.getFileToProduce()
         GSS_REST_FileProduction.FileProduction fileProd = new GSS_REST_FileProduction.FileProduction();
         
-        //
-        //
+        Test.stopTest();
     } // testGetFileProduction02_OtherCalls
     
     static testmethod void testConfirmFileProduction(){
