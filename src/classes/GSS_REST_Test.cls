@@ -10,7 +10,8 @@
  *
  * Original Author: Alexandre Jaimes
  * Change log:
- *   2016-04-11: fix and split testGetFileSpecification, add IINETUserID__c in myBillingAcct.
+ *   2016-04-11-sl: fix and split testGetFileSpecification, add IINETUserID__c in myBillingAcct.
+ *   2016-04-20-sl: update testGetFileProduction*() to increase coverage on GSS_REST_FileProduction.
  *
  */
 
@@ -42,6 +43,8 @@ global class GSS_REST_Test {
     
     private static String ZUORA_SUBSCRIPTION_ID_DAILY = '22345678901234567890123456789012';
     private static String ZUORA_SUBSCRIPTION_ID_WEEKLY = '11112222333344445555666677778888';
+    
+    private static final String FILE_DESCRIPTION_NAME_NON_REFERENCE_DELTA_DAILY_01 = 'CGO1DeltaDaily';
     
     @testSetup static void SetupTestData() {
         // setup test data method shared with all testMethods
@@ -137,13 +140,14 @@ global class GSS_REST_Test {
             Class__c='',
             Magnitude__c='Master',
             Description__c='File Description Child 1',
-            File_Naming_Convention__c='[Prefix]CGO1Master_Day[ddd]_[yyyy][Suffix].AM'
+            File_Naming_Convention__c='[Prefix]CGO1Master_Day[ddd]_[yyyy][Suffix].AM',
+            Atom__c = '1'
         );
         Insert myFileDescription;
         
         //Create a file specification master, non reference
         myFileDescriptionDeltaDaily = new GDP_File_Description__c(
-            Name = 'CGO1DeltaDaily',
+            Name = FILE_DESCRIPTION_NAME_NON_REFERENCE_DELTA_DAILY_01, // CGO1DeltaDaily
             File_Format__c='TXT',
             Frequency__c='Daily',
             Field_Label__c='',
@@ -152,7 +156,8 @@ global class GSS_REST_Test {
             Class__c='',
             Magnitude__c='Delta',
             Description__c='File Description Delta Daily 1',
-            File_Naming_Convention__c='[Prefix]CGO1Delta_Day[ddd]_[yyyy][Suffix].AD'
+            File_Naming_Convention__c='[Prefix]CGO1Delta_Day[ddd]_[yyyy][Suffix].AD',
+            Atom__c = '2'
         );
         //Create a file specification master, non reference
         myFileDescriptionDeltaWeekly = new GDP_File_Description__c(
@@ -1378,24 +1383,30 @@ global class GSS_REST_Test {
         Test.stopTest();
     }  
 
-    static testmethod void testGetFileProduction(){
+    // normal scenario in using GSS_REST_FileProduction
+    static testmethod void testGetFileProduction01_NormalCase(){
         system.debug('File Production  >>> In progress');  
         
-        String FileSpecificationId= [Select Id From GDP_File_Description__c limit 1][0].Id;
+        String FileSpecificationId= [Select Id From GDP_File_Description__c 
+                where Name = : FILE_DESCRIPTION_NAME_NON_REFERENCE_DELTA_DAILY_01
+                      and Is_Reference__c = false
+                limit 1][0].Id;
         
         RestRequest req = new RestRequest(); 
         RestResponse res = new RestResponse();
         
         req.requestURI = '/GSS/v0/FileProduction/';  
-        req.httpMethod = 'POST';
-        req.addHeader('FileSpecification', '000000000000000');
+        req.httpMethod = 'GET';
+        //req.addHeader('FileSpecification', '000000000000000');
+        req.addParameter('FileSpecificationId', FileSpecificationId);
+        req.addParameter('IsUniqueRequest', 'true');
         
         system.debug('FileSpecification >> ' + FileSpecificationId);
         
         List<String> listid = new String [] { FileSpecificationId };
             
         //    GSS_REST_FileProduction.ListOfSubscriptionId RequestClass = new GSS_REST_FileProduction.ListOfSubscriptionId(listid);
-       // req.requestBody = Blob.valueOf(json.serialize(RequestClass));
+        // req.requestBody = Blob.valueOf(json.serialize(RequestClass));
         
         
         RestContext.request = req;
@@ -1440,6 +1451,50 @@ global class GSS_REST_Test {
         Test.stopTest();
     }
 
+    // additional calls to supporting methods in GSS_REST_FileProduction
+    // simply added to increase coverage and ensure those little methods callable
+    static testmethod void testGetFileProduction01_OtherCalls(){
+        GSS_REST_FileProduction.FieldStructureCls fieldStruct = new GSS_REST_FileProduction.FieldStructureCls();
+        // call public String ExtractField(Integer TypeList, String ObjectName)
+        fieldStruct.ExtractField(0, 'Account');
+        
+        // call public void LoadFieldStructure(...)
+        String vFieldAPIName = 'Name|Name|Name';
+        String vFieldLabel = 'One|Field Two|Name';
+        String vFieldLength = '20|50|80';
+        String vFieldType = 'String|String|String';
+        String vFieldObjectName = 'GDP_Products_Account_View__c|Accreditation__c|Account';
+        String vFieldGroup ='||';
+        String vFieldHiddenColumn = '0|0|1';
+        String vXmlName = 'Name|Name|Name';
+        String vFieldXmlStructure = '||';
+        String vXmlHiddenColumn  = '0|0|1';
+        String vTxtHiddenColumn  = '0|0|0';
+        String vXmlGroup = '||';        
+        fieldStruct.LoadFieldStructure(vFieldAPIName,
+                                         vFieldLabel,
+                                         vFieldLength,
+                                         vFieldType,
+                                         vFieldObjectName,
+                                         vFieldGroup,
+                                         vFieldHiddenColumn,
+                                         vXmlName,
+                                         vFieldXmlStructure,
+                                         vXmlHiddenColumn,
+                                         vTxtHiddenColumn,
+                                         vXmlGroup );
+        
+        // the calling FileProductionCls
+        // this actually should be called when calling GSS_REST_FileProduction.getFileToProduce()
+        GSS_REST_FileProduction.FileProductionCls fileProdList = new GSS_REST_FileProduction.FileProductionCls();
+        
+        // the calling FileProduction
+        // this actually should be called when calling GSS_REST_FileProduction.getFileToProduce()
+        GSS_REST_FileProduction.FileProduction fileProd = new GSS_REST_FileProduction.FileProduction();
+        
+        //
+        //
+    } // testGetFileProduction02_OtherCalls
     
     static testmethod void testConfirmFileProduction(){
         system.debug('myProduction >>> ConfirmFileProduction ' );
