@@ -1,0 +1,48 @@
+.page-header {
+    background: #24828c;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px 0;
+
+    a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+    .inner-wrapper {
+        font-size: 0;
+    }
+}
+
+.page-header .column {
+    font-size: $font-size-base;
+    width: 50%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.column-nav {
+}
+
+.column-account {
+    text-align: right;
+}
+
+.site-logo {
+    margin: 0 50px -4px 0;
+}
+
+.site-logo,
+.main-nav,
+.account-nav li {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.account-nav li {
+    margin-left: 25px;
+}
