@@ -10,8 +10,9 @@
                 <ul class="nav">
                     <li>
                         <a class="icon caret-down after" href="#">eBroadcast</a>
-
-                        <!-- <div class="nav-content">
+                        
+                        <!-- In Progress -->
+                        <!-- <div class="sub-nav">
                             <ul>
                                 <li>
                                     <a href="#">Manage Services</a>
@@ -40,8 +41,8 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div> -->
-
+                        </div>
+ -->
                     </li>
                 </ul>
             </nav>

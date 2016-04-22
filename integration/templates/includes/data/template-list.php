@@ -8,31 +8,43 @@ $templates = array(
         ),
     array(
         'name' => '1 Column - Banded',
-        'image_path' => 'assets/img/components/templates/template-2.png',
+        'image_path' => 'assets/img/components/templates/template-1.png',
         'url' => '#',
         'description' => 'Drag and drop'
         ),
     array(
         'name' => '1:2 Column',
-        'image_path' => 'assets/img/components/templates/template-3.png',
+        'image_path' => 'assets/img/components/templates/template-2.png',
         'url' => '#',
         'description' => 'Drag and drop'
         ),
     array(
         'name' => '1:2:1 Column - Banded',
-        'image_path' => 'assets/img/components/templates/template-4.png',
+        'image_path' => 'assets/img/components/templates/template-2.png',
         'url' => '#',
         'description' => 'Drag and drop'
         ),
     array(
         'name' => '1:3 Column',
-        'image_path' => 'assets/img/components/templates/template-5.png',
+        'image_path' => 'assets/img/components/templates/template-1.png',
         'url' => '#',
         'description' => 'Drag and drop'
         ),
     array(
         'name' => '1:3 Column - Banded',
-        'image_path' => 'assets/img/components/templates/template-5.png',
+        'image_path' => 'assets/img/components/templates/template-1.png',
+        'url' => '#',
+        'description' => 'Drag and drop'
+        ),
+    array(
+        'name' => '1:2 Column',
+        'image_path' => 'assets/img/components/templates/template-1.png',
+        'url' => '#',
+        'description' => 'Drag and drop'
+        ),
+    array(
+        'name' => '1:2:1 Column - Banded',
+        'image_path' => 'assets/img/components/templates/template-1.png',
         'url' => '#',
         'description' => 'Drag and drop'
         ),

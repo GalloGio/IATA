@@ -25,6 +25,14 @@ $(document).ready(function() {
             }
     });
 
+    $('.js-tabs').on('click', '.tabs a', function(event) {
+        event.preventDefault();
+        var self = $(this),
+            parent = self.parents('.js-tabs'),
+            targetPane = self.parent('li').data('target');
+        self.parents('li').addClass(className.active).siblings().removeClass(className.active);
+        parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
+    });
 
     $('.js-datepicker').datepicker({
         dateFormat: 'MM dd yy'
@@ -48,12 +56,27 @@ $(document).ready(function() {
         }
     });
     
+    $('.js-template-list').on('click', '.user-input', function() {
+        var self = $(this),
+            parent = $(this).parents('.js-template-list'),
+            listItem = parent.find('.list-item');
+
+        if (self.is(':checked')) {
+            self.parents('li').addClass(className.selected).removeClass(className.disabled)
+                .siblings().removeClass(className.selected).addClass(className.disabled)
+                .find('.user-input').prop('disabled', true);
+        } else {
+            self.parents('li').removeClass(className.selected)
+                .siblings().removeClass(className.disabled)
+                .find('.user-input').prop('disabled', false);
+        }
+
+
+    });
 
     /* ----------------------------------------
         Sticky Footer
     ------------------------------------------- */
-    
-
     var body = $('body'),
         pageFooter = $('.page-footer');
 

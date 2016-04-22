@@ -370,6 +370,14 @@
     background: #55bbd4;
 }
 
+.template-list .checkbox:checked ~ .custom-checkbox {
+    background: #fff;
+
+    .icon::before {
+        color: #000;
+    }
+}
+
 .custom-user-input {
     display: inline-block;
     background: transparent;
@@ -389,7 +397,7 @@
         z-index: 10;
         width: 40px;
         text-align: center;
-        background: #2a3940;
+        background: #23828c;
         
         &::before {
             padding: 0;
@@ -404,7 +412,7 @@
         margin-right: 5px;
         vertical-align: middle;
         float: left;
-        
+
         .user-input {
             visibility: hidden;
         }
@@ -417,7 +425,7 @@
         padding-right: 60px;
         background: transparent;
         border-radius: 0;
-        border: 1px solid #2a3940;
+        border: 1px solid #23828c;
         -webkit-appearance: none;
            -moz-appearance: none;
                 appearance: none;
@@ -525,15 +533,13 @@
     margin: 0;
 }
 
-.modal-content .custom-user-input {
+.data-table.campaign .custom-user-input {
     
     &.select .icon {
-        background: #23828c;
-        color: #fff;
+        background: #2a3940;
     }
 
     .user-input.select {
-        border-color: #23828c;
+        border-color: #2a3940;
     }
 }
-

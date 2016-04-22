@@ -5,7 +5,12 @@
         include 'includes/components/process.php';
         ?>
 
-        <h1 class="page-title">Design</h1>
+        <h1 class="page-title">Design your campaign</h1>
+
+        <div class="plugin-container" style="border: 1px solid #ccc; padding: 20px;">
+            <h2>plugin goes here</h2>
+            <a href="//mosaico.io/">https://mosaico.io/</a>
+        </div>
         
         <div class="footer-actions text-right">
             <a class="button" href="<?= $page_url['schedule'] ?>">Continue</a>

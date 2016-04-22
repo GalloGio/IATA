@@ -198,7 +198,7 @@
                 }
                ?>
             </div>
-
+            <?php if ($scenario != 3) { ?>
             <div class="sub-container columns small-12 medium-4">
                 <div class="summary-box">
                     <div class="box-body fit">
@@ -246,8 +246,10 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
 
+        <?php if ($scenario != 3) { ?>
         <div class="row row-mangage js-match-height">
             <div class="columns medium-4 group-container manage-templates">
                 <h2 class="group-title">Manage templates and other resources</h2>
@@ -271,6 +273,6 @@
                 </div>
             </div>
         </div>
-
+        <?php } ?>
     </div>
 </main>

@@ -1,64 +1,7 @@
-.list-item {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin: 20px 10px;
-    padding: 10px;
-    display: inline-block;
-    width: 26%;
-    vertical-align: top;
-    position: relative;
-
-    .action {
-        position: absolute;
-        bottom: 12px;
-        left: 185px;
-    }
-}
-
-.item-image {
-    display: inline-block;
-    float: left;
-    width: 175px;
-
-    img {
-        vertical-align: bottom;
-    }
-}
-
-.item-name {
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
-}
-
 .nav {
     list-style: none;
     margin: 0;
     padding: 0;
-
-    &.tabs {
-        border-bottom: 1px solid #ccc;
-        margin: 10px 0 -1px;
-
-        li {
-            display: inline-block;
-            padding: 0 20px 10px;
-        }
-
-        a {
-            text-decoration: none;
-            color: $text-color;
-        }
-
-        .active {
-            border-bottom: 2px solid #555;
-
-            a {
-                cursor: default;
-                color: $link-color;
-            }
-        }
-
-    }
 }
 
 .process {
@@ -241,8 +184,77 @@
 }
 
 .template-list {
-    margin: 0 -10px; 
+    margin: 0 -15px;
+    font-size: 0;
+
+    .checkbox-box {
+        margin: 0;
+    }
+
+    .input-label {
+        font-weight: normal;
+    }
 }
+
+.input-state {
+    font-size: 1.4rem;
+
+    &.selected {
+        display: none;
+    }
+}
+
+.is-selected {
+    .input-state {
+        &.unselected {
+            display: none;
+        }
+
+        &.selected {
+            display: inline;
+        }
+    }
+}
+
+.list-item {
+    font-size: $font-size-larger;
+    padding: 15px;
+    border: 15px solid #fff;
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+    position: relative;
+    background: #f4f9f9;
+
+    &.is-selected {
+        background: #1dbec8;
+        color: #fff;
+    }
+
+    &.disabled {
+        .custom-checkbox {
+            .icon::before {
+                color: #f1f1f1;
+            }
+        }
+    }
+}
+
+.item-image {
+    text-align: center;
+    display: block;
+
+    img {
+        vertical-align: bottom;
+    }
+}
+
+.item-name {
+    font-size: $font-size-larger;
+    font-weight: $font-weight-bold;
+    margin: 0 0 10px;
+}
+
 
 .select-a-plan {
     .list.lines {

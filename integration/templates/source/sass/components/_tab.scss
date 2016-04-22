@@ -1,0 +1,31 @@
+.nav.tabs {
+    border-bottom: 1px solid #1ebec8;
+    margin: 10px 0;
+    font-size: 1.6rem;
+
+    li {
+        display: inline-block;
+        padding: 0 20px 5px;
+    }
+
+    a {
+        text-decoration: none;
+        color: $text-color;
+    }
+
+    .active {
+        border-bottom: 7px solid #1ebec8;
+
+        a {
+            cursor: default;
+        }
+    }
+}
+
+.tab-pane {
+    display: none;
+
+    &.is-open {
+        display: block;
+    }
+}

@@ -45,6 +45,10 @@ figure {
     color: #fe9e07;
 }
 
+.lead {
+    font-size: 1.6rem;
+}
+
 
 /*------------------------------------*\
     #$common
@@ -213,9 +217,18 @@ figure {
     background: #e8f8f9;
     padding: 15px 20px;
     margin: 30px 0 0;
+    color: #134045;
 
     p {
         margin: 0;
+        font-size: 1.6rem;
+    }
+
+    .title {
+        margin: 0 0 5px;
+        font-weight: normal;
+        line-height: 1.2;
+        font-size: 2rem;
     }
 }
 
@@ -442,4 +455,66 @@ figure {
     width: 70%;
     margin-top: 50px;
     padding-bottom: 20px;
+}
+
+.group-container.schedule {
+    margin: 30px 0;
+    font-size: 1.6rem;
+    border-top: 1px solid #ccc;
+    padding: 20px;
+
+    .custom-user-input.select .icon::before {
+        margin-top: 0;
+    }
+    
+    p {
+        margin: 0;
+    }
+
+    .note {
+        font-size: 1.4rem;
+        color: #666;
+    }
+    
+    .label {
+        margin: 1em 0;
+    }
+    .datepicker::before {
+        top: 8px;
+    }
+
+    .group-title {
+        font-size: 2rem;
+        font-weight: normal;
+        color: #134045;
+
+        &.icon::before {
+            font-size: 28px;
+            vertical-align: middle;
+            padding-bottom: 2px;
+            margin-right: 10px;
+        }
+    }
+
+
+    .group-content {
+        margin-left: 39px;
+    }
+}
+
+.subject-line {
+    .title .text-link {
+        font-size: 1.6rem;
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.sub-nav {
+    position: absolute;
+    background: #fff;
+    
 }
