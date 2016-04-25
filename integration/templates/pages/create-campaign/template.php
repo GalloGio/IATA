@@ -41,7 +41,7 @@
                     </ul>
                 </div>
                 <div class="tab-pane" id="pane-2">
-                    <ul class="list template-list js-saved-template-list">
+                    <ul class="list template-list js-template-list">
                         <?php 
                         $index = 1;
                         foreach ($templates as $template): 
@@ -49,7 +49,7 @@
                         <li class="list-item">
                             <div class="checkbox-box">
                                 <div class="custom-user-input checkbox">
-                                    <input class="user-input checkbox" type="radio" name="template" id="saved-template-<?= $index ?>">
+                                    <input class="user-input checkbox" type="radio" name="saved-template" id="saved-template-<?= $index ?>">
                                     <label class="custom-checkbox" for="saved-template-<?= $index ?>"><i class="icon"></i></label>
                                 </div>
                                 <label class="input-label" for="saved-template-<?= $index ?>"><span class="input-state unselected">Select</span> <span class="input-state selected">Selected</span></label>

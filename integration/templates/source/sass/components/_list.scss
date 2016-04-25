@@ -55,6 +55,7 @@
     position: relative;
     z-index: 20;
     padding-top: 30px;
+    vertical-align: top;
 
     @media #{$screen-desktop} {
         width: 170px;

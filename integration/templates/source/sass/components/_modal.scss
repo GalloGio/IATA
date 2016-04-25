@@ -104,4 +104,6 @@
 
 body[data-is-modal-open='true'] {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
 }

@@ -34,6 +34,11 @@ $(document).ready(function() {
         parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
     });
 
+    $('#js-main-nav').on('click', function(event) {
+        event.preventDefault();
+        $(this).next('.sub-nav').toggleClass(className.open);
+    });
+
     $('.js-datepicker').datepicker({
         dateFormat: 'MM dd yy'
     });
@@ -57,21 +62,8 @@ $(document).ready(function() {
     });
     
     $('.js-template-list').on('click', '.user-input', function() {
-        var self = $(this),
-            parent = $(this).parents('.js-template-list'),
-            listItem = parent.find('.list-item');
-
-        if (self.is(':checked')) {
-            self.parents('li').addClass(className.selected).removeClass(className.disabled)
-                .siblings().removeClass(className.selected).addClass(className.disabled)
-                .find('.user-input').prop('disabled', true);
-        } else {
-            self.parents('li').removeClass(className.selected)
-                .siblings().removeClass(className.disabled)
-                .find('.user-input').prop('disabled', false);
-        }
-
-
+        var self = $(this);
+        self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
 
     /* ----------------------------------------

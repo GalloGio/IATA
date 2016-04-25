@@ -49,7 +49,7 @@
                     <div class="custom-user-input select">
                         <i class="icon angle-down"></i>
                         <select class="user-input select">
-                            <?php for ($i=0; $i < 61; $i++) { ?>
+                            <?php for ($i=0; $i < 60; $i = $i+5) { ?>
                             <?php if ($i < 10) { ?>
                             <option value="0<?= $i ?>">0<?= $i ?></option>
                             <?php } else { ?>
@@ -65,12 +65,7 @@
                             <option value="pm">PM</option>
                         </select>
                     </div>
-                    <div class="custom-user-input select">
-                        <i class="icon angle-down"></i>
-                        <select class="user-input select">
-                            <option value="edt">EDT</option>
-                        </select>
-                    </div>
+                    <strong>UTC−05:00</strong>
                 </div>
             </div>
         </section>
