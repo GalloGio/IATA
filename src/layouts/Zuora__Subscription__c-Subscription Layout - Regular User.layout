@@ -140,6 +140,22 @@
         <fields>Subscription_Product_Charge__c</fields>
         <relatedList>Invoice_Item__c.Subscription__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>GDP_File_Description__c</fields>
+        <relatedList>GSS_Subscription_Detail__c.Zuora_Subscription__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Service_Specification__c</fields>
+        <fields>Service_Activation_Date__c</fields>
+        <fields>Share_Authorized_Usage__c</fields>
+        <fields>Max_API_Call_Per_Month__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>CAC_Subscription_Detail__c.Subscription__c</relatedList>
+        <sortField>Service_Specification__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
