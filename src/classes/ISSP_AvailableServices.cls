@@ -1,0 +1,449 @@
+public with sharing class ISSP_AvailableServices{
+
+    public string selectedList {get;set;}
+    public List<ServiceWrapper> ServiceList;
+    public map<string,ISSPServiceListView__c> ServiceListViewMap {get;set;} 
+    public list<string> ListViewNameList {get;set;}
+    
+    private String sortDirection = 'ASC';
+    private String sortExp  = 'CreatedDate'; 
+    
+    public Boolean isAdmin {get;set;} 
+     
+    public String conId {get; set;}
+    public ServiceWrapper Serv {get; set;}
+    public String ServId {get; set;}
+    
+    public Boolean hasPremiumTD {get; set;}
+
+    public String sortExpression {
+     get { return sortExp; }
+     set {
+        
+       //if the column is clicked on then switch between Ascending and Descending modes
+       if (value == sortExp || (value == 'Name' && sortExp == 'Name') || (value == 'Name' && sortExp == 'Name')){
+        system.debug('CHANGING FROM: ' + sortDirection);
+         sortDirection = (sortDirection == 'ASC')? 'DESC' : 'ASC';
+        system.debug('CHANGING TO: ' + sortDirection);
+       }
+       else{
+         sortDirection = 'ASC';
+         system.debug('NOT CHANGING');
+       }
+       if (value != 'Description__c')
+        sortExp = value;
+       else
+        sortExp = 'Name';
+     }
+    }
+
+    public String getSortDirection() {
+        //if not column is selected 
+        if (sortExpression == null || sortExpression == '')
+            return 'ASC';
+        else
+            return sortDirection;
+    }
+    
+    public void setSortDirection(String value) {  
+        sortDirection = value;
+    }
+    
+    public ISSP_AvailableServices(){
+         
+    }
+    
+    public PageReference initialization() {
+        try {
+            initFilters();
+            initServiceListViewMap();
+            String currentUserProfileId = UserInfo.getProfileId();
+            List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
+            if (!profileList.isEmpty()){
+                String currentUserProfileName = profileList[0].Name;
+                system.debug('currentUserProfileName: ' + currentUserProfileName);
+                if (currentUserProfileName.contains('dmin'))
+                    isAdmin = true;
+                else
+                    isAdmin = false;
+
+                conId = [select Id,ContactId from User where Id =:Userinfo.getUserId()].ContactId;
+            }
+            else
+                isAdmin = false;
+        } catch(Exception exp) {
+            ISSP_Utilities.exceptionDump(exp);
+        }
+        return null;
+    }
+    
+    //AEF:
+    private list<ISSPServiceListView__c> csServiceListViews { 
+        get {
+            if(null == csServiceListViews)
+                csServiceListViews = ISSPServiceListView__c.getAll().values();
+            system.debug('ISSPServiceListView__c: ' + csServiceListViews);
+            return csServiceListViews;
+        } 
+        set; 
+    }
+    private PermissionSetFilter     thePermissionSetFilter { get; set; }
+    private ProfilePermissionFilter theProfilePermissionFilter { get; set; }   
+    //todo
+    private void initFilters() {
+        set<String> permissionSetIDs = new Set<String>(); 
+        for(ISSPServiceListView__c ServiceListViewItem : csServiceListViews){
+            if(String.isNotBlank(ServiceListViewItem.Permission_set__c)) {
+                for(String permisSetStr : ServiceListViewItem.Permission_set__c.split(';')) {
+                    if(String.isNotBlank(permisSetStr))
+                        permissionSetIDs.add(permisSetStr);
+                }
+            }
+        }
+        
+        theProfilePermissionFilter = new ProfilePermissionFilter(); 
+        thePermissionSetFilter = new PermissionSetFilter(permissionSetIDs);
+    }
+    //todo 
+    private void initServiceListViewMap() {
+        ListViewNameList = new list<string>();
+        ServiceListViewMap = new map<string,ISSPServiceListView__c>();
+        for(ISSPServiceListView__c ServiceListViewItem : csServiceListViews){
+            
+            Boolean resultPermission1 = true; 
+            if(!theProfilePermissionFilter.isDataEmpty(ServiceListViewItem)){
+                system.debug('not profile data empty');
+                resultPermission1 = theProfilePermissionFilter.isUserPermittedFor(ServiceListViewItem);
+            }
+            else{
+                system.debug('profile data empty');
+            }
+             
+            Boolean resultPermission2 = true; 
+            if(!thePermissionSetFilter.isDataEmpty(ServiceListViewItem)){
+                system.debug('not permission data empty');
+                resultPermission2 = thePermissionSetFilter.isUserPermittedFor(ServiceListViewItem);
+            }
+            else{
+                system.debug('permission data empty');
+            }
+            //resultPermission1 && resultPermission2    
+            if(true) {
+                ServiceListViewMap.put(ServiceListViewItem.Name,ServiceListViewItem);
+                ListViewNameList.add(ServiceListViewItem.Name);
+            }
+            
+            system.debug('resultPermission1: ' + resultPermission1);
+            system.debug('resultPermission2: ' + resultPermission2);
+            
+        }
+        ListViewNameList.sort();
+        if(ListViewNameList.size()>0)
+            selectedList = ListViewNameList.get(0);
+        string ListViewName = ApexPages.currentPage().getParameters().get('ListViewName');
+        if( ListViewName!=null && ServiceListViewMap.containsKey(ListViewName))
+            selectedList = ListViewName;
+            
+        system.debug('ServiceListViewMap start: ' + ServiceListViewMap);
+        system.debug('selectedList start: ' + selectedList);
+        /*
+        if(String.isNotBlank(selectedList)){
+            
+        }
+        */
+    }
+    
+    public List<Schema.FieldSetMember> getFields() {
+        system.debug('selectedList rrr1: ' + selectedList);
+        system.debug('ServiceListViewMap.get(selectedList).Field_Set_API_Name__c rrr1: ' + ServiceListViewMap.get(selectedList).Field_Set_API_Name__c);
+        system.debug('final rrr1: ' + sObjectType.Portal_Applications__c.FieldSets.getMap().get(ServiceListViewMap.get(selectedList).Field_Set_API_Name__c).getFields());
+       return selectedList==null||selectedList==''?
+            new list<Schema.FieldSetMember>():
+            sObjectType.Portal_Applications__c.FieldSets.getMap().get(ServiceListViewMap.get(selectedList).Field_Set_API_Name__c).getFields();
+    }
+    
+    public Pagereference refresh(){ 
+        //system.debug('selectedList: ' + selectedList);
+        /*
+        if(String.isNotBlank(selectedList)){
+
+        }
+        */
+        setCon = null;
+        return null; 
+    }
+    public string getQueryConditions() {
+        
+        //string t =  selectedList==null||selectedList=='' ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
+        system.debug('ServiceListViewMap>>> ' + ServiceListViewMap);
+        //String queryConditions =  String.isBlank(selectedList) ? '' : ServiceListViewMap.get(selectedList).SOQL_Filter__c;
+        //if (selectedList == null) selectedList = '';
+        if(ServiceListViewMap.isEmpty())
+            return 'WHERE ID = NULL';
+        
+        system.debug('selectedList: ' + selectedList);
+        String queryConditions;
+        if(String.isNotBlank(selectedList)){
+            queryConditions = ServiceListViewMap.get(selectedList).SOQL_Filter__c;
+        }
+            
+        return String.isNotBlank(queryConditions) ? queryConditions : ''; 
+    }
+    
+    ////////////////////////////////
+    
+    Public Integer noOfRecords{get; set;}
+    Public Integer size{get;set;}
+    public ApexPages.StandardSetController setCon {
+        get{
+            if(setCon == null){
+                string sortFullExp = '';
+                if (sortExpression == 'Name')
+                    sortFullExp = 'Name'  + ' ' + sortDirection;
+                else
+                    sortFullExp = sortExpression  + ' ' + sortDirection;
+                system.debug('ORDERING BY: ' + sortExpression);
+                system.debug('ORDERING LIKE: ' + sortDirection);
+                size = 10;
+
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c ';
+                for(Schema.FieldSetMember f : this.getFields()) {
+                    query +=  ', '+f.getFieldPath() ;
+                }
+                string queryString = '';
+                
+                queryString = 'select '+query+' from Portal_Applications__c '+getQueryConditions()+' order by '+ sortFullExp;
+                
+                ISSP_Utilities.log('SQL String: ' + queryString);
+                setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
+                setCon.setPageSize(size);
+                noOfRecords = setCon.getResultSize();
+            }
+            return setCon;
+        }set;
+    }
+    
+    public class ServiceWrapper {
+        public string Status {get; set;}
+        public Boolean selected {get; set;}
+        public Portal_Applications__c recordService {get; set;}
+
+        public ServiceWrapper(Portal_Applications__c inRecord){
+            this.Status = getServiceStatus(inRecord);
+            this.selected = false;
+            this.recordService = inRecord;   
+        }
+
+
+        public string getServiceStatus(Portal_Applications__c inService){
+            User user = [select Id,languagelocalekey,ContactId,ProfileId from User where Id =:Userinfo.getUserId()];
+            
+            List<Portal_Application_Right__c> appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c,
+                                                                                                    p.Portal_Application__r.Requestable__c,
+                                                                                                    p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
+                                                                                                    p.Right__c, p.Portal_Application__r.Application_icon_URL__c,
+                                                                                                    p.Portal_Application__r.Name, p.Portal_Application__c,
+                                                                                                    p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,
+                                                                                                    p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c
+                                                                                                   From Portal_Application_Right__c p 
+                                                                                                   where p.Contact__c =: user.ContactId and 
+                                                                                                         p.Portal_Application__c =: inService.Id and
+                                                                                                        (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested' or p.Right__c =: 'Access denied') and
+                                                                                                         p.Portal_Application__r.Hide_on_Homepage__c = false ]);   
+            if(appsGrantedList != null && appsGrantedList.size() > 0){
+                return appsGrantedList[0].Right__c;
+            }else{
+                return null ;
+            }
+        }
+    }
+
+     
+    
+    public List<ServiceWrapper > getServiceList(){
+    	hasPremiumTD = false;
+        List<ServiceWrapper > allServiceList =  new List<ServiceWrapper>();   
+        List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
+        for (Portal_Applications__c thisService : allServices){
+            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService);
+            allServiceList.add(thisServiceRecord);
+        }
+        
+        //TF
+        system.debug('CON ID: ' + conId);
+        List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
+                                                        Portal_Application__r.Name,
+                                                        Portal_Application__r.ServiceName__c,   
+                                                        Portal_Application__r.Service_Description__c
+                                                        FROM Portal_Application_Right__c
+                                                        WHERE Contact__c = :conId
+                                                        AND Right__c = 'Access Granted'];
+        if (!appRightList.isEmpty()){
+            Set<Id> appIds = new Set<Id>();
+            Set<Id> newAppIds = new Set<Id>();
+            for (Portal_Applications__c thisApp : allServices){
+                if (!appIds.contains(thisApp.Id)){
+                    system.debug('ADDING: ' + thisApp.Name);
+                    appIds.add(thisApp.Id);
+                }
+            }
+            for (Portal_Application_Right__c thisAppRight : appRightList){
+            	system.debug('THIS APP: ' + thisAppRight.Portal_Application__r.Name);
+            	if (thisAppRight.Portal_Application__r.Name == 'Treasury Dashboard - Premium'){
+            		hasPremiumTD = true;
+            		system.debug('HAS PREMIUM');
+            	}
+                if (!appIds.contains(thisAppRight.Portal_Application__c)){
+                    system.debug('ADDING SECOND: ' + thisAppRight.Portal_Application__r.Name);
+                    newAppIds.add(thisAppRight.Portal_Application__c);
+                }
+            }
+            if (!newAppIds.isEmpty()){
+                List <Portal_Applications__c> appList = [SELECT Id, Name, Agency__c,
+                                                        Aplication_Start_Icon__c, Application_icon__c,
+                                                        Application_icon_URL__c, Application_URL__c,
+                                                        Case_creation_record_type__c, Confirm_Box__c,
+                                                        Confirm_Text__c, Description__c,
+                                                        GSA__c, GSSA__c, Hide_on_Homepage__c,
+                                                        ICH_Airline__c, New_Window__c,ServiceName__c,
+                                                        Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
+                                                        Requestable__c, Restricted_App__c, Visible__c,
+                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c
+                                                        FROM Portal_Applications__c WHERE Id IN :newAppIds];
+                if (!appList.isEmpty()){
+                    for (Portal_Applications__c thisApp : appList){
+                        system.debug('FOUND: ' + thisApp.Name);
+                        if (!appIds.contains(thisApp.Id)){
+                            system.debug('ADDING FINAL: ' + thisApp.Name);
+                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp);
+                            allServiceList.add(thisServiceRecord);
+                        }
+                    }
+                }
+            }
+        }
+        
+        system.debug('hasPremiumTD: ' + hasPremiumTD);
+        if (hasPremiumTD){
+	        integer i = 0;
+	        integer j = -1;
+			for (ServiceWrapper thisService : allServiceList){
+				if (thisService.recordService.Name == 'Treasury Dashboard' || thisService.recordService.Name == 'Treasury Dashboard - Basic'){
+					j = i;
+				}
+				i++;
+	        }
+	        if (j > -1){
+	        	system.debug('removing service');
+	        	allServiceList.remove(j);
+	        }
+        }
+        
+        ServiceList = allServiceList;
+        return allServiceList;
+    }
+     
+    public List<Portal_Applications__c > getServices(){
+        return (List<Portal_Applications__c >)setCon.getRecords();
+    }
+    //AEF:
+    public static set<String> getPermissionSetForUserSet(set<String> permissionSetIDs, ID userId) {
+        set<String> permissionSetForUserSet = new Set<String>();
+        for(PermissionSet onePermissionSet :  getPermissionSetById(permissionSetIDs, userId)) {
+            if(ISSP_Utilities.isNotEmpty(onePermissionSet.Assignments)) {
+                permissionSetForUserSet.add(onePermissionSet.Id);
+            }
+        }
+        return permissionSetForUserSet;
+                
+    }  
+    
+    public static list<PermissionSet> getPermissionSetById(set<String> permissionSetIDs, ID userId) {
+        return 
+            [SELECT Id
+                  ,(SELECT Id, PermissionSetId, AssigneeId 
+                      FROM Assignments
+                     WHERE AssigneeId =: userId) 
+               FROM PermissionSet 
+              WHERE Id IN : permissionSetIDs];
+    } 
+    
+    public interface IPermissionFilter {
+        
+        Boolean isUserPermittedFor(object oneData);
+        Boolean isDataEmpty(object oneData);
+    }
+    
+    public class ProfilePermissionFilter implements IPermissionFilter {
+        private String profileId15; 
+        public ProfilePermissionFilter() {
+            profileId15 = UserInfo.getProfileId().substring(0,15);
+        }
+        
+        public Boolean isUserPermittedFor(object oneData) {
+            //ISSPContactListView__c contactListViewItem = (ISSPContactListView__c)oneData;
+            //return String.isBlank(contactListViewItem.Profiles_Id__c);
+            Boolean isUserPermitted = false;
+            ISSPServiceListView__c ServiceListViewItem = (ISSPServiceListView__c)oneData;
+            list<String> profileIds = ServiceListViewItem.Profiles_Id__c.split(';');
+            system.debug('MY PROFILE: ' + profileId15);
+            for(String profileId : profileIds) {
+                system.debug('THIS PROFILE: ' + profileId);
+                if(profileId15 == profileId) {
+                    return true; 
+                }
+            }
+            return false;
+        }
+
+        public Boolean isDataEmpty(object oneData) {
+            ISSPServiceListView__c ServiceListViewItem = (ISSPServiceListView__c)oneData;
+            return String.isBlank(ServiceListViewItem.Profiles_Id__c);
+            //Set<string> profilesIdSet = new Set<string>(ServiceListViewItem.Profiles_Id__c.split(';'));
+            //return profilesIdSet.contains(profileId15);
+        }
+        
+    }
+    
+    public class  PermissionSetFilter implements IPermissionFilter {
+        private Set<String> permissionSetForUserSet; 
+        public PermissionSetFilter(set<String> permissionSetIDs) {
+            permissionSetForUserSet = getPermissionSetForUserSet(permissionSetIDs, UserInfo.getUserId()); 
+        }
+        
+        public Boolean isDataEmpty(object oneData) {
+            ISSPServiceListView__c ServiceListViewItem = (ISSPServiceListView__c)oneData;
+            return String.isBlank(ServiceListViewItem.Permission_set__c);
+        }
+
+        public Boolean isUserPermittedFor(object oneData) {
+            Boolean isUserPermitted = false;
+            ISSPServiceListView__c ServiceListViewItem = (ISSPServiceListView__c)oneData;
+            list<String> permissionSetIds = ServiceListViewItem.Permission_set__c.split(';');
+            for(String permisSetId : permissionSetIds) {
+                if(permissionSetForUserSet.contains(permisSetId)) {
+                    return true; 
+                }
+            }
+            return false;
+        }
+    }
+    
+    public PageReference doRequest() {
+         system.debug('XXX START doRequest : ');
+         String Servid = Apexpages.currentPage().getParameters().get('ServId');
+         system.debug('XXX Servid : '+Servid);
+        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c from Portal_Applications__c where Id =: Servid ]);
+        system.debug('XXX Servicetmp_List : '+Servicetmp_List);
+        Serv = new ServiceWrapper (Servicetmp_List[0]);
+        system.debug('XXX Serv : '+Serv);
+        return null ;
+    }
+   
+    @RemoteAction
+    public static string newAppsRequest (string applicationId, string contactId){
+        insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = 'Access Requested');
+        return 'ok';
+    }
+   
+}

@@ -1,0 +1,10 @@
+Dear {!Contact.FirstName}, 
+
+Please note that your request has been sent to our technical team for further investigation, we will revert once we have more information.
+
+Should you require further information, please do not hesitate to contact us. 
+
+Best regards,
+{!Case.CaseArea__c} Customer Support 
+
+{!Case.Email_Thread}

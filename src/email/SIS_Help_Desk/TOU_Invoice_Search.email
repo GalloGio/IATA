@@ -1,0 +1,14 @@
+Dear {!Contact.FirstName}, 
+
+Please note that your invoices are available under Miscellaneous >> Payables >> Invoice Search. The search can be performed by billing month and/or by billing period (you cannot perform a search without choosing the billing moth and the billing periods).
+
+Further information on how to use the system can be found in the attached user guide.
+
+For any queries/clarifications on the invoices, please contact: mita@iata.org or airlinecoding@iata.org for MITA and Coding invoices, and efs@iata.org for E&F invoices.
+
+Should you require further information, please do not hesitate to contact us. 
+
+Best regards,
+{!Case.CaseArea__c} Customer Support
+
+{!Case.Email_Thread}

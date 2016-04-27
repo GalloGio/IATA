@@ -1,0 +1,25 @@
+<apex:page standardcontroller="Account" extensions="clsICCSSuspendAirlineButtonController">
+    <apex:form >
+    <apex:pageMessages ></apex:pageMessages>
+        <script>
+            if("{!$Request.success}" == "true") {
+                window.top.location.href = "/{!accountId}";
+            }
+            
+            function confirmAction() {
+                return confirm('Are you sure you want to suspend this Airline? All the active Product Assignments for this account will be inactivated, as will the ICCS Membership Status.');
+            }
+        </script>
+        
+        <apex:outputPanel rendered="{!showSuspendButton}">
+            <table width="100%">
+                <tr>
+                    <td align="center">
+                        <apex:commandButton onclick="return confirmAction();" action="{!suspendAirline}" value="Suspend Airline" />
+                    </td>
+                </tr>
+            </table>
+        </apex:outputPanel>
+        
+    </apex:form>
+</apex:page>

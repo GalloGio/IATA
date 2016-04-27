@@ -1,0 +1,32 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">Dear&nbsp;</span><span style="FONT-FAMILY: Calibri, sans-serif; COLOR: rgb(33,88,104); FONT-SIZE: 11pt">&nbsp;</span><span style="BACKGROUND-COLOR: white; FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Contact.Name}</span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><br></p><p class="MsoNormal" style="font-size: 12pt;"><font face="arial" size="2">Thank you for your email.&nbsp;</font></p><p class="MsoNormal" style="font-size: 12pt;"><font face="arial" size="2"><br></font></p><p class="MsoNormal" style="font-size: 12pt;"><span style="font-size: small;">Please find below 3 links that will redirect
+you to IATA web pages where you will be able to access some useful details.
+Additionally you will find the departments contact details which may be able to
+provide you further assistance:</span></p><p class="MsoNormal"><font size="2"><br></font></p><p class="MsoNormal"></p><ol><li><a href="http://www.iata.org/services/statistics/Pages/index.aspx" style="text-indent: -18pt;"><font size="2">http://www.iata.org/services/statistics/Pages/index.aspx</font></a></li><li><span lang="EN-US" style="text-indent: -18pt;"><a href="http://www.iata.org/services/statistics/intelligence/Pages/index.aspx"><font size="2">http://www.iata.org/services/statistics/intelligence/Pages/index.aspx</font></a></span></li><li><span lang="EN-US" style="text-indent: -18pt;"><a href="https://www.iataonline.com/Store/default.htm"><font size="2">https://www.iataonline.com/Store/default.htm</font></a></span></li></ol><p style="font-size: 12pt;"></p><p class="MsoListParagraphCxSpLast" style="font-size: 12pt; text-indent: -18pt;"><font size="2"><br></font></p><p class="MsoNormal" style="font-size: 12pt;">
+
+
+
+
+
+
+
+</p><p class="MsoNormal"><b><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Is there anything else we can do for you?</span></b><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;We invite you to contact us through our&nbsp;<a href="http://www.iata.org/cs">Customer Portal&nbsp;</a>&nbsp;and we will respond to you at the earliest.</span><span style="font-family: Arial, sans-serif;"><br><br></span><o:p></o:p></p><p class="MsoNormal"><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">Before logging a query, please also review our&nbsp;</span><span lang="PT" style="font-size: 10pt; font-family: Arial, sans-serif;"><a href="http://www.iata.org/customer-portal/pages/faq.aspx"><span lang="EN-GB">FAQ section</span></a></span><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">. It contains relevant documentation and information regarding IATA processes &amp; procedures.</span></p><p class="MsoNormal" style="font-size: 12pt;"><font face="arial" size="2"><br></font></p><p class="MsoNormal" style="font-size: 12pt;"><font face="arial" size="2">Kind Regards,</font></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;<o:p></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt">Thank you,<o:p></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"><br></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal">
+</p><p class="MsoNormal" style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><span style="BACKGROUND-COLOR: white; FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.OwnerFullName}</span><o:p></o:p></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><br></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal">
+</p><p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; background-color: white;" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">----------------------------<br>Your message received on&nbsp;{!Case.CreatedDate}:<o:p></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; background-color: white;" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.Subject}<br>{!Case.Description}<o:p></o:p></span></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>
+<p style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial; text-align: justify;" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>]]></td>
+</tr>
+</table>

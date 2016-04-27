@@ -1,0 +1,197 @@
+<apex:page standardController="AMS_Agency__c" extensions="AMS_DemoTreeview" showHeader="false" sidebar="false">  
+    <!-- Mobile View -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- jQuery CDN Reference -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <apex:includeScript value="/support/console/34.0/integration.js"/>
+
+    <!-- Bootstarp css & Combined Css -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" />
+    <style>
+        a {
+            font-size: 12px;
+        }
+
+        .tree {
+            min-height: 20px;
+            padding: 19px;
+            margin-bottom: 20px;
+            background-color: #fbfbfb;
+            border: 1px solid #999;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05)
+        }
+
+        .tree li {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px 5px 0 5px;
+            position: relative;
+            font-size: 12px;
+        }
+
+        .tree li::before,
+        .tree li::after {
+            content: '';
+            left: -20px;
+            position: absolute;
+            right: auto;
+        }
+
+        .tree li::before {
+            border-left: 1px solid #999;
+            bottom: 50px;
+            height: 100%;
+            top: 0;
+            width: 1px;
+        }
+
+        .tree li::after {
+            border-top: 1px solid #999;
+            height: 20px;
+            top: 25px;
+            width: 25px;
+        }
+
+        .tree li span {
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border: 1px solid #999;
+            border-radius: 5px;
+            display: inline-block;
+            padding: 3px 8px;
+            text-decoration: none;
+        }
+
+        .tree li.parent_li>span {
+            cursor: pointer !important;
+        }
+
+        .tree>ul>li::before,
+        .tree>ul>li::after {
+            border: 0;
+        }
+
+        .tree li:last-child::before {
+            height: 30px;
+        }
+
+        .tree li.parent_li>span:hover,
+        .tree li.parent_li>span:hover+ul li span {
+            background: #eee;
+            border: 1px solid #94a0b4;
+            color: #000;
+        }
+    </style>
+    <script type="text/javascript">
+        /*$(document).ready(function() {
+            var changeTabIcon = function(result){
+                if(!{!isHQ})
+                    sforce.console.setTabIcon('servlet/servlet.FileDownload?file=015g0000000tjx4', result.id);
+            };
+            sforce.console.getEnclosingPrimaryTabId(changeTabIcon);
+        });*/
+        function testOpenPrimaryTab(tabId,tabName) {
+            var changeTab = function(result){
+                if(result.success == false){
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            //Open a new agency primary tab
+            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+        }
+    </script>
+
+    <!--<div class="tree well">
+        <apex:repeat value="{!AccConCases}" var="a">
+            <ul>
+                <li>
+                    <span><i class="icon-folder-open icon-minus-sign"></i>Agency</span> <a href="/{a.Id}"  target="_blank">{!a.Name}</a><!--Account-->
+               <!--     <ul>
+                        <apex:repeat value="{!a.Agency_Employees__r}" var="c">
+                            <li>
+                                <span><i class="glyphicon glyphicon-user"></i> Employee</span><a href="/{!c.Id}"  target="_blank"></a> {!c.Person__r.First_Name__c}<!--Contact-->
+                                <!--<ul>
+                                    <apex:repeat value="{!a.Cases}" var="ca">
+                                        <li>
+                                            <span><i class="glyphicon glyphicon-briefcase"></i> Case</span><a href="/{!ca.Id}" target="_blank"></a> {!ca.CaseNumber}
+                                        </li>
+                                    </apex:repeat>
+                                </ul>-->
+            <!--                </li>
+                        </apex:repeat>
+                    </ul>
+                </li>
+            </ul>
+        </apex:repeat>
+    </div>-->
+<apex:outputPanel rendered="{!IF(Parent != NULL, true, false)}">
+<apex:form >
+    <div class="tree well">
+            <ul>
+                <li>
+                    <span><i class="icon-folder-open icon-minus-sign"></i>{!Parent.Parent_Agency__r.Account__r.Location_Type__c} ({!Parent.Parent_Agency__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!Parent.Parent_agency__c}','{!Parent.Parent_Agency__r.Name}');return false;">{!Parent.Parent_Agency__r.Name}</apex:commandLink><br></br>{!Parent.Parent_Agency__r.IATACode__c}<br></br>{!Parent.Parent_agency__r.Primary_Address__r.Country__r.Name} - {!Parent.Parent_Agency__r.Primary_Address__r.City__c}<br></br>{!Parent.Parent_Agency__r.Agency_Status__c}
+                    <ul>
+                            <li>
+                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Account__r.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Agency_Status__c}
+                                <ul>
+                                <apex:repeat value="{!Childs}" var="c">
+                                    <apex:repeat value="{!Childs[c]}" var="ca">
+                                        <li>
+                                            <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Agency__r.Account__r.Location_Type__c} ({!ca.Child_Agency__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Agency__c}','{!ca.Child_Agency__r.Name}');return false;">{!ca.Child_Agency__r.Name}</apex:commandLink><br></br>{!ca.Child_Agency__r.IATACode__c}<br></br>{!ca.Child_Agency__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Agency__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Agency__r.Agency_Status__c}
+                                        </li>
+                                    </apex:repeat>
+                                </apex:repeat>
+                                </ul>
+                            </li>
+                    </ul>
+                </li>
+            </ul>
+    </div>
+    </apex:form>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!IF(Parent == NULL, true, false)}">
+<apex:form >
+    <div class="tree well">
+        <ul>
+                <li>
+                    <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Account__r.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Agency_Status__c}
+                    <ul>
+                    <apex:repeat value="{!Childs}" var="c">
+                        <apex:repeat value="{!Childs[c]}" var="ca">
+                            <li>
+                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Agency__r.Account__r.Location_Type__c} ({!ca.Child_Agency__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Agency__c}','{!ca.Child_Agency__r.Name}');return false;">{!ca.Child_Agency__r.Name}</apex:commandLink><br></br>{!ca.Child_Agency__r.IATACode__c}<br></br>{!ca.Child_Agency__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Agency__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Agency__r.Agency_Status__c}
+                            </li>
+                        </apex:repeat>
+                    </apex:repeat>
+                    </ul>
+                </li>
+        </ul>
+    </div>
+    </apex:form>
+</apex:outputPanel>
+
+    <script>
+    $(function() {
+        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+        //$('.tree li:has(ul)').addClass('parent_li').find(' > ul > li').hide('slow');
+        $('.tree li.parent_li > span').on('click', function(e) {
+            //alert('clicked');
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            if (children.is(":visible")) {
+                children.hide('fast');
+                $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+            } else {
+                children.show('fast');
+                $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+            }
+            e.stopPropagation();
+        });
+    });
+    </script>
+</apex:page>

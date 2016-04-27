@@ -1,0 +1,29 @@
+<apex:page standardController="Deployment_Plan_Item__c" extensions="DeploymentItems_Manager">
+<apex:form >
+<apex:pageMessages />
+	<apex:pageBlock >
+		<apex:pageBlockButtons >
+			<apex:commandButton value="Save" action="{!Save}"/>
+			<apex:commandButton value="Cancel" action="{!Cancel}"/>
+		
+		</apex:pageBlockButtons>
+		
+		<apex:pageBlockSection >
+			<apex:outputText value="{!planname}" label="Deployment Plan Name"/>
+			<apex:pageBlockSectionItem />
+			<apex:selectList value="{!objselected}" multiselect="false" label="Related Object" size="1">
+            	<apex:selectOptions value="{!objects}"/>
+        	</apex:selectList>
+
+			<apex:inputField value="{!di.For_Deletion__c}"/>
+			<apex:inputField value="{!di.Section__c}"/>
+			
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection title="Insert the list of components (1 per line)" collapsible="false">
+			<apex:inputTextArea rows="20" cols="80" value="{!componentList}" label="Components list"/>
+		</apex:pageBlockSection>
+
+	</apex:pageBlock>
+</apex:form>
+</apex:page>

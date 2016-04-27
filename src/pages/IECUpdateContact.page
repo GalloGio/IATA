@@ -1,0 +1,227 @@
+<apex:page title="Update Contact" controller="vfIECUpdateContact" sidebar="false" showHeader="false" standardStylesheets="false" language="en" action="{!pageLoad}">
+ <Title>Update Contact</Title> 
+
+    <div class="gdpwrapper">    
+    <div class="gdpbody">    
+    <c:IECSiteHeader />
+
+ <!-- only used for confirmation divs -->
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
+    
+    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'profile.css')}" />
+        
+<style>
+            .tabs {
+          height: 100vh !important;
+            overflow: visible !important;
+        }
+
+        .gdpbody {
+         padding-bottom: 100px !important;
+        }
+    
+    .billing-completeMessage {
+  color: black;
+  font-weight: 700;
+}
+    </style>
+
+<apex:form id="contactInformationForm" forceSSL="true">
+    
+ <table class="tableHolder"> 
+    <tr>
+            
+    <!-- Left Menu -->
+    <td class="menu-Panel"><c:IECHistMenu /></td>
+            
+    <!-- Form  Panel Start-->
+    <td class="account-Panel">
+    <div class="tableList-component">
+             
+    <div id="register">
+       <div class="box register fit1024">
+                    
+               <!-- Form  header-->
+                <div class="header">
+                    <h1>Account Information</h1>
+                </div>
+         <div class="content">                            
+                <!-- conf. Messages -->    
+                <div class="account-messagePanel">
+                    <apex:outputPanel id="errorMessage">
+                        <div class="errorPanel">
+                            <apex:pageMessages escape="no"/>
+                        </div>            
+                    </apex:outputPanel> 
+
+                    <apex:outputPanel id="confirmationPanel" styleClass="billing-completeMessage" rendered="{!iRegistrationStep == constUPDATECONFIRMATION}">
+                        <apex:outputText >Your Account information is now updated</apex:outputText><br/><br/>
+                        <apex:outputText rendered="{!bEmailChanged}">Your Usermane is now {!oContact.Email}<br/><br/></apex:outputText>
+                        <apex:outputText rendered="{!bEmailChanged && bPasswordReset}">A new password was sent to your new email. The prices and offers you may receive will not be active until you login with your new password</apex:outputText>
+                    
+                    </apex:outputPanel>             
+                
+                </div>
+                <!-- ------>
+                
+                <!-- alert --->
+                <apex:outputPanel id="emailConfirmationPanel" rendered="{!iRegistrationStep == constCHANGEEMAIL}">
+
+                    <div class="account-row">
+                        <h3>Account Domain</h3>
+                        <div class="settings-item">
+                            <apex:outputText rendered="{!bShowEmailDomainMessage}">
+                                <p class="account-messageText">The new email you entered is not part of registered domains for the account linked to you. To enjoy all the discounts and benefits of your linked account, please click click "Back" to change for an email under the account registered domains.</p> 
+                                <p class="account-messageText">You may continue with the email you entered just by confirming it</p> 
+                            </apex:outputText>
+                            <apex:outputText styleClass="account-messageText">
+                                <p class="account-messageText">Be aware, the new email address will become also your new Username and you may receive a new password for it</p>
+                            </apex:outputText>
+                            <br/>                           
+                            <apex:outputText styleClass="account-labelText" value="Confirm Email"/>
+
+                            <apex:inputText value="{!sConfirmEmail}" styleClass="account-inputText"/>
+
+                            <apex:commandLink value="Back" action="{!backToContactInfo}" id="backToContactInformation" styleClass="account-submitButton"/>
+                            <apex:commandLink value="Submit" action="{!updateContact}" id="submitEmailConfirmation" styleClass="account-submitButton"/>
+                        </div>
+                    </div>  
+                </apex:outputPanel> 
+                  <!-------------- -->       
+
+
+                <!--- Form body --->
+                <apex:outputPanel id="informationPanel" rendered="{!iRegistrationStep <> constCHANGEEMAIL}"> <!--constCONTACTINFO -->
+                  <h2>Account Details</h2>
+                        
+                     <div class="customInputLabelIn">
+                      <label for="{!$Component.registerCompany}">Company Name</label>
+                      <apex:inputText id="registerCompany" value="{!sAccountName}" disabled="true" style="padding-left: 115px; width: 600px;"/>
+                    </div>
+                    
+                        
+               <h2 style="margin-top:30px;">Contact information</h2>
+                <table>
+                  <tr>
+                  
+                    <td style="vertical-align:top;">    
+                   <!-- Salutation -->                                             
+                      <div class="customSelect" style="width:157px;">
+                        <i class="fa fa-caret-down"></i>
+                        <span class="alert select">*<span style="color: #969696;">Salutation</span></span>
+                          <apex:selectList styleclass="billing-selectList -required" value="{!oContact.Salutation}" size="1"    style="margin-left: 10px;">
+                                    <apex:selectOption itemValue="" itemLabel="-None-"/>
+                                    <apex:selectOption itemValue="Mr." itemLabel="Mr."/>
+                                    <apex:selectOption itemValue="Mrs." itemLabel="Mrs."/>
+                          </apex:selectList>  
+                      </div>                      
+                    </td>
+                     
+                     <td>                                   
+                     <!-- First Name -->
+                      <div class="customInputLabelIn" style="width:250px;">
+                        <label for="{!$Component.registerFirstName}"><span class="alert">*</span> First name</label>
+                        <apex:inputText id="registerFirstName" value="{!oContact.FirstName}" style="padding-left: 90px; width: 150px;"/>
+                      </div>
+                    </td>
+
+                    <td>
+                        <!-- Last Name -->
+                         <div class="customInputLabelIn" style="width:250px;">
+                          <label for="{!$Component.registerLastName}"><span class="alert">*</span> Last name</label>
+                          <apex:inputText id="registerLastName" value="{!oContact.LastName}" style="padding-left: 90px; width: 150px;"/>
+                        </div>
+                    </td>
+                </tr>
+        </table>
+              
+                <!-- Email -->
+                <div class="customInputLabelIn">
+                  <label for="{!$Component.registerEmail}"><span class="alert"></span> Email address</label>
+                  <apex:outputText value="{!oContact.Email}" id="registerEmail"   style="padding-left: 115px; width: 600px;"/>
+                </div>
+                
+                <table>
+                  <tr>
+                    <td>
+                    <!-- Job Title -->
+                      <div class="customInputLabelIn" style="width:345px;">
+                        <label for="{!$Component.registerJobTitle}"><span class="alert">*</span> Job title</label>
+                        <apex:inputText id="registerJobTitle" value="{!oContact.Title}"  style="padding-left: 75px; width: 265px;"/>
+                      </div>
+                    </td>
+                    <td>
+                    <!-- Phone -->
+                      <div class="customInputLabelIn" style="width:345px;">
+                        <label for="{!$Component.registerPhone}"><span class="alert">*</span> Phone</label>
+                        <apex:inputText id="registerPhone" value="{!oContact.Phone}" style="padding-left: 75px; width: 265px;"/>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                            
+              
+              <!-- 
+             <h2 style="margin-top:30px;">Notifications</h2>            
+            <apex:outputText styleClass="account-labelText" value="I am interested in the following types of email notifications from IATA:"/>
+            <apex:inputCheckbox styleClass="account-checkbox"/><apex:outputText styleClass="account-checkboxText" value="Monthly newsletters" />
+            <br/>
+            <apex:inputCheckbox styleClass="account-checkbox"/><apex:outputText styleClass="account-checkboxText" value="Promotions" />
+              -->
+              
+                       
+        
+            <h2 style="margin-top: -27px;">&nbsp;</h2>
+            <!--  Buttons -->
+             <table>
+                  <tr>
+                    <td>
+                      <apex:commandLink action="{!URLFOR($Page.IECUpdateContact)}" value="Cancel" id="cancelContactInformation" styleclass="customButton lastElm" style="width:295px;background:#c8c8c8"/>
+                    </td>
+                    <td>
+                      <apex:commandLink action="{!updateContact}" value="Submit" id="submitContactInformation" styleclass="customButton lastElm" style="width:295px;" />
+                    </td>
+                  </tr>
+         </table>       
+                 
+         
+      </apex:outputPanel>
+     </div>              
+    </div>
+   </div>          
+                    
+  </div>
+  </td>
+</tr>
+</table>            
+</apex:form>
+    <!-- ************************************ -->
+ </div>
+      <div class="gadfooter">
+        <!-- Footer -->
+        <c:IECSiteFooter />
+       </div>
+    </div>
+
+    <style> 
+        html, body {
+            height:100%;    
+            margin:0;
+            padding:0;
+        }               
+        .gdpwrapper {
+            min-height:100%;
+            position:relative;
+        }
+        .gdpbody{
+         padding-bottom:141px; 
+        }
+        .gadfooter{
+            width:100%;
+            height:100px; 
+            position:absolute;
+            bottom:0;
+            left:0;        
+        }
+  </style>
+</apex:page>

@@ -1,0 +1,23 @@
+<apex:component >
+<apex:attribute name="cttr"  description="" type="ISSP_reCAPTCHA" required="true"/>
+ <!-- reCAPTCHA verification 
+                         Source: https://developers.google.com/recaptcha/docs/display -->
+                    <script>
+                        var RecaptchaOptions = {
+                           theme : 'clean'
+                        };
+                    </script>
+                    <script type="text/javascript"
+                        src="https://www.google.com/recaptcha/api/challenge?k={!cttr.publicKey}">
+                    </script>
+                    <noscript>
+                        <iframe src="https://www.google.com/recaptcha/api/noscript?k={!cttr.publicKey}"
+                        height="300" width="200" frameborder="0"></iframe><br/>
+                        <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                        <input type="hidden" name="recaptcha_response_field"
+                            value="manual_challenge"/>
+                    </noscript>
+                    <!-- end reCAPTCHA verification -->
+
+
+</apex:component>

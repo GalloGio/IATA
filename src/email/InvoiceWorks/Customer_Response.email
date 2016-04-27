@@ -1,0 +1,12 @@
+Dear {!Contact.FirstName}, 
+
+
+
+Kind Regards, 
+
+Marylou
+IATA e-Invoicing Helpdesk 
+
+Email: einvoicing.helpdesk@iata.org 
+
+{!Case.Email_Thread}

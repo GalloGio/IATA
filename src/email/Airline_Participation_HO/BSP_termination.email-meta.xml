@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification of Voluntary Termination - BSP</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>BSP termination</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+&lt;?xml:namespace prefix = o ns = &quot;urn:schemas-microsoft-com:office:office&quot; /&gt;
+
+In accordance to Resolution 850, Paragraph 14.1 the airline may withdraw from a given BSP by serving written notice of not less than three (3) and not more than thirteen (13) months. Therefore, to process your request please forward the official notification of the Airline&apos;s intention to withdraw from the BSP.
+
+You can use the attached template letter for your reference.
+
+
+The notification must:
+
+
+· Be on an official company letterhead
+
+· Signed by a designated signatory
+
+· State the termination date
+
+
+
+The original document must be sent to:
+
+
+International Air Transport Association
+
+Airline Participation
+33, Route de l’Aeroport
+P.O. Box 416
+1215 Geneva 15 Airport, Switzerland
+
+
+
+Please do not hesitate to contact this office in case of any further queries/assistance that may be required with regards to the above. Our team will be glad to assist you accordingly.
+
+
+For future support in regards to any other query, please log a new inquiry through our customer portal at http://www.iata.org/customer-portal/Pages/contactus.aspx
+
+
+Thank you!
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Industry Distribution and Financial Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer
+
+
+----------------------------
+Your message received on {!Case.CreatedDate}:
+
+{!Case.Subject}
+{!Case.Description}</textOnly>
+    <type>html</type>
+</EmailTemplate>

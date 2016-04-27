@@ -1,0 +1,53 @@
+public class ISSP_AddComment{
+  public String CaseId ;
+  public Case tmpCase {get;set;}
+  public Case CaseNumber {get;set;}
+  public string inputComment {get;set;}
+  
+  
+  public ISSP_AddComment() {
+      CaseId  = ApexPages.currentPage().getParameters().get('Caseid');
+      List<Case> Case_lst = new List<Case>([select Id , description , subject, CaseNumber, New_interaction__c From Case where Id =: CaseId]);
+      
+      if(Case_lst != null && Case_lst.size() > 0){
+          tmpCase = Case_Lst[0];
+          tmpCase.New_interaction__c = 'New Comment';
+          tmpCase.New_Comment_From_Connection_User__c = true;
+      }
+      
+  }
+
+
+  public CaseComment CaseComment {
+  get {
+      if (CaseComment == null){
+        CaseComment  = new CaseComment ();
+      }
+      return CaseComment ;
+    }
+  set;
+  }
+
+  public PageReference upload() {
+    CaseComment.ParentId = CaseId; // the record the file is attached to
+    CaseComment.commentbody = inputComment ;
+
+    try {
+      //insert CaseComment ;
+      insert CaseComment;
+      update tmpCase;
+    } catch (DMLException e) {
+      ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error Adding Comment'));
+      return null;
+    } finally {
+      CaseComment = new CaseComment (); 
+    }
+
+    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Added Comment successfully'));
+    PageReference p = new PageReference('/apex/ISSP_Case?caseId='+CaseId);
+    p.setRedirect(true);
+    return p;
+    return null;
+  }
+
+}

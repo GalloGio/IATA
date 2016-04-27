@@ -1,0 +1,4 @@
+Workflow notification for {!Work_Order__c.Name} , New status: {!Work_Order__c.Status__c}
+
+Rule: Send e-mail notification to abplanalpg@iata.org  for WorkOrder object with the following parameters:
+-“Status” field value  equal to “7 - Pending Schedule” or “8 - Scheduled / Development”

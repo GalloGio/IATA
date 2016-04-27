@@ -1,0 +1,71 @@
+<apex:component layout="none"  controller="VfIECSiteHeaderComponent">
+  
+  <style>
+  
+
+     html, body {
+            height:100%;    
+            margin:0;
+            padding:0;
+        }
+        
+        
+    .gdpwrapper {
+            min-height:100%;
+            position:relative;
+        }
+        
+        .gdpbody{
+         padding-bottom:141px; 
+        }
+        
+
+        
+.gadfooter{
+    width:100%;
+    height:100px; 
+    position:absolute;
+    bottom:0;
+    left:0;
+
+}
+
+   .bigBg.gray2{ 
+        padding-bottom: 20px; 
+        padding-top: 20px;       
+
+    } 
+    
+
+  </style>
+  
+  <div class="gadfooter">
+  <div class="bigBg gray2">
+    <div class="content-container" style="margin-bottom: 0px;">
+      <div class="callout-banner big">
+        <div class="footerRight">
+          <p>Products : 
+
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}">Global Systems Solution</a> <span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdMDP}">Marketing Data Package</a> <span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}">Global Agency Directory</a> <span class="sep">|</span>            
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}">CheckACode</a>  
+             
+
+
+          </p>
+          <p>Info : 
+            <a href="https://{!$Site.Domain}/iec/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
+            <a href="mailto:{!sContactEmail}?subject={!sContactSubject}" class="header__navigation-link">Contact Us</a><span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}/iec/IECCustomers">Customers</a> <span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}/iec/IECTerms">Terms of Use</a>       
+          </p>
+        </div>
+         <apex:image url="{!URLFOR($Resource.IECStyles,'img/')}logo.png" />
+      </div>
+    </div>
+  </div>
+  
+  </div>
+
+</apex:component>

@@ -1,0 +1,125 @@
+<apex:page standardController="contact" extensions="ISSP_PortalUserStatusChange" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+     <style>
+         .requiredText {
+         display:none;
+         }
+         
+         table {
+         	float:right;
+         	margin-top:20px;
+         }
+     </style>
+     
+    <script>
+    function showHideReason(statusField, theSaveButton){
+        var theValue = document.getElementById(statusField).value;
+        var button = document.getElementById(theSaveButton);
+        if (theValue == "Deactivated"){
+        	if ({!hasProducts} == true){
+        		button.disabled = true;
+        		document.getElementById('productDiv').style.display='block';
+        	}
+        	else{
+        		if ({!hasIdCard}){
+        			button.disabled = true;
+        			if (confirm("{!$Label.ISSP_InactiveUser_IdCard} {!$Label.ISSP_SureToContinue}")){
+        				button.disabled = false;
+					    document.getElementById('reasonDiv').style.display='block';
+        			}
+        		}
+        		else{
+        			document.getElementById('reasonDiv').style.display='block';
+        		}
+            }
+            document.getElementById('reasonRejectionDiv').style.display='none';
+        }
+        else if (theValue == "Rejected"){
+        	if ({!hasProducts} == true){
+        		button.disabled = true;
+        		document.getElementById('productDiv').style.display='block';
+        	}
+        	else{
+        		document.getElementById('reasonRejectionDiv').style.display='block';
+        	}
+        	document.getElementById('reasonDiv').style.display='none';
+        }
+        else{
+            document.getElementById('reasonDiv').style.display='none';
+            document.getElementById('reasonRejectionDiv').style.display='none';
+            button.disabled = false;
+            document.getElementById('productDiv').style.display='none';
+        }
+    }
+	</script>
+
+ 	<div class="container">
+        <c:ISSP_CustomNavigation />
+        
+        <div class="alert alert-danger" style="display:{!if(errorMessages.size == null,'none','')}">
+	        <strong>{!$Label.ISSP_Error}</strong>
+	        <apex:repeat value="{!errorMessages}" var="er" id="theRepeat">
+	            <p><apex:outputText value="{!er}" escape="false" /></p>
+	        </apex:repeat>
+	    </div>
+        
+        <div class="panel panel-primary">
+        
+        <div class="panel-heading head_panel_green">
+			<h3 class="panel-title">{!$Label.ISSP_ChangeUserPortalStatus}</h3>
+		</div>
+            
+		<apex:form id="newForm" style="width:40%">
+		
+			<apex:inputHidden value="{!createUser}" id="hiddenStatus" />
+    		<apex:pageBlock title="" >
+    		
+		        <apex:pageBlockButtons location="top" id="theButtons" >
+		           <apex:commandButton id="saveButton" styleClass="btn btn_iata btn-success" action="{!saveNewStatus}" value="Save" rendered="{!!AND(UserPortalStatus =='Regional Administrator',con.User_Portal_Status__c =='Approved Admin')}" />
+		           <apex:commandButton id="cancelButton" styleClass="btn btn_iata btn-default" action="{!customCancel}" value="Cancel"/>
+		       </apex:pageBlockButtons>
+		       
+		       <div id="productDiv" style="display:none" >
+		       <apex:pageBlockSection >
+		       <apex:outputText value="{!$Label.ISSP_InactiveUser_Subscription}" rendered="{!hasProducts}" />
+		       </apex:pageBlockSection>
+		       </div>
+		       
+		       <apex:pageBlockSection title="" columns="1">
+		           <apex:inputField value="{!con.User_Portal_Status__c}" styleClass="UserStatus form-control" id="theStatus" onchange="showHideReason('{!$Component.theStatus}', '{!$Component.theButtons.saveButton}');" />
+		       </apex:pageBlockSection>
+		       
+		       <div id="reasonDiv" style="{!IF (con.User_Portal_Status__c == 'Deactivated', '', 'display:none')}" >
+		       <apex:pageBlockSection title="" columns="1">
+		       		<apex:outputText value="{!$Label.ISSP_InactiveUser_IdCard}" rendered="{!hasIdCard}" />
+		           	<apex:pageBlockSectionItem >
+						<apex:outputText value="{!$Label.ISSP_ReasonInactivation}" />
+						<apex:selectList id="reasonList" value="{!inactivationReason}" size="1" styleClass="UserStatus form-control" >
+		                    <apex:selectOptions value="{!inactiveReasonOptions}" />
+		                </apex:selectList>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+				</div>
+				
+				<div id="reasonRejectionDiv" style="{!IF (con.User_Portal_Status__c == 'Rejected', '', 'display:none')}" >
+		        <apex:pageBlockSection title="" columns="1">
+		            <apex:pageBlockSectionItem >
+		                <apex:outputText value="{!$Label.ISSP_ReasonRejection}" />
+		                <apex:selectList id="reasonRejectionList" value="{!rejectionReason}" size="1" styleClass="UserStatus form-control" >
+		                    <apex:selectOptions value="{!rejectionReasonOptions}" />
+		                </apex:selectList>
+		            </apex:pageBlockSectionItem>
+		        </apex:pageBlockSection>
+		        </div>
+				
+		    </apex:pageBlock>
+		</apex:form>
+            
+	</div><!-- panel -->
+ <c:ISSP_CustomFooter />
+</div><!-- container -->
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,318 @@
+<apex:page controller="ISSP_EditPortalServiceAccess" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
+    <html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ 
+ <style>
+  .iatainputbox{    
+    // display: block;
+  width: 90%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+    }
+  
+    #j_id0:j_id13:j_id14:j_id43:j_id48_lkwgt{
+    //background-image: url(http://www.temps-et-mesures.com/img/p/151-207-thickbox.jpg)
+    background-color:red;
+    }
+
+   
+    
+ </style>
+ 
+ <script>
+    function askReason(myReasonId) {
+        var thisReason = prompt("Do you want to provide a reason?");
+        if (thisReason != null){
+            document.getElementById(myReasonId).value = thisReason;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    function showConfirmModal(){
+        if ('{!pendingApproval}' == 'true' || '{!noUser}' == 'true' || '{!inactiveUser}' == 'true'){
+            $('#theConfirmModal').modal('show');
+        }
+        else{
+            $('#theReasonGrant').modal('show');
+        }
+    }
+    
+    function closeConfirmModal(){
+        $('#theConfirmModal').modal('hide');
+    }
+    
+    function showReasonModalGrant(){
+        $('#theReasonGrant').modal('show');
+    }
+        
+    function closeModalGrant(){
+        $('#theReasonGrant').modal('hide');
+    }
+    
+    function showReasonModalDeny(){
+        $('#theReasonDeny').modal('show');
+    }
+    
+    function closeModalDeny(){
+        $('#theReasonDeny').modal('hide');
+    }
+    
+    function showUserListModal(){
+        $('#userListModal').modal('show');
+    }
+    
+    function closeUserListModal(){
+        $('#userListModal').modal('hide');
+    }
+    
+</script>
+       
+ <body>
+  <div class="container">
+      <c:ISSP_CustomNavigation />
+          <div class="panel panel-primary">
+              <div class="panel-heading head_panel_green">
+                  <h3 class="panel-title">{!$Label.ISSP_Add_User_to_this_service} - {!Operation}</h3>
+              </div>
+              <apex:define name="body"> 
+                  {!$Label.ISSP_Help_Edit_services_page}
+                <div class="panel-body" id="body-enquiries">
+                    <apex:form id="myForm" rendered="{!isAddUser == false}">
+        
+                    <apex:pageBlock id="pgBlock" mode="edit" title="">
+                        <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+                            <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                                <p><apex:outputText value="{!er}" escape="false" /></p>
+                            </apex:repeat>
+                        </div>
+                        <div class="row">
+                            <apex:outputPanel rendered="{!!AdminCannotManage}">
+                            <div class="col-lg-4">&nbsp;</div>
+                            <!-- <div class="col-lg-2"><apex:commandButton onClick="if(!askReason('{!$Component.reasonId}')) return false;" action="{!GrantAccess}" styleclass="btn btn_iata_primary btn-block" rendered="{!AND(Operation != 'IFAP', OR(AccessStatus == 'Access Denied', AccessStatus == 'Access Requested'))}" value="{!$Label.ISSP_Grant_Access}" id="GrantAccess"/></div>
+                            <div class="col-lg-2"><apex:commandButton onClick="if(!askReason('{!$Component.reasonId}')) return false;" action="{!DenyAccess}" styleclass="btn btn_iata_primary btn-block" rendered="{!OR(AND(Operation == 'IFAP', AccessStatus == 'Access Requested'), AND(Operation != 'IFAP', OR(AccessStatus == 'Access Granted', AccessStatus == 'Access Requested')))}" value="{!$Label.ISSP_Deny_Access}" id="DenyAccess"/></div>
+                             -->
+                            <div class="col-lg-2"><apex:commandButton onClick="showConfirmModal();" rerender="pgBlock" styleclass="btn btn_iata_primary btn-block" rendered="{!AND(Operation != 'IFAP', OR(AccessStatus == 'Access Denied', AccessStatus == 'Access Requested'))}" value="{!$Label.ISSP_Grant_Access}" id="GrantAccess"/></div>
+                            <div class="col-lg-2"><apex:commandButton onClick="showReasonModalDeny();" rerender="pgBlock" styleclass="btn btn_iata_primary btn-block" rendered="{!OR(AND(Operation == 'IFAP', AccessStatus == 'Access Requested'), AND(Operation != 'IFAP', OR(AccessStatus == 'Access Granted', AccessStatus == 'Access Requested')))}" value="{!$Label.ISSP_Deny_Access}" id="DenyAccess"/></div>
+                            <div class="col-lg-4"><apex:commandButton action="{!AssignIFAPContact}" styleclass="btn btn_iata_primary btn-block" rendered="{!(Operation == 'IFAP')}" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/></div>
+                        </apex:outputPanel>
+                            </div>
+                        <table class="table table-condensed" style="margin-top:20px;">
+                            <tr >
+                                <th class="col-md-3">{!$ObjectType.Contact.fields.Name.Label}</th>
+                                <td class="col-md-9"><apex:outputLink value="/apex/ISSP_Contact?id={!PSA.Contact__c}&mid=M4S1"  >{!PSA.Contact__r.Name}</apex:outputLink></td> 
+                            </tr>
+                            
+                            <tr>
+                                <th>{!$ObjectType.Portal_Applications__c.fields.Name.Label}</th>
+                                <td><apex:outputField id="outps" value="{!PSA.PortalServiceTranslatedName__c }"/>11</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Right__c.Label}</th>
+                                <td>
+                                    <apex:outputField id="outStatus" value="{!PSA.Right__c}"  styleClass="form-control" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Access_Status_Reason__c.Label}</th>
+                                <td>
+                                    <!-- <apex:inputField id="inStatusReason" value="{!PSA.Access_Status_Reason__c}"  styleClass="form-control"  rendered="{!IF(Operation == 'Edit',true,false)}"/> -->
+                                    <apex:outputField id="outStatusReason" value="{!PSA.Access_Status_Reason__c}"  styleClass="form-control" />
+                                </td>
+                            </tr>                   
+                        </table>
+                     
+                    </apex:pageBlock>    
+                    <!-- <apex:inputHidden value="{!myReason}" id="reasonId"/> -->
+                    <!-- Modal ask for reason Grant -->
+                    <div class="modal fade" id="theReasonGrant">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">{!$Label.ISSP_Service_Approval_Rejection_Reason}</h4>
+                          </div>
+                          <div class="modal-body">
+                            <apex:inputText value="{!grantReason}"  StyleClass="form-control"/>
+                          </div>
+                          <div class="modal-footer">
+                            <apex:commandButton action="{!GrantAccess}" onclick="closeModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                            <apex:commandButton onclick="closeModalGrant();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Modal ask for reason Deny -->
+                    <div class="modal fade" id="theReasonDeny">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">{!$Label.ISSP_Service_Approval_Rejection_Reason}</h4>
+                          </div>
+                          <div class="modal-body">
+                            <apex:inputText value="{!denyReason}" StyleClass="form-control"   />
+                          </div>
+                          <div class="modal-footer">
+                            <apex:commandButton action="{!DenyAccess}" onclick="closeModalDeny();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                            <apex:commandButton onclick="closeModalDeny();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Modal confirm access grant -->
+                    <div class="modal fade" id="theConfirmModal">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <apex:outputPanel rendered="{!pendingApproval}" >
+                                <h4 class="modal-title">
+                                    <apex:outputText value="{!$Label.ISSP_GrantAccess_PendingApproval}"
+                                                    escape="false" />
+                                </h4>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!noUser}" >
+                                <h4 class="modal-title">
+                                    <apex:outputText value="{!$Label.ISSP_GrantAccess_NoUser}"
+                                                    escape="false" />
+                                    </h4>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!inactiveUser}" >
+                                <h4 class="modal-title">
+                                    <apex:outputText value="{!$Label.ISSP_GrantAccess_InactiveUser}"
+                                                    escape="false" />
+                                    </h4>
+                            </apex:outputPanel>
+                          </div>
+                          <div class="modal-footer">
+                            <apex:commandButton rendered="{!!inactiveUser}" onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                            <apex:commandButton onclick="closeConfirmModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </apex:form>
+                  
+                  <apex:form rendered="{!isAddUser == true}">
+                      <apex:pageBlock id="addUserBlock" >
+                           <table class="table table-condensed" style="margin-top:20px;">
+                       
+                            <apex:outputPanel >
+                                <tr><th class="labelCol vfLabelColTextWrap  first " scope="row" >
+                                <label for="ContactList" styleClass="iatainputbox" >Full Name</label>
+                                </th>
+                                <td class="data2Col  first ">
+                                <apex:selectList styleClass="iatainputbox" id="ContactList" value="{!SelectedContacts}" required="true" multiselect="true" size="5">
+                                    <apex:selectOptions value="{!Contacts}" />
+                                </apex:selectList>
+                                </td></tr>
+                            </apex:outputPanel>
+                            <tr>
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Name.Label}</th>
+                                <td><apex:outputtext id="outps" value=" {!CASE(servName,
+                                    "Join BSP / CASS", $Label.ISSP_Join_BSP_CASS,
+                                    "SIS", $Label.SIS,
+                                    "Management Information Report", $Label.ISSP_MIR,
+                                    "Become an IATA Accredited Agent", $Label.ISSP_Become_Accredited_Agent,
+                                    "BSP / CASS Change Request", $Label.ISSP_Change_Request,
+                                    "BSPLink", $Label.ISSP_BSPLink,
+                                    "CassLink", $Label.ISSP_CassLink,
+                                    "IFAP", $Label.ISSP_IFAP,
+                                    "Resource Center", $Label.ISSP_Resource_Center,
+                                    "Simplified Interline Settlement", $Label.ISSP_Simplified_Interline_Settlement,
+                                    "Treasury Dashboard", $Label.ISSP_TD,
+                                    "Treasury Dashboard - Premium", $Label.ISSP_TD_Premium,
+                                    "Baggage Proration", $Label.ISSP_BaggageProration,
+                                    "TestApp", $Label.ISSP_TestApp,
+
+                                    "click here"
+                                    )}"/>
+                                </td>
+                            </tr>
+                            <!-- 
+                            <tr>
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Right__c.Label}</th>
+                                <td>
+                                    <apex:inputField id="outStatus" value="{!PSA.Right__c}"  styleClass="form-control" />
+                                </td>
+                            </tr> -->
+
+                             <tr>
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Right__c.Label}</th>
+                                <td>
+                                   <apex:selectList styleclass="form-control" value="{!SelectedRightOption}" required="true" multiselect="false" size="1"  >
+                                        <apex:selectOptions value="{!RightsOptions}" />
+                                   </apex:selectList>
+                                </td>
+                            </tr>
+                           <!--  
+                            <tr>
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.Access_Status_Reason__c.Label}</th>
+                                <td>
+                                    <apex:inputField id="inStatusReason" value="{!PSA.Access_Status_Reason__c}"  styleClass="form-control" />
+                                   
+                                </td>
+                            </tr>   -->                 
+                        </table>
+                          <div class="row">
+                              <div class="col-md-4 pull-right">
+                                  
+                              
+                          <!-- <apex:commandButton action="{!CreateNewPortalAccess}" styleclass="btn btn_iata_success"  value="{!$Label.site.save}"  id="btn-Save"/>&nbsp; -->
+                          <apex:commandButton action="{!confirmContacts}" styleclass="btn btn_iata_success"  value="{!$Label.site.save}"  id="btn-Save" onComplete="showUserListModal();" rerender="userListPanel" />&nbsp;
+                          <apex:commandButton action="{!RedirectToService}" styleclass="btn btn_iata_cancel"  value="{!$Label.site.cancel}" id="btn-Cancel" immediate="true"/>
+                       
+                              </div>
+   </div><!--end row -->                       
+                      
+                      
+                        <!-- Confirmation message modal -->
+                        <apex:outputPanel id="userListPanel" >
+                        <div class="modal fade" id="userListModal">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <!-- <apex:inputText value="{!denyReason}" StyleClass="form-control"   /> -->
+                                {!$Label.ISSP_GrantAccess_UserList}
+                                <br/>
+                                <apex:repeat value="{!otherUsersList}" var="thisUser" >
+                                    <b><apex:outputText value="{!thisUser.Name}<br/>" escape="false" /></b>
+                                </apex:repeat>
+                                <apex:outputText value="{!$Label.ISSP_GrantAccess_PendingApprovalList}<br/>" rendered="{!usersToActivate}" escape="false" />
+                                <apex:repeat value="{!usersToActivateList}" var="thisUser" >
+                                    <b><apex:outputText value="{!thisUser.Name}<br/>" escape="false" /></b>
+                                </apex:repeat>
+                                <apex:outputText value="{!$Label.ISSP_GrantAccess_NoUserList}<br/>" rendered="{!usersToCreate}" escape="false" />
+                                <apex:repeat value="{!usersToCreateList}" var="thisUser" >
+                                    <b><apex:outputText value="{!thisUser.Name}<br/>" escape="false" /></b>
+                                </apex:repeat>
+                              </div>
+                              <div class="modal-footer">
+                                <apex:commandButton action="{!CreateNewPortalAccess}" onclick="closeUserListModal();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                                <apex:commandButton onclick="closeUserListModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </apex:outputPanel>
+                      </apex:pageBlock>
+                  </apex:form>
+                  
+                  <br/>  
+               </div>
+           </apex:define>
+          </div><!-- end  div class="panel panel-primary"-->
+      <c:ISSP_CustomFooter />
+  </div><!-- end container-->  
+        </body>
+    </html>
+</apex:page>

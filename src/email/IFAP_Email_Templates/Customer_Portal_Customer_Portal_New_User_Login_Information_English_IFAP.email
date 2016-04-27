@@ -1,0 +1,11 @@
+Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+First of all, thank you for participating in our Customer Portal. Your {!Organization.Name} Financial Assessment Portal username and password are below.
+
+To access the portal, copy the below URL and paste it in your browser.
+
+www.iata.org/ifap
+
+User Guide link: http://www.iata.org/customer-portal/Documents/IATA%20Financial%20Assessment%20Portal%20FAQ.pdf
+
+Kind regards,
+IATA Customer Service

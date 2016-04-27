@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used in a workflow to send a notification email to taiwteam@iata.org</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification of P1 Case</name>
+    <style>none</style>
+    <subject>Case {!Case.CaseNumber} has been identified as a Priority 1 Case!</subject>
+    <type>text</type>
+</EmailTemplate>

@@ -1,0 +1,30 @@
+<table height="400" width="650" cellpadding="0" border="0" cellspacing="0" >
+<tr valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="460" >
+<table height="400" width="460" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT size=2><FONT face=Arial,Sans-Serif>Dear Partners,<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></FONT></FONT></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><o:p><FONT size=2 face=Arial,Sans-Serif>&nbsp;</FONT></o:p></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT size=2><FONT face=Arial,Sans-Serif>Please find below volumes variations for the period from ……… to ………..<o:p></o:p></FONT></FONT></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT size=2 face=Arial,Sans-Serif>Agent type: {!Case.Type_of_customer__c}</FONT></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT size=2 face=Arial,Sans-Serif>Country:{!Case.BSPCountry__c}&nbsp;</FONT></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT size=2 face=Arial,Sans-Serif>&nbsp;</FONT></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT size=2 face=Arial,Sans-Serif>Kind Regards,</FONT></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><FONT face=Calibri></FONT>&nbsp;</P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal>{!Case.OwnerFullName}</P>]]></td>
+</tr>
+</table>
+</td>
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="10" >
+<![CDATA[]]></td>
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="180" >
+<table height="400" width="180" cellpadding="5" border="0" cellspacing="5" >
+<tr height="100" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="180" tEditID="c2r1" locked="0" aEditID="c2r1" rowspan="3" >
+<![CDATA[]]></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>

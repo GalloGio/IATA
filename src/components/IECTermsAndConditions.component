@@ -1,0 +1,62 @@
+<apex:component controller="VfIECTermsAndConditionsComponent" access="global"  allowDML="true" rendered="true">
+	<apex:attribute name="ProductInformationIDs" type="String[]" assignTo="{!listProductInformationIDs}" description="Array of Product Information IDs"  />
+	<apex:attribute name="ComponentKey" type="String" assignTo="{!key}" description="The key given to this component so the page can easily get access to it" />
+	<apex:attribute name="IECPageController" type="IECPageController" assignTo="{!pageController}" description="The controller for the page." />
+	<apex:attribute name="RerenderComponentId" type="String" description="Id of the component to rerender" assignTo="{!componentIdToRerender}" required="false" />
+	<!--apex:attribute name="IgnoreExistingAcceptance" type="Boolean" description="Choose whether to override existing accepted T&C and show the T&C anyhow" assignTo="{!overrideExistingAcceptance}" required="false" /-->
+	
+	<style>
+	#cart .checkout-wrapper .checkout-info .checkout-info__checkbox-label:before {
+	content: "";  
+    display: inline-block;   
+    width: 18px;  
+    height: 18px;  
+    margin-right: 10px;  
+    background-color: #fff;  
+    border:1px solid #dcdcdc;
+    vertical-align:middle;
+}
+
+#cart .checkout-wrapper .checkout-info input[type="checkbox"]:checked + .checkout-info__checkbox-label:before {  
+    content: "\2713";  
+    color:#1ebec8;
+    font-size: 18px;  
+    text-align: center;  
+    line-height: 18px;  
+} 
+	</style>
+	
+	<apex:componentBody >
+		<!-- <apex:actionFunction name="rerenderDebug" rerender="panelFlag" /> -->
+		<apex:outputPanel id="panelTCs" layout="block" rendered="{!hasTermsAndConditions}" >
+			<table>
+				<apex:repeat id="repeatTermsAndConditions" var="UITnC" value="{!listTermsAndConditionsToDisplay}" rendered="{!hasTermsAndConditions}">
+					<!-- will only loop on the first attachment (which are sorted by CreatedDate desc) -->
+					<apex:repeat id="repeatAttachment" var="attach" value="{!UITnC.TermsAndConditions.Attachments}" rows="1">
+						<tr>
+							<td>
+	            				<!--  <span class="checkout-info__checkbox"> -->
+									<apex:inputCheckbox value="{!UITnC.checked}" id="chkbxTnC">
+								 		<apex:actionsupport event="onchange" rerender="{!componentIdToRerender}" /> 
+									</apex:inputCheckbox>
+	            				<!-- </span> -->
+	            				<label class="checkout-info__checkbox-label" for="{!$Component.chkbxTnC}">
+	              					I agree to the {!UITnC.TermsAndConditions.Product_Information__r.Related_Product_Category__r.Display_Name__c} &nbsp;
+	              					<a href="{!URLFOR($Action.Attachment.Download, attach.Id)}" target="_blank">Terms and Conditions</a>
+	            				</label>
+	            			</td>
+            			</tr>
+					</apex:repeat>
+				</apex:repeat>
+   			</table>
+		</apex:outputPanel>
+		
+		<!-- 
+		<apex:outputPanel id="panelFlag" layout="block">
+			DEBUG<br />
+			Has T&amp;Cs: {!hasTermsAndConditions}<br />
+			Has accepted all T&amp;Cs: {!hasAcceptedAllTCs}
+		</apex:outputPanel>
+		-->
+	</apex:componentBody>
+</apex:component>

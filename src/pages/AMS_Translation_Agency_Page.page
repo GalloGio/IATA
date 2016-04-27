@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="AMS_Agency__c" TabStyle="AMS_Agency__c">
+    <c:AMS_Translated_Panel cagencyId="{!AMS_Agency__c.Id}"/>
+</apex:page>

@@ -1,0 +1,405 @@
+@isTest
+public class ISSP_PortalService_Test {
+
+	public static testMethod void unitTest1() {
+		ISSP_PortalService_Test.createTestData();
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		insert con;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        insert appReq;
+        
+        Apexpages.currentPage().getParameters().put('id', appReq.Id);
+        ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
+        
+        Apexpages.currentPage().getParameters().put('id', app.Id);
+        ISSP_PortalService ctrl2 = new ISSP_PortalService();
+        ctrl2.RedirectToServiceAccess();
+        
+        Apexpages.currentPage().getParameters().put('id', appReq.Id);
+        Apexpages.currentPage().getParameters().put('PSid', app.Id);
+        Apexpages.currentPage().getParameters().put('PSname', 'test');
+        ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();
+        ctrl3.getRightsOptions();
+        ctrl3.AssignIFAPContact();
+        ctrl3.DenyAccess();
+        ctrl3.GrantAccess();
+        ctrl3.RedirectToService();
+        ctrl3.getContacts();
+	}
+	
+	public static testMethod void unitTest2() {
+
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		con.User_Portal_Status__c = 'Pending Approval';
+		insert con;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        insert appReq;
+        
+        Apexpages.currentPage().getParameters().put('id', appReq.Id);
+        ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
+        
+        Apexpages.currentPage().getParameters().put('id', app.Id);
+        ISSP_PortalService ctrl2 = new ISSP_PortalService();
+        ctrl2.RedirectToServiceAccess();
+        
+        Apexpages.currentPage().getParameters().put('id', appReq.Id);
+        Apexpages.currentPage().getParameters().put('PSid', app.Id);
+        Apexpages.currentPage().getParameters().put('PSname', 'test');
+        ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();
+        ctrl3.getRightsOptions();
+        ctrl3.DenyAccess();
+        ctrl3.GrantAccess();
+        ctrl3.RedirectToService();
+        ctrl3.getContacts();
+	}
+	
+	public static testMethod void unitTest3() {
+
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		con.User_Portal_Status__c = 'Deactivated';
+		insert con;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        insert appReq;
+        
+        Apexpages.currentPage().getParameters().put('id', appReq.Id);
+        ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
+        
+        Apexpages.currentPage().getParameters().put('id', app.Id);
+        ISSP_PortalService ctrl2 = new ISSP_PortalService();
+        ctrl2.RedirectToServiceAccess();
+        
+        Apexpages.currentPage().getParameters().put('id', appReq.Id);
+        Apexpages.currentPage().getParameters().put('PSid', app.Id);
+        Apexpages.currentPage().getParameters().put('PSname', 'test');
+        ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();
+        ctrl3.getRightsOptions();
+        ctrl3.DenyAccess();
+        ctrl3.GrantAccess();
+        ctrl3.RedirectToService();
+        ctrl3.getContacts();
+	}
+	
+	public static testMethod void unitTest4() {
+		ISSP_PortalService_Test.createTestData();
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con1 = ISSP_ObjectFactory.createNewContact();
+		con1.AccountId = acc.Id;
+		con1.User_Portal_Status__c = 'Pending Approval';
+		insert con1;
+		
+		Contact con2 = ISSP_ObjectFactory.createNewContact();
+		con2.AccountId = acc.Id;
+		con2.User_Portal_Status__c = 'Approved User';
+		insert con2;
+		
+		Contact con3 = ISSP_ObjectFactory.createNewContact();
+		con3.AccountId = acc.Id;
+		insert con3;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        
+        Apexpages.currentPage().getParameters().put('PSid', app.Id);
+        Apexpages.currentPage().getParameters().put('PSname', 'test');
+        ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();
+        ctrl3.getContacts();
+        ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
+        ctrl3.confirmContacts();
+        ctrl3.CreateNewPortalAccess();
+	}
+	
+	public static testMethod void unitTest5() {
+
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		con.User_Portal_Status__c = 'Pending Approval';
+		insert con;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        insert appReq;
+
+        ApexPages.StandardController sc = new ApexPages.StandardController(appReq);
+		ISSP_EditPortalServiceAccessExt controller = new ISSP_EditPortalServiceAccessExt(sc);
+	    controller.save();
+	    appReq.Right__c = 'Access Rejected';
+	    controller.saveUpdate();
+	}
+	
+	public static testMethod void unitTest6() {
+
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		con.User_Portal_Status__c = 'Approved User';
+		insert con;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        insert appReq;
+
+        ApexPages.StandardController sc = new ApexPages.StandardController(appReq);
+		ISSP_EditPortalServiceAccessExt controller = new ISSP_EditPortalServiceAccessExt(sc);
+	    controller.save();
+	    appReq.Right__c = 'Access Rejected';
+	    controller.saveUpdate();
+	}
+	
+	public static testMethod void unitTest7() {
+		ISSP_PortalService_Test.createTestData();
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+		
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acc.Id;
+		insert con;
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
+        insert app;
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = con.Id;
+        insert appReq;
+
+        ApexPages.StandardController sc = new ApexPages.StandardController(appReq);
+		ISSP_EditPortalServiceAccessExt controller = new ISSP_EditPortalServiceAccessExt(sc);
+	    controller.save();
+	    appReq.Right__c = 'Access Rejected';
+	    controller.saveUpdate();
+	}
+
+	public static void createTestData(){
+		
+		List<ISSP_CS__c> csList = new List<ISSP_CS__c>();
+		
+		ISSP_CS__c cs1 = new ISSP_CS__c();
+		cs1.Name = 'DefaultNewAccountOwnerId';
+		cs1.Value__c = UserInfo.getUserId();
+		csList.add(cs1);
+		ISSP_CS__c cs2 = new ISSP_CS__c();
+		cs2.Name = 'Host';
+		cs2.Value__c = 'test';
+		csList.add(cs2);
+		
+		List<Profile> profileList = [SELECT Id, Name FROM Profile WHERE Name LIKE 'ISS%'];
+		for (Profile thisProfile : profileList){
+			ISSP_CS__c newCS = new ISSP_CS__c();
+			newCS.Value__c = thisProfile.Id;
+			if (thisProfile.Name == 'ISS Portal (Partner)'){
+				newCS.Name = 'ISS_Portal';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal Agency Delegated Admin User'){
+				newCS.Name = 'ISS_Portal_Agency_Delegated_Admin';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal Agency User (Partner)'){
+				newCS.Name = 'ISS_Portal_Agency_User';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal Airline Delegated Admin User'){
+				newCS.Name = 'ISS_Portal_Airline_Delegated_Admin';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal Airline User (Partner)'){
+				newCS.Name = 'ISS_Portal_Airline_User';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal Delegated Admin User'){
+				newCS.Name = 'ISS_Portal_Delegated_Admin';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal GSA Delegated Admin User'){
+				newCS.Name = 'ISS_Portal_GSA_Delegated_Admin';
+				csList.add(newCS);
+			}
+			else if (thisProfile.Name == 'ISS Portal GSA User (Partner)'){
+				newCS.Name = 'ISS_Portal_GSA_User';
+				csList.add(newCS);
+			}
+		}
+		insert csList;
+	}
+}

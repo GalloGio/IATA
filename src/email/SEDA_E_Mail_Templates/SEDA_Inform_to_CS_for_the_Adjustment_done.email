@@ -1,0 +1,13 @@
+Case link: {!Case.Link}
+
+R&S has adjusted the amount as follows.
+
+Case information:
+
+IATA code: {!Case.IATA_Code__c}
+Account name: {!Case.Account}
+Country: {!Case.BSPCountry__c} 
+BSP/CASS: {!Case.BSP_CASS__c} 
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject}
+Adjustment Amount:  {!Case.Currency__c}{!Case.Adjustment_Amount__c}

@@ -1,0 +1,41 @@
+@isTest
+private class ISSP_UserTriggerHandler_Test {
+
+    static testMethod void myUnitTest() {
+        //ISSP_ObjectFactory.fiilIncludedFields();
+    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+    	//Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
+    	Account acc = ISSP_ObjectFactory.createNewAccount();
+		insert acc;
+		//Contact contact = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
+		Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.Email = 'test2@test.test';
+        contact.AccountId = acc.Id;
+        insert contact;
+        User newUser = new User(alias = 'dsfsdfds', 
+	                            email = contact.email, 
+	                            emailencodingkey = 'UTF-8', 
+	                            firstname = contact.firstName, 
+	                            lastname = contact.lastname, 
+	                            languagelocalekey = 'en_US', 
+	                            localesidkey = 'en_US', 
+	                            contactId = contact.Id,
+	                            timezonesidkey = 'Asia/Dubai',
+	                            username = contact.email+'dfgdf',
+	                            PortalRole = 'Manager',
+	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+	                            ProfileId = profileId,
+	                            IsActive = true);
+    	insert newUser;
+    	
+    	System.runAs (newUser){
+    		Test.startTest();
+	    	newUser.email = 'test1234@test.test';
+	    	update newUser;
+	    	Test.stopTest();
+    	}
+    	
+    	String thisUsername = [SELECT Id, Email, Username FROM User WHERE Id = :newUser.Id].Username;
+    	system.assertEquals(thisUsername, 'test1234.test.test@partner.iata.org');
+    }
+}

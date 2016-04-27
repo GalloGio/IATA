@@ -1,0 +1,67 @@
+<apex:page controller="ISSP_PortalService" showHeader="false" sidebar="false" standardStylesheets="false" >
+    <html>
+ <c:ISSP_Header ></c:ISSP_Header>    
+ <body>
+ 
+  <div class="container">
+      <c:ISSP_CustomNavigation />
+        <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
+            <a href="/apex/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1">Back to List: Portal Service </a>
+        </div>
+          <div class="panel panel-primary">
+              <div class="panel-heading head_panel_green">
+                  <h3 class="panel-title">{!$Label.ISSP_Portal_Service_Information}</h3>
+              </div>
+             <div class="panel-body" id="body-enquiries">
+                 <div class="row">
+                     <div class="col-lg-9">
+                 
+                             <div class="row">
+                                            <label class="lbl lbl col-lg-3">{!$Label.ISSP_Portal_Service}:</label>
+                                           <p class="col-lg-6">{!PortalService.ServiceName__c} </p>
+                              </div> <!-- end row -->
+                             
+                             <div class="row">
+                                            <label class="lbl lbl col-lg-3">{!$Label.ISSP_Portal_Service_Details}:</label>
+                                           <p class="col-lg-6"><apex:outputLabel escape="false" value="{!PortalService.Service_Description__c}" /></p>
+                                
+                              </div> <!-- end row -->
+                     </div><!-- end col-lg-10 -->
+                     <div class="col-lg-3">
+                     <apex:outPutField value="{!PortalService.Application_icon__c}"/>
+                     </div>
+                </div> 
+                 </div><!--end panel body -->
+                <!--<apex:form rendered="{!IF($Profile.Name == 'System Administrator' ||$Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',true,false)   }">-->
+                <apex:form >
+                <apex:pageblock id="CustomList" title=""  >
+               
+                          <h3 class="blueback">Users
+                          <center>  <apex:commandButton action="{!RedirectToServiceAccess}" styleclass="btn btn-sm btn-primary"  value="{!$Label.ISSP_Add_User_to_this_service}" 
+                                                        rendered="{!!PortalService.Cannot_be_managed_by_portal_admin__c}"/>  </center>
+                           
+                          </h3>
+                
+                   <apex:pageBlockTable value="{!appsGrantedList}" var="o" >
+                        <apex:column style="text-align: center;" >
+                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_PortalService?id={!o.Portal_Application__c}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                        </apex:column>  
+                        <apex:column headerValue="Account Name" style="text-align: center;" >
+                            <apex:outputLink value="/apex/ISSP_Account?id={!o.Contact__r.AccountId}"  >{!o.Contact__r.Account.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column value="{!o.Contact__r.FirstName}" style="text-align: center;" />
+                        <apex:column value="{!o.Contact__r.LastName}" style="text-align: center;" />
+                        <apex:column value="{!o.Right__c}" style="text-align: center;" />
+                      
+                   </apex:pageBlockTable>
+                  
+                 </apex:pageblock>
+                </apex:form>
+                
+                
+          </div><!-- end  div class="panel panel-primary"-->
+      <c:ISSP_CustomFooter />
+  </div><!-- end container-->  
+        </body>
+    </html>
+</apex:page>

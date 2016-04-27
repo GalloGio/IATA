@@ -1,0 +1,13 @@
+<apex:page standardController="Account" showheader="false" sidebar="false"><!-- rendered="{!IF(Account.Field_Head_Office__c == 'Headquarter',true,false)}" >-->
+
+<apex:form id="theForm">
+
+
+
+        <c:AirlineServicesHQ value="{!Account.Id}" />
+
+
+
+</apex:form>
+
+</apex:page>

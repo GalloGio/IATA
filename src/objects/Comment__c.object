@@ -1,0 +1,1364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object created for the AME objectives reporting project. 
+Object to store comments related to objectives, or independent comments that we can report on.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Achievement__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is this a comment that should be displayed on the weekly or monthly reports</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is this a comment that should be displayed on the weekly or monthly reports</inlineHelpText>
+        <label>Achievement</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Area__c</fullName>
+        <description>Area this comment is related to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Area this comment is related to</inlineHelpText>
+        <label>Area</label>
+        <picklist>
+            <controllingField>Region__c</controllingField>
+            <picklistValues>
+                <fullName>Eastern Africa</fullName>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gulf Area</fullName>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Levant</fullName>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>North Africa</fullName>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SA-YE</fullName>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>South Western Africa</fullName>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Southern Africa</fullName>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Central West Africa</fullName>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Arg-Par-Uru</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brazil</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Can-Ber</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Caribbean</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Central America</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chile</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Colombia-Ecuador</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mexico</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Peru-Bolivia</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>USA</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Venezuela-Cuba</fullName>
+                <controllingFieldValues>Americas</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>India</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indonesia</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Japan</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pakistan</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Philippines</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Republic of Korea</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Southwest Pacific</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Thailand</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vietnam</fullName>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China-Mongolia-North Korea</fullName>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chinese Taipei</fullName>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HK_MO</fullName>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Central Asia</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Central Europe</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Eastern Europe</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR+BE+NL</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FR-NL</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Greece &amp;amp; Cyprus</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Iberian Peninsula</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Israel</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Italy_Malta</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nordic Baltic</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Russia and Belarus</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Southern Eastern Europe</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkey</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UK &amp;amp; Ireland</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ukraine and Caucasus</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Western Balkans</fullName>
+                <controllingFieldValues>Europe</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Country_News__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Should this comment be displayed in the RLT report under the country news</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Should this comment be displayed in the RLT report under the country news (related to the specified Area)</inlineHelpText>
+        <label>Country News</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Detail__c</fullName>
+        <description>Description of this comment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Description of this comment</inlineHelpText>
+        <label>Detail</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Division__c</fullName>
+        <description>Division this comment is related to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Division this comment is related to</inlineHelpText>
+        <label>Division</label>
+        <picklist>
+            <picklistValues>
+                <fullName>APCS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FDS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MER</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SFO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PPD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RVPO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Divisional_News__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Should this comment be displayed in the RLT report under the divisional news (related to the specified Division)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Should this comment be displayed in the RLT report under the divisional news (related to the specified Division)</inlineHelpText>
+        <label>Divisional News</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Functional_Group__c</fullName>
+        <description>Functional area/group related to a division</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Functional area/group related to the specified division</inlineHelpText>
+        <label>Functional Group</label>
+        <picklist>
+            <controllingField>Division__c</controllingField>
+            <picklistValues>
+                <fullName>Safety</fullName>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations</fullName>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Infraestructure</fullName>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>User Charges</fullName>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Passenger Experience</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security &amp; Facilitation</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ground Operations</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airport Development &amp; Charges</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Transformation</fullName>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Products</fullName>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Environment</fullName>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>External Affairs</fullName>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Is_incomplete__c</fullName>
+        <description>As there is a VR that prevents a comment to be of no kind. If no kind specify we know that is an incomplete one, and (CreatedDate =  LastModifiedDate)</description>
+        <externalId>false</externalId>
+        <formula>IF(((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE) &amp;&amp; (Achievement__c = FALSE)) &amp;&amp;  (CreatedDate =  LastModifiedDate), TRUE, FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is incomplete</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Objective__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Objective this comment is related to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Objective this comment is related to</inlineHelpText>
+        <label>Parent Objective</label>
+        <referenceTo>Objective__c</referenceTo>
+        <relationshipName>Comments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Region this comment is related to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Region this comment is related to</inlineHelpText>
+        <label>Region</label>
+        <picklist>
+            <controllingField>Division__c</controllingField>
+            <picklistValues>
+                <fullName>Africa &amp; Middle East</fullName>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Americas</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asia &amp; Pacific</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China &amp; North Asia</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Europe</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Africa</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MENA</fullName>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>News</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Parent_Objective__c</columns>
+        <columns>Detail__c</columns>
+        <columns>Division__c</columns>
+        <columns>Area__c</columns>
+        <columns>Region__c</columns>
+        <columns>Country_News__c</columns>
+        <columns>Achievement__c</columns>
+        <columns>Divisional_News__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Comment__c.Objective_Independent</value>
+        </filters>
+        <label>Comments without Objective</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Incomplete_Comments</fullName>
+        <columns>NAME</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Is_incomplete__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Incomplete Comments</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>My_comments</fullName>
+        <columns>NAME</columns>
+        <columns>Detail__c</columns>
+        <columns>Divisional_News__c</columns>
+        <columns>Country_News__c</columns>
+        <columns>Achievement__c</columns>
+        <columns>Division__c</columns>
+        <columns>Region__c</columns>
+        <columns>Area__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Parent_Objective__c</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Is_incomplete__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>My comments</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>CM-{000000}</displayFormat>
+        <label>News Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>News</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Objective_Independent</fullName>
+        <active>true</active>
+        <description>Comment not related to a formally agreed objective</description>
+        <label>2. Independent</label>
+        <picklistValues>
+            <picklist>Area__c</picklist>
+            <values>
+                <fullName>Arg-Par-Uru</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Brazil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Can-Ber</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caribbean</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central West Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China-Mongolia-North Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chinese Taipei</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Colombia-Ecuador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eastern Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eastern Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR%2BBE%2BNL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR-NL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greece %26amp%3B Cyprus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gulf Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HK_MO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iberian Peninsula</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indonesia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Israel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Italy_Malta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Levant</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mexico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nordic Baltic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pakistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Peru-Bolivia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philippines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Republic of Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russia and Belarus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA-YE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South Western Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Southern Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Southern Eastern Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Southwest Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thailand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkey</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UK %26amp%3B Ireland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ukraine and Caucasus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Venezuela-Cuba</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Western Balkans</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Division__c</picklist>
+            <values>
+                <fullName>APCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RVPO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Group__c</picklist>
+            <values>
+                <fullName>Airport Development %26 Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infraestructure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transformation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User Charges</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MENA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Objective_Related</fullName>
+        <active>true</active>
+        <description>Comment related to an objective</description>
+        <label>1. Objective Related</label>
+        <picklistValues>
+            <picklist>Area__c</picklist>
+            <values>
+                <fullName>Arg-Par-Uru</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Brazil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Can-Ber</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caribbean</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central America</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Central West Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China-Mongolia-North Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chinese Taipei</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Colombia-Ecuador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eastern Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eastern Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR%2BBE%2BNL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR-NL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greece %26amp%3B Cyprus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gulf Area</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HK_MO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iberian Peninsula</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indonesia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Israel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Italy_Malta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Levant</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mexico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nordic Baltic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pakistan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Peru-Bolivia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philippines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Republic of Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russia and Belarus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA-YE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South Western Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Southern Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Southern Eastern Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Southwest Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Thailand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkey</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UK %26amp%3B Ireland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ukraine and Caucasus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Venezuela-Cuba</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Western Balkans</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Division__c</picklist>
+            <values>
+                <fullName>APCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RVPO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Group__c</picklist>
+            <values>
+                <fullName>Airport Development %26 Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infraestructure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transformation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User Charges</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MENA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Hierarchy_of_comment</fullName>
+        <active>true</active>
+        <description>Type of comment is mandatory</description>
+        <errorConditionFormula>(Parent_Objective__r.Account__c  &lt;&gt;  Null) &amp;&amp;
+((ISPICKVAL(Division__c,&quot;&quot;)) &amp;&amp; (ISPICKVAL(Region__c,&quot;&quot;)) &amp;&amp; (ISPICKVAL(Area__c,&quot;&quot;)))</errorConditionFormula>
+        <errorDisplayField>Achievement__c</errorDisplayField>
+        <errorMessage>Please specify the hierarchy your comment is related to</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RLT_comment_Country</fullName>
+        <active>true</active>
+        <description>A country or divisional news is to be reported on the RLT report. And the area or division are needed</description>
+        <errorConditionFormula>(Country_News__c = TRUE) &amp;&amp; (ISPICKVAL(Area__c,&quot;&quot;))</errorConditionFormula>
+        <errorMessage>If this comment is intended to be in the RLT report under the country news, please specify the area</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RLT_comment_Division</fullName>
+        <active>true</active>
+        <description>A country or divisional news is to be reported on the RLT report. And the area or division are needed</description>
+        <errorConditionFormula>(Divisional_News__c = TRUE) &amp;&amp; (ISPICKVAL(Division__c,&quot;&quot;))</errorConditionFormula>
+        <errorMessage>If this comment is intended to be in the RLT report under the divisional news, please specify the division</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Type_of_independent_comment</fullName>
+        <active>true</active>
+        <description>Type of comment is mandatory</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &quot;Objective_Independent&quot;) &amp;&amp; ((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE))</errorConditionFormula>
+        <errorMessage>Please specify the type of comment</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Type_of_related_comment</fullName>
+        <active>false</active>
+        <description>Type of comment is mandatory.
+Non specified means that it is an internal comment</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &quot;Objective Related&quot;) &amp;&amp; ((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE) &amp;&amp; (Achievement__c = FALSE))</errorConditionFormula>
+        <errorDisplayField>Achievement__c</errorDisplayField>
+        <errorMessage>Please specify the type of comment</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>New_Comment</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>New News</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/NewComment?parent={!Objective__c.Id}</url>
+    </webLinks>
+</CustomObject>

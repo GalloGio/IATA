@@ -1,0 +1,105 @@
+<apex:page controller="DownloadAgentsCtrl" readonly="true" contentType="application/vnd.ms-excel#SalesForceExport.xls" cache="true">
+    <apex:pageBlock title="Export Agents" >
+ <apex:pageBlockTable value="{!displayList }" var="c" id="agents" >
+            
+
+            <apex:column >
+             <apex:facet name="header"  >
+                        Agent Name
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.name}"/>
+            </apex:column>
+ 
+            <apex:column >
+            <apex:facet name="header"  >
+                        Agent Code
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.IATACode__c}"/>
+            </apex:column>
+ 
+            <apex:column >
+             <apex:facet name="header"  >
+                        Agent Status
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.Status__c}"/>
+            </apex:column>
+  
+              <apex:column >
+            <apex:facet name="header"  >
+                        Agent Type
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.Type}"/>
+            </apex:column>
+            
+            <apex:column >
+            <apex:facet name="header"  >
+                        Agent Location Type
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.Location_Type__c}"/>
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header"  >
+                        Country
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.BillingCountry}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header"  >
+                        Contact Name
+                </apex:facet>
+                <apex:outputField value="{!c.con.Name}"/>
+            </apex:column>
+ 
+            <apex:column >
+                <apex:facet name="header"  >
+                        Contact Email
+                </apex:facet>
+                <apex:outputField value="{!c.con.Email}"/>
+            </apex:column>
+              
+                         
+            
+            <apex:column >
+                <apex:facet name="header">
+                    Nbr of Open IFAP Cases
+                </apex:facet>
+                <apex:outputText value="{0, number, #####}">
+                    <apex:param value="{!IF(TEXT(c.con.account.Number_of_open_Financial_Review_Cases__c) == '',0,c.con.account.Number_of_open_Financial_Review_Cases__c)}" />
+                </apex:outputText>
+            </apex:column> 
+                        
+            <apex:column >
+                <apex:facet name="header">
+                 Has Closed IFAP Case(s) for target Financial Year
+    
+
+                </apex:facet>
+                <apex:outputtext value="{!c.hasClosedCases}"/>
+            </apex:column>
+ 
+
+              <apex:column >
+                <apex:facet name="header">
+                    CCG Participant / KAM
+
+                </apex:facet>
+                <apex:outputtext value="{!c.CCG_Participant}"/>
+            </apex:column>
+            
+              <apex:column >
+                <apex:facet name="header">
+                  CCG IRR Distribution list
+                </apex:facet>
+                <apex:outputField value="{!c.con.account.CCG_IRR_Distribution_list__c}"/>
+            </apex:column>
+            
+            
+
+            
+        </apex:pageBlockTable>
+
+      
+    </apex:pageBlock>
+</apex:page>

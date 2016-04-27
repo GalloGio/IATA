@@ -1,0 +1,342 @@
+/**  
+  * Description: This class contains the controller for the Visualforce page Global Agency Directory results 
+  * Author: Alexandre McGraw
+  * Version: 1.0
+  * History: 
+  */
+public without sharing class vfIECGADResult extends IECPageController {
+
+	private static Integer DEFAULT_NBR_OF_RECORDS_PER_PAGE = 10;
+
+	public Integer iNBR_RECORDS_PER_PAGE { get; set; }
+
+    public vfIECSubscriptionInfo 	ctrSubsInfo		    {get; set;}
+    public vfIECSavedFilters 		ctrSavedFilters     {get; set;}
+
+	public String sParamIECApplicationFiltersID {get; set;}
+	public String sIECApplicationFiltersID {get; set;}
+	public IEC_Application_Filter__c oApplicationFilters { get; private set; }
+	public List<GDP_Products_Account_View__c> lstAgencies { get; private set; }
+	public String sAgencyIDToViewDetail {get; private set;}
+	public Integer iTotalResult { get; private set;}
+	public Integer iTotalPage { get; private set;}
+	public Integer iCurrentAgencyIndex { get; private set;}
+	public Integer iCurrentPageIndex { get; private set;} // 0 to iTotalPage-1
+	public String sSelectedAgencyId { get; set; }
+	public Map<String, String> mapListIndexAndAgencyID { get; private set; }
+	public Map<String, String> mapAreaOfActivityByCode {get; private set;}
+
+	public Boolean bPreviousPageIsEnabled {
+		get {
+			return (iCurrentPageIndex > 0);
+		}
+	}
+	public Boolean bNextPageIsEnabled {
+		get {
+			return (iCurrentPageIndex != -1 && iCurrentPageIndex + 1 < iTotalPage);
+		}
+	}
+	
+	public Boolean bPreviousAgencyIsEnabled {
+		get {
+			return (iCurrentAgencyIndex > 0);
+		}
+	}
+	public Boolean bNextAgencyIsEnabled {
+		get {
+			return (iCurrentAgencyIndex != -1 && iCurrentAgencyIndex + 1 < iTotalResult);
+		}
+	}
+	
+	public String sTextRepresentationOfFilters {
+		get {
+			if (String.isBlank(sTextRepresentationOfFilters)) {
+//				try {
+				sTextRepresentationOfFilters = (oApplicationFilters == null ? '' : IECApplicationsManager.getStringRepresentationOfApplicationFilter(oApplicationFilters.Id));
+/*				}
+				catch (Exception e) {
+					return null;
+				}*/
+			}
+			return sTextRepresentationOfFilters;
+		}
+		set;
+	}
+	
+	public Boolean bShowStateProvinceColumn {
+		get {
+			return (oApplicationFilters != null && String.isNotblank(oApplicationFilters.State__c) && !oApplicationFilters.State__c.startsWith('--') && oApplicationFilters.State__c != '(All)'
+				&& oApplicationFilters.State__c != 'All' && oApplicationFilters.State__c != 'None' && oApplicationFilters.State__c != 'null');
+		}
+	}
+	
+	public Boolean bShowCityColumn {
+		get {
+			return oApplicationFilters != null && String.isNotblank(oApplicationFilters.City__c);
+		}
+	}
+	
+	public Boolean bShowZipPostalCodeColumn {
+		get {
+			return oApplicationFilters != null && String.isNotblank(oApplicationFilters.Zip_Code__c);
+		}
+	}
+	
+	public Boolean bShowLegalName {
+		get {
+			return (oApplicationFilters == null ? false : oApplicationFilters.Agency_Name_Search_Condition__c == 'Legal Name');
+		}
+	}
+	
+	public String sProductCode {
+		get {
+			return IECConstants.ProductCategory_SF_GAD;
+		}
+	}
+
+	/**
+	 * Constructor
+	 */
+	public vfIECGADResult() {
+	 	this(DEFAULT_NBR_OF_RECORDS_PER_PAGE);
+	}
+   	public vfIECGADResult(Integer iNbrResultsPerPage) {
+   		
+        //Initilize subscription component        
+        ctrSubsInfo = new vfIECSubscriptionInfo(); 
+        ctrSubsInfo.loggedCustomer = loggedCustomer;
+        ctrSubsInfo.sApplicationName = IECConstants.ProductCategory_SF_GAD;
+        
+        ctrSavedFilters = new vfIECSavedFilters();
+        ctrSavedFilters.loggedCustomer = loggedCustomer;   
+   		
+   		oApplicationFilters = null;
+   		lstAgencies = null;
+   		iCurrentPageIndex = -1;
+   		iCurrentAgencyIndex = -1;
+   		
+   		iNBR_RECORDS_PER_PAGE = (iNbrResultsPerPage != null && iNbrResultsPerPage > 0 ? iNbrResultsPerPage : DEFAULT_NBR_OF_RECORDS_PER_PAGE);
+   	}
+   	
+   	private void fillAreOfActivityMap() {
+   		
+   		mapAreaOfActivityByCode = new Map<String, String>();
+   		mapAreaOfActivityByCode.put('D', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('E', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('K', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('N', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('O', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('F', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('P', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('T', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('S', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('V', 'Travel Agency');
+   		mapAreaOfActivityByCode.put('G', 'General Sales Agent');
+   		mapAreaOfActivityByCode.put('M', 'Airline Sales Office');
+   	}
+   	
+   	/**
+   	 * Triggered once the page is loaded
+   	 */
+   	public Pagereference pageLoad() {
+   		// first check if the user is logged in
+		try {
+			if (IECUserManager.isUserLoggedIn() == false) {
+				Pagereference prLogin = Page.IECLogin;
+				prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+				prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+				prLogin.setRedirect(true);
+				return prLogin;
+			}
+			else {
+				
+				fillAreOfActivityMap();				
+
+				// Validate Logged in user profile and ensure profile is complete
+				validUserProfile();
+
+                // Make sure to validate user access to application subscription
+                ctrSubsInfo.validateAccess(); 
+                
+                // if no access, redirect to the unauthorized page
+				if (!ctrSubsInfo.hasPageAccess)
+					return Page.IECUnauthorized;
+
+                //Load Saved filters
+                ctrSavedFilters.loadFilters();
+
+
+				sParamIECApplicationFiltersID = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
+
+				// Validate that there is parameter passed to the page
+				if (String.isBlank(sParamIECApplicationFiltersID)) {
+					addErrorMessage(Label.IEC_Error_InvalidPageParameter);
+				}
+				else {
+					
+					// Decrypt parameter before using it
+					sIECApplicationFiltersID = IECUtil.DecodeDecryptParameter(sParamIECApplicationFiltersID);
+					
+					// gets the Application Filter
+					oApplicationFilters = IECApplicationsManager.LoadFilterById(sIECApplicationFiltersID);
+					if (oApplicationFilters == null) {
+						return Page.IECGADAdvanced;
+						//throw new IECApplicationException(Label.IEC_Error_InvalidPageParameter);
+					}
+
+					// run the search
+					lstAgencies = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oApplicationFilters, IECConstants.ProductCategory_SF_GAD, loggedCustomer);
+
+				
+					//Update usage counter (UI Only)
+					ctrSubsInfo.dUnitsConsumed++;
+					if (ctrSubsInfo.iUsageLeft > 0) 
+						ctrSubsInfo.iUsageLeft--;
+
+
+
+					iTotalResult = (lstAgencies == null ? 0 : lstAgencies.size());
+					
+					// build map to keep track of what is the list index of each agency
+					mapListIndexAndAgencyID = new Map<String, String>();
+					Integer iListIndex = 0;
+					for (GDP_Products_Account_View__c iAgency : lstAgencies) {
+						mapListIndexAndAgencyID.put(iAgency.Id, String.valueOf(iListIndex));
+						iListIndex++;
+					}
+					
+					// if 1 result, show agency detail page
+					if (lstAgencies != null && lstAgencies.size() == 1) {
+						sAgencyIDToViewDetail = lstAgencies.get(0).Id;
+						iCurrentAgencyIndex = 0;
+					}
+					// 0 or more than 1 agency found, show list
+					else {
+						iCurrentPageIndex = 0;
+						system.debug('ALEX - lstAgencies.size(): ' + lstAgencies.size());
+						system.debug('ALEX - iNBR_RECORDS_PER_PAGE: ' + iNBR_RECORDS_PER_PAGE);
+						Decimal d = Decimal.valueOf(lstAgencies.size()) / Decimal.valueOf(iNBR_RECORDS_PER_PAGE);
+						system.debug('ALEX - d: ' + d);
+						iTotalPage = Integer.valueOf(d.round(system.roundingMode.CEILING));
+						system.debug('ALEX - iTotalPage: ' + iTotalPage);
+					}
+				}
+			}
+
+			return null;
+		}
+		catch(Exception ex) {
+			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+			return null;
+		}
+   	}
+   
+	/** 
+	 * Selects an agency from the list and display the agency detail component
+	 */
+	public void selectAgency() {
+		try {
+			sAgencyIDToViewDetail = sSelectedAgencyId;
+			
+			// get the list index associated to this agency
+			iCurrentAgencyIndex = Integer.valueOf(mapListIndexAndAgencyID.get(sAgencyIDToViewDetail));
+		}
+		catch (Exception ex) {
+   			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+   		}
+	}
+	
+	/** 
+	 * From the agency detail view, browse to the previous agency
+	 */
+	public void previousAgency() {
+		try {
+			if (iCurrentAgencyIndex == 0)
+				throw new IECApplicationException('Invalid record index');
+			
+			iCurrentAgencyIndex--;
+			sAgencyIDToViewDetail = lstAgencies.get(iCurrentAgencyIndex).Id;
+		}
+		catch (Exception ex) {
+   			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+   		}
+	}
+	
+	/** 
+	 * From the agency detail view, browse to the next agency
+	 */
+	public void nextAgency() {
+		try {
+			if (iCurrentAgencyIndex >= lstAgencies.size())
+				throw new IECApplicationException('Invalid record index');
+			
+			iCurrentAgencyIndex++;
+			sAgencyIDToViewDetail = lstAgencies.get(iCurrentAgencyIndex).Id;
+		}
+		catch (Exception ex) {
+   			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+   		}
+	}
+	
+	/** 
+	 * From the agency list view, browse to the previous page
+	 */
+	public void previousPage() {
+		try {
+			if (iCurrentPageIndex == 0)
+				throw new IECApplicationException('Invalid paging index');
+			iCurrentPageIndex--;
+		}
+		catch (Exception ex) {
+   			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+   		}
+	}
+	
+	/** 
+	 * From the agency list view, browse to the next page
+	 */
+	public void nextPage() {
+		try {
+			if (iCurrentPageIndex + 1 >= iTotalPage)
+				throw new IECApplicationException('Invalid paging index');
+			iCurrentPageIndex++;
+		}
+		catch (Exception ex) {
+   			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+   		}
+	}
+	
+	/** 
+	 * From the agency detail page, go to the list view
+	 */
+	public void backToResultList() {
+		try {
+			sAgencyIDToViewDetail = null;
+			iCurrentAgencyIndex = 0;
+		}
+		catch (Exception ex) {
+   			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+   		}
+	}
+	
+	/**
+	 * Redirect to the basic search page or the advanced search page to edit the Application Filter
+	 * @return The page to redirect to (GAD home page or GAD Advanced search page)
+	 */
+	public PageReference backToSearchPage() {
+		try {
+			if (oApplicationFilters == null || oApplicationFilters.Filter_Type__c == 'Basic')
+				return Page.IECGAD;
+			else {
+				Pagereference prAdvancedSearch = Page.IECGADAdvanced;
+				if (oApplicationFilters != null && oApplicationFilters.Id != null)
+					prAdvancedSearch.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(oApplicationFilters.Id));
+				return prAdvancedSearch;
+			}
+		}
+		catch (Exception ex) {
+			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+			return null;
+		}
+	}
+}

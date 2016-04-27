@@ -1,0 +1,48 @@
+<apex:page renderas="PDF" controller="MITA_MemorandumsCtrl" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" >
+	<html>
+		<head>
+			<style>
+				@page{page-size:A4}
+				body{text-align:center;}
+				table.airlinesTable{ }
+	
+				
+				table.airlinesTable th{padding:0.5em; }
+				table.airlinesTable td{padding:0.5em; }
+			</style>
+		</head>
+		
+		<body>
+			<h3>CONCURRENCES - INTERLINE TRAFFIC AGREEMENTS - PASSENGER &amp; CARGO AND ONE-WAY</h3>
+			<h3>M E M O R A N D U M</h3>
+			<p>ADMIN / INTERLINE / {!memorandumNumber}</p>
+			<p>Listed below are concurrences between parties to the IATA Multilateral Interline Traffic Agreements -</p>
+			<p>Passenger and Cargo and MITA One-Way received in this office from <apex:outputField value="{!fromDate.Effective_date__c}" /> to <apex:outputField value="{!toDate.Effective_date__c}" /></p>
+			<p>They will become effective on the dates indicated.</p>			
+			<p>Requests for concurrence from concurring parties are to be addressed to mita@iata.org copied to</p>
+			<p>respective carriers involved. (P = Passenger, C = Cargo and O = One-Way).</p>
+
+			<br/>
+
+			<apex:pageBlock >
+				<table class="airlinesTable">
+					<tr>
+						<th>Concurring party</th>
+						<th>With</th>
+						<th>Agreement</th>
+						<th>Effective date</th>
+					</tr>
+					<apex:repeat value="{!ConcurrencesAgreements}" var="agr">
+					<tr>
+						<td><apex:outputField value="{!agr.Airline_1__r.Name}" /></td>
+						<td><apex:outputField value="{!agr.Airline_2__r.Name}" /></td>
+						<td><apex:outputField value="{!agr.Agreement_type__c}" /></td>
+						<td><apex:outputField value="{!agr.Effective_date__c}" /></td>
+					</tr>
+					</apex:repeat>
+				</table>
+				
+			</apex:pageBlock>
+		</body>
+	</html>
+</apex:page>

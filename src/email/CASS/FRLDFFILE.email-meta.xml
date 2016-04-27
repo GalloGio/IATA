@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>To be used when sending LDF files to Agents, French Market</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>FR LDF FILE</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Bonjour {!Contact.Name}, 
+ 
+ 
+Nous vous prions de trouver ci-joint votre fichier LDF correspondant à la première période du mois d&apos;octobre 2010.
+ 
+ 
+Cordialement,
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs
+ 
+
+
+ 
+ 
+-------------------------------------------------------------------------------------
+Rappel de votre message recu le {!Case.CreatedDate} :
+{!Case.Subject}
+{!Case.Description}
+-------------------------------------------------------------------------------------
+Nous vous rappelons que pour toute information, nous vous invitons à consulter à tout moment notre portail client. 
+ 
+Votre demande effectuée en ligne est prioritaire.
+ </textOnly>
+    <type>html</type>
+</EmailTemplate>

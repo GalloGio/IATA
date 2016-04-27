@@ -1,0 +1,144 @@
+@isTest
+private class ISSP_ChangePassword_Test {
+
+    static testMethod void myUnitTest_2() {
+    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+        insert issc;
+    	Test.startTest();
+    	PageReference pgRef = Page.ISSP_ChangePassword;
+    	Test.setCurrentPage(pgRef);
+    	
+    	ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
+        pgCont.currentPassword = '';
+        pgCont.newPassword = '';
+        pgCont.confirmNewPassword = '';
+        pgCont.changePassword();
+
+    	User usr = IECTestUtil.createSampleGuestUserAndLogin();
+    	System.runAs(usr) {
+	        
+	        
+	        // Test 001: Leave all fields blank
+	        pgCont.currentPassword = '';
+	        pgCont.newPassword = '';
+	        pgCont.confirmNewPassword = '';
+	        pgCont.changePassword();
+	        
+	        // Test 002: Different passwords
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b';
+	        pgCont.confirmNewPassword = 'c';
+	        pgCont.changePassword();
+	        
+	        // Test 003: Correct
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b1234567';
+	        pgCont.confirmNewPassword = 'b1234567';
+	        pgCont.changePassword();
+    	}
+    	Test.stopTest();
+    }
+    
+    static testMethod void myUnitTest_3() {
+    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+    	insert issc;
+    	Test.startTest();
+    	PageReference pgRef = Page.ISSP_ChangePassword;
+    	Test.setCurrentPage(pgRef);
+    	
+    	User usr = IECTestUtil.createSampleGuestUserAndLogin();
+    	usr.UID__c = '1234';
+    	
+    	//List <User> userList = [SELECT Id, UID__c FROM User WHERE Id = :usr.Id];
+    	//User myUser = userList[0];
+    	//myUser.UID__c = '1234';
+    	//update myUser;
+    	System.runAs(usr) {
+	        ISSP_ChangePassword pgCont = new ISSP_ChangePassword();
+	        
+	        // Test 001: Leave all fields blank
+	        pgCont.currentPassword = '';
+	        pgCont.newPassword = '';
+	        pgCont.confirmNewPassword = '';
+	        pgCont.changePassword();
+	        
+	        // Test 002: Different passwords
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b';
+	        pgCont.confirmNewPassword = 'c';
+	        pgCont.changePassword();
+	        
+	        // Test 003: Correct
+	        pgCont.currentPassword = 'a';
+	        pgCont.newPassword = 'b1234567';
+	        pgCont.confirmNewPassword = 'b1234567';
+	        pgCont.changePassword();
+	        
+    	}
+    	Test.stopTest();
+    }
+    
+    static testMethod void loginPage_ISSP() {
+
+		ISSP_CS__c cs = new ISSP_CS__c();
+		cs.Name = 'ipinfo_token';
+		cs.Value__c = 'test';
+		insert cs;
+		
+		String UID =  Comm_User_Helper.NewGuid();
+		User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+    	thisUser.UID__c = UID;
+    	update thisUser;
+		
+		System.runAs(thisUser) {
+			PageReference pageRef = Page.ISSP_First_Login;
+         	Test.setCurrentPage(pageRef);
+
+         	//ApexPages.currentPage().getParameters().put('un',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('topolino@iata.org'), 'UTF-8'));
+         	//ApexPages.currentPage().getParameters().put('pw',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('paperina'), 'UTF-8'));
+         	String myUsername = Userinfo.getUsername();
+         	string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
+         	ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
+
+         	ISSP_First_Login ctrl = new ISSP_First_Login();
+		 	Pagereference pr = Page.ISSP_Login;
+			
+	        system.assertEquals('/apex/issp_changepassword',ctrl.DoNext().getUrl());
+
+		}
+	}
+	
+	static testMethod void loginPage_ISSP_2() {
+
+		ISSP_CS__c cs = new ISSP_CS__c();
+		cs.Name = 'ipinfo_token';
+		cs.Value__c = 'test';
+		insert cs;
+		
+		PageReference pageRef = Page.ISSP_First_Login;
+        Test.setCurrentPage(pageRef);
+
+        //ApexPages.currentPage().getParameters().put('un',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('topolino@iata.org'), 'UTF-8'));
+        //ApexPages.currentPage().getParameters().put('pw',EncodingUtil.urlEncode(Comm_User_Helper.EncryptString('paperina'), 'UTF-8'));
+        String UID =  Comm_User_Helper.NewGuid();
+        String myUsername = Userinfo.getUsername();
+        string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
+        ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
+
+      	ISSP_First_Login ctrl = new ISSP_First_Login();
+	 	Pagereference pr = Page.ISSP_Login;
+	
+        system.assertEquals('/apex/issp_login',ctrl.DoNext().getUrl());
+
+	}
+	
+	static testMethod void loginPage_ISSP_3() {
+		ISSP_CS__c cs = new ISSP_CS__c();
+		cs.Name = 'ipinfo_token';
+		cs.Value__c = 'test';
+		insert cs;
+		ISSP_First_Login ctrl = new ISSP_First_Login();
+		ctrl.changePassword();
+	    ISSP_First_Login.updateUsers(UserInfo.getUserId());
+	}
+}

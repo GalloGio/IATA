@@ -1,0 +1,33 @@
+<apex:page standardController="Case" extensions="clsICCSPMCaseCloseController" action="{!SendNotif}">
+	<apex:form >
+		<apex:pageBlock title="Case Close">
+			<apex:pageblockbuttons > 
+            	<apex:commandButton value="Save" action="{!SaveCase}" />                               
+            	<apex:commandbutton value="Cancel" action="{!Cancel}"/>
+            </apex:pageblockbuttons>
+			
+           	<apex:messages />
+			
+			<apex:pageBlockSection title="Case Information" columns="1" >
+			
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Status" for="status"/>
+					<apex:selectList value="{!status}" size="1" id="status">
+						<apex:selectOptions value="{!StatusItems}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Internal Comments" for="comments"/>
+					<apex:inputTextarea value="{!strCaseComments}" id="comments" cols="75" rows="6" />
+				</apex:pageBlockSectionItem>
+				
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection title="Case Closure Details" >
+				<apex:inputField value="{!Case.Process_Approved__c}" required="true" />
+			</apex:pageBlockSection>
+			
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

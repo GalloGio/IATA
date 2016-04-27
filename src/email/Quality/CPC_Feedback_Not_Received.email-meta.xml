@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to inform RQM about CPC Feedback - Not Received</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>CPC Feedback Not Received</name>
+    <style>freeForm</style>
+    <subject>Feedback NOT received from CPC - Exception Request - {!Quality__c.Name} - Region: {!Quality__c.Region__c}</subject>
+    <textOnly>Dear {!Quality__c.OwnerFullName}
+
+Quality Exception - {!Quality__c.Name} - did not receive feedback from CPC or related fields were not filled in.
+
+Related Internal Case Number: {!Quality__c.Related_Case_Number__c}
+Operation:  {!Quality__c.Operation__c}
+Region: {!Quality__c.Region__c}
+Country: {!Quality__c.IATA_Country__c}
+Key Control:  {!Quality__c.Key_Control__c}
+
+
+Please click the below link to review it or enter new information:
+{!Quality__c.Link}
+
+
+Quality Team</textOnly>
+    <type>html</type>
+</EmailTemplate>
