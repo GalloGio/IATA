@@ -1,0 +1,352 @@
+<project name="Retrieve and Deploy SFDC metadata" default="deployEmptyCheckOnly" basedir=".." xmlns:sf="antlib:com.salesforce">
+    <taskdef uri="antlib:com.salesforce"
+        resource="com/salesforce/antlib.xml"
+        classpath="${basedir}/build/ant-salesforce.jar"/>
+  <taskdef
+         resource="net/sf/antcontrib/antlib.xml"
+        classpath="${basedir}/build/ant-contrib/ant-contrib-1.0b3.jar"/>
+
+
+
+    <property file="${basedir}/build/build.properties"/>
+    <property environment="env"/>
+
+
+<target name="retrieveToDeploy">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="retrieve/package.xml"/>
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="deploy"/>
+
+  </target>
+
+
+
+<target name="retrieveToRetrieve">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="retrieve/package.xml"/>
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="retrieve"/>
+
+  </target>
+
+    <target name="specificDeploy">
+      <echo level="info">Performing the deploy of files in folder deploy</echo>
+      <sf:deploy
+        autoUpdatePackage = "true"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/deploy"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+
+<target name="checkCodeFolder">
+  <condition property="deldir">
+    <available file="${basedir}/Code" type="dir"/>
+  </condition>
+ </target>
+
+ <target name="deldir"    depends="checkCodeFolder" if="deldir"  >
+        <echo level="info">deleting  ${basedir}/Code </echo>
+
+  <delete includeEmptyDirs="true">
+   <fileset dir="${basedir}/Code">
+    
+   </fileset>
+</delete>
+ </target>
+
+
+<target name="deployCode"> 
+  <echo level="info">creating new folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${object.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${object.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/objectPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
+       <antcallback target="deployLabelFolder" />
+  
+  </target> 
+
+
+
+<target name="deployLabelFolder"> 
+  <echo level="info">creating new label folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${labelsTranslation.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${labelsTranslation.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/labelPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
+      <antcallback target="deployCodeLocalFolder" />
+  </target> 
+
+
+
+
+<target name="deployCodeLocalFolder"> 
+  <echo level="info">creating new folder</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${code.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${code.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+  
+  </target> 
+
+
+    <target name="getCode">
+      <echo level="info">Retrieving the server's version of codeobject </echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/objectPackage.xml" />
+
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
+
+
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+        <antcallback target="getLabel" />
+    </target>
+
+
+
+    <target name="getLabel">
+      <echo level="info">Retrieving the server's version of labels</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/labelPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getCodeLocal" />
+    </target>
+
+
+    <target name="getCodeLocal">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/codePackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+<antcallback target="bulkRetrieveEmailTemplate" />
+
+    </target>
+
+ 
+
+  
+<target name="bulkRetrieveEmailTemplate">
+ <echo level="info">Retrieving the emailtemplates</echo>
+ 
+   <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+
+      <for list="${listEmailTemplateFolders}" param="param" >
+        <sequential>
+     <sf:bulkRetrieve
+              username="${sfdc.username}"
+                password="${sfdc.password}"
+                serverurl="${sfdc.serverurl}"
+                metadataType="EmailTemplate"
+                  retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+                 containingFolder="@{param}"
+       />
+       </sequential>
+     </for>
+
+   <delete file="${basedir}/${sfdc.retrieveTarget}/package.xml"/>
+   <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+
+      <echo level="info">Compressing profiles </echo>
+
+      <antcallback target="compressProfiles" />
+
+      <echo level="info">Deleting profiles.bak </echo>
+
+      <antcallback target="deletebakprofiles" />
+
+      <echo level="info">Compressing permissionSets </echo>
+
+      <antcallback target="compressPermissionSets" />
+      <echo level="info">deleting permissionSets.bak </echo>
+
+        <antcallback target="deletebakpermissionsets" />
+
+</target>
+
+<target name="compressProfiles">
+ <for param="file">
+  <path>
+   <fileset dir="src/profiles"  />
+  </path>
+  <sequential>
+   <var name="name" unset="true"/>
+   <basename file="@{file}" property="name" />
+   <echo message=" ${name}"/>
+           <exec executable = "perl">
+         <arg value = "-pi"/>
+            <arg value = "build/profileCompress.pl"/>
+            <arg value = "src/profiles/${name}"/>
+        </exec>
+  </sequential>
+ </for>              
+</target>
+
+<target name="compressPermissionSets">
+ <for param="file">
+  <path>
+   <fileset dir="src/permissionsets"  />
+  </path>
+  <sequential>
+   <var name="name" unset="true"/>
+   <basename file="@{file}" property="name" />
+   <echo message=" ${name}"/>
+           <exec executable = "perl">
+           <arg value = "-pi"/>
+            <arg value = "build/profileCompress.pl"/>
+            <arg value = "src/permissionsets/${name}"/>
+        </exec>
+  </sequential>
+ </for>              
+</target>
+
+
+
+<target name="deletebakprofiles">
+<delete >
+    <fileset dir="src/profiles" includes="*.profile.bak"  />
+  </delete>
+ </target>
+
+<target name="deletebakpermissionsets">
+<delete >
+    <fileset dir="src/permissionsets" includes="*.permissionset.bak"  />
+  </delete>
+ </target>
+
+<target name="deployCodeLocal">
+      <echo level="info">Performing the deploy</echo>
+      <sf:deploy
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/Code"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+ 
+  
+    <target name="deployLabelsFix">
+      <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
+      <sf:deploy
+        autoUpdatePackage = "true"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/labelsfix"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+  
+
+  
+    <target name="undeployCodeLocal">
+        <echo level="info">Undeploying code</echo>
+        <sf:deploy
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        maxPoll="${sfdc.maxPoll}"
+        rollbackOnError="true"
+        allowMissingFiles="false"
+        autoUpdatePackage="false"
+        ignoreWarnings="true"
+        logType="Debugonly"
+        purgeOnDelete="true"
+        deployroot="${basedir}/removecodepkg" />
+    </target> 
+
+</project>
