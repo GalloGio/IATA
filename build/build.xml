@@ -246,14 +246,14 @@
 
       <echo level="info">Deleting profiles.bak </echo>
 
-      <antcallback target="deletebakprofiles" /> -->
+      <antcallback target="deletebakprofiles" /> 
 
       <echo level="info">Compressing permissionSets </echo>
 
       <antcallback target="compressPermissionSets" />
       <echo level="info">deleting permissionSets.bak </echo>
 
-        <antcallback target="deletebakpermissionsets" />
+        <antcallback target="deletebakpermissionsets" />-->
 
 </target>
 
