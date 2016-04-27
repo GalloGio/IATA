@@ -240,13 +240,13 @@
    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
 
-      <echo level="info">Compressing profiles </echo>
+    <!--  <echo level="info">Compressing profiles </echo>
 
       <antcallback target="compressProfiles" />
 
       <echo level="info">Deleting profiles.bak </echo>
 
-      <antcallback target="deletebakprofiles" />
+      <antcallback target="deletebakprofiles" /> -->
 
       <echo level="info">Compressing permissionSets </echo>
 
