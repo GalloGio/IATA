@@ -1,4 +1,3 @@
-      
     <footer class="page-footer" data-is-sticky="false">
         <div class="inner-wrapper">
             <div class="group-container">
@@ -24,8 +23,8 @@
 </div>
 
 <?php 
-include_once("includes/common/section-modal.php");
-include_once("includes/common/tag-scripts.php");
+include_once 'includes/common/tag-modal.php';
+include_once 'includes/common/tag-scripts.php';
 ?>
 </body>
 </html>

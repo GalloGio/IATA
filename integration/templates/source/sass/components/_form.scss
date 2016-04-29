@@ -1,5 +1,5 @@
 /*------------------------------------*\
-    #$input-aid 
+    #$input-aid
 \*------------------------------------*/
 .input-aid {
     font-size: 1.4rem;
@@ -114,7 +114,7 @@
     &[disabled] {
         background: #f1f1f1;
         color: #909090;
-        
+
         &:hover {
             cursor: not-allowed;
         }
@@ -123,7 +123,7 @@
             color: #aaa;
         }
     }
-    
+
     &:focus {
         -webkit-box-shadow: 10px 10px 20px -8px rgba(10, 66, 121, .7);
            -moz-box-shadow: 10px 10px 20px -8px rgba(10, 66, 121, .7);
@@ -255,7 +255,7 @@
     }
 
     .user-input {
-        &.text, 
+        &.text,
         &.textarea {
             display: inline-block;
             width: auto;
@@ -370,7 +370,9 @@
     background: #55bbd4;
 }
 
-.template-list .checkbox:checked ~ .custom-checkbox {
+.template-list .checkbox:checked ~ .custom-checkbox,
+.plan-list .checkbox:checked ~ .custom-checkbox,
+.package-list .checkbox:checked ~ .custom-checkbox {
     background: #fff;
 
     .icon::before {
@@ -382,7 +384,7 @@
     display: inline-block;
     background: transparent;
     position: relative;
-    
+
     &.select {
         background: #fff;
     }
@@ -398,7 +400,7 @@
         width: 40px;
         text-align: center;
         background: #23828c;
-        
+
         &::before {
             padding: 0;
             margin-top: -2px;
@@ -449,7 +451,7 @@
         cursor: not-allowed;
     }
 
-    .custom-checkbox { 
+    .custom-checkbox {
         border-color: $border-color;
         background: #f1f1f1;
 
@@ -458,16 +460,22 @@
         }
     }
 }
+
+.package-list .disabled {
+    .custom-checkbox {
+        .icon::before {
+            color: #f1f1f1;
+        }
+    }
+}
+
 /*------------------------------------*\
     #$others
 \*------------------------------------*/
-.footer-actions {
-    margin: 15px 0;
-}
 
 .sort-by {
     margin: 30px 0 10px;
-    
+
     @media #{$screen-desktop} {
         margin-top: 0;
     }
@@ -534,7 +542,7 @@
 }
 
 .data-table.campaign .custom-user-input {
-    
+
     &.select .icon {
         background: #2a3940;
     }

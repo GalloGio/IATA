@@ -74,6 +74,14 @@
     &.cost {
         border-top: 1px solid #23828c;
         border-bottom: 1px solid #23828c;
+
+        th,
+        td {
+        }
+
+        .item-name {
+            margin: 0;
+        }
     }
 
     td.icon {
@@ -81,7 +89,7 @@
         text-align: center;
         padding: 0;
     }
-    
+
 }
 
 .zibra {
@@ -95,5 +103,50 @@
     tr:nth-child(even) th,
     tr:nth-child(even) td {
         background: #F5F5F5;
+    }
+}
+
+.total-recipients {
+    th,
+    td {
+        background: #e9f2f3;
+    }
+}
+
+.new-balance {
+    th,
+    td {
+        background: #65a7ae;
+        color: #fff;
+    }
+}
+
+.table-payment {
+    font-size: 1.8rem;
+
+    th,
+    td {
+        padding: 15px 20px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+    }
+
+    .item {
+        th,
+        td {
+            padding: 43px 20px;
+        }
+    }
+    .total {
+        th,
+        td {
+            background: #2a3940;
+            color: #fff;
+            font-size: 1.8rem;
+        }
+    }
+
+    .price {
+        text-align: right;
     }
 }

@@ -62,7 +62,7 @@
         </div>
 
         <div class="footer-actions text-right">
-            <a class="button" href="<?= $page_url['recipients'] ?>">Continue</a>
+            <a class="button" href="<?= $pages['recipients']['url'] ?>">Continue</a>
         </div>
 
     </div>

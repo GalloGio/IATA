@@ -1,6 +1,6 @@
 <main class="main-content">
     <div class="inner-wrapper">
-        <?php 
+        <?php
         $main_step = 5;
         include 'includes/components/process.php';
         ?>
@@ -25,7 +25,7 @@
                 </p>
             </div>
         </div>
-        
+
         <section class="group-container schedule">
             <h2 class="icon schedule group-title">Schedule</h2>
             <div class="group-content">
@@ -70,7 +70,7 @@
             </div>
         </section>
         <div class="footer-actions text-right">
-            <a class="button" href="<?= $page_url['confirm'] ?>">Continue</a>
+            <a class="button" href="<?= $pages['payment']['url'] ?>">Continue</a>
         </div>
     </div>
 </main>

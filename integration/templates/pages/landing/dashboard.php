@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="action-box">
-                        <a class="button" href="<?= $page_url['setup'] ?>">Create campaign</a>
+                        <a class="button" href="<?= $pages['setup']['url'] ?>">Create campaign</a>
                     </div>
                     <?php
                 } else {
@@ -40,7 +40,7 @@
                     <div class="group-container campaigns">
                         <h2 class="group-title">Campaigns</h2>
                         <div class="action-box text-right create-campaign">
-                            <a class="button" href="<?= $page_url['setup'] ?>">Create campaign</a>
+                            <a class="button" href="<?= $pages['setup']['url'] ?>">Create campaign</a>
                         </div>
                         <table class="data-table campaign">
                             <?php if ($scenario == 3) { ?>

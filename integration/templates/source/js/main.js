@@ -11,25 +11,25 @@ $(document).ready(function() {
 
     $('.js-remaining-characters').on('keyup',  function() {
         var targetElement = $(this).data('target-element'),
-            targetID = $(this).data('target-id'),
-            target = $(document).find(targetElement+'[data-id='+targetID+']'),
-            maxCharacterLength = $(this).data('max-length'),
-            enteredCharacters = $(this).val().length;
+        targetID = $(this).data('target-id'),
+        target = $(document).find(targetElement+'[data-id='+targetID+']'),
+        maxCharacterLength = $(this).data('max-length'),
+        enteredCharacters = $(this).val().length;
 
-            target.text(maxCharacterLength-enteredCharacters);
+        target.text(maxCharacterLength-enteredCharacters);
 
-            if (enteredCharacters > maxCharacterLength) {
-                target.parents('.input-remaining').addClass('error');
-            } else {
-                target.parents('.input-remaining').removeClass('error');
-            }
+        if (enteredCharacters > maxCharacterLength) {
+            target.parents('.input-remaining').addClass('error');
+        } else {
+            target.parents('.input-remaining').removeClass('error');
+        }
     });
 
     $('.js-tabs').on('click', '.tabs a', function(event) {
         event.preventDefault();
         var self = $(this),
-            parent = self.parents('.js-tabs'),
-            targetPane = self.parent('li').data('target');
+        parent = self.parents('.js-tabs'),
+        targetPane = self.parent('li').data('target');
         self.parents('li').addClass(className.active).siblings().removeClass(className.active);
         parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
     });
@@ -39,16 +39,31 @@ $(document).ready(function() {
         $(this).next('.sub-nav').toggleClass(className.open);
     });
 
-    $('.js-datepicker').datepicker({
+    /* ---------------------------------------- */
+    /*  Tooltip                                 */
+    /* ---------------------------------------- */
+
+    $('.js-tooltip').on('vclick click', function(event) {
+        event.preventDefault();
+        $(this).next().toggleClass(className.open);
+    });
+
+    /* ---------------------------------------- */
+    /*  Datepicker                              */
+    /* ---------------------------------------- */
+    $('.js-datepicker').datepicker({ 
         dateFormat: 'MM dd yy'
     });
 
+    /* ---------------------------------------- */
+    /*  Match Height                            */
+    /* ---------------------------------------- */
     $('.js-match-height .group-container').matchHeight();
 
-    /* ----------------------------------------
-        New Campaign
-    ------------------------------------------- */
-    $('.js-radio-list').on('click', '.user-input', function() {
+    /* ---------------------------------------- */
+    /*  Radio Checkbox List                     */
+    /* ---------------------------------------- */
+    $('.js-radio-list').on('click', '.user-input.radio', function() {
         $(this).parents('li').addClass(className.selected).siblings().removeClass(className.selected);
     }).on('change', '.user-input:checked', function() {
         var value = $(this).val();
@@ -65,10 +80,14 @@ $(document).ready(function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
+    $('.js-checkbox-list').on('click', '.user-input', function() {
+        var self = $(this);
+        self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
+    });
 
-    /* ----------------------------------------
-        Sticky Footer
-    ------------------------------------------- */
+    /* ---------------------------------------- */
+    /*  Sticky Footer                           */
+    /* ---------------------------------------- */
     var body = $('body'),
         pageFooter = $('.page-footer');
 
@@ -90,10 +109,9 @@ $(document).ready(function() {
 
     stickyFooter();
 
-    /* ----------------------------------------
-        Modal
-    ------------------------------------------- */
-
+    /* ---------------------------------------- */
+    /*  Modal                                   */
+    /* ---------------------------------------- */
     var closeModal = function() {
         $('#js-modal').addClass(className.hidden);
         body.attr('data-is-modal-open', 'false');
@@ -103,19 +121,8 @@ $(document).ready(function() {
     var openModal = function() {
         $('#js-modal').removeClass(className.hidden);
         body.attr('data-is-modal-open', 'true');
-
-
-        // targetModal = $(this).data('target-modal');
-        // test = $('#js-modal-rename-campaign').html();
-
-        // console.log($(this));
-        // alert(test);
-
-        // $('#js-modal-dialog').html(targetModal);
     };
     
-    // tmpl($('id-of-script-tag').html())(data);
-
     $('.js-open-modal').on('click', function(event) {
         if (!$(this).hasClass('select')) {
             event.preventDefault();
@@ -152,7 +159,6 @@ $(document).ready(function() {
     
 
     $('.js-clear-form').on('click', function() {
-
         $('.user-input.radio').prop('checked', false);
         $('.js-radio-list li').removeClass(className.selected);
         $('.button[data-default-state="disabled"]').addClass(className.disabled);
@@ -177,15 +183,9 @@ $(document).ready(function() {
         console.log(html);
     });
 
-    /* ----------------------------------------
-        Load
-    ------------------------------------------- */
-    $(window).load(function() {
-    });
-
-    /* ----------------------------------------
-        Resize
-    ------------------------------------------- */
+    /* ---------------------------------------- */
+    /*  Resize                                  */
+    /* ---------------------------------------- */
     $(window).resize(function() {
         stickyFooter();
     });

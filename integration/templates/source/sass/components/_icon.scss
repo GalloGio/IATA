@@ -18,8 +18,12 @@ i.icon {
     }
 
     &.sent::before,
-    &.check-circle::before {
+    &.check-circle-o::before {
         content: '\f05d';
+    }
+
+    &.check-circle::before {
+        content: '\f058';
     }
 
     &.draft::before {

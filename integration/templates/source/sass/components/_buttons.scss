@@ -7,12 +7,12 @@
     display: inline-block;
     text-align: center;
     border-radius: 0;
-    
+
     &:hover {
         border: 1px solid #1ebec8;
         background: #1ebec8;
         text-decoration: none;
-    }    
+    }
 
     &.disabled {
         background: #ccc;
@@ -20,7 +20,7 @@
         color: #333;
         cursor: default;
     }
-    
+
     &.secondary {
         background: #fff;
         border-color: #23828c;
@@ -45,5 +45,12 @@
 
     &:hover {
         text-decoration: underline;
+    }
+}
+
+.footer-actions {
+    .button {
+        padding-left: 40px;
+        padding-right: 40px;
     }
 }

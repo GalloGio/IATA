@@ -13,7 +13,7 @@
                 <button class="text-link js-close-modal">Cancel</button>
             </li>
             <li>
-                <a class="button wide" href="<?= $page_url['template'] ?>">Continue to template</a>
+                <a class="button wide" href="<?= $pages['template']['url'] ?>">Continue to template</a>
             </li>
         </ul>
     </footer>

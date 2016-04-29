@@ -23,7 +23,7 @@
         $step4_class = ' disabled';
         $step5_class = ' disabled';
         $step6_class = ' disabled';
-        $step1_url = $page_url['setup'];
+        $step1_url = $pages['setup']['url'];
         $step2_url = '#';
         $step3_url = 'javascript:void(0);';
         $step4_url = 'javascript:void(0);';
@@ -38,8 +38,8 @@
         $step4_class = ' disabled';
         $step5_class = ' disabled';
         $step6_class = ' disabled';
-        $step1_url = $page_url['setup'];
-        $step2_url = $page_url['recipients'];
+        $step1_url = $pages['setup']['url'];
+        $step2_url = $pages['recipients']['url'];
         $step3_url = '#';
         $step4_url = 'javascript:void(0);';
         $step5_url = 'javascript:void(0);';
@@ -53,9 +53,9 @@
         $step4_class = ' active';
         $step5_class = ' disabled';
         $step6_class = ' disabled';
-        $step1_url = $page_url['setup'];
-        $step2_url = $page_url['recipients'];
-        $step3_url = $page_url['template'];
+        $step1_url = $pages['setup']['url'];
+        $step2_url = $pages['recipients']['url'];
+        $step3_url = $pages['template']['url'];
         $step4_url = '#';
         $step5_url = 'javascript:void(0);';
         $step6_url = 'javascript:void(0);';
@@ -68,10 +68,10 @@
         $step4_class = '';
         $step5_class = ' active';
         $step6_class = ' disabled';
-        $step1_url = $page_url['setup'];
-        $step2_url = $page_url['recipients'];
-        $step3_url = $page_url['template'];
-        $step4_url = $page_url['design'];
+        $step1_url = $pages['setup']['url'];
+        $step2_url = $pages['recipients']['url'];
+        $step3_url = $pages['template']['url'];
+        $step4_url = $pages['design']['url'];
         $step5_url = '#';
         $step6_url = 'javascript:void(0);';
         break;
@@ -83,11 +83,11 @@
         $step4_class = '';
         $step5_class = '';
         $step6_class = ' active';
-        $step1_url = $page_url['setup'];
-        $step2_url = $page_url['recipients'];
-        $step3_url = $page_url['template'];
-        $step4_url = $page_url['design'];
-        $step5_url = $page_url['schedule'];
+        $step1_url = $pages['setup']['url'];
+        $step2_url = $pages['recipients']['url'];
+        $step3_url = $pages['template']['url'];
+        $step4_url = $pages['design']['url'];
+        $step5_url = $pages['schedule']['url'];
         $step6_url = '#';
         break;
 }

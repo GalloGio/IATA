@@ -1,5 +1,7 @@
-<!-- page list index -->
-<?php require_once("docs/data/common.php"); ?>
+<?php 
+// Index
+require_once 'index/data/common.php'; 
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,32 +9,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/ui/docs/assets/css/index.min.css">
+    <link rel="stylesheet" href="index/assets/css/index.min.css">
     <title><?= $title ?></title>
 </head>
 <body>
     <div class="page-container">
-        <?php include_once("docs/includes/common/page-header.php"); ?>
-        <div class="page-content">
-        <a href="//4s005j.axshare.com/">4s005j.axshare.com</a>
-            <section class="section wiki">
-                <h2 class="section-title accordion js-accordion">Wiki</h2>
-                <div class="accordion-panel">
-                    <dl class="list">
-                        <dt class="js-accordion"><h3 class="section-title accordion">Setup Guide</h3></dt>
-                        <dd class="accordion-panel">
-                            <?php include_once("docs/includes/components/setup-guide-gulp.php"); ?>
-                        </dd>
-                        <dt class="js-accordion"><h3 class="section-title accordion">Browser support</h3></dt>
-                        <dd class="accordion-panel">
-                            <?php include_once("docs/includes/components/browser-support.php"); ?>
-                        </dd>
-                        <dt class="js-accordion"><h3 class="section-title accordion">Testing devices</h3></dt>
-                        <dd class="accordion-panel">
-                            <?php include_once("docs/includes/components/testing-devices.php"); ?>
-                        </dd>
-                    </dl>
+        
+        <header class="page-header">
+            <div class="inner-wrapper">
+                <div class="title-wrapper">
+                    <div class="project-logo">
+                        <a href="./">
+                        <!--[if lte IE 8]>
+                            <img src="<?= $project_logo_bitmap ?>" alt="<?= $project_name ?>" width="150">
+                        <![endif]-->
+                        <!--[if (gte IE 9)|!(IE)]><!-->
+                            <img src="<?= $project_logo_vector ?>" alt="<?= $project_name ?>" width="150">
+                        <!--<![endif]-->
+                        </a>
+                    </div>
+                    <h1 class="page-title"><?= $page_title ?></h1>
                 </div>
+                <!-- <nav class="nav-top">
+                    <a href="docs/">Docs</a>
+                </nav> -->
+            </div>
+        </header>
+
+        <div class="page-content">
+            <section class="group-container design">
+                <h2 class="group-title">Designs</h2>
+                <ul class="list inline">
+                    <li><a href="//4s005j.axshare.com/">4s005j.axshare.com</a></li>
+                </ul>
             </section>
 
             <main class="main-content">
@@ -107,11 +116,29 @@
             </main>
         </div>
 
-        <?php include_once("docs/includes/common/page-footer.php"); ?>
+        <footer class="page-footer">
+            <div class="inner-wrapper">
+
+                <p class="note">
+                    Created and maintained by <?= $author_name ?>
+                    <?= (isset($author_email))? '&lt;'.$author_email.'&gt;':'' ?>
+                    <?= (isset($company_name))? ' at '.$company_name:'' ?>.
+                </p>
+
+                <div class="last-update">Last update: <?= $last_update ?></div>
+
+                <small class="copyright">
+                    <?php if (isset($company_name)) { ?>
+                    <img src="docs/assets/img/cgi-logo.png" alt="<?= $company_name ?>" class="cgi-logo">
+                    <?php } ?>
+                    &copy; <?= (isset($company_name))? $company_name : $author_name ?> <?= date('Y') ?>. All rights reserved.
+                </small>
+
+            </div>
+        </footer>
 
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="docs/assets/js/index.min.js"></script>
-    <script src="docs/assets/vendor/script.min.js"></script>
+    <script src="index/assets/js/index.min.js"></script>
 </body>
 </html>

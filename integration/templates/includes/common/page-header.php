@@ -3,7 +3,7 @@
         
         <div class="column column-nav">
             <h1 class="site-logo">
-                <?php include('includes/common/site-logo.php');?>
+                <?php include 'includes/common/site-logo.php';?>
             </h1>
 
             <nav class="main-nav">

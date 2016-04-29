@@ -13,7 +13,7 @@
         </div>
         
         <div class="footer-actions text-right">
-            <a class="button" href="<?= $page_url['schedule'] ?>">Continue</a>
+            <a class="button" href="<?= $pages['schedule']['url'] ?>">Continue</a>
         </div>
     </div>
 </main>
