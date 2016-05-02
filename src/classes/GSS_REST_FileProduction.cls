@@ -45,7 +45,11 @@ global with sharing class GSS_REST_FileProduction{
                                      WHERE Id <:SpecificationId
                                      Order By Id desc
                                  LIMIT 1];
-             if (UniqueList.Size()>0) SpecificationId=UniqueList[0].id;
+            if (UniqueList.Size()>0) {
+                SpecificationId=UniqueList[0].id;
+            } else {
+                SpecificationId='000000000000000';
+            }
              BATCH_SIZE =1 ;
          }
        
