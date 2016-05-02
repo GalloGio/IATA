@@ -44,7 +44,6 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
-    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>GDP_Products_Account_View_Compact</compactLayoutAssignment>
     <compactLayouts>
         <fullName>GDP_Products_Account_View_Compact</fullName>
