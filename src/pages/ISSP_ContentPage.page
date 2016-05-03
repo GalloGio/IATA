@@ -150,10 +150,8 @@
                                     </div>
                                 </div><!-- end side menu-->
 
-                                <apex:outputpanel id="opp_results">
+                                 <apex:outputpanel id="opp_results">
                                     <div class="col-sm-8" id="resulttable">
-
-
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="hh">
                                                 <h4 class="panel-title">
@@ -165,8 +163,8 @@
                                                     table-hover table table-condensed table-responsive
                                                     <apex:column >
                                                         <apex:facet name="header">
-                                                            <apex:commandlink value="{!$Label.ISSP_Title}"  rerender="debug">
-                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_Title}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}">
+                                                                <apex:param name="sortField" value="title" assignto="{!sortExpression}" />
                                                             </apex:commandlink>
                                                         </apex:facet>
 
@@ -185,8 +183,8 @@
                                                     </apex:column>
                                                     <apex:column >
                                                         <apex:facet name="header">
-                                                            <apex:commandlink value="{!$Label.IDCard_Description}"   rerender="debug">
-                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.IDCard_Description}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}"  >
+                                                                <apex:param name="sortField" value="Description" assignto="{!sortExpression}" />
                                                             </apex:commandlink>
                                                         </apex:facet>
                                                         <apex:outputfield value="{!ver.Description }" />
@@ -194,24 +192,24 @@
                                                     </apex:column>
                                                     <apex:column >
                                                         <apex:facet name="header">
-                                                            <apex:commandlink value="{!$Label.ISSP_Country_of_Publication}"   rerender="debug">
-                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
-                                                            </apex:commandlink>
+                                                            <apex:outputText value="{!$Label.ISSP_Country_of_Publication}">
+                                                                <apex:param name="sortField" value="Country_of_publication__c" assignto="{!sortExpression}" />
+                                                            </apex:outputText>
                                                         </apex:facet>
                                                         <apex:outputfield value="{!ver.Country_of_publication__c}" />
                                                     </apex:column>
                                                     <apex:column >
                                                         <apex:facet name="header">
-                                                            <apex:commandlink value="{!$Label.IFAP_Language}"   rerender="debug">
-                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.IFAP_Language}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}" >
+                                                                <apex:param name="sortField" value="Language__C" assignto="{!sortExpression}" />
                                                             </apex:commandlink>
                                                         </apex:facet>
                                                         <apex:outputfield value="{!ver.Language__C }" />
                                                     </apex:column>
                                                     <apex:column >
                                                         <apex:facet name="header">
-                                                            <apex:commandlink value="{!$Label.ISSP_File_Size}"   rerender="debug">
-                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_File_Size}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}" >
+                                                                <apex:param name="sortField" value="title" assignto="{!sortExpression}" />
                                                             </apex:commandlink>
                                                         </apex:facet>
                                                         <apex:outputtext value="{!ROUND(ver.ContentSize/1000,0)}" />
@@ -221,8 +219,8 @@
                                                          
                                                             <apex:facet name="header">
                                                                 <apex:outputpanel id="tagsheader">
-                                                                    <apex:commandlink value="{!$Label.ISSP_Tags}"   rerender="debug" id="cl_tags">
-                                                                        <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                                    <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_Tags}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}">
+                                                                        <apex:param name="sortField" value="title" assignto="{!sortExpression}" />
                                                                     </apex:commandlink>
                                                                 </apex:outputpanel>
                                                             </apex:facet>
@@ -231,24 +229,24 @@
                                                     </apex:column>
                                                     <apex:column >
                                                         <apex:facet name="header">
-                                                            <apex:commandlink value="{!$Label.ISSP_File_Type}"   rerender="debug">
-                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_File_Type}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}"   >
+                                                                <apex:param name="sortField" value="FileType" assignto="{!sortField}" />
                                                             </apex:commandlink>
                                                         </apex:facet>
                                                         <apex:outputfield value="{!ver.FileType}" />
                                                     </apex:column>
                                                     <!--<apex:column >
-                            <apex:facet name="header">
-                                <apex:commandlink value="Country Visibilty" action="{!toggleSort}" rerender="results,debug">
-                                    <apex:param name="sortField" value="title" assignto="{!sortField}" />
-                                </apex:commandlink>
-                            </apex:facet>
-                            <apex:outputfield value="{!ver.Country_visibilty__c}" />
-                        </apex:column>-->
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink value="Country Visibilty" action="{!toggleSort}" rerender="results,debug">
+                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+                                                        <apex:outputfield value="{!ver.Country_visibilty__c}" />
+                                                    </apex:column>-->
                                                 </apex:pageblocktable>
                                             </apex:pageblock>
-                                        </div>
-                                    </div><!-- end row -->
+                                     </div>
+                                   </div> <!--end row -->
                                 </apex:outputpanel>
                             </div><!-- end body tags-->
                         </div><!-- end panel-->

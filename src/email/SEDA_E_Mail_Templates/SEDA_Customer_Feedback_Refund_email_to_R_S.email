@@ -1,0 +1,14 @@
+Case link: {!Case.Link} 
+
+The Customer Feedback is "Refund".
+
+Please check the Bank Mandate of the agent and fill the field "Bank Mandate available in IRIS?" in the SEDA case.
+
+Case information:
+
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject} 
+IATA country: {!Case.BSPCountry__c} 
+IATA code: {!Account.Site} 
+Account name: {!Account.Name} 
+Ending Balance: {!Case.Currency__c}{!Case.Outstanding_Amount__c}

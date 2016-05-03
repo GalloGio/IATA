@@ -55,7 +55,9 @@ private class ISSP_PersonalInformationTest {
 			ctrl.iataCode = '132';
 			ctrl.saveNewCompanyName();
 			ctrl.getPicklistValues();
-			ctrl.save(); 
+			List<ISSP_AMS_Accreditation.AccountChanges> accountChnages =  ctrl.getAccountChangesList();
+			ctrl.saveContact(); 
+			ctrl.saveAccount(); 
 		}
 	}
 	
@@ -115,7 +117,9 @@ private class ISSP_PersonalInformationTest {
 			ctrl.iataCode = '132';
 			ctrl.saveNewCompanyName();
 			ctrl.getPicklistValues();
-			ctrl.save(); 
+			List<ISSP_AMS_Accreditation.AccountChanges> accountChnages =  ctrl.getAccountChangesList();
+			ctrl.saveContact();
+			ctrl.saveAccount(); 
 		}
 	}
 }

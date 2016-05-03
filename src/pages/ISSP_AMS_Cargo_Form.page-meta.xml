@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>ISSP_AMS_Cargo_Form</label>
+    <packageVersions>
+        <majorNumber>6</majorNumber>
+        <minorNumber>30</minorNumber>
+        <namespace>DSE</namespace>
+    </packageVersions>
 </ApexPage>

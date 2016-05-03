@@ -2,7 +2,7 @@
 *  REST API Service returning the content of Id Card table
 *  - Based on GSS_REST_FilePayload
 *  - External class will call getFilePayload (@HttpGet) method
-*  - URI Parameter:  FileSpecificationId, LastRetrievedRecordId, RequestSizeFactor
+*  - URI Parameter:  FileSpecificationId, LastRetrievedRecordId
 *  - Relevant requirement: GDP_File_Description__c.Payload_Procedure__c = 'IDCard' , GDP_File_Description__c.Product_Type__c = 'CAC'
 * 
 *  

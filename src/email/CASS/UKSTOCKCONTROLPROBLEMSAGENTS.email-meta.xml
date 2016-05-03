@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>To be sent when agent is not assigned a stock of AWBs</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>UK STOCK CONTROL PROBLEMS (AGENTS)</name>
+    <style>formalLetter</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <type>html</type>
+</EmailTemplate>

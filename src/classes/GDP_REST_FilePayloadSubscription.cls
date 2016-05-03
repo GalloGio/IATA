@@ -28,6 +28,8 @@ global with sharing class GDP_REST_FilePayloadSubscription {
             String FileSpecificationID = RestContext.request.params.get('FileSpecificationId');
             if(FileSpecificationID == '' || FileSpecificationID == null)    throw new MyException('FileSpecificationID is required parameter');  
             
+            
+            
             //Get Optional lastRetrievedRecordId parameter
             //lastRetrievedRecordId will be used to recall the function to get more records than the BATCH_SIZE
             //the usage of value of lastRetrieveRecordId will also depend of related GDP_File_Description__c.Product_Type__c

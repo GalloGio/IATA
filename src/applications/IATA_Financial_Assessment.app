@@ -2,6 +2,7 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <label>IATA Financial Assessment</label>
+    <logo>ISS_Portal/IATA_Logo.png</logo>
     <tab>standard-Chatter</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>

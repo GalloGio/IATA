@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Customer Portal: Customer Portal New User Login Information (English)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IFAP Customer Portal: Case Portal New User Login Information (English) Text</name>
+    <style>none</style>
+    <subject>Your {!Organization.Name} Customer Portal username and password</subject>
+    <type>text</type>
+</EmailTemplate>

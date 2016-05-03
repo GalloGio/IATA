@@ -31,6 +31,9 @@ public with sharing class IDCard_AdmUserExportCSVController extends IDCardAbstra
 
     cancelledContacts = new List<ContactViewProxy2>();
     ContactViewProxy2 cpcc;
+    
+    String previousIATACode = '';
+    String previousVER = '';
 
     //1 select ID card existing in system
     for (ID_Card__c idc : [ Select i.VER_Number__c, i.Is_Active_Card__c, i.Valid_To_Date__c, i.Photo__c, i.Id, i.ID_Card_Application__c, i.Card_Status__c, i.Cancellation_Date__c, i.Blacklisted__c,
@@ -38,7 +41,7 @@ public with sharing class IDCard_AdmUserExportCSVController extends IDCardAbstra
                             Start_Date_Agency_Month__c, Start_Date_Agency_Year__c, Start_Date_Industry__c
                             From ID_Card__c i
                             where Agency_IATA_Code__c in:keyContactAndDelegateForAccountList.keySet()
-                            order by Valid_To_Date__c DESC]) {
+                            order by Agency_IATA_Code__c , VER_Number__c, Valid_To_Date__c DESC]) {
 
       if (idc.Cancellation_Date__c != null) {
         cpcc = new ContactViewProxy2();
@@ -66,7 +69,16 @@ public with sharing class IDCard_AdmUserExportCSVController extends IDCardAbstra
           cp.lastName = idc.LastName__c;
           cp.birthDate = idc.Date_of_Birth__c == null ? '' : idc.Date_of_Birth__c.month() + '/' + idc.Date_of_Birth__c.day() + '/' + idc.Date_of_Birth__c.year();
           cp.phone = idc.Phone__c;
-          cp.email = idc.Email__c;
+          
+          // keep the ID Card Email of the lastest ID Card record
+          if(previousIATACode != idc.Agency_IATA_Code__c && previousVER != idc.VER_Number__c ||
+             previousIATACode == idc.Agency_IATA_Code__c && previousVER != idc.VER_Number__c)
+             {
+                 cp.email = idc.Email__c;
+                 previousIATACode = idc.Agency_IATA_Code__c;
+                 previousVER = idc.VER_Number__c;
+             }
+             
           cp.position = idc.Position__c;
           cp.duties = idc.Duties__c;
           cp.startdateagencymonth = idc.Start_Date_Agency_Month__c;
@@ -203,7 +215,8 @@ public with sharing class IDCard_AdmUserExportCSVController extends IDCardAbstra
         if (string.isBlank(cp.iatacode)) cp.iatacode = c.Iata_code__c;
         if (string.isBlank(cp.function)) cp.function = c.Function__c;
         if (string.isBlank(cp.phone)) cp.phone = c.Phone;
-        if (string.isBlank(cp.email)) cp.email = c.Email;
+        //if (string.isBlank(cp.email)) cp.email = c.Email;
+        if (string.isBlank(cp.email)) cp.email = c.IDCard_Email__c;
         if (string.isBlank(cp.position)) cp.position = c.Position__c;
         if (string.isBlank(cp.duties)) cp.duties = c.Duties__c;
         if (string.isBlank(cp.startdateagencymonth)) cp.startdateagencymonth = c.Start_Date_Agency_Month__c;

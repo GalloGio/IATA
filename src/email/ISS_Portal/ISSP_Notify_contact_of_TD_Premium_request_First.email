@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px" border="0">
+<tr>
+<td colspan="4">
+  <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+
+  </td>
+  </tr>
+
+
+<tr>
+<td colspan="4">
+  <i>{!$Label.ISSP_Email_do_not_reply}</i>
+</td>
+</tr>
+
+<tr>
+<td colspan="4">
+  <br />
+
+   <p> 
+    Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+    </p>
+    <p>
+      Thank you for your interest in IATA’s Treasury Dashboard Pemium. Your request is being reviewed; we will reply to you shortly with all the participation details.</p>
+<p>
+Access to the new IATA Treasury Dashboard provides Airline Treasury and Financial staff instant, global visibility of their Airline’s incoming cash flows being processed by each of IATA’s main financial settlement systems: BSPs, CASSes, ICH and ICCS, and credit card sales information.
+  </p>
+    
+
+  </td>
+  </tr>
+<tr>
+
+<td colspan="4" width="75%">
+
+<hr style="height:3px; border:none; color:rgb(20,68,123); background-color:rgb(20,68,123);">
+
+<ul>
+<b>
+<li>View Incoming funds and credit card sales from over 160 countries and +100 currencies</li>
+<li>Timely information with Intra day updates</li>
+<li>Over 60 days advance visibility on incoming funds</li>
+<li>View incoming funds and credit card sales by value day of receipt, by Currency and Beneficiary Bank Account</li>
+<li>Keep track of incoming funds by settlement status</li>
+<li>Access downloadable reports</li>
+<li>View and search all of IATA’ s annual Settlement Calendars</li> 
+<li>Notifications in case of settlement changes</li>
+<li>View historical data</li>
+ <li>Secure access</li>
+<li>View credit card dashboard by Currency and sales period</li>
+<li>Access to downloadable credit card sales report</li>
+<b/>
+  </ul>
+
+<hr style="height:3px; border:none; color:rgb(20,68,123); background-color:rgb(20,68,123);">
+
+</td>
+</tr>
+<tr><td colspan="4">
+  <p/>
+  The Treasury Dashboard has a one-time set-up fee and a monthly user subscription fee allowing any airline participating in IATA’s various settlement systems to see all its incoming funds from IATA, in addition to credit cards and the respective settlement currencies. Feel free to visit our website at: <a href="www.iata.org/treasurydashboard">www.iata.org/treasurydashboard</a>, for more information.
+  <p/>
+   Regards,
+  <p />
+IATA Financial and Distribution Services
+</td></tr>
+   
+        <tr>
+    <p>
+    <td style="text-align:left">
+    <a href="http://www.iata.org/services/finance/Pages/treasury-dashboard.aspx">
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q9vF&oid=00D2000000008TF&lastMod=1435050326000" height="40%" width="20%" />
+    </p>
+      </td>
+    </tr>
+
+    <BR />
+
+   
+    <tr>
+    <td colspan="4">
+    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000" />
+      </td>
+    </tr>
+
+    
+    
+
+</table>
+</div>
+  </body>
+</html>

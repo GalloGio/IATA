@@ -48,9 +48,12 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Placholder for the fields that need to be sent to the Amazon Server to produce the Delta and Master Files</description>
     <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>API_Name__c</fullName>
         <description>Salesforce.com  API field name used to build SOQL query ex: Website__c or Status__r.Name should never have more than one level or lookup as Account__r.Industry__r.Name create a formula instead and reference the API name of the formula</description>

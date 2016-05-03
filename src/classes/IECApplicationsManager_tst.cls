@@ -424,7 +424,7 @@ private class IECApplicationsManager_tst {
                 system.assert(oAgency.Id == oGDPAccount1.Id || oAgency.Id == oGDPAccount2.Id, 'Agency #1 and #2 should be found');
             
             // Test #10 - search by zip/postal code with search type contains
-
+            
           } // end runAs
           test.stopTest();  
     } // testCustomerSearch3_GAD

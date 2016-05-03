@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification of Voluntary Termination - CASS</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>CASS Termination</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>&lt;?xml:namespace prefix = o ns = &quot;urn:schemas-microsoft-com:office:office&quot; /&gt;
+
+Dear {!Contact.Name},
+
+
+In accordance to Resolution 851.11 (CASS Export) and 853.11 (CASS Import) a Member, Airline, GSSA or CASS Delivering Company may withdraw from a given CASS by serving written notice of not less than three (3) months and shall be liable for its share of all costs through the end of the notice period.
+
+
+Exception: a GSSA’s participation in a CASS may be terminated when the Participant appointing the GSSA has notified the Agency Administrator, in accordance to Resolution 871, with not less than three calendar months’ notice in writing that they have terminated their appointment of the GSA.
+
+
+Therefore, to process your request please forward us an official notification of intention to withdraw from the CASS.
+
+
+You can use the attached template letter for your reference. The notification must:
+
+
+· Be on an official company letterhead
+
+· Signed by a designated signatory
+
+· State the termination date
+
+
+
+The original document must be sent to:
+
+
+International Air Transport Association
+
+Airline Participation
+33, Route de l’Aeroport
+P.O. Box 416
+1215 Geneva 15 Airport, Switzerland
+
+
+
+Please do not hesitate to contact this office in case of any further queries/assistance that may be required with regards to the above. Our team will be glad to assist you accordingly.
+
+
+For future support in regards to any other query, please log a new inquiry through our customer portal at http://www.iata.org/customer-portal/Pages/contactus.aspx
+
+
+
+Annex: Template Letter for Withdrawal
+
+
+Thank you !
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Industry Distribution and Financial Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer
+
+
+----------------------------
+Your message received on {!Case.CreatedDate}:
+
+{!Case.Subject}
+{!Case.Description}</textOnly>
+    <type>html</type>
+</EmailTemplate>

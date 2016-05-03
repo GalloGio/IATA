@@ -18,7 +18,7 @@ trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
 	set<Id> lstClosingCasesIds = new set<Id>();
 	
 	for (Case c : Trigger.new) {
-		system.debug('***case: ' + c);
+		system.debug(LoggingLevel.ERROR,'aqui ****************$$$$$$$$$$$$$$$$$********************case: ' + c.Previous_case_owner__c + ' owner ' + c.OwnerId);
 		if ((c.RecordTypeId == RT_ICCS_ASP_Id  &&  c.CaseArea__c == 'FDS - Create Authorized Signatories Package') ||
 			c.RecordTypeId == AirlineCodingRTId ) {
 			
@@ -36,20 +36,26 @@ trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
 	
 	// get a map of relevant cases per Account Id
 	Map<Id, Case> mapCasesPerAccountId = new Map<Id, Case>(); // for ICCS ASP
-	Map<Id, Case> mapACCasesPerAccountId = new Map<Id, Case>(); // for Airline coding, new from Oct 2015
+	Map<Id, list<Case>> mapACCasesPerAccountId = new Map<Id, list<Case>>(); // for Airline coding, new from Oct 2015
 	
-	for (Case c : [SELECT Id, RecordTypeId, AccountId, IsClosed, CaseArea__c FROM Case WHERE (RecordTypeId = :RT_ICCS_ASP_Id OR RecordTypeId = :AirlineCodingRTId) AND IsClosed = false AND AccountId IN :setRelatedAcctIds]) {
+	for (Case c : [SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c FROM Case WHERE (RecordTypeId = :RT_ICCS_ASP_Id OR RecordTypeId = :AirlineCodingRTId) AND IsClosed = false AND AccountId IN :setRelatedAcctIds]) {
 		if (c.RecordTypeId == RT_ICCS_ASP_Id) { 
 			mapCasesPerAccountId.put(c.AccountId, c);
 		}
 		
-		if (c.RecordTypeId == AirlineCodingRTId) {
-			mapACCasesPerAccountId.put(c.AccountId, c);
+		if (c.RecordTypeId == AirlineCodingRTId  ) {
+			list<Case> listCase = mapACCasesPerAccountId.get(c.AccountId);
+			if (listCase == null) {
+				listCase = new list<Case>();
+			}
+			listCase.add(c);
+			mapACCasesPerAccountId.put(c.AccountId, listCase);
 		}
 	}
 	
 	// Validate one single ASP creation case OR one single 
 	// only continue if there are new ASP creation cases
+	system.debug(LoggingLevel.ERROR,'aqui lstRelatedAccountIds ' + lstRelatedAccountIds);
 	if (!lstRelatedAccountIds.isEmpty()) {
 	
 		for (Case c : Trigger.new) {
@@ -65,14 +71,20 @@ trigger trgICCS_ASP_Case_Validation on Case (before insert, before update) {
 			}
 			
 			// New from Oct 2015: if there's already another Airline Coding case open, raise an error
-			if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null && c.Id != mapACCasesPerAccountId.get(c.AccountId).Id) {
-				c.addError('There is already an open Airline Coding Application case on the selected Account. There can be only one open case of this type on an Account.');
+			// Mod from 2016/04/05: this restriction is only when the case has the same Reason1__c
+			if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
+				for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
+					if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id) {
+						c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
+					}
+				}
 			}
 		}
 	}
 	
 	// Prevent the closing of the ASP cases if there are related tasks still open
 	// only continue if there are ASP cases getting closed
+	system.debug(LoggingLevel.ERROR, + 'lstClosingCasesIds  ' + lstClosingCasesIds);
 	if (! lstClosingCasesIds.isEmpty()) {
 		//create a map of open tasks related to the cases
     	Map<Id, Task> mapTasksPerCaseId = new Map<Id, Task>();

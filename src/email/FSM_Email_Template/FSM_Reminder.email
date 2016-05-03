@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="Financial Security Review/Renewal Letter" recipientType="Contact" relatedToType="Case" >
+
+<messaging:htmlEmailBody >
+<html>
+<body>
+  <c:VFEmailTemplateFSMReminder caseId="{!relatedTo.Id}"/>
+</body>
+</html>
+</messaging:htmlEmailBody>
+
+</messaging:emailTemplate>

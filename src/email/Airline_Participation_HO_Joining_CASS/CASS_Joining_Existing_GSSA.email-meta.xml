@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CASS Joining Process. Welcome existing GSSA or Airline</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>CASS_Joining_Existing_GSSA</name>
+    <style>freeForm</style>
+    <subject>Welcome to CASS {!Case.BSPCountry__c}</subject>
+    <textOnly>Dear {!Contact.Name},
+ 
+We are pleased to give a warm welcome to {!Account.Name} joining CASS {!Case.BSPCountry__c} as of today, {!Case.Finalization_checklist__c}. CASS would enable {!Account.Name} to monitor many cargo operations, as well as to retrieve the periodical reports furnished by IATA.
+ 
+Official CASS Start Date is {!Case.Change_effective_as_of__c}.
+ 
+Please bear in mind that your login credentials on CASSLink would remain the same as for the other airlines you currently represent. {!Account.Name} has been already added to your existing user account under code Insert main code or branch one.
+ 
+ 
+Should you need any further information from IATA, please do not hesitate to log a new query via our Customer Portal: www.iata.org/customer. These queries will be answered with the highest priority.
+Yours sincerely,
+
+{!Case.OwnerFullName}
+
+
+Global Airline Participation Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

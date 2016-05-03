@@ -1819,6 +1819,10 @@ and
         <name>IEC_Confirm_DefaultPaymentUpdate</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Confirm_SaveSuccessful --></label>
+        <name>IEC_Confirm_SaveSuccessful</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_AcceptTermAndCondition --></label>
         <name>IEC_Error_AcceptTermAndCondition</name>
     </customLabels>
@@ -1911,6 +1915,10 @@ and
         <name>IEC_Error_InvalidEmail</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Error_InvalidFileNameFormat --></label>
+        <name>IEC_Error_InvalidFileNameFormat</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_InvalidPageParameter --></label>
         <name>IEC_Error_InvalidPageParameter</name>
     </customLabels>
@@ -1937,6 +1945,10 @@ and
     <customLabels>
         <label><!-- IEC_Error_MustLogin --></label>
         <name>IEC_Error_MustLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IEC Error Must Select Subscription --></label>
+        <name>IEC_Error_Must_Select_Subscription</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC Error No Application Access --></label>
@@ -2299,12 +2311,24 @@ and
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Case Attach --></label>
+        <label>Pièces justificatives supplémentaires</label>
         <name>ISSP_AMS_Case_Attach</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Case Attach Description --></label>
+        <label>Vous pouvez à tout moment télécharger des fichiers supplémentaires pour appuyer votre demande d’accréditation ou de notification de changement.</label>
         <name>ISSP_AMS_Case_Attach_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Taille de fichier max. 50Mb. Les types de fichiers acceptés sont: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</label>
+        <name>ISSP_AMS_Case_Attach_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>Merci d’avoir envoyé votre notification de changement.</label>
+        <name>ISSP_AMS_Case_Change_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez télécharger le formulaire de demande en PDF depuis le lien ci-dessous. Une fois complété, cliquez sur le bouton  &lt;strong&gt;Envoyer et joindre un fichier&lt;/strong&gt;.&lt;br/&gt;(Note: Vous pouvez revenir à cette page à tout moment depuis la page &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Accréditation IATA Accreditation&lt;/a&gt; pour compléter votre téléchargement)</label>
+        <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
         <label>Ville</label>
@@ -2343,16 +2367,28 @@ and
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Email Branch Abroad Subject --></label>
+        <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>Brouillon de demande d&apos;agrément de la succursale</label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement des détails de l’agence - projet de demande</label>
+        <name>ISSP_AMS_Email_Change_Subject</name>
     </customLabels>
     <customLabels>
         <label>Brouillon de demande d&apos;agrément du siège social</label>
         <name>ISSP_AMS_Email_HO_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Empty_Location_Type --></label>
+        <label>Veuillez sélectionner le type de localisation</label>
         <name>ISSP_AMS_Empty_Location_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FAX --></label>
+        <name>ISSP_AMS_FAX</name>
     </customLabels>
     <customLabels>
         <label>Le téléchargement de votre fichier a échoué. Des problèmes ont été signalés pour le téléchargement du fichier Agrément avec Internet Explorer 10, si c&apos;est le cas veuillez essayer de télécharger via un autre navigateur, par exemple Internet Explorer 11 ou Chrome. Si les problèmes persistent, veuillez contacter l&apos;assistance et créer une requête pour nous le faire savoir.</label>
@@ -2365,6 +2401,10 @@ and
     <customLabels>
         <label>Les 8 premiers chiffres</label>
         <name>ISSP_AMS_First_8_Digits</name>
+    </customLabels>
+    <customLabels>
+        <label>Prénom (Chinois)</label>
+        <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
         <label>Type d&apos;agence et situation géographique</label>
@@ -2385,6 +2425,10 @@ and
     <customLabels>
         <label>Pour combien d&apos;agences de voyage avez-vous déjà travaillé ? *</label>
         <name>ISSP_AMS_How_Many_PrevAgencies</name>
+    </customLabels>
+    <customLabels>
+        <label>Agent de vente passagers IATA</label>
+        <name>ISSP_AMS_IATA_Passenger_Sales_Agent</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS INFO Currency --></label>
@@ -2431,7 +2475,7 @@ and
         <name>ISSP_AMS_International_Sales_Branch</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Invalid Email --></label>
+        <label>Adresse électronique incorrecte</label>
         <name>ISSP_AMS_Invalid_Email</name>
     </customLabels>
     <customLabels>
@@ -2449,6 +2493,10 @@ and
     <customLabels>
         <label>* Votre organisation est-elle une entité légale dont les actions participent à des opérations boursières ou sont régulièrement échangées sur un marché hors cote ?</label>
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom (Chinois)</label>
+        <name>ISSP_AMS_Last_Name_Chinese</name>
     </customLabels>
     <customLabels>
         <label>1. Informations générales</label>
@@ -2487,6 +2535,78 @@ and
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
+        <label>Veuillez saisir l’adresse physique et l’adresse de correspondance dans votre langue locale pour ce changement d’adresse d’agence.</label>
+        <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom de la société (Anglais)</label>
+        <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom de la société (Local)</label>
+        <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label>Copier l’adresse physique dans l’adresse de correspondance</label>
+        <name>ISSP_AMS_Local_Details_Copy_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresse de correspondance</label>
+        <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Prénom (Anglais)</label>
+        <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label>Prénom (Local)</label>
+        <name>ISSP_AMS_Local_Details_First_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom (Anglais)</label>
+        <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom (Local)</label>
+        <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Legal Name --></label>
+        <name>ISSP_AMS_Local_Details_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Legal Name ENG --></label>
+        <name>ISSP_AMS_Local_Details_Legal_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Company --></label>
+        <name>ISSP_AMS_Local_Details_No_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresse physique</label>
+        <name>ISSP_AMS_Local_Details_Physical_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Please Enter --></label>
+        <name>ISSP_AMS_Local_Details_Please_Enter</name>
+    </customLabels>
+    <customLabels>
+        <label>Coordonnées de l’agence en langue locale</label>
+        <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Gérant</label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
@@ -2499,6 +2619,290 @@ and
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
     <customLabels>
+        <label>Autres informations</label>
+        <name>ISSP_AMS_NoC_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Informations sur l’agence</label>
+        <name>ISSP_AMS_NoC_Agency_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Signature autorisée:</label>
+        <name>ISSP_AMS_NoC_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label>Le cédant a informé le cessionnaire de la nécessité de se conformer aux dispositions des Règles des agences de vente voyageurs si le cessionnaire souhaite être intégré dans la Liste des agences d’IATA en tant qu’Agent agréé. L’approbation ne peut être accordée que si le cessionnaire respecte à tous égards les exigences des Règles des agences de vente voyageurs.</label>
+        <name>ISSP_AMS_NoC_Bank_Change1</name>
+    </customLabels>
+    <customLabels>
+        <label>Conformément à l&apos;une des exigences de la Règlementation des agences de vente voyageurs, le cessionnaire s&apos;engage, par la présente, à accepter la responsabilité conjointe avec le cédant pour toute obligation en souffrance du cédant en vertu de son Contrat d&apos;agence de vente, tel qu&apos;il existe à la date où la cession des titres de propriété intervient.</label>
+        <name>ISSP_AMS_NoC_Bank_Change2</name>
+    </customLabels>
+    <customLabels>
+        <label>Si le cédant est employé par l’agence ou s’il en détient un intérêt financier ou un droit à titre bénéficiaire, directement ou indirectement, à la suite du changement de propriétaire, le cessionnaire soussigné sait et accepte par les présentes de prendre la responsabilité de toute violation par le cédant de son Contrat d’agence de vente susceptible de survenir dans une période de deux ans immédiatement avant le changement de propriétaire, comme si ladite violation était une violation de l’Accord d’agence de vente du cessionnaire.</label>
+        <name>ISSP_AMS_NoC_Bank_Change3</name>
+    </customLabels>
+    <customLabels>
+        <label>Coordonnées bancaires</label>
+        <name>ISSP_AMS_NoC_Bank_acount_details</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez télécharger le PDF en cliquant sur le lien ci-dessous et renvoyer le formulaire complété, accompagné des pièces justificatives énumérées à l’étape suivante (ÉTAPE D), à l’adresse:</label>
+        <name>ISSP_AMS_NoC_Bank_details_message1</name>
+    </customLabels>
+    <customLabels>
+        <label>Votre changement de coordonnées bancaires sera traité dès réception du document signé original.</label>
+        <name>ISSP_AMS_NoC_Bank_details_message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Succursale</label>
+        <name>ISSP_AMS_NoC_Branch_Office</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement des coordonnées bancaires</label>
+        <name>ISSP_AMS_NoC_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez télécharger et compléter le mandat bancaire en cliquant sur le lien ci-dessous. &lt;br/&gt;&lt;br/&gt;Il vous sera demandé de télécharger une copie numérisée de ce document à l’étape suivante (ÉTAPE D).</label>
+        <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement de propriété, d’actionnariat ou de statut juridique</label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label>Type de changement et adresse de l’agence</label>
+        <name>ISSP_AMS_NoC_Change_Type_and_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>*Le changement concerne votre</label>
+        <name>ISSP_AMS_NoC_Change_for</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement de nom légal</label>
+        <name>ISSP_AMS_NoC_Change_of_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement d’adresse</label>
+        <name>ISSP_AMS_NoC_Change_of_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Le changement est soumis pour</label>
+        <name>ISSP_AMS_NoC_Change_submitted_for</name>
+    </customLabels>
+    <customLabels>
+        <label>*Choisissez le compte de succursale</label>
+        <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Je confirme que les détails de l’agence ci-dessous sont corrects</label>
+        <name>ISSP_AMS_NoC_Confirm_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Curr_Company_Owner --></label>
+        <name>ISSP_AMS_NoC_Curr_Company_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Sociétés actuelles</label>
+        <name>ISSP_AMS_NoC_Current_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label>Statut juridique actuel</label>
+        <name>ISSP_AMS_NoC_Current_Legal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Owner --></label>
+        <name>ISSP_AMS_NoC_Current_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriétaire(s)/Responsable(s) actuel(s)</label>
+        <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriété ou actionnariat actuel(le)</label>
+        <name>ISSP_AMS_NoC_Current_Ownership_or_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement de prélèvement</label>
+        <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Siège social</label>
+        <name>ISSP_AMS_NoC_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom légal après changement</label>
+        <name>ISSP_AMS_NoC_Legal_Name_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom légal avant changement</label>
+        <name>ISSP_AMS_NoC_Legal_Name_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Statut juridique après changement</label>
+        <name>ISSP_AMS_NoC_Legal_Status_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Statut juridique avant changement</label>
+        <name>ISSP_AMS_NoC_Legal_Status_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Chargement des informations sur l’agence</label>
+        <name>ISSP_AMS_NoC_Loadiing_Agency_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresse après changement</label>
+        <name>ISSP_AMS_NoC_Location_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresse avant changement</label>
+        <name>ISSP_AMS_NoC_Location_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Des changements peuvent être demandés après l&apos;accréditation IATA de votre agence.</label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label>Multiples changements</label>
+        <name>ISSP_AMS_NoC_Multiple_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>Nom &amp; Adresse</label>
+        <name>ISSP_AMS_NoC_Name_address</name>
+    </customLabels>
+    <customLabels>
+        <label>Notification de Changement</label>
+        <name>ISSP_AMS_NoC_Notice_of_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriété, actionnariat ou statut juridique</label>
+        <name>ISSP_AMS_NoC_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Prev_Company_Owner --></label>
+        <name>ISSP_AMS_NoC_Prev_Company_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Sociétés précédentes</label>
+        <name>ISSP_AMS_NoC_Previous_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Previous_Owner --></label>
+        <name>ISSP_AMS_NoC_Previous_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriétaire(s)/Responsable(s) précédent(s)</label>
+        <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
+    </customLabels>
+    <customLabels>
+        <label>* Ce changement aura-t-il une incidence sur les locaux ayant fait l’objet d’un contrôle dans le cadre de l’approbation de la demande d’enregistrement de l’agence ?</label>
+        <name>ISSP_AMS_NoC_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label>* Ce changement aura-t-il une incidence sur les autres adresses approuvées ?</label>
+        <name>ISSP_AMS_NoC_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label>* Ce changement aura-t-il une incidence sur les responsables et le personnel aux adresses approuvées dans le cadre de ce changement ?</label>
+        <name>ISSP_AMS_NoC_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label>Informations concernant le contact</label>
+        <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>* Parmi les nouveaux propriétaires, dirigeants, responsables ou autres individus, certains sont-ils habilités à agir ou à signer au nom d’une entreprise impliquée dans des procédures de faillite ou de défaut de paiement ?</label>
+        <name>ISSP_AMS_NoC_Q4</name>
+    </customLabels>
+    <customLabels>
+        <label>* Le changement de propriétaire entraînera-t-il une relation directe ou indirecte avec une organisation détenant la candidature d’un membre au statut de GSA ?</label>
+        <name>ISSP_AMS_NoC_Q5</name>
+    </customLabels>
+    <customLabels>
+        <label>Demande de changement</label>
+        <name>ISSP_AMS_NoC_Request_for_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Rôles et responsabilités</label>
+        <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Signature --></label>
+        <name>ISSP_AMS_NoC_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label>* Veuillez indiquer le code IATA de toutes les adresses affectées par ce changement</label>
+        <name>ISSP_AMS_NoC_State_IATA_code</name>
+    </customLabels>
+    <customLabels>
+        <label>A. Sélectionnez le type de changement</label>
+        <name>ISSP_AMS_NoC_StepA</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez enregistrer votre demande de changement à tout moment et revenir plus tard pour la finaliser.</label>
+        <name>ISSP_AMS_NoC_StepB_message</name>
+    </customLabels>
+    <customLabels>
+        <label>C. Détails du changement</label>
+        <name>ISSP_AMS_NoC_StepC</name>
+    </customLabels>
+    <customLabels>
+        <label>Résumé de propriété actuelle</label>
+        <name>ISSP_AMS_NoC_Summary_Current_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label>Résumé de propriété précédente</label>
+        <name>ISSP_AMS_NoC_Summary_Previous_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label>Je certifie, par la présente, qu&apos;à ma connaissance, les déclarations susmentionnées (ainsi que les déclarations mentionnées dans les annexes jointes) sont véridiques et correctes et que je suis dûment autorisé par l&apos;organisation identifiée dans la section «Informations sur la société» ci-dessus, à procéder auxdites déclarations et à remplir le présent document.</label>
+        <name>ISSP_AMS_NoC_TC</name>
+    </customLabels>
+    <customLabels>
+        <label>Cessionnaire:</label>
+        <name>ISSP_AMS_NoC_Transferee</name>
+    </customLabels>
+    <customLabels>
+        <label>Cédant:</label>
+        <name>ISSP_AMS_NoC_Transferor</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez indiquer si cette personne est un actionnaire ou un directeur.</label>
+        <name>ISSP_AMS_NoC_Type_Of_Person</name>
+    </customLabels>
+    <customLabels>
+        <label>Témoin:</label>
+        <name>ISSP_AMS_NoC_Witness</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1 --></label>
+        <name>ISSP_AMS_NoC_error_message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2 --></label>
+        <name>ISSP_AMS_NoC_error_message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3 --></label>
+        <name>ISSP_AMS_NoC_error_message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message4 --></label>
+        <name>ISSP_AMS_NoC_error_message4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message5 --></label>
+        <name>ISSP_AMS_NoC_error_message5</name>
+    </customLabels>
+    <customLabels>
+        <label>Fonction ou&lt;br/&gt;qualité</label>
+        <name>ISSP_AMS_NoC_title_or_capacity</name>
+    </customLabels>
+    <customLabels>
+        <label>(en caractères d’imprimerie)</label>
+        <name>ISSP_AMS_NoC_type_or_print</name>
+    </customLabels>
+    <customLabels>
         <label>Vous n&apos;avez aucune demande d&apos;accréditation d&apos;agence en cours.</label>
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
@@ -2509,6 +2913,22 @@ and
     <customLabels>
         <label>Aucune information supplémentaire n&apos;est nécessaire pour cette section</label>
         <name>ISSP_AMS_No_Vat_Number_Section</name>
+    </customLabels>
+    <customLabels>
+        <label>Dénomination légale</label>
+        <name>ISSP_AMS_Noc_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Localisation</label>
+        <name>ISSP_AMS_Noc_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Les projets de changement doivent être envoyés dans un délai de 2 semaines. Au-delà, vous devrez réitérer la demande de changement.</label>
+        <name>ISSP_AMS_Noc_StepA_message</name>
+    </customLabels>
+    <customLabels>
+        <label>*Type de changement</label>
+        <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
         <label>Les actions de votre organisation n&apos;étant pas cotées en bourse, vous devez saisir les informations concernant tous les actionnaires dans les sections Personnes et Société ci-dessous.</label>
@@ -2559,12 +2979,24 @@ and
         <name>ISSP_AMS_OPTION_PAX_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION PAX BRANCH ABROAD --></label>
+        <name>ISSP_AMS_OPTION_PAX_BRANCH_ABROAD</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION PAX HO --></label>
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
         <label>Propriétaire</label>
         <name>ISSP_AMS_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PAX_Company --></label>
+        <name>ISSP_AMS_PAX_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PAX_Person --></label>
+        <name>ISSP_AMS_PAX_Person</name>
     </customLabels>
     <customLabels>
         <label>Partenaire</label>
@@ -2575,7 +3007,11 @@ and
         <name>ISSP_AMS_Pax_Branch_T_Cs</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Please Upload --></label>
+        <label><!-- ISSP_AMS_Phone --></label>
+        <name>ISSP_AMS_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez télécharger le fichier suivant avant votre envoi à l’IATA:</label>
         <name>ISSP_AMS_Please_Upload</name>
     </customLabels>
     <customLabels>
@@ -2607,11 +3043,11 @@ and
         <name>ISSP_AMS_Previous_Default_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Reason Branch Abroad --></label>
+        <label>Nouvelle Succursale en ligne ou Succursale à l&apos;étranger</label>
         <name>ISSP_AMS_Reason_Branch_Abroad</name>
     </customLabels>
     <customLabels>
-        <label>Nouvelle succursale</label>
+        <label>Nouvelle Succursale</label>
         <name>ISSP_AMS_Reason_New_Branch</name>
     </customLabels>
     <customLabels>
@@ -2651,20 +3087,92 @@ and
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
-        <label>Bienvenue dans le formulaire de demande d&apos;accréditation IATA pour les agences.&lt;br/&gt;&lt;br/&gt;Veuillez noter que celui-ci doit être envoyé par une personne autorisée de l&apos;agence. Si vous n&apos;avez pas l&apos;autorisation de signer des documents juridiques au nom de l&apos;agence, veuillez demander au représentant légal désigné de s&apos;inscrire sur le portail et d&apos;envoyer la demande.&lt;br/&gt;&lt;br/&gt;Cette section peut être utilisée pour effectuer une nouvelle demande d&apos;accréditation IATA pour une agence ou pour accéder aux demandes en cours (brouillon ou statut client en attente). Une fois la demande envoyée, veuillez vous rendre dans &lt;a href=&quot;/ISSP_CaseList&quot;&gt;« Mes dossiers »&lt;/a&gt; pour vérifier son statut.</label>
+        <label>Obtenir l&apos;accréditation IATA</label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
+        <label>Quel type d&apos;accréditation choisir?&lt;br/&gt;Veuillez consulter ce</label>
+        <name>ISSP_AMS_Step0_Agency_Article</name>
+    </customLabels>
+    <customLabels>
+        <label>Changement des coordonnées bancaires</label>
+        <name>ISSP_AMS_Step0_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Les changements ne peuvent intervenir qu’une fois que votre Agence a envoyé sa demande d’accréditation à l’IATA</label>
+        <name>ISSP_AMS_Step0_Change_Not_Allowed</name>
+    </customLabels>
+    <customLabels>
+        <label>Changements</label>
+        <name>ISSP_AMS_Step0_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pouvez également obtenir:</label>
+        <name>ISSP_AMS_Step0_In_Addition</name>
+    </customLabels>
+    <customLabels>
+        <label>Bienvenue dans le formulaire de demande d&apos;accréditation IATA pour les agences</label>
         <name>ISSP_AMS_Step0_Intro</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez noter que le dossier d&apos;accréditation en ligne devra être soumis par un signataire autorisé de l&apos;agence.</label>
+        <name>ISSP_AMS_Step0_Intro_Accred</name>
+    </customLabels>
+    <customLabels>
+        <label>Si vous n&apos;êtes pas un dirigeant ou un mandataire autorisé, veuillez demander au représentant légal désigné, de s&apos;enregistrer sur le portail et de soumettre la demande d&apos;accréditation.</label>
+        <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Les changements de nom commercial ou de numéro de téléphone/télécopie peuvent être effectués directement depuis votre &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Informations sur la société&lt;/a&gt; page.</label>
+        <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
         <label>Nouvelle demande d&apos;accréditation</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
     <customLabels>
-        <label>Accréditation IATA en ligne pour les agences</label>
+        <label>Projets de demandes en cours &amp; Changements</label>
+        <name>ISSP_AMS_Step0_Ongoing_Drafts</name>
+    </customLabels>
+    <customLabels>
+        <label>Autres changements</label>
+        <name>ISSP_AMS_Step0_Other_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>Pour un changement d&apos;adresse, de dénomination sociale, de statut légal ou de propriétaire / dans l&apos;actionnariat</label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Autres formulaires utiles</label>
+        <name>ISSP_AMS_Step0_Other_Forms</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez créer une requête auprès de l’IATA pour demander un règlement plus fréquent volontaire. Souhaitez-vous continuer?</label>
+        <name>ISSP_AMS_Step0_Proceed_VMFR</name>
+    </customLabels>
+    <customLabels>
+        <label>Demander a cloturer volontairement l&apos;accréditation IATA</label>
+        <name>ISSP_AMS_Step0_Request_Voluntary_Reliquishment</name>
+    </customLabels>
+    <customLabels>
+        <label>Accréditation IATA en ligne et demande de changements</label>
         <name>ISSP_AMS_Step0_SAA</name>
+    </customLabels>
+    <customLabels>
+        <label>Activité spéciale de ventes</label>
+        <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
+    </customLabels>
+    <customLabels>
+        <label>Réduire volontairement la période de paiement (VMFR)</label>
+        <name>ISSP_AMS_Step0_VMFR</name>
     </customLabels>
     <customLabels>
         <label>* L&apos;approbation est demandée pour</label>
         <name>ISSP_AMS_Step1_Approval_Sought</name>
+    </customLabels>
+    <customLabels>
+        <label>Le pays sélectionné n’autorise pas les succursales étrangères. Veuillez vous enregistrer en tant que nouvel utilisateur et créer une nouvelle agence pour ce pays. Souhaitez-vous continuer ?</label>
+        <name>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</name>
     </customLabels>
     <customLabels>
         <label>&quot;La demande d&apos;accréditation IATA en ligne pour les nouvelles agences de transport n&apos;est pas encore disponible pour le pays sélectionné. Vous allez être redirigé vers le site Internet IATA ; vous pourrez alors poursuivre le processus d&apos;accréditation de votre agence de transport. Souhaitez-vous y aller maintenant ?&quot;</label>
@@ -2709,7 +3217,7 @@ and
         <name>ISSP_AMS_Step1_Title</name>
     </customLabels>
     <customLabels>
-        <label>Les brouillons des demandes doivent être envoyés dans un délai de 2 semaines. Au-delà, vous devrez recommencer le processus d&apos;accréditation.</label>
+        <label>Les brouillons des demandes doivent être envoyés dans un délai de 2 semaines. Au-delà, vous devrez recommencer le processus.</label>
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
@@ -2877,12 +3385,24 @@ and
         <name>ISSP_AMS_StepFinal_Access_Direct2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepFinal ChangeBank --></label>
+        <name>ISSP_AMS_StepFinal_ChangeBank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal ChangeOther --></label>
+        <name>ISSP_AMS_StepFinal_ChangeOther</name>
+    </customLabels>
+    <customLabels>
         <label>En outre, vous pouvez suivre tous vos dossiers avec l&apos;IATA dans la rubrique</label>
         <name>ISSP_AMS_StepFinal_In_Addition</name>
     </customLabels>
     <customLabels>
         <label>Contacter l&apos;assistance -&gt; Mes dossiers</label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
+        <name>ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks</name>
     </customLabels>
     <customLabels>
         <label>Nous vous remercions d&apos;avoir envoyé votre demande d&apos;accréditation pour la nouvelle succursale de votre agence de voyage.</label>
@@ -2933,6 +3453,10 @@ and
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label>Types de changement sélectionnés</label>
+        <name>ISSP_AMS_Type_of_Change_Seclected</name>
+    </customLabels>
+    <customLabels>
         <label>Mettre à jour les informations de l&apos;agence</label>
         <name>ISSP_AMS_Update_Agency</name>
     </customLabels>
@@ -2943,6 +3467,14 @@ and
     <customLabels>
         <label>Mise à jour des fichiers en cours…</label>
         <name>ISSP_AMS_Updating_Files</name>
+    </customLabels>
+    <customLabels>
+        <label>Téléchargement du formulaire de demande signé</label>
+        <name>ISSP_AMS_Upload_Form</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez télécharger le formulaire signé afin de compléter votre demande de:</label>
+        <name>ISSP_AMS_Upload_Form_message</name>
     </customLabels>
     <customLabels>
         <label>&lt;strong&gt;Veuillez saisir un code IATA d&apos;Agent de transport valide.&lt;/strong&gt;</label>
@@ -2975,6 +3507,14 @@ and
     <customLabels>
         <label>Veuillez choisir la personne susceptible d&apos;être l&apos;administrateur du portail de votre agence.</label>
         <name>ISSP_AMS_Validation_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label>téléchargez une version PDF</label>
+        <name>ISSP_AMS_download_a_PDF_version</name>
+    </customLabels>
+    <customLabels>
+        <label>de votre demande de notification de changement</label>
+        <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
@@ -3101,6 +3641,10 @@ and
         <name>ISSP_Are_you_sure</name>
     </customLabels>
     <customLabels>
+        <label>guide</label>
+        <name>ISSP_Article</name>
+    </customLabels>
+    <customLabels>
         <label>Articles</label>
         <name>ISSP_Articles</name>
     </customLabels>
@@ -3157,7 +3701,7 @@ and
         <name>ISSP_Banner_link</name>
     </customLabels>
     <customLabels>
-        <label>IATA Accreditation</label>
+        <label>IATA Accreditation &amp; Changes</label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
@@ -3250,6 +3794,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label><!-- ISSP_CassLink --></label>
         <name>ISSP_CassLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Casslink_Plus --></label>
+        <name>ISSP_Casslink_Plus</name>
     </customLabels>
     <customLabels>
         <label>Votre numéro de demande</label>
@@ -3532,6 +4080,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_DDS_Print</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Date --></label>
+        <name>ISSP_Date</name>
+    </customLabels>
+    <customLabels>
         <label>Rejeter accès</label>
         <name>ISSP_Deny_Access</name>
     </customLabels>
@@ -3716,7 +4268,11 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Email_Draft_Branch_Process1</name>
     </customLabels>
     <customLabels>
-        <label>Nous vous remercions d&apos;avoir créé le brouillon de votre demande d&apos;accréditation de votre siège social (succursale) en tant qu&apos;agent commercial passagers IATA.</label>
+        <label>Merci d’avoir créé votre formulaire de projet de notification de changement.</label>
+        <name>ISSP_Email_Draft_Change_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Merci d’avoir créé votre demande de projet d’approbation en tant que:</label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
@@ -3920,6 +4476,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_FAQ</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Fax --></label>
+        <name>ISSP_Fax</name>
+    </customLabels>
+    <customLabels>
         <label>Fichier</label>
         <name>ISSP_File</name>
     </customLabels>
@@ -4097,7 +4657,7 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Help_TIESS_Banking</name>
     </customLabels>
     <customLabels>
-        <label>Page d&apos;acceuil</label>
+        <label>Page d&apos;accueil</label>
         <name>ISSP_Home</name>
     </customLabels>
     <customLabels>
@@ -5078,6 +5638,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Request_Ongoing</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Request Submitted --></label>
+        <name>ISSP_Request_Submitted</name>
+    </customLabels>
+    <customLabels>
         <label>Demande rejetée</label>
         <name>ISSP_Request_Withdrawn</name>
     </customLabels>
@@ -5102,7 +5666,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Resource_Center_Description</name>
     </customLabels>
     <customLabels>
-        <label>Resources</label>
+        <label>Ressources</label>
         <name>ISSP_Resources</name>
     </customLabels>
     <customLabels>
@@ -5110,7 +5674,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Results</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Return to Case --></label>
+        <label>Retour au dossier</label>
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
@@ -5423,7 +5987,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_Type_of_query</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Unique mail --></label>
+        <label>Cette adresse électronique existe déjà dans la liste des contacts. Chaque contact nécessite une adresse électronique unique.</label>
         <name>ISSP_Unique_Email</name>
     </customLabels>
     <customLabels>
@@ -5489,6 +6053,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label>Voulez-vous consultez la FAQ avant d&apos;enregistrer un nouveau dossier ?</label>
         <name>ISSP_consult_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Modifier</label>
+        <name>ISSP_edit_lowercase</name>
     </customLabels>
     <customLabels>
         <label>veuillez remplir les champs requis au bon format.</label>
@@ -6459,7 +7027,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>PWC_service_request</name>
     </customLabels>
     <customLabels>
-        <label><!-- Phone --></label>
+        <label>Téléphone</label>
         <name>Phone</name>
     </customLabels>
     <customLabels>

@@ -35,6 +35,21 @@ global class UploadMultipleFileToAmazonButtonCtrl {
 			upf.errorMessage =  Label.Overall_maximum_size;
 			return upf;
 		}
+		
+		//Check file name length: no more than 80 characters
+		if (filenameupload.length() > 80) {
+			upf.isSuccess = false;
+			upf.errorMessage =  Label.File_name_too_long;
+			return upf;
+		}
+		
+		if (filenameupload.indexOf('\'') != -1 || filenameupload.indexOf('&') != -1) {
+			upf.isSuccess = false;
+			upf.errorMessage =  Label.No_special_characters;
+			//upf.errorMessage =  'Special characters \' and & are not allowed';
+			return upf;
+		}
+		
 		upf.isSuccess = true;
 		return upF ;
 	}
@@ -92,7 +107,10 @@ global class UploadMultipleFileToAmazonButtonCtrl {
 		}
 
 		public void calculePolicy() {
-			this.timestamp = DateTime.now().formatGMT('E, d MMM yyyy HH:mm:ss Z');
+			//this.timestamp = DateTime.now().formatGMT('E, d MMM yyyy HH:mm:ss Z');
+			this.timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
+			system.debug('@@@timestamp: ' +this.timestamp);
+			//this.timestamp = DateTime.now().format();
 			String policyString = 'PUT\n\n'
 				+ this.contentType + ';charset=UTF-8\n\n'
 				+ 'x-amz-date:' + this.timestamp + '\n'

@@ -166,7 +166,6 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
             boolean blackListedCard = false;
             String IDCardQuery = 'Select Id, Blacklisted__c, Card_Status__c From ID_Card__c where Related_Contact__c  = \'' + contacts[0].Id + '\' order by createddate desc';
             ID_Card__c[] cards = Database.query(IDCardQuery);
-
             for (ID_Card__c aCard : cards) {
                 if (aCard.Blacklisted__c == true) {
                     mailAlertOnBlackListedConnection(aCard, VERNumber, IATACodeLocation);
@@ -211,11 +210,12 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                     prAgencyDetails.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(String.ValueOf(contacts[0].Date_of_Birth__c)));//parsedDtDOB.format('yyyy-MM-dd')));
                 }
 
-                // INC183592
+                // INC183592 & INC243166
                 if (contacts[0].Account.Status__c == 'Terminated' ||
-                        (cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED &&
+                    cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED){
+                        /*(cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED &&
                          contacts[0].Account.IDCard_Key_Account__c == TRUE &&
-                         contacts[0].Account.ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase))) {
+                         contacts[0].Account.ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase))) {*/
 
                     Pagereference prSkipDetails = Page.IDCard_Portal;
                     prSkipDetails.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
@@ -393,15 +393,14 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
             ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
 
-            String IDCardQuery = 'Select i.Related_Contact__c, i.Blacklisted__c '
+            String IDCardQuery = 'Select i.Related_Contact__c, i.Blacklisted__c, Card_Status__c '
                                  + ' From ID_Card__c i '
                                  + 'where '
                                  + '  i.RecordTypeId = \'' + rectypeid
                                  + '\' and i.FirstName__c = \'' + FNAME.trim() + '\' '
                                  + ' and i.LastName__c = \'' + LNAME.trim() + '\' '
-                                 + ' and i.Date_of_Birth__c = ' + parsedDtDOB.format('yyyy-MM-dd') +
-                                 + ' and i.Card_Status__c != \'' + IDCardUtil.CARDSTATUS_CANCELED
-                                 + '\' order by i.Valid_To_Date__c desc LIMIT 1';
+                                 + ' and i.Date_of_Birth__c = ' + parsedDtDOB.format('yyyy-MM-dd')
+                                 + ' order by i.Valid_To_Date__c desc LIMIT 1';
 
             system.debug('[IDCardLoginController] Existing card search query ' + IDCardQuery);
             ID_Card__c[] cards = Database.query(IDCardQuery);
@@ -465,9 +464,8 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
             ///if one or more record is found redirect to multi record page
             //if (contacts.size() + cards.size() >= 1) {
             if (cards.size() >= 1) {
-
-                // INC183592
-                if (agencyStatus == 'Terminated') {
+                // INC183592 & INC243166
+                if (agencyStatus == 'Terminated' || cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED) {
                     Pagereference prSkipDetails = Page.IDCard_Portal;
                     prSkipDetails.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
                     prSkipDetails.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(contacts[0].VER_Number_2__c));
@@ -496,7 +494,6 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
             //New Application
             else {
-
                 // INC183592
                 if (agencyStatus == 'Terminated') {
                     Pagereference prSkipDetails = Page.IDCard_Portal;

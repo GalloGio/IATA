@@ -1,0 +1,14 @@
+Case link: {!Case.Link}
+
+There has been an Over Remittance occurrence to this agent.
+
+Please check if there are any outstanding invoices pertaining to this agent, comment in the SEDA case and create an internal case to R&S if over remittance amount are to be transfer to operating account
+Case information:
+
+IATA code: {!Case.IATA_Code__c}
+Account name: {!Case.Account}
+Country: {!Case.BSPCountry__c} 
+BSP/CASS: {!Case.BSP_CASS__c} 
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject}    
+Ending Balance: {!Case.Currency__c}{!Case.Outstanding_Amount__c}

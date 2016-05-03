@@ -237,6 +237,10 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BusinessHoursId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

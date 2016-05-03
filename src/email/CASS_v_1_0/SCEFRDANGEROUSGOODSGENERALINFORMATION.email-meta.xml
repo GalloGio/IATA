@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>To be sent to whom queries information regarding Dangerous Goods.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE-FR DANGEROUS GOODS GENERAL INFORMATION</name>
+    <style>freeForm</style>
+    <subject>Dangerous Goods</subject>
+    <textOnly>Bonjour {!Contact.Name}, 
+
+ 
+ 
+IATA édite des publications sur le transport de marchandises dangereuses et organise des formations sur la matière au niveau mondial.
+
+- Pour toute question relative au transport de matières dangereuses, nous vous prions de contacter un Agent de Fret agréé IATA (Intermédiaire) ou directement votre compagnie aérienne.
+- Pour commander nos publications, veuillez aller sur notre site www.iataonline.com
+- Pour des informations concernant les formations IATA, tapez www.iata.org/training (enseignement à distance, chez IATA ou dans un Centre de Formation Autorisé).
+- Pour contacter notre équipe de spécialistes des matières dangereuses, basée à Montréal, Canada, veuillez composer le +1.514.390.6770 (Fax +1.514 874 2660) ou leur envoyer un message à dangood@iata.org
+
+Pour tout type de consultation, veuillez vous rendre sur notre portail clientèle : http://www.iata.org/europe/cs &gt;&gt; Nous contacter. Les demandes envoyées par ce biais sont traitées en priorité.
+ 
+
+Cordialement, 
+
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

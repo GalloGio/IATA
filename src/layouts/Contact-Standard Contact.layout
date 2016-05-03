@@ -5,7 +5,10 @@
     <customButtons>Community</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DisableCustomerPortal</excludeButtons>
+    <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
+    <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
@@ -704,6 +707,10 @@
         <relatedList>IEC_Usage_Tracker_Live__c.RelatedContact__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

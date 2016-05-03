@@ -3,6 +3,7 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Basic Requirements app with no High-level Requirements or Solution Estimates; contains only a single Object &amp; Tab</description>
     <label>Requirement Planning without Estimation</label>
+    <logo>PM_Icons_Basic/projects_logo_small_basic.jpeg</logo>
     <tab>Requirement_Basic__c</tab>
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>

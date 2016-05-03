@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Communicating with DPC (QMS) for JOINING</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>QMS creation - JOINING</name>
+    <style>freeForm</style>
+    <subject>{!Case.Subject}</subject>
+    <textOnly>SF Case: {!Case.CaseNumber}
+
+
+Country: {!Case.BSPCountry__c}
+
+
+Status:  {!Case.Status}
+
+
+Requestor:  {!Case.OwnerEmail}
+
+
+Description:
+
+
+
+Dear Colleagues,
+
+
+
+Please note that the below airline will join BSP {!Case.BSPCountry__c} effective X_Insert_DATE_X.
+
+
+
+
+{!Case.Account}
+X_Insert_IATA_Designator_and_numeric code_X
+
+
+
+
+Find below additional information to setup this airline:
+
+
+
+1- HOT file Requested or NOT requested
+
+&gt;&gt; Frequency: XXXX
+
+&gt;&gt; Delivery recipient: XXXX
+
+
+
+2- LCCB attached
+
+
+
+Thank you,
+
+
+
+Best Regards,
+
+
+
+{!Case.OwnerFullName}
+
+
+
+
+
+SF Thread ID: {!Case.Thread_Id}</textOnly>
+    <type>html</type>
+</EmailTemplate>

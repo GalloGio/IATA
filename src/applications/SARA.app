@@ -3,6 +3,7 @@
     <defaultLandingTab>Financial_Security__c</defaultLandingTab>
     <description>Salesforce Agency Risk Administration</description>
     <label>SARA</label>
+    <logo>SalesforceMaterial/SARA_logo.png</logo>
     <tab>standard-Chatter</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>

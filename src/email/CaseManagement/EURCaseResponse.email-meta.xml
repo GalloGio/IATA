@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>E-mail template including customers description of case to send with a reply to customer</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>EUR - Case Response</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber}  {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name},
+ 
+We have looked at above case with your description:
+&quot;{!Case.Description}&quot;
+ 
+Type your own comments!
+ 
+Best regards,</textOnly>
+    <type>html</type>
+</EmailTemplate>

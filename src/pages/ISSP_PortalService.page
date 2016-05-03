@@ -32,11 +32,13 @@
                      </div>
                 </div> 
                  </div><!--end panel body -->
-                <apex:form rendered="{!IF($Profile.Name == 'System Administrator' ||$Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',true,false)   }">
+                <!--<apex:form rendered="{!IF($Profile.Name == 'System Administrator' ||$Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',true,false)   }">-->
+                <apex:form >
                 <apex:pageblock id="CustomList" title=""  >
                
                           <h3 class="blueback">Users
-                          <center>  <apex:commandButton action="{!RedirectToServiceAccess}" styleclass="btn btn-sm btn-primary"  value="{!$Label.ISSP_Add_User_to_this_service}"/>  </center>
+                          <center>  <apex:commandButton action="{!RedirectToServiceAccess}" styleclass="btn btn-sm btn-primary"  value="{!$Label.ISSP_Add_User_to_this_service}" 
+                                                        rendered="{!!PortalService.Cannot_be_managed_by_portal_admin__c}"/>  </center>
                            
                           </h3>
                 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>To be sent to whom wishes to order IATA publications</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE-FR IATA PUBLICATIONS ORDER</name>
+    <style>freeForm</style>
+    <subject>IATA Publications</subject>
+    <textOnly>Bonjour {!Contact.Name},
+
+
+Les publications de IATA sont en vente sur le site www.iataonline.com.
+Si vous n&apos;y trouvez pas le produit qui vous intéresse, contactez custserv@iata.org.
+ 
+Pour tout type de consultation, veuillez vous rendre sur notre portail clientèle : http://www.iata.org/europe/cs &gt;&gt; Nous contacter. Les demandes envoyées par ce biais sont traitées en priorité.
+ 
+ 
+Cordialement,
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>
