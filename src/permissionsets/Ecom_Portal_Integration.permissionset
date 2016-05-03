@@ -1177,12 +1177,12 @@ If preferred, the setting here can be moved to the Ecom Portal Integration Profi
     <fieldPermissions>
         <editable>true</editable>
         <field>ID_Card__c.Json_Is_Active__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>ID_Card__c.Json_WS_Simple__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
