@@ -489,6 +489,10 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Financial Guarantee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Hong Kong Trust Fund</fullName>
                 <default>false</default>
             </picklistValues>

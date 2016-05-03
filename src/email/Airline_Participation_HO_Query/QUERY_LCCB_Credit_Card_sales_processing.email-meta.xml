@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>What is LCCB?</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>QUERY - LCCB? Credit Card sales processing</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+
+Thank you for your email.
+
+
+
+Please note that besides the joining fees, there are some additional fees charged to your airline which are mainly due to central, regional management fees and SCUs. Please refer to the attached reference guide which would provide you more details and the latest IATA Pricelist
+
+
+
+For any further assistance on such item, please log a new query through our Customer Portal, www.iata.org/cs. Our Customer Services will be address your query shortly.
+
+
+Thank you,
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Financial and Distribution Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer</textOnly>
+    <type>html</type>
+</EmailTemplate>

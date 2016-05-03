@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>IFAP_TW</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>IFAP_TW</name>
+    <style>freeForm</style>
+    <subject>提交101度財務報表及相關文件予IATA 審查。</subject>
+    <type>html</type>
+</EmailTemplate>

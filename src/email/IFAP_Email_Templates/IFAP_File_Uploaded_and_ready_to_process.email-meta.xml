@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>23.0</apiVersion>
+    <available>true</available>
+    <description>This email is used to send a confirmation to the IFAP agent that their files where successfuly uploaded on the portal and they will be processed.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IFAP File Uploaded and ready to process</name>
+    <style>none</style>
+    <type>visualforce</type>
+</EmailTemplate>

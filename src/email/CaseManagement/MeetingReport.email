@@ -1,0 +1,28 @@
+<table width="550" cellpadding="5" height="400" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td locked="0" style=" font-family:arial; bLabel:main; color:#000000; font-size:12pt; bEditID:r3st1; background-color:#FFFFFF;" aEditID="c1r1" tEditID="c1r1" >
+<![CDATA[<P><STRONG>Meeting Report {!01I2000000000n7.00N20000000jfTF}</STRONG></P>
+<P>&nbsp;</P>
+<P><STRONG>Owner:</STRONG> {!01I2000000000n7.CreatedBy}</P>
+<P><STRONG>Month:</STRONG> {!01I2000000000n7.00N20000000nOux}</P>
+<P><STRONG>Meeting category:</STRONG> {!01I2000000000n7.00N20000000jg7E}</P>
+<P><STRONG>Status:</STRONG> {!01I2000000000n7.00N20000000jfxN}</P>
+<P><STRONG>Meeting Description:</STRONG> {!01I2000000000n7.00N20000000jfTk}</P>
+<P><STRONG>Objectives:</STRONG> </P>
+<P>{!01I2000000000n7.00N20000000jfT5}</P>
+<P><STRONG>Meeting Start:</STRONG> {!01I2000000000n7.00N20000000jfT4}</P>
+<P><STRONG>Meeting End:</STRONG> {!01I2000000000n7.00N20000000jg7I}</P>
+<P><STRONG>Venue:</STRONG> {!01I2000000000n7.00N20000000jg7I}</P>
+<P><STRONG>Participants:</STRONG> </P>
+<P>{!01I2000000000n7.00N20000000jfT6}</P>
+<P>&nbsp;</P>
+<P><U><STRONG>Meeting Report</STRONG></U></P>
+<P>{!01I2000000000n7.00N20000000jfT8}</P>
+<P>&nbsp;</P>
+<P><U><STRONG>Objectives Achieved:</STRONG></U> {!01I2000000000n7.00N20000000jfxM}</P>
+<P>&nbsp;</P>
+<P><U><STRONG>Follow up actions</STRONG></U></P>
+<P>{!01I2000000000n7.00N20000000kXlU}</P>
+<P>&nbsp;</P>]]></td>
+</tr>
+</table>

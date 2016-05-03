@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Sanity check failure</name>
+    <style>freeForm</style>
+    <subject>RE: {!Case.CaseNumber} DOCUMENTS REJECTED  - {!Account.Name}: {!Account.IATACode__c}</subject>
+    <textOnly>IATA Numeric code: {!Account.IATACode__c}
+
+Dear {!Account.Name},
+
+Following the upload and submission of your financial documents to IATA, we have been advised that below documents are invalid, incomplete, or missing:
+
+- &lt;INPUT THE REASON FOR SANITY CHECK FAILURE, AS PROVIDED BY THE GFA&gt;
+
+A complete set of valid financial documents must be uploaded and submitted on the IATA Financial Assessment Portal:
+
+http://www.iata.org/ifap
+
+Your Username and password for the Portal remain as previously communicated.
+
+Deadline for submission: &lt;INPUT THE SAME DEADLINE DATE AS PER THE IFAP CASE&gt;
+
+Please be reminded that a failure to submit your financial documents by &lt;INPUT DEADLINE DATE&gt; will mean that your Agency no longer satisfied the financial standards as published in the Travel/Cargo Agent Handbook, and actions will be taken in accordance with the applicable resolution.
+
+For any queries on this matter, please contact us at http://www.iata.org/cs and refer to your case number: {!Case.CaseNumber}
+
+Thank you for your cooperation.
+
+Sincerely,
+IATA Operations &amp; Service Center</textOnly>
+    <type>html</type>
+</EmailTemplate>

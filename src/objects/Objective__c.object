@@ -137,7 +137,7 @@ Object used to store objectives that can be independent, related to other object
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>SA-YE</fullName>
+                <fullName>Saudi &amp; Yemen</fullName>
                 <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
                 <controllingFieldValues>MENA</controllingFieldValues>
                 <default>false</default>
@@ -675,7 +675,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Children Current Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>3</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -691,7 +691,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Children Forecast</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>3</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -707,7 +707,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Current Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>3</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -792,6 +792,10 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>RVPO</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Cross-Divisional</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackFeedHistory>false</trackFeedHistory>
@@ -820,7 +824,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Forecast</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>3</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -917,7 +921,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Initial Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>3</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -951,6 +955,7 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>Africa &amp; Middle East</fullName>
                 <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>FDS</controllingFieldValues>
                 <controllingFieldValues>MACS</controllingFieldValues>
                 <controllingFieldValues>MER</controllingFieldValues>
@@ -961,6 +966,7 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>Americas</fullName>
                 <controllingFieldValues>APCS</controllingFieldValues>
                 <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>FDS</controllingFieldValues>
                 <controllingFieldValues>MACS</controllingFieldValues>
                 <controllingFieldValues>MER</controllingFieldValues>
@@ -973,6 +979,7 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>Asia &amp; Pacific</fullName>
                 <controllingFieldValues>APCS</controllingFieldValues>
                 <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>FDS</controllingFieldValues>
                 <controllingFieldValues>MACS</controllingFieldValues>
                 <controllingFieldValues>MER</controllingFieldValues>
@@ -985,6 +992,7 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>China &amp; North Asia</fullName>
                 <controllingFieldValues>APCS</controllingFieldValues>
                 <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>FDS</controllingFieldValues>
                 <controllingFieldValues>MACS</controllingFieldValues>
                 <controllingFieldValues>MER</controllingFieldValues>
@@ -997,6 +1005,7 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>Europe</fullName>
                 <controllingFieldValues>APCS</controllingFieldValues>
                 <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>FDS</controllingFieldValues>
                 <controllingFieldValues>MACS</controllingFieldValues>
                 <controllingFieldValues>MER</controllingFieldValues>
@@ -1008,6 +1017,7 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>Africa</fullName>
                 <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>RVPO</controllingFieldValues>
                 <controllingFieldValues>SFO</controllingFieldValues>
                 <default>false</default>
@@ -1015,6 +1025,7 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>MENA</fullName>
                 <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>Cross-Divisional</controllingFieldValues>
                 <controllingFieldValues>RVPO</controllingFieldValues>
                 <controllingFieldValues>SFO</controllingFieldValues>
                 <default>false</default>
@@ -1087,7 +1098,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Target Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>3</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1196,19 +1207,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <columns>Target_Progress__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Incomplete_Objectives</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>is_Incomplete__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Incomplete Objectives</label>
+        <label>All objectives</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1232,68 +1231,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             <value>Levant</value>
         </filters>
         <label>Levant Area Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Objectives_with_missing_Area_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Areas_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing Area Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Objectives_with_missing_RegionObjectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Regions_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing RegionObjectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>VP_Divisional_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Type__c</columns>
-        <columns>Cascade_To_Region__c</columns>
-        <columns>Target__c</columns>
-        <columns>Current__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>Objective__c.Division</value>
-        </filters>
-        <filters>
-            <field>Division__c</field>
-            <operation>equals</operation>
-            <value>VP</value>
-        </filters>
-        <label>VP Divisional Objectives</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1449,11 +1386,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SA-YE</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>Saudi %26 Yemen</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1731,6 +1668,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross-Divisional</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2042,11 +1983,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SA-YE</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>Saudi %26 Yemen</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2324,6 +2265,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross-Divisional</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2635,11 +2580,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SA-YE</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>Saudi %26 Yemen</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2917,6 +2862,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross-Divisional</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3228,11 +3177,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SA-YE</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>Saudi %26 Yemen</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3513,6 +3462,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cross-Divisional</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -3720,6 +3673,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <openType>sidebar</openType>
         <protected>false</protected>
         <url>/apex/NewObjective?parent={!Objective__c.Id}&amp;recordtype=Account</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Account_Objective_List</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>New Account Objective</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/NewObjective?&amp;recordtype=Account</url>
     </webLinks>
     <webLinks>
         <fullName>New_Area_Objective</fullName>

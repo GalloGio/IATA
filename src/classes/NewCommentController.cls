@@ -1,28 +1,28 @@
 public with sharing class NewCommentController {
 
-	public static final map<String,Schema.RecordTypeInfo> MAP_RT = Schema.SObjectType.Comment__c.getRecordTypeInfosByName();
-	public Id objectiveId;
+    public static final map<String,Schema.RecordTypeInfo> MAP_RT = Schema.SObjectType.Comment__c.getRecordTypeInfosByName();
+    public Id objectiveId;
 
-	public NewCommentController(ApexPages.standardController controller) {
-		this.objectiveId = ApexPages.CurrentPage().getParameters().get('parent');
-	}
+    public NewCommentController(ApexPages.standardController controller) {
+        this.objectiveId = ApexPages.CurrentPage().getParameters().get('parent');
+    }
 
-	public Pagereference redirect() {
-		Comment__c comment = new Comment__c();
-		if (this.objectiveId == null ){
-			comment.Parent_Objective__c = null;
-			comment.RecordtypeId = MAP_RT.get('Objective Independent').getRecordTypeId();
-			
-		} else {
-			comment.Parent_Objective__c = this.objectiveId;
-			comment.RecordtypeId = MAP_RT.get('Objective Related').getRecordTypeId();
-		}
-		insert comment;
+    public Pagereference redirect() {
+        Comment__c comment = new Comment__c();
+        if (this.objectiveId == null ){
+            comment.Parent_Objective__c = null;
+            comment.RecordtypeId = MAP_RT.get('2. Independent').getRecordTypeId();
+            
+        } else {
+            comment.Parent_Objective__c = this.objectiveId;
+            comment.RecordtypeId = MAP_RT.get('1. Objective Related').getRecordTypeId();
+        }
+        insert comment;
 
-		Pagereference pageref = new Pagereference('/'+comment.Id + '/e');
-		pageref.getParameters().put('retURL','/' + this.objectiveId);
-		pageref.setRedirect(true);
-		return pageref;
-	}
+        Pagereference pageref = new Pagereference('/'+comment.Id + '/e');
+        pageref.getParameters().put('retURL','/' + this.objectiveId);
+        pageref.setRedirect(true);
+        return pageref;
+    }
 
 }

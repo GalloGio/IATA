@@ -1,0 +1,8 @@
+Dear {!Case.OwnerFullName}, 
+
+A new Case Comment has been added to the Case {!Case.CaseNumber}:
+
+{!Case.Last_Case_Comment} 
+
+
+please click on this link {!Case.Link}.

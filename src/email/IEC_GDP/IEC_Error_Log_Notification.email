@@ -1,0 +1,68 @@
+<HTML>
+<style type="text/css">
+	tbody tr:nth-child(odd) {background-color: #ccc;}
+	tbody td:first-child {font-weight: bold;}
+</style>
+<table>
+<tr style="background-color: #ccc;">
+	<td Style="font-weight: bold;">
+	Name:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Name}
+	</td>
+</tr>
+<tr>
+	<td Style="font-weight: bold;">
+	Type:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Type__c}
+	</td>
+</tr>
+<tr style="background-color: #ccc;">
+	<td Style="font-weight: bold;">
+	Source:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Source__c}
+	</td>
+</tr>
+<tr>
+	<td Style="font-weight: bold;">
+	Displayed Message:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Displayed_Message__c}
+	</td>
+</tr>
+
+<tr style="background-color: #ccc;">
+	<td Style="font-weight: bold;">
+	Error Message:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Errror_Message__c}
+	</td>
+</tr>
+<tr>
+	<td Style="font-weight: bold;">
+	Detail Link:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Link}
+	</td>
+</tr>
+<!--
+<tr style="background-color: #ccc;">
+	<td>
+	Stack Trace:
+	</td>
+	<td>
+	{!IEC_Error_Log__c.Stack_Trace__c}
+	</td>
+</tr>
+-->
+</table>
+
+</HTML>

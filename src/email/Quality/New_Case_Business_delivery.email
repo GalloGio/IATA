@@ -1,0 +1,14 @@
+The following case has been assigned to the queue  {!Case.OwnerFullName}.
+
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject}
+Case description: {!Case.Description} 
+
+Region: {!Case.Region__c}
+IATA Country: {!Case.BSPCountry__c}
+Case Area: {!Case.CaseArea__c}
+Key Control:  {!Quality__c.Key_Control__c}
+Reason: {!Case.Reason1__c}
+
+
+{!Case.Link}

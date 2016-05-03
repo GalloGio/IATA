@@ -1,0 +1,15 @@
+Case link: {!Case.Link} 
+
+The following airline unpaid the payment as below. 
+
+Case information: 
+
+IATA code: {!Account.Site}
+Account name: {!Account.Name} 
+Remittance period: {!Case.Remittance_Period__c}  
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject} 
+Ending Balance: {!Case.Currency__c}{!Case.Ending_Balance__c}
+
+
+Case link: {!Case.Link}

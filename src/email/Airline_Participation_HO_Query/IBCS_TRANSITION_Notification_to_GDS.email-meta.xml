@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>IBCS TRANSITION &gt;&gt; Notification to GDS</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>IBCS TRANSITION - Notification to GDS</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject} - New Airline Contacts: ETSP Notification</subject>
+    <textOnly>Dear Service Providers,
+
+
+Please find below the new contact details of the mentioned airline in the selected BSP country(ies).
+
+
+
+Airline Name: {!Case.Account}
+
+Airline Designator / Numeric Code: {!Account.Airline_designator__c} / {!Account.IATACode__c}
+
+BSP Country Name(s): {!Case.BSPCountry__c}
+
+
+
+(Insert Address)
+
+(Insert Tel no)
+
+(Insert Fax no.)
+
+(Insert email id of BSP contact)
+
+(Insert name of contact)
+
+
+
+
+Thank you,
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Industry Distribution and Financial Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer</textOnly>
+    <type>html</type>
+</EmailTemplate>

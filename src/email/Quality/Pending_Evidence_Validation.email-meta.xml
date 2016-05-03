@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify CQT that the Evidence has been uploaded for validation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Pending Evidence Validation</name>
+    <style>freeForm</style>
+    <subject>Exception Notification – Pending Evidence Validation - {!Quality__c.Name} - Region {!Quality__c.Region__c}</subject>
+    <textOnly>Dear Quality Team
+
+
+Please be informed that the evidence of alignment for the Exception {!Quality__c.Name} has been uploaded to the exception and is pending GPO validation.
+
+
+Please click the below link to access the exception:
+{!Quality__c.Link}
+Related Internal Case Number: {!Quality__c.Related_Case_Number__c}
+Exception Type: {!Quality__c.Exception_Type__c}
+SOP: {!Quality__c.SOP_Type__c}
+SOP Execution Category: {!Quality__c.Exe_Category__c}
+Priority: {!Quality__c.Priority__c}
+Region: {!Quality__c.Region__c}
+Country: {!Quality__c.Africa_MENA_CC__c}{!Quality__c.Europe_CC__c}{!Quality__c.Asia_Pacific_CC__c}{!Quality__c.China_North_Asia_CC__c}{!Quality__c.Americas_CC__c}
+Operation: {!Quality__c.Operation__c}
+
+
+Deadline for Alignment: {!Quality__c.Deadline_for_Alignment__c}
+Evidence Requested: {!Quality__c.Evidence_of_Alignment__c}
+
+
+Thank you and best regards.
+
+&lt;!--[if !supportAnnotations]--&gt;&lt;!--[endif]--&gt;</textOnly>
+    <type>html</type>
+</EmailTemplate>

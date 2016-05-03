@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CASS GSSA document</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>CASS GSSA document</name>
+    <style>freeForm</style>
+    <subject>CASS - Collection of Document</subject>
+    <textOnly>Geneva, 13 December 2012
+
+
+
+Dear Sirs,
+
+
+Following our registered mail sent a few weeks ago (below you will find the outline), we would like to apologize for not having attached the mentioned templates. Notwithstanding, those forms are available through our Customer Services.
+
+
+In order to secure a proper communication and improve the collection process, please find attached the required templates in an editable pdf version. Once filled in accordingly, kindly send the documents to IATA by December 21, 2012 by replying directly to this email attaching the scanned copies and sending the original by courier to the address indicated below:
+
+
+Airline Participation
+
+C/O CASS Collection of Document
+
+International Air Transport Association
+33, Route de l’Aeroport
+P.O. Box 416
+1215 Geneva 15 Airport, Switzerland
+
+
+Indeed, you are currently an active participant in Cargo Account Settlement System (CASS), governed by Resolution 851.
+
+
+As per IATA Resolution 851 and in order to be able to participate in CASS, General Sales and Services Agents (GSSAs) are required to complete and sign a Counterindemnity Agreement and a Form of Application and Concurrence for each CASS operation.
+
+
+According to our records we have no such documents for your Company in our Archives, and therefore we have contacted you through our Local IATA Offices to request the same.
+
+
+So far we have not received the requested
+
+- Counterindemnity Agreement
+
+- Form of Application and Concurrence
+
+
+And hereby request your Company to sign these documents as part of the requirements to participate in the following CASS operations:
+
+
+{!Case.IATA Country}
+
+
+Kindly complete the form (s) with your Company Legal Name and full address of the registered office. Please print two copies.
+
+
+Both copies should be signed by your Airline Senior Management, either Chief Executive Officer, Chief Financial Officer or Director General, and sent to the address indicated below. IATA will send return one original for your archives, after countersignature on our side.
+
+
+In the case that the documents are not received within the indicated time frame, IATA will suspend your participation from CASS pursuant to Section 14 of Resolution 851 until the above mentioned documents are received.
+
+
+Please contact us at +41227702983 for further queries.
+
+
+
+Sincerely,
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Industry Distribution and Financial Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer</textOnly>
+    <type>html</type>
+</EmailTemplate>

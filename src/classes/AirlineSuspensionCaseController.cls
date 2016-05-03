@@ -19,7 +19,7 @@ global with sharing class AirlineSuspensionCaseController {
     public Id GDStemplateId { public get {
             try {
                 EmailTemplate et = [SELECT Id, Name FROM EmailTemplate WHERE DeveloperName = 'Airline_Suspension_GDS_Message' LIMIT 1];
-            	return et.id; 
+                return et.id; 
             } catch (Exception e) {
                 system.debug('ERROR getting the GDS template: ' + e.getMessage());
                 return null;
@@ -27,16 +27,17 @@ global with sharing class AirlineSuspensionCaseController {
         } private set;
     }
     public Id InternalTemplateId { public get {
-    		String tplName = 'Airline_Suspension_Internal';
-    		
+            String tplName = 'Airline_Suspension_Internal';
+            
             try {
-            	tplName += asrecord.BSP_Participations_locked__c == 'No BSP Participation' ? '' : '_BSP';
-            	tplName += asrecord.CASS_Participations_locked__c == 'No CASS Participation' ? '' : '_CASS';
-            	
-            	tplName += asrecord.Settle_Directly_To__c == 'IATA' ? '_Settle_to_IATA' : '_Settle_to_Airline';
-            	
-            	EmailTemplate et = [SELECT Id, Name FROM EmailTemplate WHERE DeveloperName = :tplName LIMIT 1];
-            	return et.id;  
+                tplName += asrecord.BSP_Participations_locked__c == 'No BSP Participation' ? '' : '_BSP';
+                tplName += asrecord.CASS_Participations_locked__c == 'No CASS Participation' ? '' : '_CASS';
+                
+                tplName += asrecord.Settle_Directly_To__c == 'IATA' ? '_Settle_to_IATA' : '_Settle_to_Airline';
+                tplName += '_Cloned';
+                
+                EmailTemplate et = [SELECT Id, Name FROM EmailTemplate WHERE DeveloperName = :tplName LIMIT 1];
+                return et.id;  
             } catch (Exception e) {
                 system.debug('ERROR getting the internal template "' + tplName + '": ' + e.getMessage());
                 return null;
@@ -67,9 +68,9 @@ global with sharing class AirlineSuspensionCaseController {
             String tmpStr = '';
             
             if (asrecord.Regions_Involved__c != null) {
-	            for (String region : asrecord.Regions_Involved__c.split(',')) {
-	                tmpStr += (tmpStr != '' ? ',' : '') + mapEmailListPerRegion.get(region.trim());
-	            }
+                for (String region : asrecord.Regions_Involved__c.split(',')) {
+                    tmpStr += (tmpStr != '' ? ',' : '') + mapEmailListPerRegion.get(region.trim());
+                }
             }
             
             return tmpStr;
@@ -145,15 +146,15 @@ global with sharing class AirlineSuspensionCaseController {
         List<Services_Rendered__c> lstServicesRendered = new List<Services_Rendered__c>();
         
         if (c.RecordType.DeveloperName == 'Airline_Deactivation') {
-        	// if deactivation, only look through the services rendered where the account on the case is the consumer
-        	lstServicesRendered = [SELECT Id, ISO_Country_formula__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Region__c FROM Services_Rendered__c 
+            // if deactivation, only look through the services rendered where the account on the case is the consumer
+            lstServicesRendered = [SELECT Id, ISO_Country_formula__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Region__c FROM Services_Rendered__c 
                                     WHERE Services_Rendered_Status__c = 'Active' 
                                     AND Services_Rendered_Type__c IN :lstParticipationTypes 
                                     AND Services_Rendered_To_Airline__c =: c.AccountId 
                                     ORDER BY ISO_Country_formula__c];
         } else {
-        	// if suspension, look at all the services rendered received or provided by the airline hq and its branches
-	        lstServicesRendered = [SELECT Id, ISO_Country_formula__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Region__c FROM Services_Rendered__c 
+            // if suspension, look at all the services rendered received or provided by the airline hq and its branches
+            lstServicesRendered = [SELECT Id, ISO_Country_formula__c, Services_Rendered_to_Airline__r.IATA_ISO_Country__r.Region__c FROM Services_Rendered__c 
                                     WHERE Services_Rendered_Status__c = 'Active' 
                                     AND Services_Rendered_Type__c IN :lstParticipationTypes 
                                     AND (Services_Rendered_To_Airline__c =: c.AccountId 
@@ -221,61 +222,61 @@ global with sharing class AirlineSuspensionCaseController {
      * Closes all the child suspension cases with a status of "Abandoned" (to be used in case of cases mistakenly generated)
      */
     public void CloseAllChildSuspensionCases () {
-        	AirlineSuspensionChildCaseCreationBatch asb = new AirlineSuspensionChildCaseCreationBatch(c.Id, true);
-        	Id batchInstanceId = Database.executeBatch(asb, 5);
-        	
-	        asrecord.ChildSuspensionCasesGenerated__c = 'Pending';
-	        update asrecord;
+            AirlineSuspensionChildCaseCreationBatch asb = new AirlineSuspensionChildCaseCreationBatch(c.Id, true);
+            Id batchInstanceId = Database.executeBatch(asb, 5);
+            
+            asrecord.ChildSuspensionCasesGenerated__c = 'Pending';
+            update asrecord;
         
     }
     
     
     /*
     public void CreateAttachmentToParentCase () {
-    	String attBody;
-    	try {
-    		attBody = testCongaBackgroundMode(asrecord.Id, template.Id);
-    	} catch (Exception e) {
-    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-    	}
-    	
-    	if (attBody != null) {
-    		Attachment att = new Attachment();
-    		att.ParentId = c.Id;
-    		att.Name = 'Pre-suspension+Checklist.doc';
-    		att.Body = Blob.valueOf(attBody);
-    		
-    		insert att;
-    	} 
+        String attBody;
+        try {
+            attBody = testCongaBackgroundMode(asrecord.Id, template.Id);
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
+        }
+        
+        if (attBody != null) {
+            Attachment att = new Attachment();
+            att.ParentId = c.Id;
+            att.Name = 'Pre-suspension+Checklist.doc';
+            att.Body = Blob.valueOf(attBody);
+            
+            insert att;
+        } 
     }
     
     @RemoteAction
-	global static String testCongaBackgroundMode(Id asrecordId, Id templateId) {
-	
-	    String sessId = UserInfo.getSessionId();
-	    String servUrl = Url.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/u/29.0/' + UserInfo.getOrganizationId();
-		
-		String url2 = 'https://www.appextremes.com/apps/conga/pm.aspx?sessionId=' + sessId + 
-					'&serverUrl=' + servUrl + 
-					'&id=' + asrecordId + 
-					'&fp0=0&ds1=0&ds4=1&ds5=0&OFN=Pre-suspension+Checklist' + 
-					'&EmailRelatedToId=' + asrecordId + 
-					'&TemplateId=' + templateId +
-					'&DS7=3';
-					
-	    System.debug(url2);
-	
-	    Http http = new Http();
-	    HttpRequest req = new HttpRequest();
-	    req.setEndpoint(url2);
-	    req.setMethod('GET');
-	    req.setTimeout(60000);
-		
-		// Send the request, and return a response
-	    HttpResponse res = http.send(req);
-		
-	    System.debug(res);
-		
-	    return res.getBody();
-	} */
+    global static String testCongaBackgroundMode(Id asrecordId, Id templateId) {
+    
+        String sessId = UserInfo.getSessionId();
+        String servUrl = Url.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/u/29.0/' + UserInfo.getOrganizationId();
+        
+        String url2 = 'https://www.appextremes.com/apps/conga/pm.aspx?sessionId=' + sessId + 
+                    '&serverUrl=' + servUrl + 
+                    '&id=' + asrecordId + 
+                    '&fp0=0&ds1=0&ds4=1&ds5=0&OFN=Pre-suspension+Checklist' + 
+                    '&EmailRelatedToId=' + asrecordId + 
+                    '&TemplateId=' + templateId +
+                    '&DS7=3';
+                    
+        System.debug(url2);
+    
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(url2);
+        req.setMethod('GET');
+        req.setTimeout(60000);
+        
+        // Send the request, and return a response
+        HttpResponse res = http.send(req);
+        
+        System.debug(res);
+        
+        return res.getBody();
+    } */
 }

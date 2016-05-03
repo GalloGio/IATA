@@ -9,7 +9,8 @@ public with sharing class ISSP_PortalService{
     
         string psId = Apexpages.currentPage().getParameters().get('id');
 
-        PortalService_List =new List<Portal_Applications__c >([select id , Name, ServiceName__c ,Service_Description__c ,Application_icon__c 
+        PortalService_List =new List<Portal_Applications__c >([select id , Name, ServiceName__c ,Service_Description__c ,Application_icon__c,
+                                                               Cannot_be_managed_by_portal_admin__c
                                                    From Portal_Applications__c 
                                                    Where Id =: psId ]);
                                                    

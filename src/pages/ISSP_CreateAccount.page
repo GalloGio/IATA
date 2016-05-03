@@ -10,7 +10,36 @@
  <style>
  .btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
  h3.panel-title {background: none repeat scroll 0 0 #a1bc00;color: #fff;display: block;font-size: 19px;font-weight: normal;margin-top: 0;padding: 10px;}
+ .statusBox{margin-left: 60%;margin-top: -12%;}
  </style>
+
+ <script type="text/javascript">
+    var $j = jQuery.noConflict();
+
+    $j(document).ready(function() {
+        console.log('fsd '+'{!preventAddressDoctorService}');
+        if('{!preventAddressDoctorService}'=='false'){
+            $j("#shippingcountry").find("input").val("{!searchCountryName}");
+            $j("#shippingcountry").find("input").attr('readonly', true);
+            $j("#billingcountry").find("input").val("{!searchCountryName}");
+            $j("#billingcountry").find("input").attr('readonly', true);
+            $j("#billingcity").parent().siblings('.col-lg-5').find("label").prepend( "<span class='required'>*</span>" );
+            $j("#billingstreet").parent().siblings('.col-lg-5').find("label").prepend( "<span class='required'>*</span>" );
+            $j("#billingcountry").parent().siblings('.col-lg-5').find("label").prepend( "<span class='required'>*</span>" );
+            $j("#email__c").parent().siblings('.col-lg-6').find("label").html('').prepend( "<span class='required'></span>{!$Label.ISSP_Office_Email}" );
+            $j(".billingcity").addClass('rec');
+            $j(".billingstreet").addClass('rec');
+            $j(".billingcountry").addClass('rec');
+            $j(".req").change(function() {
+                copyBillingAddress();
+            });
+            $j(".labelText").hide();
+            $j("#phone").hide();
+        }
+
+
+    });
+  </script>
  
   <apex:composition template="ISS_Template"> 
     <apex:define name="body">
@@ -27,11 +56,12 @@
             </div>
             <apex:outputPanel id="searchPanel" >
             <Script>
-	        $('#IATACode').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
-	        $('#Country').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
-	        $('#IATACodeAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
-	        $('#CountryAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
-	        $('#DesignatorCodeBubble').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Designator_Bubble)}',title:''});
+            var $j = jQuery.noConflict();
+	        $j('#IATACode').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
+	        $j('#Country').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
+	        $j('#IATACodeAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
+	        $j('#CountryAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
+	        $j('#DesignatorCodeBubble').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Designator_Bubble)}',title:''});    
 	        </Script>
             <apex:form styleclass="login_box" forceSSL="true">
                 <div class="alert alert-danger" id="errorBox" style="display:{!if(errorMessage.size==0,'none','')}">
@@ -335,69 +365,65 @@
                       <div class="panel-heading">
 						<h3 class="panel-title">{!$Label.ISSP_CompanyAddressInformation}</h3>
                       </div>
-                       <div class="form-group col-lg-6">
+                       <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
                        </div>
-                      <div class="form-group col-lg-6">
+                      <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
                         <input type="checkbox" name="vehicle" id="copyCheckBox" onChange="copyBillingAddress()"/>
 						<label for="exampleInputEmail1">{!$Label.ISSP_CopyBillingAddress}</label> 
                       </div>
                       <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.BillingStreet.Label}</label>
-                            <apex:inputField styleclass="form-control rec BillingStreet" value="{!acc.BillingStreet}" onChange="copyBillingAddress()" />
+                      <DSE:DS_DataQuality id="BillingAddress"
+                        RecordRef="{!acc}"
+                        FieldGroupName="Billing Address"
+                        Edit="true"
+                        FormGroupStyle="form-group"
+                        RowStyle="row"
+                        LabelStyle="col-lg-5"
+                        InputStyle="col-lg-6"
+                        StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                        FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
+                      </DSE:DS_DataQuality>
                       </div>
                       <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.ShippingStreet.Label}</label>
-                            <apex:inputField styleclass="form-control ShippingStreet" value="{!acc.ShippingStreet}"/>
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.BillingCity.Label}</label>
-                            <apex:inputField styleclass="form-control rec BillingCity"  value="{!acc.BillingCity}" onChange="copyBillingAddress()" />
-                      </div>
-                       <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.ShippingCity.Label}</label>
-                            <apex:inputField styleclass="form-control ShippingCity"  value="{!acc.ShippingCity}"/>
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.BillingState.Label}</label>
-                            <apex:inputField styleclass="form-control BillingState"  value="{!acc.BillingState}" onChange="copyBillingAddress()" />
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.ShippingState.Label}</label>
-                            <apex:inputField styleclass="form-control ShippingState"  value="{!acc.ShippingState}"/>
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.BillingPostalCode.Label}</label>
-                            <apex:inputField styleclass="form-control BillingPostalCode"  value="{!acc.BillingPostalCode}" onChange="copyBillingAddress()" />
-                      </div>
-                       <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.ShippingPostalCode.Label}</label>
-                            <apex:inputField styleclass="form-control ShippingPostalCode"  value="{!acc.ShippingPostalCode}"/>
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.BillingCountry.Label}</label>
-						<apex:OutputText styleclass="form-control" value="{!searchCountryName}" />
-						<!-- 
-						<apex:selectList styleclass="form-control" value="{!searchCountry}" size="1" rendered="{!AND(!toSearchDesignatorCode, isAirline)}" >
-                            <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_CountryNone}"/>
-                            <apex:selectOptions value="{!ISOCountry}"/>
-                        </apex:selectList>
-                         -->
-                      </div>
-                      <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.ShippingCountry.Label}</label>
-                        <apex:OutputText styleclass="form-control"  value="{!searchCountryName}"/>
+                      <DSE:DS_DataQuality id="ShippingAddress"
+                        RecordRef="{!acc}"
+                        FieldGroupName="Shipping Address"
+                        Edit="true"
+                        FormGroupStyle="form-group"
+                        RowStyle="row"
+                        LabelStyle="col-lg-5"
+                        InputStyle="col-lg-6"
+                        StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                        FormControlStyle="form-control" rendered="{!preventAddressDoctorService==false}">
+                      </DSE:DS_DataQuality>
                       </div>
                       	<apex:inputHidden value="{!acc.Phone}" id="businessphone"/>
                 		<apex:inputHidden value="{!acc.Mobile__c}" id="businessmobile"/>
                 		<apex:inputHidden value="{!acc.Fax}" id="businessfax"/>
                       <div class="form-group col-lg-6">
-                          <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Office_Phone}</label><br/>
-                            <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');"/>
+                        <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Office_Phone}</label><br/>
+                            <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');$j('.phone').change();"/>
                       </div>
+
                       <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required"></span>{!$Label.ISSP_Office_Mobile}</label><br/>
                             <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"/>
                       </div>
+
+                      <div class="form-group col-lg-6">
+                          <DSE:DS_DataQuality id="phoneinput"
+                            RecordRef="{!acc}"
+                            FieldGroupName="Phone"
+                            Edit="true"
+                            FormGroupStyle="form-group"
+                            RowStyle="row"
+                            LabelStyle="col-lg-6 labelText"
+                            InputStyle="col-lg-9"
+                            StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox"
+                            FormControlStyle="form-control national" rendered="{!preventAddressDoctorService==false}">
+                          </DSE:DS_DataQuality>
+                      </div>
+                      
                       <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required"></span>{!$Label.ISSP_Office_Fax}</label><br/>
                             <apex:inputField id="businessfaxinput" styleclass="form-control"  value="{!acc.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
@@ -408,8 +434,17 @@
                       </div>
                       
                       <div class="form-group col-lg-6">
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$Label.ISSP_Office_Email}</label>
-                            <apex:inputField styleclass="form-control"  value="{!acc.Email__c}"/>
+                          <DSE:DS_DataQuality id="emailinput"
+                            RecordRef="{!acc}"
+                            FieldGroupName="Email"
+                            Edit="true"
+                            FormGroupStyle="form-group"
+                            RowStyle="row"
+                            LabelStyle="col-lg-6"
+                            InputStyle="col-lg-11"
+                            StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                            FormControlStyle="form-control" rendered="{!preventAddressDoctorService==false}">
+                          </DSE:DS_DataQuality>
                       </div>
                    
                   
@@ -429,7 +464,7 @@
         
                 <div class="panel panel-default row" style="display:{!IF(accountFound,'none','')}" id="submitAccountButtons">
                 	
-                	<div class="alert alert-info" id="infoBox" style="display:{!if(infoMessage.size==0,'none','')}">
+                	<div class="alert alert-info" id="infoBox" style="display:{!if(infoMessage.size==0,'none','')};margin-top:-9%">
 	                    <apex:repeat value="{!infoMessage}" var="er" id="theRepeat2">
 	                        <p><apex:outputText value="{!er}" escape="false" /></p>
 	                    </apex:repeat>
@@ -452,14 +487,14 @@
                       	/>
                       <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitNewAccount" onClick="if(!validateNewAccount('{!$Component.categoryField}'))return false;blockme();" action="{!register}" value="{!$Label.site.submit}" id="submit" style="display:none" />
                     </div>
-                </div>
+                </div>`
                 <div id="pleaseWait2" style="display:none" >
                 	<h3> {!$Label.ISSP_PleaseWait}</h3>
             	</div>
                <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>  
         <script>
-        var natphone = $("input[name='{!$Component.newAccount.businessphoneinput}']");
-        var phone = $("input[name='{!$Component.newAccount.businessphone}']");
+        var natphone = $j("input[name='{!$Component.newAccount.businessphoneinput}']");
+        var phone = $j(".phone");
         
         natphone.intlTelInput({
             defaultCountry: '{!searchCountryISOCode}',
@@ -469,8 +504,8 @@
           utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
                         
-        var natmobile = $("input[name='{!$Component.newAccount.businessmobileinput}']");
-    	var mobile = $("input[name='{!$Component.newAccount.businessmobile}']");
+        var natmobile = $j("input[name='{!$Component.newAccount.businessmobileinput}']");
+    	var mobile = $j("input[name='{!$Component.newAccount.businessmobile}']");
         
          natmobile.intlTelInput({
             defaultCountry: '{!searchCountryISOCode}',
@@ -480,8 +515,8 @@
         	utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
   
-        var natfax = $("input[name='{!$Component.newAccount.businessfaxinput}']");
-    	var fax = $("input[name='{!$Component.newAccount.businessfax}']");
+        var natfax = $j("input[name='{!$Component.newAccount.businessfaxinput}']");
+    	var fax = $j("input[name='{!$Component.newAccount.businessfax}']");
     
          natfax.intlTelInput({
             defaultCountry: '{!searchCountryISOCode}',
@@ -512,48 +547,48 @@
         var type = '{!selectedCustomerType}';
         
         if (type=='Airline' || type=='NonIATAAgent') {
-            $(".selectCountry").val('{!searchCountry}');
-            $('.selectCountry').attr('readonly', true);
+            $j(".selectCountry").val('{!searchCountry}');
+            $j('.selectCountry').attr('readonly', true);
         }
         
         function selectAccId(theAccId){
             var accId = $('input[name="group1"]:checked').val();
-            $('.accId').val(accId);
+            $j('.accId').val(accId);
             //document.getElementById(theAccId).val = accId;
-            $('.submitExistAccount').show();
+            $j('.submitExistAccount').show();
         }
             
         if({!accList.size}==1) {
         	if ({!!showNextAsGP}){
-	            $('#searchResults input[name="group1"]').first().prop("checked", true);
-	            $('.submitExistAccount').show();
+	            $j('#searchResults input[name="group1"]').first().prop("checked", true);
+	            $j('.submitExistAccount').show();
 	            //selectAccId();
             }
         }
 
         function validateSearch(){
             var flag = true;
-            $('#recFields').hide();
-            $('.recSearch').each(function (){
-                $(this).parents('.form-group').removeClass('has-error');
-                if(!$(this).val() || ($(this).hasClass('len3') && $(this).val().length<3)){
+            $j('#recFields').hide();
+            $j('.recSearch').each(function (){
+                $j(this).parents('.form-group').removeClass('has-error');
+                if(!$j(this).val() || ($j(this).hasClass('len3') && $j(this).val().length<3)){
                     flag = false;
-                    $(this).parents('.form-group').addClass('has-error');
+                    $j(this).parents('.form-group').addClass('has-error');
                 }
             })
             if(flag == false){
-                $('#recFields').show();
+                $j('#recFields').show();
             }
             return flag;
         }
         
         function validateSelectAccount(){
-            if ($('.accId').val()!='') {
+            if ($j('.accId').val()!='') {
                 return true;
             }
             else {
                 // should be selected anyway
-                $('.accId').parents('.form-group').addClass('has-error');
+                $j('.accId').parents('.form-group').addClass('has-error');
                 return false;
             }
         }
@@ -561,7 +596,7 @@
     function validateNewAccount(categoryField){
     	
     	var flag = true;
-        $('#recFields').hide();
+        $j('#recFields').hide();
     	
     	var myCategoryField = document.getElementById(categoryField);
     	if (myCategoryField == null){
@@ -571,31 +606,31 @@
     	{
 	    	if (myCategoryField.value == '' || myCategoryField.value == null){
 	    		flag = false;
-	    		$('#theCategoryMainDiv').addClass('has-error');
+	    		$j('#theCategoryMainDiv').addClass('has-error');
 	    	}
 	    	else{
-	    		$('#theCategoryMainDiv').removeClass('has-error');
+	    		$j('#theCategoryMainDiv').removeClass('has-error');
 	    	}
 	    }
     	
         if ({!accountFound}) {
-            if ($('.accId').val()!='') {
+            if ($j('.accId').val()!='') {
             	alert("return 1");
                 return true;
             }
             else {
             	alert("return 2");
-                $('.accId').parents('.form-group').addClass('has-error');
+                $j('.accId').parents('.form-group').addClass('has-error');
                 return false;
             }
         }
         
-        $('.rec').each(function (){
-			$(this).parents('.form-group').removeClass('has-error');
-			if(!$(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
-				if($(this).css('display') != 'none'){
+        $j('.rec').each(function (){
+			$j(this).parents('.form-group').removeClass('has-error');
+			if(!$j(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
+				if($j(this).css('display') != 'none'){
                    	flag = false;
-                   	$(this).parents('.form-group').addClass('has-error');
+                   	$j(this).parents('.form-group').addClass('has-error');
 				}
 			}
 		}
@@ -606,38 +641,38 @@
 			flag = false;
 		*/
         if(flag == false){
-            $('#recFields').show();
+            $j('#recFields').show();
         }
         //alert(flag);
         return flag;
     }
     
     function showCreateAccountForm() {
-        $('#createAccountForm').show();
-        $('.submitNewAccount').show();
-        $('#btnShowCreateAccount').hide();
-        $('#searchForm').hide();
-        $('#errorBox').hide();
-        $('#infoBox').hide();
-        $('#searchResultsHQ').hide();
+        $j('#createAccountForm').show();
+        $j('.submitNewAccount').show();
+        $j('#btnShowCreateAccount').hide();
+        $j('#searchForm').hide();
+        $j('#errorBox').hide();
+        $j('#infoBox').hide();
+        $j('#searchResultsHQ').hide();
     }
     if('{!createAccountErroeMode}'=='true'){
         showCreateAccountForm(); 
-        $('#errorBox').show();
+        $j('#errorBox').show();
     }
                    
     function copyBillingAddress() {
     	var checkBox = document.getElementById('copyCheckBox');
     	if (checkBox.checked){
-        	$(".ShippingStreet").val($(".BillingStreet").val());
-        	$(".ShippingCity").val($(".BillingCity").val());
-        	$(".ShippingState").val($(".BillingState").val());
-        	$(".ShippingPostalCode").val($(".BillingPostalCode").val());
+        	$j("#shippingstreet").find("textarea").val($j("#billingstreet").find("textarea").val());
+        	$j("#shippingcity").find("input").val($j("#billingcity").find("input").val());
+        	$j("#shippingstate").find("input").val($j("#billingstate").find("input").val());
+        	$j("#shippingpostalcode").find("input").val($j("#billingpostalcode").find("input").val());
 		}
     }
     
     function saveCountryName() {
-        $(".countryName").val($(".searchCountry option:selected").text());
+        $j(".countryName").val($j(".searchCountry option:selected").text());
     }
     
     function showCategory(div1, div2, inputValue, div3){

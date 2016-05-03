@@ -33,18 +33,18 @@ public with sharing class DAL_ISSP {
         if (contactId == null)
             return null;
         List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone, 
-                    OtherCity, OtherStreet, OtherState, OtherCountry, Function__c, Membership_Function__c, 
+                    OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c, 
                     User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c ,
                     AccountId, Account.Name, Account.Status__c, Account.BillingStreet, Account.BillingCity,
                     Account.BillingCountry, Account.IATACode__c, Account.BillingPostalCode,Account.BillingState,
                     Account.TradeName__c, Account.ParentId, Account.Top_Parent__c, Account.Airline_designator__c,
                     Account.Accumulated_Irregularities__c,Account.Sector__c,Account.Category__c,Account.VAT_Number__c,
                    	Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
-               		Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,
-                    Account.ICAO_designator__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.ISO_Code__c, Account.Location_Type__c,
-                    Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,
+               		Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,Account.Email__c,Account.WebSite,
+                    Account.ICAO_designator__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.IATA_ISO_Country__r.ISO_Code__c,Account.IATA_ISO_Country__r.OSCAR_enabled__c,
+               		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,
-					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c
+					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
             return contacts[0];
@@ -99,5 +99,20 @@ public with sharing class DAL_ISSP {
             return cases[0];
         return null;
         
+    }
+    
+    public static boolean visibilityOnIATACertificate(String accCategory, String accStatus){
+        List<VisibilityOnIATACertificates__c> VisibilityOnIATACertificatesCS = VisibilityOnIATACertificates__c.getall().values();
+        String accountCategory, accountStatus;
+       
+        for(VisibilityOnIATACertificates__c v : VisibilityOnIATACertificatesCS){
+            accountCategory = v.Account_Category__c;
+            accountStatus = v.Account_Status__c;
+           
+            if(accountCategory == accCategory && accountStatus == accStatus){
+                return true;
+            }
+        }
+        return false;
     }
 }

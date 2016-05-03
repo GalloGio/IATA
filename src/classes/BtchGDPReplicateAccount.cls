@@ -63,6 +63,7 @@ global class BtchGDPReplicateAccount implements Database.Batchable<sObject>, Dat
 				gdpRecord.Manager_Last_Name__c = liveRecord.Manager_Last_Name__c;
 				gdpRecord.Manager_First_Name__c = liveRecord.Manager_First_Name__c;
 				gdpRecord.Last_Date_of_Update__c = Date.today();
+				gdpRecord.Agency_Short_Name__c = liveRecord.Short_Name__c;
 
 				/**
 				 * Transformations

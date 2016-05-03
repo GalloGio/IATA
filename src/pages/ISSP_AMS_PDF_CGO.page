@@ -73,6 +73,7 @@
     </head>
     
     <body>
+    
         <div class="header">
             <div><apex:image width="100%" value="{!URLFOR($Resource.AP_PDF_Header)}"/></div>
         </div>
@@ -81,7 +82,7 @@
             <h2 class="panel-title">APPLICATION FOR APPROVAL</h2>
             <h2 class="panel-title">{!newForm.Agent_Type__c}</h2>
         </center>
-
+          
         <div class="footer">
             <table border="0" width="100%">
                 <tr>
@@ -113,11 +114,12 @@
         </div>
         
         <apex:pageBlock >
+        <apex:include pageName="{!includedSummaryPage}"/>
         <apex:form >
             <div style="font-size:13px">
-            <c:ISSP_AMS_CGO_ReadOnly rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),OR(newForm.Agent_Type__c == 'IATA Cargo Agent',newForm.Agent_Type__c=='EACP Intermediary'),amsOfficeType=='HO')}"/>
+            <!--<c:ISSP_AMS_CGO_ReadOnly rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),OR(newForm.Agent_Type__c == 'IATA Cargo Agent',newForm.Agent_Type__c=='EACP Intermediary'),amsOfficeType=='HO')}"/>
             <c:ISSP_AMS_CASS_HO_ReadOnly rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),AND(newForm.Agent_Type__c != 'IATA Cargo Agent',newForm.Agent_Type__c!='EACP Intermediary'),amsOfficeType=='HO')}"/>
-            <c:ISSP_AMS_CGO_BR_ReadOnly rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch')}"/>    
+            <c:ISSP_AMS_CGO_BR_ReadOnly rendered="{!AND(BEGINS(sectorValue,'Cargo_Agent'),amsOfficeType=='Branch')}"/>-->    
                     
            <!-- Display terms and conditions for CGO -->
          	<c:ISSP_AMS_CGO_T_Cs ></c:ISSP_AMS_CGO_T_Cs>

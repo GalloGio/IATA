@@ -13,7 +13,10 @@ public with sharing class ISSP_PersonalInformation {
     public String accountCountryISOCode {get; set;}
     //If the user is admin and already opt-out, optin option will be visible
     public boolean bIsAdmin				{get; set;}		//identify if a user is administrator or not
-
+    public boolean bIsOSCARenabled {get; set;} //Hide edit buttons on Company Info page if Country for Agencies is not pointing to OSCAR
+    public boolean bBlockTradeNameChange {get; set;}
+    public boolean isHOAccredited {get;set;}
+    
 	//Global Variables
 	public String UserPortalStatus {get;set;}
 	public String UserPortalAccountSector {get;set;}
@@ -47,6 +50,10 @@ public with sharing class ISSP_PersonalInformation {
     public ISSP_PersonalInformation(){ 
     	hasIdCard = false;
     	bIsAdmin = false;
+        bIsOSCARenabled = false;
+        bBlockTradeNameChange = false;
+        isHOAccredited = false;
+        
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
     	if (confirmParameter == 'yes'){
@@ -60,6 +67,14 @@ public with sharing class ISSP_PersonalInformation {
         errorMessage = new list<string>();  
         popContact();
         accountType=' Company ';
+
+        if (con.Account.Top_Parent__c == null) { //User is from HQ  Account
+            if(con.Account.IATACode__c!=null && con.Account.Location_Type__c=='HO' && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c=='Approved')
+                isHOAccredited = true; //This is an accredited  Agency Account    
+        } else { //Get Id for HQ Account when user's Account is a branch office
+             if(con.Account.Top_Parent__r.IATACode__c!=null && con.Account.Top_Parent__r.Location_Type__c=='HO' && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c=='Approved')
+                isHOAccredited = true; //This is an accredited  Agency Account
+        }
         
         OpenDebts = string.valueof(con.Account.Overdue_Invoices_Indicator__c );
         
@@ -91,6 +106,7 @@ public with sharing class ISSP_PersonalInformation {
 		{
 			isValidatedAirlineUser = true ;
 		}
+       
         //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing 
     }
     
@@ -116,6 +132,9 @@ public with sharing class ISSP_PersonalInformation {
         //DDS
         if(con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
         	bIsAdmin = true;
+        
+        bIsOSCARenabled = con.Account.IATA_ISO_Country__r.OSCAR_enabled__c;
+        bBlockTradeNameChange = con.Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
     }
     
     /*public void save(){
@@ -128,15 +147,61 @@ public with sharing class ISSP_PersonalInformation {
 
         }
     }*/
+
+    public List<ISSP_AMS_Accreditation.AccountChanges> getAccountChangesList(){
+        List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
+
+        Account acc = [Select Phone,PhoneNational__c,Fax,FaxNational__c,Email__c,TradeName__c,WebSite From Account Where id=:con.Account.Id limit 1];
+
+        if(acc.Phone != con.Account.Phone)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone',acc.Phone,con.Account.Phone));
+
+        if(acc.PhoneNational__c != con.Account.PhoneNational__c)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('PhoneNational__c',acc.PhoneNational__c,con.Account.PhoneNational__c));
+
+        if(acc.Fax != con.Account.Fax)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Fax',acc.Fax,con.Account.Fax));
+
+        if(acc.FaxNational__c != con.Account.FaxNational__c)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('FaxNational__c',acc.FaxNational__c,con.Account.FaxNational__c));
+
+        if(acc.Email__c != con.Account.Email__c)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Email__c',acc.Email__c,con.Account.Email__c));
+
+        if(acc.TradeName__c != con.Account.TradeName__c)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('TradeName__c',acc.TradeName__c,con.Account.TradeName__c));
+        
+        if(acc.WebSite != con.Account.WebSite)
+            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('WebSite',acc.WebSite,con.Account.WebSite));
+        
+        return accChanges_List;
+    }
 	
-	public Pagereference save(){
+	public Pagereference saveContact(){
         try {
         	isEditMode = false;
-        	update con;  
+        	update con;
         	popContact();  
         	Pagereference homePage = Page.ISSP_Homepage;
         	homePage.setRedirect(true); 
         	return homePage;
+        } catch (DmlException ex) {
+            ApexPages.addMessages(ex);
+            return null;   
+        }
+    }
+
+    public Pagereference saveAccount(){
+        try {
+            isEditMode = false;
+            if(isHOAccredited && bIsOSCARenabled){
+                ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
+            }
+            update con.Account;
+            popContact();  
+            Pagereference homePage = Page.ISSP_Homepage;
+            homePage.setRedirect(true); 
+            return homePage;
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
             return null;   

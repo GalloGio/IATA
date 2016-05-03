@@ -11,6 +11,7 @@ public with sharing class vfIECHomePage extends IECPageController {
 	public Boolean bProdAccessGSS 		{get; set;}
 	public Boolean bProdAccessMDP		{get; set;}
 	public Boolean bProdAccessEBro 		{get; set;}
+    public Boolean bProdAccessCACWeb      {get; set;}
 
 	public Boolean bHasAnyProdAccess {
 		get {
@@ -18,7 +19,8 @@ public with sharing class vfIECHomePage extends IECPageController {
 				|| bProdAccessGAD
 				|| bProdAccessGSS
 				|| bProdAccessMDP
-				|| bProdAccessEBro;
+				|| bProdAccessEBro
+                || bProdAccessCACWeb;
 		}
 	}
 
@@ -27,6 +29,9 @@ public with sharing class vfIECHomePage extends IECPageController {
 			return IECUserManager.isUserLoggedIn();
 		}
 	}
+	
+	public String sPageName {get; set;}
+	public String sProductCode {get; set;}
 
 	/**
 	 * Constructor
@@ -49,9 +54,18 @@ public with sharing class vfIECHomePage extends IECPageController {
 			
 		  	bProdAccessCACPro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CACPRO) != -1);
 			bProdAccessGAD = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GAD) != -1);
-			bProdAccessGSS = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GSS) != -1);
+			bProdAccessGSS = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GSS) != -1); 
 			bProdAccessMDP = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_MDP) != -1);
 			bProdAccessEBro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_EBROADCAST) != -1);
+		  	bProdAccessCACWeb = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CACWEB) != -1);
+         
 		}		
+	}
+	
+	public PageReference NavigateTo() {
+		Pagereference pgRef = new PageReference('/iec/' + sPageName);
+        pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(sProductCode));
+		pgRef.setRedirect(true);
+		return pgRef;
 	}
 }

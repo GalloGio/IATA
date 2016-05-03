@@ -54,6 +54,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>AccountIATAAirlineSetName</fullName>
+        <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
+        <field>Name</field>
+        <formula>IF(
+  OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
+  IF (
+    OR( ISNULL( Name_on_AOC__c ), Name_on_AOC__c == &apos;&apos;),
+    Name,
+    Name_on_AOC__c
+  ),
+  TradeName__c
+)</formula>
+        <name>AccountIATAAirlineSetName</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Accountsiteupdate</fullName>
         <field>Site</field>
         <formula>if(ISPICKVAL(Industry,&apos;Travel Agent&apos;),Site, if( ISBLANK(IATACode__c), 
@@ -239,6 +257,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <protected>false</protected>
     </fieldUpdates>
     <rules>
+        <fullName>ACLIAccountSetName</fullName>
+        <actions>
+            <name>AccountIATAAirlineSetName</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
+        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>AIMS Accounts RT Assignment Rule</fullName>
         <actions>
             <name>AIMS_Accounts_RT_Assignment</name>
@@ -334,7 +363,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Update account site if the account Record Type is Airline Branch or Airline Headquarters</description>
-        <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,RecordType.DeveloperName= &apos;Standard_Account&apos;) )</formula>
+        <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,(and (RecordType.DeveloperName= &apos;Standard_Account&apos;, ISPICKVAL(Sector__c,&apos;Airline&apos;)))))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

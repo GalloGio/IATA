@@ -1814,6 +1814,10 @@ and
         <name>IEC_Confirm_DefaultPaymentUpdate</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Confirm_SaveSuccessful --></label>
+        <name>IEC_Confirm_SaveSuccessful</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_AcceptTermAndCondition --></label>
         <name>IEC_Error_AcceptTermAndCondition</name>
     </customLabels>
@@ -1906,6 +1910,10 @@ and
         <name>IEC_Error_InvalidEmail</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Error_InvalidFileNameFormat --></label>
+        <name>IEC_Error_InvalidFileNameFormat</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_InvalidPageParameter --></label>
         <name>IEC_Error_InvalidPageParameter</name>
     </customLabels>
@@ -1932,6 +1940,10 @@ and
     <customLabels>
         <label><!-- IEC_Error_MustLogin --></label>
         <name>IEC_Error_MustLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IEC Error Must Select Subscription --></label>
+        <name>IEC_Error_Must_Select_Subscription</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC Error No Application Access --></label>
@@ -2297,12 +2309,24 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Case Attach --></label>
+        <label>Documentos adicionales de apoyo</label>
         <name>ISSP_AMS_Case_Attach</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Case Attach Description --></label>
+        <label>Puede subir documentos adicionales que respalden su solicitud de acreditación o notificación de cambio en cualquier momento.</label>
         <name>ISSP_AMS_Case_Attach_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>El tamaño máximo del archivo es de 50 Mb. Tipos de archivo compatibles: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</label>
+        <name>ISSP_AMS_Case_Attach_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>Gracias por enviar su notificación de cambio.</label>
+        <name>ISSP_AMS_Case_Change_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Le rogamos que suba el formulario de solicitud en PDF empleando el enlace inferior. Una vez haya rellenado el formulario, envíelo a IATA haciendo clic en  el botón &lt;strong&gt;Enviar y adjuntar archivos&lt;/strong&gt; &lt;br/&gt;(Nota: para finalizar el proceso de solicitud, puede volver a esta página desde la página de &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;Acreditación IATA&lt;/a&gt; en cualquier momento.)</label>
+        <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
         <label>Ciudad</label>
@@ -2341,16 +2365,28 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Email Branch Abroad Subject --></label>
+        <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Email Branch Subject --></label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de datos de la agencia: Borrador solicitado</label>
+        <name>ISSP_AMS_Email_Change_Subject</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Email HO Subject --></label>
         <name>ISSP_AMS_Email_HO_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Empty_Location_Type --></label>
+        <label>Elija tipo de ubicación</label>
         <name>ISSP_AMS_Empty_Location_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FAX --></label>
+        <name>ISSP_AMS_FAX</name>
     </customLabels>
     <customLabels>
         <label>La subida de su archivo no pudo realizarse. Se conoce problemas de compatibilidad con Internet Explorer 10. Por favor, intente subir el archivo de nuevo usando Explorer 11 o Chrome. Si continuan sus problemas, por favor contacte con Support y cree un query para notificarlo.</label>
@@ -2363,6 +2399,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Los primeros 8 dígitos</label>
         <name>ISSP_AMS_First_8_Digits</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre (chino)</label>
+        <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
         <label>Tipo de agencia y la ubicación</label>
@@ -2383,6 +2423,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>¿Para cuántas agencias de viajes ha trabajado antes? *</label>
         <name>ISSP_AMS_How_Many_PrevAgencies</name>
+    </customLabels>
+    <customLabels>
+        <label>Agente de viajes IATA</label>
+        <name>ISSP_AMS_IATA_Passenger_Sales_Agent</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS INFO Currency --></label>
@@ -2429,7 +2473,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_International_Sales_Branch</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Invalid Email --></label>
+        <label>Dirección de correo electrónico no válida</label>
         <name>ISSP_AMS_Invalid_Email</name>
     </customLabels>
     <customLabels>
@@ -2447,6 +2491,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>* ¿Es su organización una entidad jurídica cuyas acciones cotizan en una bolsa de valores o se negocian en un mercado extrabursátil?</label>
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
+    </customLabels>
+    <customLabels>
+        <label>Apellido (chino)</label>
+        <name>ISSP_AMS_Last_Name_Chinese</name>
     </customLabels>
     <customLabels>
         <label>1. Información General</label>
@@ -2485,6 +2533,78 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
+        <label>Indique la dirección física y postal en su idioma local para este cambio de ubicación de la agencia.</label>
+        <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre de la empresa (inglés)</label>
+        <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre de la empresa (idioma local)</label>
+        <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label>Copiar la dirección física en la dirección postal</label>
+        <name>ISSP_AMS_Local_Details_Copy_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Dirección postal</label>
+        <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre (inglés)</label>
+        <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre (local)</label>
+        <name>ISSP_AMS_Local_Details_First_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label>Apellido (inglés)</label>
+        <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label>Apellido (local)</label>
+        <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Legal Name --></label>
+        <name>ISSP_AMS_Local_Details_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Legal Name ENG --></label>
+        <name>ISSP_AMS_Local_Details_Legal_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Company --></label>
+        <name>ISSP_AMS_Local_Details_No_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label>Dirección física</label>
+        <name>ISSP_AMS_Local_Details_Physical_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Please Enter --></label>
+        <name>ISSP_AMS_Local_Details_Please_Enter</name>
+    </customLabels>
+    <customLabels>
+        <label>Datos de la agencia en el idioma local</label>
+        <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Gerente</label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
@@ -2497,6 +2617,290 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
     <customLabels>
+        <label>Información adicional</label>
+        <name>ISSP_AMS_NoC_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Información de la agencia</label>
+        <name>ISSP_AMS_NoC_Agency_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Firma autorizada:</label>
+        <name>ISSP_AMS_NoC_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label>El cesionario ha informado al beneficiario de la necesidad de cumplir con lo dispuesto en las Normas para agencias de venta de pasajes si dicho beneficiario desea ser incluido en la lista de agencias de la IATA como agente acreditado. Solo se concederá la aprobación si el Cesionario cumple en todos los aspectos con los requisitos de las Normas para agencias de venta de pasajes.</label>
+        <name>ISSP_AMS_NoC_Bank_Change1</name>
+    </customLabels>
+    <customLabels>
+        <label>De conformidad con uno de los requisitos de las Normas para agencias de venta de pasajes, por el presente el Cesionario se compromete a aceptar la responsabilidad solidaria junto con el Cedente o por cualquier obligación pendiente del Cedente bajo su Contrato de agencia de venta en la fecha en la que tenga lugar la transferencia de la propiedad.</label>
+        <name>ISSP_AMS_NoC_Bank_Change2</name>
+    </customLabels>
+    <customLabels>
+        <label>Cuando el cedente sea un empleado del intermediario o tenga una participación económica o usufructo directos o indirectos en la agencia tras el cambio de propietarios, el cesionario, abajo firmante, acepta la responsabilidad por cualquier incumplimiento del cedente respecto al Contrato de agencia de venta que pueda haberse producido en un plazo de dos años inmediatamente anterior al cambio de propiedad como si tal incumplimiento fuese un incumplimiento del Contrato de agencia de venta.</label>
+        <name>ISSP_AMS_NoC_Bank_Change3</name>
+    </customLabels>
+    <customLabels>
+        <label>Datos de la cuenta bancaria</label>
+        <name>ISSP_AMS_NoC_Bank_acount_details</name>
+    </customLabels>
+    <customLabels>
+        <label>Descargue el PDF con el enlace que verá más abajo y envíe el formulario completo, junto con la documentación de apoyo mencionada en el siguiente paso (PASO D) a la siguiente dirección:</label>
+        <name>ISSP_AMS_NoC_Bank_details_message1</name>
+    </customLabels>
+    <customLabels>
+        <label>El cambio de sus datos bancarios se realizará tan pronto como recibamos el documento original firmado.</label>
+        <name>ISSP_AMS_NoC_Bank_details_message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Oficina de sucursal</label>
+        <name>ISSP_AMS_NoC_Branch_Office</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de datos bancarios</label>
+        <name>ISSP_AMS_NoC_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Le rogamos que descargue y rellene la orden bancaria utilizando el enlace que hallará a continuación. &lt;br/&gt;&lt;br/&gt;Se le pedirá que suba una copia escaneada de este documento en el siguiente paso (PASO D).</label>
+        <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de propiedad o accionariado o forma jurídica</label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipo de cambio y ubicación de la agencia</label>
+        <name>ISSP_AMS_NoC_Change_Type_and_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>*El cambio es para su</label>
+        <name>ISSP_AMS_NoC_Change_for</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de nombre legal</label>
+        <name>ISSP_AMS_NoC_Change_of_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de ubicación</label>
+        <name>ISSP_AMS_NoC_Change_of_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>El cambio se ha enviado para</label>
+        <name>ISSP_AMS_NoC_Change_submitted_for</name>
+    </customLabels>
+    <customLabels>
+        <label>*Elija la cuenta de la sucursal</label>
+        <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Confirmo que los datos de la agencia que aparecen a continuación son correctos</label>
+        <name>ISSP_AMS_NoC_Confirm_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Curr_Company_Owner --></label>
+        <name>ISSP_AMS_NoC_Curr_Company_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Empresas actuales</label>
+        <name>ISSP_AMS_NoC_Current_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label>Estado legal actual</label>
+        <name>ISSP_AMS_NoC_Current_Legal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Owner --></label>
+        <name>ISSP_AMS_NoC_Current_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Propietario(s)/gerente(es) actual(es)</label>
+        <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
+    </customLabels>
+    <customLabels>
+        <label>Propiedad actual o accionariado</label>
+        <name>ISSP_AMS_NoC_Current_Ownership_or_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de domicialización bancaria</label>
+        <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Oficina central</label>
+        <name>ISSP_AMS_NoC_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre legal después del cambio</label>
+        <name>ISSP_AMS_NoC_Legal_Name_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre legal antes del cambio</label>
+        <name>ISSP_AMS_NoC_Legal_Name_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Forma jurídica después del cambio</label>
+        <name>ISSP_AMS_NoC_Legal_Status_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Forma jurídica antes del cambio</label>
+        <name>ISSP_AMS_NoC_Legal_Status_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargando información de la agencia</label>
+        <name>ISSP_AMS_NoC_Loadiing_Agency_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Ubicación después del cambio</label>
+        <name>ISSP_AMS_NoC_Location_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Ubicación antes del cambio</label>
+        <name>ISSP_AMS_NoC_Location_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Sólo puede realizar cambios una vez se haya acreditado con IATA.</label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambios múltiples</label>
+        <name>ISSP_AMS_NoC_Multiple_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre y Dirección</label>
+        <name>ISSP_AMS_NoC_Name_address</name>
+    </customLabels>
+    <customLabels>
+        <label>Aviso de Cambio</label>
+        <name>ISSP_AMS_NoC_Notice_of_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Propiedad o accionariado o forma jurídica</label>
+        <name>ISSP_AMS_NoC_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Prev_Company_Owner --></label>
+        <name>ISSP_AMS_NoC_Prev_Company_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Empresas anteriores</label>
+        <name>ISSP_AMS_NoC_Previous_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Previous_Owner --></label>
+        <name>ISSP_AMS_NoC_Previous_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Propietario(s)/gerente(es) anterior(es)</label>
+        <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
+    </customLabels>
+    <customLabels>
+        <label>*¿Afectarán estos cambios a las instalaciones que se inspeccionaron durante el proceso de aprobación de la solicitud de registro del agente?</label>
+        <name>ISSP_AMS_NoC_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label>*¿Afectarán estos cambios a otras ubicaciones aprobadas?</label>
+        <name>ISSP_AMS_NoC_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label>*¿Afectarán estos cambios a los gestores y al personal de las ubicaciones aprobadas incluidas en este cambio?</label>
+        <name>ISSP_AMS_NoC_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label>Datos de contacto</label>
+        <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>*¿Ha estado cualquiera de los nuevos propietarios, oficinas (directores), gestores u otras personas a actuar o firmar en nombre de dicha empresa, involucrado en procesos de incumplimiento o bancarrota?</label>
+        <name>ISSP_AMS_NoC_Q4</name>
+    </customLabels>
+    <customLabels>
+        <label>*¿Causará el cambio de propiedad una relación directa o indirecta con una organización con nombramiento GSA de un miembro?</label>
+        <name>ISSP_AMS_NoC_Q5</name>
+    </customLabels>
+    <customLabels>
+        <label>Petición de cambio</label>
+        <name>ISSP_AMS_NoC_Request_for_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>Funciones y responsabilidades</label>
+        <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label>Firma</label>
+        <name>ISSP_AMS_NoC_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label>*Indique el código IATA de todas las ubicaciones afectadas por el cambio</label>
+        <name>ISSP_AMS_NoC_State_IATA_code</name>
+    </customLabels>
+    <customLabels>
+        <label>A. Seleccionar tipo de cambio</label>
+        <name>ISSP_AMS_NoC_StepA</name>
+    </customLabels>
+    <customLabels>
+        <label>Puede guardar su petición de cambio en todo momento y volver a ella para completarla.</label>
+        <name>ISSP_AMS_NoC_StepB_message</name>
+    </customLabels>
+    <customLabels>
+        <label>C. Datos del cambio</label>
+        <name>ISSP_AMS_NoC_StepC</name>
+    </customLabels>
+    <customLabels>
+        <label>Resumen de la propiedad actual</label>
+        <name>ISSP_AMS_NoC_Summary_Current_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label>Resumen de la propiedad anterior</label>
+        <name>ISSP_AMS_NoC_Summary_Previous_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label>Certifico por la presente que las afirmaciones anteriores (incluyendo las realizadas en cualquier adjunto a la presente) son ciertas y correctas a mi leal saber y entender, y que estoy autorizado por la organización identificada en la «Información de la compañía» anterior para realizar estas afirmaciones y presentar este documento.</label>
+        <name>ISSP_AMS_NoC_TC</name>
+    </customLabels>
+    <customLabels>
+        <label>Cesionario:</label>
+        <name>ISSP_AMS_NoC_Transferee</name>
+    </customLabels>
+    <customLabels>
+        <label>Cedente:</label>
+        <name>ISSP_AMS_NoC_Transferor</name>
+    </customLabels>
+    <customLabels>
+        <label>Indique si esta persona es accionista o director.</label>
+        <name>ISSP_AMS_NoC_Type_Of_Person</name>
+    </customLabels>
+    <customLabels>
+        <label>Testigo:</label>
+        <name>ISSP_AMS_NoC_Witness</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1 --></label>
+        <name>ISSP_AMS_NoC_error_message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2 --></label>
+        <name>ISSP_AMS_NoC_error_message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3 --></label>
+        <name>ISSP_AMS_NoC_error_message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message4 --></label>
+        <name>ISSP_AMS_NoC_error_message4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message5 --></label>
+        <name>ISSP_AMS_NoC_error_message5</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo o&lt;br/&gt;en calidad de</label>
+        <name>ISSP_AMS_NoC_title_or_capacity</name>
+    </customLabels>
+    <customLabels>
+        <label>(escriba en mayúsculas o teclee)</label>
+        <name>ISSP_AMS_NoC_type_or_print</name>
+    </customLabels>
+    <customLabels>
         <label>No tiene ninguna solicitud de acreditación de agencia pendiente.</label>
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
@@ -2507,6 +2911,22 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>No se requiere información adicional para esta sección</label>
         <name>ISSP_AMS_No_Vat_Number_Section</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre Legal</label>
+        <name>ISSP_AMS_Noc_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Ubicación</label>
+        <name>ISSP_AMS_Noc_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Los cambios de borradores deberán presentarse en 2 semanas; de lo contrario, tendrá que volver a empezar la petición de cambio.</label>
+        <name>ISSP_AMS_Noc_StepA_message</name>
+    </customLabels>
+    <customLabels>
+        <label>*Tipo de cambio</label>
+        <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
         <label>Como organización cuyas acciones no cotizan en bolsa, debe introducir a continuación los datos de los accionistas en las secciones de personal y empresa.</label>
@@ -2557,12 +2977,24 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_OPTION_PAX_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION PAX BRANCH ABROAD --></label>
+        <name>ISSP_AMS_OPTION_PAX_BRANCH_ABROAD</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION PAX HO --></label>
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
         <label>Propietario</label>
         <name>ISSP_AMS_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PAX_Company --></label>
+        <name>ISSP_AMS_PAX_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PAX_Person --></label>
+        <name>ISSP_AMS_PAX_Person</name>
     </customLabels>
     <customLabels>
         <label>Socio</label>
@@ -2573,7 +3005,11 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Pax_Branch_T_Cs</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Please Upload --></label>
+        <label><!-- ISSP_AMS_Phone --></label>
+        <name>ISSP_AMS_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label>Suba el siguiente archivo antes de realizar el envío a la IATA:</label>
         <name>ISSP_AMS_Please_Upload</name>
     </customLabels>
     <customLabels>
@@ -2605,7 +3041,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Previous_Default_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Reason Branch Abroad --></label>
+        <label>Nueva sucursal en línea o  en el extranjero</label>
         <name>ISSP_AMS_Reason_Branch_Abroad</name>
     </customLabels>
     <customLabels>
@@ -2649,20 +3085,92 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
-        <label>Bienvenido a la solicitud de acreditación de agencia de la IATA en línea&lt;br/&gt;&lt;br/&gt;Tenga en cuenta que este formulario tiene que ser presentado por un signatario autorizado de la agencia. Si no tiene autorización para firmar documentos legales en nombre de la agencia, solicite al representante jurídico designado que se registre en el portal y presente la solicitud. &lt;br/&gt;&lt;br/&gt;Esta área se utiliza para una nueva acreditación de agencia de la IATA o para acceder a las solicitudes en las que esté trabajando en la actualidad (en estado de borrador o de cliente pendiente). Cuando haya presentado la solicitud, vaya a &lt;a href=&quot;/ISSP_CaseList&quot;&gt;&quot;Mis casos&quot;&lt;/a&gt; para comprobar su estado.</label>
+        <label>Solicitar una acreditación como agente IATA</label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
+        <label>¿No está seguro del tipo de agencia para el que desea solicitar la acreditación?&lt;br/&gt;En este caso, consulte aquí</label>
+        <name>ISSP_AMS_Step0_Agency_Article</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambio de datos bancarios</label>
+        <name>ISSP_AMS_Step0_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Solo se podrán realizar los cambios cuando su Agencia haya enviado su solicitud de acreditación a IATA.</label>
+        <name>ISSP_AMS_Step0_Change_Not_Allowed</name>
+    </customLabels>
+    <customLabels>
+        <label>Cambios</label>
+        <name>ISSP_AMS_Step0_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>Además, puede solicitar:</label>
+        <name>ISSP_AMS_Step0_In_Addition</name>
+    </customLabels>
+    <customLabels>
+        <label>Bienvenido a la plataforma de solicitud en línea de acreditación como agencia  IATA</label>
         <name>ISSP_AMS_Step0_Intro</name>
+    </customLabels>
+    <customLabels>
+        <label>Tenga en cuenta que las solicitudes de acreditación en línea deben ser realizadas por una persona de su agencia que cuente con la autorización para hacerlo.</label>
+        <name>ISSP_AMS_Step0_Intro_Accred</name>
+    </customLabels>
+    <customLabels>
+        <label>Si no está autorizado para firmar documentos legales en nomber de su agencia, le rogamos se dirija a la persona oportuna para que ésta se registre en el portal y realice la solicitud en línea.</label>
+        <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Los cambios tales como el nombre de la compañía, el teléfono o los números de FAX se pueden realizar directamente desde su &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Página de la información&lt;/a&gt; empresarial</label>
+        <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
         <label>Nueva solicitud de acreditación</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
     <customLabels>
-        <label>Acreditación de agencia en línea de la IATA</label>
+        <label>Borradores de solicitudes &amp; cambios en curso</label>
+        <name>ISSP_AMS_Step0_Ongoing_Drafts</name>
+    </customLabels>
+    <customLabels>
+        <label>Otros cambios</label>
+        <name>ISSP_AMS_Step0_Other_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>Para cambios de dirección, nombre legal, estado legal o &lt;br/&gt;de propiedad o accionariado.</label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Otros formularios de utilidad</label>
+        <name>ISSP_AMS_Step0_Other_Forms</name>
+    </customLabels>
+    <customLabels>
+        <label>Realice una consulta con IATA para solicitar una Remisión más frecuente voluntaria. ¿Desea continuar?</label>
+        <name>ISSP_AMS_Step0_Proceed_VMFR</name>
+    </customLabels>
+    <customLabels>
+        <label>Solicitar cierre voluntario</label>
+        <name>ISSP_AMS_Step0_Request_Voluntary_Reliquishment</name>
+    </customLabels>
+    <customLabels>
+        <label>Acreditación en línea de agencia en IATA y cambios</label>
         <name>ISSP_AMS_Step0_SAA</name>
+    </customLabels>
+    <customLabels>
+        <label>Actividad Específica de Ventas</label>
+        <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
+    </customLabels>
+    <customLabels>
+        <label>Incremento voluntario de la frecuencia de entrega de remesas (VMFR)</label>
+        <name>ISSP_AMS_Step0_VMFR</name>
     </customLabels>
     <customLabels>
         <label>* La aprobación se solicita para</label>
         <name>ISSP_AMS_Step1_Approval_Sought</name>
+    </customLabels>
+    <customLabels>
+        <label>El país elegido no permite sucursales en el extranjero. Regístrese como nuevo usuario y cree una nueva agencia para este país. ¿Desea continuar?</label>
+        <name>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</name>
     </customLabels>
     <customLabels>
         <label>La solicitud de acreditación de la IATA en línea para una nueva agencia de carga no está disponible todavía para el país seleccionado. Ahora le redirigiremos a la página web de la IATA, dónde podrá continuar con el proceso de acreditación para su agencia de transporte de carga. ¿Quiere ir a esa página ahora?</label>
@@ -2707,7 +3215,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step1_Title</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Las solicitudes provisionales deberán presentarse en 2 semanas; de lo contrario, deberá comenzar de nuevo el proceso de acreditación.&quot;</label>
+        <label>Las solicitudes provisionales deberán presentarse en 2 semanas; de lo contrario, deberá comenzar de nuevo el proceso de acreditación.</label>
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
@@ -2879,12 +3387,24 @@ Por favor seleccione al menos un signatario autorizado.</label>
         <name>ISSP_AMS_StepFinal_Access_Direct2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepFinal ChangeBank --></label>
+        <name>ISSP_AMS_StepFinal_ChangeBank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal ChangeOther --></label>
+        <name>ISSP_AMS_StepFinal_ChangeOther</name>
+    </customLabels>
+    <customLabels>
         <label>También puede seguir todos sus casos en IATA a través de</label>
         <name>ISSP_AMS_StepFinal_In_Addition</name>
     </customLabels>
     <customLabels>
         <label>Contacto y asistencia - Mis casos</label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
+        <name>ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks</name>
     </customLabels>
     <customLabels>
         <label>Gracias por enviar su solicitud de acreditación para la sucursal de su agencia de viajes.</label>
@@ -2935,6 +3455,10 @@ Por favor seleccione al menos un signatario autorizado.</label>
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label>Tipo de cambio seleccionado</label>
+        <name>ISSP_AMS_Type_of_Change_Seclected</name>
+    </customLabels>
+    <customLabels>
         <label>Actualizar datos de la agencia</label>
         <name>ISSP_AMS_Update_Agency</name>
     </customLabels>
@@ -2945,6 +3469,14 @@ Por favor seleccione al menos un signatario autorizado.</label>
     <customLabels>
         <label>Actualización de archivos en progreso…</label>
         <name>ISSP_AMS_Updating_Files</name>
+    </customLabels>
+    <customLabels>
+        <label>Subir formulario de solicitud firmado</label>
+        <name>ISSP_AMS_Upload_Form</name>
+    </customLabels>
+    <customLabels>
+        <label>Le rogamos que suba su solicitud firmada a fin de finalizar el proceso de solicitud de:</label>
+        <name>ISSP_AMS_Upload_Form_message</name>
     </customLabels>
     <customLabels>
         <label>&lt;strong&gt;Introduzca un código de agente de carga de la IATA válido.&lt;/strong&gt;</label>
@@ -2977,6 +3509,14 @@ Por favor seleccione al menos un signatario autorizado.</label>
     <customLabels>
         <label>Seleccione el administrador del portal en su agencia.</label>
         <name>ISSP_AMS_Validation_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label>descargue la versión en PDF</label>
+        <name>ISSP_AMS_download_a_PDF_version</name>
+    </customLabels>
+    <customLabels>
+        <label>de su solicitud de Notificación de cambio.</label>
+        <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
@@ -3103,6 +3643,10 @@ Por favor seleccione al menos un signatario autorizado.</label>
         <name>ISSP_Are_you_sure</name>
     </customLabels>
     <customLabels>
+        <label>artículo</label>
+        <name>ISSP_Article</name>
+    </customLabels>
+    <customLabels>
         <label>Artículos</label>
         <name>ISSP_Articles</name>
     </customLabels>
@@ -3159,7 +3703,7 @@ Por favor seleccione al menos un signatario autorizado.</label>
         <name>ISSP_Banner_link</name>
     </customLabels>
     <customLabels>
-        <label>IATA Accreditation</label>
+        <label>IATA Accreditation &amp; Changes</label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
@@ -3252,6 +3796,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label><!-- ISSP_CassLink --></label>
         <name>ISSP_CassLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Casslink_Plus --></label>
+        <name>ISSP_Casslink_Plus</name>
     </customLabels>
     <customLabels>
         <label>Su número de solicitud</label>
@@ -3534,6 +4082,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_DDS_Print</name>
     </customLabels>
     <customLabels>
+        <label>Fecha</label>
+        <name>ISSP_Date</name>
+    </customLabels>
+    <customLabels>
         <label>Denegar acceso</label>
         <name>ISSP_Deny_Access</name>
     </customLabels>
@@ -3718,7 +4270,11 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_Draft_Branch_Process1</name>
     </customLabels>
     <customLabels>
-        <label>Gracias por crear el borrador de solicitud de su sede central (oficina de sucursal) para su aprobación como agente de ventas de pasajeros de la IATA.</label>
+        <label>Gracias por crear el borrador del formulario de notificación de cambio.</label>
+        <name>ISSP_Email_Draft_Change_Process</name>
+    </customLabels>
+    <customLabels>
+        <label>Gracias por crear el borrador de su solicitud para la aprobación como:</label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
@@ -3920,6 +4476,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Preguntas frecuentes</label>
         <name>ISSP_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fax --></label>
+        <name>ISSP_Fax</name>
     </customLabels>
     <customLabels>
         <label>Archivo</label>
@@ -5080,6 +5640,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Request_Ongoing</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Request Submitted --></label>
+        <name>ISSP_Request_Submitted</name>
+    </customLabels>
+    <customLabels>
         <label>Petición retirada</label>
         <name>ISSP_Request_Withdrawn</name>
     </customLabels>
@@ -5112,7 +5676,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Results</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Return to Case --></label>
+        <label>Volver al caso</label>
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
@@ -5425,7 +5989,7 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>ISSP_Type_of_query</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Unique mail --></label>
+        <label>Esta dirección de correo ya existe en la lista de contactos. Cada contacto requiere una única dirección de correo.</label>
         <name>ISSP_Unique_Email</name>
     </customLabels>
     <customLabels>
@@ -5491,6 +6055,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label>¿Desea leer las preguntas frecuentes antes de crear un caso?</label>
         <name>ISSP_consult_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Modificar</label>
+        <name>ISSP_edit_lowercase</name>
     </customLabels>
     <customLabels>
         <label>Rellene los campos necesarios con el formato adecuado</label>
@@ -6461,7 +7029,7 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>PWC_service_request</name>
     </customLabels>
     <customLabels>
-        <label><!-- Phone --></label>
+        <label>Teléfono</label>
         <name>Phone</name>
     </customLabels>
     <customLabels>

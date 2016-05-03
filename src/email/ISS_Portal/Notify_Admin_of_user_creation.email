@@ -1,0 +1,27 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div><p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Dear Portal Administrator,</span><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Please be informed that
+we have received a request from {!Contact.Salutation}
+{!Contact.FirstName}&nbsp;{!Contact.LastName}&nbsp;to become validated Customer
+Service Portal user.&nbsp; We would be grateful if you could confirm&nbsp;{!Contact.Salutation}
+{!Contact.FirstName}&nbsp;{!Contact.LastName}&nbsp;works for your organization.</span><span style="font-size: 12pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: 'Times New Roman', serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Please access the
+approval request&nbsp;</span><a href="https://customer-portal-iata.force.com/{!Contact.Id}" style="font-family: 'Times New Roman', serif;"><font size="4">here</font></a><span style="font-size: 12pt; font-family: 'Times New Roman', serif;">.&nbsp;</span></p><p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: 'Times New Roman', serif;"><br></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Thank you in advance.</span><span style="font-size: 12pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: 'Times New Roman', serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">IATA Customer Service
+Portal<o:p></o:p></span></p></div><div style="font-size: 12pt;"><br></div><div style="font-size: 12pt;"><br></div><div style="font-size: 12pt;"><br></div><div style="font-size: 12pt;"><br></div><div style="font-size: 12pt;"><br></div>]]></td>
+</tr>
+</table>

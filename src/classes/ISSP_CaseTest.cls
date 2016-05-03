@@ -9,6 +9,8 @@ public class ISSP_CaseTest {
         contact.AccountId = account.Id;
         insert contact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
         String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
         Case c = new Case();
         c.Subject = 'test 1';
@@ -26,7 +28,7 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'test');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
-        
+        Test.startTest();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
@@ -34,6 +36,7 @@ public class ISSP_CaseTest {
         	cttr.AddComment();
         	cttr.edit();
         }
+        Test.stopTest();
 	}
 	
 	public static testMethod void testISSP_Case_2() {
@@ -44,6 +47,8 @@ public class ISSP_CaseTest {
         contact.AccountId = account.Id;
         insert contact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
         String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'Cases - SIS Help Desk'].Id;
         Case c = new Case();
         c.Subject = 'test 1';
@@ -72,7 +77,7 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'SIS');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
-        
+        Test.startTest();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
@@ -80,6 +85,7 @@ public class ISSP_CaseTest {
         	cttr.AddComment();
         	cttr.edit();
         }
+        Test.stopTest();
 	}
 	
 	public static testMethod void testISSP_Case_3() {
@@ -90,6 +96,8 @@ public class ISSP_CaseTest {
         contact.AccountId = account.Id;
         insert contact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
         String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'IDFS Airline Participation Process'].Id;
         Case c = new Case();
         c.Subject = 'test 1';
@@ -168,7 +176,7 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
         ApexPages.currentPage().getParameters().put('artid', art.Id);
-        
+        Test.startTest();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
@@ -179,6 +187,7 @@ public class ISSP_CaseTest {
         	cttr.saveAttach();
         	//cttr.getSelectArtical();
         }
+        Test.stopTest();
 	}
 	
 	public static testMethod void testISSP_Case_4() {
@@ -189,6 +198,8 @@ public class ISSP_CaseTest {
         contact.AccountId = account.Id;
         insert contact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
         String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'DPC_Service_Request'].Id;
         Case c = new Case();
         c.Subject = 'test 1';
@@ -206,7 +217,7 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'test');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
-        
+        Test.startTest();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
@@ -237,6 +248,7 @@ public class ISSP_CaseTest {
         	cttr.newCase.Deployment_date_to_acca__c = system.today();
         	cttr.close();
         }
+        Test.stopTest();
 	}
 	
 	public static testMethod void testISSP_Case_5() {
@@ -247,6 +259,8 @@ public class ISSP_CaseTest {
         contact.AccountId = account.Id;
         insert contact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
         String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'DPC_Service_Request'].Id;
         Case c = new Case();
         c.Subject = 'test 1';
@@ -264,7 +278,7 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('topic', 'test');
         ApexPages.currentPage().getParameters().put('subtopic', 'test1');
         ApexPages.currentPage().getParameters().put('origin', 'Portal');
-        
+        Test.startTest();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
@@ -295,6 +309,7 @@ public class ISSP_CaseTest {
         	cttr.save();
         	cttr.saveAttach();
         }
+        Test.stopTest();
 	}
 
 	public static testMethod void testISSP_Case_99() {

@@ -1,0 +1,25 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<FONT style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt" class=Apple-style-span size=3 face=arial>Dear&nbsp;all,</FONT> 
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><BR></DIV>
+<DIV><FONT size=3 face=arial>A Quality Exception - {!Quality__c.Name}&nbsp;- has been Accepted by GPO&nbsp;</FONT><FONT face=arial>{!Quality__c.Responsible_GPO__c}&nbsp;</FONT><FONT size=3 face=arial>and the action plan has been started.</FONT></DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><BR></DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Related Internal Case Number:&nbsp;{!Quality__c.Related_Case_Number__c}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Operation:&nbsp; {!Quality__c.Operation__c}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Region:&nbsp;{!Quality__c.Region__c}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Country:&nbsp;{!Quality__c.IATA_Country__c}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Key Control:&nbsp; {!Quality__c.Key_Control__c}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><BR></DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Comments:&nbsp;{!ApprovalRequest.Comments}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><BR></DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">&nbsp;</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Please click the below link to review it:</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">{!Quality__c.Link}</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><FONT class=Apple-style-span face=arial><BR></FONT></DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><FONT class=Apple-style-span face=arial>Thank you and best regards,</FONT></DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">&nbsp;</DIV>
+<DIV style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt"><FONT class=Apple-style-span face=arial>Quality Team</FONT></DIV></DIV>]]></td>
+</tr>
+</table>

@@ -1,0 +1,43 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="font-size: 12pt; text-align: justify; margin: 0in 0in 10pt;" class="MsoNormal"><span style="LINE-HEIGHT: 115%; FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt">Dear <span style="FONT-FAMILY: 'Arial','sans-serif'; BACKGROUND: white; COLOR: black; FONT-SIZE: 10pt; mso-fareast-font-family: 宋体; mso-fareast-language: ZH-CN; mso-fareast-theme-font: minor-fareast; mso-ansi-language: EN-US; mso-bidi-language: AR-SA">{!Contact.Name},</span></span></p><p style="text-align: justify; margin: 0in 0in 10pt;" class="MsoNormal"><font size="2">Thank you for having submitted your bank mandate.&nbsp;</font></p>
+<p class="MsoNormal" style="font-size: 12pt;"><font size="2">To enhance the security of your payments, IATA will test the
+bank mandate by transferring a penny to the new account details you provided.&nbsp;<o:p></o:p></font></p><p class="MsoNormal" style="font-size: 12pt;"><o:p><font size="2">&nbsp;</font></o:p></p><p class="MsoNormal" style="font-size: 12pt;"></p><ul><li><span style="font-size: small;">In the case that the <u>penny transfer is rejected </u></span><span style="font-size: small;"><u>by our
+bank</u></span><span style="font-size: small;">, we will inform you of the needed changes to your bank details.</span></li></ul><p></p><p class="MsoNormal" style="font-size: 12pt;"></p><ul><li><span style="font-size: small;">In the case that t<u>he transfer is <b>accepted </b></u></span><u style="font-size: small;"><b>by our bank</b></u><span style="font-size: small;">,
+the account details will </span><b style="font-size: small;"><u>not</u></b><span style="font-size: small;"><u> </u>be effectively changed by IATA until a
+confirmation is received from your side:</span></li></ul><span style="font-size: small;"><ol><ol><li><b>Option 1</b>: You may wish to wait until the penny has been credited to
+your account.</li><li><b>Option 2</b>: Alternatively, please indicate if you would prefer that IATA
+effectively changes you bank account details upon successfully debiting the
+penny from our account (with no confirmation from your end). <u>Bear in mind
+that after being accepted at our bank’s end, the penny transfer can still get rejected
+at a later stage and be returned to our account a number of days later.</u></li></ol></ol></span><p></p><p style="font-size: 12pt; text-align: justify; margin: 0in 0in 10pt;" class="MsoNormal">
+
+
+
+
+
+
+
+
+
+</p>
+<p style="font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoPlainText"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"></span>&nbsp;</p>
+<p style="font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoPlainText"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"><!--?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /--><o:p>Best regards!</o:p></span></p>
+<p style="font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoPlainText"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"><o:p></o:p></span>&nbsp;</p><span style="font-size: 10pt; font-family: Arial, sans-serif;"><o:p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; BACKGROUND: white; COLOR: black; FONT-SIZE: 10pt">{!Case.OwnerFullName}<o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #002060; FONT-SIZE: 10pt">Global Airline Participation Team<o:p></o:p></span></b></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #002060; FONT-SIZE: 10pt">Financial&nbsp;</span><span style="color: rgb(0, 32, 96);">and Distribution&nbsp;</span><span style="color: rgb(0, 32, 96); font-size: 10pt;">Services</span></p></o:p></span><span style="font-size: 10pt; font-family: Arial, sans-serif;"><o:p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #002060; FONT-SIZE: 10pt"><o:p>&nbsp;</o:p></span></b></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f; FONT-SIZE: 10pt; mso-ansi-language: FR" lang="FR">International Air Transport Association<o:p></o:p></span></b></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f; FONT-SIZE: 10pt; mso-ansi-language: FR" lang="FR">33, Route de l'Aéroport</span><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f; mso-ansi-language: FR" lang="FR"><o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f; FONT-SIZE: 10pt">1215 Geneva 15 Airport</span><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f"><o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f; FONT-SIZE: 10pt">Switzerland</span><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #08015f"><o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><a href="http://www.iata.org/customer"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"><font color="#0000ff">www.iata.org/customer</font></span></a><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #215868"><o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><span style="COLOR: #215868"><o:p><font size="3" face="Calibri">&nbsp;</font></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt; BACKGROUND: white" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: black; FONT-SIZE: 10pt">----------------------------<br>Your message received on&nbsp;{!Case.CreatedDate}:<o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt; BACKGROUND: white" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: black; FONT-SIZE: 10pt">{!Case.Subject}<br>{!Case.Description}<o:p></o:p></span></p>
+<p style="MARGIN: 0in 0in 0pt" class="MsoNormal"><o:p><font size="3" face="Calibri">&nbsp;</font></o:p></p>
+<p style="TEXT-JUSTIFY: inter-ideograph; TEXT-ALIGN: justify; MARGIN: 0in 0in 0pt" class="MsoPlainText">&nbsp;</p></o:p></span>]]></td>
+</tr>
+</table>

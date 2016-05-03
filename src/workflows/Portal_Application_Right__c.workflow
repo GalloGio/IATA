@@ -294,6 +294,11 @@
         </actions>
         <active>true</active>
         <criteriaItems>
+            <field>Portal_Applications__c.Name</field>
+            <operation>equals</operation>
+            <value>ifap</value>
+        </criteriaItems>
+        <criteriaItems>
             <field>Portal_Application_Right__c.Right__c</field>
             <operation>notEqual</operation>
             <value>Access Granted</value>
