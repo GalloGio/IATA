@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Resolution regarding Discount on Air Travels</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE EN- DISCOUNT AIR TICKETS</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name}, 
+ 
+ 
+To help them in their professional travels, IATA carriers can offer to the IATA Intermediaries some important discounts on their air tickets.
+ 
+May we invite you to carefully read the related and attached resolution 881.
+ 
+ 
+Yours Sincerely,
+ 
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

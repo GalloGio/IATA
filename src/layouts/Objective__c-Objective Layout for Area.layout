@@ -35,7 +35,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Division__c</field>
             </layoutItems>
             <layoutItems>
@@ -43,7 +43,7 @@
                 <field>Functional_Area__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>

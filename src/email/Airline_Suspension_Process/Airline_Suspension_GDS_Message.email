@@ -1,0 +1,26 @@
+Dear Ticketing System Providers,
+
+I hereby request you to suspend {!Airline_Suspension__c.Airline_Name__c} ({!Airline_Suspension__c.Airline_Code__c}) with immediate effect.
+
+Kindly ensure both ticketing and refund capabilities are deactivated in the following markets: {!Airline_Suspension__c.BSP_Participations_locked__c}.
+
+Please bear in mind that these instructions needs to be completed within the next 24Hrs. 
+
+Please confirm action taken by sending the following information to the undersigned:
+
+
+Airline was deactivated in our systems on:
+
+
+Date: (DD/MM/YYYY)
+
+Time: (HH:MM)
+
+
+Best Regards,
+
+
+Airline Management
+
+
+{!Case.Thread_Id}

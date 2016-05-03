@@ -1,0 +1,97 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">Dear&nbsp;</span><span style="font-family: Arial, sans-serif; font-size: small; text-align: justify; background-color: rgb(255, 255, 255);">{!Contact.Name}</span><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">,<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">&nbsp;</span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">We kindly ask you to send us a CASS Test File pertaining
+to your joining request. A </span><span style="font-size:9.0pt;line-height:
+115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-language:ZH-CN">Test File is
+the billing report in .txt format which will be run in the test environment to
+test if the module and structure of your billing file is correct. Therefore, please
+send us a billing file sample in .TXT format. We will run it in CASSLink test
+environment. This process is to ensure your first settlement through CASSLink goes
+smoothly.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-language:ZH-CN">&nbsp;</span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-language:ZH-CN">The test file should include
+standard monthly transactions, ie:<o:p></o:p></span></p>
+
+<p class="MsoListParagraph" style="text-indent:-.25in;line-height:115%;
+mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size:9.0pt;
+line-height:115%;mso-fareast-font-family:Calibri;mso-bidi-font-family:Calibri;
+mso-bidi-font-weight:bold">-<span style="font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span style="font-size:9.0pt;line-height:115%;
+font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold">10 AWBs<o:p></o:p></span></p>
+
+<p class="MsoListParagraph" style="text-indent:-.25in;line-height:115%;
+mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size:9.0pt;
+line-height:115%;mso-fareast-font-family:Calibri;mso-bidi-font-family:Calibri;
+mso-bidi-font-weight:bold">-<span style="font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span style="font-size:9.0pt;line-height:115%;
+font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold">10 DCOs<o:p></o:p></span></p>
+
+<p class="MsoListParagraph" style="text-indent:-.25in;line-height:115%;
+mso-list:l0 level1 lfo1"><!--[if !supportLists]--><span style="font-size:9.0pt;
+line-height:115%;mso-fareast-font-family:Calibri;mso-bidi-font-family:Calibri;
+mso-bidi-font-weight:bold">-<span style="font-size: 7pt; line-height: normal; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span style="font-size:9.0pt;line-height:115%;
+font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold">10 DCRs<o:p></o:p></span></p>
+
+<p class="MsoListParagraph" style="line-height:115%"><span style="font-size:9.0pt;
+line-height:115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:bold">&nbsp;</span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">Attached you will find the Airline Test Data Requirements
+for your assistance.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">&nbsp;</span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">If you have any questions, please do not hesitate to let
+me know.<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">&nbsp;</span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">Kind Regards,<o:p></o:p></span></p>
+
+<p class="MsoNormal"><span style="font-size:9.0pt;line-height:115%;font-family:
+&quot;Arial&quot;,&quot;sans-serif&quot;">&nbsp;</span></p><p class="MsoNormal"><span style="font-family: Arial, sans-serif; font-size: small; text-align: justify; background-color: rgb(255, 255, 255);">{!Case.OwnerFullName}</span></p>
+
+<p class="MsoNormal"><b><span style="font-size:10.0pt;line-height:115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-theme-font:minor-fareast;
+color:#1F497D;mso-themecolor:text2;background:white;mso-no-proof:yes">Global
+Airline Participation Team</span></b><span style="font-size:10.0pt;line-height:
+115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-theme-font:minor-fareast;color:#1F497D;mso-themecolor:text2;
+background:white;mso-no-proof:yes">&nbsp;</span><span style="font-size:10.0pt;
+line-height:115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-theme-font:minor-fareast;color:#1F497D;mso-themecolor:text2;
+mso-no-proof:yes"><br>
+<span style="background:white">Financial and Distribution Services&nbsp;</span><br>
+<br>
+<b><span style="background:white">International
+Air Transport Association</span></b><span style="background:white">&nbsp;</span><br>
+<span style="background:white">33, Route de l'Aéroport&nbsp;</span><br>
+<span style="background:white">1215 Geneva 15 Airport&nbsp;</span><br>
+<span style="background:white">Switzerland&nbsp;</span><br>
+</span><a href="http://www.iata.org/customer" target="_blank"><span style="font-size:10.0pt;line-height:115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-theme-font:minor-fareast;
+color:#1F497D;mso-themecolor:text2;background:white;mso-no-proof:yes">www.iata.org/customer</span></a><span style="font-size:10.0pt;line-height:115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-theme-font:minor-fareast;
+color:#1F497D;mso-themecolor:text2;background:white;mso-no-proof:yes">&nbsp;</span><span style="font-size:10.0pt;line-height:115%;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-theme-font:minor-fareast;color:#1F497D;mso-themecolor:text2;
+mso-no-proof:yes"><o:p></o:p></span></p>]]></td>
+</tr>
+</table>

@@ -1,0 +1,509 @@
+<apex:page controller="ISSP_AMS_Accreditation"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           language="{!displayLanguage}"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false">
+    <html>
+    <style>
+      .col1{
+        font-weight: normal;
+      }
+      .col2 label{
+        font-size: 100% !important;
+      }
+    </style>
+
+    <apex:form >
+        <apex:pageBlock >
+        <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_NoC_Change_Type_and_Location}" collapsible="false">
+                    <apex:panelGrid columns="2" width="100%"  >                  
+                            <apex:outputText value="{!$Label.ISSP_AMS_Type_of_Change_Seclected}" style="font-weight:bold;"/>
+                            <apex:panelGrid columns="8" width="100%">  
+                                <apex:outputField value="{!newForm.Is_change_bank_account_details__c}" rendered="{!isBankAccountChange}" />         
+                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Bank_acount_details}&nbsp;&nbsp;&nbsp;&nbsp;" rendered="{!isBankAccountChange}"/>                   
+                                <apex:outputField value="{!newForm.Is_change_legal_name__c}" rendered="{!isBankAccountChange==false}"/>         
+                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Legal_Name}&nbsp;&nbsp;&nbsp;&nbsp;" rendered="{!isBankAccountChange==false}"/>
+                                <apex:outputField value="{!newForm.Is_change_location__c}" rendered="{!isBankAccountChange==false}"/>       
+                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Location}&nbsp;&nbsp;&nbsp;&nbsp;" rendered="{!isBankAccountChange==false}"/>
+                                <apex:outputField value="{!newForm.Is_change_ownership_or_shareholding__c}" rendered="{!isBankAccountChange==false}"/> 
+                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Ownership_Shareholding}&nbsp;&nbsp;&nbsp;&nbsp;" rendered="{!isBankAccountChange==false}"/>           
+                            </apex:panelGrid>
+                            <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                            <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                            <apex:outputText value="{!$Label.ISSP_AMS_NoC_Change_submitted_for}" style="font-weight:bold;"/>
+                            <apex:outputText value="{!noCLocationType}"/>
+                            <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                            <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>               
+                            <apex:outputText value="{!$Label.ISSP_CountryConcerned}" style="font-weight:bold;"/> 
+                            <apex:outputText value="{!amsAllLangCountryLabel}"/> 
+                    </apex:panelGrid>
+              </apex:pageBlockSection>
+        
+        <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_bank_account_details__c==true && PDFPerRegionCS!=null,'','none')}">
+               <apex:pageBlockSection columns="1" collapsible="false">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            {!$Label.ISSP_AMS_NoC_Change_Bank_Details}
+                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
+                        </apex:outputpanel>
+                    </apex:facet>
+                    <apex:panelGrid columns="1" rendered="{!isocountry.original_bank_details_not_required__c==false}">  
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_Bank_details_message1}"/>
+                        <br/>
+                        <apex:outputText escape="false" value="{!PDFPerRegionCS.Address__c}" style="padding-left:26px"/>
+                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_Bank_details_message2}"/>
+                    </apex:panelGrid>
+                    <apex:panelGrid columns="2" rendered="{!isocountry.original_bank_details_not_required__c==true}">  
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_details_message1}"/>
+                    </apex:panelGrid>
+                       
+              
+                </apex:pageBlockSection>
+        </div>
+
+
+        <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_legal_name__c==true,'','none')}">
+              <apex:pageBlockSection columns="1" collapsible="false">
+                  <apex:facet name="header">
+                            <apex:outputpanel >
+                                {!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}
+                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
+                            </apex:outputpanel>                       
+                        </apex:facet>
+                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">     
+                           <apex:outputText value="{!$Label.ISSP_AMS_NoC_Legal_Name_Before_Change}" style="font-weight:bold; font-size:110%"/>
+                           <apex:outputText value="{!$Label.ISSP_AMS_NoC_Legal_Name_After_Change}" style="font-weight:bold; font-size:110%"/>
+                           <apex:outputField value="{!accountConcerned.Name}" />
+                           <apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, col2" columns="2">
+                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" style="font-weight:bold; font-size:110%"/>
+                             <apex:outputField value="{!newForm.Account_Name__c}" />
+                           </apex:panelGrid>
+                        	 <apex:outputtext rendered="{!isocountry.Local_language_Agency_details_required__c}"><!--empty: move following field to next column -->&nbsp;</apex:outputtext>
+                        	<apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, col2" columns="2" rendered="{!isocountry.Local_language_Agency_details_required__c}">
+                             <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}" style="font-weight:bold; font-size:110%"/>
+                             <apex:outputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                           </apex:panelGrid>
+                           <apex:outputField value="{!accountConcerned.TradeName__c}" />
+                           <apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, col2" columns="2">
+                           <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" style="font-weight:bold; font-size:110%"/>
+                           <apex:outputField value="{!newForm.Trade_Name__c}"/>
+                           </apex:panelGrid>
+                    </apex:panelGrid>
+                                             
+              </apex:pageBlockSection>       
+                       
+        </div>
+        <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_location__c==true,'','none')}">
+        <apex:pageBlockSection columns="1" collapsible="false">
+                <apex:facet name="header">
+                            <apex:outputpanel >
+                                {!$Label.ISSP_AMS_NoC_Change_of_Location}
+                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
+                            </apex:outputpanel>                       
+                </apex:facet>
+              
+                  
+                      <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">    
+                       <apex:outputText value="{!$Label.ISSP_AMS_NoC_Location_Before_Change}" style="font-weight:bold; font-size:110%"/>
+                       <apex:outputText value="{!$Label.ISSP_AMS_NoC_Location_After_Change}" style="font-weight:bold; font-size:110%"/>
+                           <apex:outputtext value="{0}
+                                <br />{1}<br />{2}<br />Phone: {3}<br />Mobile: {4}<br />Fax: {5}" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
+                                <apex:param value="{!accountConcerned.BillingStreet}" />
+                                <apex:param value="{!accountConcerned.BillingCity},&nbsp;{!accountConcerned.BillingPostalCode}" />
+                                <apex:param value="{!IF(accountConcerned.BillingState!='',accountConcerned.BillingState + ',&nbsp;','')}{!accountConcerned.BillingCountry}" />
+                                <apex:param value="{!accountConcerned.PhoneNational__c}" />
+                                <apex:param value="{!accountConcerned.MobileNational__c}" />
+                                <apex:param value="{!accountConcerned.FAXNational__c}" />
+                            </apex:outputtext>
+                        
+                        
+                        <apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, col2" columns="2">                     
+                      
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.Branch_Office_Street_name_number__c}" />
+                        
+                        
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.Branch_Office_City__c}" />
+                  
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.Branch_Office_Postal_code__c}" />
+                        
+                        
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.State_Province__c.Label}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.State_Province__c}" />
+                       
+                        
+                            <apex:outputLabel value="{!$Label.ISSP_Country}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!isocountry.Name}" />
+                     
+                        
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone_National__c.Label}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.Branch_Office_Phone_National__c}" />
+                        
+                      
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Mobile__c.Label}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.MobileNational__c}"/>
+                        
+                        
+                            <apex:outputLabel value="Fax" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputField value="{!newForm.Branch_Office_FAX__c}"/>
+                            </apex:panelGrid>
+                          
+                        <apex:outputtext rendered="{!isocountry.Local_language_Agency_details_required__c}"><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                        <apex:outputText value="{!txtLocalAgencyDetailsTitle}" style="font-weight:bold; font-size:110%" rendered="{!isocountry.Local_language_Agency_details_required__c}"/>
+                        <apex:outputtext rendered="{!isocountry.Local_language_Agency_details_required__c}"><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+            			<apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, col2" columns="2" rendered="{!isocountry.Local_language_Agency_details_required__c}">     
+                            <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Physical_Address_Street__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_City__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Physical_Address_City__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Postal_Code__c.Label}"/>
+	                       <apex:outputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Province__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Physical_Address_Province__c}" />
+                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Area__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Physical_Address_Area__c}" />
+                            <apex:outputLabel value="Country"/>
+	                       	<apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       	</apex:panelGrid>  	
+                        <apex:outputtext rendered="{!isocountry.Local_language_Agency_details_required__c}"><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+            			<apex:panelGrid width="50%" cellpadding="10%" columnClasses="col1, col2" columns="2" rendered="{!isocountry.Local_language_Agency_details_required__c}">     
+                            <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Street__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Postal_Address_Street__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_City__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Postal_Address_City__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Postal_Code__c.Label}"/>
+	                       <apex:outputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Province__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Postal_Address_Province__c}" />
+                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Postal_Address_Area__c.Label}"/>
+	                       	<apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" />
+                            <apex:outputLabel value="Country"/>
+	                       	<apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       	</apex:panelGrid>
+                            </apex:panelGrid>
+            			
+          </apex:pageBlockSection>
+        </div>
+        <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_bank_account_details__c==false,'','none')}">
+        <apex:pageBlockSection columns="1" collapsible="false">
+                <apex:facet name="header">
+                            <apex:outputpanel >
+                                {!IF(newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding, $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}
+                                <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
+                            </apex:outputpanel>                       
+                </apex:facet>
+                <apex:pageBlockSection columns="2">    
+                    <apex:pageblocksectionitem labelStyle="width:16.5%">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" style="font-weight:bold; font-size:110%"/>
+                        <apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}"/>
+                    </apex:pageblocksectionitem>
+                    <apex:pageblocksectionitem labelStyle="width:19.5%" rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Specify_Legal_Status_After_Change__c.Label}" style="font-weight:bold; font-size:110%"/>
+                        <apex:outputField value="{!newForm.Specify_Legal_Status_After_Change__c}"/>
+                    </apex:pageblocksectionitem>
+                </apex:pageBlockSection>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection columns="2" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
+                        <apex:outputPanel style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}">
+                        <apex:pageBlockSection columns="1">
+                            <apex:pageblocksectionitem labelStyle="width:43%" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
+                                <apex:outputlabel value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputfield value="{!newForm.ISSP_AMS_Entity_with_listed_shares__c}"/>                               
+                            </apex:pageblocksectionitem>
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <apex:outputPanel style="display:{!IF(newForm.Specify_Legal_Status_After_Change__c=='Corporation' && newForm.Is_change_ownership_or_shareholding__c==true, '', 'none')}">
+                        <apex:pageBlockSection columns="1">
+                            <apex:pageblocksectionitem labelStyle="width:48%" rendered="{!newForm.Specify_Legal_Status_After_Change__c=='Corporation' && newForm.Is_change_ownership_or_shareholding__c==true}">
+                                <apex:outputlabel value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputfield value="{!newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c}"/>                               
+                            </apex:pageblocksectionitem>
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <apex:outputPanel style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}">
+                        <apex:pageBlockSection columns="1">
+                            <apex:pageblocksectionitem labelStyle="width:43%" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
+                                <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Issued_share_capital__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputfield value="{!newForm.Issued_share_capital__c}"/>                               
+                            </apex:pageblocksectionitem>
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <apex:outputPanel style="display:{!IF(newForm.Specify_Legal_Status_After_Change__c=='Corporation' && newForm.Is_change_ownership_or_shareholding__c==true, '', 'none')}">
+                            <apex:pageBlockSection columns="1">
+                                <apex:pageblocksectionitem labelStyle="width:48%" rendered="{!newForm.Specify_Legal_Status_After_Change__c=='Corporation' && newForm.Is_change_ownership_or_shareholding__c==true}">
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Issued_share_capital_After_Change__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                    <apex:outputfield value="{!newForm.Issued_share_capital_After_Change__c}"/>                               
+                                </apex:pageblocksectionitem>
+                                </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!newForm.ISSP_AMS_Legal_Status__c!=null}"> 
+                        <apex:pageBlockSection collapsible="false" columns="1" rendered="{!List_PreviousOwners.size > 0}">
+                        <apex:facet name="header"><apex:outputpanel >{!IF(newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NoC_Previous_Owners_Managers, $Label.ISSP_AMS_NoC_Current_Owners_Managers)}</apex:outputpanel></apex:facet>
+                        <apex:dataTable value="{!List_PreviousOwners}" var="agencycon" width="100%" columnsWidth="25%,45%,30%">                    
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                                <apex:facet name="header">{!$Label.IFAP_name}</apex:facet>
+                                <apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.ISO_Code__c=='CN','('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+                            </apex:column>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
+                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
+                            </apex:column>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%" >
+                                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>
+                                <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
+                                <apex:outputText rendered="{!agencycon.Agency_role__c}" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
+                            </apex:column>                                                      
+                        </apex:dataTable>
+                        </apex:pageBlockSection>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!newForm.Specify_Legal_Status_After_Change__c!=null && newForm.Is_change_ownership_or_shareholding__c==true}">
+                        <apex:pageBlockSection collapsible="false" columns="1" rendered="{!List_CurrentOwners.size > 0}">
+                        <apex:facet name="header"><apex:outputpanel >{!$Label.ISSP_AMS_NoC_Current_Owners_Managers}</apex:outputpanel></apex:facet>
+                        <apex:dataTable value="{!List_CurrentOwners}" var="agencycon" width="100%" columnsWidth="25%,45%,30%">                            
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                                <apex:facet name="header">{!$Label.IFAP_name}</apex:facet>
+                                <apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.ISO_Code__c=='CN','('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+                            </apex:column>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+                                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
+                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
+                            </apex:column>
+                            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%" >
+                                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>
+                                <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelTypeAfterChange, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
+                                <apex:outputText rendered="{!agencycon.Agency_role__c}" value="{!CASE(roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
+                            </apex:column>                                                      
+                        </apex:dataTable>
+                        </apex:pageBlockSection>
+                        </apex:outputPanel>   
+                          <apex:outputtext rendered="{!List_PreviousCompanies.size == 0 || newForm.Is_change_ownership_or_shareholding__c==false}"><!--empty: move following field to next row --></apex:outputtext>  
+                          <apex:pageBlockSection columns="1" collapsible="false" rendered="{!List_PreviousCompanies.size > 0}">
+                          <apex:facet name="header">
+                             <apex:outputpanel >
+                                  {!IF(newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NoC_Previous_Companies, $Label.ISSP_AMS_NoC_Current_Companies)}
+                              </apex:outputpanel>
+                          </apex:facet>                      
+                          <apex:pageBlockTable styleClass="summary-table" columnsWidth="30%,30%,20%,20%" value="{!List_PreviousCompanies}" var="agencycon" >
+                              <apex:column value="{!agencycon.Name}">
+                                  <apex:facet name="header">{!$ObjectType.Account.fields.Legal_name__c.Label}</apex:facet>
+                              </apex:column> 
+                              <apex:column value="{!agencycon.Registration_number__c}">
+                                  <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}</apex:facet>
+                              </apex:column>
+                              <apex:column value="{!agencycon.IATACode__c}">
+                                  <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}</apex:facet>
+                              </apex:column>
+                              <apex:column value="{!agencycon.Financial_interest__c}">
+                                  <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}</apex:facet>
+                              </apex:column>
+                          </apex:pageBlockTable>                                 
+                        </apex:pageBlockSection> 
+                          <apex:pageBlockSection columns="1" collapsible="false" rendered="{!List_CurrentCompanies.size > 0 && newForm.Is_change_ownership_or_shareholding__c==true}">
+                          <apex:facet name="header">
+                             <apex:outputpanel >
+                                  {!$Label.ISSP_AMS_NoC_Current_Companies}
+                              </apex:outputpanel>
+                          </apex:facet>                      
+                          <apex:pageBlockTable styleClass="summary-table" value="{!List_CurrentCompanies}" var="agencycon" >
+                              <apex:column value="{!agencycon.Name}">
+                                  <apex:facet name="header">{!$ObjectType.Account.fields.Legal_name__c.Label}</apex:facet>
+                              </apex:column> 
+                              <apex:column value="{!agencycon.Registration_number__c}">
+                                  <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}</apex:facet>
+                              </apex:column>
+                              <apex:column value="{!agencycon.IATACode__c}">
+                                  <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}</apex:facet>
+                              </apex:column>
+                              <apex:column value="{!agencycon.Financial_interest__c}">
+                                  <apex:facet name="header">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}</apex:facet>
+                              </apex:column>
+                          </apex:pageBlockTable>                                 
+                        </apex:pageBlockSection>         
+                           
+                        </apex:pageBlockSection>
+            <br/><br/>
+                    <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false}">  
+                     <apex:outputpanel id="agencydetails">                    
+                            <apex:pageblocksection collapsible="false" columns="2">
+                                <apex:facet name="header">
+                                   <apex:outputpanel >
+                                        {!$Label.ISSP_AMS_NoC_Agency_Information}
+                                    </apex:outputpanel>
+                                </apex:facet>
+                                <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+                                <apex:pageBlockSection columns="1">
+                                <apex:pageBlockSectionItem labelStyle="width:63%">
+                                <apex:outputLabel style="font-weight:bold; font-size:110%;margin-right:-55%"  value="{!$Label.ISSP_AMS_NoC_Confirm_details}"/>
+                                <apex:inputField styleClass="pull-right" value="{!newForm.Confirm_Agent_Details__c}" html-disabled="true"/>    
+                                </apex:pageBlockSectionItem>
+                                </apex:pageBlockSection>
+                                <apex:pageblocksectionitem >
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Legally_Registered_Name__c.Label}" style="font-weight:bold; font-size:110%"/>                                    
+                                    <apex:outputText >
+                                      <apex:outputfield value="{!newForm.Account_Name__c}" rendered="{!newForm.Account_Name__c!=null}" />
+                                      <apex:outputfield value="{!accountConcerned.Name}" rendered="{!newForm.Account_Name__c==null}" />
+                                    </apex:outputText>
+                                </apex:pageblocksectionitem>
+                                <apex:pageblocksectionitem >
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" style="font-weight:bold; font-size:110%"/>                                    
+                                    <apex:outputText >
+                                      <apex:outputfield value="{!newForm.Trade_Name__c}" rendered="{!newForm.Trade_Name__c!=null}" />
+                                      <apex:outputfield value="{!accountConcerned.TradeName__c}" rendered="{!newForm.Trade_Name__c==null}" />
+                                    </apex:outputText> 
+                                </apex:pageblocksectionitem> 
+                                <apex:pageblocksectionitem >
+                                    <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_Office_FullAddress}" style="font-weight:bold; font-size:110%"/>
+                                    <apex:outputtext id="address" value="{0}
+                                    <br />{1}<br />{2}" escape="false">
+                                        <apex:param value="{!IF(newForm.Branch_Office_Street_name_number__c!='',newForm.Branch_Office_Street_name_number__c ,accountConcerned.BillingStreet)}"  />
+                                        <apex:param value="{!IF(newForm.Branch_Office_City__c!='',newForm.Branch_Office_City__c ,accountConcerned.BillingCity)},&nbsp;{!IF(newForm.Branch_Office_Postal_code__c!='',newForm.Branch_Office_Postal_code__c ,accountConcerned.BillingPostalCode)}" />
+                                        <apex:param value="{!IF(newForm.State_Province__c!='' || accountConcerned.BillingState!='',IF(newForm.State_Province__c!='',newForm.State_Province__c + ',&nbsp;',accountConcerned.BillingState + ',&nbsp;'),'')}{!isocountry.Name}" />
+                                    </apex:outputtext>
+                                </apex:pageblocksectionitem>                              
+                                <apex:pageblocksectionitem >
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                    <apex:outputText >
+                                      <apex:outputfield value="{!newForm.Branch_Office_Phone__c}" rendered="{!newForm.Branch_Office_Phone__c!=null}" />
+                                      <apex:outputfield value="{!accountConcerned.Phone}" rendered="{!newForm.Branch_Office_Phone__c==null}" />
+                                    </apex:outputText>
+                                </apex:pageblocksectionitem>
+                                <apex:pageblocksectionitem >
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Email__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                    <apex:outputText >
+                                      <apex:outputfield value="{!newForm.Branch_Office_Email__c}" rendered="{!newForm.Branch_Office_Email__c!=null}" />
+                                      <apex:outputfield value="{!accountConcerned.Email__c}" rendered="{!newForm.Branch_Office_Email__c==null}" />
+                                    </apex:outputText>                               
+                                </apex:pageblocksectionitem>
+                                <apex:pageblocksectionitem >
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                    <apex:outputText >
+                                      <apex:outputfield value="{!newForm.Branch_Office_FAX__c}" rendered="{!newForm.Branch_Office_FAX__c!=null}" />
+                                      <apex:outputfield value="{!accountConcerned.FAX}" rendered="{!newForm.Branch_Office_FAX__c==null}" />
+                                    </apex:outputText>
+                                </apex:pageblocksectionitem> 
+                                <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
+                                    <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                    <apex:outputText >
+                                      <apex:outputfield value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" rendered="{!newForm.ISSP_AMS_VAT_Number_Input__c!=null}" />
+                                      <apex:outputfield value="{!accountConcerned.VAT_Number__c}" rendered="{!newForm.ISSP_AMS_VAT_Number_Input__c==null}" />
+                                    </apex:outputText>
+                                </apex:pageblocksectionitem>                                                          
+                            </apex:pageblocksection>
+                            </apex:outputpanel>
+                            <br/><br/>
+                            <apex:pageBlockSection collapsible="false" columns="1">
+                            <apex:facet name="header">
+                              <apex:outputpanel >
+                                  {!$Label.ISSP_AMS_NoC_Additional_Information}
+                              </apex:outputpanel>
+                            </apex:facet>
+                            <apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>                               
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputText value="{!newForm.Is_this_Branch_becoming_a_Head_Office__c}"/>                                   
+                            </apex:pageBlockSectionItem>
+
+                           <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q1}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputText value="{!newForm.Will_such_change_affect_the_premises__c}"/>                                    
+                            </apex:pageBlockSectionItem>
+
+                           <apex:outputPanel layout="block" style="display:{!IF(newForm.Will_such_change_affect_the_premises__c=='Yes', '', 'none')}">
+                           <apex:pageBlockSection columns="1">
+                               <apex:pageblocksectionitem labelStyle="width:50%">
+                                   <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Please_provide_details_for_the_change__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                   <apex:outputfield value="{!newForm.Please_provide_details_for_the_change__c}" style="width:200px;height:90px"/>
+                            </apex:pageblocksectionitem>
+                           </apex:pageBlockSection>
+                            
+                            </apex:outputPanel>
+
+                            <apex:pageblocksectionitem labelStyle="width:40%">
+                                   <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Effective_Date_Of_Change__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                   <apex:outputfield value="{!newForm.Effective_Date_Of_Change__c}" />
+                            </apex:pageblocksectionitem>
+                        </apex:pageBlockSection>
+                     
+                        <apex:pageBlockSection columns="1" rendered="{!newform.Is_change_bank_account_details__c==false}">
+                        <apex:pageBlockSectionItem labelStyle="width:40%">
+                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q2}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputText value="{!newForm.Will_such_change_affect_locations__c}" />                                
+                        </apex:pageBlockSectionItem>
+
+                        <apex:outputPanel layout="block" style="display:{!IF(newForm.Will_such_change_affect_locations__c=='Yes', '', 'none')}">
+                           <apex:pageBlockSection columns="1">
+                                <apex:pageblocksectionitem labelStyle="width:50%">
+                                   <apex:outputlabel value="{!$Label.ISSP_AMS_NoC_State_IATA_code}" style="font-weight:bold; font-size:110%" />
+                                   <apex:outputfield value="{!newForm.Provide_explanation_for_change_locations__c}" style="width:200px;height:90px"/>
+                                </apex:pageblocksectionitem>
+                           </apex:pageBlockSection>                       
+                        </apex:outputPanel>
+
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q3}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputText value="{!newForm.Will_such_change_affect_the_managers__c}"/>                              
+                        </apex:pageBlockSectionItem>
+
+                        <apex:outputPanel layout="block" style="display:{!IF(newForm.Will_such_change_affect_the_managers__c=='Yes', '', 'none')}">
+                           <apex:pageBlockSection columns="1">
+                                <apex:pageblocksectionitem labelStyle="width:50%">
+                                   <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Provide_details_for_change_affect_staff__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                   <apex:outputfield value="{!newForm.Provide_details_for_change_affect_staff__c}" style="width:200px;height:90px"/>
+                                </apex:pageblocksectionitem>
+                           </apex:pageBlockSection>                       
+                        </apex:outputPanel>
+
+                        <apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q4}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputText value="{!newForm.Have_any_having_authorization_to_act__c}" />                            
+                        </apex:pageBlockSectionItem>
+
+                        <apex:outputPanel layout="block" style="display:{!IF(newForm.Have_any_having_authorization_to_act__c=='Yes', '', 'none')}">
+                           <apex:pageBlockSection columns="1">
+                                <apex:pageblocksectionitem labelStyle="width:50%">
+                                   <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_authorization_to_act__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                   <apex:outputfield value="{!newForm.Give_details_for_authorization_to_act__c}" style="width:200px;height:90px"/>
+                                </apex:pageblocksectionitem>
+                           </apex:pageBlockSection>                       
+                        </apex:outputPanel>
+
+                        <apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q5}" style="font-weight:bold; font-size:110%"/>
+                            <apex:outputText value="{!newForm.Will_the_change_of_ownership_cause__c}"/>                              
+                        </apex:pageBlockSectionItem>
+
+                        <apex:outputPanel layout="block" style="display:{!IF(newForm.Will_the_change_of_ownership_cause__c=='Yes', '', 'none')}">
+                           <apex:pageBlockSection columns="1">
+                                <apex:pageblocksectionitem labelStyle="width:50%">
+                                   <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_the_change_of_ownership__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                   <apex:outputfield value="{!newForm.Give_details_for_the_change_of_ownership__c}" style="width:200px;height:90px"/>
+                                </apex:pageblocksectionitem>
+                           </apex:pageBlockSection>                       
+                        </apex:outputPanel>
+                     </apex:pageblocksection>
+                    </apex:pageBlockSection>
+                            
+        </div>
+        
+    </apex:pageBlock>    
+    </apex:form>
+    </html>
+    
+</apex:page>

@@ -156,6 +156,16 @@
         <template>unfiled$public/Calendar_Change_Approval_Confimation</template>
     </alerts>
     <alerts>
+        <fullName>Approved_airline_coding_application</fullName>
+        <description>Approved airline coding application</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Airline_Coding_Application_Approved</template>
+    </alerts>
+    <alerts>
         <fullName>BPSlink_New_Case_comment</fullName>
         <description>BPSlink: New Case comment</description>
         <protected>false</protected>
@@ -2029,6 +2039,15 @@
         <template>ISS_Portal/ISSP_DPC_Notification</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Send_DP_Service_Request_ACCA_email_notification</fullName>
+        <ccEmails>rdpc.support@acca.com.cn</ccEmails>
+        <description>ISSP Send DP Service Request ACCA email notification</description>
+        <protected>false</protected>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISSP_DPC_Notification</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Send_DP_Service_Request_DBIndia_email_notification</fullName>
         <description>ISSP Send DP Service Request DBIndia email notification</description>
         <protected>false</protected>
@@ -2036,6 +2055,15 @@
             <recipient>ISS_DPC_SR_DB_India_Members</recipient>
             <type>group</type>
         </recipients>
+        <senderAddress>iatacustomerservice@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISSP_DPC_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>ISSP_Send_DP_Service_Request_ILDS_email_notification</fullName>
+        <ccEmails>JIANGHT@iata.org</ccEmails>
+        <description>ISSP Send DP Service Request ILDS email notification</description>
+        <protected>false</protected>
         <senderAddress>iatacustomerservice@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_DPC_Notification</template>
@@ -2440,6 +2468,16 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/FDS_Ad_hoc_Calendar_change_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejected_airline_coding_application</fullName>
+        <description>Rejected airline coding application</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Airline_Coding_Application_Rejected</template>
     </alerts>
     <alerts>
         <fullName>Rejection_of_FAQ_proposal</fullName>
@@ -3447,11 +3485,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>parkyr@iata.org</recipient>
+            <recipient>shalbakf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shalbakf@iata.org</recipient>
+            <recipient>zhangxl@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3761,6 +3799,15 @@
         <name>Approval Date = Today</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Assign_ICCS_Team</fullName>
+        <field>Groups__c</field>
+        <literalValue>ICCS Team</literalValue>
+        <name>Assign ICCS Team</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5107,8 +5154,9 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
 (IF(CONTAINS( $UserRole.Name, &quot;Business Delivery&quot;),&quot;Business Delivery&quot;, 
 (IF(CONTAINS($UserRole.Name, &quot;Acc Staff&quot;),&quot;Agency Management&quot;, 
 (IF(OR(CONTAINS( $Profile.Name,&quot;ISS Portal&quot;),CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;)),&quot;IATA Partner&quot;,
+(IF(AND(CONTAINS($UserRole.Name, &quot;Record owner&quot;),ISPICKVAL(Origin,&quot;Voicemail&quot;)),&quot;Voicemail&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Record owner&quot;),&quot;IATA System&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))</formula>
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;)))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -5290,9 +5338,9 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
         <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;,
+&quot;Europe&quot;, IF(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; )),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
 
-IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1
+IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
 )</formula>
         <name>IDFS_SIDRA_Update nbr IRR for DEF</name>
         <notifyAssignee>false</notifyAssignee>
@@ -6613,6 +6661,33 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <field>Status</field>
         <literalValue>Scheduled</literalValue>
         <name>Status: Scheduled</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_change_to_Approved</fullName>
+        <field>Status</field>
+        <literalValue>Approved</literalValue>
+        <name>Status change to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_change_to_Awaiting_approval</fullName>
+        <field>Status</field>
+        <literalValue>Awaiting Approval</literalValue>
+        <name>Status change to Awaiting approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_change_to_Rejected</fullName>
+        <field>Status</field>
+        <literalValue>Closed_Rejected</literalValue>
+        <name>Status change to Rejected</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -15215,7 +15290,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,Major Change,Bank Detail Update</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -15358,6 +15433,32 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>ISS Portal DPC Service Request Notify ACCA</fullName>
+        <actions>
+            <name>ISSP_Send_DP_Service_Request_ACCA_email_notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DPC Service Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>IBSP1,IBSPs</value>
+        </criteriaItems>
+        <description>Notify ACCA when a case is made visible on the portal with DPC System = IBSPs, IBSP1</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ISS Portal DPC Service Request Notify DBIndia</fullName>
         <actions>
             <name>ISSP_Send_DP_Service_Request_DBIndia_email_notification</name>
@@ -15381,6 +15482,32 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>ISIS DB India</value>
         </criteriaItems>
         <description>Notify HP when a case  (DPC Service Request) is made visible on the portal with DPC System = CASSLink</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISS Portal DPC Service Request Notify ILDS</fullName>
+        <actions>
+            <name>ISSP_Send_DP_Service_Request_ILDS_email_notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Application Change Request (DPC Systems - locked)</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Open</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>ILDS</value>
+        </criteriaItems>
+        <description>Notify ILDS when a case is made visible on the portal with DPC System = ILDS</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -15533,14 +15660,6 @@ $User.Id = OwnerId )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -15553,6 +15672,14 @@ $User.Id = OwnerId )</formula>
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -15670,13 +15797,15 @@ $User.Id = OwnerId )</formula>
             <name>Inform_Deskom_of_new_case_assignment_escalation</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>contains</operation>
             <value>Deskom Escalations</value>
         </criteriaItems>
-        <description>Informs Deskom that a case has been assigned/escalated to them</description>
+        <description>Informs Deskom that a case has been assigned/escalated to them
+
+Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -15697,7 +15826,7 @@ $User.Id = OwnerId )</formula>
             <name>Update_Portal_Case_Status</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>User.ProfileId</field>
             <operation>equals</operation>
@@ -15712,7 +15841,7 @@ $User.Id = OwnerId )</formula>
             <name>Update_case_Visible_field</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15727,7 +15856,7 @@ $User.Id = OwnerId )</formula>
             <name>Notification_on_Priority_1_Case_for_InvoiceWorks</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15935,12 +16064,63 @@ $User.Id = OwnerId )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Populate Case Groups picklist for ICCS Team</fullName>
+        <actions>
+            <name>Assign_ICCS_Team</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8)</booleanFilter>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>equals</operation>
+            <value>FDS ICCS Administrator</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>equals</operation>
+            <value>FDS ICCS User</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - Europe</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - Africa &amp; Middle East</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - Americas</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - Asia &amp; Pacific</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - China &amp; North Asia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+        <description>Assign ICCS Team value on the Groups picklist on Case</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Portal - Uncheck Visible in Self-Service</fullName>
         <actions>
             <name>UncheckVisibleinSelfService</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2 OR 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15957,7 +16137,9 @@ $User.Id = OwnerId )</formula>
             <operation>equals</operation>
             <value>External Cases (InvoiceWorks),External Cases (E&amp;F Services)</value>
         </criteriaItems>
-        <description>Uncheck Visible in Self-Service when a new cases is created with the Record Types that relates to Internal Cases, SIDRA, Central Billing, myIATA and Process</description>
+        <description>Uncheck Visible in Self-Service when a new cases is created with the Record Types that relates to Internal Cases, SIDRA, Central Billing, myIATA and Process
+
+Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -16275,7 +16457,7 @@ $User.Id = OwnerId )</formula>
             <name>SCE_Notify_CS_queue_communication</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>equals</operation>
@@ -16305,7 +16487,7 @@ $User.Id = OwnerId )</formula>
             <name>Bankingcase</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1</booleanFilter>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -16321,7 +16503,7 @@ $User.Id = OwnerId )</formula>
             <name>SCE_New_Communciation_Web_Upload_case</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.OwnerId</field>
             <operation>equals</operation>
@@ -16436,7 +16618,7 @@ $User.Id = OwnerId )</formula>
             <name>NewInvoicingcase</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1</booleanFilter>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -16473,7 +16655,7 @@ $User.Id = OwnerId )</formula>
             <name>NewReportingBillingcase</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1</booleanFilter>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -16513,7 +16695,7 @@ $User.Id = OwnerId )</formula>
             <name>AlertsRSNBLocaloffice</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1</booleanFilter>
         <criteriaItems>
             <field>Case.OwnerId</field>

@@ -13,12 +13,12 @@
 <style>
             .tabs {
           height: 100vh !important;
-  			overflow: visible !important;
+            overflow: visible !important;
         }
 
-		.gdpbody {
- 		 padding-bottom: 100px !important;
-		}
+        .gdpbody {
+         padding-bottom: 100px !important;
+        }
     
     .billing-completeMessage {
   color: black;
@@ -138,7 +138,7 @@
                 <!-- Email -->
                 <div class="customInputLabelIn">
                   <label for="{!$Component.registerEmail}"><span class="alert"></span> Email address</label>
-                  <apex:inputText value="{!oContact.Email}" id="registerEmail"   style="padding-left: 115px; width: 600px;"/>
+                  <apex:outputText value="{!oContact.Email}" id="registerEmail"   style="padding-left: 115px; width: 600px;"/>
                 </div>
                 
                 <table>
@@ -204,18 +204,18 @@
     </div>
 
     <style> 
-	 	html, body {
-			height:100%;	
-			margin:0;
-			padding:0;
-		}				
-		.gdpwrapper {
-			min-height:100%;
-			position:relative;
-		}
-		.gdpbody{
- 		 padding-bottom:141px; 
-		}
+        html, body {
+            height:100%;    
+            margin:0;
+            padding:0;
+        }               
+        .gdpwrapper {
+            min-height:100%;
+            position:relative;
+        }
+        .gdpbody{
+         padding-bottom:141px; 
+        }
         .gadfooter{
             width:100%;
             height:100px; 

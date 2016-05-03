@@ -1,0 +1,11 @@
+Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName},
+
+Welcome to {!Community_Name}.Your e-mail adress is
+{!Receiving_User.Email}
+
+In order to finalize your registration process, please click on the below link:
+ {!Community_Url}
+
+Thank you for signing up,
+
+IATA Customer Service Portal

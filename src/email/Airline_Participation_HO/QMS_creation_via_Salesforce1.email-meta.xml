@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to use when communicating with DPC (QMS)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>QMS creation via Salesforce</name>
+    <style>freeForm</style>
+    <subject>{!Case.Subject}</subject>
+    <type>html</type>
+</EmailTemplate>

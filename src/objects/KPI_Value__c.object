@@ -66,6 +66,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CaseNumber__c</fullName>
+        <description>Field to link the object to a case to be able to filter from dashboards</description>
+        <externalId>false</externalId>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>KPI Values</relationshipLabel>
+        <relationshipName>KPI_Values</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <externalId>false</externalId>
         <label>Comments</label>

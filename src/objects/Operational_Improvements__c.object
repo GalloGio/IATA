@@ -594,6 +594,22 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Closest_Action_Plan_due_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Closest Action Plan due date</label>
+        <summarizedField>OI_Action_Plan__c.Due_Date__c</summarizedField>
+        <summaryFilterItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </summaryFilterItems>
+        <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Date_Time_Closed__c</fullName>
         <externalId>false</externalId>
         <label>Date/Time Closed</label>
@@ -601,6 +617,37 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Days_passed_until_submission_for_approva__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATEVALUE(Submission_for_Approval_Date__c) - DATEVALUE(Open_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days passed til submission for approval</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_since_submission_for_approval__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(OI_Approval_date__c), 
+    TODAY()-  DATEVALUE(Submission_for_Approval_Date__c ), 
+    DATEVALUE(OI_Approval_date__c)-DATEVALUE(Submission_for_Approval_Date__c )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days since submission for approval</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Description__c</fullName>
@@ -611,6 +658,15 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Extension_approved_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Extension approved date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Frequency_of_occurence__c</fullName>
@@ -825,6 +881,32 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OI_Approval_date__c</fullName>
+        <externalId>false</externalId>
+        <label>OI Approval date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>OI_Status_auto__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Date_Time_Closed__c)),&quot;Closed&quot;,IF(NOT(ISNULL(Extension_approved_date__c)), 
+      IF(Closest_Action_Plan_due_date__c&gt;= TODAY(), &quot;Extended&quot;,&quot;Delayed&quot;), 
+      IF(NOT(ISNULL(Submission_for_extension_date__c)),&quot;Pending Extension Approval&quot;, IF(NOT(ISNULL(OI_Approval_date__c)), 
+            IF(Closest_Action_Plan_due_date__c&gt;= TODAY(),&quot;Ongoing Action Plan&quot;,&quot;Delayed&quot;), 
+              IF(NOT(ISNULL(Submission_for_Approval_Date__c)), &quot;Pending Approval&quot;,&quot;Investigation&quot;)))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
+        <label>OI Status (auto)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>OI_Type__c</fullName>
@@ -1059,6 +1141,24 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Status_Image__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(OI_Status_auto__c, &quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTb2&quot;, &quot;C &quot;,40,420 ),
+&quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTdc&quot;, &quot;E &quot;,40,420 ),
+&quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTg7&quot;, &quot;OAP&quot;,40,420 ),
+&quot;Delayed&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTcP&quot;, &quot;Delayed &quot;,40,420 ),
+&quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTht&quot;, &quot;PEA&quot;,40,420 ),
+&quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oThA&quot;, &quot;PA&quot;,40,420 ),
+&quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000003oTeV&quot;, &quot;I&quot;,40,420 ),&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status Image</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
@@ -1116,16 +1216,36 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Submission_for_Approval_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission for Approval Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Submission_for_extension_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission for extension date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
     <label>Operational Improvements</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Affected_Process__c</columns>
+        <columns>OI_Status_auto__c</columns>
         <columns>Subject__c</columns>
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
+        <columns>Status_Image__c</columns>
+        <columns>Closest_Action_Plan_due_date__c</columns>
         <columns>Related_Case_Number__c</columns>
         <columns>Date_Time_Closed__c</columns>
         <columns>OWNER.ALIAS</columns>
@@ -1634,4 +1754,55 @@ NOT(INCLUDES( Root_Cause_s__c , &quot;Mother Earth (force majeure)&quot;))
         <errorConditionFormula>AND(ISPICKVAL( Affected_Process__c , &quot;Other&quot;), ISBLANK(  If_other_please_state_the_affected_proc__c ))</errorConditionFormula>
         <errorMessage>When ‘Affected process’ is selected as ‘Other’, please describe your choice in the ‘If other, please state the affected proc’ field.</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>Close_OI</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Close OI</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Date_Time_Closed__c = new Date(&apos;{!Now()}&apos;);
+sforce.connection.update([improvement ]); 
+
+window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Extension_approved</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Extension approved</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Extension_approved_date__c = new Date(&apos;{!TODAY()}&apos;);
+sforce.connection.update([improvement ]); 
+
+window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Submitted_for_extension</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submitted for extension</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Submission_for_extension_date__c = new Date(&apos;{!TODAY()}&apos;);
+sforce.connection.update([improvement ]); 
+
+window.location.reload();</url>
+    </webLinks>
 </CustomObject>

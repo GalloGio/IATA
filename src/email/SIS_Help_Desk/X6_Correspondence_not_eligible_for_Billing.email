@@ -1,0 +1,12 @@
+Dear {!Contact.FirstName}, 
+
+Please note that the correspondence for which you are raising a billing memo / correspondence invoice has status “Open – Saved” and is therefore not eligible for billing. Billing memos / Correspondence invoices can only be raised against correspondences for which authority to bill was granted (status Open – Received, Authority to Bill – Yes) or for correspondences initiated by your company for which no reply was received (status Expired - Responded).
+
+For correspondences that have been granted authority to bill, no further action is required on the correspondence itself before the issuance of the billing memo / correspondence invoice. Any reply, even if not sent, will trigger a status change, making the correspondence not eligible for billing.
+
+Should you require further information, please do not hesitate to contact us. 
+
+Best regards,
+{!Case.CaseArea__c} Customer Support 
+
+{!Case.Email_Thread}

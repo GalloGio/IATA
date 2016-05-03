@@ -24,10 +24,10 @@ public list<String> errorMessage {get; set;}
         ID CaseId = ApexPages.currentPage().getParameters().get('Id');
         //TODO : slecet the case according to the CaseId and get the topic /Subtopic
         List<Case> Case_List = new List<Case>([select Id , Topic__c , SubTopic__c ,Compliment__c ,IFAP_Country_ISO__c , 
-													  Origin ,BSPCountry__c ,Country_concerned_by_the_query__c ,IsComplaint__c ,
-													  RecordTypeId , OwnerId , Description 
-												From Case 
-												Where id =: CaseId]);
+                                                      Origin ,BSPCountry__c ,Country_concerned_by_the_query__c ,IsComplaint__c ,
+                                                      RecordTypeId , OwnerId , Description 
+                                                From Case 
+                                                Where id =: CaseId]);
         if (Case_List != null && Case_List.size() > 0)
         {
                 parentCase = new Case();
@@ -52,14 +52,14 @@ public list<String> errorMessage {get; set;}
                 this.DataCategoryContainer.lst_DataCategories.sort();
 
                 if (parentCase.Topic__c != null && parentCase.Topic__c != ''){
-					String tmpTopic = (parentCase.Topic__c).replace(' ' ,'_');
+                    String tmpTopic = (parentCase.Topic__c).replace(' ' ,'_');
                         for(Integer index = 0; index < this.DataCategoryContainer.lst_DataCategories.size(); index++)
                         {
                                 clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[index];
 
-								if (cdc.CategoryName.contains(tmpTopic)){
-									System.debug('XoYo INNN index '+index);
-										topic = String.valueOf(index);
+                                if (cdc.CategoryName.contains(tmpTopic)){
+                                    System.debug('XoYo INNN index '+index);
+                                        topic = String.valueOf(index);
                                         this.lst_selectTopics.add(new SelectOption(String.valueOf(index),cdc.CategoryLabel));
                                         this.lst_selectTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
                                 }
@@ -84,71 +84,71 @@ public list<String> errorMessage {get; set;}
 
 
         public void refreshTopicPickList()
-		{   
-			if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
-			{
-				this.lst_selectsubTopics = new list<SelectOption>();
-				this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
-			}       
-			else
-			{
-				this.lst_selectsubTopics = new list<SelectOption>();
-				system.debug('TOPIC: ' + topic); 
-				Integer index = Integer.valueOf(topic.trim());
-				system.debug('INTEGER: ' + index);
+        {   
+            if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
+            {
+                this.lst_selectsubTopics = new list<SelectOption>();
+                this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
+            }       
+            else
+            {
+                this.lst_selectsubTopics = new list<SelectOption>();
+                system.debug('TOPIC: ' + topic); 
+                Integer index = Integer.valueOf(topic.trim());
+                system.debug('INTEGER: ' + index);
 
-				clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+                clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
-				if (selectDataCategory.lst_childs.size() > 0)
-				{
-					this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
-					for(Integer cIndex = 0; cIndex < selectDataCategory.lst_childs.size(); cIndex++)
-					{
-						clsDataCategory.CategoryChildWrapper childCat = selectDataCategory.lst_childs[cIndex];  
-						this.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
-					}
+                if (selectDataCategory.lst_childs.size() > 0)
+                {
+                    this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
+                    for(Integer cIndex = 0; cIndex < selectDataCategory.lst_childs.size(); cIndex++)
+                    {
+                        clsDataCategory.CategoryChildWrapper childCat = selectDataCategory.lst_childs[cIndex];  
+                        this.lst_selectsubTopics.add(new SelectOption(childCat.CategoryName, childCat.CategoryLabel));
+                    }
 
-					subtopic = selectDataCategory.CategoryName;
-				}
-				else
-				{
-					this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
-					subtopic = selectDataCategory.CategoryName;
-				}
-			} 
-			if (parentCase.SubTopic__c != null && parentCase.SubTopic__c != '')
-			{
-				refreshSubTopicPickList();
-			}
-			
-		}
+                    subtopic = selectDataCategory.CategoryName;
+                }
+                else
+                {
+                    this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+                    subtopic = selectDataCategory.CategoryName;
+                }
+            } 
+            if (parentCase.SubTopic__c != null && parentCase.SubTopic__c != '')
+            {
+                refreshSubTopicPickList();
+            }
+            
+        }
         
-	   public void refreshSubTopicPickList()     {
-			Integer index = Integer.valueOf(topic.trim());
+       public void refreshSubTopicPickList()     {
+            Integer index = Integer.valueOf(topic.trim());
 
-			clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
-			if (parentCase.SubTopic__c == null || parentCase.SubTopic__c == '')
-			{
-				//subtopic = selectDataCategory.CategoryName;
-			}
-			else
-			{
-				String tmpSubTopic = (parentCase.SubTopic__c).replace(' ' ,'_');
-				for(integer cindex = 0; cindex < selectDataCategory.lst_childs.size(); cindex++)
-				{
-					clsdatacategory.categorychildwrapper childcat = selectDataCategory.lst_childs[cindex];  
-					system.debug('xoyo childcat.categoryname '+childcat.categoryname);
-					if (childcat.CategoryName.contains(tmpsubtopic))
-					{
-						system.debug('xoyo innn index '+index);
-						subtopic = childcat.CategoryName ;
-					}
-				}
-			}
-		}
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+            if (parentCase.SubTopic__c == null || parentCase.SubTopic__c == '')
+            {
+                //subtopic = selectDataCategory.CategoryName;
+            }
+            else
+            {
+                String tmpSubTopic = (parentCase.SubTopic__c).replace(' ' ,'_');
+                for(integer cindex = 0; cindex < selectDataCategory.lst_childs.size(); cindex++)
+                {
+                    clsdatacategory.categorychildwrapper childcat = selectDataCategory.lst_childs[cindex];  
+                    system.debug('xoyo childcat.categoryname '+childcat.categoryname);
+                    if (childcat.CategoryName.contains(tmpsubtopic))
+                    {
+                        system.debug('xoyo innn index '+index);
+                        subtopic = childcat.CategoryName ;
+                    }
+                }
+            }
+        }
 
         
-		public PageReference ChangemodeMethod() {
+        public PageReference ChangemodeMethod() {
             if (isEditMode == true)
             {
                     isEditMode = false;
@@ -157,16 +157,16 @@ public list<String> errorMessage {get; set;}
                     isEditMode = true ;
                     this.topic = Env.SelectOptionDefaultValue;
                     refreshTopicPickList();
-			return null;
+            return null;
             } 
-		}
+        }
 
          
 
-	public PageReference SaveTopicSubtopic(){
+    public PageReference SaveTopicSubtopic(){
 
-		string ErrFields = ''; 
-		if(topic == null ||topic == ''||topic == '-- Select --' ) {
+        string ErrFields = ''; 
+        if(topic == null ||topic == ''||topic == '-- Select --' ) {
             ErrFields += 'Topic ,' ;
         }
         if(subtopic == null ||subtopic == ''||subtopic == '-- Select --'|| subTopic == topic) {
@@ -179,193 +179,193 @@ public list<String> errorMessage {get; set;}
             errorMessage.add(errorString);
             return null;
         }else{
-			//set the Topic__c "English Value"
-			if (parentCase.Compliment__c == false)
-			{
-				clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
-				parentCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
-				System.debug('Kero11 parentCase.Topic__c - ' + parentCase.Topic__c);
-				//set the Topic__c "English Value"
+            //set the Topic__c "English Value"
+            if (parentCase.Compliment__c == false)
+            {
+                clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
+                parentCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                System.debug('Kero11 parentCase.Topic__c - ' + parentCase.Topic__c);
+                //set the Topic__c "English Value"
 
-				for(Integer cIndex = 0; cIndex < cdc.lst_childs.size(); cIndex++)
-				{
-					clsDataCategory.CategoryChildWrapper childCat = cdc.lst_childs[cIndex];  
-					if(subtopic == childCat.CategoryName)
-					{
-						 parentCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
-					}
-				}
-				System.debug('Kero11 parentCase.SubTopic__c - ' + parentCase.SubTopic__c);
-			}else{
-				parentCase.Topic__c = 'COMPLIMENT';
-				parentCase.SubTopic__c = 'COMPLIMENT';
-				this.topic = '0';
-			}
+                for(Integer cIndex = 0; cIndex < cdc.lst_childs.size(); cIndex++)
+                {
+                    clsDataCategory.CategoryChildWrapper childCat = cdc.lst_childs[cIndex];  
+                    if(subtopic == childCat.CategoryName)
+                    {
+                         parentCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                    }
+                }
+                System.debug('Kero11 parentCase.SubTopic__c - ' + parentCase.SubTopic__c);
+            }else{
+                parentCase.Topic__c = 'COMPLIMENT';
+                parentCase.SubTopic__c = 'COMPLIMENT';
+                this.topic = '0';
+            }
 
-			//Set Origin to be PORTAL
-			parentCase.Origin = 'Portal'; 
-
-
-			Integer index = Integer.valueOf(topic.trim());
-			clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
-			String topicName = selectDataCategory.CategoryName;
-
-			//Holds Final Matched Custom Setting if exists
-			List <ISSP_FAQ2Case_Record_Type__c> FinalMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
-			//Represents the best matched Custom Setting
-			ISSP_FAQ2Case_Record_Type__c ChoosenCS = new ISSP_FAQ2Case_Record_Type__c();
-			//String to be used in the LIKE query 
-			string varCountry = '%' + parentCase.IFAP_Country_ISO__c + '%';
-
-			list<IATA_ISO_Country__c> lst_Country = new list<IATA_ISO_Country__c>([SELECT Id, Name , Case_BSP_Country__c , ISO_Code__c
-																					FROM IATA_ISO_Country__c 
-																					WHERE ISO_Code__c  =: parentCase.IFAP_Country_ISO__c 
-																					LIMIT 1 ]);
-			if(lst_Country != null && lst_Country.size() > 0){
-				parentCase.BSPCountry__c =  lst_Country[0].Case_BSP_Country__c ;
-				parentCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
-			}
-
-			system.debug('KER0 topicName: ' + topicName);
-			system.debug('KER0 subtopic: ' + subtopic);
-			system.debug('KER0 parentCase.Compliment__c: ' + parentCase.Compliment__c);
-			system.debug('KER0 varCountry: ' + varCountry);
-
-			//select all matched custom settings
-			List <ISSP_FAQ2Case_Record_Type__c> csList = [SELECT RecordType__c, OwnerId__c ,Topic__c ,SubTopic__c ,Complaint__c ,Country_concerned_by_the_query__c , 
-																 Country_concerned_by_the_query2__c , Country_concerned_by_the_query3__c,
-																 Flag_Assignment_Rules__c
-																FROM ISSP_FAQ2Case_Record_Type__c
-																WHERE 
-																Complaint__c = :parentCase.IsComplaint__c
-																AND (Topic__c = :topicName
-																	OR SubTopic__c = :subtopic
-																	OR Country_concerned_by_the_query__c like: varCountry
-																	OR Country_concerned_by_the_query2__c like: varCountry
-																	OR Country_concerned_by_the_query3__c like: varCountry)];
-			system.debug('KER0 csList: ' + csList);
+            //Set Origin to be PORTAL
+            parentCase.Origin = 'Portal'; 
 
 
-			if(csList != null && csList.size() > 0 ) {
-				String userInput_Country = parentCase.IFAP_Country_ISO__c ;
+            Integer index = Integer.valueOf(topic.trim());
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+            String topicName = selectDataCategory.CategoryName;
+
+            //Holds Final Matched Custom Setting if exists
+            List <ISSP_FAQ2Case_Record_Type__c> FinalMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
+            //Represents the best matched Custom Setting
+            ISSP_FAQ2Case_Record_Type__c ChoosenCS = new ISSP_FAQ2Case_Record_Type__c();
+            //String to be used in the LIKE query 
+            string varCountry = '%' + parentCase.IFAP_Country_ISO__c + '%';
+
+            list<IATA_ISO_Country__c> lst_Country = new list<IATA_ISO_Country__c>([SELECT Id, Name , Case_BSP_Country__c , ISO_Code__c
+                                                                                    FROM IATA_ISO_Country__c 
+                                                                                    WHERE ISO_Code__c  =: parentCase.IFAP_Country_ISO__c 
+                                                                                    LIMIT 1 ]);
+            if(lst_Country != null && lst_Country.size() > 0){
+                parentCase.BSPCountry__c =  lst_Country[0].Case_BSP_Country__c ;
+                parentCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
+            }
+
+            system.debug('KER0 topicName: ' + topicName);
+            system.debug('KER0 subtopic: ' + subtopic);
+            system.debug('KER0 parentCase.Compliment__c: ' + parentCase.Compliment__c);
+            system.debug('KER0 varCountry: ' + varCountry);
+
+            //select all matched custom settings
+            List <ISSP_FAQ2Case_Record_Type__c> csList = [SELECT RecordType__c, OwnerId__c ,Topic__c ,SubTopic__c ,Complaint__c ,Country_concerned_by_the_query__c , 
+                                                                 Country_concerned_by_the_query2__c , Country_concerned_by_the_query3__c,
+                                                                 Flag_Assignment_Rules__c
+                                                                FROM ISSP_FAQ2Case_Record_Type__c
+                                                                WHERE 
+                                                                Complaint__c = :parentCase.IsComplaint__c
+                                                                AND (Topic__c = :topicName
+                                                                    OR SubTopic__c = :subtopic
+                                                                    OR Country_concerned_by_the_query__c like: varCountry
+                                                                    OR Country_concerned_by_the_query2__c like: varCountry
+                                                                    OR Country_concerned_by_the_query3__c like: varCountry)];
+            system.debug('KER0 csList: ' + csList);
+
+
+            if(csList != null && csList.size() > 0 ) {
+                String userInput_Country = parentCase.IFAP_Country_ISO__c ;
             
-				//Holds All Topic match Cases
-				List <ISSP_FAQ2Case_Record_Type__c> TopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
-				//
-				List <ISSP_FAQ2Case_Record_Type__c> EmptyTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
-				//Holds All Topic + Subtopic Matches Custom setting
-				List <ISSP_FAQ2Case_Record_Type__c> SubTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
-				//
-				List <ISSP_FAQ2Case_Record_Type__c> EmptySubTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
-				 //
-				List <ISSP_FAQ2Case_Record_Type__c> EmptySubTopicAndSubTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
+                //Holds All Topic match Cases
+                List <ISSP_FAQ2Case_Record_Type__c> TopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
+                //
+                List <ISSP_FAQ2Case_Record_Type__c> EmptyTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
+                //Holds All Topic + Subtopic Matches Custom setting
+                List <ISSP_FAQ2Case_Record_Type__c> SubTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
+                //
+                List <ISSP_FAQ2Case_Record_Type__c> EmptySubTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
+                 //
+                List <ISSP_FAQ2Case_Record_Type__c> EmptySubTopicAndSubTopicMatch_Lst = new List<ISSP_FAQ2Case_Record_Type__c>();
              
-				for(ISSP_FAQ2Case_Record_Type__c cs : csList){
+                for(ISSP_FAQ2Case_Record_Type__c cs : csList){
 
-					//Collect Topic Match Custom Settings
-					if(cs.Topic__c != null && cs.Topic__c.contains(topicName)){
-					   TopicMatch_Lst.add(cs);
-					}
+                    //Collect Topic Match Custom Settings
+                    if(cs.Topic__c != null && cs.Topic__c.contains(topicName)){
+                       TopicMatch_Lst.add(cs);
+                    }
 
-					//Collect Empty Topic no-Match Custom Settings
-					if(cs.Topic__c == null || cs.Topic__c == ''){
-					   EmptyTopicMatch_Lst.add(cs);
-					} 
+                    //Collect Empty Topic no-Match Custom Settings
+                    if(cs.Topic__c == null || cs.Topic__c == ''){
+                       EmptyTopicMatch_Lst.add(cs);
+                    } 
 
-					//Collect Empty Topic ans SubTopics no-Match Custom Settings
-					if((cs.Topic__c == null || cs.Topic__c == '') && (cs.SubTopic__c == null || cs.SubTopic__c == '') ){
-					   EmptySubTopicAndSubTopicMatch_Lst.add(cs);
-					}                          
-				}
-				system.debug('KER0 TopicMatch_Lst: ' + TopicMatch_Lst);
-				//Collect the Topic + subtopic match Custom settings
-				if(TopicMatch_Lst != null && TopicMatch_Lst.size() > 0)
-				{
-					for(ISSP_FAQ2Case_Record_Type__c tcs : TopicMatch_Lst){
-					system.debug('KER0xo tcs.SubTopic__c: ' + tcs.SubTopic__c);
-					system.debug('KER0xo subtopic: ' + subtopic);
-						if(tcs.SubTopic__c != null && tcs.SubTopic__c.contains(subtopic)){
-							SubTopicMatch_Lst.add(tcs);
-						}
-						if(tcs.SubTopic__c == null || tcs.SubTopic__c == ''){
-							EmptySubTopicMatch_Lst.add(tcs);
-						}
-					}
-					system.debug('KER0 SubTopicMatch_Lst  : ' + SubTopicMatch_Lst);
-					if(SubTopicMatch_Lst != null && SubTopicMatch_Lst.size() > 0)
-					{
-						//Check for country match
-						FinalMatch_Lst = RetriveMatchCountrySettings(SubTopicMatch_Lst , userInput_Country);
-						system.debug('KER0 T + ST _Country matches  : ' + FinalMatch_Lst);
-					}
-					else{
-						//Topic + NO SubTopic Match Case
-						//Check for country match
-						if(EmptySubTopicMatch_Lst != null && EmptySubTopicMatch_Lst.size() > 0){
-							FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicMatch_Lst , userInput_Country);
-							system.debug('KER0 SubTopicMatch_Lst  ELSE: ' + FinalMatch_Lst);
-						}else{
-							FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicAndSubTopicMatch_Lst , userInput_Country); 
-							system.debug('KER0 SubTopicMatch_Lst  ELSE: ' + FinalMatch_Lst);
-						}
-					}
-				}
-				else{
-					//NO Topic Match Case
-					//Check for country match
-					if(EmptyTopicMatch_Lst != null && EmptyTopicMatch_Lst.size() > 0){
-						FinalMatch_Lst = RetriveMatchCountrySettings(EmptyTopicMatch_Lst , userInput_Country);
-					}
-					system.debug('KER0 TopicMatch_Lst ELSE: ' + FinalMatch_Lst);
-				}
-			}
-			system.debug('KER0xxo FinalMatch_Lst'+FinalMatch_Lst);
+                    //Collect Empty Topic ans SubTopics no-Match Custom Settings
+                    if((cs.Topic__c == null || cs.Topic__c == '') && (cs.SubTopic__c == null || cs.SubTopic__c == '') ){
+                       EmptySubTopicAndSubTopicMatch_Lst.add(cs);
+                    }                          
+                }
+                system.debug('KER0 TopicMatch_Lst: ' + TopicMatch_Lst);
+                //Collect the Topic + subtopic match Custom settings
+                if(TopicMatch_Lst != null && TopicMatch_Lst.size() > 0)
+                {
+                    for(ISSP_FAQ2Case_Record_Type__c tcs : TopicMatch_Lst){
+                    system.debug('KER0xo tcs.SubTopic__c: ' + tcs.SubTopic__c);
+                    system.debug('KER0xo subtopic: ' + subtopic);
+                        if(tcs.SubTopic__c != null && tcs.SubTopic__c.contains(subtopic)){
+                            SubTopicMatch_Lst.add(tcs);
+                        }
+                        if(tcs.SubTopic__c == null || tcs.SubTopic__c == ''){
+                            EmptySubTopicMatch_Lst.add(tcs);
+                        }
+                    }
+                    system.debug('KER0 SubTopicMatch_Lst  : ' + SubTopicMatch_Lst);
+                    if(SubTopicMatch_Lst != null && SubTopicMatch_Lst.size() > 0)
+                    {
+                        //Check for country match
+                        FinalMatch_Lst = RetriveMatchCountrySettings(SubTopicMatch_Lst , userInput_Country);
+                        system.debug('KER0 T + ST _Country matches  : ' + FinalMatch_Lst);
+                    }
+                    else{
+                        //Topic + NO SubTopic Match Case
+                        //Check for country match
+                        if(EmptySubTopicMatch_Lst != null && EmptySubTopicMatch_Lst.size() > 0){
+                            FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicMatch_Lst , userInput_Country);
+                            system.debug('KER0 SubTopicMatch_Lst  ELSE: ' + FinalMatch_Lst);
+                        }else{
+                            FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicAndSubTopicMatch_Lst , userInput_Country); 
+                            system.debug('KER0 SubTopicMatch_Lst  ELSE: ' + FinalMatch_Lst);
+                        }
+                    }
+                }
+                else{
+                    //NO Topic Match Case
+                    //Check for country match
+                    if(EmptyTopicMatch_Lst != null && EmptyTopicMatch_Lst.size() > 0){
+                        FinalMatch_Lst = RetriveMatchCountrySettings(EmptyTopicMatch_Lst , userInput_Country);
+                    }
+                    system.debug('KER0 TopicMatch_Lst ELSE: ' + FinalMatch_Lst);
+                }
+            }
+            system.debug('KER0xxo FinalMatch_Lst'+FinalMatch_Lst);
 
-			if(FinalMatch_Lst != null && FinalMatch_Lst.size() > 0)
-			{
-				ChoosenCS = FinalMatch_Lst[0];
-				//Select the choosen Record Type
-				String recordType = ChoosenCS.RecordType__c;
-				List <RecordType> recordTypeList = [SELECT Id FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+            if(FinalMatch_Lst != null && FinalMatch_Lst.size() > 0)
+            {
+                ChoosenCS = FinalMatch_Lst[0];
+                //Select the choosen Record Type
+                String recordType = ChoosenCS.RecordType__c;
+                List <RecordType> recordTypeList = [SELECT Id FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
 
-				if (!recordTypeList.isEmpty()){
-					//Assign RecordType according to custom Settings
-					parentCase.RecordTypeId = recordTypeList[0].Id;
-					system.debug('KER0 parentCase.RecordTypeId'+parentCase.RecordTypeId);
-					system.debug('KER0 ChoosenCS.OwnerId__c'+ChoosenCS.OwnerId__c);
+                if (!recordTypeList.isEmpty()){
+                    //Assign RecordType according to custom Settings
+                    parentCase.RecordTypeId = recordTypeList[0].Id;
+                    system.debug('KER0 parentCase.RecordTypeId'+parentCase.RecordTypeId);
+                    system.debug('KER0 ChoosenCS.OwnerId__c'+ChoosenCS.OwnerId__c);
 
-					//Assign owenerId according to custom Settings
-					if (ChoosenCS.OwnerId__c != null && ChoosenCS.OwnerId__c != ''){
-						parentCase.OwnerId = ChoosenCS.OwnerId__c;
-						system.debug('KER0 parentCase.OwnerId '+parentCase.OwnerId );
-					}
+                    //Assign owenerId according to custom Settings
+                    if (ChoosenCS.OwnerId__c != null && ChoosenCS.OwnerId__c != ''){
+                        parentCase.OwnerId = ChoosenCS.OwnerId__c;
+                        system.debug('KER0 parentCase.OwnerId '+parentCase.OwnerId );
+                    }
                     
 
-					addDecsription() ;
-					//TF - Add Flag_Assignment_Rules__c value to Description
-					if (ChoosenCS.Flag_Assignment_Rules__c != null && ChoosenCS.Flag_Assignment_Rules__c != ''){
-						parentCase.Description = parentCase.Description+'\n\n' + ChoosenCS.Flag_Assignment_Rules__c;
-					}
-				}
-			}
+                    addDecsription() ;
+                    //TF - Add Flag_Assignment_Rules__c value to Description
+                    if (ChoosenCS.Flag_Assignment_Rules__c != null && ChoosenCS.Flag_Assignment_Rules__c != ''){
+                        parentCase.Description = parentCase.Description+'\n\n' + ChoosenCS.Flag_Assignment_Rules__c;
+                    }
+                }
+            }
 
-			//Fetching the assignment rules on case
-			AssignmentRule AR = new AssignmentRule();
-			AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+            //Fetching the assignment rules on case
+            AssignmentRule AR = new AssignmentRule();
+            AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
 
-			//Creating the DMLOptions for "Assign using active assignment rules" checkbox
-			Database.DMLOptions dmlOpts = new Database.DMLOptions();
-			dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+            //Creating the DMLOptions for "Assign using active assignment rules" checkbox
+            Database.DMLOptions dmlOpts = new Database.DMLOptions();
+            dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
 
-			//Setting the DMLOption on Case instance
-			parentCase.setOptions(dmlOpts);
-            Database.update(parentCase);
+            //Setting the DMLOption on Case instance
+            parentCase.setOptions(dmlOpts);
+            Database.update(parentCase, false);
             return null;
-		}
+        }
     }
 
 
-	 //Description : Method that Retrive Custom setting "From input list" that have matching country with the input param inIFAPCountryISO
+     //Description : Method that Retrive Custom setting "From input list" that have matching country with the input param inIFAPCountryISO
     // Input : List <ISSP_FAQ2Case_Record_Type__c>  , string
     // Output: List <ISSP_FAQ2Case_Record_Type__c> 
     private List <ISSP_FAQ2Case_Record_Type__c> RetriveMatchCountrySettings (List <ISSP_FAQ2Case_Record_Type__c> inCS_Lst , string inIFAPCountryISO){
@@ -405,24 +405,24 @@ public list<String> errorMessage {get; set;}
     }
 
 
-	private void addDecsription() {
+    private void addDecsription() {
         
 
-		String addDecsription ;
-		if (parentCase.Compliment__c == false)
-		{
-			 Integer index = Integer.valueOf(topic.trim());
-			 clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
-			 addDecsription = Label.ISSP_F2CTopic + ' - ' 
+        String addDecsription ;
+        if (parentCase.Compliment__c == false)
+        {
+             Integer index = Integer.valueOf(topic.trim());
+             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+             addDecsription = Label.ISSP_F2CTopic + ' - ' 
                               + selectDataCategory.CategoryLabel + '\n' 
                               + Label.ISSP_F2CSubTopic + ' - '  
                               + selectDataCategory.getLabelByNameCategory(subtopic); 
-		}else {
-			 addDecsription = Label.ISSP_F2CTopic + ' - ' 
+        }else {
+             addDecsription = Label.ISSP_F2CTopic + ' - ' 
                               + 'COMPLIMENT' + '\n' 
                               + Label.ISSP_F2CSubTopic + ' - '  
                               + 'COMPLIMENT'; 
-		}
+        }
         parentCase.Description = '';
         parentCase.Description += '\n\n' + addDecsription;
         

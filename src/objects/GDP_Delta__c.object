@@ -51,9 +51,12 @@
 Records in this objects holds the date of the last modification related to the FileSpecification
 Records in this object holds the nature of the modification ( A=Added, C=Changed or D=Deleted)</description>
     <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Change_Code__c</fullName>
         <description>A=Added, C=Changed or D=Deleted</description>

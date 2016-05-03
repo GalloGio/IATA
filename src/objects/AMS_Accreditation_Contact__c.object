@@ -230,6 +230,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Birthdate__c</fullName>
+        <externalId>false</externalId>
+        <label>Birthdate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>CASS_contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -237,6 +246,17 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Company_Name_Local__c</fullName>
+        <externalId>false</externalId>
+        <label>Company Name (Local language)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Contact_Id__c</fullName>
@@ -259,6 +279,15 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Duplicate_contact_exists__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Duplicate contact exists</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Email__c</fullName>
@@ -384,6 +413,15 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Membership_Main_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Membership Main Contact</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>MobileNational__c</fullName>
@@ -665,6 +703,16 @@
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>list_Dangerous_Goods_Awareness__c</fullName>
+        <description>list Dangerous Goods Awareness certificate completed</description>
+        <externalId>false</externalId>
+        <label>list Dangerous Goods Awareness</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
     <label>AMS Accreditation Contact</label>
     <nameField>
         <label>AMS Accreditation Contact Name</label>
@@ -709,9 +757,209 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>Current_Company_Owner</fullName>
+        <active>true</active>
+        <label>Current Company Owner</label>
+        <picklistValues>
+            <picklist>Agencies_prev_worked_for__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 or more</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>none</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Salutation__c</picklist>
+            <values>
+                <fullName>Miss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_dangerous_goods_completed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Current_Owner</fullName>
+        <active>true</active>
+        <label>Current Owner</label>
+        <picklistValues>
+            <picklist>Agencies_prev_worked_for__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 or more</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>none</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Salutation__c</picklist>
+            <values>
+                <fullName>Miss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_dangerous_goods_completed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Person</fullName>
         <active>true</active>
         <label>Person</label>
+        <picklistValues>
+            <picklist>Agencies_prev_worked_for__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 or more</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>none</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Salutation__c</picklist>
+            <values>
+                <fullName>Miss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_dangerous_goods_completed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Previous_Company_Owner</fullName>
+        <active>true</active>
+        <label>Previous Company Owner</label>
+        <picklistValues>
+            <picklist>Agencies_prev_worked_for__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 or more</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>none</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Salutation__c</picklist>
+            <values>
+                <fullName>Miss</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Training_dangerous_goods_completed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Previous_Owner</fullName>
+        <active>true</active>
+        <label>Previous Owner</label>
         <picklistValues>
             <picklist>Agencies_prev_worked_for__c</picklist>
             <values>

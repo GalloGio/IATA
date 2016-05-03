@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>CASSLink User + Password sent to Agents or Carriers</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>BELUX-FR CASSLINK GENERAL USER NAME (NOT ONLY STOCK)</name>
+    <style>freeForm</style>
+    <subject>Votre accès à CASSlink</subject>
+    <textOnly>Bonjour {!Contact.Name},
+
+  
+ 
+Nous vous informons que votre accès à CASSlink est le suivant :
+ 
+https://casslink.iata.org  (Adresse à garder parmi vos favoris ) 
+ 
+Nom d’utilisateur :                          
+Mot de passe :                                                 
+(attention à la taille des caractères : respectez les minuscules et majuscules)
+ 
+ 
+Un guide de l’utilisateur est disponible sur notre portail clientèle (www.iata.org/europe/cs,  Documents &amp; Formulaires). Veuillez en prendre connaissance.
+ 
+ 
+Les documents postés sur CASSlink (« output Services ») sont composés comme suit :
+ 
+Période 1 :
+·         Factures de la 1ère période
+·         Relevé CASS de la 1ère période
+ 
+Période 2 :
+·         Factures de la 2ème période
+·         Relevé CASS du cumul des périodes 1 et 2. Montant dû au titre des 2 périodes.
+ 
+Période de Correction (P3):
+·         Documents édités uniquement si une compagnie apporte une/des correction(s) sur vos opérations CASS de la période en cours.
+·         Correction des AWB
+·         Relevé CASS du cumul des 3 périodes du mois. Montant définitif dû pour la période en cours.
+ 
+En fin de relevé, vous pouvez être amené(e) à voir la mention « ADDITIONAL COLLECTIONS ». 
+ 
+Il s’agit de BTA dont les montants correspondent : 
+-          Soit aux factures émises par IATA (contrairement aux factures postées sur CASSlink, qui sont celles émises au nom des compagnies aériennes pour le transport uniquement). Ces factures IATA sont disponibles sur votre site myIATA : www.myiata.org/ssp (Fichiers HOT, Excel, Participation annuelle au CASS etc).
+-          Soit à des ajustements concernant vos paiements au CASS (excès de paiements, etc).
+  
+Pour tout type de consultation, veuillez vous rendre sur notre portail clientèle : http://www.iata.org/europe/cs &gt;&gt; Nous contacter. Les demandes envoyées par ce biais sont traitées en priorité.
+
+
+ 
+Cordialement,
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

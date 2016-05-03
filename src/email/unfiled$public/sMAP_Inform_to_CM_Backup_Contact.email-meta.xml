@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>E-mail alert to inform CM &amp; Backup Contact</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>sMAP - new case created inform CM and Backup</name>
+    <style>none</style>
+    <subject>Important: sMAP Red Alert. Case number {!Case.CaseNumber}</subject>
+    <type>text</type>
+</EmailTemplate>

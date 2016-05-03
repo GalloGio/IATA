@@ -1,4 +1,5 @@
 <apex:component controller="ISSP_AmazonS3_Ctrl" allowDML="true">
+    <c:ISSP_WaitingStatus />
     <apex:attribute name="reqCnt" type="Integer" required="true" description="requirement item count" />
     <apex:attribute name="reqRequired" type="String" required="true" description="Mandatory, Optional" />
     <apex:attribute name="reqName" type="String" required="true" description="Requirement name" />
@@ -45,7 +46,7 @@
                                 <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
                             </div>
                         </div>
-                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueAmazonFileNames">
+                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueFileNamesList">
                                 <apex:param assignTo="{!uploadedFileName}" name="filename" value=""/>
                                 <apex:param assignTo="{!uploadedFileSize}" name="filesize" value=""/>
                                 <apex:param assignTo="{!uploadedFileIdentifier}" name="fileidentifier" value="{!reqIdentifier}"/>
@@ -77,7 +78,8 @@
                                        <apex:commandLink value="{!$Label.IDCard_Delete}"
                                             action="{!deleteThisFile}"
                                             onclick="if(!confirm('{!$Label.ISSP_Confirm_File_Delete}'))return false;"
-                                            rendered="{!caseStatus=='Draft'}"
+                                            rendered="{!caseStatus=='Draft'}" 
+                                            status="WaitingStatus"
                                             reRender="AmazonDocs"
                                            oncomplete="location.reload();"
                                        >
@@ -85,9 +87,9 @@
                                         </apex:commandLink>
                                     </apex:column>
                                 </apex:dataTable>
-                            </apex:outputPanel>
+                            </apex:outputPanel> 
                         </apex:repeat>
-                        <input type="hidden" class="UniqueFileNames-{!reqCnt}" value="{!uniqueFileNames}"/> 
+                            <input type="hidden" id="UniqueFileNamesList" class="UniqueFileNames" value="{!uniqueFileNames}"/>
                         </apex:outputPanel>
                         </apex:form>
                         </div>
@@ -96,6 +98,18 @@
     
     <script>
     var folderInit = '{!storageFolder}';
+
+    function getAllFileNames(){
+        var res=[];
+        for(i=0 ; i<$(".UniqueFileNames").length ; i++){
+            var currFileNamesList = ($(".UniqueFileNames")[i].value).split(",");
+            for(j=0 ; j<currFileNamesList.length ; j++){
+                if(res.indexOf(currFileNamesList[j])==-1)
+                    res.push(currFileNamesList[j]);
+            }
+        }
+        return res;
+    }
  
         $(document).ready( function() {
             $('.direct-upload-{!reqCnt}').each( function() {
@@ -119,8 +133,7 @@
                         
                         var uploadErrors = [];
         				var acceptFileTypes = {!allowedExtensions};
-                        //var currentAmazonFilesString = $(".UniqueFileNames-{!reqCnt}").val();
-                        //var currentAmazonFilesArray = currentAmazonFilesString.split(",");
+                        var currentAmazonFilesArray = getAllFileNames();
                         
                         //Remove any special characters from file name
                         	var fn = data.originalFiles[0]['name'];
@@ -140,9 +153,9 @@
             				uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
         				}
                        
-                            //if(currentAmazonFilesArray.indexOf(fn) > -1) {
-                            //uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
-                            //}
+                      	if(currentAmazonFilesArray.indexOf(fn) > -1) {
+                        	uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
+                         }
                             
         				if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > maxFileSize) {
             				uploadErrors.push('Filesize is too big');

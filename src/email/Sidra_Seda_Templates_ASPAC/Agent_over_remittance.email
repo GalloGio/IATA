@@ -1,0 +1,18 @@
+IATA Numeric Code: {!Account.IATACode__c} 
+
+Dear {!Contact.Name}
+
+Greetings from IATA. 
+
+Our email is regarding over remittance of {!Case.Currency__c} {!Case.Outstanding_Amount__c} received from the agency for the period {!Case.Remittance_Period__c}. 
+Against this over remittance received, this office will be issuing a credit memo (SPCR) for the same value and this will be included in the agency's billing for period i.e. XXXXXX.
+
+Please note that your next remittance to IATA will need to be as per the IATA billing statement. Manual adjustment of this credit during the time of your next remittance will not be accepted. 
+
+Should the agency require immediate refund of this credit, please confirm back on this email on or before close of business XXXX <Date>
+In the absence of your confirmation, this office will proceed with the issuance of credit memo (SPCR) for the over remitted value
+
+Thank you. 
+Best Regards, 
+{!Case.OwnerFullName} 
+ISS Operations & Service Centre - Asia & Pacific

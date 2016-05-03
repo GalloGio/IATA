@@ -190,7 +190,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeReason1List1</shortDescription>
-        <value>AIMS Data Entry,CHG – Data Maintenance,CLO - Closure,Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irregularity withdrawal,Reinstatement,Direct Debit Setup/Update</value>
+        <value>AIMS Data Entry,CHG – Data Maintenance,
+Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irregularity withdrawal,Reinstatement</value>
     </labels>
     <labels>
         <fullName>CaseTypeReason1List2</fullName>
@@ -645,14 +646,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Footer</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D8E0000009CAN</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_VFEmailTemplate_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D8E0000009CAN</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -1759,8 +1760,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <protected>false</protected>
         <shortDescription>IDCard_LoginWithCodes</shortDescription>
         <value>&lt;h1&gt;&lt;b&gt;Login with Codes&lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
-For Returning agents who looking to Renew, re-issue their card due to Lost, Stolen, Damage, Name change or have relocated to a different agency.
-Please login with your VER# and IATA Agency Code found on your existing card</value>
+For returning agents who are looking to renew or re-issue their card due to loss, damage, name change or relocation to a different agency, please log in with your VER# and IATA Agency Code found on your existing card.</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginWithPInfo</fullName>
@@ -3380,7 +3380,7 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_Error_InvalidFileNameFormat</shortDescription>
-        <value>Invalid file name format for field {0}. Can only use Alpha-numeric characters and &apos;.&apos;</value>
+        <value>nvalid file name format for field {0}. Can only use Alpha-numeric characters and &apos;&apos;.</value>
     </labels>
     <labels>
         <fullName>IEC_Error_InvalidPageParameter</fullName>
@@ -4106,6 +4106,30 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>You can upload additional files to support your accreditation application or notice of change at any time.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Case_Attach_Limit</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Case Attach Limit</shortDescription>
+        <value>Max. file size 50Mb. Accepted file types are: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Case_Change_Description</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Case Change Description</shortDescription>
+        <value>Thank you for submitting your Change Notification.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Case_PDF_Download</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Case PDF Download</shortDescription>
+        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Submit &amp; Add Attachment&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_City</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4173,12 +4197,28 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Download Accreditation Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Email_Branch_Abroad_Subject</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Email Branch Abroad Subject</shortDescription>
+        <value>Agency Accreditation Branch Abroad Office Draft Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Email_Branch_Subject</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Email Branch Subject</shortDescription>
         <value>Agency Accreditation Branch Office Draft Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Email_Change_Subject</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Email Change Subject</shortDescription>
+        <value>Change of Agency details - Draft request</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Email_HO_Subject</fullName>
@@ -4195,6 +4235,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Empty_Location_Type</shortDescription>
         <value>Please Select Location Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_FAX</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_FAX</shortDescription>
+        <value>FAX</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_File_Upload_Issue</fullName>
@@ -4219,6 +4266,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS First 8 Digits</shortDescription>
         <value>First 8 Digits</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_First_Name_Chinese</fullName>
+        <categories>ISSP AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_First_Name_Chinese</shortDescription>
+        <value>First Name (Chinese)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_First_Page_Summary_Header</fullName>
@@ -4255,6 +4310,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS How Many PrevAgencies</shortDescription>
         <value>* How many travel agencies previously worked for?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_IATA_Passenger_Sales_Agent</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_IATA_Passenger_Sales_Agent</shortDescription>
+        <value>IATA Passenger Sales Agent</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_INFO_Currency</fullName>
@@ -4381,6 +4444,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>* Is your organization a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Last_Name_Chinese</fullName>
+        <categories>ISSP AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Last_Name_Chinese</shortDescription>
+        <value>Last Name (Chinese)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section1</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -4452,6 +4523,150 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Loading Contact details...</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Local_Details_Change_Please_Enter</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Change Please Enter</shortDescription>
+        <value>Please enter the Physical &amp; Correspondence address in your local language for this change of Agency Location.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Company_Name_ENG</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Company Name ENG</shortDescription>
+        <value>Company Name (English)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Company_Name_Local</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Company Name Local</shortDescription>
+        <value>Company Name (Local language)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Copy_Address</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Copy Address</shortDescription>
+        <value>Copy Physical Address to Correspondence Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Correspondence_Address</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Correspondence Address</shortDescription>
+        <value>Correspondence Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_First_Name_ENG</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details First Name ENG</shortDescription>
+        <value>First Name (English)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_First_Name_Local</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details First Name Local</shortDescription>
+        <value>First Name (Local)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Last_Name_ENG</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Last Name ENG</shortDescription>
+        <value>Last Name (English)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Last_Name_Local</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Last Name Local</shortDescription>
+        <value>Last Name (Local)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Legal_Name</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Legal Name</shortDescription>
+        <value>* Legal / Registered Name (Local language)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Legal_Name_ENG</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Legal Name ENG</shortDescription>
+        <value>Legal / Registered Name (English)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_No_Company</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details No Company</shortDescription>
+        <value>No Company Name in local language? Then enter Company Name in Latin Characters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_No_Local_CompanyName</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details No Local CompanyName</shortDescription>
+        <value>No Company name in local language? Then enter name in Latin characters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_No_Local_FirstName</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details No Local FirstName</shortDescription>
+        <value>No Local Name? Then re-enter First Name in Latin characters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_No_Local_LastName</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details No Local LastName</shortDescription>
+        <value>No Local Name? Then re-enter Last Name in Latin characters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Physical_Address</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Physical Address</shortDescription>
+        <value>Physical Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Please_Enter</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Please Enter</shortDescription>
+        <value>Please enter the Legal Name and Physical &amp; Correspondence address of the Agency to be accredited in your local language.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Local_Details_Title</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Local Details Title</shortDescription>
+        <value>Agency Details in Local language</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Manager</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4472,6 +4687,575 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Name of employer</shortDescription>
         <value>Name of employer:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Additional_Information</shortDescription>
+        <value>Additional Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Agency_Information</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Agency_Information</shortDescription>
+        <value>Agency Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Authorized_Signature</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Authorized_Signature</shortDescription>
+        <value>Authorized Signature:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Bank_Change1</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Bank_Change1</shortDescription>
+        <value>The transferor has informed the Transferee of the need to comply with the provision of the Passenger Sales Agency Rules if the Transferee wishes to be entered on the IATA Agency List as an Accredited Agent. Approval may be granted only if the Transferee complies in all respects with the requirements of the Passenger Sales Agency Rules.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Bank_Change2</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Bank_Change2</shortDescription>
+        <value>In accordance with one of the requirements of the Passenger Sales Agency Rules, the Transferee hereby undertakes that it accepted joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Sales Agency Agreement as at the date the transfer of ownership takes place.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Bank_Change3</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Bank_Change3</shortDescription>
+        <value>Where the Transferor is employed by, or retains a financial or benificial interest, directory or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Bank_acount_details</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Bank_acount_details</shortDescription>
+        <value>Bank account details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Bank_details_message1</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Bank_details_message1</shortDescription>
+        <value>In the following step, you will be able to download templates that you can use to notify IATA of new Direct Debit Details and/ or Bank Account Details. Once completed, please upload a scanned copy and submit your request to IATA. If the country you are accredited/ registered in requires the submission of the documents in Original, you will be indicated the IATA postal address as well.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Bank_details_message2</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Bank_details_message2</shortDescription>
+        <value>Your change of bank details will be processed as soon as we receive the original, signed document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Branch_Office</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Branch_Office</shortDescription>
+        <value>Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_Bank_Details</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Bank_Details</shortDescription>
+        <value>Change of Bank Account Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_Bank_Details_message1</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Bank_Details_message1</shortDescription>
+        <value>Please download and complete the bank mandate using the link below.&lt;br/&gt;&lt;br/&gt;
+You will be required to upload a scanned copy of this document in the next step (STEP D).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_Ownership_Shareholding</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Ownership_Shareholding</shortDescription>
+        <value>Change of Ownership or Shareholding or Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_Type_and_Location</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Type_and_Location</shortDescription>
+        <value>Agency Type of Change &amp; Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_for</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_for</shortDescription>
+        <value>*Is the change for your</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_of_Legal_Name</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_of_Legal_Name</shortDescription>
+        <value>Change of Legal Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_of_Location</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_of_Location</shortDescription>
+        <value>Change of Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_submitted_for</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_submitted_for</shortDescription>
+        <value>Change is submitted for</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Choose_Branch_Account</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Choose_Branch_Account</shortDescription>
+        <value>*Choose Branch Account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Confirm_details</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Confirm_details</shortDescription>
+        <value>I confirm the agency details below are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Curr_Company_Owner</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Curr_Company_Owner</shortDescription>
+        <value>Current Company Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Companies</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Current_Companies</shortDescription>
+        <value>Current Companies</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Legal_Status</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Current_Legal_Status</shortDescription>
+        <value>Current Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Owner</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Current_Owner</shortDescription>
+        <value>Current Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Owners_Managers</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Current_Owners_Managers</shortDescription>
+        <value>Current Owner(s)/Manager(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Ownership_or_Shareholding</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Current_Ownership_or_Shareholding</shortDescription>
+        <value>Current Ownership or Shareholding</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Direct_Debit_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Direct_Debit_Change</shortDescription>
+        <value>Direct Debit Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Head_Office</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Head_Office</shortDescription>
+        <value>Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Legal_Name_After_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Legal_Name_After_Change</shortDescription>
+        <value>Legal Name after Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Legal_Name_Before_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Legal_Name_Before_Change</shortDescription>
+        <value>Legal Name before Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Legal_Status_After_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Legal_Status_After_Change</shortDescription>
+        <value>Legal Status after Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Legal_Status_Before_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Legal_Status_Before_Change</shortDescription>
+        <value>Legal Status before Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Loadiing_Agency_Information</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Loadiing_Agency_Information</shortDescription>
+        <value>Loading agency information...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Location_After_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Location_After_Change</shortDescription>
+        <value>Location after Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Location_Before_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Location_Before_Change</shortDescription>
+        <value>Location before Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Message_Accredited_Agent</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Message_Accredited_Agent</shortDescription>
+        <value>Changes can only be made once your agency has been accredited to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Multiple_Changes</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Multiple_Changes</shortDescription>
+        <value>Multiple Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Name_address</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Name_address</shortDescription>
+        <value>Name &amp; address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Notice_of_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Notice_of_Change</shortDescription>
+        <value>Notice Of Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Ownership_Shareholding</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Ownership_Shareholding</shortDescription>
+        <value>Ownership or Shareholding or Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Prev_Company_Owner</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Prev_Company_Owner</shortDescription>
+        <value>Previous Company Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Previous_Companies</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Previous_Companies</shortDescription>
+        <value>Previous Companies</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Previous_Owner</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Previous_Owner</shortDescription>
+        <value>Previous Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Previous_Owners_Managers</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Previous_Owners_Managers</shortDescription>
+        <value>Previous Owner(s)/Manager(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q1</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q1</shortDescription>
+        <value>* Will such change affect the premises that were investigated in the course of approving the Agent’s application for registration?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q2</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q2</shortDescription>
+        <value>* Will such change affect all approved locations?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q3</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q3</shortDescription>
+        <value>* Will such change affect the managers and staff at the approved locations under this change?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q3_Contact_Details</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q3_Contact_Details</shortDescription>
+        <value>Contact Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q4</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q4</shortDescription>
+        <value>* Have any of the new owners, offices (directors), managers or any individual having authorization to act or sign on behalf of such firm been involved in bankruptcy or default proceedings?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q5</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q5</shortDescription>
+        <value>* Will the change of ownership cause direct or indirect relationship with an organization holding GSA appointment from a member?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Request_for_Change</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Request_for_Change</shortDescription>
+        <value>Request for Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Roles_and_Responsabilities</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Roles_and_Responsabilities</shortDescription>
+        <value>Roles &amp; Responsibilities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Signature</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Signature</shortDescription>
+        <value>Signature</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_State_IATA_code</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_State_IATA_code</shortDescription>
+        <value>* Please state the IATA code of all locations affected by this change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_StepA</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_StepA</shortDescription>
+        <value>A. Select Type of Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_StepB_message</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_StepB_message</shortDescription>
+        <value>You can save your change request at anytime and come back later to complete it.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_StepC</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_StepC</shortDescription>
+        <value>C. Details of Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Summary_Current_Ownership</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Summary_Current_Ownership</shortDescription>
+        <value>Summary of Current Ownership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Summary_Previous_Ownership</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Summary_Previous_Ownership</shortDescription>
+        <value>Summary of Previous Ownership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_TC</shortDescription>
+        <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‘Company information’ above to make these statements and file this document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Transferee</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Transferee</shortDescription>
+        <value>Transferee:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Transferor</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Transferor</shortDescription>
+        <value>Transferor:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Type_Of_Person</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Type_Of_Person</shortDescription>
+        <value>Please select the role of this person in the Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Witness</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Witness</shortDescription>
+        <value>Witness:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message1</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message1</shortDescription>
+        <value>Please confirm the agency details below are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message2</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message2</shortDescription>
+        <value>Section Previous Owner(s)/Manager(s) - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message3</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message3</shortDescription>
+        <value>Sections Previous Owner(s)/Manager(s) &amp; Previous Companies - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message4</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message4</shortDescription>
+        <value>Section Current Owner(s)/Manager(s) - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message5</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message5</shortDescription>
+        <value>Sections Current Owner(s)/Manager(s) &amp; Current Companies - Please ensure that the % Total Ownership equals 100%.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_title_or_capacity</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_title_or_capacity</shortDescription>
+        <value>Title or capacity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_type_or_print</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_type_or_print</shortDescription>
+        <value>(type or print)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_No_Pending</fullName>
@@ -4495,6 +5279,38 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_No_Vat_Number_Section</shortDescription>
         <value>No additional information is required for this section</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Noc_Legal_Name</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Noc_Legal_Name</shortDescription>
+        <value>Legal name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Noc_Location</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Noc_Location</shortDescription>
+        <value>Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Noc_StepA_message</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Noc_StepA_message</shortDescription>
+        <value>Draft changes must be submitted within 2 weeks, otherwise you will need to restart the change request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Noc_Type_of_Change</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Noc_Type_of_Change</shortDescription>
+        <value>*Type of Change</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Not_Listed_Msg</fullName>
@@ -4591,6 +5407,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>IATA Passenger Sales - Branch Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_PAX_BRANCH_ABROAD</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION PAX BRANCH ABROAD</shortDescription>
+        <value>IATA Passenger Sales - Branch Abroad</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_PAX_HO</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -4607,6 +5431,20 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Owner</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_PAX_Company</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PAX_Company</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_PAX_Person</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_PAX_Person</shortDescription>
+        <value>Person</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Partner</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4619,6 +5457,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Pax Branch T&amp;Cs</shortDescription>
         <value>&lt;p&gt;I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to Section 2 above to make these statements and file this document.&lt;br/&gt;&lt;br/&gt;It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 2.2). Notwithstanding the foregoing, the applicant authorizes IATA to use and process the information contained in Sections 2.1 and 4, in order to produce and distribute databases among the airline industry participants.&lt;br/&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Phone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Phone</shortDescription>
+        <value>* Phone</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Please_Upload</fullName>
@@ -4690,7 +5535,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Reason Branch Abroad</shortDescription>
-        <value>New Online Branch or Branch Abroad</value>
+        <value>New Branch Abroad</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Reason_New_Branch</fullName>
@@ -4770,12 +5615,83 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Shareholder</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Agency_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Agency Accreditation</shortDescription>
+        <value>Apply for Agency Accreditation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Agency_Article</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Agency Article</shortDescription>
+        <value>Not sure which type of agency to apply for?&lt;br/&gt;Then please consult this</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Change_Bank_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Change Bank Details</shortDescription>
+        <value>Change of Bank Account Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Change_Not_Allowed</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Change Not Allowed</shortDescription>
+        <value>Changes can only be made once your Agency has submitted its application for accreditation to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Changes</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Changes</shortDescription>
+        <value>Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_In_Addition</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 In Addition</shortDescription>
+        <value>In addition you may also apply for:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Intro</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro</shortDescription>
-        <value>Welcome to the online IATA Agency Accreditation application.&lt;br/&gt;&lt;br/&gt;Please note that this form must be submitted by an authorised signatory of the Agency. If you are not authorised to sign legal documents on behalf of the Agency, please request the appointed legal representative to register to the portal and submit the application.&lt;br/&gt;&lt;br/&gt;This area is used to apply for a new IATA Agency Accreditation or to access the applications you are currently working on (Draft or Pending Customer status). Once you have submitted an application, please go to &lt;a href=&quot;/ISSP_CaseList&quot;&gt;My Cases&lt;/a&gt; in order to check the progress.</value>
+        <value>Welcome to the online IATA Agency Accreditation application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_Accred</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro Accred</shortDescription>
+        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_Accred_Msg</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro Accred Msg</shortDescription>
+        <value>If you are not authorised to sign legal documents on behalf of the Agency, please request the appointed legal representative to register to the portal and submit the application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Minor_Changes</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
+        <value>Changes to your Trade Name, Phone or FAX numbers can be made directly from your &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Company Information&lt;/a&gt; page.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
@@ -4786,12 +5702,76 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>New Accreditation Application</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Ongoing_Drafts</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Ongoing Drafts</shortDescription>
+        <value>Ongoing Applications &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Other_Changes</shortDescription>
+        <value>Other Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes_Msg</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
+        <value>For changes to your Location, Company Name, Legal Status or &lt;br/&gt;Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Forms</shortDescription>
+        <value>Other Useful Forms</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Proceed_VMFR</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Proceed VMFR</shortDescription>
+        <value>Please create a create a query with IATA in order to request a Voluntary more Frequent Remittance. Do you wish to proceed?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Request_Voluntary_Reliquishment</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Request_Voluntary_Reliquishment</shortDescription>
+        <value>Request Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_SAA</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 SAA</shortDescription>
-        <value>IATA Online Agency Accreditation</value>
+        <value>IATA Online Agency Accreditation &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Specific_Sales_Activity</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Specific_Sales_Activity</shortDescription>
+        <value>Specific Sales Activity Code (SA)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_VMFR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_VMFR</shortDescription>
+        <value>Voluntary more Frequent Remittance(VMFR)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Approval_Sought</fullName>
@@ -4800,6 +5780,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Approval Sought</shortDescription>
         <value>* Location Type requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Branch Abroad Not Allowed</shortDescription>
+        <value>The selected country does not allow Branches Abroad. Please self-register as a new user and create a new Agency for this country. Do you wish to proceed?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_GoTo_Cargo</fullName>
@@ -4886,7 +5874,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Two Weeks Expiry</shortDescription>
-        <value>Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the accreditation process.</value>
+        <value>Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the process.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step2_Check_List</fullName>
@@ -5214,6 +6202,22 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>directly in order to view the status  of your application at any time.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepFinal_ChangeBank</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal ChangeBank</shortDescription>
+        <value>Thank you for submitting your request for a change of bank account details.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepFinal_ChangeOther</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal ChangeOther</shortDescription>
+        <value>Thank you for submitting your request to change your Agency details.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepFinal_In_Addition</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -5228,6 +6232,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS StepFinal In Addition2</shortDescription>
         <value>Contact Support -&gt; My Cases area</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal Pax BR Abroad Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your Travel Agency Branch Abroad Office.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepFinal_Pax_Branch_Thanks</fullName>
@@ -5321,6 +6332,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Top</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Type_of_Change_Seclected</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Type_of_Change_Seclected</shortDescription>
+        <value>Types Of Change Selected</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Update_Agency</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -5343,6 +6362,22 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Updating Files</shortDescription>
         <value>Updating Files in progress...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Upload_Form</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Upload_Form</shortDescription>
+        <value>Upload signed application form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Upload_Form_message</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Upload_Form_message</shortDescription>
+        <value>Please upload your signed application form in order to complete your application:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Valid_Cargo_Agent_Code</fullName>
@@ -5405,6 +6440,22 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Validation Portal Admin</shortDescription>
         <value>Please select who should be the Portal Administrator for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_download_a_PDF_version</fullName>
+        <categories>ISSP AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_download_a_PDF_version</shortDescription>
+        <value>download a PDF version</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_download_of</fullName>
+        <categories>ISSP AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_download_of</shortDescription>
+        <value>of your Notice Of Change application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change</fullName>
@@ -5653,6 +6704,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Do you really want to delete this notification?</value>
     </labels>
     <labels>
+        <fullName>ISSP_Article</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Article</shortDescription>
+        <value>article</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Articles</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -5752,7 +6811,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Banner_img</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D8E0000009CAN&amp;lastMod=1433764815000</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D2000000008TF&amp;lastMod=1433764815000</value>
     </labels>
     <labels>
         <fullName>ISSP_Banner_link</fullName>
@@ -5768,7 +6827,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Become_Accredited_Agent</shortDescription>
-        <value>IATA Accreditation</value>
+        <value>IATA Accreditation &amp; Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Branches</fullName>
@@ -5946,6 +7005,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>CassLink</value>
     </labels>
     <labels>
+        <fullName>ISSP_Casslink_Plus</fullName>
+        <categories>s11, portal, sprint11</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Casslink_Plus</shortDescription>
+        <value>Casslink Plus</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CertificateEmail1</fullName>
         <categories>S11, Portal</categories>
         <language>en_US</language>
@@ -6004,7 +7071,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Certificate_Profile_Restriction</shortDescription>
-        <value>You cannot purchase an IATA Certificate because you have to be approved by your Portal Administrator or by IATA Customer Service.</value>
+        <value>Product cannot be requested: please note that IATA certificates is only available to IATA accredited Passenger and Cargo Agents, that currently are approved. Terminated or defaulted agents under those groups, or other agent types like TIDS and CASS associates cannot request a certificate.</value>
     </labels>
     <labels>
         <fullName>ISSP_ChangeDDS</fullName>
@@ -6499,6 +7566,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Print this page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Date</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Deny_Access</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -6864,12 +7939,20 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Thank you for creating your Branch Office draft application for approval as an IATA Passenger Sales Agent.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Draft_Change_Process</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Email Draft Change Process</shortDescription>
+        <value>Thank you for creating your draft Notice of Change form.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Draft_Process1</fullName>
         <categories>ISSP, AMS, Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Email Draft Process1</shortDescription>
-        <value>Thank you for creating your draft application for approval as an:</value>
+        <value>Thank you for creating your application for approval as:</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Draft_Process2</fullName>
@@ -6877,7 +7960,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Email Draft Process2</shortDescription>
-        <value>You can access any ongoing accreditation applications by clicking the link below and logging into the portal with your email address:</value>
+        <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Granted_Reason</fullName>
@@ -7268,6 +8351,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_FAQ</shortDescription>
         <value>Frequently Asked Questions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Fax</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Fax</shortDescription>
+        <value>Fax</value>
     </labels>
     <labels>
         <fullName>ISSP_File</fullName>
@@ -9552,6 +10643,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Request Ongoing</value>
     </labels>
     <labels>
+        <fullName>ISSP_Request_Submitted</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Request Submitted</shortDescription>
+        <value>Request Submitted</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Request_Withdrawn</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9924,7 +11023,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SurveyClosedCase</shortDescription>
-        <value>3e6svf1iedsc4&amp;q1</value>
+        <value>nm15vo9nk3tu</value>
     </labels>
     <labels>
         <fullName>ISSP_TC_Accept</fullName>
@@ -10362,6 +11461,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_HomePage</shortDescription>
         <value>Do you want to consult FAQ before logging a new case ?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_edit_lowercase</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP edit lowercase</shortDescription>
+        <value>edit</value>
     </labels>
     <labels>
         <fullName>ISSP_fill_required_fields</fullName>
@@ -12296,7 +13403,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Allowed Users</shortDescription>
-        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS</value>
+        <value>005w0000004ohsY;00520000000rfl7AAA;005w00000047RhzAAE;00520000001VbBNAA0;005w0000002te47AAA;00520000001WIUJ;00520000001Wo2s;00520000002PRqS;00520000002qSkO;005w0000003Z3il;00520000002Q7A4;005200000014b1i;00520000002OqCK;00520000000lGDb;005w00000048WJD;00520000000hdUI;00520000001UEA0;00520000001VhfB</value>
     </labels>
     <labels>
         <fullName>Signaturit_Endpoint</fullName>

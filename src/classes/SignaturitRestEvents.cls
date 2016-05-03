@@ -7,15 +7,22 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 
 	public static String testJson;
 
+	public class SignaturitEventException extends Exception {}
+
 	@HttpPost
 	global static void receiveEvent() {
+		String jsonStr = '';
 		try {
-			String jsonStr = Test.isRunningTest()? testJson: RestContext.request.requestBody.toString();
+			jsonStr = Test.isRunningTest()? testJson: RestContext.request.requestBody.toString();
 			//saveLog(jsonStr);
 			processEvent(jsonStr);
 		} catch (Exception e) {
 			//saveLog('ERROR ' + e.getMessage());
-			System.debug('ERROR in SignaturitRestEvents.receiveEvent() ' + e);
+			String message = 'ERROR in SignaturitRestEvents.receiveEvent()\n JSON:' + jsonStr;
+			System.debug(message + '\n' + e.getMessage());
+			TransformationHelper.sendEmailSupport('SignaturitRestEvents.receiveEvent()', message + '\n' + e.getMessage());
+			//EM: Send back error message to Signaturit in order to handle the exceptions
+			throw new SignaturitEventException(message,e);
 		}
 	}
 
@@ -44,30 +51,35 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 
 		System.debug('****** ' + response);
 
-		Tracked_Email__c trackedEmail = [
+		list<Tracked_Email__c> listTrackedEmail = [
 			Select Id
 			From Tracked_Email__c
 			Where Signaturit_Id__c = :response.certificate.id
-			or Signaturit_Certificate_Ids__c = :response.certificate.id
+			or Signaturit_Certificate_Ids__c like :'%' + response.certificate.id + '%'
 			limit 1];
 
-		if (trackedEmail != null) {
-			Savepoint sp = Database.setSavepoint();
-			try {
-				Tracked_Email_Event__c event = new Tracked_Email_Event__c(
-					Parent__c = trackedEmail.Id,
-					Timestamp__c = response.getEventDate(),
-					Status__c = response.getEventType()
-				);
-				insert event;
+		if (listTrackedEmail.isEmpty() ) {
+			throw new SignaturitEventException('SignaturitRestEvents Error in processEvent(). No Tracked Email found with id ' + response.certificate.id );
+		}
 
-				trackedEmail.Status__c = event.Status__c;
-				update trackedEmail;
+		Tracked_Email__c trackedEmail = listTrackedEmail.get(0);
 
-			} catch ( Exception e) {
-				Database.rollback(sp);
-				System.debug('SignaturitRestEvents Error in processEvent() : ' + e.getMessage());
-			}
+		Savepoint sp = Database.setSavepoint();
+		try {
+			Tracked_Email_Event__c event = new Tracked_Email_Event__c(
+				Parent__c = trackedEmail.Id,
+				Timestamp__c = response.getEventDate(),
+				Status__c = response.getEventType()
+			);
+			insert event;
+
+			trackedEmail.Status__c = event.Status__c;
+			update trackedEmail;
+
+		} catch ( Exception e) {
+			Database.rollback(sp);
+			System.debug('SignaturitRestEvents Error in processEvent() : ' + e.getMessage());
+			throw new SignaturitEventException('SignaturitRestEvents Error in processEvent()', e);
 		}
 	}
 
@@ -78,6 +90,7 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 		global Certificate certificate;
 
 		public DateTime getEventDate() {
+
 			if (certificate.last_event == null) {
 				return getDate();
 			}
@@ -85,6 +98,8 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 		}
 
 		public String getEventType() {
+			//EM
+			if (certificate == null)	return null;
 			if (certificate.last_event == null) {
 				return this.type;
 			}
@@ -99,20 +114,26 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 	global class Certificate {
 		//global CertifiedEmail certified_email;
 		global String created_at;
-		//global Event events;
+		//global EventData [] events;
 		global String id;
 		global EventData last_event;
 		global String recipient_email;
 		global String recipient_name;
+
 	}
 
 	global class EventData {
 		global String date_x;
+		global String created_at;
 		global String type;
 
 		private DateTime getDate() {
+
 			return parseDateString(date_x);
 		}
+
+
+
 	}
 
 	private static DateTime parseDateString(String dateStr) {
@@ -126,5 +147,37 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 			return DateTime.now();
 		}
 	}
+
+/*
+	public Tracked_Email__c checkstatus(Tracked_Email__c te, JSONParser parser) {
+		try {
+			system.debug('@@@parser: ' +parser);
+			MailInfoResponse response = (MailInfoResponse)parser.readValueAs(MailInfoResponse.class);
+			String laststatus;
+			if (response != null)
+				laststatus = response.certificates[0].events[response.certificates[0].events.size()-1].type;
+			system.debug('@@@laststatus: ' +laststatus);
+
+
+			if (te.status__c != laststatus) {
+				te.status__c = laststatus;
+				return te;
+			}
+			else return null;
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+	*/
+
+	global class MailInfoResponse {
+		global String created_at;
+		//global String data;
+		global String id;
+		global Certificate [] certificates;
+
+	}
+
 
 }

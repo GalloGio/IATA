@@ -48,9 +48,12 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Will hold the CAC WebService Subscription Details</description>
     <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Actions__c</fullName>
         <description>Technical use to perform actions against the RDS Database directly in order to update service or suspend it</description>

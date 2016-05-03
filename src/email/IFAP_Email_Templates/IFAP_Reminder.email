@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="{!relatedTo.Reminder_EmailTemplate__r.Subject__c}" recipientType="Contact" relatedToType="Case" >
+
+<messaging:htmlEmailBody >
+<html>
+<body>
+<font face="arial" size="24">
+<table>
+<tr align ="center"><td align="center"><apex:image url="https://c.cs13.content.force.com/servlet/servlet.ImageServer?id=015W00000008tU5&oid=00DW00000008ccJ"/></td></tr>
+<tr></tr>
+
+<tr><td><c:VFEmailTemplate caseId="{!relatedTo.Id}"></c:VFEmailTemplate></td></tr>
+
+
+</table>
+</font>
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

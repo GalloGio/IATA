@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>In case the airline asks questions such as: What are Central fees? Are there Any other fees?</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>QUERY - Central fees</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <type>html</type>
+</EmailTemplate>

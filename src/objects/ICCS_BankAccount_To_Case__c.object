@@ -92,6 +92,15 @@
         <fullName>ICCS_Bank_Account__c</fullName>
         <externalId>false</externalId>
         <label>ICCS Bank Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>ICCS_Bank_Account__c.Account__r.ACLI_Status__c</field>
+                <operation>notEqual</operation>
+                <value>Inactive Company</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>ICCS_Bank_Account__c</referenceTo>
         <relationshipLabel>ICCS Bank Accounts To Cases</relationshipLabel>
         <relationshipName>ICCS_Bank_Accounts_To_Cases</relationshipName>

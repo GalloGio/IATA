@@ -30,7 +30,6 @@ ul li, ol li {
         
         .apcontainer div {
         border-top: 0px !important;
-        border: 1px solid #ececec;
         }
         
         .col1 {
@@ -60,6 +59,10 @@ ul li, ol li {
         	color: #fff !important;
         }
         
+        .bPageBlock {
+        	border-top-width : thin;
+        }
+       
  		.pbSubheader {
         	font-weight:bold;
         	font-size:15px;
@@ -199,6 +202,10 @@ p.LOB {
         border: 0;
         -webkit-appearance: none;
         }
+
+    .apcontainer div .intl-tel-input {
+        border: 0;
+    }
         
     </style>
 </apex:component>

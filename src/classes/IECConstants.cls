@@ -5,29 +5,43 @@
   * History: 
   */
 global class IECConstants {
-	// GET parameters constants
-	public static final string PARAM_PRODUCT_CODE = 		'ProductCode';
-	public static final string PARAM_RATEPLAN_ID = 			'rpid';
-	public static final string PARAM_RATEPLANINFO_ID =		'rpiid';
-	public static final string PARAM_PRODINFO_ID =			'piid';
-	public static final string PARAM_RETURN_URL = 			'returl';
-	public static final string PARAM_WARNING_MSG = 			'warnmsg';
-	public static final string PARAM_SHOW_REGISTER_LINK	=	'registerLink';
-	public static final string PARAM_SUBSCRIPTION_ID =		'subid';
-	public static final string PARAM_SUBSCRIPTION_NAME =	'subname';
-	public static final string PARAM_INVOICE_ID = 			'invid';
-	public static final string PARAM_PAYMENT_ID = 			'payid';
-	public static final string PARAM_RESETPASSWORD =		'respw';
-	public static final string PARAM_APPFILTER_ID =			'appfid';
-	
-	//Get customer types constants
-	public static final string PARAM_CUSTOMERTYPE_AIRLINE = 		'Airline';
-	public static final string PARAM_CUSTOMERTYPE_NONAIRLINE =		'Non Airline Supplier';
-	public static final string PARAM_CUSTOMERTYPE_AGENCY = 			'IATA Agency';
-	public static final string PARAM_CUSTOMERTYPE_NONIATAAGENCY = 	'Non IATA Agency';
-	public static final string PARAM_CUSTOMERTYPE_GAS = 			'GAS';
-	public static final string PARAM_CUSTOMERTYPE_PARTNER = 		'Partner';
-	public static final string PARAM_CUSTOMERTYPE_OTHER = 			'Other';
+
+    //Order Status : add by CGI - David D 2015-10-16
+    public static final String ORDER_STATUS_PAID            =   'Paid';
+    public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';
+    public static final String ORDER_STATUS_CREDIT_CARD_DEFERRED = 'Credit Card Deferred';
+    public static final String ORDER_STATUS_CHECK = 'Check';
+
+    public static final String ORDER_TYPE_QUOTE = 'Quote';
+    public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
+
+    public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';
+
+
+    // GET parameters constants
+    public static final string PARAM_PRODUCT_CODE =         'ProductCode';
+    public static final string PARAM_RATEPLAN_ID =          'rpid';
+    public static final string PARAM_RATEPLANINFO_ID =      'rpiid';
+    public static final string PARAM_PRODINFO_ID =          'piid';
+    public static final string PARAM_RETURN_URL =           'returl';
+    public static final string PARAM_WARNING_MSG =          'warnmsg';
+    public static final string PARAM_SHOW_REGISTER_LINK =   'registerLink';
+    public static final string PARAM_SUBSCRIPTION_ID =      'subid';
+    public static final string PARAM_SUBSCRIPTION_NAME =    'subname';
+    public static final string PARAM_INVOICE_ID =           'invid';
+    public static final string PARAM_PAYMENT_ID =           'payid';
+    public static final string PARAM_RESETPASSWORD =        'respw';
+    public static final string PARAM_APPFILTER_ID =         'appfid';
+    public static final string PARAM_LIMITTOIDS =           'limittoids'; // Added by Mathieu Beausoleil
+    
+    //Get customer types constants
+    public static final string PARAM_CUSTOMERTYPE_AIRLINE =         'Airline';
+    public static final string PARAM_CUSTOMERTYPE_NONAIRLINE =      'Non Airline Supplier';
+    public static final string PARAM_CUSTOMERTYPE_AGENCY =          'IATA Agency';
+    public static final string PARAM_CUSTOMERTYPE_NONIATAAGENCY =   'Non IATA Agency';
+    public static final string PARAM_CUSTOMERTYPE_GAS =             'GAS';
+    public static final string PARAM_CUSTOMERTYPE_PARTNER =         'Partner';
+    public static final string PARAM_CUSTOMERTYPE_OTHER =           'Other';
 
 	//Params to defin elements to be shown on Maps
 	public static final string PARAM_SHOWMAPSAGENCIES = 			'sa';

@@ -30,7 +30,7 @@
 	                    </apex:facet>
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
 	                    
-		    			<apex:outputText value="{!IF(isocountry.ISO_Code__c=='CN', 'Legal / Registered Name (English)',$ObjectType.Account.fields.Legal_name__c.Label)}" />
+		    			<apex:outputText value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
 		            	<apex:outputField value="{!hqAccount.Name}"/>
 		            	<apex:outputText value="{!$ObjectType.Account.fields.TradeName__c.Label}" />
 	                    <apex:outputField value="{!hqAccount.TradeName__c}"/>
@@ -85,24 +85,24 @@
 	        </apex:pageBlockSection>
 	    <div style="page-break-after:always;margin-top:30px;">
 	    
-	    <!-- ************************* section Local Details (China) ************************* -->
-	    			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isocountry.ISO_Code__c=='CN'}">
+	    <!-- ************************* section Local Details (Local language) ************************* -->
+	    			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
 	                    <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            Agency Details in Local language
+	                             {!txtLocalAgencyDetailsTitle}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
 	                        </apex:outputpanel>
 	                    </apex:facet>
-	                    <apex:outputText value="Please enter the Legal Name and Physical & Correspondence address of the Agency to be accredited in your local language."/>
+	                    <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
 	                    <apex:panelGrid columns="4" width="100%" cellpadding="10%" columnClasses="col1_regular, col2_regular">
-	                        <apex:outputLabel value="Legal / Registered Name (Chinese)"/>
+	                        <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
 	                       	<apex:outputField value="{!newForm.Local_Legally_Registered_Name__c}" />
 	                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
 	                    	<apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
 	                        
-	                        <apex:outputText value="Physical Address" style="font-weight:bold; font-size:110%"/>
+	                        <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
 	                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
-	                    	<apex:outputText value="Correspondence Address" style="font-weight:bold; font-size:110%"/>
+	                    	<apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
 	                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
 	                        
 	                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
@@ -131,9 +131,9 @@
 	                        <apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
 	                        
 	                        <apex:outputLabel value="Country"/>
-	                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+	                       	<apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
 	                        <apex:outputLabel value="Country"/>
-	                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+	                       	<apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
 	                    </apex:panelGrid>
 	                </apex:pageBlockSection>
 	    </div>
@@ -151,7 +151,7 @@
 	            <apex:facet name="header">3.1 PEOPLE</apex:facet>
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
 	            	<apex:facet name="header">Name</apex:facet>
-	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.ISO_Code__c=='CN','('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
 	        	</apex:column>
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
 	                <apex:facet name="header">Contact Details</apex:facet>

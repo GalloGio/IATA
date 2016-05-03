@@ -1,0 +1,7 @@
+Dear {!Case.OwnerFullName}, 
+
+A new attachment has been added to the Case {!Case.CaseNumber}. 
+
+Please click on the link to respond appropriately:
+
+{!Case.Link}

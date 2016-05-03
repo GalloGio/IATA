@@ -48,9 +48,12 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Object used to describe the file representation that will be used to generate Txt, Xls and XML files</description>
     <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Atom__c</fullName>
         <description>Will Allow to segregate the File Production. Selection of option 0 will deactivate the production of the file.</description>
@@ -705,6 +708,110 @@
             <value>XML</value>
         </filters>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_CAC_Non_Reference</fullName>
+        <columns>NAME</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <columns>Description__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>contains</operation>
+            <value>CAC</value>
+        </filters>
+        <label>All CAC Non Reference</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_CAC_Non_Reference_DB_Files</fullName>
+        <columns>NAME</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <columns>Description__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Atom__c</field>
+            <operation>equals</operation>
+            <value>255</value>
+        </filters>
+        <label>All CAC Non Reference DB &amp; Files</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_GSS_Non_Reference</fullName>
+        <columns>NAME</columns>
+        <columns>Class__c</columns>
+        <columns>File_Format__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <columns>Description__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <label>All GSS Non Reference</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_References</fullName>
+        <columns>NAME</columns>
+        <columns>File_Naming_Convention__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Class__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Master_File_Description__c</columns>
+        <columns>Payload_Procedure__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Service_Target__c</columns>
+        <columns>Is_Reference__c</columns>
+        <columns>Description__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Reference__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All References</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div>Dear {!Contact.Salutation}&nbsp;{!Contact.FirstName} {!Contact.LastName},</div><div><br></div>Congratulations!<div>Your access to {!Portal_Applications__c.Name} Service has been granted. You can access it <a href="https://customer-portal-iata.force.com/ISSP_HomePage">here</a><a><span style="font-size: 12pt; font-family: Arial, sans-serif; background-color: rgb(255, 255, 255);">.</span></a></div><div><br></div><div><span style="font-size: 12pt;">Thank you.</span></div><div><span style="font-size: 12pt;"><br></span></div><div><span style="font-size: 12pt;">IATA Customer Service Portal</span></div><div><br></div>]]></td>
+</tr>
+</table>

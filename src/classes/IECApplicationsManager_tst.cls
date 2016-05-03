@@ -6,7 +6,7 @@
  */
 @isTest
 private class IECApplicationsManager_tst {
-	private static User oCommunityUser; 
+    private static User oCommunityUser; 
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
@@ -65,10 +65,10 @@ private class IECApplicationsManager_tst {
         oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert oProductInfo;
-        
+
         oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
         insert oProductRatePlan;
-        
+
         oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
         oProductRatePlanInfo.Display_As_Monthly_Fee__c = true;
         oProductRatePlanInfo.Subscription_Usage_Qty__c = SUB_USAGE_QTY;
@@ -86,7 +86,7 @@ private class IECApplicationsManager_tst {
         
         oRefLocationType = IECTestUtil.createSampleGDPReferenceTableEntry('HO', 'Head Office');
         insert oRefLocationType;
-        
+
         List<RecordType> rtypes = [Select Name, Id 
                                     From RecordType
                                     where sObjectType='Account'
@@ -164,7 +164,7 @@ private class IECApplicationsManager_tst {
         insert oBillingAccount;
         
         dtSubscriptionEnddate = Date.today().addMonths(6);
-        
+
         oSubscription = IECTestUtil.createSampleSubscription(oAccount.Id, 'Subs 01', dtSubscriptionEnddate);
         oSubscription.Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
         oSubscription.Zuora__CustomerAccount__c = oBillingAccount.Id;
@@ -279,7 +279,6 @@ private class IECApplicationsManager_tst {
             
             // usage should be consumed (even if no results)
             lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-            
             //futuremethod
             //system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 1, 'Product Access should reflect 1 search consumption');
             
@@ -290,7 +289,6 @@ private class IECApplicationsManager_tst {
             
             // usage should be consumed
             lstProductAccess = IECApplicationsManager.getListProductAccessByContactByProductCategory(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-            
             //system.assert(lstProductAccess != null && lstProductAccess.get(0).Usage_Qty_consumed__c == 2, 'Product Access should reflect 2 search consumption');
             
             // make sure the search was tracked in the global counter
@@ -353,8 +351,7 @@ private class IECApplicationsManager_tst {
             insert oGDPAddress1;
             oGDPAccount1.Related_GDP_Address__c = oGDPAddress1.Id;
             update oGDPAccount1;
-            
-            
+
             IEC_Application_Filter__c oFilter = new IEC_Application_Filter__c();
             oFilter.Sub_Continent__c = 'Some sub-continent';
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
@@ -367,13 +364,8 @@ private class IECApplicationsManager_tst {
             // throw new  transformationException('GDP_Products_Account_View__cs   ' +GDPs);
             
             oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter,
-                                                IECConstants.ProductCategory_SF_CACPRO,
-                                                 IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null
-                             && lstSearchResult.size() == 1 && 
-                             oGDPAccount1.Id == lstSearchResult.get(0).Id,
-                              'The Agency #1 should be found based on sub-continent');
+            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
+            system.assert(lstSearchResult != null && lstSearchResult.size() == 1 && oGDPAccount1.Id == lstSearchResult.get(0).Id, 'The Agency #1 should be found based on sub-continent');
             
             // Test #9 - search by multiple filters with 2 agencies having the same city, country and sub-continent
             
@@ -397,6 +389,7 @@ private class IECApplicationsManager_tst {
             GDP_Address__c oGDPAddress2 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount2, oISOCountry, null, oGEODetail2);
             oGDPAddress2.Address_City__c = 'BOYA_2';
             insert oGDPAddress2;
+    
             oGDPAccount2.Related_GDP_Address__c = oGDPAddress2.Id;
             update oGDPAccount2;
             
@@ -412,10 +405,9 @@ private class IECApplicationsManager_tst {
             oFilter.Country__c = oGDPAddress1.Address_ISO_Country_Code__c;
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
             system.assert(lstSearchResult != null && lstSearchResult.size() == 2, '2 agencies should be found based on sub-continent and city');
-            
             for (GDP_Products_Account_View__c oAgency : lstSearchResult)
                 system.assert(oAgency.Id == oGDPAccount1.Id || oAgency.Id == oGDPAccount2.Id, 'Agency #1 and #2 should be found');
-            
+
             // Test #10 - search by zip/postal code with search type contains
             
           } // end runAs
@@ -447,7 +439,7 @@ private class IECApplicationsManager_tst {
         
         // add Address to the existing oGDPAccount3 in database
         GDP_Products_Account_View__c oGDPAccount3New = new GDP_Products_Account_View__c( Id = oGDPAccount3.Id
-	        	, Related_GDP_Address__c = oGDPAddress3.Id);
+                , Related_GDP_Address__c = oGDPAddress3.Id);
         update oGDPAccount3New;
         
         // Test #10
@@ -650,25 +642,25 @@ private class IECApplicationsManager_tst {
         GDP_Products_Account_View__c oGDPAccount1Search = IECApplicationsManager.getAgencyByID(oGDPAccount1.Id);
         System.assertEquals( oGDPAccount1.Id, oGDPAccount1Search.Id, 'GDPAccount1 should have been found');
         
- 		IECApplicationsManager.createProductAccessOnNewSubscription( oContact.Id, oSubscription, 'INVOICE 333'); 
+        IECApplicationsManager.createProductAccessOnNewSubscription( oContact.Id, oSubscription, 'INVOICE 333'); 
         
         Integer contactAccessProductCategoryStatusCode = IECApplicationsManager.ContactHasAccessToProductCategory( oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
         Integer contactAccessSubscriptionStatusCode =  IECApplicationsManager.ContactHasAccessToSubscriptionName( oContact.Id, oSubscription.Name);   
 
         List<IEC_Product_Access__c> lstProdAccessBySubs = IECApplicationsManager.getListProductAccessByContactBySubscriptionNumber(oContact.Id, oSubscription.Name);
-    	System.assertNotEquals(0, lstProdAccessBySubs.size(), 'ProductAccess By Subscription should be found.');
+        System.assertNotEquals(0, lstProdAccessBySubs.size(), 'ProductAccess By Subscription should be found.');
             
         List<IEC_Product_Access__c> lstProdAccessByProductCategory = IECApplicationsManager.getProductAccessByContact(oContact.Id, IECConstants.ProductCategory_SF_CACPRO);
-    	System.assertNotEquals(0, lstProdAccessByProductCategory.size(), 'ProductAccess By Product Category should be found.');
+        System.assertNotEquals(0, lstProdAccessByProductCategory.size(), 'ProductAccess By Product Category should be found.');
         
         IECApplicationsManager.adjustProductAccessOnSubscription( oContact.Id, oSubscription, 'INVOICE 333', lstProdAccessBySubs[0]); 
         
         List<IEC_Application_Filter__c> lstFilters = IECApplicationsManager.LoadFilterByContact( oContact.id, true) ;// test for bSystemGenerated
         
         System.runAs(oCommunityUser) {
-    	    Date dEndSubscriptionDate = IECApplicationsManager.getEnddateOfSubscriptionName(oSubscription.Name);
-        	Integer iDayLeftForAccess = IECApplicationsManager.getDaysLeftForAccessBySubscriptionName(oSubscription.Name);
-	    }
+            Date dEndSubscriptionDate = IECApplicationsManager.getEnddateOfSubscriptionName(oSubscription.Name);
+            Integer iDayLeftForAccess = IECApplicationsManager.getDaysLeftForAccessBySubscriptionName(oSubscription.Name);
+        }
         Test.stopTest();
         
     } // end of testOtherStuff2

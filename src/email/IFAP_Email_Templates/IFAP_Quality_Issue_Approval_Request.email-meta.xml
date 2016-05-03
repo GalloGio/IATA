@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Quality issue approval request sent to the IFAP RPM group</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATA_Sky</letterhead>
+    <name>IFAP Quality Issue Approval Request</name>
+    <style>formalLetter</style>
+    <subject>IFAP quality issue approval request</subject>
+    <textOnly>Dear RPM team,  
+
+Please approve the IFAP quality issue created for the case {!Case.CaseNumber}.  
+
+Regards,
+{!Case.Owner}</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -21,5 +21,16 @@
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
+    <fields>
+        <fullName>Sort_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Sort Order</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>ISSP AMS PDF Per Region</label>
 </CustomObject>

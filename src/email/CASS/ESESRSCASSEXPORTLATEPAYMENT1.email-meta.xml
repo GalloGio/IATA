@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>1st Email sent to CASS EXPORT Agents in late payment, Spain</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>ES-ES R&amp;S CASS EXPORT LATE PAYMENT (1)</name>
+    <style>freeForm</style>
+    <subject>INCIDENCIA EN EL PAGO DE SUS OPERACIONES CASS</subject>
+    <textOnly>Estimado/a {!Contact.Name}, 
+  
+ 
+Tras nuestra conversación telefonica de hoy, le confirmamos que según la información recibida de nuestro banco, su compañía tiene un balance negativo a favor de CASS España. 
+ 
+Al no haber recibido a tiempo el importe total correspondiente a sus operaciones CASS Export en la cuenta puente, le rogamos que regularice su situación antes del fín del periodo de gracia mediante transferencia bancaria, si no lo ha hecho ya.
+ 
+Operaciones CASS:                    Noviembre 2010
+Fecha límite de pago:                 30 Diciembre 2010
+Fín del periodo de gracia:          10 Enero 2011
+ 
+Importe debido:                          XXX,XX EUR
+Importe recibido:                        XXX.XX EUR
+Importe pendiente:                     XXX,XX EUR
+ 
+ 
+Con el fín de agilizar la gestión de su expediente, le rogamos que conteste a este mensaje adjuntando el justificante de pago.
+ 
+Nos gustaría advertirle que, en el caso de que su situación no hubiera sido regularizada durante el periodo de gracia y de acuerdo con la resolución 801re, no tendríamos más remedio que suspender inmediatamente su compañía en CASS España.
+ 
+Para cualquier información adicional al respecto, puede contestar sobre este mansaje.
+ 
+ 
+Atentamente,
+ 
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/customer
+ 
+
+ </textOnly>
+    <type>html</type>
+</EmailTemplate>

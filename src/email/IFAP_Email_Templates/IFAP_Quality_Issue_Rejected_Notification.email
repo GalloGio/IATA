@@ -1,0 +1,14 @@
+<table height="400" width="600" cellpadding="5" border="0" cellspacing="5" >
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<span style="font-size: medium;">Dear {!Case.Owner},&nbsp;</span>]]></td>
+</tr>
+<tr height="300" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r2" locked="0" aEditID="c1r2" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: arial;">Your quality issue related to the case <a href="{!Case.Link}">{!Case.CaseNumber}</a> have been rejected for the following reason:</span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div><font face="arial">{!ApprovalRequest.Comments}</font><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">.</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><div>Regards,</div><div>The RPM team&nbsp;</div></font></div>]]></td>
+</tr>
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r3" locked="0" aEditID="c1r3" >
+<![CDATA[]]></td>
+</tr>
+</table>
