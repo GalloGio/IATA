@@ -1,0 +1,128 @@
+i.icon {
+    font-style: normal;
+}
+
+.icon-refresh {
+    margin-left: 5px;
+}
+
+.icon {
+    &::before {
+        font-family: 'FontAwesome';
+        display: inline-block;
+        padding-right: 5px;
+    }
+    
+    &.schedule::before {
+        content: '\f017';
+    }
+
+    &.sent::before,
+    &.check-circle-o::before {
+        content: '\f05d';
+    }
+
+    &.check-circle::before {
+        content: '\f058';
+    }
+
+    &.draft::before {
+        content: '\f14b';
+    }
+    
+    &.pending::before {
+        content: '\f251';
+    }
+
+    &.rejected::before {
+        content: '\f05c';
+    }
+
+    &.angle-right::before {
+        content: '\f105';
+    }
+
+    &.plus::before {
+        content: '\f067';
+    }
+    
+    $icon-size: 1.8em;
+    &.plus-circle::before {
+        content: '\f067';
+        border: 2px solid $link-color;
+        border-radius: 50%;
+        width: $icon-size;
+        height: $icon-size;
+        line-height: 1.7;
+        padding: 0 0 0 1px;
+        margin-right: 7px;
+    }
+
+    &.angle-left::before {
+        content: '\f104';
+    }
+
+    &.angle-down::before {
+        content: '\f107';
+    }
+
+    &.caret-down::before {
+        content: '\f0d7';
+    }
+
+    &.user::before {
+        content: '\f007';
+    }
+
+    &.shopping-cart::before {
+        content: '\f07a';
+    }
+
+    &.after {
+        &::before {
+            content: '';
+            display: inline;
+        }
+
+        &::after {
+            font-family: 'FontAwesome';
+            display: inline-block;
+            padding-left: 5px;
+        }
+
+        &.caret-down::after {
+            content: '\f0d7';
+        }
+
+        &.angle-right::after {
+            content: '\f105';
+        }
+    }
+
+}
+
+.icon-status {
+    font-size: 30px;
+
+    &.schedule {
+        color: #e6bb70;
+    }
+    
+    &.sent {
+        color: #238b63;
+    }
+
+    &.draft {
+        color: #2a3940;
+        font-size: 26px;
+    }
+
+    &.pending {
+        color: #24828c;
+        font-size: 22px;
+    }
+
+    &.rejected {
+        color: #e67070;
+    }
+}
