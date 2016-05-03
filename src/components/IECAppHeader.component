@@ -1,9 +1,11 @@
 <apex:component layout="none" controller="vfIECAppHeaderComponent" allowDML="true">
 
     <apex:attribute name="applicationTitle" description="Title to be shown on the header menu" type="String" assignTo="{!sApplicationTitle}" />
+    <apex:attribute name="applicationCode" description="Application code used to display different UI" type="String"/>
 
     <apex:attribute name="subInfoController" description="Subscription Info Contrller" type="vfIECSubscriptionInfo" assignTo="{!subscriptionInfoCtr}" />
     <apex:attribute name="showSearchOptions" description="Dislplay Search Options" type="boolean" />
+    <apex:attribute name="showLastOfUpdate" description="Dislplay Search Options" type="boolean" default="true"/>
     <apex:attribute name="savedFiltersController" description="Saved Filters Controller" type="vfIECSavedFilters" assignTo="{!savedFiltersCtr}" />
 
 
@@ -86,7 +88,7 @@
     <!-- End Google Tag Manager -->
 
 
-	<!-- mouse set cursor in progress -->
+    <!-- mouse set cursor in progress -->
     <script>
         function changeCursorProgress(control) {
             control.style.cursor = 'progress';
@@ -115,7 +117,7 @@
                 </li>
 
                 <li class="header__navigation-li">
-                    <apex:outputText styleClass="header__navigation-link" value="Last Date of Update: {0,date,dd MMM yyyy}">
+                    <apex:outputText rendered="{!showLastOfUpdate}" styleClass="header__navigation-link" value="Last Date of Update: {0,date,dd MMM yyyy}">
                         <apex:param value="{!dtDBLastUpdate}" />
                     </apex:outputText>
                 </li>
@@ -181,7 +183,7 @@
             <table class="customTabs">
                 <tr>
                     <td>
-                        <apex:commandLink rel="tab1" action="{!switchToSubscriptionInfo}" rerender="menuComponent" value="Service Details" styleClass="customButton lastElm active" />
+                        <apex:commandLink rel="tab1" action="{!switchToSubscriptionInfo}" rerender="menuComponent" value="{!if (applicationCode == 'GSS' || applicationCode == 'MDP', 'Service Overview', 'Service Details')}" styleClass="customButton lastElm active" />
 
                     </td>
                     <td>
@@ -196,28 +198,28 @@
             </table>
             
             <apex:outputPanel id="menuComponent"  >                
-	               
-	                <apex:outputPanel id="menuComponent1" rendered="{!bShowSubscriptioninfo}">
-	                    <div class="inner tab1">
-	                        <c:IECSubscriptionInfo infoController="{!subInfoController}"  />
-	                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
-	                    </div>
-	                </apex:outputPanel>
-	
-	                <apex:outputPanel id="menuComponent2" rendered="{!bShowSearchOptions}">
-	                    <div class="inner tab2">
-	                        <c:IECSearchOptions />
-	                        <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
-	                    </div>
-	                </apex:outputPanel>
-	
-	                <apex:outputPanel id="menuComponent3" rendered="{!bShowSavedFilters}">
-	                    <div class="inner tab3">
-	                        <c:IECSavedFilters filtersController="{!savedFiltersController}"  />
-	                        <a  class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
-	                    </div>
-	                </apex:outputPanel>
-	                
+                   
+                    <apex:outputPanel id="menuComponent1" rendered="{!bShowSubscriptioninfo}">
+                        <div class="inner tab1">
+                            <c:IECSubscriptionInfo infoController="{!subInfoController}" applicationCode="{!applicationCode}" />
+                            <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
+                        </div>
+                    </apex:outputPanel>
+    
+                    <apex:outputPanel id="menuComponent2" rendered="{!bShowSearchOptions}">
+                        <div class="inner tab2">
+                            <c:IECSearchOptions />
+                            <a class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
+                        </div>
+                    </apex:outputPanel>
+    
+                    <apex:outputPanel id="menuComponent3" rendered="{!bShowSavedFilters}">
+                        <div class="inner tab3">
+                            <c:IECSavedFilters filtersController="{!savedFiltersController}"  />
+                            <a  class="customButton signup" href="mailto:globaldata@iata.org?subject={!sApplicationTitle}: write your subject here">Contact Support</a>
+                        </div>
+                    </apex:outputPanel>
+                    
             </apex:outputPanel>
 
         </apex:form>

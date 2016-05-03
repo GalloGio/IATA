@@ -1819,6 +1819,10 @@ and
         <name>IEC_Confirm_DefaultPaymentUpdate</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Confirm_SaveSuccessful --></label>
+        <name>IEC_Confirm_SaveSuccessful</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_AcceptTermAndCondition --></label>
         <name>IEC_Error_AcceptTermAndCondition</name>
     </customLabels>
@@ -1911,6 +1915,10 @@ and
         <name>IEC_Error_InvalidEmail</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Error_InvalidFileNameFormat --></label>
+        <name>IEC_Error_InvalidFileNameFormat</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_InvalidPageParameter --></label>
         <name>IEC_Error_InvalidPageParameter</name>
     </customLabels>
@@ -1937,6 +1945,10 @@ and
     <customLabels>
         <label><!-- IEC_Error_MustLogin --></label>
         <name>IEC_Error_MustLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IEC Error Must Select Subscription --></label>
+        <name>IEC_Error_Must_Select_Subscription</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC Error No Application Access --></label>

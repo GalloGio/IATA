@@ -66,10 +66,19 @@
     </fields>
     <fields>
         <fullName>Web_Service_endpoint__c</fullName>
-        <defaultValue>&quot;https://sapws.iata.org/XISOAPAdapter/MessageServlet&quot;</defaultValue>
-        <description>Endpoint of the MDM (SAP PI) web service</description>
+        <description>Endpoint for SAP PI web service
+
+Environment	Used on SFDC - Web URL 
+DEV - https://pixid.iata.org/XISOAPAdapter/MessageServlet
+QA - https://pixiq.iata.org/XISOAPAdapter/MessageServlet
+PRE-PROD - https://pixis.iata.org/XISOAPAdapter/MessageServlet</description>
         <externalId>false</externalId>
-        <inlineHelpText>Endpoint of the MDM (SAP PI) web service</inlineHelpText>
+        <inlineHelpText>Endpoint for SAP PI web service
+
+Environment	Used on SFDC - Web URL 
+DEV - https://pixid.iata.org/XISOAPAdapter/MessageServlet
+QA - https://pixiq.iata.org/XISOAPAdapter/MessageServlet
+PRE-PROD - https://pixis.iata.org/XISOAPAdapter/MessageServlet</inlineHelpText>
         <label>Web Service endpoint</label>
         <length>255</length>
         <required>true</required>

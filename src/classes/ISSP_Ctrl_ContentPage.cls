@@ -31,24 +31,13 @@ public class ISSP_Ctrl_ContentPage
   public ContentVersion cont_ContentVersion { get; set; }
 
   public String csHost {get;set;}
-        
-  // the current sort direction. defaults to accessToLibrariesCS
-  public String sortDir {
-    get  { if (sortDir == null) {  sortDir = 'desc'; } return sortDir;  }
-    set;
-  }
 
-  // the current field to sort by. defaults to last name
-  public String sortField {
-    get  { if (sortField == null) {sortField = 'LastModifiedDate '; } return sortField;  }
-    set;
-  }
 
   // format the soql for display on the visualforce page
-  public String debugSoql {
+ /* public String debugSoql {
     get { return soql + ' order by ' + sortField + ' ' + sortDir + ' limit 20'; }
     set;
-  }
+  }*/
   
   public String UserPortalCategory;
   public String UserPortalRecodType;
@@ -57,15 +46,17 @@ public class ISSP_Ctrl_ContentPage
   // set of ids of the libraries with visibility
   public Set<Id> libraryIds_set;
 
+  private String sortDirection = 'ASC';
+  private String sortExp = 'LastModifiedDate';
+  
+
   //Consetructor
   public ISSP_Ctrl_ContentPage(){
-    system.debug('aqui ISSP_Ctrl_ContentPage Starting...');
     Init();
   }
 
   //Initialize Variables and Parameters
   public void Init(){
-    system.debug('aqui Init Starting...');
     List<ContentWorkspace> ContentWorkspace_Lst;
     
     User tmpPortalUSer = [select Id , ContactId From User Where id =: userinfo.getuserid()];
@@ -113,7 +104,7 @@ public class ISSP_Ctrl_ContentPage
 
     system.debug('KER0  UserPortalStatus '+UserPortalStatus);   
     system.debug('KER0  UserPortalCountry '+UserPortalCountry);   
-    system.debug('KER0  UserPortalRegion '+UserPortalRegion);  
+    system.debug('KER0  UserPortalRegion '+UserPortalRegion);   
     system.debug('KER0  UserPortalAccountSector '+UserPortalAccountSector);   
     system.debug('KER0  Category  '+ UserPortalCategory);    
     system.debug('KER0  RecordType '+ UserPortalRecodType);
@@ -130,7 +121,7 @@ public class ISSP_Ctrl_ContentPage
     List<Access_to_Libraries_on_Portal__c> accessToLibrariesCS = Access_to_Libraries_on_Portal__c.getAll().values();
     AccessLibraryName = new List<String>();
     libraryIds_set = new Set<Id>();
-
+ 
     system.debug('accessToLibrariesCS : ' + accessToLibrariesCS.size());
     
     for(Access_to_Libraries_on_Portal__c a : accessToLibrariesCS){
@@ -148,11 +139,9 @@ public class ISSP_Ctrl_ContentPage
           }
       }
     }
-    system.debug('aqui UserPortalAccountSector ' + UserPortalAccountSector + ' AccessLibraryName ' + AccessLibraryName);
+    
     if(UserPortalAccountSector != null && ( AccessLibraryName == null || AccessLibraryName.isEmpty()) ){ 
-        system.debug('aqui dentro ');
         ContentWorkspace_Lst = new List<ContentWorkspace>([select Id ,Name from ContentWorkspace where Name =: UserPortalAccountSector]);
-        system.debug('aqui ContentWorkspace_Lst ' + ContentWorkspace_Lst);
         if(ContentWorkspace_Lst != null && ContentWorkspace_Lst.size() > 0){ 
             LibraryId = ContentWorkspace_Lst[0].Id;
             libraryIds_set.add(LibraryId);
@@ -187,14 +176,7 @@ public class ISSP_Ctrl_ContentPage
   }
 
 
-  // toggles the sorting of query from asc<-->desc
-   public void toggleSort() {
-        // simply toggle the direction
-        sortDir = sortDir.equals('asc') ? 'desc' : 'asc';
-        
-        // run the query again
-        runQueryAfterSearch();
-    }
+
 
 
 
@@ -208,18 +190,18 @@ public class ISSP_Ctrl_ContentPage
 
   //Method Handles TAGS and Sector Filtering
   public void runQueryAfterSearch() {
-    system.debug('KER0 START runQueryAfterSearch');
+    system.debug('KER0 START runQueryAfterSearch sortDir ' + sortExpression + ' sortField ' + sortDirection);
     try {
         //List Holds ContentVirsions for Sector Filtering
         tmpContentVersion_Lst = new List<ContentVersion>(); 
         
         //Run the soql Query
-        ContentVersions = Database.query(soql + ' order by ' + sortField + ' ' + sortDir );//+ ' limit 20'
+        ContentVersions = Database.query(soql + ' order by ' + sortExpression  + ' ' + sortDirection );//+ ' limit 20'
         system.debug('SFF Title'+Title);
 
         //Run Filter BY Country 
         FilterContentVersionByCountry();
-        system.debug('SFF ContentVersions.size(02) ==> '+ContentVersions.size());
+        system.debug('SFF ContentVersions.size(02) ==> '+ContentVersions.size() + ' ContentVersions records ' + ContentVersions);
        
         //Run Filter By Library 
         FilterContentVersionBySector(UserPortalAccountSector ,libraryIds_set);
@@ -313,12 +295,12 @@ public class ISSP_Ctrl_ContentPage
               }
           }
           ////////////////////////////////////
-          List<ContentVersion > tmpContentVersion_Lst = new List<ContentVersion >([ select id, Title, Description, FileType,OwnerId,Owner.Name, VersionNumber ,Country_visibilty__c ,User_status_access__c,Region__c,TagCsv ,ContentSize,Language__c,ContentDocumentId,Document_Category__c,Country_of_publication__c ,ContentUrl
+         /* List<ContentVersion > tmpContentVersion_Lst = new List<ContentVersion >([ select id, Title, Description, FileType,OwnerId,Owner.Name, VersionNumber ,Country_visibilty__c ,User_status_access__c,Region__c,TagCsv ,ContentSize,Language__c,ContentDocumentId,Document_Category__c,Country_of_publication__c ,ContentUrl
                                     From ContentVersion 
                                     where IsLatest = true AND
                                         Id IN: set_contentverIds 
                                     Order by LastModifiedDate desc]) ;
-          
+          //sortExpression  + ' ' + sortDirection
           
           system.debug('KER0 tmpContentVersion_Lst   '+tmpContentVersion_Lst ); 
           system.debug('KER0 tmpContentVersion_Lst   .size()'+tmpContentVersion_Lst   .size()); 
@@ -330,7 +312,7 @@ public class ISSP_Ctrl_ContentPage
           }
           system.debug('KER0 ContentVersions  '+ContentVersions  ); 
           system.debug('KER0 ContentVersions.size()'+ContentVersions.size());
-          ///////////////////////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////////////////////*/
       }else{
           ContentVersions.clear();
           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Not Founud a Content with a Library that Matches account sector' ));
@@ -544,10 +526,10 @@ public class ISSP_Ctrl_ContentPage
                 ContentVersions.clear();
                 ContentVersions.addAll(tmpContentVersion_set);
             }else{
-        if (Title !=null && Title != '')
-        {
-           ContentVersions.clear();
-        }
+                  if (Title !=null && Title != '')
+                {
+                   ContentVersions.clear();
+                }
             }
             tmpContentVersion_set.clear();
             system.debug('Kerensen3 ContentVersions'+ContentVersions);
@@ -577,5 +559,60 @@ public class ISSP_Ctrl_ContentPage
      }       
      return options;
   }
+
+    // toggles the sorting of query from asc<-->desc
+  
+   /* public void toggleSort() {
+      // simply toggle the direction
+      sortDir = sortDir.equals('asc') ? 'desc' : 'asc';
+        // run the query again
+        runQueryAfterSearch();
+    }*/
+
+
+
+
+     public String sortExpression
+   {
+     get
+     {
+        return sortExp;
+     }
+     set
+     {
+       //if the column is clicked on then switch between Ascending and Descending modes
+       if (value == sortExp)
+         sortDirection = (sortDirection == 'ASC')? 'DESC' : 'ASC';
+       else
+         sortDirection = 'ASC';
+       sortExp = value;
+     }
+   }
+
+ public String getSortDirection()
+ {
+    //if not column is selected 
+    if (sortExpression == null || sortExpression == '')
+      return 'ASC';
+    else
+     return sortDirection;
+ }
+
+ public void setSortDirection(String value)
+ {  
+   sortDirection = value;
+ }
+
+    // the current sort direction. defaults to accessToLibrariesCS
+   /*public String sortDir {
+        get  { if (sortDir == null) {  sortDir = 'asc'; } return sortDir;  }
+        set;
+    }
+   
+   // the current field to sort by. defaults to account Name
+    public String sortField {
+        get  { if (sortField == null) {sortField = 'LastModifiedDate '; } return sortField;  }
+        set;
+    }*/
 
 }

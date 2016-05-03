@@ -105,6 +105,10 @@
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Groups__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -273,11 +277,11 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Bank Mandate Validation to MDM Validation</label>
+        <label>MDM Validation</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Bank_Mandate_Validated__c</field>
+                <field>MDM_Updated__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

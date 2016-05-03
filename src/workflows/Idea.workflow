@@ -5,11 +5,7 @@
         <description>New Comment Added</description>
         <protected>false</protected>
         <recipients>
-            <recipient>amandussoc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>curtisp@iata.org</recipient>
+            <recipient>liewf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -20,8 +16,8 @@
         <description>New Idea Submitted</description>
         <protected>false</protected>
         <recipients>
-            <recipient>HUBMadrid</recipient>
-            <type>group</type>
+            <recipient>liewf@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -36,7 +32,7 @@
         <active>true</active>
         <formula>AND(
 ISCHANGED(NumComments), 
-OR(CommunityId = &quot;09a200000000UfC&quot;,CommunityId =&quot;09a200000000UBF&quot;))</formula>
+OR(CommunityId = &quot;09aw0000000c4uZ&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -49,9 +45,9 @@ OR(CommunityId = &quot;09a200000000UfC&quot;,CommunityId =&quot;09a200000000UBF&
         <criteriaItems>
             <field>Idea.CommunityId</field>
             <operation>equals</operation>
-            <value>0 Service Centre Europe</value>
+            <value>DPC Management Community</value>
         </criteriaItems>
-        <description>SCE</description>
+        <description>DPCM ideas 2016</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>
