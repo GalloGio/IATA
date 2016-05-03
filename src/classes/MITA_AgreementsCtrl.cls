@@ -1,5 +1,23 @@
 public with sharing class MITA_AgreementsCtrl {
 
+    private static final String TYPE_ISSUING_AIRLINE = 'The One Way Issuing Airline';
+    private static final String TYPE_PARTICIPATING_AIRLINE = 'The One Way Participating Airline';
+
+    private static final String TYPE_PAX_ISSUING_AIRLINE = 'One Way Passenger Issuing Airline';
+    private static final String TYPE_PAX_PARTICIPATING_AIRLINE = 'One Way Passenger Participating';
+
+    private static final String TYPE_IMOD_ISSUING_AIRLINE = 'One Way Intermodal Issuing Date';
+    private static final String TYPE_IMOD_PARTICIPATING_AIRLINE = 'One Way Intermodal Participating Date';
+
+    private static final map<String, String> MAP_ONE_WAY_TYPES = new map<String,String>{
+        TYPE_ISSUING_AIRLINE => TYPE_PARTICIPATING_AIRLINE,
+        TYPE_PARTICIPATING_AIRLINE => TYPE_ISSUING_AIRLINE,
+        TYPE_PAX_ISSUING_AIRLINE => TYPE_PAX_PARTICIPATING_AIRLINE,
+        TYPE_PAX_PARTICIPATING_AIRLINE => TYPE_PAX_ISSUING_AIRLINE,
+        TYPE_IMOD_ISSUING_AIRLINE => TYPE_IMOD_PARTICIPATING_AIRLINE,
+        TYPE_IMOD_PARTICIPATING_AIRLINE => TYPE_IMOD_ISSUING_AIRLINE
+    };
+
     public Account acc {get;set;}
     public Contact c {get;set;}
     public MITA_Agreement__c agr {get;set;}
@@ -42,32 +60,58 @@ public with sharing class MITA_AgreementsCtrl {
     ///// AIRLINE METHODS /////
     
     public void selectAccount(){
-        
-        List<Account> accs = [SELECT Name, Airline_designator__c, IATAcode__c, MITA_Member__c, Membership_status__c, ICH_Member__c, Due_Diligence_Status__c, BIETA_Member__c, MITA_Currency__c, ACH_Member__c, 
-                                BIETA_Bilateral_Date__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c, BIETA_One_way_Intermodal_Participating__c, 
-                                MITA_IATA_Interline_Art3_Excepted_Status__c, MITA_IATA_Interline_Cargo__c, MITA_IATA_Interline_Cargo_Charges__c, MITA_IATA_Interline_Cargo_Claims__c, MITA_IATA_Interline_Pass_Art3_Joined__c, 
-                                MITA_IATA_Interline_Passenger__c, MITA_IATA_Interline_Passenger_Charges__c, MITA_One_way_Pass_Issuing_Airline__c, MITA_One_way_Pass_Participating__c
-                              FROM Account 
-                              WHERE Id = :accountid];
-        if(accs.size()!=1)  ApexPages.addMessage(new ApexPages.Message(ApexPAges.Severity.ERROR, 'Error in the system: cannot open the selected account'));
-        else{
-            chosenAccount = true;
-            chosenContact = false;
-            chosenMITAAgreement=false;
-            chosenBIETAAgreement=false;
-            acc = accs[0];
-            
-            editAccountMode = false;
-            editContactMode = false;
-            editMITAAgreementMode = false;
-            editBIETAAgreementMode = false;
-            agreements = new Map<Id,MITA_Agreement__c> ((List<MITA_Agreement__c>)
-                                                        [SELECT Airline_1__c, Airline_2__c, Active__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name, Airline_2__r.Name, 
-                                                                 Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c
-                                                          FROM MITA_Agreement__c 
-                                                          WHERE Airline_1__c = :acc.Id OR Airline_2__c = :acc.Id]);
-            agr = null;
-            contacts = [SELECT Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c FROM Contact WHERE MITA_Contact__c = true AND (AccountId = :acc.Id OR Account.Top_Parent__c = :acc.Id)];
+        acc = getAccount();
+        if (acc == null) return;
+
+        chosenAccount = true;
+        chosenContact = false;
+        chosenMITAAgreement=false;
+        chosenBIETAAgreement=false;
+
+        editAccountMode = false;
+        editContactMode = false;
+        editMITAAgreementMode = false;
+        editBIETAAgreementMode = false;
+
+        // fill the agreements map
+        agreements = new map<Id,MITA_Agreement__c>();
+        for ( MITA_Agreement__c agreement: [
+            SELECT Airline_1__c, Airline_2__c, Active__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c , 
+                Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c
+            FROM MITA_Agreement__c 
+            WHERE Airline_1__c = :acc.Id OR Airline_2__c = :acc.Id
+        ]) {
+            // change agreement type for all one way agreements (each side of the agreement has a different name, defined in MAP_ONE_WAY_TYPES)
+            if (agreement.Airline_2__c == acc.Id) {
+                String newAgreementType = MAP_ONE_WAY_TYPES.get(agreement.Agreement_type__c);
+                if (newAgreementType!= null) {
+                    agreement.Agreement_type__c = newAgreementType;
+                }
+            }
+            agreements.put(agreement.Id, agreement);
+        }
+
+        if (agr != null ) {
+            selectAgreement(agr.MITAorBIETA__c=='MITA');
+        }
+
+        contacts = [SELECT Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c FROM Contact WHERE MITA_Contact__c = true AND (AccountId = :acc.Id OR Account.Top_Parent__c = :acc.Id)];
+    }
+    
+    private Account getAccount() {
+        try {
+            Account account = [
+                SELECT Name, Name_on_AOC__c, Airline_designator__c, IATAcode__c, MITA_Member__c, Membership_status__c, ICH_Member__c, Due_Diligence_Status__c, BIETA_Member__c, MITA_Currency__c, ACH_Member__c, 
+                BIETA_Bilateral_Date__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c, BIETA_One_way_Intermodal_Participating__c, 
+                MITA_IATA_Interline_Art3_Excepted_Status__c, MITA_IATA_Interline_Cargo__c, MITA_IATA_Interline_Cargo_Charges__c, MITA_IATA_Interline_Cargo_Claims__c, MITA_IATA_Interline_Pass_Art3_Joined__c, 
+                MITA_IATA_Interline_Passenger__c, MITA_IATA_Interline_Passenger_Charges__c, MITA_One_way_Pass_Issuing_Airline__c, MITA_One_way_Pass_Participating__c, Airline_Prefix__c
+                FROM Account 
+                WHERE Id = :this.accountid
+            ];
+            return account;
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Error in the system: cannot open the selected account'));
+            return null;
         }
         
     }
@@ -86,20 +130,21 @@ public with sharing class MITA_AgreementsCtrl {
             String cleanmessage = e.getMessage();
             if(cleanmessage.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION')!=-1)   cleanmessage = cleanmessage.substring(cleanmessage.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION')+35);
             ApexPages.addMessage(new ApexPages.Message(ApexPAges.Severity.ERROR, 'It was not possible to save the airline because of the following error: '+cleanmessage));
+            acc = getAccount();
         }
         
     }
     
     public String getAccountTable(){
         String accTable = '';
-        for(Account a : [SELECT Name, Airline_designator__c, MITA_Member__c, IATACode__c
+        for(Account a : [SELECT Name, Name_on_AOC__c , Airline_designator__c, MITA_Member__c, IATACode__c
                          FROM Account 
                          WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company' ])
             accTable += '<tr id="'+a.ID+'">'+
                             '<td>' + escape(a.Airline_designator__c)+ '</td>'+
                             '<td>' + escape(a.IATACode__c)+ '</td>'+
-                            '<td>' + escape(a.Name) + '</td>'+
+                            '<td>' + escape(a.Name_on_AOC__c ) + '</td>'+
                             '<td>' + a.MITA_Member__c +'</td>'+
                         '</tr>';
         
@@ -138,7 +183,7 @@ public with sharing class MITA_AgreementsCtrl {
                 
                 agTable += '<tr id="'+ag.Id+'">'+
                                 '<td>'+escape(ag.Airline_1__c==acc.Id ? ag.Airline2_designator_code__c : ag.Airline1_designator_code__c)+'</td>'+
-                                '<td>'+escape(ag.Airline_1__c==acc.Id ? ag.Airline_2__r.Name : ag.Airline_1__r.Name)+ '</td>'+
+                                '<td>'+escape(ag.Airline_1__c==acc.Id ? ag.Airline_2__r.Name_on_AOC__c  : ag.Airline_1__r.Name_on_AOC__c )+ '</td>'+
                                 '<td>'+ag.Agreement_type__c+ '</td>'+
                                 '<td>'+ effectiveDate + '</td>'+
                                 '<td>'+ag.Active__c+ '</td>'+
@@ -158,8 +203,18 @@ public with sharing class MITA_AgreementsCtrl {
     public void selectMITAAgreement(){selectAgreement(true);}
     public void selectBIETAAgreement(){selectAgreement(false);}
     public void selectAgreement(boolean isMITA){
-        agr = agreements.get(isMITA ? MITAagreementid : BIETAagreementid);
-        system.debug('selectAgreement() IS MITA ? '+isMITA+' - id = '+(isMITA ? MITAagreementid : BIETAagreementid)+' - agr = '+agr);
+        try {
+            Id agreementId = isMITA ? MITAagreementid : BIETAagreementid;
+            agr = [
+                SELECT Airline_1__c, Airline_2__c, Active__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c , Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c 
+                From MITA_Agreement__c m
+                where id = :agreementId];
+            system.debug('selectAgreement() IS MITA ? '+isMITA+' - id = '+agreementId+' - agr = '+agr);
+
+        } catch (Exception e) {
+            System.debug('EXCEPTION selectAgreement ' + e.getMessage());
+        }
+        
         if(isMITA){
             chosenMITAAgreement = true;
             editMITAAgreementMode = false;
@@ -233,28 +288,43 @@ public with sharing class MITA_AgreementsCtrl {
     public void saveAgreement(){
         system.savepoint sp = Database.setSavePoint();
         try{
-            
+            // set some fileds before upserting to the database
+            if ( agr.Cancellation_date__c != null && agr.Cancellation_processed_date__c == null ) {
+                agr.Cancellation_processed_date__c = Date.today();
+            }
+            if ( agr.Effective_date__c != null && agr.Agreement_processed_date__c == null ) {
+                agr.Agreement_processed_date__c = Date.today();
+            }
             // As first I save so that I can catch the errors raised by the validation rules
             upsert agr;
-            system.debug(LoggingLevel.ERROR, 'upserted the agreement: '+agr.Airline_1__r.Name+' ---> '+agr.Airline_2__r.Name+' with id = '+agr.id);
-            List<MITA_Agreement__c> duplicates = [SELECT Id, Airline_1__c, Airline_1__r.Name, Airline_2__c, Airline_2__r.Name
+            
+            list<String> listAgreementTypes = new list<String>();
+            listAgreementTypes.add(agr.Agreement_type__c);
+            //add the type equivalent in an One Way Agreement, if exists
+            String oneWayType = MAP_ONE_WAY_TYPES.get(agr.Agreement_type__c);
+            if (oneWayType != null) {
+                listAgreementTypes.add(oneWayType );
+            }
+            
+            system.debug(LoggingLevel.ERROR, 'upserted the agreement: '+agr.Airline_1__r.Name_on_AOC__c +' ---> '+agr.Airline_2__r.Name_on_AOC__c +' with id = '+agr.id);
+            List<MITA_Agreement__c> duplicates = [SELECT Id, Airline_1__c, Airline_1__r.Name_on_AOC__c , Airline_2__c, Airline_2__r.Name_on_AOC__c , Agreement_processed_date__c
                                                     FROM MITA_Agreement__c 
-                                                    WHERE ((Airline_1__c = :agr.Airline_1__c AND Airline_2__c = :agr.Airline_2__c))
-                                                        //OR (Airline_1__c = :agr.Airline_2__c AND Airline_2__c = :agr.Airline_1__c))
-                                                        AND Agreement_type__c = :agr.Agreement_type__c
+                                                    WHERE ((Airline_1__c = :agr.Airline_1__c AND Airline_2__c = :agr.Airline_2__c)
+                                                        OR (Airline_1__c = :agr.Airline_2__c AND Airline_2__c = :agr.Airline_1__c))
+                                                        AND Agreement_type__c in :listAgreementTypes
                                                         AND ID <> :agr.ID];
             // If it's a duplicate I remove it! 
             if(duplicates.size()>0){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, acc.Name +' has already an agreement of type '+agr.Agreement_Type__c +
-                                                                                    ' with the airline '+(duplicates[0].Airline_1__c==agr.Airline_1__c ? duplicates[0].Airline_2__r.Name : duplicates[0].Airline_1__r.Name)));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, acc.Name_on_AOC__c  +' has already an agreement of type '+agr.Agreement_Type__c +
+                                                                                    ' with the airline '+(duplicates[0].Airline_1__c==agr.Airline_1__c ? duplicates[0].Airline_2__r.Name_on_AOC__c  : duplicates[0].Airline_1__r.Name_on_AOC__c )));
                                                                                     
                 Database.rollback(sp);
                 return;
             }           
             
             
-            MITA_Agreement__c thenewone = [SELECT Airline_1__c, Airline_2__c, Active__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name, Airline_2__r.Name, 
-                                                                 Airline1_designator_code__c , Airline2_designator_code__c 
+            MITA_Agreement__c thenewone = [SELECT Airline_1__c, Airline_2__c, Active__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c , 
+                                                                 Airline1_designator_code__c , Airline2_designator_code__c, Agreement_processed_date__c 
                                                           FROM MITA_Agreement__c 
                                                           WHERE ID = :agr.ID];
             
@@ -338,7 +408,7 @@ public with sharing class MITA_AgreementsCtrl {
             return;
         }
         duplicateContacts = new Map<Id, Contact>((List<Contact>) [SELECT Name, Salutation, FirstName, LastName, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c, Phone, Fax, OtherStreet, OtherCity, OtherPostalCode, 
-                                                                        OtherState, OtherCountry, Status__c, AccountId, Account.RecordTypeId, Account.Name, Account.IATA_ISO_Country__r.Name, Account.Top_Parent__c, Account.ParentId  
+                                                                        OtherState, OtherCountry, Status__c, AccountId, Account.RecordTypeId, Account.Name_on_AOC__c , Account.IATA_ISO_Country__r.Name, Account.Top_Parent__c, Account.ParentId  
                                                                   FROM Contact 
                                                                   WHERE Email = :contactEmail]);
                                                                   
@@ -395,13 +465,13 @@ public with sharing class MITA_AgreementsCtrl {
     }
     
     public void deactivateMitaMember() {
-    	deactivateMember('MITA');
+        deactivateMember('MITA');
     }
     
     public void deactivateBietaMember() {
-    	deactivateMember('BIETA');
+        deactivateMember('BIETA');
     }
-    	
+        
     public void deactivateMember(String agreementType) {
         Date cancellationDate = Date.today();
         list<MITA_Agreement__c> listUpdates = new list<MITA_Agreement__c>(); 

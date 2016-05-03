@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>FR How to Order Statistics</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE EN- CASS STATS</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name}, 
+ 
+ 
+Following your query {!Case.CaseNumber}, we are informing you that any statistics requests are handled by our Cargo-is team in Montreal, Canada.
+ 
+Please visit their webpage clicking here.
+ 
+You can contact our Cargo-is department at:
+ 
+
+CargoIS Customer Care
+Tel.: +1 (514) 390 6725
+Fax: +1 (514) 874 1779
+E-mail: cargo-is@iata.org 
+ 
+Yours sincereley,
+ 
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

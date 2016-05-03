@@ -1,0 +1,16 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P>Dear {!Contact.Name},</P>
+<P>&nbsp;</P>
+<P>We have looked at above case with your&nbsp;description stated in the bottom of this email.</P>
+<P>&nbsp;</P>
+<P>Type your own comments!</P>
+<P>____________________</P>
+<P>&nbsp;</P>
+<P>Case Description:<BR>"{!Case.Description}"</P>
+<P>____________________&nbsp;</P>
+<P>&nbsp;</P>
+<P>Best regards,</P>]]></td>
+</tr>
+</table>

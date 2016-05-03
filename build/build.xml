@@ -12,6 +12,48 @@
     <property environment="env"/>
 
 
+<target name="retrieveToDeploy">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="retrieve/package.xml"/>
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="deploy"/>
+
+  </target>
+
+
+
+<target name="retrieveToRetrieve">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="retrieve/package.xml"/>
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="retrieve"/>
+
+  </target>
+
+    <target name="specificDeploy">
+      <echo level="info">Performing the deploy of files in folder deploy</echo>
+      <sf:deploy
+        autoUpdatePackage = "true"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        deployRoot="${basedir}/deploy"
+        pollWaitMillis="${sfdc.pollWaitMillis}"
+        maxPoll="${sfdc.maxPoll}"/>
+    </target>
+
 <target name="checkCodeFolder">
   <condition property="deldir">
     <available file="${basedir}/Code" type="dir"/>
@@ -29,7 +71,7 @@
  </target>
 
 
-<target name="deployObjectFolder"> 
+<target name="deployCode"> 
   <echo level="info">creating new folder</echo>
   <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
@@ -54,14 +96,15 @@
  <move file="${basedir}/src/objectPackage.xml" tofile="${basedir}/Code/package.xml"/>  
 
       
-      <antcallback target="deployCode" />
+      <antcallback target="deployCodeLocal" />
        <antcallback target="deployLabelFolder" />
   
   </target> 
 
 
+
 <target name="deployLabelFolder"> 
-  <echo level="info">creating new folder</echo>
+  <echo level="info">creating new label folder</echo>
   <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
@@ -85,14 +128,14 @@
  <move file="${basedir}/src/labelPackage.xml" tofile="${basedir}/Code/package.xml"/>  
 
       
-      <antcallback target="deployCode" />
-      <antcallback target="deployCodeFolder" />
+      <antcallback target="deployCodeLocal" />
+      <antcallback target="deployCodeLocalFolder" />
   </target> 
 
 
 
 
-<target name="deployCodeFolder"> 
+<target name="deployCodeLocalFolder"> 
   <echo level="info">creating new folder</echo>
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
@@ -116,16 +159,13 @@
 
  <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
-      <antcallback target="deployCode" />
+      <antcallback target="deployCodeLocal" />
   
   </target> 
 
 
-
-
-
-    <target name="getObject">
-      <echo level="info">Retrieving the server's version of code</echo>
+    <target name="getCode">
+      <echo level="info">Retrieving the server's version of codeobject </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
         retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
@@ -135,6 +175,9 @@
         unpackaged="src/objectPackage.xml" />
 
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
+
+
+
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
         <antcallback target="getLabel" />
     </target>
@@ -142,7 +185,7 @@
 
 
     <target name="getLabel">
-      <echo level="info">Retrieving the server's version of code</echo>
+      <echo level="info">Retrieving the server's version of labels</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
         retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
@@ -152,11 +195,11 @@
         unpackaged="src/labelPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-       <antcallback target="getCode" />
+       <antcallback target="getCodeLocal" />
     </target>
 
 
-    <target name="getCode">
+    <target name="getCodeLocal">
       <echo level="info">Retrieving the server's version of code</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
       <sf:retrieve
@@ -196,10 +239,75 @@
    <delete file="${basedir}/${sfdc.retrieveTarget}/package.xml"/>
    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
+
+    <!--  <echo level="info">Compressing profiles </echo>
+
+      <antcallback target="compressProfiles" />
+
+      <echo level="info">Deleting profiles.bak </echo>
+
+      <antcallback target="deletebakprofiles" /> 
+
+      <echo level="info">Compressing permissionSets </echo>
+
+      <antcallback target="compressPermissionSets" />
+      <echo level="info">deleting permissionSets.bak </echo>
+
+        <antcallback target="deletebakpermissionsets" />-->
+
+</target>
+
+<target name="compressProfiles">
+ <for param="file">
+  <path>
+   <fileset dir="src/profiles"  />
+  </path>
+  <sequential>
+   <var name="name" unset="true"/>
+   <basename file="@{file}" property="name" />
+   <echo message=" ${name}"/>
+           <exec executable = "perl">
+         <arg value = "-pi"/>
+            <arg value = "build/profileCompress.pl"/>
+            <arg value = "src/profiles/${name}"/>
+        </exec>
+  </sequential>
+ </for>              
+</target>
+
+<target name="compressPermissionSets">
+ <for param="file">
+  <path>
+   <fileset dir="src/permissionsets"  />
+  </path>
+  <sequential>
+   <var name="name" unset="true"/>
+   <basename file="@{file}" property="name" />
+   <echo message=" ${name}"/>
+           <exec executable = "perl">
+           <arg value = "-pi"/>
+            <arg value = "build/profileCompress.pl"/>
+            <arg value = "src/permissionsets/${name}"/>
+        </exec>
+  </sequential>
+ </for>              
 </target>
 
 
-    <target name="deployCode">
+
+<target name="deletebakprofiles">
+<delete >
+    <fileset dir="src/profiles" includes="*.profile.bak"  />
+  </delete>
+ </target>
+
+<target name="deletebakpermissionsets">
+<delete >
+    <fileset dir="src/permissionsets" includes="*.permissionset.bak"  />
+  </delete>
+ </target>
+
+<target name="deployCodeLocal">
       <echo level="info">Performing the deploy</echo>
       <sf:deploy
         username="${sfdc.username}"
@@ -223,21 +331,9 @@
         maxPoll="${sfdc.maxPoll}"/>
     </target>
   
-    <target name="specificDeploy">
-      <echo level="info">Performing the deploy of the labels as they were in preprod</echo>
-      <sf:deploy
-        autoUpdatePackage = "true"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        deployRoot="${basedir}/deploy"
-        pollWaitMillis="${sfdc.pollWaitMillis}"
-        maxPoll="${sfdc.maxPoll}"/>
-    </target>
-  
 
   
-    <target name="undeployCode">
+    <target name="undeployCodeLocal">
         <echo level="info">Undeploying code</echo>
         <sf:deploy
         username="${sfdc.username}"

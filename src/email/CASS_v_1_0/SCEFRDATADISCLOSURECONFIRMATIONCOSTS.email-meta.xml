@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Email that informs the customer that our participants list is paying.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE-FR DATA DISCLOSURE CONFIRMATION COSTS</name>
+    <style>freeForm</style>
+    <subject>Liste de participants au CASS, acceptation des coûts.</subject>
+    <textOnly>Bonjour {!Contact.Name}, 
+
+ 
+L&apos;information que vous nous demandez est payante. Son coût sera inclus dans l&apos;un de vos prochains relevés CASS et votre facture postée sur myIATA (www.myiata.org/ssp).
+ 
+Afin de pouvoir traiter votre demande, nous vous demandons de bien vouloir accepter d&apos;être facturé pour le montant repris dans notre liste de tarifs, disponible sur notre portail clientèle www.iata.org/europe/cs (cliquer sur &quot;Documents &amp; Formulaires&quot;).
+ 
+Pour tout type de consultation, veuillez vous rendre sur notre portail clientèle : http://www.iata.org/europe/cs &gt;&gt; Nous contacter. Les demandes envoyées par ce biais sont traitées en priorité.
+ 
+ 
+Cordialement,
+{!Case.OwnerFullName}
+
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,88 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<FONT face=Geneva,Arial,Sans-Serif size=2>
+<P><SPAN style="FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">Dear {!Contact.Name}, <?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">&nbsp;<o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Below please find the bank account information of where your payments must be received.&nbsp;</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">&nbsp;</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P>
+<TABLE style="WIDTH: 394pt; BORDER-COLLAPSE: collapse; mso-padding-alt: 0in 0in 0in 0in" cellSpacing=0 cellPadding=0 width=525 border=0 u1:str>
+<COLGROUP>
+<COL style="WIDTH: 142pt; mso-width-source: userset; mso-width-alt: 6912" width=189>
+<COL style="WIDTH: 42pt; mso-width-source: userset; mso-width-alt: 2048" width=56>
+<COL style="WIDTH: 118pt; mso-width-source: userset; mso-width-alt: 5741" width=157>
+<COL style="WIDTH: 47pt; mso-width-source: userset; mso-width-alt: 2304" width=63>
+<COL style="WIDTH: 45pt; mso-width-source: userset; mso-width-alt: 2194" width=60>
+<TBODY>
+<TR style="HEIGHT: 28.5pt; mso-height-source: userset">
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 0in; BACKGROUND: #ccffcc; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 142pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 28.5pt" width=189>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Account Name</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 0in; BACKGROUND: #ccffcc; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 42pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 28.5pt" width=56>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Account Number</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 0in; BACKGROUND: #ccffcc; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 118pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 28.5pt" width=157>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">IBAN</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 0in; BACKGROUND: #ccffcc; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 47pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 28.5pt" width=63>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">SWIFT</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 0in; BORDER-TOP: windowtext 1pt solid; PADDING-LEFT: 0in; BACKGROUND: #ccffcc; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 45pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 28.5pt" width=60 u1:str="Sort Code ">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">Sort Code </SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD></TR>
+<TR style="HEIGHT: 0.25in; mso-height-source: userset">
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 142pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent" width=189 u1:str="IATA CASS UK Export Hinge Account ">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">IATA CASS UK Export Hinge Account </SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent" u1:num>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">39006670</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">GB 88 NWBK 60000139006670</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">NWBKGB2L</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">60-00-01</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD></TR>
+<TR style="HEIGHT: 0.25in; mso-height-source: userset">
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 142pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent" width=189 u1:str="IATA CASS UK Import Hinge Account ">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">IATA CASS UK Import Hinge Account </SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent" u1:num>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">39006727</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">GB 88 NWBK 60000139006727</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">NWBKGB2L</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 0.5pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">60-00-01</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD></TR>
+<TR style="HEIGHT: 0.25in; mso-height-source: userset">
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: windowtext 1pt solid; WIDTH: 142pt; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent" width=189>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">IATA CASS UK Courier Hinge Account</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent" u1:num>
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">39093875</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">GB 88 NWBK 60000139093875</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">NWBKGB2L</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD>
+<TD style="BORDER-RIGHT: windowtext 1pt solid; PADDING-RIGHT: 0in; BORDER-TOP: #d4d0c8; PADDING-LEFT: 0in; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; PADDING-TOP: 0in; BORDER-BOTTOM: windowtext 1pt solid; HEIGHT: 0.25in; BACKGROUND-COLOR: transparent">
+<P style="TEXT-ALIGN: center" align=center><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial">60-00-01</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P></TD></TR></TBODY></TABLE></P>
+<P><SPAN style="FONT-FAMILY: Arial"><FONT size=3>&nbsp;<o:p></o:p></FONT></SPAN></P>
+<P><U><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">Bank details</SPAN></U><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">:</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><STRONG><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">NATIONAL WESTMINSTER</SPAN></STRONG><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'"> (Royal Bank of Scotland)</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">City of London Office</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">PO Box 12258</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">1 Princes Street</SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; LAYOUT-GRID-MODE: line; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'">London EC2R 8PA </SPAN><SPAN style="FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; TEXT-ALIGN: justify"><SPAN style="FONT-SIZE: 9pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">&nbsp;<o:p></o:p></SPAN></P>
+<P style="MARGIN-BOTTOM: 12pt"><SPAN style="FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">Sincerely,<o:p></o:p></SPAN></P>
+<P style="MARGIN-BOTTOM: 12pt"><SPAN style="FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">&nbsp;<o:p></o:p></SPAN></P>
+<P style="MARGIN-BOTTOM: 12pt"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt; mso-bidi-font-weight: bold">{!Case.OwnerFullName}</SPAN><SPAN style="COLOR: black; FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P><B style="mso-bidi-font-weight: normal"><SPAN style="COLOR: #333399; FONT-FAMILY: Arial"><FONT size=3>Service Centre&nbsp;Europe</FONT></SPAN></B><SPAN style="FONT-SIZE: 11pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt"><BR></SPAN><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 10pt; COLOR: #333399; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">International Air Transport Association</SPAN></B><SPAN style="FONT-SIZE: 11pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-SIZE: 10pt; COLOR: #333399; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: 'Times New Roman'"><A href="http://www.iata.org/europe/cs">www.iata.org/europe/cs</A></SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt"><o:p></o:p></SPAN></P>
+<P><SPAN style="FONT-FAMILY: 'Times New Roman'; mso-fareast-font-family: 'Times New Roman'"><FONT size=3>&nbsp;<SPAN style="FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">-------------------------------------------------------------------------------------<BR>Your message received on&nbsp;{!Case.CreatedDate}:<o:p></o:p></SPAN></P>
+<P class=MsoBodyText style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt; COLOR: black; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">{!Case.Subject}<BR>{!Case.Description}<BR>-------------------------------------------------------------------------------------</SPAN><SPAN style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: Arial"><o:p></o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><STRONG><SPAN style="FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt">In order to obtain information or assistance from IATA, do not hesitate to&nbsp;access&nbsp;at any time to <FONT color=#000066>our </FONT></SPAN></STRONG><STRONG><U><SPAN style="FONT-WEIGHT: normal; FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt"><A href="http://www.iata.org/europe/cs"><B><SPAN style="COLOR: #000066"><FONT color=#000066>Customer Portal</FONT></SPAN></B></A></SPAN></U></STRONG><STRONG><SPAN style="FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt"><FONT color=#000066>. <o:p></o:p></FONT></SPAN></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><STRONG><SPAN style="FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt">&nbsp;<o:p></o:p></SPAN></STRONG></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><STRONG><SPAN style="FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt">The enquiries <FONT color=#000066>received </FONT></SPAN></STRONG><STRONG><SPAN style="FONT-WEIGHT: normal; FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt"><A href="http://www.iata.org/customer_portal_europe/contactus.htm"><B><SPAN style="COLOR: #000066"><FONT color=#000066>on-line</FONT></SPAN></B></A></SPAN></STRONG><STRONG><SPAN style="FONT-SIZE: 10pt; COLOR: #000066; FONT-FAMILY: Arial; mso-bidi-font-size: 6.5pt"><FONT color=#000066> will </FONT>be managed with highest priority.</SPAN></STRONG></P><o:p></o:p></FONT></SPAN>
+<P><SPAN style="COLOR: black; FONT-FAMILY: Arial"><FONT size=3>---------------------------------------------------------------------&nbsp;<o:p></o:p></FONT></SPAN></P>
+<P><SPAN style="COLOR: black; FONT-FAMILY: Arial"><FONT size=3>&nbsp;<o:p></o:p></FONT></SPAN></P>
+<P><SPAN style="COLOR: black; FONT-FAMILY: Arial"><FONT style="BACKGROUND-COLOR: #ffffff" color=#cc9933><STRONG><EM>This is a message from IATA Distance Learning:</EM></STRONG></FONT></SPAN></P>
+<P><SPAN style="COLOR: black; FONT-FAMILY: Arial"><IMG alt="" src="/servlet/servlet.ImageServer?id=01520000000fOo5&amp;oid=00D2000000008TF" align=left border=0></P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><BR></SPAN>&nbsp;</P>
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Arial; mso-bidi-font-size: 12.0pt">&nbsp;<o:p></o:p></SPAN></P>
+<P></FONT></P>]]></td>
+</tr>
+</table>

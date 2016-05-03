@@ -1,8 +1,8 @@
 public class ISSP_Ctrl_BuyCertificate { 
-	public Case newCase {get;set;}
+    public Case newCase {get;set;}
 
 /*------------------------------------------------------*/
-	
+    
     public string selectedList {get;set;}
     public string currNavState {get;set;}
     public map<string,ISSP_CertificateListView__c> caseListViewMap {get;set;} 
@@ -21,10 +21,10 @@ public class ISSP_Ctrl_BuyCertificate {
     
     public string soqlOrder {get;set;}
 
-	public String Category {get;set;}
+    public String Category {get;set;}
     public String SubCategory{get;set;}
 
-	public Contact con		 {get;set;}  
+    public Contact con       {get;set;}  
 
     public String sortExpression {
      get { return sortExp; }
@@ -38,19 +38,21 @@ public class ISSP_Ctrl_BuyCertificate {
      }
     }
 
+    public boolean iataCertificatesVisible {get; set;}
+    
     public String getSortDirection() {
         //if not column is selected 
         if (sortExpression == null || sortExpression == '')
-			return 'DESC';
+            return 'DESC';
         else
-			return sortDirection;
+            return sortDirection;
     }
         
     public void setSortDirection(String value) {  
-		sortDirection = value;
+        sortDirection = value;
     }
     
-	public List<SelectOption> getCategories()
+    public List<SelectOption> getCategories()
     {
        List<SelectOption> options = new List<SelectOption>();
         
@@ -59,15 +61,15 @@ public class ISSP_Ctrl_BuyCertificate {
                                      WHERE Name = : 'IATA Certificate'
                                      ORDER BY Name
                                      ];
-		Set<String> ProductCategory_set = new Set<String>();
+        Set<String> ProductCategory_set = new Set<String>();
 
         for(Product_Category__c thisPC : ProductCategorytList){
-			if (!ProductCategory_set.contains(thisPC.Name))
-			{
-				ProductCategory_set.add(thisPC.Name);
-			}
+            if (!ProductCategory_set.contains(thisPC.Name))
+            {
+                ProductCategory_set.add(thisPC.Name);
+            }
         }
-		for(String thisPC : ProductCategory_set){
+        for(String thisPC : ProductCategory_set){
             options.add(new SelectOption(thisPC, thisPC));
         }
         return options;
@@ -88,11 +90,11 @@ public class ISSP_Ctrl_BuyCertificate {
         return options;
     }       
 
-	public ISSP_Ctrl_BuyCertificate(){}
-	public ISSP_Ctrl_BuyCertificate(ISSP_Homepage controller){
-		isExtinstion = true ;
-		initialization();
-	}
+    public ISSP_Ctrl_BuyCertificate(){}
+    public ISSP_Ctrl_BuyCertificate(ISSP_Homepage controller){
+        isExtinstion = true ;
+        initialization();
+    }
     
     public PageReference initialization() {
         try {
@@ -100,32 +102,38 @@ public class ISSP_Ctrl_BuyCertificate {
                 sortDirection = 'ASC';
             }
             else{
-				ApexPages.currentPage().getParameters().put('ListViewName', '1_Certificate_All');
+                ApexPages.currentPage().getParameters().put('ListViewName', '1_Certificate_All');
                 sortDirection = 'DESC';
             }
 
-			//Retrieve  Contact
-			User myUser = DAL_ISSP.getUser(Userinfo.getUserId());
-			con = DAL_ISSP.getContact(myUser.ContactId);
-
+            //Retrieve  Contact
+            User myUser = DAL_ISSP.getUser(Userinfo.getUserId());
+            con = DAL_ISSP.getContact(myUser.ContactId);
+            
+            if(con <> null){
+                iataCertificatesVisible = DAL_ISSP.visibilityOnIATACertificate(con.Account.Category__c, con.Account.Status__c);
+            } else {
+                iataCertificatesVisible = false;
+            }
+            
             newCase = new Case();
-			//Assign IATA Code
-			newCase.IATACodeProduct__c = con.Account.IATACode__c != null ? con.Account.IATACode__c : '';
+            //Assign IATA Code
+            newCase.IATACodeProduct__c = con.Account.IATACode__c != null ? con.Account.IATACode__c : '';
             //AS
             currNavState = ApexPages.currentPage().getParameters().get('mid');
             
             //TF
             apList = false;
             apUser = false;
-			 
+             
             if (myUser.ContactId != null){
-				List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
-																where Contact__c =: myUser.ContactId and
-																Right__c = 'Access Granted'  and
-																Portal_Application__r.Name = 'Airline Participation'];
-		        if (!appRightList.isEmpty()){
-		                apUser = true;
-		        }
+                List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
+                                                                where Contact__c =: myUser.ContactId and
+                                                                Right__c = 'Access Granted'  and
+                                                                Portal_Application__r.Name = 'Airline Participation'];
+                if (!appRightList.isEmpty()){
+                        apUser = true;
+                }
             }
                 
             isAdmin = ApexPages.currentPage().getParameters().get('admin') == 'true'  ? true : false ;
@@ -142,9 +150,9 @@ public class ISSP_Ctrl_BuyCertificate {
      
     private list<ISSP_CertificateListView__c> csCaseListViews { 
         get {
-			if(null == csCaseListViews)
-            	csCaseListViews = ISSP_CertificateListView__c.getAll().values();
-			return csCaseListViews;
+            if(null == csCaseListViews)
+                csCaseListViews = ISSP_CertificateListView__c.getAll().values();
+            return csCaseListViews;
         } 
         set; 
     }
@@ -163,7 +171,7 @@ public class ISSP_Ctrl_BuyCertificate {
         caseListViewMap = new map<string,ISSP_CertificateListView__c>();
         for(ISSP_CertificateListView__c caseListViewItem : csCaseListViews){
                    
-			Boolean resultPermission1 = true; 
+            Boolean resultPermission1 = true; 
             if(!theProfilePermissionFilter.isDataEmpty(caseListViewItem, 'Profiles_Id__c')) {
                 resultPermission1 = theProfilePermissionFilter.isUserPermittedFor(caseListViewItem, 'Profiles_Id__c');
             }
@@ -213,7 +221,7 @@ public class ISSP_Ctrl_BuyCertificate {
     }
 
 
-	public List<SelectOption> getAccounts() {
+    public List<SelectOption> getAccounts() {
         List<SelectOption> options = new List<SelectOption>();
         
         List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
@@ -222,7 +230,7 @@ public class ISSP_Ctrl_BuyCertificate {
                                      ORDER BY IATACode__c
                                      ];
         for(Account thisAccount : accountList){
-			 String theLabel = thisAccount.Name + ' (' + thisAccount.IATACode__c + ')';
+             String theLabel = thisAccount.Name + ' (' + thisAccount.IATACode__c + ')';
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
         return options;
@@ -236,11 +244,11 @@ public class ISSP_Ctrl_BuyCertificate {
         system.debug('caseListViewMap >>> ' + caseListViewMap);
         
         if(caseListViewMap.isEmpty())
-			return 'WHERE ID = NULL';
+            return 'WHERE ID = NULL';
         
         String queryConditions;
         if(String.isNotBlank(selectedList))
-			queryConditions = caseListViewMap.get(selectedList).SOQL_Filter__c;             
+            queryConditions = caseListViewMap.get(selectedList).SOQL_Filter__c;             
                 
         return String.isNotBlank(queryConditions) ? queryConditions : ''; 
     }
@@ -267,15 +275,15 @@ public class ISSP_Ctrl_BuyCertificate {
                 
                 string queryString ;
                 if(String.isNotBlank(selectedList)){
-                	if (caseListViewMap.containsKey(selectedList)){
-						soqlOrder = caseListViewMap.get(selectedList).SOQL_Order__c;
-                	}
+                    if (caseListViewMap.containsKey(selectedList)){
+                        soqlOrder = caseListViewMap.get(selectedList).SOQL_Order__c;
+                    }
                 }
 
                 if(!isExtinstion){
-                	if (sortFullExp == 'CaseNumber ASC' && soqlOrder != '' & soqlOrder != null)
-                		sortFullExp = soqlOrder;
-					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate DESC';
+                    if (sortFullExp == 'CaseNumber ASC' && soqlOrder != '' & soqlOrder != null)
+                        sortFullExp = soqlOrder;
+                    queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate DESC';
                 }
                 else{
                      queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
@@ -303,63 +311,63 @@ public class ISSP_Ctrl_BuyCertificate {
 
 
 
-	public Pagereference Purchase(){
-	system.debug('XXX Purchase: ' );
-		try 
-		{	   
-			//Assign RecordType
-			Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-			newCase.RecordTypeId = CaseSAAMId ;
+    public Pagereference Purchase(){
+    system.debug('XXX Purchase: ' );
+        try 
+        {      
+            //Assign RecordType
+            Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+            newCase.RecordTypeId = CaseSAAMId ;
 
-			//Assign Account_Concerned__c
-			List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c
+            //Assign Account_Concerned__c
+            List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c
                                      FROM Account
                                      WHERE IATACode__c =: newCase.IATACodeProduct__c
                                      ORDER BY IATACode__c
                                      ];
 
-			system.debug('XXX accountList: ' +accountList);
-			newCase.Account_Concerned__c	= accountList[0].Id ;
-			newCase.BSPCountry__c			= accountList[0].IATA_ISO_Country__r.Name ;
-			newCase.Region__c				= accountList[0].Region_formula__c;
-			newCase.Origin					= 'Portal';
-			newCase.Subject					= 'Request for certificate - '+ newCase.IATACodeProduct__c;
-			newCase.CaseArea__c				= 'Accreditation Products';
-			newCase.Reason1__c				= 'PAX/CARGO Certificate';
+            system.debug('XXX accountList: ' +accountList);
+            newCase.Account_Concerned__c    = accountList[0].Id ;
+            newCase.BSPCountry__c           = accountList[0].IATA_ISO_Country__r.Name ;
+            newCase.Region__c               = accountList[0].Region_formula__c;
+            newCase.Origin                  = 'Portal';
+            newCase.Subject                 = 'Request for certificate - '+ newCase.IATACodeProduct__c;
+            newCase.CaseArea__c             = 'Accreditation Products';
+            newCase.Reason1__c              = 'PAX/CARGO Certificate';
             if (newCase.Description == null){
                 newCase.Description = '';   
             }
-      		newCase.Description				= 'Product Category : ' + Category +'\n' +
-											  'Product SubCategory : ' + SubCategory +'\n' +
-											   '\n' + newCase.Description	;
+            newCase.Description             = 'Product Category : ' + Category +'\n' +
+                                              'Product SubCategory : ' + SubCategory +'\n' +
+                                               '\n' + newCase.Description   ;
            
-			system.debug('XXX newCase: ' +newCase);
-			List <Product_Category__c> ProductCategorytList = [SELECT Id, Name, Active__c,Short_Description__c
+            system.debug('XXX newCase: ' +newCase);
+            List <Product_Category__c> ProductCategorytList = [SELECT Id, Name, Active__c,Short_Description__c
                                       FROM Product_Category__c
                                      WHERE Short_Description__c = : SubCategory
                                      ORDER BY Name
                                      ];
 
-			system.debug('XXX ProductCategorytList: ' +ProductCategorytList);
-			newCase.Product_Category_ID__c	= ProductCategorytList != null ? ProductCategorytList[0].Id : '' ;
-			
-			//Assign Category and Subcategory      
-			//newCase.ProductCategory__c		= Category ;
-			//newCase.ProductSubcategory__c	= SubCategory ;
-			system.debug('XXX newCase: ' + newCase);
-			insert newCase ;
-			PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
-			p.setRedirect(true);
-			return p;
-		}
-		catch (Exception  e)
-		{
-			AddError(e.getMessage());
-		}
- 		return null;
-	}
+            system.debug('XXX ProductCategorytList: ' +ProductCategorytList);
+            newCase.Product_Category_ID__c  = ProductCategorytList != null ? ProductCategorytList[0].Id : '' ;
+            
+            //Assign Category and Subcategory      
+            //newCase.ProductCategory__c        = Category ;
+            //newCase.ProductSubcategory__c = SubCategory ;
+            system.debug('XXX newCase: ' + newCase);
+            insert newCase ;
+            PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
+            p.setRedirect(true);
+            return p;
+        }
+        catch (Exception  e)
+        {
+            AddError(e.getMessage());
+        }
+        return null;
+    }
 
-	private void AddError(string msg) {
+    private void AddError(string msg) {
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, msg));
     }
 }

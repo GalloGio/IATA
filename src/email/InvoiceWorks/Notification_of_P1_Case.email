@@ -1,0 +1,9 @@
+This is to inform that the below Case has been categorised as a Priority 1 Case.
+
+Account: {!Case.Account}
+Contact: {!Case.Contact}
+Power User Account: {!Case.Power_User_Account__c}
+Classification: {!Case.Classification__c}
+Case Description: {!Case.Description}
+
+Here is a link to the Case: {!Case.Link}

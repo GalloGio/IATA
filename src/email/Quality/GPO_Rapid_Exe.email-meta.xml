@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to inform request for input GPO Exe to Res</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>GPO Rapid Exe</name>
+    <style>freeForm</style>
+    <subject>Exception Notification - Input Request – {Priority} - {!Quality__c.Name} - Region: {!Quality__c.Region__c}</subject>
+    <textOnly>Dear GPO,
+
+
+Exception to Resolution - {!Quality__c.Name} - has been raised. Please review, provide your input and forward to Dir. FDS Ops for recommendation to SVP FDS.
+
+
+Related Internal Case Number: {!Quality__c.Related_Case_Number__c}
+Exception Type: {!Quality__c.Exception_Type__c}
+SOP: {!Quality__c.SOP_Type__c}
+SOP Execution Category: {!Quality__c.Exe_Category__c}
+Priority: {!Quality__c.Priority__c}
+Region: {!Quality__c.Region__c}
+Country:  {!Quality__c.Africa_MENA_CC__c}{!Quality__c.Asia_Pacific_CC__c}{!Quality__c.China_North_Asia_CC__c}{!Quality__c.Europe_CC__c}{!Quality__c.Americas_CC__c}
+
+
+
+Please click the below link to review it:
+{!Quality__c.Link}
+
+Thank you and best regards,</textOnly>
+    <type>html</type>
+</EmailTemplate>

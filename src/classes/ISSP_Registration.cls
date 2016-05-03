@@ -92,6 +92,7 @@ public without sharing class ISSP_Registration {
     public boolean showNextAsGP {get; set;}
     public boolean showConfirmMessage {get; set;}
     public boolean createAccountErroeMode {get; set;}
+    public boolean preventAddressDoctorService {get; set;}
     //public Case case {get; set;}
     
     public Boolean isAirline {get; set;}
@@ -124,6 +125,7 @@ public without sharing class ISSP_Registration {
     
     public ISSP_Registration(){
         
+        preventAddressDoctorService = false;
         show90Days = false;
         
         captchaId = Comm_User_Helper.generateRandomString(10);
@@ -765,8 +767,10 @@ public without sharing class ISSP_Registration {
             	con.AccountId = selectedAccId2;
         }
         
-        if (searchCountry!=null && searchCountry!='')
+        if (searchCountry!=null && searchCountry!=''){
             con.ISO_Country__c = searchCountry;
+            //con.MailingCountry = searchCountryName;
+        }
             
             
         // create new Contact

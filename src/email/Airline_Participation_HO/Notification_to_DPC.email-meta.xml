@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification to DPC</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Notification to DPC</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name},&lt;?xml:namespace prefix = o ns = &quot;urn:schemas-microsoft-com:office:office&quot; /&gt;
+
+
+[Insert airline name, IATA designator and numeric code] will join [Select operation BSP OR CASS and insert Country] effective (Insert Date dd-mmm-yyy)
+
+
+
+Find below additional information to setup this airline:
+
+
+1)
+
+2)
+
+3)
+
+
+Please confirm once you have completed the above action.
+
+
+Thank you!
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Industry Distribution and Financial Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer
+
+
+----------------------------
+Your message received on {!Case.CreatedDate}:
+
+{!Case.Subject}
+{!Case.Description}</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -10,8 +10,15 @@ public class MITA_PortalTest {
 	
 	public static void initData(){
 		Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-
-		MyAirline = new Account(RecordTypeId = rtHQ, Name='MyAirline', ACLI_Status__c = 'Active Company', MITA_Member__c = true, BIETA_Member__c = true);
+		MyAirline = new Account(
+			RecordTypeId = rtHQ,
+			Name='MyAirline',
+			ACLI_Status__c = 'Active Company',
+			MITA_Member__c = true,
+			BIETA_Member__c = true,
+			Airline_designator__c = 'AA',
+			IATACode__c = '123',
+			Airline_Prefix__c = '456');
 		insert MyAirline;
 		
 		Contact MyContact = new Contact(LastName='My Contact', AccountId=MyAirline.Id, Email='contact@MyAirline.com');
@@ -29,7 +36,8 @@ public class MITA_PortalTest {
 		
 		Airlines = new List<Account>();
 		for(integer i=0; i<10; i++)
-			Airlines.add(new Account(RecordTypeId = rtHQ, Name='Airline '+i, ACLI_Status__c = 'Active Company', MITA_Member__c = true, BIETA_Member__c = true));
+			Airlines.add(new Account(RecordTypeId = rtHQ, Name='Airline '+i, ACLI_Status__c = 'Active Company', MITA_Member__c = true, BIETA_Member__c = true, 
+				Airline_designator__c = 'AA', IATACode__c = '123', Airline_Prefix__c = '456'));
 		insert Airlines;
 		
 		Contacts = new List<Contact>();

@@ -1,0 +1,198 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); margin: 0in 0in 0pt; text-align: justify; font-family: arial; font-size: 12pt;"></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">Dear {!Contact.Name},<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">Thank you for your interest in joining<span class="apple-converted-space">&nbsp;</span><b>BSP {!Case.Country__c}</b>.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">You can now apply to join a BSP operation through our Customer
+Portal – Online services via the new '</span><b><span style="font-size:10.0pt;
+font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#3333FF">Join BSP/CASS</span></b><span style="font-size: 10pt; font-family: Arial, sans-serif;">'
+&nbsp;functionality. It will allow you to:<o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Initiate online an application to
+     join a BSP operation<o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Eliminate the need to send the BSP
+     Joining Form in paper format<o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Add or correct any information in
+     the Online BSP Joining Form when necessary&nbsp;<o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">View the status of your
+     application<o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Communicate directly with the
+     IATA Representative handling your process.&nbsp;<o:p></o:p></span></li>
+</ul><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+color:#000099">A. Starting your Joining Process:</span></b><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp; a) Access our&nbsp;&nbsp;<a href="https://portal.iata.org/ISSP_Login">Customer Portal</a>&nbsp;and select
+the "</span><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+color:#3333FF">Join BSP/CASS</span></b><span style="font-size:10.0pt;
+font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#330033">"</span><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;functionality.
+In case you do not see that option, please refer to the detailed User Guide
+available in our ‘<b>Resources</b>’ tab of the&nbsp;<a href="https://portal.iata.org/ISSP_Login">Customer Portal</a>&nbsp;for further
+clarification.&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp; b) When starting this functionality, you will have access
+to the country requirements applicable for the selected operation.
+Alternatively, the country requirements can also be found in on the Resource
+Center available on<span class="apple-converted-space">&nbsp;</span></span><u><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#000099">www.iata.org/cs</span></u><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#000099">.</span><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp; c) Once the online joining process is submitted to IATA,
+our dedicated team will validate the local bank account mandate, resolution
+agreements (if applicable) and your airline’s compliance with the country
+requirements, and get back to you as soon as possible.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">Do not hesitate in having a look at our video tutorial&nbsp;</span><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#000066"><a href="http://portal.iata.org/faq/articles/en_US/FAQ/How-to-apply-online-for-joining-a-BSP-for-Airlines-Video/?q=video&amp;l=en_US&amp;fs=Search&amp;pn=1" title="BSP joining"><span style="color:#0077C0">BSP joining</span></a></span><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#0077C0">&nbsp;</span></b><span style="font-size: 10pt; font-family: Arial, sans-serif;">for
+further support.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+color:#330099">B. The below set of documents are still required in paper format</span></b><span class="apple-converted-space"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></span><span style="font-size: 10pt; font-family: Arial, sans-serif;">and must be sent to IATA Geneva c/o Airline
+Participation so your application is processed:<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><ul type="disc">
+ <li class="MsoNormal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Airline BSP
+     Participation - Additional Requirements Form</span></b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">: only if the
+     selected country requires it<o:p></o:p></span></li>
+ <li class="MsoNormal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Airline BSP -
+     CASS Local Bank Account Mandate</span></b><span style="font-size:10.0pt;
+     font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">: For settlement purposes your Airline
+     must provide IATA with a Banking Mandate for each CASS country. The
+     applicable bank mandate and further instructions may be found within the
+     online joining form.&nbsp;<o:p></o:p></span></li>
+ <li class="MsoNormal"><i><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Alternatively to
+     a local bank account</span></i><span style="font-size:10.0pt;font-family:
+     &quot;Arial&quot;,&quot;sans-serif&quot;">, your airline may opt for crossborder payment via
+     ICCS. Should you wish to apply to ICCS in a specific operation, please log
+     a query through our&nbsp;<a href="https://portal.iata.org/ISSP_Login">Customer
+     Portal</a>&nbsp;which will be directly handlded by our ICCS&nbsp;team.<o:p></o:p></span></li>
+</ul><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+color:#330099">C. Resolution Agreements:</span></b><span style="font-size: 10pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:windowtext">All NON IATA
+     Member must send a Form of Application for the BSP concerned of
+     application which is available&nbsp;</span><span style="font-size:10.0pt;
+     font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#000099"><a href="http://www.iata.org/sites/fmc/Files/Reso-850-Att-D-BSP-FORM-OF-APPLICATION-NON-IATA-June-2013.pdf"><b>Here</b></a></span><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">;<o:p></o:p></span></li>
+ <li class="MsoNormal"><span lang="EN-GB" style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-ansi-language:
+     EN-GB">Updated versions of legal documents (Counterindemnity or Form of
+     Concurrence) might be requested as well during the joining process</span><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">If your airline is joining a BSP
+     operation for the first time, you will need to submit the Counterindemnity
+     &nbsp;and the Form of Application and Concurrence available&nbsp;</span><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#3333FF"><a href="http://www.iata.org/sites/fmc/Files/Reso-850-Att-E-FORM-OF-CONCURRENCE-NON-IATA-June-2013.pdf">Here</a></span></b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">.<o:p></o:p></span></li>
+</ul><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">We recommend that you attach into the online joining process scan
+copies of the forms for review prior to sending the original documents.&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><b><span style="font-size: 10pt; font-family: Arial, sans-serif;">Note</span></b><span style="font-size: 10pt; font-family: Arial, sans-serif;">: The process will only begin once the above mentioned documents
+in (B) and (C) are received in paper format at the Geneva Head Office at the
+below address:<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 10pt; font-family: Arial, sans-serif;">International Air Transport Association<o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 10pt; font-family: Arial, sans-serif;">c/o Global Airline Participation Team<o:p></o:p></span></p><p class="MsoNormal"><span lang="FR" style="font-size: 10pt; font-family: Arial, sans-serif;">33, Route de l'Aéroport<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">1215 Geneva 15 Airport<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">Switzerland<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><b><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+color:#330099">D. Joining Fees:</span></b><span style="font-size: 10pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><ul type="disc">
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">A Joining Fee in USD is required
+     to be paid before an Airline can be activated in the designated BSP.<o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Please access Airline Central
+     Billing related information through our<span class="apple-converted-space">&nbsp;</span><a href="https://portal.iata.org/ISSP_Login">Customer Portal</a>. Once
+     logged, please select<span class="apple-converted-space">&nbsp;</span><b><i>Resources</i></b>,
+     then click on<span class="apple-converted-space">&nbsp;</span><b><i>Documents</i></b>.
+     You would be able to do a research query if required.<o:p></o:p></span></li>
+ <li class="MsoNormal"><span style="font-size:
+     10.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">Payment Procedure: Once the
+     applicable original documents have been received and validated by IATA, an
+     invoice will be issued to the airline. If the airline is an IATA Clearing
+     House member, then the joining fee will be invoiced and settled through
+     this option. &nbsp;Otherwise, a prepayment advise (Joining fee invoice)
+     will be sent to you by email for your immediate payment by bank transfer.
+     &nbsp;In such case, the instructions for payment are included in this
+     prepayment advice.<o:p></o:p></span></li>
+</ul><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><b><span style="font-size: 10pt; font-family: Arial, sans-serif;">Is there anything else we can do for you?</span></b><span class="apple-converted-space"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></span><span style="font-size: 10pt; font-family: Arial, sans-serif;">We invite you to contact us through our&nbsp;<a href="https://portal.iata.org/ISSP_Login">Customer Portal</a>&nbsp;&nbsp;and we
+will respond to you at the earliest.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">Before logging a query, please also review our<span class="apple-converted-space">&nbsp;</span><a href="https://portal.iata.org/faq_home?MainNav=resources&amp;subNav=faq&amp;mid=M2S1">FAQ
+section</a>. It contains relevant documentation and information regarding IATA
+processes &amp; procedures.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">We look forward to hearing from you shortly.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">Thank you,<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal" style="font-size: 12pt; margin-bottom: 0pt;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">{!Case.OwnerFullName},<o:p></o:p></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"></p></div>]]></td>
+</tr>
+</table>

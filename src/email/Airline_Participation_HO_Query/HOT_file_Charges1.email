@@ -1,0 +1,25 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">Dear&nbsp;</span><span style="FONT-FAMILY: Calibri, sans-serif; COLOR: rgb(33,88,104); FONT-SIZE: 11pt">&nbsp;</span><span style="BACKGROUND-COLOR: white; FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Contact.Name}</span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt"><br></span><br></p>
+<p style="font-family: Arial;"><span style="font-size: 10pt;"><font face="Geneva,Arial,Sans-Serif">The delivery of HOT files is free of charge, as long as you receive only one frequency. In the BSP</font></span><span style="font-family: Arial, sans-serif; font-size: 13px; text-align: justify;">&nbsp;</span><strong style="font-family: Arial, sans-serif; font-size: 13px; text-align: justify;">{!Case.Country__c}</strong><span style="font-family: Arial, sans-serif; font-size: 13px; text-align: justify;">&nbsp;</span><span style="font-size: 10pt;"><font face="Geneva,Arial,Sans-Serif">you can choose between&nbsp;a daily, weekly (or periodic) and monthly delivery.<br>&nbsp;&nbsp;<br>Should you wish to receive several HOT&nbsp;file services (for example daily&nbsp;<em>and</em>&nbsp;weekly delivery), you will be charged for&nbsp;the additional service(s) only.&nbsp;The monthly cost for an additional service second is detailed on the attached IATA Price list, which will be charged via Central Invoicing.<br></font></span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-SIZE: 10pt">&nbsp;</span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">If you require any further assistance please contact our Customer Services&nbsp;Team at </span><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: blue; FONT-SIZE: 10pt"><a href="http://www.iata.org/customer-portal/Pages/contactus.aspx">http://www.iata.org/customer-portal/Pages/contactus.aspx</a></span><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #002060; FONT-SIZE: 10pt"><o:p></o:p></span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;</span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;<o:p></o:p></span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt">Thank you,<o:p></o:p></span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><span style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"><br></span></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal">
+</p><p class="MsoNormal"><span style="BACKGROUND-COLOR: white; FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.OwnerFullName}</span><o:p></o:p></p>
+<p></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><font size="2" face="Arial, sans-serif">Global Airline Participation Team</font></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal">
+</p><p style="BACKGROUND: white" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">----------------------------<br>Your message received on&nbsp;{!Case.CreatedDate}:<o:p></o:p></span></p>
+<p style="BACKGROUND: white" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.Subject}<br>{!Case.Description}<o:p></o:p></span></p>
+<p></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>
+<p style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>]]></td>
+</tr>
+</table>

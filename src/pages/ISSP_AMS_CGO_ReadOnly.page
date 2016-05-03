@@ -77,7 +77,7 @@
 	       		</apex:facet>
 	    		<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
 	            
-	                <apex:outputText value="{!IF(isocountry.ISO_Code__c=='CN', 'Legal / Registered Name (English)',$ObjectType.Account.fields.Legal_name__c.Label)}" />
+	                <apex:outputText value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
 	                <apex:outputfield value="{!hqAccount.Name}" />
 	                <apex:outputText value="Full billing Address of the Office for which Application for Approval is made" />
 	                <apex:outputtext value="{0}
@@ -123,23 +123,23 @@
 	    <div style="page-break-after:always;margin-top:30px;">
 	    
 	    <!-- ************************* section Local Details (China) ************************* -->
-	    			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isocountry.ISO_Code__c=='CN'}">
+	    			<apex:pageBlockSection columns="1" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
 	                    <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            Agency Details in Local language
+	                             {!txtLocalAgencyDetailsTitle}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
 	                        </apex:outputpanel>
 	                    </apex:facet>
-	                    <apex:outputText value="Please enter the Legal Name and Physical & Correspondence address of the Agency to be accredited in your local language."/>
+	                    <apex:outputText value="{!txtLocalAgencyDetailsPleaseEnter}"/>
 	                    <apex:panelGrid columns="4" width="100%" cellpadding="10%" columnClasses="col1_regular, col2_regular">
-	                        <apex:outputLabel value="Legal / Registered Name (Chinese)"/>
+	                        <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
 	                       	<apex:outputField value="{!newForm.Local_Legally_Registered_Name__c}" />
 	                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
 	                    	<apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
 	                        
-	                        <apex:outputText value="Physical Address" style="font-weight:bold; font-size:110%"/>
+	                        <apex:outputText value="{!txtLocalAgencyDetailsPhysicalAddress}" style="font-weight:bold; font-size:110%"/>
 	                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
-	                    	<apex:outputText value="Correspondence Address" style="font-weight:bold; font-size:110%"/>
+	                    	<apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
 	                        <apex:outputtext ><!--empty: move following field to next row -->&nbsp;</apex:outputtext>
 	                        
 	                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Local_Physical_Address_Street__c.Label}"/>
@@ -168,9 +168,9 @@
 	                        <apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
 	                        
 	                        <apex:outputLabel value="Country"/>
-	                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+	                       	<apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
 	                        <apex:outputLabel value="Country"/>
-	                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+	                       	<apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
 	                    </apex:panelGrid>
 	                </apex:pageBlockSection>
 	    </div>
@@ -188,7 +188,7 @@
 	            <apex:facet name="header">3.1 PEOPLE</apex:facet>
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
 	            	<apex:facet name="header">Name</apex:facet>
-	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.ISO_Code__c=='CN','('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
 	        	</apex:column>
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
 	                <apex:facet name="header">Contact Details</apex:facet>
@@ -223,7 +223,7 @@
 	            <apex:facet name="header">3.2 COMPANIES</apex:facet>
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
 	            	<apex:facet name="header">Name</apex:facet>
-	            	<apex:outputText value="{!agencycon.Name}"/>
+	            	<apex:outputText value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
 	        	</apex:column>
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
 	            	<apex:facet name="header">Registration Number</apex:facet>
@@ -251,15 +251,17 @@
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>
-	    <apex:panelGrid columns="3" width="100%" headerClass="bg-primary" cellpadding="10%" columnClasses="col1, col2_4, col3">
+	    <apex:panelGrid columns="3" width="100%" headerClass="bg-primary" rowClasses="row1" columnClasses="col1, col2_4, col3">
             <apex:outputText value="{!IF(isocountry.EACP_Country__c,'* Has your firm ever held an EACP Intermediary Agreement executed by IATA?','* Has your firm ever held a Cargo Agency Agreement executed by IATA?')}"/>
 	        <apex:outputText value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}"/>
 	        <apex:outputText >
-	            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes'}">
+	            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes'}" columnClasses="col1_inner, col2_inner">
 	            	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Agents_Numeric_Code__c.Label}"/>
 	                <apex:outputText value="{!newForm.IATA_Agents_Numeric_Code__c}"/>
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Date_issued__c.Label}" />
-	                <apex:outputText value="{!newForm.Date_issued__c}"/>
+                    <apex:outputText value="{0,date, MMMM d,  yyyy}">
+	                    <apex:param value="{!newForm.Date_issued__c}" />
+	                </apex:outputText>
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Name_under_which_it_was_issued__c.Label}" />
 	                <apex:outputText value="{!newForm.Name_under_which_it_was_issued__c}"/>
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Reason_for_cancellation__c.Label}" />
@@ -267,14 +269,16 @@
 	            </apex:panelGrid>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="* Has your firm ever held a CASS Associate Agreement executed by IATA?"/>
-	        <apex:outputText value="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c}"/>
-	        <apex:outputText >
-	            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c=='Yes'}">
+	        <apex:outputText value="* Has your firm ever held a CASS Associate Agreement executed by IATA?" rendered="{!isocountry.EACP_Country__c}"/>
+	        <apex:outputText value="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c}" rendered="{!isocountry.EACP_Country__c}"/>
+	        <apex:outputText rendered="{!isocountry.EACP_Country__c}">
+	            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_form_ever_held_CASS_Assoc_etc__c=='Yes'}" columnClasses="col1_inner, col2_inner">
 	            	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Assoc_Code__c.Label}"/>
 	                <apex:outputText value="{!newForm.CASS_Assoc_Code__c}"/>
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Date_issued__c.Label}" />
-	                <apex:outputText value="{!newForm.CASS_Date_issued__c}"/>
+                    <apex:outputText value="{0,date, MMMM d,  yyyy}">
+	                    <apex:param value="{!newForm.CASS_Date_issued__c}" />
+	                </apex:outputText>
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Name_under_which_it_was_issued__c.Label}" />
 	                <apex:outputText value="{!newForm.CASS_Name_under_which_it_was_issued__c}"/>
 	                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.CASS_Reason_for_cancellation__c.Label}" />
@@ -286,7 +290,7 @@
 	        <apex:outputText value="{!newForm.Does_your_firm_intend_to_request__c}"/>
 	         <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Does_your_firm_intend_to_request__c=='Yes'}">
-	        	<apex:outputText value="* List the airport(s) to be authorized and to be reflected on your Cargo Agency Agreement. " />
+                <apex:outputText value="* List the airport(s) to be authorized and to be reflected on your Cargo Agency Agreement. " /><br/>
 	            <apex:outputField value="{!newForm.List_the_airport_s_to_be_authorized__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
@@ -295,25 +299,25 @@
 	        <apex:outputText value="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c}" />
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Is_your_firm_an_approved_IATA_Passenger__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Agents_Numeric_Code_of_your_Head_Office__c.Label}"/>
+	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Agents_Numeric_Code_of_your_Head_Office__c.Label}:" style="padding-right:6px"/>
 	            <apex:outputfield value="{!newForm.Agents_Numeric_Code_of_your_Head_Office__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
 	       
-	        <apex:outputText value="Does the air transportation which your firm sells/handles include goods owned by your firm? "/>
+	        <apex:outputText value="Does the air transportation which your firm sells/handles include goods owned by your firm?"/>
 	        <apex:outputText value="{!newForm.Does_the_air_transportation_which_your__c}"/>
 	         <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Does_the_air_transportation_which_your__c=='Yes'}">
-	        	<apex:outputText value="* State the percentage of your gross monetary volume of yearly air cargo transportation business represented by the transportation of such goods"/>
+	        	<apex:outputText value="* State the percentage of your gross monetary volume of yearly air cargo transportation business represented by the transportation of such goods" style="padding-right:10px"/>
 	            <apex:outputfield value="{!newForm.State_the_percentage_of_your_gross__c}" />
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="Does your firm sell air cargo transportation to the general public?"/>
+	        <apex:outputText value="Does your firm sell air cargo transportation to the general public?" style="padding-right:10px"/>
 	        <apex:outputText value="{!newForm.Does_your_firm_sell_air_cargo__c}" />
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Does_your_firm_sell_air_cargo__c=='Yes'}">
-	        	<apex:outputText value="* What percentage of your sales is to the general public?"/>
+	        	<apex:outputText value="* What percentage of your sales is to the general public?" style="padding-right:10px"/>
 	          	<apex:outputfield value="{!newForm.What_percentage_of_your_sales__c}"/>	
 	        </apex:outputText>
 	        </apex:outputText>
@@ -322,7 +326,7 @@
 	        <apex:outputText value="{!newForm.Is_your_firm_a_General_Sales_Agent_GSA__c}"/>
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Is_your_firm_a_General_Sales_Agent_GSA__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.List_carriers__c.Label}" />
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.List_carriers__c.Label}" /><br/>
 	            <apex:outputfield value="{!newForm.List_carriers__c}" />
 	        </apex:outputText>
 	        </apex:outputText>
@@ -331,7 +335,7 @@
 	        <apex:outputText value="{!newForm.Does_your_firm_operate_a_cargo_cartage__c}"/>
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Does_your_firm_operate_a_cargo_cartage__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_use_its_own_vehicles__c.Label}"/>
+	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Does_your_firm_use_its_own_vehicles__c.Label}" style="padding-right:10px"/>
 	            <apex:outputText value="{!newForm.Does_your_firm_use_its_own_vehicles__c}" />
 	        </apex:outputText>
 	        </apex:outputText>
@@ -340,7 +344,7 @@
 	        <apex:outputText value="{!newForm.Is_your_firm_a_member_of_a_national__c}"/>
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Is_your_firm_a_member_of_a_national__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_the_name_of_the_association_s__c.Label}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_the_name_of_the_association_s__c.Label}"/><br/>
 	            <apex:outputfield value="{!newForm.Give_the_name_of_the_association_s__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
@@ -349,7 +353,7 @@
 	        <apex:outputText value="{!newForm.Is_there_any_relationship__c}"/>
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Is_there_any_relationship__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_full_details__c.Label}"/>
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_full_details__c.Label}"/><br/>
 	            <apex:outputfield value="{!newForm.Give_full_details__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
@@ -373,7 +377,7 @@
 	        <apex:outputText value="{!newForm.Is_your_firm_affiliated_directly__c}" />
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Is_your_firm_affiliated_directly__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.provide_details__c.Label}" />
+                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.provide_details__c.Label}" /><br/>
 	            <apex:outputField value="{!newForm.provide_details__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
@@ -382,7 +386,7 @@
 	        <apex:outputText value="{!newForm.Does_your_firm_now_share_or_intend__c}"/>
 	        <apex:outputText >
 	      	<apex:outputText rendered="{!newForm.Does_your_firm_now_share_or_intend__c=='Yes'}">
-	        	<apex:outputText value="* Explain fully, stating name and business of other person or firm"/>
+	        	<apex:outputText value="* Explain fully, stating name and business of other person or firm"/><br/>
 	           	<apex:outputField value="{!newForm.Explain_fully_stating_name__c}"/>
 	        </apex:outputText>
 	        </apex:outputText>
@@ -406,7 +410,7 @@
 	        <apex:outputText value="{!newForm.Been_involved_in_a_bankruptcy__c}" />
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Been_involved_in_a_bankruptcy__c=='Yes'}">
-	        	<apex:outputText value="* Are you fully and legally discharged of your obligations by the court involved?"/>
+	        	<apex:outputText value="* Are you fully and legally discharged of your obligations by the court involved?"  style="padding-right:10px"/>
 	        	<apex:outputText value="{!newForm.If_yes_are_you_fully_and_legally__c}" />
 	        </apex:outputText>
 	        </apex:outputText>
@@ -419,7 +423,7 @@
 	        <apex:outputText value="{!newForm.Been_director_or_had_a_financial__c}"/>
 	        <apex:outputText >
 	        <apex:outputText rendered="{!newForm.Been_director_or_had_a_financial__c=='Yes'}">
-	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Were_all_IATA_Members_fully_repaid__c.Label}" />
+	        	<apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Were_all_IATA_Members_fully_repaid__c.Label}"  style="padding-right:10px"/>
 	            <apex:outputText value="{!newForm.Were_all_IATA_Members_fully_repaid__c}" />
 	        </apex:outputText>
 	        </apex:outputText>
@@ -525,10 +529,10 @@
 	                <apex:outputField value="{!facilityInContext.Date_agreement_expires__c}" rendered="{!facilityInContext.Is_the_warehouse_sub_contracted__c=='Yes'}"/>
 											
 					<apex:outputText value="Is the office open to the general public ?" rendered="{!AND(facilityInContext.recordType.Name == 'Office',NOT(isocountry.EACP_Country__c))}"/>
-					<apex:outputField value="{!facilityInContext.Is_the_office_open_to_the_general_public__c}" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
+					<apex:outputField value="{!facilityInContext.Is_the_office_open_to_the_general_public__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Office',NOT(isocountry.EACP_Country__c))}"/>
 										
 					<apex:outputText value="Is the warehouse open to the general public?" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
-					<apex:outputField value="{!facilityInContext.Is_warehouse_open_to_general_public__c}" rendered="{!facilityInContext.recordType.Name == 'Warehouse'}"/>
+					<apex:outputField value="{!facilityInContext.Is_warehouse_open_to_general_public__c}" rendered="{!AND(facilityInContext.recordType.Name == 'Warehouse',NOT(isocountry.EACP_Country__c))}"/>
 										
 	                <apex:outputText value="Which of the following are available?" rendered="{!facilityInContext.recordType.Name == 'Office'}"/>
 	               	<apex:outputtext rendered="{!facilityInContext.recordType.Name == 'Office'}"><!--empty: move following field to next row --></apex:outputtext>

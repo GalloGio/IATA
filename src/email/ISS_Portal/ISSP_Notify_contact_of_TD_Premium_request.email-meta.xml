@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ISSP Notify contact of T Dashboard Premium request</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP Notify contact of TD Premium request</name>
+    <style>none</style>
+    <subject>Your request for IATA Treasury Dashboard Premium</subject>
+    <textOnly>{!$Label.ISSP_Email_do_not_reply}
+
+Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+
+Thank you for your interest in IATA Treasury Dashboard Premium. Your request is being reviewed; we will reply to you shortly with all the participation details.
+
+Access to the new IATA Treasury Dashboard Premium provides Airline Treasury and Financial staff instant, global visibility of their Airline’s incoming credit card sales
+
+View credit card sales from over 160 countries and +100 currencies
+Timely information with Intra day updates
+View credit card dashboard by Currency and sales period
+Access downloadable credit card sales report
+Secure access
+
+The Treasury Dashboard Premium has a one-time set-up fee and a monthly user subscription fee allowing visibility in regards to credit cards and the respective settlement currencies. Feel free to visit our website at: www.iata.org/treasurydashboard, for more information.
+
+Regards,
+
+IATA Financial and Distribution Services</textOnly>
+    <type>custom</type>
+</EmailTemplate>

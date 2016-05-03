@@ -17,8 +17,8 @@
 
 				<!-- MEMORANDUM FOR CONCURRENCES -->
 			 	<apex:pageBlockSection id="headerMEMOConcurrencies" rendered="{!sectionActive=1}" title="{!memorandumTypes[1].label}" columns="4">
-					<apex:inputField label="From" value="{!fromdate.Effective_date__c}" required="true"/>
-					<apex:inputField label="To" value="{!toDate.Effective_date__c}" required="true"/>
+					<apex:inputField label="From" value="{!fromdate.Agreement_processed_date__c}" required="true"/>
+					<apex:inputField label="To" value="{!toDate.Agreement_processed_date__c}" required="true"/>
 					<apex:selectList label="Agreement type" value="{!selectedAgreement}" size="1" >
 						<apex:selectOptions value="{!agreementTypes}" />
 					</apex:selectList>
@@ -54,8 +54,8 @@
 				
 				<!-- MEMORANDUM FOR WITHDRAWALS -->
 				<apex:pageBlockSection id="headerMEMOWithdrawals" rendered="{!sectionActive=2}" title="{!memorandumTypes[2].label}" columns="4">
-					<apex:inputField label="From" value="{!fromdate.Effective_date__c}" required="true"/>
-					<apex:inputField label="To" value="{!toDate.Effective_date__c}" required="true"/>
+					<apex:inputField label="From" value="{!fromdate.Cancellation_processed_date__c}" required="true"/>
+					<apex:inputField label="To" value="{!toDate.Cancellation_processed_date__c}" required="true"/>
 					<apex:selectList label="Agreement type" value="{!selectedAgreement}" size="1" >
 						<apex:selectOptions value="{!agreementTypes}" />
 					</apex:selectList>

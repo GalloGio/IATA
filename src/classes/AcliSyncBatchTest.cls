@@ -23,9 +23,9 @@
 private class AcliSyncBatchTest {
     // create the sync file contents
     private static String CSV = 'NAME1,NAME2,NUM_CODE_NULL,ICAO_DES,DES_NULL,DES_SEC_FLAG,ADDRESS1,ADDRESS2,CITY,PROV_ST_NAME,COUNTRY,POSTAL,RES_TTYPE,RES_HEAD_NAME,RES_TITLE,CO_TTYPE,EMERG_TTYPE,EMERG_HEAD_NAME,EMERG_TITLE,SITA_FLAG,ARINC_FLAG,IATA_FLAG,ATA_FLAG,MITA_FLAG,CAT_PKEY,NUM_SEC_FLAG,AIRLINE_PRF_NULL,AIRLINE_SEC_FLAG,KUNNR,ACTIVE,AOC_date,MITA_MEMBER,REQUEST_ID,REQ_STATUS,REQ_STATUS_DESCR,RECEIVED,FORMTYPE' 
-        + '\n' + 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X000000001234567890 Coding status                 20151014'
-        + '\n' + 'AEROFLOT RUSSIAN AIRLINES                                                       555 AFLSU 37 LENINGRADSKY PROSPEKT                                                        MOSCOW                                       Russian Federation                          125167                                                                                                            YYY YI 555 0010000368X00000000                                         00000000'
-        + '\n' + 'AEROLINEAS ARGENTINA                                                            044 ARGAR BOUCHARD 5471                           9TH FLOOR                               BUENOS AIRES                                 Argentina                                   1106                                                                                                              YYY YI 044 0010000088X00000000                                         00000000';
+        + '\n' + 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X000000001234567890 Coding status                 20151014ACP'
+        + '\n' + 'AEROFLOT RUSSIAN AIRLINES                                                       555 AFLSU 37 LENINGRADSKY PROSPEKT                                                        MOSCOW                                       Russian Federation                          125167                                                                                                            YYY YI 555 0010000368X00000000                                         00000000   '
+        + '\n' + 'AEROLINEAS ARGENTINA                                                            044 ARGAR BOUCHARD 5471                           9TH FLOOR                               BUENOS AIRES                                 Argentina                                   1106                                                                                                              YYY YI 044 0010000088X00000000                                         00000000   ';
 
     static void loadData() {
         // create the custom setting values
@@ -111,7 +111,7 @@ private class AcliSyncBatchTest {
         			IATA_ISO_Country__c = country_i.Id);
         insert EI;
         
-        Account SU = new Account(Name = 'Aeroflot INTENTIONAL TYPO', Airline_designator__c = 'SU', ACLI_SAP_Id__c = '0010000368', Membership_status__c = 'IATA member', RecordTypeId = AirlineHQ_RT_Id, 
+        Account SU = new Account(Name = 'Aeroflot INTENTIONAL TYPO', Name_on_AOC__c = 'Aeroflot INTENTIONAL TYPO', Airline_designator__c = 'SU', ACLI_SAP_Id__c = '0010000368', Membership_status__c = 'IATA member', RecordTypeId = AirlineHQ_RT_Id, 
         			IATA_ISO_Country__c = country_r.Id);
         insert SU;
         
@@ -123,7 +123,7 @@ private class AcliSyncBatchTest {
                               Status = 'Open',
                               Origin = 'asd',
                               CaseArea__c = 'Accreditation',
-                              Reason1__c = 'Annual Fees',
+                              Reason1__c = '3 Digit Form',
                               AccountId = EI.id,
                               Coding_Application_ID__c = null,
                               Coding_Application_Status__c = null,
@@ -157,22 +157,21 @@ private class AcliSyncBatchTest {
         // check that all the info was updated
         System.AssertEquals('Aer Lingus Limited', EI.Name); 
         System.AssertEquals('DUBLIN', EI.billingCity);
-        System.AssertEquals(true, EI.MITA_Member__c);
         
         SU = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :SU.Id];
         // check that name & address didn't change (only MER can change this for IATA Members)
         System.AssertEquals('Aeroflot INTENTIONAL TYPO', SU.Name); 
         System.AssertEquals(null, SU.billingCity); 
         // check that other info did change
-        System.AssertEquals(true, SU.MITA_Member__c); 
         
         
         
         // check that the coding case was updated
-        cs1 = [SELECT Id, Coding_Application_ID__c, Coding_Application_Status__c, Coding_Application_Reception_Date__c FROM Case WHERE Id = :cs1.Id];
+        cs1 = [SELECT Id, Coding_Application_ID__c, Coding_Application_Status__c, Coding_Application_Reception_Date__c, Reason1__c FROM Case WHERE Id = :cs1.Id];
         system.assertEquals(Date.newinstance(2015,10,14), cs1.Coding_Application_Reception_Date__c);
         system.assertEquals('1234567890', cs1.Coding_Application_ID__c);
         system.assertEquals('Coding status', cs1.Coding_Application_Status__c.trim());
+        system.assertEquals('3 Digit Form', cs1.Reason1__c.trim());
         
         
         // check the existing SAP Account record with the wrong SAP Id was not updated

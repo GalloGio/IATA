@@ -75,6 +75,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_Country_Name_Uppercase__c</fullName>
+        <description>IATA_ISO_Country Name in uppercase, this is intended for generating the GDP Files.</description>
+        <externalId>false</externalId>
+        <formula>UPPER(IATA_ISO_Country__r.Name)</formula>
+        <inlineHelpText>IATA_ISO_Country Name in uppercase</inlineHelpText>
+        <label>Address Country Name Uppercase</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_Country_Name__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.Name</formula>
@@ -136,9 +148,29 @@
     </fields>
     <fields>
         <fullName>Address_State_Code__c</fullName>
+        <description>State Code without the preceding country code. 
+The source of information is taken from IATA_ISO_State.
+In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
-        <formula>IATA_ISO_State__r.ISO_Code__c</formula>
+        <formula>IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
+   , SUBSTITUTE(IATA_ISO_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c+ &apos;-&apos;, &apos;&apos;) 
+   , IATA_ISO_Country__r.ISO_Code__c 
+)</formula>
+        <inlineHelpText>State Code without the preceding country code. 
+The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <label>Address State Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_State_Name_Uppercase__c</fullName>
+        <description>IATA_ISO_State Name in uppercase, this is intended for generating the GDP Files.</description>
+        <externalId>false</externalId>
+        <formula>UPPER(IATA_ISO_State__r.Name)</formula>
+        <inlineHelpText>IATA_ISO_State Name in uppercase</inlineHelpText>
+        <label>Address State Name Uppercase</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -211,6 +243,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>IATA_ISO_NCode__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA ISO NCode</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_ISO_State__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -281,6 +324,9 @@
     <label>GDP Address</label>
     <listViews>
         <fullName>AIMS_Mailing_address</fullName>
+        <columns>AIMS_ID__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>Related_Account__c</columns>
         <columns>NAME</columns>
         <columns>Address_City__c</columns>
         <columns>Address_Country_Name__c</columns>

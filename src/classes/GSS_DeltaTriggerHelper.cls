@@ -1,0 +1,403 @@
+/*
+* This class is a trigger helper that will be called by all objects and child objects associated
+* to reference GDP File description
+*/
+
+//Class to load the fields and object name to use in the comparasion
+//ObjectName + FieldName must be unique use map
+public class GSS_DeltaTriggerHelper { 
+    public class FieldStructureCls {
+        public string ObjectName {get;set;}
+        public string Fieldname  {get;set;}
+        //Includes all FileSpecifications that includes this Object-Field
+        public Set<string> SpecficationFile {get;set;}
+        //Constructor
+        public FieldStructureCls()
+        {
+            this.ObjectName = '';
+            this.Fieldname = '';
+            this.SpecficationFile = new set<string>();
+        }
+    }
+    
+    
+    //UpdateInsertDelete = U/I/D
+    public static void calculateDeltas(String UpdateInsertDelete, List<sObject> oldRecords, List<sObject> newRecords){
+        //Get the source object name dynamically
+        String SourceObjectName = newRecords[0].Id.getSObjectType().GetDescribe().getName();
+        
+        Boolean OBJECT_ACCREDITATION = 'Accreditation__c' == SourceObjectName ;
+        Boolean OBJECT_ACCOUNTVIEW = 'GDP_Products_Account_View__c' == SourceObjectName ;
+        Boolean ISINSERT = UpdateInsertDelete == 'I';
+        Boolean ISUPDATE = UpdateInsertDelete == 'U';
+        Boolean ISDELETE = UpdateInsertDelete == 'D';
+        
+        
+        
+        //Question this method will answer : Is there an update to a field that is contained in a 
+        //file desctiption?  If yes add a record to the delta junction table, with lastmodified date 
+        //and change code (A, B, C, D)
+        //A: Add
+        //B: Reinstate (Agency Status Code changed from 0 to > 3)
+        //C: Change
+        //D: Agency Terminated
+        
+        //Get the list of all reference file specification        
+        List<GDP_File_Description__c> filespecicifactionlist = [SELECT Id
+                                                                ,Field_API__c
+                                                                ,Field_Object_Name__c                                          
+                                                                FROM GDP_File_Description__c
+                                                                WHERE Is_Reference__c = true
+                                                                and Product_type__c in ('GSS','MDP')
+                                                               ];
+        
+        //Nothing to do if there is no Reference file specifications
+        if (filespecicifactionlist.size()==0) return;
+        
+        
+        //Build a map of FieldStructureCls to see all the fields that needs to be tracked
+        Map<String, FieldStructureCls> fieldstructure = new Map<String,FieldStructureCls>();      
+        for(GDP_File_Description__c mySpecificationRecord : filespecicifactionlist)
+        {
+            //This is always a reference FileSpecification because of where clause above
+            String[] FieldsNameList = mySpecificationRecord.Field_API__c.split('\\|');
+            String[] ObjectNameList = mySpecificationRecord.Field_Object_Name__c.split('\\|');
+            Integer i=-1;
+            for(String oName : ObjectNameList)
+            {
+                i++;
+                if (SourceObjectName!=oName) continue;
+                //detect here if the field has __r                
+                //The logical key to this map is objectname + field name
+                //As the trigger helper is called in the context of a single object at the time
+                //we keep only the FieldName as key to the map.
+                String key = FieldsNameList[i];
+                if (key.Contains('__r.')) {
+                    String[] vfieldname= key.Split('\\.');
+                    key = vfieldname[0].Replace('__r','__c');
+                }
+                
+                FieldStructureCls ds;
+                if (!fieldstructure.ContainsKey(key)) ds = new FieldStructureCls();
+                else ds = (FieldStructureCls) fieldstructure.get(key);
+                ds.ObjectName = oName;
+                ds.FieldName = FieldsNameList[i];
+                ds.SpecficationFile.add(mySpecificationRecord.Id);
+                fieldstructure.put(key,ds);             
+            } 
+        }
+        
+        //Add delta records to track the change of code for all related FileSpecification
+        Set<String> FirstSpecficationFiles;
+        for (string skey : fieldstructure.keySet()) {
+            //Get the first set elements to have a set of file specification
+            FirstSpecficationFiles = new Set<String>(fieldstructure.get(skey).SpecficationFile);
+            break;
+        }
+        
+        
+        
+        //Create a list of delta that will be inserted
+        list<GDP_Delta__c> DeltaList = new list<GDP_Delta__c>();
+        GDP_Delta__c Delta = null;
+        
+        //Create a map of  RecId-FileSpecId : Delta to check as we go if there is already a code to exit
+        //Key of the following map is RecId-FileSpecId
+        Map<string,GDP_Delta__c> DeltaMap = New Map<string,GDP_Delta__c> ();
+        Set<String> DeltaSet = new Set<String>();
+        Set<id> ProcessedRecordSet = new set<id>();
+        String key ='';
+        Integer position=0; 
+        boolean LogDelta=false;
+        
+        
+        
+        //Specific treatment of Accreditation__c Status code change
+        //Manage Agency Status code change on Accreditation object
+        //TODO: verify if the accreditation change is the 'Main' accreditation refered from the Parent object
+        //
+        if(OBJECT_ACCREDITATION || OBJECT_ACCOUNTVIEW)
+        {
+            //For the case where there is a change on the Accreditation Status
+            //Build a map of Status code referenced by the accreditation status
+            Map<Id, GDP_Reference_Table__c> RTid_StatusCodeMap 
+                = new Map<Id, GDP_Reference_Table__c>([SELECT Id, Code__c 
+                                                       FROM GDP_Reference_Table__c 
+                                                       WHERE Table__c = 'STATUS']);
+            Set<Id> AccountViewSet = new Set<Id>();
+            Set<id> newRecordsIdSet = new Set<Id>();
+            Set<id> AccreditationSet = new Set<Id>();           
+            for(SObject newrecord : newRecords) 
+            {
+                if (OBJECT_ACCREDITATION) AccountViewSet.Add((id)newRecord.get('Related_GDP_Products_Account_View__c'));
+                if (OBJECT_ACCREDITATION) AccreditationSet.Add((id)newRecord.Id);
+                if (OBJECT_ACCOUNTVIEW) newRecordsIdSet.Add((id)newRecord.Id); 
+            }
+            
+            //Map used for the case of an update of accreditation
+            //Related_Accreditation_Class__c to Accreditation__r.Status__r.Code__c
+            map<id, String> AccreditationStatusMap= new map<id, String>();
+            for(Accreditation__c a : [SELECT Id, Status__r.Code__c 
+                                      FROM Accreditation__c 
+                                      WHERE Related_GDP_Products_Account_View__c IN : newRecordsIdSet]) 
+                AccreditationStatusMap.put(a.Id, a.Status__r.Code__c);          
+            
+            
+            Map<Id, GDP_Products_Account_View__c> PAVid_StatusCodeMap 
+                = new Map<Id, GDP_Products_Account_View__c>();
+            //Find out if there is any accrediation used as lookup from the account view 
+            //in the list of accrediation sent in the newRecords list           
+            if (OBJECT_ACCREDITATION)   
+            {               
+                PAVid_StatusCodeMap  
+                    = new Map<Id, GDP_Products_Account_View__c>(
+                        [SELECT Id
+                         , Related_Accreditation_Class__c
+                         , Related_Accreditation_Class__r.Status__r.Code__c
+                         FROM GDP_Products_Account_View__c 
+                         WHERE Id IN : AccountViewSet
+                         AND Related_Accreditation_Class__c in :AccreditationSet]); 
+                AccreditationSet.Clear();
+                for(GDP_Products_Account_View__c newrecord : PAVid_StatusCodeMap.Values()) 
+                {
+                    AccreditationSet.Add(newrecord.Related_Accreditation_Class__c);
+                }
+            }                                           
+            
+            //For the case where there is a change of the Related_Accreditation_Class__c lookup on the GDP_Products_Account_View__c
+            //Build a map of Status code referenced by the GDP_Products_Account_View__c
+            if (OBJECT_ACCOUNTVIEW)  
+                PAVid_StatusCodeMap 
+                = new Map<Id, GDP_Products_Account_View__c>(
+                    [SELECT Id
+                     , Related_Accreditation_Class__c
+                     , Related_Accreditation_Class__r.Status__r.Code__c
+                     FROM GDP_Products_Account_View__c 
+                     WHERE Id IN : newRecordsIdSet]);
+            
+            
+            position=0; 
+            for(SObject newrecord : newRecords)    
+            { 
+                //Manage change of Agency_Status_Code for desactivation and reinstment first
+                Integer NewStatusCode=-1;
+                Integer OldStatusCode=-1;
+                LogDelta=false;
+                //Is the Accrediation used by the Account view 
+                if(OBJECT_ACCREDITATION && AccreditationSet.Contains(newrecord.Id))
+                {
+                    try {
+                        if (ISINSERT || ISUPDATE) NewStatusCode = Integer.valueOf(RTid_StatusCodeMap.get((Id)newRecord.get('Status__c')).Code__c);              //New Accreditation__c.Status__r.Code__c
+                        if (ISUPDATE) OldStatusCode = Integer.valueOf(RTid_StatusCodeMap.get((Id)oldRecords[position].get('Status__c')).Code__c);   //Old Accreditation__c.Status__r.Code__c 
+                        if (ISUPDATE && (NewStatusCode != OldStatusCode)) LogDelta=true;
+                    }catch(Exception e) {}                  
+                    
+                }
+                if(OBJECT_ACCOUNTVIEW)
+                {    
+                    //TODO point to correct fields in GDP_Product_Account_View__c Need to test this code.
+                    try {
+                        if (ISINSERT || ISUPDATE) 
+                            NewStatusCode = Integer.valueOf(PAVid_StatusCodeMap.get((Id)newRecord.get('Id')).Related_Accreditation_Class__r.Status__r.Code__c);             
+                        if (ISUPDATE) 
+                            OldStatusCode = Integer.valueOf(AccreditationStatusMap.get((Id)oldRecords[position].get('Related_Accreditation_Class__c')));   //
+                        if (ISUPDATE && (NewStatusCode != OldStatusCode))  
+                            LogDelta=true;
+                    }catch(Exception e) {}                  
+                }
+                
+                System.debug('OldStatusCode: '+ OldStatusCode);               
+                System.debug('NewStatusCode: '+ NewStatusCode);
+                
+                String StatusChangeCode = '';
+                //There is an Agency Status Change! Get the StatusChangeCode
+                if (LogDelta)
+                { 
+                    System.debug(' Accreditation status code Change Need to dertermine the code (A, B, C, D)');
+                    // load all the specification id 
+                    if (OldStatusCode == 0 ){
+                        if (NewStatusCode >= 4) StatusChangeCode = 'B';  // Reinstatment
+                        
+                        else {// NewStatusCode < 4
+                            // Do nothing the Agency stays inactive
+                            
+                        }                                 
+                    }
+                    else if (OldStatusCode  >= 1 && OldStatusCode <= 3){
+                        if (NewStatusCode >= 4) StatusChangeCode = 'A';//Activation
+                        else {// NewStatusCode < 4
+                            // Do nothing the Agency stays inactive
+                            
+                        }     
+                    }
+                    else { //OldStatusCode >= 4
+                        if (NewStatusCode == 0) 
+                            StatusChangeCode = 'D';//Deactivation
+                        if (NewStatusCode == 9) 
+                            StatusChangeCode = 'C';  //Status Change
+                        
+                        if (NewStatusCode >= 4 && NewStatusCode <= 8){
+                            if(true){  ///TODO
+                                //Status Change
+                                StatusChangeCode = 'C';                                            
+                            }
+                            else {
+                                // Do nothing the change code is not sent to the Non member
+                                
+                            }
+                        }   
+                    }
+                    
+                    
+                    for(String SpecificationId : FirstSpecficationFiles)
+                    {
+                        Delta = new GDP_Delta__c();
+                        Delta.GDP_File_Description__c = SpecificationId;
+                        if (OBJECT_ACCOUNTVIEW) Delta.Related_GDP_Product_Account_View__c = newrecord.id; 
+                        if (OBJECT_ACCREDITATION) Delta.Related_GDP_Product_Account_View__c = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+                        Delta.DeltaLastModifiedDate__c = System.Today();
+                        Delta.Change_Code__c = StatusChangeCode;
+                        key = Delta.Related_GDP_Product_Account_View__c
+                            + '|'
+                            + Delta.GDP_File_Description__c;
+                        if(Delta.Related_GDP_Product_Account_View__c != null){
+                            DeltaList.add(Delta);
+                            DeltaSet.Add(key);
+                            ProcessedRecordSet.add(Delta.Related_GDP_Product_Account_View__c);
+                        }
+                    }
+                }                    
+                position++;
+            } 
+            
+        }
+        //Add all the Delta Codes to a structure to avoid working on the same record again
+        system.debug('ProcessedRecordSet:' +ProcessedRecordSet);
+        
+        //End of Status code specific treatment
+        
+        //Generic treatment for aby type of objects.
+        //Iterate on records, fields, and File specification to detect change and add change code as needed
+        //Iterate the list of new records to find if there are modifications
+        position=-1;
+        
+        for(SObject newrecord : newRecords)    
+        {   
+            position++;
+            //Find-Out what is the parent record id to avoid processing again a record that had a status change
+            String ParentRecordId = '';
+            if (OBJECT_ACCOUNTVIEW) ParentRecordId = newrecord.id;
+            //Case of a child object, the "Standard" lookup field name is Related_GDP_Products_Account_View__c. Could fail otherwise.
+            if (!OBJECT_ACCOUNTVIEW) ParentRecordId = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+       
+            
+            
+
+            //Reparenting a child record scenario
+            //This can create two change codes: one on the original parent and one on the destination parent
+            //Verify if Related_GDP_Products_Account_View__c (Parent lookup) changed
+            if ( ISUPDATE
+                  &&
+                !OBJECT_ACCOUNTVIEW 
+                   &&
+                 (newrecord.get('Related_GDP_Products_Account_View__c') != oldRecords[position].get('Related_GDP_Products_Account_View__c'))
+                )
+            {
+                for(String SpecificationId : FirstSpecficationFiles) 
+                {   
+                    //StatusChangeCode C of new parent Related_GDP_Product_Account_View__c
+                    Delta = new GDP_Delta__c();
+                    Delta.GDP_File_Description__c = SpecificationId;
+                    Delta.DeltaLastModifiedDate__c = System.Today();
+                    Delta.Change_Code__c = 'C';
+                    Delta.Related_GDP_Product_Account_View__c = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+                    
+                    if(Delta.Related_GDP_Product_Account_View__c != null){
+                        DeltaList.add(Delta);   
+                        ProcessedRecordSet.add(Delta.Related_GDP_Product_Account_View__c);                          
+                    }
+                    
+                    //StatusChangeCode C of OLD parent Related_GDP_Product_Account_View__c
+                    Delta = new GDP_Delta__c();
+                    Delta.GDP_File_Description__c = SpecificationId;
+                    Delta.DeltaLastModifiedDate__c = System.Today();
+                    Delta.Change_Code__c = 'C';
+                    Delta.Related_GDP_Product_Account_View__c = (id)oldRecords[position].get('Related_GDP_Products_Account_View__c');
+                    
+                    if(Delta.Related_GDP_Product_Account_View__c != null){
+                        DeltaList.add(Delta);   
+                        ProcessedRecordSet.add(Delta.Related_GDP_Product_Account_View__c);  
+                    }
+                }
+            }
+            // END Reparenting a child record scenario
+                
+                
+            system.debug('ParentRecordId: ' + ParentRecordId);
+            //Check if record already have a delta change if yes, continue
+            if(ProcessedRecordSet.contains(ParentRecordId))  continue;
+            
+            System.debug('No Agency code Change, need to loop all fields to detect possible change');
+            
+            //Loop list of fields
+            system.debug('fieldstructure.keyset(): ' +fieldstructure.keyset());
+            for(String dskey : fieldstructure.keyset())
+            {
+                FieldStructureCls ds = (FieldStructureCls) fieldstructure.get(dskey);
+                
+                try
+                {               
+                    //Code Review
+                    LogDelta=false;
+                    if (ISUPDATE)                            
+                        if (newRecord.get(ds.FieldName)!=oldRecords[position].get(ds.FieldName)) LogDelta=true;
+                    if (ISINSERT || ISDELETE) LogDelta=true;
+                    
+                    
+                    if (LogDelta)
+                        for(String SpecificationId : ds.SpecficationFile)
+                        {
+                            if(OBJECT_ACCOUNTVIEW)  key = newrecord.id;
+                            if(!OBJECT_ACCOUNTVIEW) key = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+                            key += '|' + SpecificationId;
+                            if (DeltaSet.Contains(Key)) continue;
+                            
+                            //StatusChangeCode
+                            // load all the specification id 
+                            Delta = new GDP_Delta__c();
+                            Delta.GDP_File_Description__c = SpecificationId;
+                            Delta.DeltaLastModifiedDate__c = System.Today();
+                            Delta.Change_Code__c = 'C';
+                            
+                            //This is the parent object
+                            if(OBJECT_ACCOUNTVIEW) {
+                                Delta.Related_GDP_Product_Account_View__c = newrecord.id; 
+                                if (ISINSERT) Delta.Change_Code__c = 'A';
+                                if (ISDELETE) Delta.Change_Code__c = 'D';                                 
+                            }
+                            else{ //Case of a child object, the "Standard" lookup field name is Related_GDP_Products_Account_View__c. Could fail otherwise.
+                                try{
+                                    Delta.Related_GDP_Product_Account_View__c = (id)newrecord.get('Related_GDP_Products_Account_View__c');
+                                }
+                                catch(exception e) {}
+                            }
+                            if(Delta.Related_GDP_Product_Account_View__c != null){
+                                DeltaList.add(Delta);
+                            }
+                        }
+                    if (LogDelta) break;
+                    
+                }
+                catch(Exception e) {}
+            }   
+            
+           // position++;
+        }
+        
+        //TODO OPTIMIZATION: future serialize statement for batch asynch processing
+        if (DeltaList.Size()>0) {
+            System.debug('DeltaList: '+DeltaList);
+            insert DeltaList;               
+        }
+    }
+}

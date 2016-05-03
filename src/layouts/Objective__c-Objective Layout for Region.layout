@@ -43,7 +43,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Division__c</field>
             </layoutItems>
             <layoutItems>

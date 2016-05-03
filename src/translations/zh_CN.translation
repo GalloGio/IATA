@@ -1793,6 +1793,10 @@ and
         <name>IEC_Confirm_DefaultPaymentUpdate</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Confirm_SaveSuccessful --></label>
+        <name>IEC_Confirm_SaveSuccessful</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_AcceptTermAndCondition --></label>
         <name>IEC_Error_AcceptTermAndCondition</name>
     </customLabels>
@@ -1885,6 +1889,10 @@ and
         <name>IEC_Error_InvalidEmail</name>
     </customLabels>
     <customLabels>
+        <label><!-- IEC_Error_InvalidFileNameFormat --></label>
+        <name>IEC_Error_InvalidFileNameFormat</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Error_InvalidPageParameter --></label>
         <name>IEC_Error_InvalidPageParameter</name>
     </customLabels>
@@ -1911,6 +1919,10 @@ and
     <customLabels>
         <label><!-- IEC_Error_MustLogin --></label>
         <name>IEC_Error_MustLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IEC Error Must Select Subscription --></label>
+        <name>IEC_Error_Must_Select_Subscription</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC Error No Application Access --></label>
@@ -2281,6 +2293,18 @@ and
         <name>ISSP_AMS_Case_Attach_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Case Attach Limit --></label>
+        <name>ISSP_AMS_Case_Attach_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Case Change Description --></label>
+        <name>ISSP_AMS_Case_Change_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>烦请您点击以下链接，下载PDF申请表。填写完成后，请点击“提交&amp;添加附件”按钮上传附件至IATA。(注：您可随时通过IATA资格认证页面回到此界面完成上传)</label>
+        <name>ISSP_AMS_Case_PDF_Download</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS City --></label>
         <name>ISSP_AMS_City</name>
     </customLabels>
@@ -2317,16 +2341,28 @@ and
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Email Branch Subject --></label>
+        <label>代理机构认证海外分公司草拟申请</label>
+        <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>代理机构认证分公司草拟申请</label>
         <name>ISSP_AMS_Email_Branch_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Email HO Subject --></label>
+        <label><!-- ISSP AMS Email Change Subject --></label>
+        <name>ISSP_AMS_Email_Change_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>代理机构认证总部草拟申请</label>
         <name>ISSP_AMS_Email_HO_Subject</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Empty_Location_Type --></label>
         <name>ISSP_AMS_Empty_Location_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FAX --></label>
+        <name>ISSP_AMS_FAX</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS File Upload Issue --></label>
@@ -2339,6 +2375,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS First 8 Digits --></label>
         <name>ISSP_AMS_First_8_Digits</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_First_Name_Chinese --></label>
+        <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS First Page Summary Header --></label>
@@ -2359,6 +2399,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS How Many PrevAgencies --></label>
         <name>ISSP_AMS_How_Many_PrevAgencies</name>
+    </customLabels>
+    <customLabels>
+        <label>国际航协客运代理人</label>
+        <name>ISSP_AMS_IATA_Passenger_Sales_Agent</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS INFO Currency --></label>
@@ -2425,6 +2469,10 @@ and
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Last_Name_Chinese --></label>
+        <name>ISSP_AMS_Last_Name_Chinese</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS LeftNav_Section1 --></label>
         <name>ISSP_AMS_LeftNav_Section1</name>
     </customLabels>
@@ -2461,6 +2509,78 @@ and
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Local Details Change Please Enter --></label>
+        <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Company Name ENG --></label>
+        <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Company Name Local --></label>
+        <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Copy Address --></label>
+        <name>ISSP_AMS_Local_Details_Copy_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Correspondence Address --></label>
+        <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details First Name ENG --></label>
+        <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details First Name Local --></label>
+        <name>ISSP_AMS_Local_Details_First_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Last Name ENG --></label>
+        <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Last Name Local --></label>
+        <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Legal Name --></label>
+        <name>ISSP_AMS_Local_Details_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Legal Name ENG --></label>
+        <name>ISSP_AMS_Local_Details_Legal_Name_ENG</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Company --></label>
+        <name>ISSP_AMS_Local_Details_No_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Physical Address --></label>
+        <name>ISSP_AMS_Local_Details_Physical_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Please Enter --></label>
+        <name>ISSP_AMS_Local_Details_Please_Enter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Local Details Title --></label>
+        <name>ISSP_AMS_Local_Details_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Manager --></label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
@@ -2473,7 +2593,291 @@ and
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS No Pending --></label>
+        <label><!-- ISSP_AMS_NoC_Additional_Information --></label>
+        <name>ISSP_AMS_NoC_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Agency_Information --></label>
+        <name>ISSP_AMS_NoC_Agency_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Authorized_Signature --></label>
+        <name>ISSP_AMS_NoC_Authorized_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Bank_Change1 --></label>
+        <name>ISSP_AMS_NoC_Bank_Change1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Bank_Change2 --></label>
+        <name>ISSP_AMS_NoC_Bank_Change2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Bank_Change3 --></label>
+        <name>ISSP_AMS_NoC_Bank_Change3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Bank_acount_details --></label>
+        <name>ISSP_AMS_NoC_Bank_acount_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Bank_details_message1 --></label>
+        <name>ISSP_AMS_NoC_Bank_details_message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Bank_details_message2 --></label>
+        <name>ISSP_AMS_NoC_Bank_details_message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Branch_Office --></label>
+        <name>ISSP_AMS_NoC_Branch_Office</name>
+    </customLabels>
+    <customLabels>
+        <label>银行账户明细变更</label>
+        <name>ISSP_AMS_NoC_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Bank_Details_message1 --></label>
+        <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Type_and_Location --></label>
+        <name>ISSP_AMS_NoC_Change_Type_and_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_for --></label>
+        <name>ISSP_AMS_NoC_Change_for</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_of_Legal_Name --></label>
+        <name>ISSP_AMS_NoC_Change_of_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_of_Location --></label>
+        <name>ISSP_AMS_NoC_Change_of_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_submitted_for --></label>
+        <name>ISSP_AMS_NoC_Change_submitted_for</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Choose_Branch_Account --></label>
+        <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
+        <name>ISSP_AMS_NoC_Confirm_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Curr_Company_Owner --></label>
+        <name>ISSP_AMS_NoC_Curr_Company_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Companies --></label>
+        <name>ISSP_AMS_NoC_Current_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Current_Legal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Owner --></label>
+        <name>ISSP_AMS_NoC_Current_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Owners_Managers --></label>
+        <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Current_Ownership_or_Shareholding --></label>
+        <name>ISSP_AMS_NoC_Current_Ownership_or_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label>账户变更</label>
+        <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Head_Office --></label>
+        <name>ISSP_AMS_NoC_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Legal_Name_After_Change --></label>
+        <name>ISSP_AMS_NoC_Legal_Name_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Legal_Name_Before_Change --></label>
+        <name>ISSP_AMS_NoC_Legal_Name_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Legal_Status_After_Change --></label>
+        <name>ISSP_AMS_NoC_Legal_Status_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Legal_Status_Before_Change --></label>
+        <name>ISSP_AMS_NoC_Legal_Status_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Loadiing_Agency_Information --></label>
+        <name>ISSP_AMS_NoC_Loadiing_Agency_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Location_After_Change --></label>
+        <name>ISSP_AMS_NoC_Location_After_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Location_Before_Change --></label>
+        <name>ISSP_AMS_NoC_Location_Before_Change</name>
+    </customLabels>
+    <customLabels>
+        <label>只有IATA认可的代理人才可申请变更</label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label>新分公司申请</label>
+        <name>ISSP_AMS_NoC_Multiple_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Name_address --></label>
+        <name>ISSP_AMS_NoC_Name_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Notice_of_Change --></label>
+        <name>ISSP_AMS_NoC_Notice_of_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Ownership_Shareholding --></label>
+        <name>ISSP_AMS_NoC_Ownership_Shareholding</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Prev_Company_Owner --></label>
+        <name>ISSP_AMS_NoC_Prev_Company_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Previous_Companies --></label>
+        <name>ISSP_AMS_NoC_Previous_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Previous_Owner --></label>
+        <name>ISSP_AMS_NoC_Previous_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Previous_Owners_Managers --></label>
+        <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q1 --></label>
+        <name>ISSP_AMS_NoC_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q2 --></label>
+        <name>ISSP_AMS_NoC_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q3 --></label>
+        <name>ISSP_AMS_NoC_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q3_Contact_Details --></label>
+        <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q4 --></label>
+        <name>ISSP_AMS_NoC_Q4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q5 --></label>
+        <name>ISSP_AMS_NoC_Q5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Request_for_Change --></label>
+        <name>ISSP_AMS_NoC_Request_for_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Roles_and_Responsabilities --></label>
+        <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Signature --></label>
+        <name>ISSP_AMS_NoC_Signature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_State_IATA_code --></label>
+        <name>ISSP_AMS_NoC_State_IATA_code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_StepA --></label>
+        <name>ISSP_AMS_NoC_StepA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_StepB_message --></label>
+        <name>ISSP_AMS_NoC_StepB_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_StepC --></label>
+        <name>ISSP_AMS_NoC_StepC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Summary_Current_Ownership --></label>
+        <name>ISSP_AMS_NoC_Summary_Current_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Summary_Previous_Ownership --></label>
+        <name>ISSP_AMS_NoC_Summary_Previous_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC --></label>
+        <name>ISSP_AMS_NoC_TC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Transferee --></label>
+        <name>ISSP_AMS_NoC_Transferee</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Transferor --></label>
+        <name>ISSP_AMS_NoC_Transferor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Type_Of_Person --></label>
+        <name>ISSP_AMS_NoC_Type_Of_Person</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Witness --></label>
+        <name>ISSP_AMS_NoC_Witness</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1 --></label>
+        <name>ISSP_AMS_NoC_error_message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2 --></label>
+        <name>ISSP_AMS_NoC_error_message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3 --></label>
+        <name>ISSP_AMS_NoC_error_message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message4 --></label>
+        <name>ISSP_AMS_NoC_error_message4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message5 --></label>
+        <name>ISSP_AMS_NoC_error_message5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_title_or_capacity --></label>
+        <name>ISSP_AMS_NoC_title_or_capacity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_type_or_print --></label>
+        <name>ISSP_AMS_NoC_type_or_print</name>
+    </customLabels>
+    <customLabels>
+        <label>您目前没有在办理的申请</label>
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
     <customLabels>
@@ -2483,6 +2887,22 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_No_Vat_Number_Section --></label>
         <name>ISSP_AMS_No_Vat_Number_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Noc_Legal_Name --></label>
+        <name>ISSP_AMS_Noc_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Noc_Location --></label>
+        <name>ISSP_AMS_Noc_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Noc_StepA_message --></label>
+        <name>ISSP_AMS_Noc_StepA_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Noc_Type_of_Change --></label>
+        <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Not Listed Msg --></label>
@@ -2533,6 +2953,10 @@ and
         <name>ISSP_AMS_OPTION_PAX_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION PAX BRANCH ABROAD --></label>
+        <name>ISSP_AMS_OPTION_PAX_BRANCH_ABROAD</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION PAX HO --></label>
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
@@ -2541,12 +2965,24 @@ and
         <name>ISSP_AMS_Owner</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_PAX_Company --></label>
+        <name>ISSP_AMS_PAX_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_PAX_Person --></label>
+        <name>ISSP_AMS_PAX_Person</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Partner --></label>
         <name>ISSP_AMS_Partner</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Pax Branch T&amp;Cs --></label>
         <name>ISSP_AMS_Pax_Branch_T_Cs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Phone --></label>
+        <name>ISSP_AMS_Phone</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Please Upload --></label>
@@ -2581,11 +3017,11 @@ and
         <name>ISSP_AMS_Previous_Default_Validation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Reason Branch Abroad --></label>
+        <label>新在线分公司/海外分公司申请</label>
         <name>ISSP_AMS_Reason_Branch_Abroad</name>
     </customLabels>
     <customLabels>
-        <label>新分公司</label>
+        <label>多项变更</label>
         <name>ISSP_AMS_Reason_New_Branch</name>
     </customLabels>
     <customLabels>
@@ -2625,26 +3061,92 @@ and
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
-        <label>IATA 在线：代理人资格认可申请
- &lt;br/&gt;&lt;br/&gt;
-欢迎您使用《国际航空运输协会认可代理人资格申请》在线功能。
- 
-敬请注意：在线申请功能仅限于贵公司法定代表人或授权人员提交表格及文件。若非公司法定代表人或非授权人员，请联系贵公司法定代表人或授权人员登录客户服务门户网站并提交申请。
- &lt;br/&gt;&lt;br/&gt;
-在线申请功能为贵公司提供国际航空运输协会认可代理人资格申请和查询正在申请的案例功能（包括状态为草稿或等待客户回复的案例等）。贵公司完成申请并成功提交后，即可在&lt;a href=&quot;/ISSP_CaseList&quot;&gt;“我的案例”&lt;/a&gt;中实时查询贵公司的申请进展及办理情况。</label>
+        <label>申请代理人资质</label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
+        <label>不确认您要申请的公司类型？</label>
+        <name>ISSP_AMS_Step0_Agency_Article</name>
+    </customLabels>
+    <customLabels>
+        <label>银行账户明细变更</label>
+        <name>ISSP_AMS_Step0_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Change Not Allowed --></label>
+        <name>ISSP_AMS_Step0_Change_Not_Allowed</name>
+    </customLabels>
+    <customLabels>
+        <label>变更</label>
+        <name>ISSP_AMS_Step0_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>您还可申请：</label>
+        <name>ISSP_AMS_Step0_In_Addition</name>
+    </customLabels>
+    <customLabels>
+        <label>欢迎您使用《国际航空运输协会认可代理人资格申请》在线功能。</label>
         <name>ISSP_AMS_Step0_Intro</name>
     </customLabels>
     <customLabels>
-        <label>新资质申请</label>
+        <label>请知悉，所有在线申请需由公司法人/或其代理人完成并提交</label>
+        <name>ISSP_AMS_Step0_Intro_Accred</name>
+    </customLabels>
+    <customLabels>
+        <label>如您无权代表代理机构签署法律文件，请要求代理机构的指定法定代表在本网站注册并提交申请。</label>
+        <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>新申请</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
     <customLabels>
-        <label>IATA 在线代理资质认可</label>
+        <label>正在进行的申请/变更草稿箱</label>
+        <name>ISSP_AMS_Step0_Ongoing_Drafts</name>
+    </customLabels>
+    <customLabels>
+        <label>其他变更</label>
+        <name>ISSP_AMS_Step0_Other_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label>适用于您的地址、法定名称、法律地位或 &lt;br/&gt;所有权/股权的变更。</label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>其他申请表</label>
+        <name>ISSP_AMS_Step0_Other_Forms</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Proceed VMFR --></label>
+        <name>ISSP_AMS_Step0_Proceed_VMFR</name>
+    </customLabels>
+    <customLabels>
+        <label>申请自愿退出</label>
+        <name>ISSP_AMS_Step0_Request_Voluntary_Reliquishment</name>
+    </customLabels>
+    <customLabels>
+        <label>国际航协在线代理人新申请／变更申请</label>
         <name>ISSP_AMS_Step0_SAA</name>
+    </customLabels>
+    <customLabels>
+        <label>特殊销售代理人（SA）</label>
+        <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
+    </customLabels>
+    <customLabels>
+        <label>自愿申请缩短结算期</label>
+        <name>ISSP_AMS_Step0_VMFR</name>
     </customLabels>
     <customLabels>
         <label>* 申请的认证</label>
         <name>ISSP_AMS_Step1_Approval_Sought</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Branch Abroad Not Allowed --></label>
+        <name>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</name>
     </customLabels>
     <customLabels>
         <label>IATA 新货运代理资质在线申请在某些国家尚无法进行。所以，您将转至可以继续货运代理资质认证流程的 IATA 网站。您希望立即前往该网站吗？</label>
@@ -2855,12 +3357,24 @@ and
         <name>ISSP_AMS_StepFinal_Access_Direct2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepFinal ChangeBank --></label>
+        <name>ISSP_AMS_StepFinal_ChangeBank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal ChangeOther --></label>
+        <name>ISSP_AMS_StepFinal_ChangeOther</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS StepFinal In Addition --></label>
         <name>ISSP_AMS_StepFinal_In_Addition</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepFinal In Addition2 --></label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
+        <name>ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepFinal Pax Branch Thanks --></label>
@@ -2911,6 +3425,10 @@ and
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Type_of_Change_Seclected --></label>
+        <name>ISSP_AMS_Type_of_Change_Seclected</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Update Agency --></label>
         <name>ISSP_AMS_Update_Agency</name>
     </customLabels>
@@ -2921,6 +3439,14 @@ and
     <customLabels>
         <label><!-- ISSP AMS Updating Files --></label>
         <name>ISSP_AMS_Updating_Files</name>
+    </customLabels>
+    <customLabels>
+        <label>上传申请表（需有法人签名）</label>
+        <name>ISSP_AMS_Upload_Form</name>
+    </customLabels>
+    <customLabels>
+        <label>请上传法人签署后的申请表格以完成您的申请</label>
+        <name>ISSP_AMS_Upload_Form_message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Invalid IATA Code --></label>
@@ -2953,6 +3479,14 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Portal Admin --></label>
         <name>ISSP_AMS_Validation_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_download_a_PDF_version --></label>
+        <name>ISSP_AMS_download_a_PDF_version</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_download_of --></label>
+        <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
@@ -3079,6 +3613,10 @@ and
         <name>ISSP_Are_you_sure</name>
     </customLabels>
     <customLabels>
+        <label>请参阅右侧链接文档</label>
+        <name>ISSP_Article</name>
+    </customLabels>
+    <customLabels>
         <label>文章</label>
         <name>ISSP_Articles</name>
     </customLabels>
@@ -3135,7 +3673,7 @@ and
         <name>ISSP_Banner_link</name>
     </customLabels>
     <customLabels>
-        <label>IATA Accreditation</label>
+        <label>IATA Accreditation &amp; Changes</label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
@@ -3227,6 +3765,10 @@ and
     <customLabels>
         <label><!-- ISSP_CassLink --></label>
         <name>ISSP_CassLink</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Casslink_Plus --></label>
+        <name>ISSP_Casslink_Plus</name>
     </customLabels>
     <customLabels>
         <label>您关于IATA证书的申请编号已经创建成功</label>
@@ -3509,6 +4051,10 @@ and
         <name>ISSP_DDS_Print</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Date --></label>
+        <name>ISSP_Date</name>
+    </customLabels>
+    <customLabels>
         <label>拒绝</label>
         <name>ISSP_Deny_Access</name>
     </customLabels>
@@ -3693,11 +4239,15 @@ and
         <name>ISSP_Email_Draft_Branch_Process1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Email Draft Change Process --></label>
+        <name>ISSP_Email_Draft_Change_Process</name>
+    </customLabels>
+    <customLabels>
         <label>感谢您为 IATA 客运销售代理认证创建的申请草表。</label>
         <name>ISSP_Email_Draft_Process1</name>
     </customLabels>
     <customLabels>
-        <label>您可单击下方链接，用您的电子邮件地址登录网站，访问任何正在进行中的认证资质申请：</label>
+        <label>您可单击下方链接，用您的电子邮件地址登录网站，访问任何正在进行中的资质认证和变更申请：</label>
         <name>ISSP_Email_Draft_Process2</name>
     </customLabels>
     <customLabels>
@@ -3897,6 +4447,10 @@ and
         <name>ISSP_FAQ</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Fax --></label>
+        <name>ISSP_Fax</name>
+    </customLabels>
+    <customLabels>
         <label>文件</label>
         <name>ISSP_File</name>
     </customLabels>
@@ -3909,7 +4463,7 @@ and
         <name>ISSP_FileType</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP File Exists --></label>
+        <label>所选文件已上传。</label>
         <name>ISSP_File_Exists</name>
     </customLabels>
     <customLabels>
@@ -5049,6 +5603,10 @@ and
         <name>ISSP_Request_Ongoing</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Request Submitted --></label>
+        <name>ISSP_Request_Submitted</name>
+    </customLabels>
+    <customLabels>
         <label>已撤销申请</label>
         <name>ISSP_Request_Withdrawn</name>
     </customLabels>
@@ -5081,7 +5639,7 @@ and
         <name>ISSP_Results</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Return to Case --></label>
+        <label>回到案例</label>
         <name>ISSP_Return_to_Case</name>
     </customLabels>
     <customLabels>
@@ -5458,6 +6016,10 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
     <customLabels>
         <label>是否在提交问询之前先行翻阅常见问题解答？</label>
         <name>ISSP_consult_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP edit lowercase --></label>
+        <name>ISSP_edit_lowercase</name>
     </customLabels>
     <customLabels>
         <label>请按正确格式输入必填信息</label>
@@ -6429,7 +6991,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PWC_service_request</name>
     </customLabels>
     <customLabels>
-        <label><!-- Phone --></label>
+        <label>电话</label>
         <name>Phone</name>
     </customLabels>
     <customLabels>

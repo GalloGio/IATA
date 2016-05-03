@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p>The following case has been escalated and assigned to&nbsp;your team:</p><p>&nbsp;</p><p>Case Area:&nbsp;{!Case.CaseArea__c}</p><p>Case Number: {!Case.CaseNumber}</p><p>Subject: {!Case.Subject}</p><p>Description: {!Case.Description}</p><p>Priority: {!Case.Priority}</p><p>Status: {!Case.Status}<br></p><p>Type: {!Case.Type}</p><p>Classification: {!Case.Classification_SIS__c}</p><p>Defect/ Issue: {!Case.Defect_Issue__c}</p><p>Contact Name: {!Contact.Name}</p><p>Contact Email: {!Contact.Email}</p><p>Contact Phone: {!Contact.Phone}</p><p>Browser Type: {!Case.Browser_Type__c}</p><p>Escalation Date/Time:&nbsp;{!Case.Date_Time_Escalated__c}</p><p>Has Attachment(s):&nbsp;{!Case.Has_Attachments__c}</p><p><br></p>]]></td>
+</tr>
+</table>

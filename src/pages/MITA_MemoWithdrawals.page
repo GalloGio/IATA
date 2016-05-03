@@ -51,7 +51,7 @@
 						<th>Carrier Withdrawing</th>
 						<th>With Respect to Carrier</th>
 						<th>Agreement(s)</th>
-						<th>Withdrawal Date</th>
+						<th>Effective Date</th>
 					</tr>
 					<apex:repeat value="{!WithdrawalsAgreements}" var="agr">
 					<tr>

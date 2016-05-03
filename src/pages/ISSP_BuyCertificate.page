@@ -1,8 +1,9 @@
 <apex:page controller="ISSP_Ctrl_BuyCertificate" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" action="{!initialization}">
     <html>
+    <!--
       <apex:variable var="IsAgency" value="{!if($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User','block','none')}" />
 <apex:variable var="NotAgency" value="{!if($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User','none','block')}" />
-
+    -->
     <c:ISSP_Header ></c:ISSP_Header>
         <script>
       
@@ -95,7 +96,7 @@
                                                     <apex:inputtextarea rows="4" styleclass="form-control"  value="{!newCase.Description}"/>
                                                 </div>
                                             </div>
-                                        <div class="row"  style="display: {!NotAgency}">
+                                        <div class="row"  style="display: {!if(iataCertificatesVisible, 'none', 'block')}">
                                                 <div class="col-md-6" >
                                                     {!$Label.ISSP_Certificate_Profile_Restriction}
 
@@ -113,7 +114,7 @@
 
 
                                             
-                                        <div class="row"  style="display: {!IsAgency}">
+                                        <div class="row"  style="display: {!if(iataCertificatesVisible, 'block', 'none')}">
                                                 <div class="col-md-3" >
                                                     <button type="button" class="btn_iata_success btn btn-block"  id="confbutton" >{!$Label.ISSP_PURCHASE}</button>
                                                   

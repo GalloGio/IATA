@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},<div><br></div><div>We regret to inform you that your request to access {!Portal_Applications__c.Name} Service has been rejected by your company administrator,&nbsp;{!Portal_Application_Right__c.LastModifiedBy}.</div><div><br></div><div>Please, refer to your administrator for any further inquiries on this matter.&nbsp;</div><div><br></div><div>Thank you.</div><div><span style="font-size: 12pt;"><br></span></div><div><span style="font-size: 12pt;">IATA Customer Service Portal</span></div>]]></td>
+</tr>
+</table>

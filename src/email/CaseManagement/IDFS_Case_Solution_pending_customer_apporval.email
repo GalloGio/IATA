@@ -1,0 +1,38 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>Dear {!Contact.Name},</P>
+<P>&nbsp;</P>
+<P>xxxxxxxx</P>
+<P>&nbsp;</P>
+<P>Should you not be satisfied with the solution provided, please do not hesitate to contact me by replying to this email, or by adding a Comment to the Case in the <A href="https://emea.salesforce.com/secur/login_portal.jsp?orgId=00D2000000008TF&amp;portalId=060200000004znE">Customer Portal</A>. If I have not heard back from you within 5 business days, your Case will be closed.</P>
+<P>&nbsp;</P>
+<P>With kind regards,</P>
+<P>&nbsp;</P>
+<P>IATA Service Centre {!Case.Region__c}</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P><FONT size=1>{!Case.Thread_Id}</FONT></P>]]></td>
+</tr>
+</table>

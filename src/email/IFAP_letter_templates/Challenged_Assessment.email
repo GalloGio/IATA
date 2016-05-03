@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[Dear PwC,<div><br></div><div>IATA Code:&nbsp;{!Account.IATACode__c}</div><div>Agent Name:&nbsp;{!Account.Name}</div><div>Financial Review Type:&nbsp;{!Case.Financial_Review_Type__c}</div><div><br></div><div>The Agent has challenged the financial assessment received on&nbsp;{!Case.Assessment_Performed_Date__c}.</div><div><br></div><div>The reason for the challenge is:</div><div>- interpretation of local criteria</div><div>- calculation of ratios</div><div>- financial security calculation</div><div>- other (what?)</div><div><br></div><div>Kindly review the challenge and provide your comments as a reply to this email.&nbsp;</div><div><br></div><div>Attached you may find:</div><div>1. The challenge in writing</div><div>2. The financial assessment as performed</div><div><br></div><div>Thank you.</div><div><br></div><div>Best regards,</div><div>IATA Agency Risk Management&nbsp;</div>]]></td>
+</tr>
+</table>

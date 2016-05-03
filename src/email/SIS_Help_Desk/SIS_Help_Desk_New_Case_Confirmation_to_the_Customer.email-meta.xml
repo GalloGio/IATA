@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Send notification email to the SIS customer or user who created the case from the web</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>SIS Help Desk - New Case Confirmation to the Customer</name>
+    <style>freeForm</style>
+    <subject>IS Case # {!Case.CaseNumber} Creation   {!Case.Thread_Id}</subject>
+    <type>html</type>
+</EmailTemplate>

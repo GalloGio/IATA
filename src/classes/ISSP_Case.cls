@@ -26,8 +26,10 @@ public without sharing class ISSP_Case {
     public boolean DPCCaseScheduleWarning {get;set;}
     public boolean isEditMode {get;set;}
     public String sisCaseArea {get;set;}
+    public boolean isAccreditationUploadCase {get;set;}  //Accreditation upload to case e.g. for TIDS, VR etc.
    
     public Id runningUserId{get;set;}
+    public Contact con {get;set;}
     public List <FAQ__kav> finalArticleList {get;set;}
     //public FAQ__kav selectedArtical { get; set; }
     public List <How_To__kav> finalHowList {get;set;}//TF-sp2
@@ -56,6 +58,9 @@ public without sharing class ISSP_Case {
     private String caseTypeSelectionInit;
     public String caseClassificationSelection {get;set;}
     
+    //Store PDF per type of Accreditation request e.g. TIDS, VR etc,
+    public List <ISSP_PDF_Per_Region__c> pdfPerAccreditationTypeList {get; set;}
+   
     //Survey Handle
     public boolean mySurveyCompletedVariable  {get;set;}
     
@@ -93,7 +98,11 @@ public without sharing class ISSP_Case {
         
         showAP = false;
         showAccreditation = false;
+        isAccreditationUploadCase = false;
         SurveyLanguage = UserInfo.getLanguage() ;
+        
+        popContact();
+        
         //TF - SP9-C5
         ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
         String recordTypeId = ApexPages.currentPage().getParameters().get('recordTypeId');
@@ -123,6 +132,38 @@ public without sharing class ISSP_Case {
                 newCase.CaseArea__c='ICH';
              }
 		}
+        
+        if (paramTopic != null ) { //Specific cases created from accreditation landing page
+            
+            //Get the PDF URLs to download for this Accred. type
+            String paramTopicString = paramTopic + '-%';
+             pdfPerAccreditationTypeList = [SELECT Address__c, Link_To_PDF__c FROM ISSP_PDF_Per_Region__c
+                           WHERE Name LIKE :paramTopicString ORDER BY Sort_Order__c, Name];
+            newCase.Country_concerned_by_the_query__c = con.Account.IATA_ISO_Country__r.Name;
+            newCase.Region__c = con.Account.IATA_ISO_Country__r.Region__c;
+            newCase.Dossier_reception_date__c = datetime.now().date();
+            newCase.Visible_on_ISS_Portal__c = true;
+          
+            if(paramTopic=='SA') {
+                newCase.Subject = 'New SA - ' + con.Account.Name;
+                newCase.CaseArea__c = 'Accreditation Process';
+                newCase.Reason1__c = 'New SA / CHV – New Code';
+                newCase.ownerid = getAMSRegionalQueue();
+                isAccreditationUploadCase = true;
+            } else if (paramTopic=='TIDS') {
+                 newCase.Subject = 'New TIDS - ' + con.Account.Name;
+                 newCase.CaseArea__c = 'Accreditation Products';
+                 newCase.Reason1__c = 'TIDS';
+                 isAccreditationUploadCase = true;
+            } else if (paramTopic=='VR') {
+                newCase.Subject = 'Closure - ' + con.Account.IATACode__c + ' - ' + con.Account.Name;
+               	newCase.CaseArea__c = 'Accreditation Process';
+               	newCase.Reason1__c = 'CLO - Closure';
+              	newCase.ownerid = getAMSRegionalQueue();
+               	isAccreditationUploadCase = true;
+            }
+        }
+       
 
         String origin = ApexPages.currentPage().getParameters().get('origin');
         if (recordTypeId == FDScaseRecordTypeID && origin == 'Portal')
@@ -223,13 +264,13 @@ public without sharing class ISSP_Case {
                 List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId];
                 if (!amsList.isEmpty()){
                 	isOnlineOSCARCase = true; //SAAM, OSCAR case has associated online form and so was submitted via Portal (cannot use case origin since converted Case Queries also have Origin=Portal)
-                    if(amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
+                    if(amsList[0].Operation_Type__c != null && amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
                         isTravelAccreditation = true;
                     }
                 }
                 
                 system.debug('status: ' + newCase.Status);
-                if (newCase.Status == 'Draft' || newCase.Status == 'Pending customer'){
+                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Pending customer'){
                     List <AP_Process_Form__c> apList = [SELECT Id FROM AP_Process_Form__c WHERE Case__c = :caseId];
    
                     system.debug('apList: ' + apList);
@@ -247,7 +288,7 @@ public without sharing class ISSP_Case {
                         }
                     }
                     
-                    if (!amsList.isEmpty()){
+                    if (!amsList.isEmpty() || newCase.Status == 'Open - EDMC'){ //For SAAM/OSCAR cases created internally show link to Online form even if no record yet created 
                         User myUser = [select Id,ContactId from User where Id =:Userinfo.getUserId()];
                         if (myUser.ContactId != null){
                             List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
@@ -632,9 +673,16 @@ order by Name];*/
 									+ paramSubtopic.replace('+',' ');
             
 			}
-            upsert newCase;
-            //return new Pagereference('/p/attach/NoteAttach?pid' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
-            return new Pagereference('/ISSP_AddAttachment?caseid='+ newCase.Id);
+            
+            try {
+            	upsert newCase;
+                SYSTEM.DEBUG('ATTACHING file');
+            	//return new Pagereference('/p/attach/NoteAttach?pid' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
+            	return new Pagereference('/ISSP_AddAttachment?caseid='+ newCase.Id);   
+            } catch (DmlException ex) {
+             	ApexPages.addMessages(ex);
+            }
+            return new Pagereference('/ISSP_AddAttachment?caseid='+ newCase.Id);   
         }
     }
     
@@ -834,7 +882,12 @@ order by Name];*/
     
     public void changeDpcOwner(){
         update newCase; 
-        
+    }
+    
+    private void popContact(){
+        User user = DAL_ISSP.getUser(Userinfo.getUserId());
+        system.debug('user.ContactId '+user.ContactId);
+        con = DAL_ISSP.getContact(user.ContactId);
     }
     
     public PageReference getSelectArtical() {
@@ -894,6 +947,47 @@ break;
         PageReference p = new PageReference('/apex/ISSP_AddComment?caseId='+ApexPages.currentPage().getParameters().get('caseId'));
         p.setRedirect(true);
         return p;
+    }
+    
+    public Id getAMSRegionalQueue(){
+        //Available queue names
+        Id qId;
+
+        Set<String> queueNames = new Set<String>{'AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore'};
+        Map<String,QueueSobject> mapRegionalQueue = new Map<String,QueueSobject>();
+        //Build map queue.name -> queue
+        for(QueueSobject queue : [Select Queue.Id,Queue.DeveloperName From QueueSobject Where Queue.DeveloperName in: queueNames]){
+            mapRegionalQueue.put(queue.Queue.DeveloperName,queue);
+        }
+
+        //Assigns queue according to region
+        if(newCase.Region__c == 'Africa & Middle East'){
+            if(mapRegionalQueue.get('AgencyManagementAfricaME') != null){
+                qId = mapRegionalQueue.get('AgencyManagementAfricaME').Queue.Id;
+            }
+
+        }
+        else if(newCase.Region__c == 'Americas'){
+            if(mapRegionalQueue.get('AgencyManagementAmericas') != null){
+                qId = mapRegionalQueue.get('AgencyManagementAmericas').Queue.Id;
+            }
+            
+        } else if(newCase.Region__c == 'Asia & Pacific'){
+            if(mapRegionalQueue.get('AgencyManagementAP') != null){
+                qId = mapRegionalQueue.get('AgencyManagementAP').Queue.Id;
+            } 
+        } else if(newCase.Region__c == 'China & North Asia'){
+            if(mapRegionalQueue.get('AgencyManagementChinaNAsia') != null){
+                qId = mapRegionalQueue.get('AgencyManagementChinaNAsia').Queue.Id;
+            } 
+        } else if(newCase.Region__c == 'Europe'){
+            if(mapRegionalQueue.get('CasesACCEuropeOffOnshore') != null){
+                qId = mapRegionalQueue.get('CasesACCEuropeOffOnshore').Queue.Id;
+            } 
+        }
+        System.DEBUG('Case region: ' + newCase.Region__c);
+        System.DEBUG('AM Queue returned: ' + qId);
+        return qId;
     }
     
     public List<SelectOption> getCaseTypeItems() {
