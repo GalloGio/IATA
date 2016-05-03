@@ -324,6 +324,9 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <label>GDP Address</label>
     <listViews>
         <fullName>AIMS_Mailing_address</fullName>
+        <columns>AIMS_ID__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>Related_Account__c</columns>
         <columns>NAME</columns>
         <columns>Address_City__c</columns>
         <columns>Address_Country_Name__c</columns>

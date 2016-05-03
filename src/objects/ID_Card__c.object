@@ -393,6 +393,59 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>JSON_WS_Complex__c</fullName>
+        <description>CAC Web Service Complex Response for IDCard</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;Response\&quot;:\&quot;&quot;
++ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
+&quot;\&quot;CardHolder Name\&quot;:\&quot;&quot;
++  FirstName__c +&quot; &quot;+ LastName__c  + &quot;\&quot;,&quot;+
+&quot;\&quot;Expiration Date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+
+&quot;\&quot;Agency Code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+
+&quot;\&quot;Agency Name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
+        <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
+        <label>JSON WS Complex</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Json_Is_Active__c</fullName>
+        <description>Is Active according the new conditions Valid Date To and The Card Status not Cancelled</description>
+        <externalId>false</externalId>
+        <formula>IF (
+       AND(Valid_To_Date__c &gt; TODAY(),
+           NOT(OR (
+                   ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
+                   ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
+                  )
+              )
+         )
+, True, False)</formula>
+        <inlineHelpText>Is Active according the new conditions Valid Date To and The Card Status not Cancelled</inlineHelpText>
+        <label>Json Is Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Json_WS_Simple__c</fullName>
+        <description>CAC Web Service Simple Response for IDCard</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;Response\&quot;:\&quot;&quot;
++ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>CAC Web Service Simple Response for IDCard</inlineHelpText>
+        <label>Json WS Simple</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>LastName__c</fullName>
         <externalId>false</externalId>
         <label>LastName</label>

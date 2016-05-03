@@ -369,5 +369,4 @@
         <type>Url</type>
     </fields>
     <label>IEC Settings</label>
-    <visibility>Public</visibility>
 </CustomObject>
