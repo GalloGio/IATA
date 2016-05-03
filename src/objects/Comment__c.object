@@ -662,8 +662,8 @@ Object to store comments related to objectives, or independent comments that we 
     <recordTypes>
         <fullName>Objective_Independent</fullName>
         <active>true</active>
-        <description>Comment not related to any objective</description>
-        <label>Objective Independent</label>
+        <description>Comment not related to a formally agreed objective</description>
+        <label>2. Independent</label>
         <picklistValues>
             <picklist>Area__c</picklist>
             <values>
@@ -985,7 +985,7 @@ Object to store comments related to objectives, or independent comments that we 
         <fullName>Objective_Related</fullName>
         <active>true</active>
         <description>Comment related to an objective</description>
-        <label>Objective Related</label>
+        <label>1. Objective Related</label>
         <picklistValues>
             <picklist>Area__c</picklist>
             <values>

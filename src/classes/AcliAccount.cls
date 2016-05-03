@@ -1,10 +1,16 @@
 global  class AcliAccount  {
     
+    private static final map<String,String> MAP_REASONS = new map<String,String>{
+    	'ACP' => '3 Digit Form',
+    	'DES' => 'Designator Form',
+    	'LOS' => 'Location ID Form'
+    };
+    
+    
     public string AirlineName {get;set;}
     public string AccountingCode {get;set;}
     public string ThreeLetterCode {get;set;}
     public string TwoCaracterCode {get;set;}
-    public boolean DuplicateFlagIndicator{get;set;}
     public string Address {get;set;}    
     public string City {get;set;}
     public string State {get;set;}
@@ -22,7 +28,7 @@ global  class AcliAccount  {
     public string AcliSAPId {get;set;} // CustomerNumber 
     public string AcliStatus {get;set;}
     public string AocExpiryDate {get;set;} // Airline Operating Certificate valdity date
-    public boolean MITA {get;set;} // MITA Member
+    //public boolean MITA {get;set;} // MITA Member
     public string ApplicationId {get;set;}
     public string CodingApplicationStatus {get;set;}
     public string CodingApplicationReceptionDate {get;set;}
@@ -39,6 +45,7 @@ global  class AcliAccount  {
     public string AccKey {get;set;}
     public string AcctID {get;set;} 
     public string Membership_status {get; set;}
+    public string reason {get; set;}
     
     public AcliAccount( String Line, boolean stateOFF ){
                          
@@ -46,8 +53,8 @@ global  class AcliAccount  {
         this.AirlineName =  Line.substring(0,80).trim();
         this.AccountingCode =  Line.substring(80,84).trim();
         this.ThreeLetterCode =  Line.substring(84,87).trim();
-        this.TwoCaracterCode = Line.substring(87,89).trim();
-        this.DuplicateFlagIndicator =  Line.substring(89,90) == '*' ? true: false;
+        this.TwoCaracterCode = Line.substring(87,90).trim();
+        //this.DuplicateFlagIndicator =  Line.substring(89,90) == '*' ? true: false;
         this.Address =  Line.substring(90,170).trim();
         this.City =  Line.substring(170,195).trim();
         this.State =  Line.substring(195,215).trim() == 'Not Available' ? '': Line.substring(195,215).trim() ;
@@ -66,7 +73,8 @@ global  class AcliAccount  {
         */
         
         // new mapping from Oct 2015
-        this.MITA = Line.substring(377,378) == 'Y' ? true: false;
+        // March 2016 removed the use of MITA field, this field is managed manually
+        //this.MITA = Line.substring(377,378) == 'Y' ? true: false;
         
         this.TypeOfOperations = Line.substring(378,379).trim();
         this.AccountingCodeSecondaryFlag = Line.substring(379,380).trim();
@@ -84,11 +92,13 @@ global  class AcliAccount  {
         if (Line.substring(444,452).trim() != '' && Line.substring(444,452).trim() != '0' && Line.substring(444,452).trim() != '00000000') {
             this.CodingApplicationReceptionDate = Line.substring(444,452).substring(0,4) + '-' + Line.substring(444,452).substring(4,6) + '-' + Line.substring(444,452).substring(6,8);
         }
+        this.reason = MAP_REASONS.get(Line.substring(452,455).trim());
         
         // /new
                          
                          
-         this.AccKey =  AirlineName + AccountingCode +ThreeLetterCode + TwoCaracterCode +DuplicateFlagIndicator + Country    ;
+         //this.AccKey =  AirlineName + AccountingCode +ThreeLetterCode + TwoCaracterCode +DuplicateFlagIndicator + Country    ;
+         this.AccKey =  AirlineName + AccountingCode +ThreeLetterCode + TwoCaracterCode + Country    ;
          IATA_ISO_Country__c iataLocal  =   IsoSingleton.getInstance().IsoCountriesPerAcliCountryNames.get(Country.trim());
             
          if(iataLocal <> null){
@@ -120,8 +130,6 @@ global  class AcliAccount  {
 
 		isUpdated |= nvl(account.Airline_designator__c) != nvl(this.TwoCaracterCode);
 		account.ICAO_designator__c   =this.ThreeLetterCode;
-		isUpdated |= account.duplicate_flag_indicato__c != this.DuplicateFlagIndicator;
-		account.duplicate_flag_indicato__c=this.DuplicateFlagIndicator;
 
 		isUpdated |= account.Membership_SITA__c != this.SITA;
 		account.Membership_SITA__c=this.SITA;
@@ -150,8 +158,8 @@ global  class AcliAccount  {
 		isUpdated |= nvl(account.ACLI_SAP_Id__c) != nvl(this.AcliSAPId);
 		account.ACLI_SAP_Id__c = this.AcliSAPId;
 		
-		isUpdated |= account.MITA_Member__c != this.MITA;
-		account.MITA_Member__c = this.MITA;
+		//isUpdated |= account.MITA_Member__c != this.MITA;
+		//account.MITA_Member__c = this.MITA;
 		
 		Date expiryDate = getDate(this.AocExpiryDate);
 		isUpdated |= account.AOC_Expiry_Date__c != expiryDate;
@@ -168,8 +176,8 @@ global  class AcliAccount  {
 
 		if ( this.Membership_status != 'IATA member') {
 			// this data is only for MER to edit
-			isUpdated |= nvl(account.name) != nvl(this.AirlineName);
-			account.name =  this.AirlineName;
+			isUpdated |= nvl(account.Name_on_AOC__c) != nvl(this.AirlineName);
+			account.Name_on_AOC__c =  this.AirlineName;
 			
 			isUpdated |= nvl(account.billingStreet) != nvl(this.Address);
 			account.billingStreet=this.Address;
@@ -200,13 +208,14 @@ global  class AcliAccount  {
             try{
                 Account a;
                 if(acliacc <>null) {
-                    a = new Account(                                        
+                    a = new Account(
                                         //Accounting_Code__c=acliacc.ThreeLetterCode ,   acliacc one could be deleted                                 
-                                        id = acliacc.AcctID, 
+                                        id = acliacc.AcctID,
+                                        Name = acliacc.AirlineName,
+                                        Name_on_AOC__c =  acliacc.AirlineName,
                                         IATACode__c = (string.isBlank(acliacc.AccountingCode.trim()) ? acliacc.AirlinePrefix.trim() : acliacc.AccountingCode.trim()) ,                                   
                                         Airline_designator__c=acliacc.TwoCaracterCode ,  
                                         ICAO_designator__c   =acliacc.ThreeLetterCode ,                              
-                                        duplicate_flag_indicato__c=acliacc.DuplicateFlagIndicator ,                                        
                                         Membership_SITA__c=acliacc.SITA ,                                              
                                         Memmership_ARINC__c=acliacc.ARINC ,                                             
                                         IATA_Member__c=acliacc.IATA ,                                              
@@ -216,7 +225,7 @@ global  class AcliAccount  {
                                         Airline_Prefix__c=acliacc.AirlinePrefix ,                                    
                                         ACLI_Status__c = acliacc.AcliStatus,
                                         ACLI_SAP_Id__c = acliacc.AcliSAPId,
-                                        MITA_Member__c = acliacc.MITA,
+                                        //MITA_Member__c = acliacc.MITA,
                                         AOC_Expiry_Date__c = getDate(acliacc.AocExpiryDate)
                                         );
                     
@@ -227,7 +236,6 @@ global  class AcliAccount  {
                     
                     if (acliacc.Membership_status != 'IATA member') {
                         // this data is only for MER to edit
-                        a.name =  acliacc.AirlineName;
                         a.billingStreet=acliacc.Address;                                           
                         a.billingCity=acliacc.City;                                           
                         a.billingState = acliacc.State;                                            
@@ -256,7 +264,7 @@ global  class AcliAccount  {
     
     public static String firstLineCSV(){
     
-        string fline = 'ID,Name,IATACode__c,Airline_designator__c,ICAO_designator__c,duplicate_flag_indicato__c,'
+        string fline = 'ID,Name_on_AOC__c,IATACode__c,Airline_designator__c,ICAO_designator__c,'
                         +'billingStreet,billingCity,billingState,billingCountry,billingPostalCode,Membership_SITA__c,'
                         +'Memmership_ARINC__c,IATA_Member__c,Memmership_ATA__c,Type_of__c,'
                         +'Account_code_secondary_flag__c,Airline_Prefix__c,IATA_ISO_Country__c,ACLI_Status__c,'
@@ -270,15 +278,13 @@ global  class AcliAccount  {
                 string  backUpAcct = '"';
                         backUpAcct +=     a.ID <> null ?   string.valueOf(a.ID) : '' ;
                         backUpAcct += '","' ;
-                        backUpAcct +=    a.name <> null ?   a.name  : ''  ;
+                        backUpAcct +=    a.Name_on_AOC__c <> null ?   a.Name_on_AOC__c  : ''  ;
                         backUpAcct += '","' ;
                         backUpAcct +=   a.IATACode__c <> null ?   a.IATACode__c : '';
                         backUpAcct +=  '","' ;
                         backUpAcct +=    a.Airline_designator__c <> null ?   a.Airline_designator__c : ''  ;
                         backUpAcct +='","' ;
                         backUpAcct +=   a.ICAO_designator__c <> null ?  a.ICAO_designator__c : ''   ;
-                        backUpAcct +='","' ;
-                        backUpAcct +=   a.duplicate_flag_indicato__c == true ? 'true' : 'false';
                         backUpAcct +='","' ;
                         backUpAcct +=   a.billingStreet <> null ?   a.billingStreet: '' ;   
                         backUpAcct +='","' ;
@@ -307,8 +313,6 @@ global  class AcliAccount  {
                         backUpAcct +=    a.IATA_ISO_Country__c<> null? string.valueOf(a.IATA_ISO_Country__c): ''  ;    
                         backUpAcct +='","' ;
                         backUpAcct +=   a.ACLI_Status__c <> null ? a.ACLI_Status__c: ''   ;
-                        backUpAcct +='","' ;
-                        backUpAcct +=   a.MITA_Member__c == true ? 'true' : 'false';
                         backUpAcct +='","' ;
                         backUpAcct +=   a.ACLI_SAP_Id__c <> null ? a.ACLI_SAP_Id__c: ''   ;
                         backUpAcct +='","' ;

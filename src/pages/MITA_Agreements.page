@@ -60,7 +60,7 @@
 				<apex:form >
 				
 				<apex:pageBlock rendered="{!chosenAccount}" >
-					<h1><a href="/{!acc.Id}" target="_blank" style="font-size:1.5em;">{!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</a></h1><br/><br/>
+					<h1><a href="/{!acc.Id}" target="_blank" style="font-size:1.5em;">{!acc.Name_on_AOC__c} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</a></h1><br/><br/>
 					<!-- CUSTOM TAB HEADER -->
 					<div class="mytabheadercontainer" >
 						<div class="mytabheader active" id="hdAirline" onclick="showTab('Airline')">Airline</div>
@@ -78,8 +78,10 @@
 								<apex:outputField value="{!acc.Airline_designator__c}" />
 								<apex:outputField value="{!acc.IATACode__c}" />
 								<apex:outputField value="{!acc.Membership_status__c}" />
-								<apex:outputField value="{!acc.ICH_Member__c}" />
+								<apex:outputField value="{!acc.Airline_Prefix__c}" />
 								<apex:outputField value="{!acc.Due_Diligence_Status__c}" />
+								<apex:outputField value="{!acc.ICH_Member__c}" />
+								<apex:PageBlockSectionItem />
 								<apex:outputField value="{!acc.ACH_Member__c}" />
 							</apex:pageBlockSection>
 							<apex:pageBlockSection id="viewAccountMITAInfo" rendered="{!NOT(editAccountMode)}" title="Participant dates of MITA agreement">
@@ -177,17 +179,23 @@
 									<apex:pageBlockSectionItem >
 										<apex:outputLabel for="theLink" value="Airline" />
 										<apex:commandLink id="theLink" 
-														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name, agr.Airline_1__r.Name)}" 
+														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name_on_AOC__c, agr.Airline_1__r.Name_on_AOC__c)}" 
 														  onclick="$('[id$=accountid]').val('{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__c, agr.Airline_1__c)}'); selectAccount();" 
 														  rerender="messages"/>	
-									</apex:pageBlockSectionItem>
-									<apex:pageBlockSectionItem />
+									</apex:PageBlockSectionItem>
+									<apex:PageBlockSectionItem />
+
 									<apex:outputField value="{!agr.Agreement_type__c}" />
-									
+									<apex:PageBlockSectionItem />
+
+									<apex:outputField value="{!agr.Agreement_processed_date__c}" />
 									<apex:outputField value="{!agr.Effective_date__c}" />
+
 									<apex:outputField value="{!agr.Withdrawal_Request_Reception_Date__c}" />
 									<apex:outputField value="{!agr.Cancellation_date__c}" />
-									
+
+									<apex:outputField value="{!agr.Cancellation_processed_date__c}" />
+
 								</apex:pageBlockSection>
 								<apex:pageBlockSection id="editMITAAgreementInfo" rendered="{!AND(chosenMITAAgreement,editMITAAgreementMode)}" title="Agreement details">
 									<apex:inputField value="{!agr.Airline_2__c}" rendered="{!AND(agr.Id = null,agr.Airline_1__c = acc.Id)}" required="true"/>
@@ -195,18 +203,23 @@
 									<apex:pageBlockSectionItem rendered="{!agr.Id != null}">
 										<apex:outputLabel for="theLink" value="Airline" />
 										<apex:commandLink id="theLink" 
-														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name, agr.Airline_1__r.Name)}" 
+														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name_on_AOC__c, agr.Airline_1__r.Name_on_AOC__c)}" 
 														  onclick="$('[id$=accountid]').val('{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__c, agr.Airline_1__c)}'); selectAccount();" 
 														  rerender="messages"/>	
 									</apex:pageBlockSectionItem>
 									<apex:inputField value="{!agr.MITAorBIETA__c}" style="display:none" label=""/>
-									
+
 									<apex:inputField value="{!agr.Agreement_type__c}" required="true" rendered="{!agr.ID = null}"/>
-									<apex:outputField value="{!agr.Agreement_type__c}" rendered="{!agr.ID != null}"/>
+									<apex:PageBlockSectionItem rendered="{!agr.ID != null}" />
+									<apex:PageBlockSectionItem />
+
+									<apex:inputField value="{!agr.Agreement_processed_date__c}" />
 									<apex:inputField value="{!agr.Effective_date__c}" />
 
 									<apex:inputField value="{!agr.Withdrawal_Request_Reception_Date__c}" />
 									<apex:inputField value="{!agr.Cancellation_date__c}" />
+
+									<apex:inputField value="{!agr.Cancellation_processed_date__c}" />
 									
 								</apex:pageBlockSection>
 								
@@ -235,8 +248,8 @@
 <!-- 									</div> -->
 									<div style="float:right" >
 										<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />Show all the agreements<br/>
-										<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>Active agreemnents<br/>
-										<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />Inactive agreemnents<br/>
+										<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>Active agreements<br/>
+										<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />Inactive agreements<br/>
 									</div>
 
 									<br style="clear:both"/>
@@ -280,18 +293,23 @@
 									<apex:pageBlockSectionItem >
 										<apex:outputLabel for="theLink" value="Airline" />
 										<apex:commandLink id="theLink" 
-														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name, agr.Airline_1__r.Name)}" 
+														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name_on_AOC__c, agr.Airline_1__r.Name_on_AOC__c)}" 
 														  onclick="$('[id$=accountid]').val('{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__c, agr.Airline_1__c)}'); selectAccount();" 
 														  rerender="messages"/>	
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem />
 
 									<apex:outputField value="{!agr.Agreement_type__c}" />
-									<apex:outputField value="{!agr.Withdrawal_Request_Reception_Date__c}" />
+									<apex:PageBlockSectionItem />
 
+									<apex:outputField value="{!agr.Agreement_processed_date__c}" />
 									<apex:outputField value="{!agr.Effective_date__c}" />
+
+									<apex:outputField value="{!agr.Withdrawal_Request_Reception_Date__c}" />
 									<apex:outputField value="{!agr.Cancellation_date__c}" />
-									
+
+									<apex:outputField value="{!agr.Cancellation_processed_date__c}" />
+
 								</apex:pageBlockSection>
 								<apex:pageBlockSection id="editBIETAAgreementInfo" rendered="{!AND(chosenBIETAAgreement,editBIETAAgreementMode)}" title="Agreement details">
 									<apex:inputField value="{!agr.Airline_2__c}" rendered="{!AND(agr.Id = null,agr.Airline_1__c = acc.Id)}" required="true"/>
@@ -299,18 +317,23 @@
 									<apex:pageBlockSectionItem rendered="{!agr.Id != null}">
 										<apex:outputLabel for="theLink" value="Airline" />
 										<apex:commandLink id="theLink" 
-														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name, agr.Airline_1__r.Name)}" 
+														  value="{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__r.Name_on_AOC__c, agr.Airline_1__r.Name_on_AOC__c)}" 
 														  onclick="$('[id$=accountid]').val('{!IF(agr.Airline_1__c = acc.Id,agr.Airline_2__c, agr.Airline_1__c)}'); selectAccount();" 
 														  rerender="messages"/>	
 									</apex:pageBlockSectionItem>
 									<apex:inputField value="{!agr.MITAorBIETA__c}" style="display:none" label=""/>
-									
+
 									<apex:inputField value="{!agr.Agreement_type__c}" required="true" rendered="{!agr.ID = null}"/>
-									<apex:outputField value="{!agr.Agreement_type__c}" rendered="{!agr.ID != null}"/>
+									<apex:PageBlockSectionItem rendered="{!agr.ID != null}" />
+									<apex:pageBlockSectionItem />
+
+									<apex:inputField value="{!agr.Agreement_processed_date__c}" />
 									<apex:inputField value="{!agr.Effective_date__c}" />
 
 									<apex:inputField value="{!agr.Withdrawal_Request_Reception_Date__c}" />
 									<apex:inputField value="{!agr.Cancellation_date__c}" />
+
+									<apex:inputField value="{!agr.Cancellation_processed_date__c}" />
 								</apex:pageBlockSection>
 								
 								
@@ -456,7 +479,7 @@
 							                </apex:column>
 							                <apex:column headerValue="Contact Name" ><a href="/{!duplicateContacts[cv].id}" target="_blank">{!duplicateContacts[cv].Name}</a></apex:column>
 							                <apex:column value="{!duplicateContacts[cv].Title}" headerValue="Title"/>
-							                <apex:column value="{!duplicateContacts[cv].Account.Name}" headerValue="Account Name"/>
+							                <apex:column value="{!duplicateContacts[cv].Account.Name_on_AOC__c}" headerValue="Account Name"/>
 							                <apex:column value="{!duplicateContacts[cv].Account.IATA_ISO_Country__r.Name}" headerValue="Country"/>
 							            </apex:dataTable>           
 							        </apex:pageBlockSection>
@@ -489,7 +512,7 @@
 										
 										<apex:inputField value="{!foundContact.OtherCountry}" />
 									</apex:pageBlockSection>
-									<apex:pageMessage severity="Warning" strength="2" summary="If you proceed the contact {!foundContact.Name} will be moved from the {!foundContact.Account.Name} to {!acc.Name}. Do you really want to proceed?" />									
+									<apex:pageMessage severity="Warning" strength="2" summary="If you proceed the contact {!foundContact.Name} will be moved from the {!foundContact.Account.Name_on_AOC__c} to {!acc.Name_on_AOC__c}. Do you really want to proceed?" />									
 								</apex:pageBlockSection>
 								
 								

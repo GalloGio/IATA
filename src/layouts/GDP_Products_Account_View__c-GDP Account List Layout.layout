@@ -16,6 +16,10 @@
                 <field>Trading_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Agency_Short_Name__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Last_Date_of_Update__c</field>
             </layoutItems>

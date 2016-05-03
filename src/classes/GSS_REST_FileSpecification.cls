@@ -1,3 +1,4 @@
+
 /*
 *  REST API Service returning the File Specification and Subscription Details to be delivered
 *  - External class will call getActiveSubscription (@HttpGet) method

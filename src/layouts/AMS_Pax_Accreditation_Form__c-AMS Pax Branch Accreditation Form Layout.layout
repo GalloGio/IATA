@@ -353,6 +353,7 @@
         <fields>RECORDTYPE</fields>
         <fields>Phone__c</fields>
         <fields>Email__c</fields>
+        <fields>Duplicate_contact_exists__c</fields>
         <fields>Agency_owner__c</fields>
         <fields>Agency_role__c</fields>
         <fields>Authorised_signatory__c</fields>

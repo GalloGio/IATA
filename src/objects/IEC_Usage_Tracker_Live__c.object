@@ -55,6 +55,46 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Authorized_Consumption__c</fullName>
+        <externalId>false</externalId>
+        <label>Authorized Consumption</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CAC_Subscription_Detail__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Record of the CAC Subscription Detail (Authorized Limit, File Description and Web Service Type)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Record of the CAC Subscription Detail (Authorized Limit, File Description and Web Service Type)</inlineHelpText>
+        <label>CAC Subscription Detail</label>
+        <referenceTo>CAC_Subscription_Detail__c</referenceTo>
+        <relationshipLabel>IEC Usage Trackers Live</relationshipLabel>
+        <relationshipName>IEC_Usage_Trackers_Live</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CAC_Web_Service_Id__c</fullName>
+        <description>Unique Id form the CAC Web service</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Unique Id form the CAC Web service</inlineHelpText>
+        <label>CAC Web Service Id</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Counter__c</fullName>
         <defaultValue>1</defaultValue>
         <description>Usage value</description>

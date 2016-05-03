@@ -1,3 +1,4 @@
+
 trigger GDP_File_Field_DescriptionAfterUpdate on GDP_File_Fields_Description__c (after insert, after Update, before Delete)
 {
     final String ACCOUNTVIEW = 'GDP_Products_Account_View';

@@ -1,0 +1,21 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="font-family: arial; font-size: 12pt;">&nbsp;</p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial"><font style="BACKGROUND-COLOR: #ffffff" color="#000000"><font size="3">Dear {!Contact.FirstName},<br></font></font></span></span></p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"></span>&nbsp;</p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><font color="#000000" size="3">The&nbsp;IATA Customer Service representative, {!Case.OwnerFullName}, &nbsp;has added the following comment to your above case:</font></span></p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><font color="#000000"></font></span>&nbsp;________________</p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><font color="#000000" size="3">{!Case.Last_Case_Comment}</font></span></p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><font color="#000000"></font></span>&nbsp;</p>
+<p><font face="Arial">_________________</font></p>
+<p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><font color="#000000"><font size="3"></font></font></span>&nbsp;</p>
+<p style="font-family: arial; font-size: 12pt;">
+</p><p style="font-family: arial; font-size: 12pt;"><span style="FONT-SIZE: 9pt; COLOR: #333333; FONT-FAMILY: Arial; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><font color="#000000"><font size="3"></font></font></span></p><span style="font-family: Arial; font-size: 9pt; color: rgb(51, 51, 51);"><font style="BACKGROUND-COLOR: #ffffff" color="#000000"><font size="3"><font color="#000000">Kind regards,<br style="mso-special-character: line-break"></font><br style="mso-special-character: line-break"></font>
+<p></p></font></span>
+<div style="font-family: arial; font-size: 12pt;">
+<div style="mso-element: comment">
+<div language="JavaScript" class="msocomtxt" id="_com_1" onmouseover="msoCommentShow('_anchor_1','_com_1')" onmouseout="msoCommentHide('_com_1')">
+<p class="MsoCommentText" style="MARGIN: 0in 0in 0pt">IATA&nbsp;Service Centre&nbsp;{!Case.Region__c}</p><p class="MsoCommentText" style="MARGIN: 0in 0in 0pt">www.iata.org/cs</p><p class="MsoCommentText" style="MARGIN: 0in 0in 0pt"><br></p><p class="MsoCommentText" style="MARGIN: 0in 0in 0pt"><br></p><p class="MsoCommentText" style="MARGIN: 0in 0in 0pt"><br></p><p class="MsoCommentText" style="MARGIN: 0in 0in 0pt"><font size="1" style="background-color: rgb(255, 255, 255);">{!Case.Thread_Id}</font><span style="background-color: rgb(255, 255, 255);">&nbsp;</span></p></div></div></div>]]></td>
+</tr>
+</table>

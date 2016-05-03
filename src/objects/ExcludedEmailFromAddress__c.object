@@ -80,6 +80,7 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>ApplicationName__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>

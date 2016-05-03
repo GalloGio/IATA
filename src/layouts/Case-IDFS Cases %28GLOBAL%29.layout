@@ -109,6 +109,10 @@
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Groups__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -16,12 +16,12 @@ global class SchBtchDeltaFileCleanup implements Schedulable {
         System.debug('Returned batch process ID: ' + batchProcessId);
    }
    
-	public static void schedule() { schedule(null); }
-	public static void schedule(String sch) {
-		if (sch == null) {
-			sch = '0 0 8 * * ?';
-		}
+    public static void schedule() { schedule(null); }
+    public static void schedule(String sch) {
+        if (sch == null) {
+            sch = '0 0 8 * * ?';
+        }
 
-		String jobID = System.schedule('GDP Delta File Cleanup', sch, new SchBtchDeltaFileCleanup());
-	}
+        String jobID = System.schedule('GDP Delta File Cleanup', sch, new SchBtchDeltaFileCleanup());
+    }
 }

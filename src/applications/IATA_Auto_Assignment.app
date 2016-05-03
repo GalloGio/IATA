@@ -3,6 +3,7 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Used by the Spanish Team to assign Cases</description>
     <label>IATA - Auto Assignment</label>
+    <logo>IATA_Corporate_Graphics/iata_blue_gif.gif</logo>
     <tab>standard-Chatter</tab>
     <tab>Agents__c</tab>
     <tab>My_Status</tab>

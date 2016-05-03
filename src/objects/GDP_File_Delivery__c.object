@@ -48,9 +48,12 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Will receive the Delivery Notice from the GSS Java Process in Amazon</description>
     <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Delivery_Date_Text__c</fullName>
         <externalId>false</externalId>

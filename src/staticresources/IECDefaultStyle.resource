@@ -1,5 +1,6 @@
 
 
+
   .card.list .list-item {
     padding-right: 1px;
     padding-left: 1px; }

@@ -16,14 +16,13 @@
         <members>*</members>
         <name>ApexTrigger</name>
     </types>
-
     <types>
-        <members>ISS_Portal/ISS_Portal_User_Status_Change_Inac_VF</members>
-        <name>EmailTemplate</name>
+        <members>*</members>
+        <name>CustomLabel</name>
     </types>
     <types>
-        <members>ISS_Portal/ISS_Portal_User_Status_Change_Inac_VF</members>
-        <name>EmailTemplate</name>
+        <members>*</members>
+        <name>RemoteSiteSetting</name>
     </types>
     <types>
         <members>*</members>
@@ -31,11 +30,11 @@
     </types>
     <types>
         <members>*</members>
+        <name>Translations</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>Workflow</name>
     </types>
-
-
-	
-	
     <version>31.0</version>
 </Package>

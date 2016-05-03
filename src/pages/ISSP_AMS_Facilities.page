@@ -229,7 +229,7 @@
 		        		<apex:pageBlock >
 		        			<apex:pageBlockButtons >
 			                	<apex:commandButton action="{!cancelFacilities}" value="{!$Label.ISSP_Cancel}" immediate="true"/>&nbsp;
-			                	<apex:commandButton action="{!saveFacilities}" onclick="updateHiddenFields(mapBetweenIds)" oncomplete="togglePageItems(idsArray);" value="{!$Label.ISSP_Submit}" reRender="msgs,facilitypage" />
+			                	<apex:commandButton action="{!saveFacilities}" onclick="this.disabled='disabled';updateHiddenFields(mapBetweenIds)" oncomplete="togglePageItems(idsArray);this.removeAttribute('disabled');" value="{!$Label.ISSP_Submit}" reRender="msgs,facilitypage" />
 		            		</apex:pageBlockButtons>
 		            		<apex:PageMessages id="msgs"/>
 		            		<apex:pageBlockSection id="facilitiesSection" columns="2">

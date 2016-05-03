@@ -1,0 +1,8 @@
+Dear {!Contact.FirstName}, 
+
+Please note that this problem has been fixed and deployed with Release XXX, this case will now be closed. Should you experience further problems, please do not hesitate to contact us. 
+
+Best regards,
+{!Case.CaseArea__c} Customer Support 
+
+{!Case.Email_Thread}

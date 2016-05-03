@@ -87,7 +87,7 @@ public  class AcliParser {
                 integer totalLines =0;    
                 list<Account> acctOnDb = [SELECT ID, site_index__c, billingState ,ACLI_Status__c,
                                                  name, billingCity,billingCountry,billingPostalCode,
-                                                 billingStreet,duplicate_flag_indicato__c,Name_on_AOC__c,
+                                                 billingStreet,Name_on_AOC__c,
                                                  site,Airline_designator__c,Account_code_secondary_flag__c,
                                                  Accounting_Code__c,Airline_Prefix__c,Field_Head_Office__c, 
                                                  Industry,Type,IATACode__c,Membership_status__c,

@@ -2,8 +2,9 @@
 <html>
 <c:ISSP_Header ></c:ISSP_Header>  
     <head>
+ <!--
  <apex:variable var="ShowBuyCertif" value="{!($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User')&& con.User_Portal_Status__c !='Pending Approval' && con.Account.Category__c != 'CASS Associate' && con.Account.Category__c != 'TIDS Agent' }" />
-    
+ -->
 <style>
     /* this style should be moved to head component*/
     div.adminpanel{
@@ -402,7 +403,7 @@
         
                                             <div id="my_Services" class="col-leg-6 ">
                                                 
-                                                <apex:outputLink value="ISSP_BuyCertificate?mid=M3S1" rendered="{!ShowBuyCertif}">{!$Label.ISSP_IATAcertificate}</apex:outputLink>
+                                                <apex:outputLink value="ISSP_BuyCertificate?mid=M3S1" rendered="{!iataCertificatesVisible}">{!$Label.ISSP_IATAcertificate}</apex:outputLink>
                                               
                                               
                                               <!-- This will nolonger be the main access point for creating cases

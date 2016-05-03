@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Email that informs the customer that our participants list is paying.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE-EN DATA DISCLOSURE CONFIRMATION COSTS</name>
+    <style>freeForm</style>
+    <subject>CASS Data Disclosure: Acceptation of costs</subject>
+    <textOnly>Dear {!Contact.Name}, 
+
+
+The information you have requested is a paying service and will be charged through a BTA, to be included in one or your upcoming CASS statements. 
+The corresponding invoice will be available in myIATA (www.myiata.org/ssp).
+ 
+Before we send you the file you are interested in, may we ask you to accept the corresponding charge. Our fares are available in our web portal, www.iata.org/europe/cs (click on Document and Form Centre).
+
+ 
+In case you need further information from IATA, please do not hesitate to login a new query via our Customer Portal: www.iata.com/europe/cs. These queries will be answered with the highest priority.
+ 
+ 
+Yours Sincerely
+ 
+{!Case.OwnerFullName}
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

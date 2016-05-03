@@ -1,3 +1,4 @@
+
 @RestResource(urlMapping='/GSS/v0/ExceptionHandler/*')
 global with sharing class GSS_REST_ErrorHandler{
     

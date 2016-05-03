@@ -80,7 +80,9 @@
         <fields>Sort_Order__c</fields>
         <fields>Location_type__c</fields>
         <fields>Language__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Type_Of_Agent__c</fields>
+        <fields>Type_Of_Change__c</fields>
         <relatedList>AMS_Accreditation_Requirement__c.AMS_Accreditation_Country_CheckList__c</relatedList>
         <sortField>Sort_Order__c</sortField>
         <sortOrder>Asc</sortOrder>

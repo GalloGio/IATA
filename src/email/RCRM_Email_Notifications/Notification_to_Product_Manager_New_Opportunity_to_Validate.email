@@ -1,0 +1,12 @@
+Dear Product Manager, 
+
+Please note that a new RCRM Opportunity has been submitted to you for validation. 
+Opportunity: {!Opportunity.Name}
+
+You can access this Opportunity by clicking on this link:
+{!Opportunity.Link}
+
+This message has been sent to both the Product manager and the Alternate Product Manager of the products attached to the Opportunity.
+
+---------------------------
+Note: This is an automatic message, please do not reply to it.

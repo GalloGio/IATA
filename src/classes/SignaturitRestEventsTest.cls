@@ -44,7 +44,12 @@ private class SignaturitRestEventsTest {
 		SignaturitRestEvents.testJson = null;
 
 		Test.startTest();
-		SignaturitRestEvents.receiveEvent();
+		try {
+			SignaturitRestEvents.receiveEvent();
+			System.assert(false, 'Exception expected');
+		} catch (Exception e ) {
+			System.assert(true);
+		}
 		Test.stopTest();
 	}
 
@@ -52,7 +57,12 @@ private class SignaturitRestEventsTest {
 		SignaturitRestEvents.testJson = TESTJSON;
 
 		Test.startTest();
-		SignaturitRestEvents.receiveEvent();
+		try {
+			SignaturitRestEvents.receiveEvent();
+			System.assert(false, 'Exception expected');
+		} catch (Exception e ) {
+			System.assert(true);
+		}
 		Test.stopTest();
 	}
 

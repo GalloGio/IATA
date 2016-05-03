@@ -16,10 +16,6 @@
     } else {
     	$('.selected-flag').hide();
     }
-    
-    // add required to the apex multi select input
-    var membership = $("[id$='membershipFunction']");
-    membership.addClass('rec');
       //alert({!isEditMode});
   });
 
@@ -120,7 +116,7 @@
                                     <label class="lbl" for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_MyProfile_LASTNAME}</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <apex:inputField styleclass="col-lg-8 form-control editMode rec" value="{!con.LastName}"/>
+                                    <apex:inputField styleclass="form-control editMode rec" value="{!con.LastName}"/>
                                     <div class="hiddenerror" style="display: none;">
                     					<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_LastName}</p>
                   					</div>  
@@ -131,11 +127,11 @@
                             </div>
                             <!-- end row -->
                             <div class="row form-group">
-                                <div class="col-md-4" >
-                                    <label class="lbl" for="exampleInputEmail1"><span class="required">*</span> {!$Label.ISSP_MyProfile_TITLE}</label>
+                                <div class="col-md-4" style="padding-left:28px">
+                                    <label class="lbl" for="exampleInputEmail1">{!$Label.ISSP_MyProfile_TITLE}</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <apex:inputField styleclass="form-control editMode col-lg-8 rec" value="{!con.Title}"/>
+                                    <apex:inputField styleclass="form-control editMode col-lg-8" value="{!con.Title}"/>
                                     <span class="saveMode">
                                         <apex:outputField value="{!con.Title}"/>
                                     </span>
@@ -210,14 +206,12 @@
                             <!-- end row -->
                             
                             <div class="row">
-                                <div class="col-md-4" >
-                                    <label  class="lbl" for="exampleInputEmail1"><span class="required">*</span> {!$Label.ISSP_MyProfile_FUNCTION}</label>
+                                <div class="col-md-4" style="padding-left:28px">
+                                    <label  class="lbl" for="exampleInputEmail1"> {!$Label.ISSP_MyProfile_FUNCTION}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="editMode" >
-<!--                                 <apex:inputField id="businessphoneinput" styleclass="form-control editMode col-lg-8 rec" value="{!con.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');"/> -->
-<!--                                 <apex:inputField id="membership" styleclass="form-control rec" value="{!con.Membership_Function__c}" /> -->
-                                        <apex:inputField id="membershipFunction" value="{!con.Membership_Function__c}"/>
+                                        <apex:inputField value="{!con.Membership_Function__c}"/>
                                     <!-- 
                                         <apex:inputHidden value="{!con.Membership_Function__c}"/>
                                         <select class="form-control" multiple="multiple">
@@ -289,7 +283,7 @@
                     <!-- END row  -->
                     <div class="row">
                         <div class="ol-md-3 col-md-offset-10 "  style="clear: both; ">
-                            <apex:commandButton styleclass="btn_iata btn-success btn_save editMode" onClick="if(!validateUserProfile())return false;" action="{!save}" value="{!$Label.site.save}" id="loginButton"/>
+                            <apex:commandButton styleclass="btn_iata btn-success btn_save editMode" onClick="if(!validateUserProfile())return false;" action="{!saveContact}" value="{!$Label.site.save}" id="loginButton"/>
                             <button type="button" class="btn_iata btn-danger btn_cancel editMode" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
                                  </div>
                     </div>

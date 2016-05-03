@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px" border="0">
+<tr>
+<td colspan="4">
+  <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+
+  </td>
+  </tr>
+
+
+<tr>
+<td colspan="4">
+  <i>{!$Label.ISSP_Email_do_not_reply}</i>
+</td>
+</tr>
+
+<tr>
+<td colspan="4">
+  <br />
+
+   <p> 
+    Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+    </p>
+    <p>
+      Congratulations, your access to IATA’s new Treasury Dashboard Premium has been granted! You are on your way to enjoy the benefits of this dynamic, global information tool and bring your cash flow planning & forecasting to another level, as well as visibility on your credit card sales.<br/>
+You will find attached the following documents that will guide you towards your first log in and navigation experience.
+    </p>
+  
+
+  </td>
+  </tr>
+<tr>
+
+<td colspan="4" width="75%">
+
+<hr style="height:3px; border:none; color:rgb(20,68,123); background-color:rgb(20,68,123);">
+
+<ol>
+<b>
+<li>
+Instructions on how to activate your 2-factor authentication profile to access the dashboard in a secure environment.
+</li>
+<br />
+<li>
+A Treasury Dashboard Premium User Guide that highlights the different Dashboards, and their features including explanations on how to interpret various views, graphs and terms used throughout the Dashboard.
+</li>
+<b/>
+
+  </ol>
+<hr style="height:3px; border:none; color:rgb(20,68,123); background-color:rgb(20,68,123);">
+
+</td>
+</tr>
+<tr><td colspan="4">
+  <p/>
+ To organize a short training session via webinar, please feel free to contact us at: treasurydashboard@iata.org.
+  <p>
+   The Treasury Dashboard has a one-time set-up fee and a monthly user subscription fee allowing any airline participating in IATA’s various settlement systems to see all its incoming funds from IATA, in addition to viewing the airline’s credit card sales. Feel free to visit our website at: <a href="www.iata.org/treasurydashboard">www.iata.org/treasurydashboard</a>, for more information.
+  
+  </p>
+   <p>
+   Regards,
+  <p />
+IATA Financial and Distribution Services
+</td></tr>
+   
+        <tr>
+    <p>
+    <td style="text-align:left">
+    <a href="http://www.iata.org/services/finance/Pages/treasury-dashboard.aspx">
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q9vF&oid=00D2000000008TF&lastMod=1435050326000" height="40%" width="20%" />
+    </p>
+      </td>
+    </tr>
+
+    <BR />
+
+   
+    <tr>
+    <td colspan="4">
+    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF&lastMod=1389346115000" />
+      </td>
+    </tr>
+
+    
+    
+
+</table>
+</div>
+  </body>
+</html>

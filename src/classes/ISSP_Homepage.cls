@@ -17,11 +17,11 @@ public with sharing class ISSP_Homepage {
     public List<Notification__c> myNotificationsList{get;private set;}
     //public list<KnowledgeArticleVersionWrapper> kbList {get;private set;}
 
-	//Survey variables
-	public String  SurveyLink {get; set;}
-	public String  SurveyName {get; set;}
-	public Boolean ShowModal {get; set;}
-	public Decimal SurveyDelayTime {get; set;}
+    //Survey variables
+    public String  SurveyLink {get; set;}
+    public String  SurveyName {get; set;}
+    public Boolean ShowModal {get; set;}
+    public Decimal SurveyDelayTime {get; set;}
   
     
     public string Cases_ListView {get {return ISSP_Constant.customSetingMap.get('Cases_ListView');}private set;}
@@ -35,6 +35,7 @@ public with sharing class ISSP_Homepage {
 //  public string maxirr {get;private set;} 
 
     public string UserLanguage {get; set;}
+    public boolean iataCertificatesVisible {get; set;}
          
     public ISSP_Homepage(){
         if(!Userinfo.getUserType().contains('Guest')){
@@ -45,10 +46,10 @@ public with sharing class ISSP_Homepage {
         isDPCUser = (profileName.startsWith('ISS Portal DPC'));
         isAdmin =(profileName.containsIgnoreCase('admin'));
          
-		//Survey init
-		ShowModal = true ;
-		SurveyDelayTime = 0 ;
-		getSurveyDetails();
+        //Survey init
+        ShowModal = true ;
+        SurveyDelayTime = 0 ;
+        getSurveyDetails();
 
         UserLanguage = UserLanguage();
     }
@@ -61,11 +62,12 @@ public with sharing class ISSP_Homepage {
             coo = new Cookie('lang',user.languagelocalekey,null,100000000,false);
             ApexPages.currentPage().setCookies(new Cookie[]{coo});
         }
-        con = [select Id,Credit_Card_Payment_Link__c,User_Portal_Status__c,BSP_CASS_Payment_contact__c,Financial_Assessment_Contact__c,Account.Top_Parent__c,AccountId,Account.Industry,Account.Accumulated_Irregularities__c, Account.Category__c from Contact where Id=:user.ContactId];
+        con = [select Id,Credit_Card_Payment_Link__c,User_Portal_Status__c,BSP_CASS_Payment_contact__c,Financial_Assessment_Contact__c,Account.Top_Parent__c,AccountId,Account.Industry,Account.Accumulated_Irregularities__c, Account.Category__c, Account.Status__c from Contact where Id=:user.ContactId];
         //acct = [select Id,Industry,Accumulated_Irregularities__c from Account where Id=:con.AccountId];
         userMap = new map<string,integer> {'Pending approvals'=>0,'Portal Users'=>0,'Portal Delegates Administrators'=>0,'Regional Administrator'=>0};
         string topParentId = con.Account.Top_Parent__c==null?con.AccountId:con.Account.Top_Parent__c;
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
+        iataCertificatesVisible = DAL_ISSP.visibilityOnIATACertificate(con.Account.Category__c, con.Account.Status__c);
 
 /* OLD IRREGULARITIES DISPLAY
         Irregularities_by_Agent_Type__c MaxCargo =  Irregularities_by_Agent_Type__c.getValues('Cargo');
@@ -292,51 +294,51 @@ public with sharing class ISSP_Homepage {
         return UserInfo.getLanguage();
     }
 
-	public PageReference getSurveyDetails(){
-	System.debug('SFI Start checkloginSurvey Method');
+    public PageReference getSurveyDetails(){
+    System.debug('SFI Start checkloginSurvey Method');
 
-		//Select all active LoginSrvey Custom settings
-		List<ISSPLoginSurvey__c> LoginSurvey_List = new List<ISSPLoginSurvey__c>([select Name, Survey_Link__c, isActive__c ,PopupDelayTime__c from ISSPLoginSurvey__c where isActive__c =: true ]);
-		System.debug('SFI LoginSurvey_List'+LoginSurvey_List);
+        //Select all active LoginSrvey Custom settings
+        List<ISSPLoginSurvey__c> LoginSurvey_List = new List<ISSPLoginSurvey__c>([select Name, Survey_Link__c, isActive__c ,PopupDelayTime__c from ISSPLoginSurvey__c where isActive__c =: true ]);
+        System.debug('SFI LoginSurvey_List'+LoginSurvey_List);
 
-		if (LoginSurvey_List != null && LoginSurvey_List.size() > 0)
-		{
-			//Get the newest one according to Survey_Number Field
-			ISSPLoginSurvey__c LoginSurvey_rec = new ISSPLoginSurvey__c();
-			LoginSurvey_rec = LoginSurvey_List[0];
-			SurveyName = LoginSurvey_rec.Name ;
-			SurveyDelayTime = LoginSurvey_rec.PopupDelayTime__c * 1000;
-			System.debug('SFI LoginSurvey_rec'+LoginSurvey_rec);
-			
-			//Get the Survey ID
-			String SurveyID = (LoginSurvey_rec.Survey_Link__c).substringAfterLast('iv=');
-			
-			//Retrieve the current looged in useriv=
-			User userRec = [SELECT Id, ContactId FROM User WHERE Id =:UserInfo.getUserId()][0];
-			System.debug('SFI userList'+userRec);
-			
-			//prepare the full survey URL
-			String fullSurveyURL = LoginSurvey_rec.Survey_Link__c.removeStart('http:')+'&q3='+userRec.ContactId+'&q4='+userRec.ID+'&q5='+SurveyID;
+        if (LoginSurvey_List != null && LoginSurvey_List.size() > 0)
+        {
+            //Get the newest one according to Survey_Number Field
+            ISSPLoginSurvey__c LoginSurvey_rec = new ISSPLoginSurvey__c();
+            LoginSurvey_rec = LoginSurvey_List[0];
+            SurveyName = LoginSurvey_rec.Name ;
+            SurveyDelayTime = LoginSurvey_rec.PopupDelayTime__c * 1000;
+            System.debug('SFI LoginSurvey_rec'+LoginSurvey_rec);
+            
+            //Get the Survey ID
+            String SurveyID = (LoginSurvey_rec.Survey_Link__c).substringAfterLast('iv=');
+            
+            //Retrieve the current looged in useriv=
+            User userRec = [SELECT Id, ContactId FROM User WHERE Id =:UserInfo.getUserId()][0];
+            System.debug('SFI userList'+userRec);
+            
+            //prepare the full survey URL
+            String fullSurveyURL = LoginSurvey_rec.Survey_Link__c.removeStart('http:')+'&q3='+userRec.ContactId+'&q4='+userRec.ID+'&q5='+SurveyID;
 
-			//Get Survey Instant according to UserId and Survey ID
-			List<Instant_Surveys__c>  InstantSurvey_List = new List<Instant_Surveys__c>([select Id ,SurveyUserID__c , SurveyURL__c
-																						  From Instant_Surveys__c 
-																						  Where SurveyUserID__c =: userRec.Id
-																						  AND SurveyURL__c =: SurveyID ]);
+            //Get Survey Instant according to UserId and Survey ID
+            List<Instant_Surveys__c>  InstantSurvey_List = new List<Instant_Surveys__c>([select Id ,SurveyUserID__c , SurveyURL__c
+                                                                                          From Instant_Surveys__c 
+                                                                                          Where SurveyUserID__c =: userRec.Id
+                                                                                          AND SurveyURL__c =: SurveyID ]);
 
-			if (InstantSurvey_List != null && InstantSurvey_List.size() > 0 )
-			{
-				ShowModal = false ;
-			}
-			else
-			{
-				SurveyLink = fullSurveyURL ;
-			}
-		}else{
-			ShowModal = false ;
-		}
-	return null;
-	}
+            if (InstantSurvey_List != null && InstantSurvey_List.size() > 0 )
+            {
+                ShowModal = false ;
+            }
+            else
+            {
+                SurveyLink = fullSurveyURL ;
+            }
+        }else{
+            ShowModal = false ;
+        }
+    return null;
+    }
     
     //browser detection ed dec15
    public string isIE {get

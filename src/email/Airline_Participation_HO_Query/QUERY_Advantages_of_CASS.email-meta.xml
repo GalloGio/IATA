@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Advantages of CASS</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>QUERY - Advantages of CASS</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear  {!Contact.Name}
+
+
+
+Thank you for your email.
+
+
+
+In regards to your query, please note that you can find useful information on CASS through the below link which will redirect to the related IATA web page:
+
+
+
+
+CASS
+
+
+
+
+For any further assistance on such item, please log a new query through our Customer Portal, www.iata.org/cs. Our Customer Services will be address your query shortly.
+
+
+
+Kind Regards,
+
+
+Thank you,
+
+
+
+
+{!Case.OwnerFullName}
+
+
+Global Airline Participation Team
+
+
+
+
+----------------------------
+Your message received on {!Case.CreatedDate}:
+
+{!Case.Subject}
+{!Case.Description}</textOnly>
+    <type>html</type>
+</EmailTemplate>
