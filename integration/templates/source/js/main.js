@@ -7,7 +7,9 @@ var className = {
     hover: 'is-hover'
 };
 
-$(document).ready(function() {
+jQuery.noConflict();
+
+jQuery(document).ready(function($) {
 
     $('.js-remaining-characters').on('keyup',  function() {
         var targetElement = $(this).data('target-element'),
