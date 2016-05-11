@@ -232,6 +232,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Scheduled_Date_Valid_Until__c</fullName>
+        <description>Schedule date minus 17 business hours (2 business days)</description>
+        <externalId>false</externalId>
+        <label>Scheduled Date Valid Until</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Scheduled_Date__c</fullName>
         <description>The scheduled date of the campaign</description>
         <externalId>false</externalId>

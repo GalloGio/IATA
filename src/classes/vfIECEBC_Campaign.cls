@@ -1,7 +1,7 @@
 public class vfIECEBC_Campaign {
     class Controller_Exception extends Exception{}
     
-    private User u = [Select ContactId, Contact.AccountId from User where id =: Userinfo.getUserid()];
+    private User u = [Select ContactId, AccountId from User where id =: Userinfo.getUserid()];
     
     public ApexPages.StandardController con {
         public get;
@@ -57,10 +57,10 @@ public class vfIECEBC_Campaign {
         
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
         
-        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != u.Contact.AccountId) {
-            throw new Controller_Exception('You don\'t have access to this record.');
+        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != u.AccountId) {
+            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Account__c + ':' + u.AccountId + ').');
         }
-        this.campaign.Account__c = u.Contact.AccountId;
+        this.campaign.Account__c = u.AccountId;
     }
     
     public PageReference saveAndExit() {
@@ -84,7 +84,7 @@ public class vfIECEBC_Campaign {
     
     public PageReference pageLoad() {
         // Check if the current step is allowed and if not, redirect to the last allowed step
-		if (campaign.Maximum_Allowed_Step__c < (currentStepNumber - 1)) return getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
+		if (campaign.Maximum_Allowed_Step__c < currentStepNumber) return getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
         
         return null;
     }

@@ -12,4 +12,7 @@ public class vfIECEBC_Test {
 	public static testMethod void testCampaignSetup() {
         vfIECEBC_TestSuite.testCampaignSetup();
     }
+	public static testMethod void testCampaignScheduling() {
+        vfIECEBC_TestSuite.testCampaignScheduling();
+    }
 }

@@ -5,6 +5,7 @@
   * History: 
   */
 public with sharing class IECTestUtil {
+    public static Id PortalUserAccountId;
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -226,6 +227,7 @@ public with sharing class IECTestUtil {
         );
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
+        PortalUserAccountId = newAccount.Id;
       //  trgPortalUserAfterInserUpdate = false;
         /*
         // assign Permission Set to provide access to objects
