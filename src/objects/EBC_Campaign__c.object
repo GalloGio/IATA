@@ -142,12 +142,34 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Step1_Writable__c</fullName>
+        <description>Is Step1 is writable based on other fields values</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Status__c) == &apos;Setup&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step1 Writable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Step2_Valid__c</fullName>
         <description>Verify if the Step 2 is valid and meet the validation.</description>
         <externalId>false</externalId>
         <formula>false &amp;&amp;  Is_Step1_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step2 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step2_Writable__c</fullName>
+        <description>Is Step2 is writable based on other fields values</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step2 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -164,6 +186,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Step3_Writable__c</fullName>
+        <description>Is Step3 is writable based on other fields values</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step3 Writable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Step4_Valid__c</fullName>
         <description>Verify if the Step 4 is valid and meet the validation.</description>
         <externalId>false</externalId>
@@ -175,12 +208,34 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Step4_Writable__c</fullName>
+        <description>Is Step4 is writable based on other fields values</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step4 Writable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Step5_Valid__c</fullName>
         <description>Verify if the Step 5 is valid and meet the validation.</description>
         <externalId>false</externalId>
         <formula>false &amp;&amp;  Is_Step4_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step5 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step5_Writable__c</fullName>
+        <description>Is Step5 is writable based on other fields values</description>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step5 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

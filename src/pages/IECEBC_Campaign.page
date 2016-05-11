@@ -16,6 +16,7 @@
             
                     <h1 class="page-title">Campaign Info</h1>
                     
+                    
                     <apex:form >
                         <div class="alert">
                             <h2 class="alert-title">Account balance</h2>
@@ -28,7 +29,8 @@
                                 <div class="field-group">
                                     <label>
                                         <span class="input-label">Name your campaign</span>
-                                        <apex:inputField type="text" styleClass="user-input" value="{!EBC_Campaign__c.Name}" />
+                                        <apex:inputField rendered="{!campaign.Is_Step1_Writable__c}" value="{!EBC_Campaign__c.Name}" styleClass="user-input text" />
+                                        <apex:outputText rendered="{!NOT(campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.Name}" styleClass="user-input readonly" />
                                     </label>
                                     <p class="input-description">Internal use only. Ex: "Newsletter Test#4"</p>
                                 </div>
@@ -36,22 +38,24 @@
                                 <div class="field-group">
                                     <label>
                                         <span class="input-label">Email subject</span>
-                                        <apex:inputField type="text" styleClass="user-input js-remaining-characters" value="{!EBC_Campaign__c.Subject__c}" html-data-target-element=".js-remaining-count" html-data-target-id="email-subject" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.Subject__c.length}" />
+                                        <apex:inputField rendered="{!campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input js-remaining-characters text" value="{!EBC_Campaign__c.Subject__c}" html-data-target-element=".js-remaining-count" html-data-target-id="email-subject" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.Subject__c.length}" />
+                                        <apex:outputText rendered="{!NOT(campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.Subject__c}" styleClass="user-input readonly" />
                                     </label>
-                                    <div class="input-remaining">
+                                    <apex:outputPanel rendered="{!campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
                                         <span class="js-remaining-count" data-id="email-subject">{!$ObjectType.EBC_Campaign__c.fields.Subject__c.length}</span>
-                                    </div>
+                                    </apex:outputPanel>
                                     <p class="input-description">This is the email subject that your recipients will see</p>
                                 </div>
                 
                                 <div class="field-group">
                                     <label>
                                         <span class="input-label">From name</span>
-                                        <apex:inputField type="text" styleClass="user-input js-remaining-characters" value="{!EBC_Campaign__c.From_Name__c}" html-data-target-element=".js-remaining-count" html-data-target-id="from-name" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}" />
+                                        <apex:inputField rendered="{!campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input js-remaining-characters text" value="{!EBC_Campaign__c.From_Name__c}" html-data-target-element=".js-remaining-count" html-data-target-id="from-name" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}" />
+                                        <apex:outputText rendered="{!NOT(campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.From_Name__c}" styleClass="user-input readonly" />
                                     </label>
-                                    <div class="input-remaining">
-                                        <span class="js-remaining-count" data-id="from-name">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
-                                    </div>
+                                    <apex:outputPanel rendered="{!campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
+                                        <span class="js-remaining-count" data-id="email-subject">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
+                                    </apex:outputPanel>
                                     <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
                                 </div>
                             </div>
@@ -59,20 +63,22 @@
                                 <div class="field-group google-analytics">
                                     <label>
                                         <div class="custom-user-input">
-                                            <apex:inputField id="Is_Google_Analytics_Tracker_Active" value="{!EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c}" styleClass="user-input checkbox" />
-                                            <apex:outputLabel styleClass="custom-checkbox" for="Is_Google_Analytics_Tracker_Active"><i class="fa fa-check"></i></apex:outputLabel>
+                                            <apex:inputField rendered="{!campaign.Is_Step1_Writable__c}" id="Is_Google_Analytics_Tracker_Active" value="{!EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c}" styleClass="user-input checkbox" />
+                                            <apex:outputLabel styleClass="custom-checkbox" for="Is_Google_Analytics_Tracker_Active"><i class="icon"></i></apex:outputLabel>
                                         </div>
                                         <span class="input-label">Google Analytics <sup>TM</sup> tracker</span>
                                     </label>
-                                    <apex:inputField type="text" styleClass="user-input" value="{!EBC_Campaign__c.Google_Analytics_Tracking_Code__c}" />
+                                    <apex:inputField rendered="{!campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input text" value="{!EBC_Campaign__c.Google_Analytics_Tracking_Code__c}" />
+                                    <apex:outputText rendered="{!NOT(campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.Google_Analytics_Tracking_Code__c}" styleClass="user-input readonly" />
                                     <p class="input-description">Track clicks from your campaigns all the way to your website.</p>
                                 </div>
                             </div>
                         </div>
                 
                         <div class="footer-actions text-right">
-                            <apex:commandLink action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
+                            <apex:commandLink rendered="{!campaign.Is_Step1_Writable__c}" action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
+                            <apex:commandLink rendered="{!campaign.Is_Step1_Writable__c}" action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
+                            <apex:commandLink rendered="{!NOT(campaign.Is_Step1_Writable__c)}" action="{!next}" value="Next" />
                         </div>
                 
                     </apex:form>
