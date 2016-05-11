@@ -222,7 +222,7 @@
         <fullName>Is_Step5_Valid__c</fullName>
         <description>Verify if the Step 5 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>false &amp;&amp;  Is_Step4_Valid__c</formula>
+        <formula>(Scheduled_Date_Valid_Until__c &gt;= NOW()) &amp;&amp; Is_Step4_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step5 Valid</label>
         <trackHistory>false</trackHistory>
