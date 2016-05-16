@@ -14,14 +14,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,700,600">
         <link rel="stylesheet" href="assets/css/main.min.css">    
-        <title></title>
-        
+        <title>Dashboard - IATA eBroadcast</title>
+
     </head>
     <body data-is-modal-open="false">
         <div class="app-container">
             <header class="page-header">
                 <div class="inner-wrapper">
-                    
+
                     <div class="column column-nav">
                         <h1 class="site-logo">
                             <a href="?page=dashboard">
@@ -38,7 +38,7 @@
     <ul class="nav">
         <li>
             <a class="icon caret-down after" id="js-main-nav" href="#">eBroadcast</a>
-            
+
             <!-- In Progress -->
             <div class="sub-nav tab-container js-tabs">
                 <ul class="nav tabs">
@@ -96,22 +96,23 @@
     <div class="row">
         <div class="main-container columns small-12 medium-8">
 
-            
+
             <div class="group-container campaigns">
                 <h2 class="group-title">Campaigns</h2>
                 <div class="action-box text-right create-campaign">
                     <a class="button" href="?page=setup">Create campaign</a>
                 </div>
+
                 <table class="data-table campaign">
-                    <tr>
+                    <tr id="campaign-id-1">
                         <td class="icon">
-                            <i class="icon icon-status schedule"></i>
+                            <i class="js-icon-status icon icon-status" data-icon-type="schedule"></i>
                         </td>
                         <td class="name">
                             <ul class="list campaign">
-                                <li><a href="#">Campaign 1 (copy 01)</a></li>
+                                <li><a href="#" class="js-campaign-name">Campaign (copy 01)</a></li>
                                 <li>Regular - IP, AS &amp; LD</li>
-                                <li><strong>Schedule</strong></li>
+                                <li><strong class="js-campaign-status">Schedule</strong></li>
                                 <li>Sun Feb 28, 2016 7:00 pm</li>
                             </ul>
                         </td>
@@ -122,10 +123,9 @@
                         <td class="clicks">
                         </td>
                         <td class="action">
-                            
                             <div class="custom-user-input select">
                                 <i class="icon angle-down"></i>
-                                <select class="user-input select js-champaign-actions js-open-modal">
+                                <select data-target-campaign-id="campaign-id-1" class="user-input select js-champaign-actions js-open-modal">
                                     <option value="default">Select action</option>
                                     <option value="delete" data-target-modal="#js-modal-delete-campaign">Delete</option>
                                     <option value="rename" data-target-modal="#js-modal-rename-campaign">Rename</option>
@@ -136,16 +136,16 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="campaign-id-2">
                         <td class="icon">
-                            <i class="icon icon-status sent"></i>
+                            <i class="js-icon-status icon icon-status" data-icon-type="sent"></i>
                         </td>
                         <td class="name">
                             <ul class="list campaign">
-                                <li><a href="#">Campaign 1</a></li>
-                                <li>Recipients -  List ABC</li>
-                                <li><strong>Sent</strong></li>
-                                <li>Fri, Feb 26, 2016 11:00 am</li>
+                                <li><a href="#" class="js-campaign-name">Campaign 1</a></li>
+                                <li>Regular - IP, AS &amp; LD</li>
+                                <li><strong class="js-campaign-status">Sent</strong></li>
+                                <li>Sun Feb 28, 2016 7:00 pm</li>
                             </ul>
                         </td>
                         <td class="recipients">
@@ -161,10 +161,9 @@
                             <span class="label">Clicks</span>
                         </td>
                         <td class="action">
-                            
                             <div class="custom-user-input select">
                                 <i class="icon angle-down"></i>
-                                <select class="user-input select js-champaign-actions js-open-modal">
+                                <select data-target-campaign-id="campaign-id-2" class="user-input select js-champaign-actions js-open-modal">
                                     <option value="default">Select action</option>
                                     <option value="delete" data-target-modal="#js-modal-delete-campaign">Delete</option>
                                     <option value="rename" data-target-modal="#js-modal-rename-campaign">Rename</option>
@@ -175,16 +174,16 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr id="campaign-id-3">
                         <td class="icon">
-                            <i class="icon icon-status sent"></i>
+                            <i class="js-icon-status icon icon-status" data-icon-type="sent"></i>
                         </td>
                         <td class="name">
                             <ul class="list campaign">
-                                <li><a href="#">Campaign 1</a></li>
-                                <li>Recipients -  List ABC</li>
-                                <li><strong>Sent</strong></li>
-                                <li>Fri, Feb 26, 2016 11:00 am</li>
+                                <li><a href="#" class="js-campaign-name">Campaign 2</a></li>
+                                <li>Regular - IP, AS &amp; LD</li>
+                                <li><strong class="js-campaign-status">Sent</strong></li>
+                                <li>Sun Feb 28, 2016 7:00 pm</li>
                             </ul>
                         </td>
                         <td class="recipients">
@@ -200,10 +199,9 @@
                             <span class="label">Clicks</span>
                         </td>
                         <td class="action">
-                            
                             <div class="custom-user-input select">
                                 <i class="icon angle-down"></i>
-                                <select class="user-input select js-champaign-actions js-open-modal">
+                                <select data-target-campaign-id="campaign-id-3" class="user-input select js-champaign-actions js-open-modal">
                                     <option value="default">Select action</option>
                                     <option value="delete" data-target-modal="#js-modal-delete-campaign">Delete</option>
                                     <option value="rename" data-target-modal="#js-modal-rename-campaign">Rename</option>
@@ -327,7 +325,7 @@
                 <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
             </header>
             <div class="modal-body">
-                <p>You are about to delete a campaign called <strong>Campaign 1</strong>.</p>
+                <p>You are about to delete a campaign called <strong class="js-get-campaign-name">Campaign 1</strong>.</p>
             </div>
             <footer class="modal-footer">
                 <ul class="list actions">
@@ -335,7 +333,7 @@
                         <button class="text-link js-close-modal">Cancel</button>
                     </li>
                     <li>
-                        <button class="button">Delete</button>
+                        <button class="button js-delete-campaign">Delete</button>
                     </li>
                 </ul>
             </footer>
@@ -348,7 +346,7 @@
             <div class="field-group text">
                 <label>
                     <span class="input-label">Rename your compaign</span>
-                    <input class="user-input text" type="text">
+                    <input class="user-input text js-get-campaign-name" type="text" value="">
                 </label>
                 <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
             </div>
@@ -359,7 +357,7 @@
                     <button class="text-link js-close-modal">Cancel</button>
                 </li>
                 <li>
-                    <button class="button">Save</button>
+                    <button class="button js-rename-campaign">Save</button>
                 </li>
             </ul>
         </footer>
@@ -370,7 +368,7 @@
     </header>
     <div class="modal-body">
         <p>
-            You are about to pause a scheduled campaign called <strong>Campaign 1</strong>
+            You are about to pause a scheduled campaign called <strong class="js-get-campaign-name">Campaign 1</strong>
             <br>
             Please confirm this action.
         </p>
@@ -381,7 +379,7 @@
                 <button class="text-link js-close-modal">Cancel</button>
             </li>
             <li>
-                <button class="button">Pause</button>
+                <button class="button js-pause-campaign">Pause</button>
             </li>
         </ul>
     </footer>
@@ -391,7 +389,7 @@
     <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
 </header>
 <div class="modal-body">
-    <p>You are about to cancel the campaign called <strong>Campaign 1</strong>.</p>
+    <p>You are about to cancel the campaign called <strong class="js-get-campaign-name">Campaign 1</strong>.</p>
 </div>
 <footer class="modal-footer">
     <ul class="list actions">

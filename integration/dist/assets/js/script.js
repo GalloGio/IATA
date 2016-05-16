@@ -12725,6 +12725,7 @@ jQuery(document).ready(function($) {
         body.attr('data-is-modal-open', 'true');
     };
     
+    var selectedCampainID;
     $('.js-open-modal').on('click', function(event) {
         if (!$(this).hasClass('select')) {
             event.preventDefault();
@@ -12737,14 +12738,42 @@ jQuery(document).ready(function($) {
             }
         }
     }).on('change', function(event) {
-        var selected = $(this).find('option:selected'),
+        var selected = $(this).find('option:selected');
+        
+        selectedCampainID = this.getAttribute('data-target-campaign-id');
+        
+        var targetCampaignName = $('#' + selectedCampainID).find('.js-campaign-name').html(),
             targetModal = selected.data('target-modal'),
             selectedValue = selected.val();
+
         if (selectedValue !== 'default') {
+            console.log(targetCampaignName); 
+            $(targetModal).find('.js-get-campaign-name').html(targetCampaignName);
+            $(targetModal).find('.user-input.js-get-campaign-name').val(targetCampaignName);
             $('.modal-content').addClass(className.hidden);
             $(targetModal).removeClass(className.hidden);
             openModal();
         }
+    });
+
+    $('.js-delete-campaign').on('click', function(event) {
+        event.preventDefault();
+        $('#' + selectedCampainID).remove();
+        closeModal();
+    });
+
+    $('.js-rename-campaign').on('click', function(event) {
+        event.preventDefault();
+        var newCampaignName = $('.user-input.js-get-campaign-name').val();
+        $('#' + selectedCampainID).find('.js-campaign-name').html(newCampaignName);
+        closeModal();
+    });
+
+    $('.js-pause-campaign').on('click', function(event) {
+        event.preventDefault();
+        $('#' + selectedCampainID).find('.js-icon-status').attr('data-icon-type', 'pending');
+        $('#' + selectedCampainID).find('.js-campaign-status').text('Pending');
+        closeModal();
     });
 
     $('#js-modal').on('click', '.js-close-modal', function(event) {
@@ -12758,7 +12787,6 @@ jQuery(document).ready(function($) {
             $(target).removeClass(className.disabled);
         }
     });
-    
 
     $('.js-clear-form').on('click', function() {
         $('.user-input.radio').prop('checked', false);
