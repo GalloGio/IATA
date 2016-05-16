@@ -117,4 +117,69 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
         }
     }
+    public static void testCampaignScheduling() {
+		PageReference pageRef = Page.IECEBC_CampaignSchedule;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        insert masterFilter;
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Account__c = IECTestUtil.PortalUserAccountId;
+        camp.EBC_Master_Filter__c = masterFilter.Id;
+        camp.EBC_Template__c = tpl.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            Test.startTest();
+            
+            init();
+            
+            // Layout PageLoad
+        	vfIECEBC layoutController = new vfIECEBC();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            vfIECEBC_CampaignSchedule scheduleExtCon = new vfIECEBC_CampaignSchedule(sc);
+            
+            System.assert(scheduleExtCon.getUserTimezoneOffset() == '-04:00' || scheduleExtCon.getUserTimezoneOffset() == '-05:00');
+            System.assertEquals('Eastern Standard Time', scheduleExtCon.getUserTimezoneDisplayName());
+            System.assertEquals(null, scheduleExtCon.validationMessage);
+            
+            Datetime dt = Datetime.now().addDays(1);
+            scheduleExtCon.humanCampaignDate = dt.format('MMMM d y');
+            scheduleExtCon.campaignDate = dt.month() + '/' + dt.day() + '/' + dt.year();
+            scheduleExtCon.campaignHours = dt.hour() > 12 ? dt.hour() - 12 : dt.hour();
+            scheduleExtCon.campaignMinutes = dt.minute();
+            scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
+            scheduleExtCon.validate();
+            System.assertNotEquals(null, scheduleExtCon.validationMessage);
+            System.debug(scheduleExtCon.validationMessage);
+            System.assert(scheduleExtCon.validationMessage.contains('2 business days'));
+            
+            dt = Datetime.now().addDays(5);
+            scheduleExtCon.humanCampaignDate = dt.format('MMMM d y');
+            scheduleExtCon.campaignDate = dt.month() + '/' + dt.day() + '/' + dt.year();
+            scheduleExtCon.campaignHours = dt.hour() > 12 ? dt.hour() - 12 : dt.hour();
+            scheduleExtCon.campaignMinutes = dt.minute();
+            scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
+            //camp.Scheduled_Date__c = Datetime.now().addDays(5);
+            scheduleExtCon.validate();
+            System.assertEquals(null, scheduleExtCon.validationMessage);
+            
+            PageReference pr = campaignExtCon.saveAndContinue();
+            
+            System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
+            System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
+        }
+    }
 }
