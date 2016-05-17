@@ -12611,6 +12611,18 @@ jQuery.noConflict();
 
 jQuery(document).ready(function($) {
 
+    var userInputs = $('.js-remaining-characters');
+
+    for (var i = 0; i < userInputs.length; i++) {
+        if ($(userInputs[i]).val().length) {
+            var maxCharacterLength = $(userInputs[i]).data('max-length'),
+                defaultCharacters = $(userInputs[i]).val().length;
+            $(userInputs[i]).parents('.field-group').find('.js-remaining-count').text(maxCharacterLength-defaultCharacters);
+        }
+    }
+
+    $('.js-remaining-characters').parents('.field-group text');
+
     $('.js-remaining-characters').on('keyup',  function() {
         var targetElement = $(this).data('target-element'),
         targetID = $(this).data('target-id'),
@@ -12663,6 +12675,24 @@ jQuery(document).ready(function($) {
     $('.js-match-height .group-container').matchHeight();
 
     /* ---------------------------------------- */
+    /*  Payment Method                            */
+    /* ---------------------------------------- */
+    $('.js-payment-method').on('change', '.user-input:checked', function() {
+        var value = $(this).val();
+        console.log(0);
+        if (value === 'ich') {
+            $('.payment-method-container').addClass(className.hidden);
+        }
+        if (value === 'creditCard') {
+            $('.payment-method-container').removeClass(className.hidden);
+        }
+    });
+
+    $('.js-card-data-table .user-input').on('change', function() {
+        $(this).parents('tr').addClass(className.selected).siblings().removeClass(className.selected);
+    });
+    
+    /* ---------------------------------------- */
     /*  Radio Checkbox List                     */
     /* ---------------------------------------- */
     $('.js-radio-list').on('click', '.user-input.radio', function() {
@@ -12687,6 +12717,24 @@ jQuery(document).ready(function($) {
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
 
+    /* ----------------------------------------
+        From Validation
+    ------------------------------------------- */
+
+    $('.user-input').on('focus', function() {
+        $(this).parents('.field-group').addClass('is-focus');
+    }).on('blur', function() {
+        $(this).parents('.field-group').removeClass('is-focus');
+    }).on('keyup', function() {
+        if ($(this).val().length) {
+            $(this).parents('.field-group').removeClass('is-focus').removeClass('error');
+        }
+    }).on('change', function() {
+        if ($(this).val() !== 'select') {
+            $(this).parents('.field-group').removeClass('is-focus').removeClass('error');
+        }
+    });
+    
     /* ---------------------------------------- */
     /*  Sticky Footer                           */
     /* ---------------------------------------- */
@@ -12821,4 +12869,5 @@ jQuery(document).ready(function($) {
     });
     
 });
+
 

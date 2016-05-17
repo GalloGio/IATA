@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,700,600">
         <link rel="stylesheet" href="assets/css/main.min.css">    
-        <title></title>
+        <title>Design - IATA eBroadcast</title>
         
     </head>
     <body data-is-modal-open="false">
@@ -114,12 +114,32 @@
         </ol>
     </div>
     <h1 class="page-title">Design your campaign</h1>
-
-    <div class="plugin-container" style="border: 1px solid #ccc; padding: 20px;">
-        <h2>plugin goes here</h2>
-        <a href="//mosaico.io/">https://mosaico.io/</a>
-    </div>
     
+    <div class="tab-container js-tabs">
+        <ul class="nav tabs">
+            <li class="active" data-target="#pane-1"><a href="#">Design</a></li>
+            <li data-target="#pane-2"><a href="#">Use your HTML code</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane is-open" id="pane-1">
+                <div class="plugin-container" style="border: 1px solid #ccc; padding: 20px;">
+                    <h2>plugin goes here</h2>
+                    <a href="//mosaico.io/">https://mosaico.io/</a>
+                </div>
+            </div>
+            <div class="tab-pane" id="pane-2">
+                <div class="field-group textarea">
+                    <label>
+                        <span class="input-label">HTML code</span>
+                        <textarea class="user-input textarea" rows="10"></textarea>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="footer-actions text-right">
         <a class="button" href="?page=schedule">Continue</a>
     </div>
@@ -152,5 +172,5 @@
     <div class="overlay"></div>
     <div class="modal-dialog" id="js-modal-dialog">
     </div>
-</div><script src="assets/js/script.min.js"></script></body>
+</div><script src="assets/js/script.js"></script></body>
 </html>
