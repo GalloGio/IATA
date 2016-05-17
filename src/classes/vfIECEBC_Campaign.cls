@@ -46,12 +46,15 @@ public class vfIECEBC_Campaign {
     
     public EBC_Campaign__c campaign { get; set; }
     
-    public vfIECEBC_Campaign(ApexPages.StandardController stdController) {
+    public vfIECEBC_Campaign(ApexPages.StandardController stdController) {        
         this.con = stdController;
         
         if (!Test.isRunningTest()) {
             List<String> fields = new List<String>();
             fields.addAll(Schema.sObjectType.EBC_Campaign__c.fields.getMap().keySet());
+            fields.addAll(new List<String>{
+                'EBC_Master_Filter__r.Audience__c'
+            });
         	stdController.addFields(fields);
         }
         
@@ -64,9 +67,13 @@ public class vfIECEBC_Campaign {
     }
     
     public PageReference saveAndExit() {
-        this.con.save();
+        PageReference pr = this.con.save();
         
-        return Page.IECEBC_Dashboard;
+        if (!ApexPages.hasMessages()) {
+            pr = Page.IECEBC_Dashboard;
+        }
+        
+        return pr;
     }
     
     public PageReference previous() {
@@ -74,12 +81,22 @@ public class vfIECEBC_Campaign {
         
         return getPRByStepNumber(currentStepNumber, true);
     }
-    
-    public PageReference saveAndContinue() {
-        this.con.save();
+    public PageReference next() {
         currentStepNumber++;
         
         return getPRByStepNumber(currentStepNumber, true);
+    }
+    
+    public PageReference saveAndContinue() {
+        PageReference pr = this.con.save();
+        
+        if (!ApexPages.hasMessages()) {
+            currentStepNumber++;
+            
+            pr = getPRByStepNumber(currentStepNumber, true);
+        }
+        
+        return pr;
     }
     
     public PageReference pageLoad() {

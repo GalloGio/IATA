@@ -6,22 +6,23 @@
             <!-- End of Page </head> -->
         </apex:define>
         <apex:define name="pageScriptAdditions">
-            
-            <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $('.humanCampaignDate').datepicker({
-                    minDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!minDatetime}" /></apex:outputText>'),
-                    
-                    onSelect: function(a, b, c){
-                        $('.campaignDate').trigger('change');
-                    },
-                    
-                    dateFormat:"MM dd yy",
-                    altFormat: "mm/dd/yy",
-                    altField: '.campaignDate'
+            <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+                <script type="text/javascript">
+                jQuery(document).ready(function($) {
+                    $('.humanCampaignDate').datepicker({
+                        minDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!minDatetime}" /></apex:outputText>'),
+                        
+                        onSelect: function(a, b, c){
+                            $('.campaignDate').trigger('change');
+                        },
+                        
+                        dateFormat:"MM dd yy",
+                        altFormat: "mm/dd/yy",
+                        altField: '.campaignDate'
+                    });
                 });
-            });
-            </script>
+                </script>
+            </apex:outputText>
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
@@ -50,7 +51,15 @@
                         </div>
                     </div>
             
-                    <apex:form >
+                    <c:IECEBC_CampaignSchedule c="{!campaign}">
+                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!previous}" styleClass="button" value="Previous" />
+                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button" value="Save and Exit" />
+                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" />
+                            
+							<apex:commandLink rendered="{!NOT(campaign.Is_Step5_Writable__c)}" action="{!previous}" value="Previous" />
+                            <apex:commandLink rendered="{!NOT(campaign.Is_Step5_Writable__c)}" action="{!next}" value="Next" />
+                    </c:IECEBC_CampaignSchedule>
+                    <apex:form rendered="false">
                         <section class="group-container schedule">
                             <h2 class="icon schedule group-title">Schedule</h2>
                             <div class="group-content">
@@ -125,9 +134,12 @@
                     
                         
                         <div class="footer-actions text-right">
-                            <apex:commandLink action="{!previous}" styleClass="button" value="Previous" />
-                            <apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" />
+                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!previous}" styleClass="button" value="Previous" />
+                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button" value="Save and Exit" />
+                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" />
+                            
+							<apex:commandLink rendered="{!NOT(campaign.Is_Step5_Writable__c)}" action="{!previous}" value="Previous" />
+                            <apex:commandLink rendered="{!NOT(campaign.Is_Step5_Writable__c)}" action="{!next}" value="Next" />
                         </div>
                     </apex:form>
                     

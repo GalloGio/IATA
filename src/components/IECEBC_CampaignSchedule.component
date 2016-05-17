@@ -1,0 +1,88 @@
+<apex:component controller="vfIECEBC_CampaignSchedule">
+    <apex:attribute name="c"  description="The campaign" type="EBC_Campaign__c" required="true" assignTo="{!campaign}"/>
+    
+    <apex:form >
+        <section class="group-container schedule">
+            <h2 class="icon schedule group-title">Schedule</h2>
+            <div class="group-content">
+                <p class="lead"><strong>Please confirm the date you want your campaign to be sent.</strong></p>
+                <p class="note"><strong>NOTE:</strong> 48 business hours are necessary for IATA to perform the campaign review process.</p>
+                <p class="label"><strong>The below date is the earliest your campaign can be sent:</strong></p>
+                <div class="field-group default field-datepicker">
+                    <div class="datepicker">
+                        <apex:inputText value="{!campaignDate}" styleClass="campaignDate" style="display: none;">
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:inputText>
+                        <apex:input rendered="{!c.Is_Step5_Writable__c}" value="{!humanCampaignDate}" type="text" styleClass="humanCampaignDate user-input text" />
+                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!humanCampaignDate}" styleClass="humanCampaignDate user-input text" />
+                    </div>
+                    
+                    <div class="custom-user-input select">
+                        <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
+                        <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignHours}" size="1">
+                            <apex:selectOption itemLabel="1" itemValue="1" />
+                            <apex:selectOption itemLabel="2" itemValue="2" />
+                            <apex:selectOption itemLabel="3" itemValue="3" />
+                            <apex:selectOption itemLabel="4" itemValue="4" />
+                            <apex:selectOption itemLabel="5" itemValue="5" />
+                            <apex:selectOption itemLabel="6" itemValue="6" />
+                            <apex:selectOption itemLabel="7" itemValue="7" />
+                            <apex:selectOption itemLabel="8" itemValue="8" />
+                            <apex:selectOption itemLabel="9" itemValue="9" />
+                            <apex:selectOption itemLabel="10" itemValue="10" />
+                            <apex:selectOption itemLabel="11" itemValue="11" />
+                            <apex:selectOption itemLabel="12" itemValue="12" />
+                            
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:selectList>
+                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!campaignHours}" styleClass="user-input select" />
+                    </div>
+                    :
+                    <div class="custom-user-input select">
+                        <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
+                        <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignMinutes}" size="1">
+                            <apex:selectOption itemLabel="00" itemValue="00" />
+                            <apex:selectOption itemLabel="05" itemValue="05" />
+                            <apex:selectOption itemLabel="10" itemValue="10" />
+                            <apex:selectOption itemLabel="15" itemValue="15" />
+                            <apex:selectOption itemLabel="20" itemValue="20" />
+                            <apex:selectOption itemLabel="25" itemValue="25" />
+                            <apex:selectOption itemLabel="30" itemValue="30" />
+                            <apex:selectOption itemLabel="35" itemValue="35" />
+                            <apex:selectOption itemLabel="40" itemValue="40" />
+                            <apex:selectOption itemLabel="45" itemValue="45" />
+                            <apex:selectOption itemLabel="50" itemValue="50" />
+                            <apex:selectOption itemLabel="55" itemValue="55" />
+                            
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:selectList>
+                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!campaignMinutes}" styleClass="user-input select" />
+                    </div>
+                    <div class="custom-user-input select">
+                        <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
+                        <apex:selectList rendered="{!c.Is_Step5_Writable__c}" styleClass="user-input select" value="{!campaignMeridiem}" size="1">
+                            <apex:selectOption itemLabel="AM" itemValue="AM" />
+                            <apex:selectOption itemLabel="PM" itemValue="PM" />
+                            
+                            <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
+                        </apex:selectList>
+                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!campaignMeridiem}" styleClass="user-input select" />
+                    </div>
+                    <strong>{!userTimezoneDisplayName} (UTC{!userTimezoneOffset})</strong>
+                    <apex:outputPanel id="pageMessagesBlock">
+                        <apex:pageMessages />
+                        <apex:outputText rendered="{!NOT(ISBLANK(validationMessage))}">
+                            <p style="font-weight: bold; color: #c00;">{!validationMessage}</p>
+                        </apex:outputText>
+                    </apex:outputPanel>
+                </div>
+            </div>
+            
+            <div class="footer-actions text-right">
+	            <apex:componentBody />
+            </div>
+        </section>
+        
+        
+    </apex:form>
+</apex:component>

@@ -19,9 +19,12 @@
                     <apex:form >
                         
                         <div class="footer-actions text-right">
-                            <apex:commandLink action="{!previous}" styleClass="button" value="Previous" />
-                            <apex:commandLink action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
+                            <apex:commandLink rendered="{!campaign.Is_Step4_Writable__c}" action="{!previous}" styleClass="button" value="Previous" />
+                            <apex:commandLink rendered="{!campaign.Is_Step4_Writable__c}" action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button" value="Save and Exit" />
+                            <apex:commandLink rendered="{!campaign.Is_Step4_Writable__c}" action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" />
+                            
+							<apex:commandLink rendered="{!NOT(campaign.Is_Step4_Writable__c)}" action="{!previous}" value="Previous" />
+                            <apex:commandLink rendered="{!NOT(campaign.Is_Step4_Writable__c)}" action="{!next}" value="Next" />
                         </div>
                     </apex:form>
                 </div>

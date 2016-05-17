@@ -4,6 +4,11 @@
             <!-- Start of Page <head> -->
             <title>eBroadcast Dashboard</title>
             <!-- End of Page </head> -->
+            <style type="text/css">
+            	.action-box.create-campaign {
+                	right: 25px;
+                }
+            </style>
         </apex:define>
         <apex:define name="pageScriptAdditions">
             <!-- If any page specific .js, add them here -->
@@ -13,7 +18,33 @@
             <main class="main-content content-dashboard">
                 <div class="inner-wrapper">
                     <h1 class="page-title">All Campaigns</h1>
-                	<c:IECEBC_CampaignList campaigns="{!campaigns}" campaignsCount="{!CampaignsCount}" />
+                    <apex:form >
+                        Sort By: 
+                        <div class="custom-user-input select">
+                            <i class="icon angle-down"></i>
+                            <apex:selectList value="{!sortBy}" styleClass="user-input select js-champaign-actions" size="1">
+                                <apex:selectOptions value="{!sortByOptions}"/>
+                                <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
+                            </apex:selectList> 
+                        </div>
+                    </apex:form>
+                        <apex:outputPanel id="campaignList" style="padding: 10px 0;" layout="block">
+	                        <c:IECEBC_CampaignList campaigns="{!campaigns}" campaignsCount="{!CampaignsCount}" />
+                        </apex:outputPanel>
+                    <apex:form >
+                        
+                        <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                            Page 
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!page}" styleClass="user-input select js-champaign-actions" size="1">
+                                    <apex:selectOptions value="{!pageOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
+                                </apex:selectList> 
+                            </div>
+                            of {!maxPage}
+                        </apex:outputPanel>
+                    </apex:form>
                 </div>
             </main>
             <!-- End of Page Content -->
