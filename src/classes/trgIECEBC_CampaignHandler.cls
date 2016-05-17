@@ -1,4 +1,6 @@
 public class trgIECEBC_CampaignHandler {
+    class Validation_Exception extends Exception {}
+    
     public static void updateScheduledDateValidUntil(List<EBC_Campaign__c> newCampaigns) {
         if (!Trigger.isBefore || !Trigger.isUpdate) return ;
         
@@ -9,9 +11,9 @@ public class trgIECEBC_CampaignHandler {
             
             if (o.Scheduled_Date__c == n.Scheduled_Date__c) continue;
             
-            if (bh == null) bh = [select Id from BusinessHours where Name = 'Americas - Canada'];
+            if (bh == null) bh = [select Id from BusinessHours where Name = 'EBC Campaign Approval'];
             
-            n.Scheduled_Date_Valid_Until__c = BusinessHours.add(bh.Id, n.Scheduled_Date__c, -1 * Integer.valueOf(3600 * (2 * 8.5 - 1) * 1000)); // Scheduled date - (2 days - 1 hour)
+            n.Scheduled_Date_Valid_Until__c = BusinessHours.add(bh.Id, n.Scheduled_Date__c, -1 * Integer.valueOf(3600 * (2 * 9) * 1000)); // Scheduled date - (2 days - 1 hour)
         }
     }
 }

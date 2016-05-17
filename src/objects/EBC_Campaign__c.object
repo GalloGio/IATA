@@ -68,6 +68,21 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>EBC_Design__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Template used by the campaign to perform the email blast (Matches the Wizard Step 4)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Template used by the campaign to perform the email blast (Matches the Wizard Step 4)</inlineHelpText>
+        <label>EBC Design</label>
+        <referenceTo>EBC_Template__c</referenceTo>
+        <relationshipLabel>EBC Campaigns</relationshipLabel>
+        <relationshipName>EBC_Campaigns</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>EBC_Master_Filter__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Selected filter</description>
@@ -82,15 +97,14 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>EBC_Template__c</fullName>
+        <fullName>EBC_Selected_Template__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Template used by the campaign to perform the email blast</description>
+        <description>Reusable template selected by the end user at the Step 3 of the Wizard</description>
         <externalId>false</externalId>
-        <inlineHelpText>Template used by the campaign to perform the email blast</inlineHelpText>
-        <label>EBC Template</label>
+        <label>EBC Selected Template</label>
         <referenceTo>EBC_Template__c</referenceTo>
-        <relationshipLabel>EBC Campaigns</relationshipLabel>
-        <relationshipName>EBC_Campaigns</relationshipName>
+        <relationshipLabel>EBC Campaigns (EBC Selected Template)</relationshipLabel>
+        <relationshipName>EBC_Campaigns1</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -145,7 +159,7 @@
         <fullName>Is_Step1_Writable__c</fullName>
         <description>Is Step1 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>TEXT(Status__c) == &apos;Setup&apos;</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step1 Writable</label>
         <trackHistory>false</trackHistory>
@@ -156,7 +170,7 @@
         <fullName>Is_Step2_Valid__c</fullName>
         <description>Verify if the Step 2 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>false &amp;&amp;  Is_Step1_Valid__c</formula>
+        <formula>EBC_Master_Filter__c != null &amp;&amp; Is_Step1_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step2 Valid</label>
         <trackHistory>false</trackHistory>
@@ -167,7 +181,7 @@
         <fullName>Is_Step2_Writable__c</fullName>
         <description>Is Step2 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step2 Writable</label>
         <trackHistory>false</trackHistory>
@@ -178,7 +192,7 @@
         <fullName>Is_Step3_Valid__c</fullName>
         <description>Verify if the Step 3 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>true &amp;&amp;  Is_Step2_Valid__c</formula>
+        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step3 Valid</label>
         <trackHistory>false</trackHistory>
@@ -189,7 +203,7 @@
         <fullName>Is_Step3_Writable__c</fullName>
         <description>Is Step3 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step3 Writable</label>
         <trackHistory>false</trackHistory>
@@ -200,7 +214,7 @@
         <fullName>Is_Step4_Valid__c</fullName>
         <description>Verify if the Step 4 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>true &amp;&amp;  Is_Step3_Valid__c</formula>
+        <formula>Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step4 Valid</label>
         <trackHistory>false</trackHistory>
@@ -211,7 +225,7 @@
         <fullName>Is_Step4_Writable__c</fullName>
         <description>Is Step4 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step4 Writable</label>
         <trackHistory>false</trackHistory>
@@ -233,7 +247,7 @@
         <fullName>Is_Step5_Writable__c</fullName>
         <description>Is Step5 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>ISPICKVAL(Status__c, &apos;Setup&apos;)</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos; || TEXT(Status__c) == &apos;APPROVED&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step5 Writable</label>
         <trackHistory>false</trackHistory>
@@ -313,17 +327,30 @@
         <label>Status</label>
         <picklist>
             <picklistValues>
-                <fullName>Setup</fullName>
+                <fullName>DRAFT</fullName>
                 <default>true</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Scheduled</fullName>
+                <fullName>PENDING_APPROVAL</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Sent</fullName>
+                <fullName>APPROVED</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>REJECTED</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SENT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DELETED</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -356,4 +383,125 @@
     <pluralLabel>EBC Campaigns</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Design_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+PRIORVALUE( EBC_Design__c  ) != EBC_Design__c &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
+        <errorDisplayField>EBC_Design__c</errorDisplayField>
+        <errorMessage>The Design can only be changed when the campaign status is Draft</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>FromName_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+PRIORVALUE( From_Name__c  ) != From_Name__c &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
+        <errorDisplayField>From_Name__c</errorDisplayField>
+        <errorMessage>The From Name can only be changed when the campaign status is Draft</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>GoogleAnalytics_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+(
+PRIORVALUE(  Is_Google_Analytics_Tracker_Active__c ) != Is_Google_Analytics_Tracker_Active__c ||
+PRIORVALUE(  Google_Analytics_Tracking_Code__c ) != Google_Analytics_Tracking_Code__c
+) &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
+        <errorDisplayField>Google_Analytics_Tracking_Code__c</errorDisplayField>
+        <errorMessage>Google Analytics Settings can only be changed when the campaign status is Draft</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>MasterFilter_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+PRIORVALUE( EBC_Master_Filter__c ) != EBC_Master_Filter__c &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
+        <errorDisplayField>EBC_Master_Filter__c</errorDisplayField>
+        <errorMessage>The Recipients List can only be changed when the campaign status is Draft</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Pending_Campaign_Limited_to_Aprv_Rjct</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(PRIORVALUE(Status__c)) != TEXT(Status__c) &amp;&amp;
+TEXT(PRIORVALUE(Status__c)) == &apos;PENDING_APPROVAL&apos; &amp;&amp;
+
+(TEXT(Status__c) != &apos;APPROVED&apos; || TEXT(Status__c) != &apos;REJECTED&apos; || TEXT(Status__c) != &apos;DRAFT&apos;)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Pending Approval status can only result in Approval or Rejection</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Rejected_Campaign_can_only_be_deleted</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+(
+  TEXT(PRIORVALUE(Status__c)) == TEXT(Status__c) &amp;&amp;
+  TEXT(Status__c) == &apos;REJECTED&apos;
+) ||
+(
+  TEXT(PRIORVALUE(Status__c)) == &apos;REJECTED&apos; &amp;&amp;
+  TEXT(Status__c) != &apos;DELETED&apos;
+)</errorConditionFormula>
+        <errorMessage>Rejected campaigns may only be deleted</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Scheduled_Date_2_Business_Days</fullName>
+        <active>true</active>
+        <description>Make sure that the Scheduled Date Valid Until is in the future</description>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+(
+    (PRIORVALUE(Scheduled_Date_Valid_Until__c) != Scheduled_Date_Valid_Until__c)
+) &amp;&amp;
+
+
+Scheduled_Date_Valid_Until__c &lt; NOW()</errorConditionFormula>
+        <errorDisplayField>Scheduled_Date__c</errorDisplayField>
+        <errorMessage>The Scheduled Date does not respect the 2 business day criteria.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Scheduled_Date_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+TEXT(PRIORVALUE( Scheduled_Date__c )) != TEXT(Scheduled_Date__c) &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos; &amp;&amp;
+TEXT(Status__c) != &apos;APPROVED&apos;</errorConditionFormula>
+        <errorDisplayField>Scheduled_Date__c</errorDisplayField>
+        <errorMessage>The Scheduled Date can only be changed when the campaign status is Draft or Approved</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Subject_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+PRIORVALUE( Subject__c ) != Subject__c &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
+        <errorDisplayField>Subject__c</errorDisplayField>
+        <errorMessage>The Subject can only be changed when the campaign status is Draft</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Template_vs_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+PRIORVALUE( EBC_Selected_Template__c ) != EBC_Selected_Template__c &amp;&amp;
+
+TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
+        <errorDisplayField>EBC_Selected_Template__c</errorDisplayField>
+        <errorMessage>The Campaign Design &amp; Template can only be changed when the campaign status is Draft</errorMessage>
+    </validationRules>
 </CustomObject>

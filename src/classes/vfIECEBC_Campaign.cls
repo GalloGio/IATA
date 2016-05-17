@@ -67,9 +67,13 @@ public class vfIECEBC_Campaign {
     }
     
     public PageReference saveAndExit() {
-        this.con.save();
+        PageReference pr = this.con.save();
         
-        return Page.IECEBC_Dashboard;
+        if (!ApexPages.hasMessages()) {
+            pr = Page.IECEBC_Dashboard;
+        }
+        
+        return pr;
     }
     
     public PageReference previous() {
@@ -84,10 +88,15 @@ public class vfIECEBC_Campaign {
     }
     
     public PageReference saveAndContinue() {
-        this.con.save();
-        currentStepNumber++;
+        PageReference pr = this.con.save();
         
-        return getPRByStepNumber(currentStepNumber, true);
+        if (!ApexPages.hasMessages()) {
+            currentStepNumber++;
+            
+            pr = getPRByStepNumber(currentStepNumber, true);
+        }
+        
+        return pr;
     }
     
     public PageReference pageLoad() {

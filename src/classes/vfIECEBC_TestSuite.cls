@@ -87,6 +87,72 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(null, layoutController.pageLoad());
         }
     }
+    public static void testCampaignListing() {
+		PageReference pageRef = Page.IECEBC_CampaignList;
+        Test.setCurrentPage(pageRef);
+        
+        Account hw = new Account();
+        hw.Name = 'Hello World';
+        insert hw;
+        
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        
+        List<EBC_Campaign__c> campaigns = new List<EBC_Campaign__c>{
+            new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Account__c = IECTestUtil.PortalUserAccountId),
+            new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Account__c = IECTestUtil.PortalUserAccountId),
+            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Account__c = IECTestUtil.PortalUserAccountId),
+            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Account__c = IECTestUtil.PortalUserAccountId),
+            new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Account__c = hw.Id)
+        };
+            
+        insert campaigns;
+        
+        System.runAs(usr) {
+            Test.startTest();
+            
+            init();
+            
+            // Layout PageLoad
+        	vfIECEBC layoutController = new vfIECEBC();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            vfIECEBC_CampaignList campaignListCon = new vfIECEBC_CampaignList();
+            
+            vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = campaigns.size() - 1;
+            
+            System.assertEquals(campaigns.size() - 1, campaignListCon.campaignsCount);
+            System.assert(campaignListCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
+            System.assertEquals(1, campaignListCon.page);
+            System.assertEquals(1, campaignListCon.maxPage);
+            System.assertEquals(campaignListCon.maxPage, campaignListCon.getPageOptions().size());
+            System.assertEquals(campaignListCon.getSortByOptions()[0].getValue(), campaignListCon.sortBy);
+            System.assertEquals(0, campaignListCon.offset);
+            
+            vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = 3;
+            
+            campaignListCon = new vfIECEBC_CampaignList();
+            
+            System.assertEquals(campaigns.size() - 1, campaignListCon.campaignsCount);
+            System.assert(campaignListCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
+            System.assertEquals(1, campaignListCon.page);
+            System.assertEquals(2, campaignListCon.maxPage);
+            System.assertEquals(campaignListCon.maxPage, campaignListCon.getPageOptions().size());
+            System.assertEquals(campaignListCon.getSortByOptions()[0].getValue(), campaignListCon.sortBy);
+            System.assertEquals(0, campaignListCon.offset);
+            
+            campaignListCon.page = 2;
+            
+            System.assertEquals(campaigns.size() - 1, campaignListCon.campaignsCount);
+            System.assert(campaignListCon.campaigns.size() <= vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE);
+            System.assertEquals(2, campaignListCon.page);
+            System.assertEquals(2, campaignListCon.maxPage);
+            System.assertEquals(campaignListCon.maxPage, campaignListCon.getPageOptions().size());
+            System.assertEquals(campaignListCon.getSortByOptions()[0].getValue(), campaignListCon.sortBy);
+            System.assertEquals(vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE, campaignListCon.offset);
+            
+            campaignListCon.sortBy = campaignListCon.getSortByOptions()[1].getValue();
+        }
+    }
     
     public static void testCampaignSetup() {
 		PageReference pageRef = Page.IECEBC_Campaign;

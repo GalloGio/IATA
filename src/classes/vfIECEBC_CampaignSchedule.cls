@@ -7,10 +7,9 @@ public class vfIECEBC_CampaignSchedule {
     public vfIECEBC_CampaignSchedule(ApexPages.StandardController stdController) {
         this.con = stdController;
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
-        
-        validate();
     }
     
+    public vfIECEBC_CampaignSchedule() {}
     
     public String humanCampaignDate {
         get {
@@ -91,12 +90,25 @@ public class vfIECEBC_CampaignSchedule {
         return UserInfo.getTimeZone().getDisplayName();
     }
     
-    public Datetime getMinDatetime() {
-        List<BusinessHours> bh = [select Id from BusinessHours where Name = 'Americas - Canada'];
-        return BusinessHours.add(bh[0].Id, Datetime.now(), Integer.valueOf(3600 * 2 * 8.5 * 1000)); // 2 business day in Montreal office
+    public static Datetime getMinDatetime() {
+        List<BusinessHours> bh = [select Id from BusinessHours where Name = 'EBC Campaign Approval'];
+        return BusinessHours.add(bh[0].Id, Datetime.now(), Integer.valueOf(3600 * 2 * 9 * 1000)); // 2 business day in Montreal office
     }
     
-    public String validationMessage { get; set; }
+    public String validationMessage {
+        get {
+            if (validationMessage == null) {
+                Datetime dt = getMinDatetime();
+                
+                if (this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c <= dt) {
+                    validationMessage = 'A delay of minimum 2 business days is required. Date must be greater to ' + dt.format('EEEE, MMM d, h:mm a', UserInfo.getTimeZone().getID());
+                }
+            }
+            
+            return validationMessage;
+        }
+        set;
+    }
     
     public String inputScheduledDatetime {
         get;
@@ -109,12 +121,9 @@ public class vfIECEBC_CampaignSchedule {
 	        this.campaign.Scheduled_Date__c = Datetime.parse(campaignDate + ' ' + campaignHours + ':' + campaignMinutes + ' ' + campaignMeridiem);
         } catch(Exception e){}
     }
-    public PageReference validate() {    
+    public PageReference validate() {
+        //throw new Controller_Exception('Test: ' + this.campaign.Scheduled_Date_Valid_Until__c + ' < ' + Datetime.now());
         validationMessage = null;
-        
-        if (this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c < getMinDatetime()) {
-        	validationMessage = 'A delay of minimum 2 business days is required. Date must be greater to ' + getMinDatetime().format('EEEE, MMM d, h:mm a', UserInfo.getTimeZone().getID());
-        }
         
         return null;
     }

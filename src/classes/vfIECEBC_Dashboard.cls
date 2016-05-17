@@ -4,7 +4,7 @@ public class vfIECEBC_Dashboard {
         get {
             User u = [Select ContactId, Contact.AccountId from User where id =: Userinfo.getUserid()];
             
-            if (campaigns == null) campaigns = [Select Id, Name, Status__c, Scheduled_Date__c, Owner.Name From EBC_Campaign__c WHERE Account__c = :u.Contact.AccountId ORDER BY LastModifiedDate LIMIT 3];
+            if (campaigns == null) campaigns = [Select Id, Is_Step5_Writable__c, Is_Step4_Valid__c, Name, Status__c, Scheduled_Date__c, Owner.Name From EBC_Campaign__c WHERE Account__c = :u.Contact.AccountId ORDER BY LastModifiedDate LIMIT 3];
             return campaigns;
         }
         private set;
