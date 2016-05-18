@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Operational Improvement Creation Notification</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>OI Creation Notification</name>
+    <style>freeForm</style>
+    <subject>OI Notification – Operational Improvement Creation - {!Operational_Improvements__c.Name}, Region: {!Operational_Improvements__c.Region__c}</subject>
+    <textOnly>Dear Colleague,
+
+A Quality Exception - {!Quality__c.Name} - has been created.
+
+Related Internal Case Number: {!Quality__c.Related_Case_Number__c}
+Exception Type: {!Quality__c.Exception_Type__c}
+SOP: {!Quality__c.SOP_Type__c}
+SOP Execution Category: {!Quality__c.Exe_Category__c}
+Priority: {!Quality__c.Priority__c}
+Region: {!Quality__c.Region__c}
+Country: {!Quality__c.Africa_MENA_CC__c}{!Quality__c.Asia_Pacific_CC__c}{!Quality__c.China_North_Asia_CC__c}{!Quality__c.Europe_CC__c}{!Quality__c.Americas_CC__c}
+
+Please click the below link to review it:
+{!Quality__c.Link}
+
+Thank you and best regards,</textOnly>
+    <type>html</type>
+</EmailTemplate>

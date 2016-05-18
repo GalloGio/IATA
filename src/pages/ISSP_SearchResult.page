@@ -1,0 +1,134 @@
+<apex:page showHeader="false" sidebar="false" controller="ISSP_SearchResultCO" action="{!searchGet}"  standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+            <style>
+    .search-title {
+        font-size: x-large;
+    }
+    .search-ctl-holder {
+        margin-top: 20px;
+    }
+    .search-input {
+        width: 200px;
+    }
+    .search-go {
+        text-decoration: none;
+        padding: 3px;
+    }
+    .search-go:hover {
+        text-decoration: none;   
+    } 
+</style>
+            <script>
+    document.onkeypress = stopRKey; 
+
+    var j$ = jQuery.noConflict();
+
+
+    j$(document).ready(function(){
+        initTbl();
+    }); 
+
+    function initTbl() { 
+        j$('.result-table').dataTable({
+                                "bLengthChange": false,
+                                "sPaginationType": "two_button",
+                                "bSort": false,
+                                "bFilter": false});
+    }
+
+    function enterKey(evt) { 
+      var evt = (evt) ? evt : ((event) ? event : null); 
+      var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+      if ((evt.keyCode == 13) && (node.type=="text"))  {
+            doSearch();
+      } 
+    }
+
+    function doSearch() {
+        //console.log(j$("#pageSearchInput").val());
+        j$("#pageSearchInput, .search-go").attr("disabled", "disabled");
+        searchPost(j$("#pageSearchInput").val());
+
+    }
+
+    function stopRKey(evt) { 
+          var evt = (evt) ? evt : ((event) ? event : null); 
+          var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+          if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
+    }
+
+    function searchComplete() {
+        initTbl();
+        j$("#pageSearchInput, .search-go").removeAttr("disabled");
+    } 
+</script>
+            <div class="container">
+                <c:ISSP_CustomNavigation />
+                <div class="panel panel-primary">
+                    <div class="panel-heading head_panel_green">
+                        <h3 class="panel-title">{!$Label.ISSP_Search_Result}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <apex:form >
+                            <apex:actionFunction name="searchPost" action="{!searchPost}" reRender="searchReasult" oncomplete="searchComplete();" status="WaitingStatus">
+                                <apex:param name="query" value="" />
+                            </apex:actionFunction>
+                            <apex:outputPanel id="searchReasult" layout="inline">
+                                <apex:pageMessages />
+                                <apex:repeat value="{!viewList}" var="viewItem" >
+                                    <apex:pageBlock mode="edit" tabStyle="Case">
+                                        <h4 class="blueback">
+                    {!viewItem.objectLabel}
+                 </h4>
+                                        <table id="{!viewItem.objectName}" class="result-table table">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                            {!viewItem.theFieldLabel}
+                        </th>
+                                                    <apex:repeat value="{!viewItem.fieldNameList}" var="fieldName">
+                                                        <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'Id', UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName), UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C' )}" layout="none" >
+                                                            <th>
+                                    {!fieldName.Label}
+                                </th>
+                                                        </apex:outputPanel>
+                                                    </apex:repeat>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!viewItem.theObjectList}" var="objectItem" >
+                                                    <tr>
+                                                        <td>
+                                                            <apex:outputLink value="/ISSP_Case?caseId={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '500'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Contact?id={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '003'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                            <apex:outputLink value="/ISSP_Account?id={!objectItem['Id']}" rendered="{!LEFT(objectItem['Id'],3) = '001'}" >{!objectItem[viewItem.theFieldName]}</apex:outputLink>
+                                                        </td>
+                                                        <apex:repeat value="{!viewItem.fieldNameList}" var="fieldName"  >
+                                                        	<apex:outputPanel rendered="{!fieldName.fieldPath = 'ContactId'}" layout="none" >
+                                                                <td>
+                                                                	<apex:outputLink value="/ISSP_Contact?id={!objectItem['ContactId']}" >{!objectItem['Contact.Name']}</apex:outputLink>
+                                                                </td>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!AND(fieldName.fieldPath != 'ContactId', fieldName.fieldPath != 'Id', UPPER(fieldName.fieldPath) != UPPER(viewItem.theFieldName), UPPER(fieldName.fieldPath) != 'ISSP_CONTACT_NAME__C')}" layout="none" >
+                                                                <td>
+                                                                    <apex:outputField value="{!objectItem[fieldName]}" />
+                                                                </td>
+                                                            </apex:outputPanel>
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </apex:pageBlock>
+                                </apex:repeat>
+                            </apex:outputPanel>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+            <c:ISSP_CustomFooter />
+        </body>
+    </html>
+</apex:page>

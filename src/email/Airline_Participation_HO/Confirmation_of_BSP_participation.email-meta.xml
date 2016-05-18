@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Confirmation of participation in BSP and introduction of BSP</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Z- Confirmation of BSP participation</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name}
+
+
+We are pleased to welcome [Insert airline name, IATA designator and numeric code]&lt;?xml:namespace prefix = o ns = &quot;urn:schemas-microsoft-com:office:office&quot; /&gt;
+
+as BSP (Insert Country) Member as from the (insert date DD-MMM-YYYY)
+
+
+We are sending you herewith the calendar of reporting and remittance for this year.
+
+
+BSPLink (www.bsplink.iata.org) is an innovative, internet-based system that facilitates the interaction and exchange of information between all participants in the BSP. It is the global interface for travel agents and airlines to access the IATA Billing and Settlement Plan (BSP).
+
+
+Furthermore, BSPlink is IATA’s main communication tool for the BSP. As a BSP participant we encourage you to check BSPlink regularly for important notices and information updates. The designated person will receive login details to access this system.
+
+
+Please note that the Ticketing Authority feature is open in BSPlink and you should use it to allow your chosen agents to issue STDs on your behalf. All concerned GDS’s will be automatically notified when you update BSPlink.
+
+
+IATA Currency Clearance Service, ICCS, allows Member airlines to centrally manage, control, transfer and optionally convert their world-wide BSP and CASS settlements quickly, seamlessly and at low cost. For more information please go to www.iata.org/iccs
+
+
+If you require any further assistance please contact our Customer Services Team at http://www.iata.org/customer-portal/Pages/contactus.aspx
+
+
+{!Case.OwnerFullName}
+
+Global Airline Participation Team
+
+Industry Distribution and Financial Services
+
+
+International Air Transport Association
+
+33, Route de l&apos;Aéroport
+
+1215 Geneva 15 Airport
+
+Switzerland
+
+www.iata.org/customer
+
+
+----------------------------
+Your message received on {!Case.CreatedDate}:
+
+{!Case.Subject}
+{!Case.Description}</textOnly>
+    <type>html</type>
+</EmailTemplate>

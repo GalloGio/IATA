@@ -1,0 +1,305 @@
+<apex:page controller="ISSP_Ctrl_ContentPage" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false">
+    <html>
+    <c:ISSP_Header ></c:ISSP_Header>
+
+    <script>
+        window.hideTags = function() {
+
+             if(window.flag == false){
+                $("[id$=tags],[id$=tagsheader] ").hide();
+            }
+
+        }
+
+        $(document).ready(function(){
+        window.flag = false;
+                window.hideTags();
+        $("#hidefilter").click(function(){
+                window.flag = !window.flag;
+                $("[id$=tags],[id$=tagsheader],[id$=filtcol]").toggle();
+                $("#resulttable").toggleClass("col-sm-8");
+                $("#resulttable").toggleClass("col-sm-12");
+            });
+        });
+
+
+
+    </script>
+    <body>
+        <div class="container">
+            <c:ISSP_CustomNavigation />
+             
+
+
+
+            <apex:form id="mainFrm">
+                <apex:pagemessages id="errors" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>
+                            {!$Label.ISSP_Resources} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                            {!$Label.ISSP_Documents} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                            <small>{!$Label.ISSP_PageDescription_ISSP_ContentPage}</small>
+                        </h4>
+                    </div>
+                </div><!-- end row-->
+
+                <div class="row">
+
+                </div>
+
+                <!-- results-->
+                <div class="col-md-12" id="results1">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{!$Label.LAQ_Search}</h3>
+                        </div>
+                        <div class="panel-body" id="body-results">
+                            <apex:pageblock mode="edit" id="criteria">
+
+                                <!-- search input box -->
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <apex:inputtext styleclass="form-control" alt="{!$Label.ISSP_Search}" id="title" value="{!Title}" html-placeholder="{!$Label.ISSP_Search}" onkeypress="return isNumberKey(this, event)" />
+
+                                                <span class="input-group-btn">
+                                                    <apex:commandbutton id="btn_applyfilter" action="{!runSearch}" value="{!$Label.ISSP_Apply_Filter}" styleclass="btn btn-block" rerender="results,debug,errors,Tags" status="loadStatusSpinner" oncomplete="hideTags();" />
+                                                </span>
+                                            </div><!-- /input-group -->
+                                        </div><!-- /.col-lg-6 -->
+                                    </div><!-- /.row -->
+
+
+                                    <script type="text/javascript">
+                                 function isNumberKey(evt) {
+                                        var keycode;
+                                        if (window.event)
+                                            keycode = window.event.keyCode;
+                                        else if (evt)
+                                            keycode = (evt.which) ? evt.which : event.keyCode;
+                                        else
+                                            return true;
+
+                                        if (keycode == 13)
+                                        {
+                                            searchServer(document.getElementById('{!$Component.title}').value);
+                                            return false;
+                                        }
+
+                                    }
+                                    </script>
+
+                                </div>
+                              <!-- end search input box -->
+                            </apex:pageblock>
+                            <div class="row">
+                                <br /><br /><br />
+                                <div class="col-sm-4" id="filtcol">
+
+                                    <!--------------------------------- ACTION FUNCTION SECTION ---------------------------------->
+                                    <apex:actionfunction name="searchServer" action="{!runSearch}" rerender="results,debug,errors,Tags" status="loadStatusSpinner" oncomplete="hideTags();">
+                                        <apex:param name="title" value="" />
+                                    </apex:actionfunction>
+                                    <apex:actionfunction name="FilterByCountryofpublication" action="{!FilterContentVersionByCountryofpublication}" rerender="results,debug,errors,Tags" />
+                                    <apex:actionfunction name="FilterByDocumentCategory" action="{!FilterContentVersionByDocumentCategory}" rerender="results,debug,errors,Tags" />
+                                    <!---------------------------------------------------------------------------------------------->
+
+                                    <div id="filtercriteria" class="" role="tabpanel">
+                                        <div class="panel-body" id="body-filter">
+
+                                            <apex:pageblock mode="edit" id="Filter">
+                                                <div class="row">
+
+                                                    <div class="col-sm-12">
+                                                        {!$Label.ISSP_Filter_by_Type}<br />
+                                                        <apex:inputfield styleclass="form-control" value="{!cont_ContentVersion.Document_Category__c }" id="filter_DocCat" />
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        {!$Label.ISSP_Filter_by_Country}
+
+                                                        <apex:outputpanel layout="block" >
+                                                            <apex:selectlist styleclass="form-control" value="{!cont_ContentVersion.Country_of_publication__c}" required="false" size="1">
+                                                                <apex:selectoptions value="{!countries}" />
+                                                            </apex:selectlist>
+                                                        </apex:outputPanel>
+                                                        <!--<apex:inputfield styleclass="form-control" style="min-width:47px; max-width:170px" value="{!cont_ContentVersion.Country_of_publication__c }" id="filter_country" />-->
+                                                    </div>
+                                                </div><!-- end row -->
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                          <apex:commandbutton id="btn_applyfilter" action="{!runSearch}" value="{!$Label.ISSP_Apply_Filter}" styleclass="btn btn-block btn_iata_success" rerender="results,debug,errors,Tags" status="loadStatusSpinner" oncomplete="hideTags();" />
+ <apex:commandbutton id="ss" action="{!ClearFilters}" value="{!$Label.PKB2_Reset_Search}" styleclass="btn btn-block btn_iata_cancel" rerender="criteria,Filter,results,debug,errors,Tags,tagsheader" status="loadStatusSpinner" oncomplete="hideTags();" />
+                                                 
+                                                    </div>
+                                                </div>
+                                                <div id="contactUs">
+                                                    Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1">
+                                                        Contact Us
+                                                    </a>
+                                                    <br /><br />
+                                                    Located in the United States?<br />
+                                                    Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
+                                                    <p />
+
+                                                </div>
+                                            </apex:pageblock>
+                                        </div>
+                                    </div>
+                                </div><!-- end side menu-->
+
+                                 <apex:outputpanel id="opp_results">
+                                    <div class="col-sm-8" id="resulttable">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="hh">
+                                                <h4 class="panel-title">
+                                                    <a href="#" id="hidefilter">{!$Label.PKB2_Filter_Options}</a>
+                                                </h4>
+                                            </div>
+                                            <apex:pageblock mode="edit" id="results">
+                                                <apex:pageblocktable value="{!ContentVersions}" var="ver" styleclass="table-hover table table-condensed table-responsive">
+                                                    table-hover table table-condensed table-responsive
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_Title}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}">
+                                                                <apex:param name="sortField" value="title" assignto="{!sortExpression}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+
+
+                                                        <!---------------------------------------------->
+                                                        
+                                                        <apex:outputlink rendered="{!if(ver.FileType=='LINK','false','true')}" value="{!csHost}/sfc/servlet.shepherd/version/download/{!ver.id}" target="_document" >
+                                                            {!ver.title}
+                                                        </apex:outputlink>
+                                                        <apex:outputlink rendered="{!if(ver.FileType=='LINK','true','false')}" target="_Blank"
+                                                                         value="{!ver.ContentUrl}">
+                                                            {!ver.title}
+                                                        </apex:outputlink>
+                                                        <!---------------------------------------------->
+                                                        <!--<apex:commandlink value="{!ver.title}" action="/apex/ISSP_ContentDisplay?id={!ver.ContentDocumentId}&mid=M2S2" rerender="results,debug" />-->
+                                                    </apex:column>
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.IDCard_Description}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}"  >
+                                                                <apex:param name="sortField" value="Description" assignto="{!sortExpression}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+                                                        <apex:outputfield value="{!ver.Description }" />
+                                                        <!--<apex:outputField value="{!ver.Document_Category__c }"/>-->
+                                                    </apex:column>
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:outputText value="{!$Label.ISSP_Country_of_Publication}">
+                                                                <apex:param name="sortField" value="Country_of_publication__c" assignto="{!sortExpression}" />
+                                                            </apex:outputText>
+                                                        </apex:facet>
+                                                        <apex:outputfield value="{!ver.Country_of_publication__c}" />
+                                                    </apex:column>
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.IFAP_Language}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}" >
+                                                                <apex:param name="sortField" value="Language__C" assignto="{!sortExpression}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+                                                        <apex:outputfield value="{!ver.Language__C }" />
+                                                    </apex:column>
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_File_Size}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}" >
+                                                                <apex:param name="sortField" value="title" assignto="{!sortExpression}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+                                                        <apex:outputtext value="{!ROUND(ver.ContentSize/1000,0)}" />
+                                                        <apex:outputtext value=" KB" />
+                                                    </apex:column>
+                                                    <apex:column id="tags">
+                                                         
+                                                            <apex:facet name="header">
+                                                                <apex:outputpanel id="tagsheader">
+                                                                    <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_Tags}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}">
+                                                                        <apex:param name="sortField" value="title" assignto="{!sortExpression}" />
+                                                                    </apex:commandlink>
+                                                                </apex:outputpanel>
+                                                            </apex:facet>
+                                                            <apex:outputfield value="{!ver.TagCsv }" />
+                                                         
+                                                    </apex:column>
+                                                    <apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink action="{!runQueryAfterSearch}" value="{!$Label.ISSP_File_Type}{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}"   >
+                                                                <apex:param name="sortField" value="FileType" assignto="{!sortField}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+                                                        <apex:outputfield value="{!ver.FileType}" />
+                                                    </apex:column>
+                                                    <!--<apex:column >
+                                                        <apex:facet name="header">
+                                                            <apex:commandlink value="Country Visibilty" action="{!toggleSort}" rerender="results,debug">
+                                                                <apex:param name="sortField" value="title" assignto="{!sortField}" />
+                                                            </apex:commandlink>
+                                                        </apex:facet>
+                                                        <apex:outputfield value="{!ver.Country_visibilty__c}" />
+                                                    </apex:column>-->
+                                                </apex:pageblocktable>
+                                            </apex:pageblock>
+                                     </div>
+                                   </div> <!--end row -->
+                                </apex:outputpanel>
+                            </div><!-- end body tags-->
+                        </div><!-- end panel-->
+                    </div><!-- end results-->
+                </div><!-- end row-->
+                <!------------------------------------------------------------------------------------>
+                <!--------------------------- Lock Screen while Processing  ---------------------------->
+                <!------------------------------------------------------------------------------------>
+                <apex:actionstatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner" />
+                <style>
+                    .overlay {
+                        display: none;
+                        height: 100%;
+                        left: 0;
+                        position: fixed;
+                        top: 0;
+                        opacity: 0.3;
+                        -moz-opacity: 0.3;
+                        width: 100%;
+                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                        filter: alpha(opacity=30);
+                        background: #000;
+                        -khtml-opacity: 0.3;
+                        z-index: 1000;
+                    }
+
+                    .loader {
+                        background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                        width: 32px;
+                        height: 32px;
+                        position: absolute;
+                        left: 50%;
+                    }
+                </style>
+
+                <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
+                <div class="loadingBox overlay"> </div>
+
+
+                <script type="text/javascript">
+            function startLoading(){
+                $('#load_scrl').css('top', $(document).scrollTop() + 200);
+                $('.loadingBox').show();
+            }
+            function endLoading(){
+                 $('.loadingBox').hide();
+            }
+                </script>
+                <!----------------------------------------------------------------------------------->
+            </apex:form>
+            <c:ISSP_CustomFooter />
+       
+        </div><!-- end container-->
+    </body>
+</html>
+</apex:page>

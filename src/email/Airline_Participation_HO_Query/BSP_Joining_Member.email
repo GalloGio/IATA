@@ -1,0 +1,172 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify; margin: 0in 0in 0pt;" class="MsoNormal"></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">Dear <span style="background:white">{!Contact.Name},</span><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">Thank you for your interest in joining BSP {!Case.Country__c}.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">In order for us to be
+able to process your application kindly ensure that the following documentation
+is submitted to IATA:</span><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt; text-indent: -0.25in;"></p><ul style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><li><span style="text-indent: -0.25in; font-size: 10pt; font-family: Symbol;"><span style="font-size: 7pt; font-family: 'Times New Roman';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></span><b style="text-indent: -0.25in; font-size: 12pt;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">IATA BSP Airline Participation Joining
+Form</span></b><span lang="EN-GB" style="text-indent: -0.25in; font-size: 9pt; font-family: Arial, sans-serif;">:
+Please complete the form in electronic typewritten format (i.e. not
+handwritten) with all the information requested, and then sign and certify it
+with your Company’s official stamp.</span></li></ul><!--[if !supportLists]--><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt; text-indent: -0.25in;"></p><ul style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><li><span style="text-indent: -0.25in; font-size: 10pt; font-family: Symbol;"><span style="font-size: 7pt; font-family: 'Times New Roman';">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></span><b style="text-indent: -0.25in; font-size: 12pt;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">Bank Account Mandate: </span></b><span lang="EN-GB" style="text-indent: -0.25in; font-size: 9pt; font-family: Arial, sans-serif;">For settlement purposes
+your Airline must provide IATA with a <u>Banking Mandate for each BSP country:</u></span></li></ul><!--[if !supportLists]--><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 1.5in; text-indent: -0.25in;"><!--[if !supportLists]--><span style="font-size: 10pt; font-family: Arial, sans-serif;">1.<span style="font-size: 7pt; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp; </span></span><!--[endif]--><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">The mandate can be
+provided in two forms: Local bank account in the BSP Country and Currency <u>or
+</u>IATA Currency Clearance Service (ICCS) contract for cross border payments
+instructions. For more information on ICCS please visit </span><u><span lang="EN-GB" style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:blue;mso-ansi-language:EN-GB"><a href="http://www.iata.org/service/finance/iccs/Pages/index.aspx">http://www.iata.org/service/finance/iccs/Pages/index.aspx</a></span></u><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 1.5in; text-indent: -0.25in;"><!--[if !supportLists]--><span lang="EN-GB" style="font-size: 10pt; font-family: Arial, sans-serif;">2.<span style="font-size: 7pt; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><!--[endif]--><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">If you would like to use a local bank
+account, please note that the corresponding mandate must be issued as per the
+attached instructions and template,&nbsp;</span><span style="font-family: Arial, sans-serif; font-size: 11.818181991577148px; text-align: justify;">on the participants letterhead,</span><span style="font-family: Arial, sans-serif; font-size: 11.818181991577148px; text-align: justify;">&nbsp;</span><span style="font-family: Arial, sans-serif; font-size: 9pt; text-indent: -0.25in;">and signed at your Airline’s Head Office by
+two 2 senior officers at least one of which must be:</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoListParagraphCxSpFirst" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 2in; text-indent: -0.25in;"><!--[if !supportLists]--><span style="font-size: 10pt; font-family: 'Courier New';">o<span style="font-size: 7pt; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp; </span></span><!--[endif]--><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">the Chief Financial
+Officer (CFO) or</span><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoListParagraphCxSpLast" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 2in; text-indent: -0.25in;"><!--[if !supportLists]--><span style="font-size: 10pt; font-family: 'Courier New';">o<span style="font-size: 7pt; font-family: 'Times New Roman';">&nbsp;&nbsp;&nbsp; </span></span><!--[endif]--><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">Head of Treasury or Cash
+Management Department</span><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 0.5in;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;"><span style="text-align: justify; background-color: rgb(255, 255, 255);">For countries/operations with dual currencies, the bank mandate needs to be submitted per currency.</span></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 0.5in;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;"><span style="text-align: justify; background-color: rgb(255, 255, 255);"><br></span></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 0.5in;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;"><span style="text-align: justify; background-color: rgb(255, 255, 255);">The bank mandate must be provided with the joining package and will be handled within the&nbsp;joining timeline of 35 days.</span></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 0.5in;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;"><span style="text-align: justify; background-color: rgb(255, 255, 255);"><br></span></span></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0in 0in 0.0001pt 0.5in;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">Please
+complete the form in electronic&nbsp;typewritten format (i.e. not handwritten)&nbsp;with
+all the information requested, and then sign and certify it with your Company’s
+official stamp.</span><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></b><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">The
+process will begin once all original documents are received at the Geneva Head
+Office at the below address:<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; margin-bottom: 0.0001pt;"><b><span lang="FR" style="font-size: 9pt; font-family: Arial, sans-serif;">Global Airline Participation Team<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; margin-bottom: 0.0001pt;"><b><span lang="FR" style="font-size: 9pt; font-family: Arial, sans-serif;">International Air Transport Association<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; margin-bottom: 0.0001pt;"><b><span lang="FR" style="font-size: 9pt; font-family: Arial, sans-serif;">33, Route de l'Aéroport<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; margin-bottom: 0.0001pt;"><b><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">1215 Geneva 15 Airport<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; margin-bottom: 0.0001pt;"><b><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">Switzerland<o:p></o:p></span></b></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; margin-bottom: 0.0001pt;"><span lang="EN-GB" style="font-size: 11.818181991577148px;"><font face="Arial, sans-serif"><b>Ref nr {!Case.CaseNumber}&nbsp;</b></font></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><span lang="EN-GB" style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;color:#CC0000;background:white;mso-ansi-language:EN-GB"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><u><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">Fees:</span></u></b><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></b></p><ul type="disc" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-top: 0in;"><li class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt; text-align: justify;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif;">A Joining Fee of USD &nbsp;is required to process the request</span></li><li class="MsoNormal" style="text-align: left; margin-bottom: 0.0001pt;"><font face="Arial, sans-serif"><span style="font-size: 12px;">Please visit the following link for Airline Central Billing information, such as Price List 2014, Central &amp; Regional Management Fees and SCUs: &nbsp;</span></font><span style="font-family: Arial, sans-serif; font-size: 12px;">http://www.iata.org/services/finance/Pages/airline-central-billing.aspx &nbsp;</span></li></ul><div><div style="text-align: justify;"><font face="Arial, sans-serif"><span style="font-size: 12px;"><br></span></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><font face="Arial, sans-serif"><span style="font-size: 11.818181991577148px;">Payment Procedure: Once all original documents have been received and validated by IATA, an invoice will be issued to the airline. If the airline is an IATA Clearing House member, then the payment will be handled through this option. However, should the airline join via IBCS, the fees will be collected by IBCS.</span></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><br></div>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><u><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif; background-color: white; background-position: initial initial; background-repeat: initial initial;">Credit
+Card Sales:</span></u></b><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span lang="EN-GB" style="font-size: 9pt; font-family: Arial, sans-serif; background-color: white; background-position: initial initial; background-repeat: initial initial;">Please
+note that the BSP only settles cash sales. If your Airline wishes </span><span style="font-size: 9pt; font-family: Arial, sans-serif;">to open credit card sales in a given market, you
+will need to setup a valid merchant agreement with the credit card acquirers of
+your choice. IATA has developed some products that allow you to handle credit
+card sales in a more efficient manner, providing detailed reports to facilitate
+Head Office reconciliation:<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">ECCB – Electronic Credit Card Billing: This
+service provides your credit card acquirers with daily files with information
+on credit card transactions processed by the BSP, allowing them to credit your
+Airline for the required amounts. In addition, a daily file is uploaded on your
+Airline BSP<i>link </i>or iiNet account.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">(<u><a href="http://www.iata.org/ps/financial_services/Pages/cardclear.aspx?NRMODE=Unpublished" title="blocked::http://www.iata.org/ps/financial_services/Pages/cardclear.aspx?NRMODE=Unpublished"><span style="color:black">IATA CardClear</span></a> and <a href="http://www.iata.org/ps/financial_services/Pages/cardaxs.aspx?NRMODE=Unpublished" title="blocked::http://www.iata.org/ps/financial_services/Pages/cardaxs.aspx?NRMODE=Unpublished"><span style="color:black">IATA CardAXS</span></a></u>), that allow the airlines to
+accept payment cards worldwide in local currencies. These products simplify the
+payment process (reduced number of card acceptance merchant agreements and
+processing contracts), reduce network distribution costs (favorable terms and
+conditions) and provide consolidated and centralized settlement in multiple
+currencies at favorable rates. More information is available at </span><u><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:#3333FF;
+background:white">http://www.iata.org/services/finance/Pages/airlines.aspx</span></u><span style="font-size: 9pt; font-family: Arial, sans-serif;">.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">Please do not hesitate
+to contact this office,by replying to this email, in case of any further
+queries/assistance. Our team will be glad to assist you accordingly.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">For future support in
+regards to any other query, please log a new inquiry through our customer
+portal at </span><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:blue"><a href="http://www.iata.org/customer-portal/Pages/contactus.aspx">http://www.iata.org/customer-portal/Pages/contactus.aspx</a></span><span style="font-size: 9pt; font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">We look forward to
+hearing from you shortly.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">Thank you,<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: Arial, sans-serif; background-color: white; background-position: initial initial; background-repeat: initial initial;">{!Case.OwnerFullName}</span><span style="font-size: 9pt; font-family: Arial, sans-serif;">,<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size: 9pt; font-family: 'Times New Roman', serif;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#002060">Global Airline
+Participation Team</span></b><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#002060">Financial and&nbsp;</span><span style="color: rgb(0, 32, 96); font-family: Arial, sans-serif; font-size: 12px;">Distribution</span><span style="color: rgb(0, 32, 96); font-family: Arial, sans-serif; font-size: 12px;">&nbsp;</span><span style="color: rgb(0, 32, 96); font-family: Arial, sans-serif; font-size: 9pt;">Services</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#002060">&nbsp;</span></b><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><b><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#08015F">International Air
+Transport Association</span></b><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#08015F">33, Route de
+l'Aéroport</span><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#08015F">1215 Geneva 15 Airport</span><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:#08015F">Switzerland</span><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-bottom: 0.0001pt;"><u><span lang="FR" style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;color:blue;mso-ansi-language:FR"><a href="http://www.iata.org/customer"><span lang="EN-US">www.iata.org/customer</span></a></span></u><span style="font-size: 9pt; font-family: 'Times New Roman', serif;"><o:p></o:p></span></p><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"></p></div>]]></td>
+</tr>
+</table>

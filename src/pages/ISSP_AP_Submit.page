@@ -1,0 +1,265 @@
+<apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
+    <c:iss_ap_css />
+    
+    <div class="panel-primary">
+            <div class="panel-heading head_panel_green">
+               <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
+            </div>
+    <div class="panel-body" id="body-enquiries">
+        <div class="progress">
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                A. Participation Country &amp; Type
+            </div>
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
+                B. {!strLoB} Country requirements
+            </div>
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                 C. BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                D. Submit to IATA
+            </div>
+        </div>
+    
+     <apex:form id="FinalForm">    
+        <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton styleclass="apbutton" action="{!goToStep3}" value="Previous"/>&nbsp;
+                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}"/>
+                <apex:commandButton styleclass="apbutton" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" style="float:right"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageMessages />
+            <div class="apcontainer">
+                <apex:pageBlockSection title="Application Status" columns="1">
+                    <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}">
+                    <apex:outputText >
+                        <div style="padding-bottom:10px">
+                            <div class="aplabel">The Airline needs to provide a Bank Account Mandate to IATA, so that the BSP / CASS proceedings can be settled. The bank account must either be:</div>
+                            <div style="margin:20px 20px">
+                                <p>1- an ICCS account (for cross border transfers) </p>
+                                <p>2- or a local bank account in the ISS country and currency of settlement. </p>
+                            </div>
+                            
+                        </div>
+                    </apex:outputText>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="* Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market, if available?" style="color:#a31717; font-weight: bold !important;"/>
+                        <!-- <apex:inputField value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="$('#bankmandate').toggle();"/> -->
+                        <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="hideText('{!$Component.mandateSelect}');"/>
+                    </apex:pageBlockSectionItem>      
+                    <apex:outputText id="bankmandate">
+                            <div id="bankmandate_p" style="padding-left:20px;{!IF (newForm.Airline_wish_to_join_ICCS__c == 'No', '', 'display:none')}" >
+                                
+                                <b>Please download the Bank Mandate form using the link below:</b><br/>
+                                <div id="bankmandatelink_p">
+                                    <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS Local Bank Account Beneficiary</a></u>
+                                </div>
+                                <br/>
+                                Kindly note the bank mandate must be issued from your Company’s Head Office and signed by two Head Office senior officers, at least one of which must be:<br/>
+                                <ul style="display:lock;list-style-type: disc;">
+                                    <li>Chief Financial Officer (CFO) or</li>
+                                    <li>Head of Treasury or Cash Management Department</li>
+                                </ul>
+                                <apex:outputPanel rendered="{!(strChangeType!='Bank Account Instructions')}">
+                                <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
+                                <div style="padding-bottom:5px">2) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process):</div>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
+                                <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
+                                <div style="padding-bottom:5px">2) Kindly note any change in the bank account instructions must be requested by the participant at least 15 days in advance. The implementation of such instructions can only be considered as valid by the participant when acknowledged by IATA, including the settlement date in which the new instructions will be effective. Until such confirmation, please ensure that you current account remains active.</div>
+                                <div style="padding-bottom:5px">3) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process). Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements it can delay the process.</div>
+                                </apex:outputPanel>
+                                <br/>
+                                <div style="font-weight:bold;margin-left:100px;display:block">
+                                Airline Participation<br/>
+                                International Air Transport Association<br/>
+                                    33, Route de l'Aéroport<br/>
+                                    1215 Geneva<br/>
+                                    Switzerland<br/>
+                                </div>
+                                <br/>
+                                <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
+                                <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
+                                    <div style="padding-bottom:5px"><b>NOTE II:</b>&nbsp;In case you are applying for a change from ICCS to a Local Bank Account in the concerned operation, you are requested to coordinate with ICCS team (ICCSO@iata.org) in order to take the necessary adjustments in regards to your ICCS participation.</div>
+                                </apex:outputPanel>
+                                <apex:outputText rendered="{!apCountryISOCode='BO'}">
+                                    <br/><br/><b>NOTE:</b>&nbsp;If you choose only one currency that travel agents may use to issue tickets, please inform your travel agents accordingly.  However, please note that GDSs do not have the capability to restrict ticketing to only one currency.
+                                </apex:outputText>
+                            </div>
+                  
+                    </apex:outputText>
+                <p/>
+                    
+                    <apex:outputText id="ICCS">
+                        <div class="aplabel">
+                            <p id="bankmandatenotes_p" style="{!IF (newForm.Airline_wish_to_join_ICCS__c == 'Yes', '', 'display:none')}" >
+                                
+                                Please coordinate directly with ICCS department via our Customer Portal. Please ensure the ICCS documents are submitted directly to ICCS Geneva.<br/>
+                                <br/>NOTE: The Bank account change from your local Bank account to ICCS will only start once the ICCS Agreement is received and validated by IATA's ICCS department.
+                                
+                            </p>
+                        </div>
+                    </apex:outputText>
+                    
+                </apex:pageBlockSection>
+                <div id="bankmandateupload_p" style="{!IF (newForm.Airline_wish_to_join_ICCS__c == 'No', '', 'display:none')}">
+                    <apex:pageBlockSection title="Upload Bank Mandate" columns="1">
+                        
+                        Please upload the completed Bank Mandates.                
+                        <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fileName}" />
+                        <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />                        
+                    </apex:pageBlockSection>
+                </div>
+                
+                <!-- Attachment List -->
+                <div id="bankmandateattachment_p" style="{!IF(OR(newForm.Airline_wish_to_join_ICCS__c == 'No'), '', 'display:none')}">
+                    <apex:pageBlockSection title="Attachments">
+                        
+                        <apex:pageBlockTable value="{!attachList}" var="attach" >
+                            <apex:column value="{!attach.Name}" />
+                        </apex:pageBlockTable>
+                        
+                    </apex:pageBlockSection>
+                </div>
+                
+                <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='IL',apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'))}">
+                    <apex:outputText rendered="{!apcountryisocode='IL'}">
+                        It is a legal requirement in {!strLOB} Israel that the participating Airline signs and submits the Antitrust Document.<br/>
+                        It is the Airline that signs the form, even it is being represented in the market by a GSA/GSSA.<br/>
+                        The document must show the Airline?s legal name, be dated, stamped, and sent to the following address:<br/><br/>
+                        <div style="padding-left:50px;padding-bottom:30px; font-weight:bold">
+                            IATA Israel<br/>
+                            Trade Tower Building, 8th Floor 25 Hamereed Street<br/>
+                            Tel Aviv, ISRAEL
+                        </div>
+                        <br/><br/>
+                        <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
+                        <br/><br/>
+                        Please click here to download the form(s):&nbsp;
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!apcountryisocode='EC'}">
+                        <div>
+                        Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
+                            <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Kindly indicate if your airline holds such legal forms and is consequently compliant with the legal Ecuadorian requirements:&nbsp;</apex:outputLabel>
+                        <apex:inputField value="{!newForm.Ecuador_Legal_Forms_requirements__c}" label=""/>
+                        <div style="margin-left:20px;margin-top:5px;line-height:20px">
+                            - Local Air Operator Certficate/Certificado de Transportador A?reo: <b>ON-line Carriers</b><br/>
+                            - Local Comercialization permit/ Permiso de comercializaci?n: <b>OFF-line carriers</b><br/>
+                        - Legal Constitution of the Airline or its GSA (including shareholding details)<br/>
+                        </div>
+                        </div>    
+                    </apex:outputText>
+                   
+                    <apex:pageBlockSectionItem helpText="The EDRPOU must belong to the beneficiary account holder indicated in the bank mandate." rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
+                        <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Beneficiary Registration Code/ Local Registration Number (EDRPOU)</apex:outputLabel>
+                        <apex:inputField value="{!newForm.BSP_UA_LocalReg_Number_EDRPOU__c}" label=""/>
+                    </apex:pageBlockSectionItem>
+              
+                    <apex:pageBlockSectionItem rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
+                        <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Bank Code (MFO)</apex:outputLabel>
+                        <apex:inputField value="{!newForm.BSP_UA_BankCode_MFO__c}" label=""/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:outputText rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
+                        In addition the following Agreements are mandatory to be submitted to the IATA local office in Ukraine:
+                        <br/><br/>
+                        <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
+                        <br/><br/>
+                        (1) IATA-Carrier Agreement (If the Airline has its own Representative office in Ukraine)<br/>
+                        OR<br/><br/>
+                        IATA-Carrier-GSA Agreement (If the Airline has a GSA as its representative in Ukraine)<br/><br/>
+                        (2) IATA-Carrier BG Agreement<br/><br/>
+                        
+                        The documents must be submitted in [ Word format ] to onatskya@iata.org, cc: kostyuky@iata.org and gogenkoi@iata.org.
+                        <br/><br/>
+                        Please click here to download the form(s):&nbsp;
+                        
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!AND(apcountryisocode='KR', strLOB='BSP')}">
+                        For BSP Korea, Airlines who wish to impose ticket capping for travel agents must inform the ETSPs/GDSs directly.<br/><br/>
+                        Alternatively, an Airline may avail of an optional service called Airline Capping Network.<br/>
+                        The form is to be sent to selcs@iata.org.
+                        <br/><br/>
+                        Click here for further details and to download the form.
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!apcountryisocode='PE'}">
+                        For {!strLOB} Peru, the Disclaimer in Spanish must be signed by the applicant and included in the joining package / documents.
+                        <br/><br/>
+                        Please click here to download the disclaimer form:&nbsp;
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!apcountryisocode='RU'}">
+                        <div style="margin-bottom:30px;line-height:16px">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Is there is a ?Double Tax avoiding Treaty? between Russia and the Airline's country of Registration?&nbsp;</apex:outputLabel>
+                            <apex:inputField value="{!newForm.BSP_Russia_Double_Tax_avoiding_Treaty__c}" label=""/>
+                        </apex:pageBlockSectionItem>
+                        <div style="margin-left:20px">
+                            (a) If <b>Yes</b>, please enclose your 'Certificate of Residence' which should be issued in accordance with Russian Tax  code regulation.  For more clarification on this document, you may contact IATA MOW office through the customer portal.<br/><br/>
+                            (b) If <b>No</b>, then your airline will need to participate in BSP Russia through a local GSA.
+                        </div>
+                        </div>
+                        <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
+                        <br/><br/>
+  
+                        Airlines who intend to use a local bank account for settlements must include the Company Card Draft in the joining package/documents.  The document must be submitted in [ Word format ].
+                        <br/><br/>
+                        Please click here to download the form:&nbsp;
+                    </apex:outputText>
+                    
+                    <apex:dataList value="{!urlList}" var="urlItem">
+                        <apex:outputLink value="{!urlItem.Download_URL__c}" target="_blank">{!urlItem.Link_label__c}</apex:outputLink>
+                    </apex:dataList>
+                    
+                </apex:pageBlockSection>
+                
+                <!-- Accept terms and conditions -->   
+                <apex:pageBlockSection title="Terms and conditions" columns="1">
+                    <div class="aplabel">
+                        <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
+                            and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
+                        <p>
+                            I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
+                        </p><br/> 
+                        <p>
+                            I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
+                        </p>
+                    
+                    <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
+                        <div style="line-height: 20px;font-weight:bold">
+                        In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
+                        <div style="margin-left:20px">
+                        a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
+                        b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
+                        c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
+                        d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
+                        e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
+                        </div>
+                        </div>
+                     </apex:outputText>
+                    </div>
+                    <div class="aplabel">
+                    By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
+                         
+                    <br/>
+                    <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
+                    </div>
+                    
+                </apex:pageBlockSection>   
+            </div>
+            
+        </apex:pageBlock>    
+    </apex:form>
+    
+        </div>
+    </div>    
+        
+        
+</apex:page>

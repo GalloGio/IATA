@@ -1,0 +1,72 @@
+<apex:page standardController="Portal_Application_Right__c" extensions="ISSP_EditPortalServiceAccessExt" >
+
+<script>
+	function showMessages(){
+		//alert(document.getElementById("{!$Component.theForm.theBlock.theSection.rightItem.rightField}").value);
+		var statusValue = document.getElementById("{!$Component.theForm.theBlock.theSection.rightItem.rightField}").value;
+		if (statusValue == 'Access Granted'){
+			if ('{!pendingApproval}' == 'true'){
+				if (confirm('This user is Pending Approval. If you grant him access to a service, this user will automatically become Active. Continue?'))
+					save();
+			}
+			else if ('{!noUser}' == 'true'){
+				if (confirm('This contact is still not a user. If you grant him access to a service, a user will automatically be created. Continue?'))
+					save();
+			}
+			else if ('{!inactiveUser}' == 'true'){
+				alert('This user is inactive. If you grant him access to a service, you must first reactivate the user manually.');
+			}
+			else{
+				save();
+			}
+		}
+		else{
+			saveUpdate();
+		}
+	}
+</script>
+
+<apex:sectionHeader title="Portal Service Access Edit" subtitle="{!Portal_Application_Right__c.name}"/>
+<apex:form id="theForm" >
+<apex:inputHidden value="{!Portal_Application_Right__c.Application_Name__c}" />
+<apex:actionFunction name="save" action="{!save}" />
+<apex:actionFunction name="saveUpdate" action="{!saveUpdate}" />
+<apex:pageBlock title="Portal Service Access Edit" mode="edit" id="theBlock" >
+	<apex:pageBlockButtons >
+		<apex:commandButton value="Save" onclick="showMessages();" rerender="theBlock" />
+		<apex:commandButton value="Cancel" action="{!cancel}" />
+	</apex:pageBlockButtons>
+	<apex:pageMessages />
+	<apex:pageBlockSection title="Information" id="theSection" >
+		<apex:pageBlockSectionItem >
+			<apex:outputLabel value="Contact" for="contact" />
+			<apex:inputField value="{!Portal_Application_Right__c.Contact__c}" id="contact" />
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem id="rightItem" >
+			<apex:outputLabel value="Access Status" for="right" />
+			<apex:inputField value="{!Portal_Application_Right__c.Right__c}" id="rightField" required="true" />
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem id="serviceItem" >
+			<apex:outputLabel value="Portal Service" for="service" />
+			<apex:inputField value="{!Portal_Application_Right__c.Portal_Application__c}" id="serviceField" />
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem >
+			<apex:outputLabel value="Reason" for="reason" />
+			<apex:inputField value="{!Portal_Application_Right__c.Access_Status_Reason__c}" id="reason" />
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem rendered="{!isTD}" >
+			<apex:outputLabel value="Main Currency" for="currency1" />
+			<apex:selectList id="currency1" value="{!Portal_Application_Right__c.Currency1__c}" size="1" >
+				<apex:selectOptions value="{!mainCurrencyOptions}" />
+			</apex:selectList>
+		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem rendered="{!isTD}" >
+			<apex:outputLabel value="Secondary Currency" for="currency2" />
+			<apex:selectList id="currency2" value="{!Portal_Application_Right__c.Currency2__c}" size="1" >
+				<apex:selectOptions value="{!currencyOptions}" />
+			</apex:selectList>
+		</apex:pageBlockSectionItem>
+	</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

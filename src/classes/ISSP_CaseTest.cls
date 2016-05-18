@@ -1,0 +1,465 @@
+@isTest
+public class ISSP_CaseTest {
+	
+	public static testMethod void testISSP_Case_1() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        insert c;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+        	cttr.pageLoad();
+        	
+        	cttr.AddComment();
+        	cttr.edit();
+        }
+        Test.stopTest();
+	}
+	
+	public static testMethod void testISSP_Case_2() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'Cases - SIS Help Desk'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        insert c;
+       
+       	ContentVersion doc = new ContentVersion();
+        doc.Title = 'test;';
+        doc.PathOnClient = 'test';
+        doc.VersionData = Blob.valueOf('test');
+        insert doc;
+        ContentDistribution cDist = new ContentDistribution();
+        cDist.RelatedRecordId = c.Id;
+        cDist.Name = 'test';
+        cDist.ContentVersionId = doc.Id;
+        insert cDist;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'SIS');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+        	cttr.pageLoad();
+        	cttr.sisCaseArea = 'test';
+        	cttr.AddComment();
+        	cttr.edit();
+        }
+        Test.stopTest();
+	}
+	
+	public static testMethod void testISSP_Case_3() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'IDFS Airline Participation Process'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Draft';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        insert c;
+        Portal_Applications__c newApp = new Portal_Applications__c();
+        newApp.Name = 'TEST';
+        insert newApp;
+        Portal_Application_Right__c newAppRight = new Portal_Application_Right__c();
+        newAppRight.Portal_Application__c = newApp.Id;
+        newAppRight.Contact__c = contact.Id;
+        newAppRight.Right__c = 'Access Granted';
+        insert newAppRight;
+        ISSP_Portal_Service_Ids__c newCS = new ISSP_Portal_Service_Ids__c();
+        newCS.AgencyAccreditation__c = String.valueOf(newApp.Id).left(15);
+        insert newCS;
+        AP_Process_Form__c form = new AP_Process_Form__c();
+        form.Case__c = c.Id;
+        insert form;
+        AMS_Pax_Accreditation_Form__c form2 = new AMS_Pax_Accreditation_Form__c();
+        form2.Operation_Type__c = 'Travel_Agent';
+        form2.SAAM_Case__c = c.Id;
+        insert form2;
+        
+        FAQ__kav FAQkav;
+        FAQkav =  (FAQ__kav)ISSP_ObjectFactory.createSObject('FAQ__kav',false,5);
+        FAQkav.Language='en_US';
+        FAQkav.UrlName = 'test00qwe';
+        FAQkav.Title ='Test';
+        FAQkav.To_display_on_Homepage__c=true;
+        insert FAQkav;
+        
+        String kId = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :FAQkav.Id LIMIT 1].KnowledgeArticleId;
+        
+        CaseArticle art = new CaseArticle();
+        art.CaseId = c.Id;
+        art.KnowledgeArticleId = kId;
+        insert art;
+        
+        How_To__kav howTokav ;
+        howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
+        howTokav.Language='en_US';
+        howTokav.UrlName = 'test2qwesdf';
+        howTokav.Title='test2';
+        howTokav.To_display_on_Homepage__c=true;
+        insert howTokav;
+        
+        String kId2 = [SELECT KnowledgeArticleId FROM How_To__kav WHERE Id = :howTokav.Id LIMIT 1].KnowledgeArticleId;
+        
+        CaseArticle art2 = new CaseArticle();
+        art2.CaseId = c.Id;
+        art2.KnowledgeArticleId = kId2;
+        insert art2;
+        
+        String recordTypeId2 = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Account account2 = ISSP_ObjectFactory.createNewAccount();
+        account2.Name = 'Account2';
+        account2.RecordTypeId = recordTypeId2;
+        account2.Site = '123';
+        account2.IATACode__c = '123';
+        insert account2;
+        Services_Rendered__c service = new Services_Rendered__c();
+        service.Services_Rendered_By__c = account.Id;
+        service.Services_Rendered_to_Airline__c = account2.Id;
+        insert service;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        ApexPages.currentPage().getParameters().put('artid', art.Id);
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+        	cttr.pageLoad();
+        	cttr.getAirlines();
+        	cttr.AddComment();
+        	cttr.edit();
+        	cttr.save();
+        	cttr.saveAttach();
+        	//cttr.getSelectArtical();
+        }
+        Test.stopTest();
+	}
+	
+	public static testMethod void testISSP_Case_4() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'DPC_Service_Request'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Draft';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        insert c;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+        	cttr.pageLoad();
+        	cttr.DPCAccept();
+        	cttr.DPCCompleteDSR();
+        	cttr.newCase.Planned_Start_CR__c = system.today();
+        	cttr.newCase.Planned_End_CR__c = system.today();
+        	cttr.DPCCompleteScheduleDSR();
+        	cttr.DPCSave();
+        	cttr.changeDpcOwner();
+        	cttr.newCase.Escalated_Status_ACCA__c = '8.0 Doc review - completed';
+        	cttr.validateACR();
+        	cttr.newCase.Evaluation_Effort__c = 'test';
+        	cttr.newCase.Specification_Effort__c = 'test';
+            cttr.newCase.Coding_Effort__c = 'test'; 
+            cttr.newCase.Unit_Test_Effort__c = 'test';
+    		cttr.newCase.System_Test_Effort__c = 'test'; 
+    		cttr.newCase.QA_Effort__c = 'test';
+            cttr.newCase.Documentation_Effort__c = 'test'; 
+            cttr.newCase.Implementation_Effort__c = 'test';
+            cttr.newCase.Estimated_Total_Person_days__c = 1; 
+            cttr.newCase.Estimated_Total_Development_Cost__c = 1;
+        	cttr.validateACR();
+        	cttr.newCase.Planned_Documentation_Date__c = system.today();
+        	cttr.newCase.Planned_Implementation_Date__c = system.today();
+        	cttr.validateACR();
+        	cttr.newCase.Documentation_Complete__c = system.today();
+        	cttr.newCase.Deployment_date_to_acca__c = system.today();
+        	cttr.close();
+        }
+        Test.stopTest();
+	}
+	
+	public static testMethod void testISSP_Case_5() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'DPC_Service_Request'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Draft';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        insert c;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+        	cttr.pageLoad();
+        	cttr.DPCCaseScheduleWarning = true;
+        	cttr.newCase.Region__c = 'Africa & Middle East';
+        	cttr.assignToIATA();
+        	cttr.newCase.Region__c = 'Americas';
+        	cttr.assignToIATA();
+        	cttr.newCase.Region__c = 'Asia & Pacific';
+        	cttr.assignToIATA();
+        	cttr.newCase.Region__c = 'China & North Asia';
+        	cttr.assignToIATA();
+        	cttr.newCase.Region__c = 'Europe';
+        	cttr.assignToIATA();
+        	cttr.cancel();
+        	ApexPages.currentPage().getParameters().put('retURL', '/ISSP_Homepage');
+        	cttr.cancel();
+        	ApexPages.currentPage().getParameters().put('caseId', '1234');
+        	cttr.cancel();
+        	cttr.isEditMode = true;
+        	cttr.cancel();
+        	cttr.isGSAOnly = false;
+        	cttr.isGSAUser = true;
+        	cttr.save();
+        	cttr.saveAttach();
+        	cttr.isGSAOnly = false;
+        	cttr.isGSAUser = true;
+        	cttr.save();
+        	cttr.saveAttach();
+        }
+        Test.stopTest();
+	}
+
+	public static testMethod void testISSP_Case_99() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+        							IATA_COUNTRY_EN__c = 'test', IATA_Country_FR__c = 'test', IATA_Country_ZH__c = 'test',
+        							IATA_Country_IT__c = 'test', IATA_Country_JP__c = 'test', ISO_Code__c = 'tt',
+        							IATA_Country_PT__c = 'test', IATA_Country_SP__c = 'test', Case_BSP_Country__c = 'test');
+        insert country;
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2',  ISO_Code__c = 'tp', Case_BSP_Country__c = 'test2');
+        insert country2;
+		User currentUserInfo = [select LanguageLocaleKey from User where Id = :UserInfo.getUserId()];
+    	currentUserInfo.LanguageLocaleKey = 'pt_BR';
+        update currentUserInfo;
+        
+        ISSP_Case cttr = new ISSP_Case();
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'zh_CN';
+        update currentUserInfo;
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'fr';
+        update currentUserInfo;
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'ja';
+        update currentUserInfo;
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'it';
+        update currentUserInfo;
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'es';
+        update currentUserInfo;
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'ko';
+        update currentUserInfo;
+        cttr.getItems();
+        currentUserInfo.LanguageLocaleKey = 'de';
+        update currentUserInfo;
+        cttr.getItems();
+        
+        cttr.edit();
+        
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Feature Request');
+        cttr.getCaseClassificationItems();
+        /*
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'General Question');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Problem / Issue');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH Finance');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH General');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH Membership');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH Operations');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Problem Issue');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'test');
+        cttr.getCaseClassificationItems();
+        cttr.filterCaseClassificationItems();
+        */
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Application Error');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Application Error - ICH');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Bankruptcy');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Billing Data Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Business Related');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Certification Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Claim Entry');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Clearance Notifications');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Digital Signature Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Enhancement to Existing Feature');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'ICH Contacts');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'ICH General');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'ICH Membership');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'ICH Reports');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'ICH Reports Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Input File load Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Invoice Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Invoicing / Billing');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Master Table Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Member Profile Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Migration Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Miscellaneous');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'New Feature');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Output File Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Processing Time Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Protest / Adjustment');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Remittance and Settlement');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Reporting Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Sandbox Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Server / iiNET Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Settlement File Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Supporting Document');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'System Related');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'User Access Issue');
+        cttr.getCaseDefectItems();
+        Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'test');
+        cttr.getCaseDefectItems();
+        
+        cttr.getCaseSubTypeItems();
+        
+        //cttr.retCaseClassificationItems();
+        
+        cttr.newCase.CaseArea__c = 'ICH';
+        cttr.getCaseTypeItems();
+        cttr.newCase.CaseArea__c = 'SIS';
+        cttr.getCaseTypeItems();
+        cttr.newCase.CaseArea__c = 'test';
+        cttr.getCaseTypeItems();
+	}
+
+ }

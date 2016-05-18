@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email sent out to sys admin whenever an error occurs on the GDP Replicate process</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IEC GDP Replicate Error</name>
+    <style>none</style>
+    <subject>IATA - IEC GDP Replicate Error</subject>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,7 @@
+<apex:page standardController="Account" tabStyle="Account">
+
+<flow:interview name="Assign_New_Financial_Assessment_Contact_by_Search" finishLocation="{!URLFOR('/' + id)}">
+    <apex:param name="id" value="{!id}"/>
+</flow:interview>
+
+</apex:page>

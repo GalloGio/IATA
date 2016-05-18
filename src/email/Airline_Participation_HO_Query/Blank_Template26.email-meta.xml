@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>Blank Template</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!Case.CaseNumber} - {!Case.Subject}</subject>
+    <textOnly>Dear {!Contact.Name},
+
+
+
+
+Should you require additional information regarding your original question, please reply to this email.
+
+For future support in regards to any other question, please log a new inquiry through our customer portal at www.iata.org/customer.
+
+
+
+
+Yours sincerely,
+
+{!Case.OwnerFullName}
+
+
+
+Airline Participation Central Team
+
+
+International Air Transport Association
+
+www.iata.org/
+
+
+
+Please visit our portal to search FAQs, to find documents and information related to Accreditation, BSP and CASS or to contact us!
+
+
+
+
+
+
+
+
+
+
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time to our Customer Portal.
+
+
+The enquiries received on-line will be managed with highest priority.
+
+
+
+
+
+-------------------------------------------------------------------------------------
+
+Your message received on {!Case.CreatedDate}:
+
+
+{!Case.Subject}
+{!Case.Description}
+-------------------------------------------------------------------------------------</textOnly>
+    <type>html</type>
+</EmailTemplate>

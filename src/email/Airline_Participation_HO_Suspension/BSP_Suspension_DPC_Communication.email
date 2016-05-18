@@ -1,0 +1,44 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p style="font-size: 12pt; text-align: justify; font-family: arial;" class="MsoNormal"></p><p><font size="2">SF Case: {!Case.CaseNumber}</font></p>
+<p> </p>
+<p><font size="2"><br></font></p><p><font size="2">Country: {!Case.BSPCountry__c}</font></p>
+<p> </p>
+<p><font size="2"><br></font></p><p><font size="2">Status:  {!Case.Status}</font></p>
+<p> </p>
+<p><font size="2"><br></font></p><p><font size="2">Requestor:  {!Case.OwnerEmail}</font></p>
+<p> </p>
+<p style="font-size: 12pt;"><span style="font-size: 12pt;"><br></span></p><p><font size="2">Description:</font></p><p style="font-size: 12pt;"><span style="font-size: 10pt; font-family: Geneva, sans-serif;"><br></span></p><p style="font-size: 12pt;"><span style="font-size: 10pt; font-family: Geneva, sans-serif;">Dear Team, <o:p></o:p></span></p>
+
+<p style="font-size: 12pt;"><span style="font-size: 10pt; font-family: Geneva, sans-serif;">&nbsp;</span></p>
+
+<p style="font-size: 12pt;"><span style="font-size: 10pt; font-family: Arial, sans-serif;">This is to inform that
+Airline {!Account.Name}
+({!Account.IATACode__c}/{!Account.Airline_designator__c}) has been suspended as
+a Ticketing Airline in BSP {!Case.BSPCountry__c}.</span><span style="font-family: Arial, sans-serif;"><o:p></o:p></span></p>
+
+<p style="font-size: 12pt; margin-bottom: 12pt;"><span style="font-size: 10pt; font-family: Arial, sans-serif;"><br>
+Effective today, {!Case.CreatedDate} please suspend the use of {!Account.Name}
+({!Account.IATACode__c}/{!Account.Airline_designator__c}) as a Ticketing
+Airline and stop the production of any addtional reports. <br>
+<br>
+Please make sure to deliver the reports to the airline's inbox containing the
+transactions up to the date of suspension. <br>
+<br>
+Kindly confirm as soon as it has been deactivated. <br>
+<br>
+Thank you in advance and best regards, <o:p></o:p></span></p>
+
+<p style="font-size: 12pt; margin-bottom: 12pt;"><span style="background-color: white; font-family: Arial, sans-serif; font-size: 10pt;">{!Case.OwnerFullName}</span></p><p style="font-size: 12pt;"></p><p class="MsoNormal" style="font-size: 12pt;"><o:p></o:p></p>
+<p style="font-size: 12pt;"></p>
+<p style="font-size: 12pt; text-align: justify; font-family: arial;" class="MsoNormal"><font size="2" face="Arial, sans-serif">Global Airline Participation Team</font></p>
+<p style="font-size: 12pt; text-align: justify; font-family: arial;" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p><p style="text-align: justify; font-family: arial;" class="MsoNormal"></p><p><font size="2">SF Thread ID: {!Case.Thread_Id}</font></p><p></p>
+<p style="font-size: 12pt; text-align: justify; font-family: arial;" class="MsoNormal">
+</p><p style="font-size: 12pt; background-color: white; background-position: initial initial; background-repeat: initial initial;" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">----------------------------<br>Your message received on&nbsp;{!Case.CreatedDate}:<o:p></o:p></span></p>
+<p style="font-size: 12pt; background-color: white; background-position: initial initial; background-repeat: initial initial;" class="MsoNormal"><span style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.Subject}<br><br><o:p></o:p></span></p>
+<p style="font-size: 12pt;"></p>
+<p style="font-size: 12pt; text-align: justify; font-family: arial;" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>
+<p style="font-size: 12pt; text-align: justify; font-family: arial;" class="MsoNormal"><font size="2" face="Arial, sans-serif"><br></font></p>]]></td>
+</tr>
+</table>

@@ -1,0 +1,170 @@
+public class AmazonFileTrgHelper {
+
+    /*
+
+        copy the files back into the appropriate folder
+        Delete the old files levereging AmazonRest class
+
+    
+    -----this are few lines to test it from your execute anynuomous the id is hte id of the amazonfile__c
+    list<Id> filesIDS = new list<Id>{'a558E0000005gYF'};
+
+    list<AmazonFile__C>  ama = (list<AmazonFile__C>) Database.query('SELECT '
+                                                            + TransformationHelper.selectAllFields('AmazonFile__C')
+                                                            + ' FROM AmazonFile__C  WHERE ID IN: filesIDS ALL ROWS ');
+    system.debug('' +ama);
+
+    AmazonFileTrgHelper.AfterUndelete(new map<Id,AmazonFile__C>{'a558E0000005gZc' => ama[0]});
+        
+    */
+
+    private static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials('GenericAttach');
+    private static final AmazonCredentials RECYCLEBIN = AmazonCredentials.getCredentials('RecycleBin');
+
+    public static void AfterUndelete(map<Id,AmazonFile__C> trgNewMap){
+
+        try{
+            
+            integer maxEntry = trgNewMap.keySet().size();
+            integer max = 100/2; //the max number of callouts in an @future Its on 2 cuase we have a copy and a delete!
+            integer numberOfLoops = (trgNewMap.KeySet().Size()+1)/50;
+            
+            if(numberOfLoops >50) throw new transformationException('Apex limits exceeded not possible to perform the operation');
+            //max number of @future calls allowed in a transaction
+
+
+            map<Integer,List<Id>> listIdToProcessPerInt  = new map<Integer,List<Id>>();
+            map<Integer,Id> IdPerInt = new map<Integer,Id>();
+            
+            integer k = 0;
+            for(Id idFile: trgNewMap.KeySet()){
+                IdPerInt.put(k, idFile);
+                k++;
+            }
+
+            system.debug(' @@@  IdPerInt ' + IdPerInt);
+            for(integer y = numberOfLoops;y>-1; y--){//Moonwalker
+                
+                integer localMax;
+                
+                if((max - maxEntry) > 0) localMax = maxEntry;
+                else {localMax = max; maxEntry -=50;} 
+
+                for(Integer i = 0; i < localMax  ;i++){
+
+                    if(listIdToProcessPerInt.get(y) == null)
+                        listIdToProcessPerInt.put(y, new list<Id>());
+                    listIdToProcessPerInt.get(y).add(IdPerInt.get(i));
+                }
+            }
+
+            system.debug(' @@@ 1  listIdToProcessPerInt ' + listIdToProcessPerInt);
+            //for(integer num:listIdToProcessPerInt.keySet()){
+            for(integer num = numberOfLoops;num >-1; num--){
+                if(Limits.getLimitFutureCalls()<>0){
+
+                    system.debug(' @@@ 2  listIdToProcessPerInt ' + listIdToProcessPerInt.get(num));
+                    system.debug(' @@@ 3 Limits.getLimitFutureCalls() ' + Limits.getLimitFutureCalls());
+                    AfterUndelete(listIdToProcessPerInt.get(num));
+                }
+                
+                else throw new transformationException('Apex limits exceeded not possible to perform the operation \n trgNewMap '
+                                 + trgNewMap+ '\n listIdToProcessPerInt  '  + listIdToProcessPerInt  +  '\n num '+num   );
+            }
+                    
+
+        }catch(Exception e){
+
+         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete  ' , '\n MESSAGE: '  + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString()  );
+
+        }
+
+
+    }
+
+    /* 
+        we need to use an @future cause of the callout operation
+        we need to copy back the file and then delete it
+    */
+
+    @Future(callout=true)
+    public static void AfterUndelete(List<Id> filesIDS){
+//  throw new transformationException('#######   filesIDS' +filesIDS);
+        try{        
+            
+            if(Limits.getLimitCallouts()==0) throw new transformationException('At Future Limits reached ');
+
+
+            map<Id,GenericAttach> genericAttachPerId = new map<Id,GenericAttach>();
+            map<Id,AmazonFile__C> amazonFilesPerId = new map<Id,AmazonFile__C>();
+            for(AmazonFile__C amF : (list<AmazonFile__C>) Database.query('SELECT '
+                                                            + TransformationHelper.selectAllFields('AmazonFile__C')
+                                                            + ' FROM AmazonFile__C  WHERE ID IN: filesIDS  ALL ROWS ')){
+
+                    amazonFilesPerId.put(amF.id,amF);
+                    genericAttachPerId.put(amF.id,new GenericAttach(amF));
+
+            }
+
+
+            // first we copy back
+            for(Id amazonFId :amazonFilesPerId.keySet()){
+
+                    AmazonRest.copyFile(RECYCLEBIN,genericAttachPerId.get(amazonFId).pathComplete,
+                                        CREDENTIALS,genericAttachPerId.get(amazonFId).pathComplete);            
+
+            }
+            // then we delete
+            for(Id amazonFId :amazonFilesPerId.keySet()){
+
+                    AmazonRest.deleteFile(genericAttachPerId.get(amazonFId).pathComplete,RECYCLEBIN);           
+
+            }
+
+
+        }catch(Exception e){
+            if(test.isrunningTest())   throw new transformationException( e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS);
+         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: ' 
+                     + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS  );
+
+        }
+    
+    }
+    
+
+
+    public class genericAttach{
+
+    
+            public string pathComplete {get;set;}
+            //public string name {get;set;}
+
+
+        public genericAttach(AmazonFile__c amazonFile){
+
+                string lookup =  getTheLookUp(amazonFile);
+                this.pathComplete = lookup <> null ? lookup.substring(0,3)+'/'+ lookup + '/'+  amazonFile.Name : '';
+
+
+        }
+
+        // this is to keep it generic as the users might want to add new lookups to this component and there will be no need to change the code
+        // and the same time it will be possible to undelete attach belonging to different parents
+        public string getTheLookUp(AmazonFile__c amazonFile){
+                
+            for(String fieldName: TransformationHelper.getAllFieldsPerDisplayType('AmazonFile__c').get('Reference')){
+
+                    if(amazonFile.get(fieldName) != null && fieldName.endsWith('__c'))  {
+
+                        system.debug('##############   fieldName ' +fieldName);
+                        return String.valueOf(amazonFile.get(fieldName));
+                    
+                    }
+
+            }
+            return null;
+        }
+
+    }
+
+}

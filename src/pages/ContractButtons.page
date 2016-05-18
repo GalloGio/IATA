@@ -1,0 +1,55 @@
+<apex:page standardcontroller="Contract" extensions="ContractButtonsController">
+    <apex:form >
+    <apex:pageMessages ></apex:pageMessages>
+        <script>
+            if("{!$Request.success}" == "true") {
+                if ("{!$Request.redirid}" != "") {
+                    window.top.location.href = "/{!$Request.redirid}";
+                }
+            }
+            
+            function confirmInitiateRenewalProcess() {
+                return confirm('This will initiate the Contract Renewal Process. Continue ?');
+            }
+            
+            function confirmRenewedAsIs() {
+                return confirm('This will renew the Contract as-is. Continue ?');
+            }
+            
+            function confirmAmended() {
+                return confirm('This will initiate the Contract Renewal Process for an amended Contract. Continue ?');
+            }
+            
+            function confirmNotRenewed() {
+                return confirm('This will mark the Contract as not renewed. Continue ?');
+            }
+            
+            function confirmContractCancelled() {
+                return confirm('This will cancel the Contract.\n\nIMPORTANT NOTE:\nBooked revenue for the current year must be adjusted manually before cancelling a contract.\nDo not proceed until done.\n\nContinue ?');
+            }
+        </script>
+        
+        <apex:outputPanel >
+            <table width="100%">
+                <tr>
+                    <td align="center">
+                        <apex:commandButton onclick="return confirmInitiateRenewalProcess();" action="{!InitiateRenewalProcess}" value="Initiate Contract Renewal Process" rendered="{!showSMRenewButtons}" />
+                        
+                        <apex:commandButton onclick="return confirmRenewedAsIs();" action="{!RenewAsIs}" value="Renewed as-is" rendered="{!showPMRenewButtons}" />
+                        <apex:commandButton onclick="return confirmAmended();" action="{!InitiateRenewalProcess}" value="Amended" rendered="{!showPMRenewButtons}" />
+                        <apex:commandButton onclick="return confirmNotRenewed();" action="{!DoNotRenew}" value="Not Renewed" rendered="{!showPMRenewButtons}" />
+                        
+                        <apex:commandButton onclick="return confirmContractCancelled();" action="{!CancelContract}" value="Contract Canceled" rendered="{!showPMCancelButton}" style="margin-left: 15px;" />
+                        
+                        
+                        <apex:outputPanel id="LinkToRenewalOpp" rendered="{!showRenewalOpportunityLink}">
+                            The Contract Renewal process has started. &nbsp;
+                            <apex:outputLink value="/{!RenewalOpportunityId}" target="_top">Click here</apex:outputLink> to go to the renewal Opportunity.
+                        </apex:outputPanel>
+                    </td>
+                </tr>
+            </table>
+        </apex:outputPanel>
+        
+    </apex:form>
+</apex:page>

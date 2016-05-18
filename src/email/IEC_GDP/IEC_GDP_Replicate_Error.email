@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta content="Title in here" property="og:title">
+		<title>Your Message Subject or Title</title>
+		<style type="text/css">		
+			/* Reset */
+			body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #ECECEC;}
+			img {outline:none; text-decoration:none;}
+			a img {border:none;}
+			p {margin: 1em 0;}
+			br {line-height:12px;}
+			h1, h2, h3, h4, h5, h6 {color: #000000 !important;} /* hotmail fix */
+			a {color: #0088cc; text-decoration:none;}
+			a:link { color: #0088cc; text-decoration:none;}
+			a:visited { color: #0088cc; text-decoration:none;}
+			a:hover { color: #0088cc; text-decoration:underline;}
+			/* Client Specific */
+			table td {border-collapse: collapse;}
+			#outlook a {padding:0;} 
+			.ExternalClass {width:100%;}  
+			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, 
+			.ExternalClass div {line-height: 100%;} 
+			.ExternalClass img[class^=Emoji] { width: 10px !important; height: 10px !important; display: inline !important; }
+			.noWrapPrice {white-space: nowrap;  overflow: hidden;}
+			/* Mobile Targeting */
+			@media only screen and (max-device-width: 480px) {
+			body {-webkit-text-size-adjust:120% !important; line-height:120% !important;}
+			h1 {-webkit-text-size-adjust:100% !important; line-height:110% !important;}
+			.ap-wrapper{margin:0px 14px;}
+			a, a:link, a:visited, a:active  {color: #000000; text-decoration:none;}/* fix unwanted styling for iPhone on date, tel and address */
+			}
+			/* iPad Targeting */
+			@media only screen and (device-width: 768px) {			
+			a, a:link, a:visited, a:active  {color: #000000 !important; text-decoration:none !important;} /* fix unwanted styling on date, tel and address */	
+			}	
+			/* Android Targeting */
+			@media only screen and (-webkit-device-pixel-ratio:.75){/* low density (ldpi) layouts */}
+			@media only screen and (-webkit-device-pixel-ratio:1){/* medium density (mdpi) layouts */}
+			@media only screen and (-webkit-device-pixel-ratio:1.5){/* high density (hdpi) layouts */}	  
+		</style>
+	</head>
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="ECECEC">
+		<center>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="margin:0; padding:0; width:100% !important; line-height: 100% !important;" id="ap-backgroundwrap">
+			<tr>
+				<td align="center" class="background-noise" valign="top" bgcolor="ECECEC">
+					<!-- start wrapper //-->
+					<table class="ap-wrapper" width="700" border="0" cellpadding="0" celspacing="0">
+			<tr>
+				<td valign="top" align="left">
+					<!-- start header -->
+					<table cellspacing="0" cellpadding="0" border="0" width="100%" id="ap-header">
+						<tr>
+							<td valign="top" align="left" height="67" width="100"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxH&oid=00D110000005PWM" height="62" width="100" alt="IATA store" style="outline:none; display:block;" border="0"></td>
+							<td valign="bottom" align="right" style="font-family: 'Lucida Grande','Lucida Sans','Lucida Sans Unicode', Arial, Helvetica, Verdana, sans-serif; color:#666666 !important; font-size: 11px;line-height:14px;">							
+								&nbsp;
+								<br><br>
+							</td>
+						</tr>
+					</table>
+					<!-- end header //-->
+					<!-- start white container -->
+					<table cellspacing="0" bgcolor="ffffff" cellpadding="0" border="0" width="100%" style="-webkit-border-radius:7px;-moz-border-radius:7px; border-radius:7px; border-top: 1px solid #e1e1e1; border-right: 1px solid #cecece; border-left: 1px solid #cecece; border-bottom: 1px solid #b4b4b4; -moz-box-shadow: 0px 1px 1px #b4b4b4; -webkit-box-shadow: 0px 1px 1px #b4b4b4; box-shadow: 0px 1px 1px #b4b4b4;" class="ap-container">
+						<tr>
+							<td valign="top" align="center">
+								<img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" alt="" style="display:block; outline: none;" border="0" height="18" width="1">
+								<table cellspacing="0" height="9" cellpadding="0" border="0" width="100%" class="ap-9pxspacer">
+									<tr>
+										<td valign="top" height="9" align="left" style="font-size:6px; line-height: 0;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" alt="" style="display:block; outline: none;" border="0" height="9" width="1"></td>
+									</tr>
+								</table>
+								<table cellspacing="0" cellpadding="0" border="0" width="656" class="ap-heading">
+									<tr>
+										<td valign="top" align="left">
+											<h3 style="font-family: 'Lucida Grande','Lucida Sans','Lucida Sans Unicode', Arial, Helvetica, Verdana, sans-serif; color:#000000 !important; font-size: 21px; line-height:24px; margin-top:0; margin-left: 0; margin-right:0; margin-bottom:0; font-weight:200;">Error Notification - GDP Replicate Process</h3>
+										</td>
+									</tr>
+								</table>
+								<!-- end heading -->
+								<!--start data divider -->
+								<table cellspacing="0" cellpadding="0" border="0" width="656" class="ap-inner-divide">
+									<tr>
+										<td valign="top" height="10" align="left" style="height: 10px;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" style="display:block; outline: none;" border="0" height="10" width="1"></td>
+									</tr>
+									<tr>
+										<td valign="top" bgcolor="e6e6e6" style="background:#e6e6e6;height: 1px;" height="1" align="left"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" style="display:block; outline: none;" border="0" height="1" width="1"></td>
+									</tr>
+									<tr>
+										<td valign="top" height="15" align="left" style="height: 15px;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" style="display:block; outline: none;" border="0" height="15" width="1"></td>
+									</tr>
+								</table>
+								<!--end data divider -->
+								<!-- start billing-table -->
+								<table align="center" class="ap-billing-table" width="622" cellpadding="0" border="0" cellspacing="0">
+									<tr>
+										<td align="left" valign="top" style="font-family: 'Lucida Grande','Lucida Sans','Lucida Sans Unicode', Arial, Helvetica, Verdana, sans-serif; color:#111111; font-size: 12px;line-height:18px;">
+											The GDP Replicate Process has generated errors while processing the GDP Records. Please click on the link below in order to view the report of errors generated today:
+										</td>
+									</tr>
+									<tr>
+										<td align="left" class="spacer-col" width="15" valign="top">&nbsp;</td>
+									</tr>
+									<tr>
+										<td align="left" valign="top">
+											<div style="font-size:12px; line-height:1.3em; color:#979797;font-family: Lucida Grande, Lucida Sans, Lucida Sans Unicode, Arial, Helvetica, Verdana, sans-serif">
+												<a href="https://iata.my.salesforce.com/00Ow0000006YhAB" style="color:#0085cf" class="aapl-link">IEC Errors - GDP Replicate Report</a>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<!-- end billing-table -->	
+								<!--start order data row divider -->
+								<table cellspacing="0" cellpadding="0" border="0" width="656" class="ap-inner-divide">
+									<tr>
+										<td valign="top" height="20" align="left" style="height: 20px;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" style="display:block; outline: none;" border="0" height="20" width="1"></td>
+									</tr>
+									<tr>
+										<td valign="top" bgcolor="e6e6e6" style="background:#e6e6e6;height: 1px;" height="1" align="left"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" style="display:block; outline: none;" border="0" height="1" width="1"></td>
+									</tr>
+									<tr>
+										<td valign="top" height="10" align="left" style="height: 10px;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" style="display:block; outline: none;" border="0" height="10" width="1"></td>
+									</tr>
+								</table>
+								<!--end order data row divider -->                              
+								<table cellpadding="0" width="656" border="0" cellspacing="0" class="ap-payment-totals">
+									<!-- start payment totals -->
+									<table cellpadding="0" width="656" border="0" cellspacing="0" class="ap-payment-totals">
+										<!-- start 25px spacer -->
+										<table cellspacing="0" height="25" cellpadding="0" border="0" width="100%" class="ap-25pxspacer">
+											<tr>
+												<td valign="top" height="25" align="left" style="height:25px;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" alt="" style="display:block; outline: none;" border="0" height="25" width="1"></td>
+											</tr>
+										</table>
+										<!-- end 25px spacer -->
+										</td>
+										</tr>
+									</table>
+									<table cellspacing="0" height="10" cellpadding="0" border="0" width="100%" class="ap-10pxspacer">
+										<tr>
+											<td valign="top" height="10" align="left" style="height:10px;"><img src="https://iata--ecom--c.cs18.content.force.com/servlet/servlet.ImageServer?id=015110000000gxC&oid=00D110000005PWM" alt="" style="display:block; outline: none;" border="0" height="10" width="1"></td>
+										</tr>
+									</table>
+
+									<table cellspacing="0" height="10" cellpadding="0" border="0" width="100%" class="ap-footer-boxes">
+										<tr>							
+										</tr>
+									</table>
+									<table cellspacing="0" height="10" cellpadding="0" border="0" width="100%" class="ap-footer-text">
+										<tr>
+											<td style="padding-top:3px;-webkit-text-size-adjust:125%">
+												<div style="font-size:10px; line-height:1.3em; color:#979797;font-family: Lucida Grande, Lucida Sans, Lucida Sans Unicode, Arial, Helvetica, Verdana, sans-serif"></div>
+											</td>
+										</tr>
+										<tr>
+											<td style="padding-top:14px;-webkit-text-size-adjust:125%">
+												<div style="font-size:10px; line-height:1.3em; color:#979797;font-family: Lucida Grande, Lucida Sans, Lucida Sans Unicode, Arial, Helvetica, Verdana, sans-serif">
+													Copyright © 2014&nbsp;<a style="text-decoration:none !important;color:#979797">International Air Transport Association</a> All rights reserved.&nbsp;&nbsp;&nbsp;&nbsp;|
+													&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apple.com/ca/privacy/?cid=CDM-CA-OM-OA-BFS-0000000" style="color:#0085cf" class="aapl-link">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;|
+													&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="color:#0085cf" class="aapl-link">Contact Us</a>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<!-- end footer text -->
+									</td>
+									</tr>
+								</table>
+								<!-- end wrapper //-->
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+		</center>
+	</body>
+</html>

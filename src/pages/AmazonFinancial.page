@@ -1,0 +1,449 @@
+<apex:page standardController="case" extensions="AmazonFinancialCtrl" showHeader="false" sidebar="false" id="thePage" applyHtmlTag="false" applyBodyTag="false" >
+  <apex:outputPanel rendered="{!Archived}"> 
+     <script> 
+     
+   function viewMethod(){
+    
+        var archivedDate = '{!cse.ArchivedDate__c}'; 
+        var caseNum = '{!cse.CaseNumber}';
+        
+        var dir = "\\\\ymq-fs2\\IFAP\\"+archivedDate.slice(archivedDate.length-4, archivedDate.length)+"\\"+caseNum+"\\Financial Documents\\";
+        var text = "<br/>The document is archived. You can view the document here:<br/> ";
+        var instruction = "<br/><i>To view the document, copy and paste the network path onto your Windows explorer(the same way you access any document on your computer).</i><br/>"; 
+            
+        HTMLstring='<HTML>\n';
+        HTMLstring+='<style type="text/css"> body { font-family:  Arial; } </style>';    
+        HTMLstring+='<HEAD>\n';
+        HTMLstring+='<TITLE>File has been archived</TITLE>\n';
+        HTMLstring+='</HEAD><center>';
+        HTMLstring+='<BODY>'+text +'<br/>'+dir+instruction+'</a><br/>';
+        HTMLstring+='</BODY>\n <input type="button" value="Ok" onclick="window.close();">';
+        HTMLstring+='</HTML>';
+    
+      newwindow=window.open('','','width=590,height=180,status=0,menubar=0,location=0,toolbar=0,scrollbars=0,resizable=0');
+      newdocument=newwindow.document;
+      newdocument.write(HTMLstring); 
+        
+    }
+      
+    </script>
+      
+    <Apex:pageblock >
+        <apex:pageBlockTable id="docsTable" value="{!docs}" var="d"  Title="{!$Label.Financial_Documents}">
+
+            <apex:column headerValue="Action" width="60" >
+               
+                <a href ="" onclick="viewMethod();return false;"  title="View" style="color:#015ba7; cursor: pointer;">
+                   <span value="View" class="view">View</span>
+                </a>
+                   
+            </apex:column>
+
+            <apex:column headerValue="{!$Label.IFAP_name}">
+                <a href ="" onclick="viewMethod();return false;" style="color:black; cursor:pointer;" title="{!d.Name}" class="view">
+                   <apex:outputText value="{!d.Name}"/>
+                </a>
+            </apex:column>
+
+        </apex:pageBlockTable>
+    </Apex:pageblock>
+
+  
+  </apex:outputPanel>
+  
+  
+<apex:outputPanel rendered="{!not(Archived)}">
+<apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+<apex:includeScript value="{!$Resource.ajaxform}"/>
+
+        <div id="formcontainer">
+           <form id="sendFileForm2" method="post" 
+                    enctype="multipart/form-data" 
+                    action="{!AMAZONURL}" 
+                    style="display:none" 
+                    target="iframe2" >
+            </form>
+        </div>
+        
+        
+        <iframe id="iframe2" name="iframe2" style="display:none" ></iframe>
+       
+       
+        <apex:form id="theForm" enctype="multipart/form-data">
+        
+
+            <div id="loading" style="display:none">
+                    <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" >
+                    </div>
+                    <div style="border:1px solid black; background:white; text-align:center;
+                                display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+                                position: absolute; top:40%; left:45%; z-index:10;" >
+                        <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>Work in progress...
+                    </div>
+            </div>        
+    
+    
+    <script>
+    
+        j$ = jQuery.noConflict();   
+        j$( document ).ready(function() {
+            if( ! {!listFile.empty} ) {
+                j$(".phase2").show();
+                j$(".phase3").show();
+            }
+            
+            j$(".phase1").change( function() {
+                var filename = j$(this).val();
+                if( filename.length > 80 ) {
+                    j$(this).val("");
+                    alert("File name too long, please, rename it");
+                } else if((new RegExp('[()]')).test(filename)) {
+                    j$(this).val("");
+                    alert("File name cannot contain brackets, please, rename it");
+                } else {
+                    j$(".phase2").show();
+                }
+            });
+        });
+
+       function sendfileInfo() {
+            if(j$(".inputfile").val() =="" || j$(".inputfile").val() ==null || j$(".inputfile").val() == undefined)return false;
+            
+            
+            j$("#loading").show();
+          
+            setTimeout(function(){
+                try{
+                     var filename = "";
+                     var filetype = "";
+                     var filesize = 0;
+                 
+                     // INTERNET EXPLORER
+                     if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+                         var allpath = j$(".inputfile").val();
+                         var extension = allpath.substring(allpath.lastIndexOf('.')+1);
+                         filename = allpath.indexOf('\\')==-1 ?  allpath : allpath .substring(allpath.lastIndexOf('\\')+1);
+                         filetype = extension == "pdf" ? "application/pdf" : extension;
+                         filesize = 0;
+                         
+                    // NORMAL BROWSERS
+                    }else{
+                         var file = j$(".inputfile")[0].files[0];
+                         filename = file.name;
+                         filetype = file.type;
+                         filesize = file.size;
+                     }  
+                            
+                    AmazonFinancialCtrl.createUploadFile("{!id}",filename,filetype, filesize, function(result, event){
+                        if(result["isSuccess"]==false){
+                            var em1 = result["errorMessage"];
+                            var em2 = em1.replace("apostrophe", "'");
+                            alert(em2);
+                            j$("#loading").hide();
+                            return false;
+                        }
+                    
+                        var form = j$("#sendFileForm2");
+                        form.attr('action', result["url"]);
+                        addParam(form,"success_action_status",result["actionStatus"]);
+                        addParam(form,"Content-Type", result["contentType"]);
+                        addParam(form,"signature", result["signedPolicy"]);
+                        addParam(form,"policy", result["policy"]);
+                        addParam(form,"AWSAccessKeyId", result["accessKey"]);
+                        var key = result["filenameupload"];
+                        addParam(form,"key", key);
+                        submitFunction( key, filesize);
+                    });
+                        
+                }catch(err){alert( err.message); }
+                
+            },500);
+           
+        }
+
+
+
+
+        function addParam( form, name, value ) {
+            var input = j$("#"+name.replace("-",""));
+            if(j$(input).size()==0)
+               input = j$("<input/>"); 
+            j$(input)
+                .attr("type", "hidden")
+                .attr("id", name.replace("-",""))
+                .attr("name", name).val(value);
+            form.prepend(input);
+        }
+        
+        
+         function submitStart(){
+               // if(!confirm('Please check you have uploaded all the documents and then click ok. \r{!message}'))
+                if(!confirm('{!$Label.IFAPAllFilesCheck} \r{!message}')) 
+                    return false;
+               j$("#loading").show();
+                AmazonFinancialCtrl.mergeFilesAndSubmitParams("{!id}", function(result, event){
+                if(result["isSuccess"]==false){
+                    alert(result["errorMessage"]);
+                     j$("#loading").hide();
+                  }else if(result["isSuccess"]==true){
+                    alert("Files merged");
+                    refreshAll();
+                  }
+                });
+
+            }
+            
+        function isIE(){
+            return /MSIE/.test(navigator.userAgent);
+        }
+    
+       
+        
+        
+        function submitFunction( key, filesize){
+             if( j$(".inputfile").val() == "")return false;
+             
+             j$.support.cors = true;
+             
+             j$("<input type='file' id='inputfiletemp'/>").insertBefore("#inputfile");
+             j$("#inputfile").appendTo("#sendFileForm2");
+             
+             
+             var formtmp = document.getElementById('sendFileForm2');
+             
+             //IE
+             //if(isIE()){
+             if(true){
+                 if(/MSIE 8\./.test(navigator.userAgent) || /MSIE 7\./.test(navigator.userAgent)){
+                     alert("Your browser is too old and it's not supported anymore");
+                     j$("#loading").hide();
+                     return;
+                 }
+                
+                var form = document.getElementById('sendFileForm2');
+                form.submit();
+                j$("#iframe2").unbind("load").on("load", function () {
+                    AmazonFinancialCtrl.checkIfFileWasUploaded(key, function(result, event){
+                        if (result) {
+                           // alert("File uploaded succesfully");
+                            callToCreateAmazonFileObject(key, filesize);
+                           
+                        } else {
+                            alert("Connection error. Try it later");
+                        }
+                       // j$("#loading").hide();
+                        j$(".phase3").fadeIn();
+                        // create again input file and delete the temporary one
+                        j$('<input class="inputfile phase1" type="file"  name="file" id="inputfile" styleClass="phase1" "/>').insertBefore("#inputfiletemp");
+                        j$("#inputfiletemp").remove();
+                        
+                        // empty the hidden form
+                        j$("#sendFileForm2").empty();
+                        
+                      //  j$("#loading").hide();
+                    });
+                });
+             
+             //REST OF THE WORLD (INCLUDING IE9!!)
+             }else{
+             
+                j$("#sendFileForm2").ajaxSubmit({
+                    beforeSubmit: function() { 
+                        j$("#loading").show();
+                    },
+                    error: function(err){
+                        j$("#loading").hide();
+                        var errorMessage = j$(err.responseText).find("Message");
+                        alert(errorMessage);
+                        if(errorMessage.html().indexOf("content-type")!=-1)
+                            alert("Your file is not a valid pdf file");
+                        else if(errorMessage.html().indexOf("Bucket POST must contain a field named ")!=-1)
+                            alert("Check the selected file!");    
+                        else if(j$(err.responseText).find("Code").html().indexOf("EntityTooLarge")!=-1)
+                            alert("Your file is too large. The limit is 10 MB");
+                        else
+                            alert("ERROR: "+j$(err.responseText).find("Message").html());
+                        
+                       
+                       j$("#inputfile").insertBefore("#inputfiletemp");
+                       j$("#inputfiletemp").remove();
+                    },
+                    success: function(err){
+    
+                        callToCreateAmazonFileObject(key, filesize);
+                      
+                      //  j$("#loading").hide();
+                      //  alert("File uploaded succesfully");
+                        j$(".phase3").fadeIn();
+                        // create again input file and delete the temporary one
+                        j$('<input class="inputfile phase1" type="file"  name="file" id="inputfile" styleClass="phase1" />').insertBefore("#inputfiletemp");
+                        j$("#inputfiletemp").remove();
+                        
+                        // empty the hidden form
+                        j$("#sendFileForm2").empty();
+                    }
+                
+                }); 
+               }
+        }
+        
+        function callToCreateAmazonFileObject(key, filesize) {
+            AmazonFinancialCtrl.createAmazonFileObject(key, filesize,"{!id}", function(result, event){
+                refreshListDoc();
+           });
+        }
+    </script>
+    
+    <apex:actionFunction name="refreshAll" action="{!RefreshAll}" reRender="theForm"  oncomplete="j$('#loading').hide();"/>
+    <apex:actionFunction name="refreshListDoc" action="{!refreshListDoc}"  rerender="fileList,sizeLabel" oncomplete="j$('#loading').hide();"/>
+ 
+       
+            
+    <apex:outputPanel id="messagePanel2" > 
+          <apex:pageMessages />
+      </apex:outputPanel>
+                        
+    <apex:outputPanel rendered="{!canUploadAndDelete}" id="btnsSubmitPanel" >  
+     <label><b>{!$Label.IFAP_Overall_Max_size_20mb}</b></label> 
+
+                     <!--  <apex:outputText value="{0,number,0.##}\20" id="sizeLabel"  >
+                        <apex:param value="{!totalSize}" />
+                    </apex:outputText> -->
+  
+     <table border="0" width="100%" align="left"   >
+            <tr>
+    
+                <table id="mytable">
+                    <tr>
+                    <td>
+                        <b><apex:outputLabel for="inputfile" value="{!$Label.IFAP_1_Select_the_File} "  styleClass="phase1"/></b> <br/>
+
+                        <input class="inputfile phase1" type="file"  name="file" id="inputfile" styleClass="phase1" />
+                    </td>
+                    
+                    <td>
+                        <b><apex:outputLabel value="{!$Label.IFAP_2_Click_the_Upload_Financial_Documents_button}" styleClass="phase2"/></b><br/>
+                        <input id="submitBtn" type="button" class="submit phase2" value="{!$Label.Upload_Financial_Documents}" onclick="sendfileInfo()"/>
+                    </td>
+ 
+                    <td>
+
+                        <b><apex:outputLabel value=" {!$Label.IFAP_3_When_you_finished_uploading_please_click_on_the_Confirm_submission_of_do}" styleClass="phase3"/></b><br/>
+                               <apex:commandButton action="{!mergeFilesAndSubmitParams}"   styleclass="btn phase3" 
+                                    onclick="if(!confirm('{!$Label.IFAPAllFilesCheck} \r{!message}')) return false; j$('#loading').show() "
+                               
+                                onComplete=" if({!hasmessage}){ j$('#loading').hide();return false;}refreshAll();alert('{!$Label.IfapSubmissionOfDocsOK}');j$('#loading').hide();"   
+                               rerender="messagePanel2"
+                                    styleClass="btn phase3"
+                                    value="{!$Label.IFAP_Confirm_submission_of_documents_to_IATA}"/> 
+                    </td> 
+                   </tr> <style>
+                    .phase2,.phase3{display:none;}
+                    #mytable{width:100%;}
+                    #mytable tr td{width:30%; font-weight:bold; font-size:110%;vertical-align:baseline;}
+                    #mytable tr td:last-child{width:40%;}
+                    #submitBtn{
+                              color: #333;
+                              margin: 1px;
+                              padding: 5px 6px;
+                              border: 1px solid #b5b5b5;
+                              background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;
+                              border-bottom-color: #7f7f7f;
+                              font-weight: bold;
+                              font-size: .9em;
+                              -moz-border-radius: 3px;
+                              -webkit-border-radius: 3px;
+                              border-radius: 3px;
+                              }
+                    #inputfile{
+                              color: #333;
+                              margin: 1px;
+                              padding: 2px 3px;
+                              border-bottom-color: #7f7f7f;
+                              font-weight: bold;
+                              font-size: .9em;
+                              -moz-border-radius: 3px;
+                              -webkit-border-radius: 3px;
+                              border-radius: 3px;
+                              }
+                tr{
+                        display:!{if(canUploadAndDelete,'block','none')}
+                    }       
+                    iframe{display:none;}       
+                </style>
+                </table>
+               
+
+             </tr>
+        </table>
+   </apex:outputPanel>   
+
+
+        <apex:pageblock id="fileList" mode="maindetail"> 
+
+            <apex:pageBlockTable id="tablefileones"  value="{!listfile}" var="fileone" Title="{!$Label.Financial_Documents}">
+
+                <apex:column headerValue="Action" width="{!if(canUploadAndDelete,'120','60')}"   >
+                 
+                  <a class="actionLink" title="view" escape="false" target="_blank" onclick="getLInk('{!fileone.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >View</a> 
+                     <script>
+                     
+                          function getLInk(fileName) {
+                         // alert(''+fileName);
+                           j$("#loading").show();
+                            setTimeout(function(){
+                                try{
+                             
+                                    AmazonFinancialCtrl.getExpiringLinkIfap(fileName,function(result, event){
+                                            var result2= result.replace("&amp;","&"); 
+                                            var newWin = window.open(result2);
+                                            if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                                                alert('Please check the pop-up settings of your browser!');
+                                                        }
+                                            j$("#loading").hide();
+                                    },{escape:false});
+                                
+                                   
+                                }catch(err){alert('Please try again later if the problem persists contact the support');}
+                                
+                              },500);
+                            }
+                     
+                     </script> 
+                     
+                   {!if(canUploadAndDelete,' | ','')} 
+
+                 <apex:commandLink action="{!fileone.deletefile}" rendered="{!canUploadAndDelete}"  
+                        onclick=" if(!confirm('{!$Label.IfapDelete}'))return false; j$('#loading').show(); " reRender="messagePanel2"
+                                 value="Delete" style="color:#015ba7; cursor: pointer;" onComplete=" if(!{!listFile.empty})refreshListDoc(); return false;refreshAll();" />
+                </apex:column>
+
+                <apex:column headerValue="{!$Label.IFAP_name}">
+                    <apex:outputText value="{!fileone.name}"/>
+                </apex:column>
+
+
+                <apex:column headerValue="Size">
+                       <apex:outputText value="{0,number,0.##} MB">
+                        <apex:param value="{!fileone.size}" />
+                    </apex:outputText>
+                </apex:column>
+
+                <apex:column headerValue="Created Date" rendered="{!renderLast2Columns }" >
+                    <apex:outputText value="{!fileone.lastModified}"/>
+                </apex:column>
+                
+                <apex:column headerValue="Created By" rendered="{!renderLast2Columns }" >
+                    <apex:outputText value="{!fileone.createdBy}"/>
+                </apex:column>
+
+            </apex:pageBlockTable>
+            <script>
+                 j$("#loading").hide();
+            </script>
+        </apex:pageblock>
+
+
+    </apex:form>  
+  </apex:outputPanel>
+</apex:page>

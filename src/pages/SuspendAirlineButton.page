@@ -1,0 +1,25 @@
+<apex:page standardcontroller="Account" extensions="clsSuspendAirlineButtonController">
+    <apex:form >
+    <apex:pageMessages ></apex:pageMessages>
+        <script>
+            if("{!$Request.success}" == "true") {
+                window.top.location.href = "/{!accountId}";
+            }
+            
+            function confirmAction() {
+                return confirm('Are you sure you want to suspend this Airline? The participation of the Airline will be made inactive from the BSP and CASS for ALL countries.');
+            }
+        </script>
+        
+        <apex:outputPanel rendered="{!showSuspendButton}">
+            <table width="100%">
+                <tr>
+                    <td align="center">
+                        <apex:commandButton onclick="return confirmAction();" action="{!suspendAirline}" value="Suspend Airline" />
+                    </td>
+                </tr>
+            </table>
+        </apex:outputPanel>
+        
+    </apex:form>
+</apex:page>

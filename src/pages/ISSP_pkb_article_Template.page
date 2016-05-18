@@ -1,0 +1,128 @@
+<apex:page cache="false"
+  standardStylesheets="false"
+  showHeader="false"
+  sidebar="false"
+  standardController="KnowledgeArticle"
+  extensions="pkb_Controller"
+  language="{!pkbCon.selectedLanguage}"
+  applyBodyTag="false"
+  applyHtmlTag="false"
+  >
+<html>
+<head>
+  <title>{!pageTitle}</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=.5, minimum-scale=.5, maximum-scale=.5"/>
+    <meta name="viewport" content="target-densitydpi=device-dpi" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <script src="{!$Resource.pkb_jquery_1_6_2}" type="text/javascript" />
+    <script src="{!$Resource.pkb_jquery_simplemodal_1_4_1}" type="text/javascript" />
+    <apex:outputText rendered="{!viewingArticle}">
+    <apex:variable var="typeName" value="{!SUBSTITUTE(pkbCon.theKad.articleTypeName, pkbCon.kavExtension, '')}" />
+    <apex:variable var="articleURL" value="{!pkbCon.currentSiteUrl}articles{!pkbCon.selectedLanguageURL}{!typeName}/{!pkbCon.theKad.urlName}" />
+        <meta property="og:title" content="{!pkbCon.theKad.title}"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:url" content="{!articleURL}"/>
+        <meta property="og:site_name" content="{!SUBSTITUTE(pkbCon.siteName,'_',' ')}" />
+        <meta property="og:description" content="{!pkbCon.theKad.summary}"/>
+        <meta property="description" content="{!pkbCon.theKad.summary}"/>
+        <link rel="canonical" href="{!articleURL}"/>
+        <link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/style.css')}" type="text/css" />
+    </apex:outputText>
+  <c:pkb_css />
+  <c:pkb_js pkbCon="{!pkbCon}" />
+</head>
+
+<body>
+<!--
+HELPFUL DEBUG DATA
+
+SITE ADMIN: {!pkbCon.siteAdmin.Email}, {!pkbCon.siteAdmin.Name}<br/>
+ALL PARAMS: {!allSearchParams}<br/>
+SITE/PAGE URL: {!pkbCon.currentSiteUrl}<br/>
+FEEDBACK? : {!displayFeedback}<br/>
+SESSION: {!$Api.Session_ID}<br/>
+RSS URL: {!$Page.pkb_RSS}<br/>
+CATEGORIES: {!selectedCategory}<br/>
+KNOWLEDGE ARTICLE ID: {!theKad.Id}<br/>
+KNOWLEDGE ARTICLE ID (FROM CONTROLLER): {!KnowledgeArticle.Id}<br/>
+-->
+
+<!--  HOME PAGE LAYOUT -->
+    
+    <div id="header">
+        <span style="margin-left: 5px;">
+            <div class="logo"> </div>
+        </span>
+    </div>
+        
+  <div id="body">
+      
+      <div id="left_column">
+    
+          <div id="leftHeader" style="height: 60px;">&nbsp;</div>
+
+        <apex:outputText rendered="{!NOT(displayContactUs)}">
+        <div id="left_content">
+          
+     
+        </div>
+      </apex:outputText>
+        
+    </div>
+
+
+    <div id="right_column">
+        <div style="color: #028FD7; font-size: 21pt; font-weight: normal; line-height: 28px; margin: 10px 0px;">{!$Label.ISSP_FAQ}</div>                  
+        <div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;line-height: 18px;margin-bottom: 0px;margin-top: 0;">
+            Our customers most frequent questions about operations and procedures related to BSP, CASS and agent accreditation are continuously compiled into a knowledge database accessible to all at all times.
+        </div>
+      
+      <div id="right_content">
+
+        <apex:outputText rendered="{!NOT(displayContactUs)}">
+          <apex:outputText rendered="{!NOT(viewingArticle)}">
+            <c:pkb_featured pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" />
+            <c:pkb_popular pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" />
+            <c:pkb_results pkbCon="{!pkbCon}" rendered="{!searchExecuted}" showHeaderInfo="true" />
+          </apex:outputText>
+
+          <apex:outputText rendered="{!viewingArticle}">
+            <div id="articleView" >
+              <c:pkb_articleview pkbCon="{!pkbCon}" showFeedbackYesNo="yes" showBackLinks="false" />
+            </div>
+          </apex:outputText>
+        </apex:outputText>
+
+        <apex:outputText rendered="{!displayContactUs}">
+          <c:pkb_results pkbCon="{!pkbCon}" rendered="{!searchExecuted}" showHeaderInfo="false" />
+          <c:pkb_contactus_buttons_article pkbCon="{!pkbCon}" />
+        </apex:outputText>
+
+      </div>
+
+    </div>
+
+    <div style="clear: both;"></div>
+  </div>
+
+  <div id="footer">
+    <div id="footerImg">
+    <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yLWy&oid=00D2000000008TF&lastMod=1389654749000" alt="IATA Customer Portal"/>
+        <small style="color:#999">© International Air Transport Association (IATA) 2014. All rights reserved.</small>
+    </div>                                                                                                                                                       
+    
+  </div>
+<site:googleAnalyticsTracking />
+<div id="dvBackgroundMaster" style="">
+    <img id="ctl00_imgBackgroundMaster" class="wwBg" title="Page Background Image" alt="Page Background Image" src="{!urlfor($Resource.IIS_Portal,'/images/background_IATA.png')}" />
+</div>    
+    
+</body>
+
+</html>
+<site:previewAsAdmin />
+</apex:page>

@@ -1,0 +1,37 @@
+<apex:page standardController="ISSP_Banner__c">
+    <style>
+    .carousel{
+        width:358px;
+        }
+    
+    a{
+        color:inherit;
+        }
+     td.banner{
+        vertical-align: middle;
+        }
+    </style>
+
+    <div style='background-image:url("{!ISSP_Banner__c.Background_image__c}") ; background-size: 358px 271px; background-repeat: no-repeat;'>
+
+            <table width="358px" height="271px" style="">
+                <tr><!-- zone text 1 -->
+                    <td class="banner"  colspan="3"  style="color:{!ISSP_Banner__c.Zone_1_text_colour__c}; font-size:{!ISSP_Banner__c.Zone_1_text_size__c}; text-align:center; background-color:{!ISSP_Banner__c.Zone_1_text_background_colour__c};">
+                     <a href="{!ISSP_Banner__c.Zone_1_text_hyperlink__c}" target="{!ISSP_Banner__c.Zone_1_text_hyperlink_target_window__c}" style="text-decoration:none">{!ISSP_Banner__c.Zone_1_text__c}</a>
+                   
+                    </td>
+                </tr>
+                <tr><!-- zone text 2 -->
+                    <td class="banner"  colspan="3"  style="color:{!ISSP_Banner__c.Zone_2_text_colour__c}; font-size:{!ISSP_Banner__c.Zone_2_text_size__c}; text-align:center; background-color:{!ISSP_Banner__c.Zone_2_text_background_colour__c};">
+                     <a href="{!ISSP_Banner__c.Zone_2_text_hyperlink__c}" target="{!ISSP_Banner__c.Zone_2_text_hyperlink_target_window__c}" style="text-decoration:none">{!ISSP_Banner__c.Zone_2_text__c}</a>
+                    </td>
+                </tr>
+                <tr><!-- zone text 3 -->
+                    <td class="banner"  colspan="3"  style="color:{!ISSP_Banner__c.Zone_3_text_colour__c}; font-size:{!ISSP_Banner__c.Zone_3_text_size__c}; text-align:center; background-color:{!ISSP_Banner__c.Zone_3_text_background_colour__c};">
+                     <a href="{!ISSP_Banner__c.Zone_3_text_hyperlink__c}" target="{!ISSP_Banner__c.Zone_3_text_hyperlink_target_window__c}" style="text-decoration:none">{!ISSP_Banner__c.Zone_3_text__c}</a>
+                    </td>
+                </tr>
+                
+                </table>
+            </div>
+</apex:page>

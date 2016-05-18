@@ -1,0 +1,200 @@
+public class AmazonFile {
+
+	private AmazonRest.S3File s3File;
+	public AmazonFile__c amazonFile;
+
+	public AmazonFile(AmazonRest.S3File s3File, AmazonFile__c aFile ) {
+		this.s3File = s3File;
+		this.amazonFile = afile;
+	}
+
+	public Id getId() {
+		return this.amazonFile == null? null: this.amazonFile.Id;
+	}
+	
+	public double getSize() {
+		return this.s3File.getSize();
+	}
+
+	public String getName() {
+		return this.s3File.getName();
+	}
+	
+	public String getDescription() {
+		return amazonFile==null? '': this.amazonFile.Description__c;
+	}
+
+	public String getFullName() {
+		return this.s3File.getFullName();
+	}
+
+	public DateTime getLastModifiedDate() {
+		return amazonFile==null? this.s3File.getLastModified(): this.amazonFile.CreatedDate;
+	}
+
+	public String getLastModified() {
+		return getLastModifiedDate().format();
+	}
+
+	public DateTime getCreatedDate() {
+		try {
+			//EM: Need to take into account the user locale: compute offset from GMT
+			DateTime now = DateTime.now();
+			Long offset = (DateTime.newInstance(now.date(), now.time()).getTime() - DateTime.newInstance(now.dateGmt(), now.timeGmt()).getTime())/(3600*1000);
+			return amazonFile == null? null: this.amazonFile.CreatedDate.addHours(Integer.valueOf(offset));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getCreatedBy() {
+		return amazonFile == null? null: this.amazonFile.CreatedBy.Name;
+	}
+
+	public String getCreatedById() {
+		return amazonFile == null? null: this.amazonFile.CreatedById;
+	}
+	
+	public Boolean getIsPublic() {
+		return amazonFile == null? false: this.amazonFile.isPublic__c;
+	}
+	
+	public String getFileIdentifier() {
+		return amazonFile == null? null: this.amazonFile.File_Identifier__c;
+	}
+
+	// for compatibility with AmazonFinancial.page
+	public PageReference deleteFile() {
+		delFile();
+		return null;
+	}
+	
+	public Boolean delFile() {
+		Boolean result = this.s3File.deleteFile();
+		if ( result ) {
+			deleteAmazonFile();
+		}
+		return result;
+	}
+
+	public void deleteAmazonFile() {
+		try {
+			if (amazonFile != null) {
+				delete amazonFile;
+			}
+		} catch (Exception e) {
+			System.debug('Error deleting amazon file ' + amazonFile);
+		}
+	}
+	
+	public void changePermission() {
+		if (amazonFile != null) {
+			amazonFile.isPublic__c = !amazonFile.isPublic__c;
+			update amazonFile;
+		}
+	}
+	
+	public void changePermission(Boolean value) {
+		if (amazonFile != null && amazonFile.isPublic__c != value ) {
+			amazonFile.isPublic__c = value;
+			update amazonFile;
+		}
+	}
+	
+	public Boolean copyFile( AmazonCredentials sourceCredentials, AmazonCredentials destCredentials, String destinationFilename) {
+		String sourceFilename = this.amazonFile.Full_Name_Unique__c;
+		Boolean result = AmazonRest.copyFile(sourceCredentials, sourceFilename, destCredentials, destinationFilename);
+		return result;
+	}
+	
+
+	/** STATIC METHODS **/
+
+	/**
+		Get a all AmazonFiles from an Object
+	**/
+	public static list<AmazonFile> getFiles(Id sobjectId, list<AmazonRest.S3File> listS3Files) {
+		map<String,AmazonFile__c> mapAmazonFiles = getMapAmazonFiles(sobjectId);
+		//list<AmazonFile__c> listNewAmazonFile = new list<AmazonFile__c>();
+		list<AmazonFile> listResultFiles = new list<AmazonFile>();
+		
+		for (AmazonRest.S3File s3File: listS3Files) {
+			AmazonFile__c amazonFile = mapAmazonFiles.get(s3File.getKey());
+			if ( amazonFile == null ) {
+				amazonFile = createAmazonFile(s3File);
+				//listNewAmazonFile.add(amazonFile);
+			}
+			listResultFiles.add( new AmazonFile(s3File, amazonFile) );
+		}
+		//if(!listNewAmazonFile.isEmpty()) insert listNewAmazonFile;
+		return listResultFiles;
+	}
+	
+	/**
+		Get a single file AmazonFile Object
+	**/
+	public static AmazonFile getFile(Id sobjectId, String fullName, AmazonCredentials credential) {
+		try {
+			// find the file in the Amazon Bucket
+			list<AmazonRest.S3File> listS3Files = AmazonRest.getListFiles(fullName, WrapperAttach.CREDENTIAL);
+			if ( listS3Files.size() != 1 ) {
+				System.debug('Error finding a file in Amazon: ' + fullName + ' ' + credential + '\nresult: ' + listS3Files);
+				return null;
+			}
+			AmazonRest.S3File s3File = listS3Files.get(0);
+			
+			//get the amazonFile Object
+			AmazonFile__c aFile;
+			list<AmazonFile__c> aFiles = [
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c
+				From AmazonFile__c 
+				Where id = :sobjectId
+			];
+			
+			if ( aFiles.isEmpty() ) {
+				aFile = createAmazonFile(s3File);
+			} else {
+				aFile = aFiles.get(0);
+			}
+			
+			AmazonFile amazonFile = new AmazonFile(s3File, aFile);
+			return amazonFile;
+			
+		} catch ( Exception e) {
+			System.debug('Error creating an AmazonFile object ' + fullName + ' ' + credential + '\nerror: ' + e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+		Creates an AmazonFile__c object with input S3File object
+	**/
+	private static AmazonFile__c createAmazonFile(AmazonRest.S3File s3File) {
+		AmazonFile__c amazonFile = new AmazonFile__c();
+		amazonFile.Full_Name_Unique__c = s3File.getKey();
+		amazonFile.Name = s3File.getName();
+		amazonFile.isPublic__c = false;
+		return amazonFile;
+	}
+
+	/**
+		Returns a map of all AmazonFile__c related to an object with Full_Name_Unique__c as key
+	**/
+	private static map<String,AmazonFile__c> getMapAmazonFiles(Id sobjectId) {
+		list<AmazonFile__c> listFiles = new list<AmazonFile__c>();
+		// for cases
+		if ( String.ValueOf(sobjectId.getSObjectType()) == 'Case') {
+			listFiles = [
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c
+				From AmazonFile__c
+				Where Case__c = :sobjectId
+			];
+		}
+		map<String,AmazonFile__c> mapFiles = new map<String,AmazonFile__c>();
+		for (AmazonFile__c file: listFiles) {
+			mapFiles.put(file.Full_Name_Unique__c, file);
+		}
+		return mapFiles;
+	}
+
+}

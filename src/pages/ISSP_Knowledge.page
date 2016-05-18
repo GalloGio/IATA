@@ -1,0 +1,5 @@
+<apex:page >
+<script>
+window.location= "/_ui/knowledge/ui/KnowledgeHome" ;
+</script>
+</apex:page>

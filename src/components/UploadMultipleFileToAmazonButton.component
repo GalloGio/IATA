@@ -1,0 +1,149 @@
+<!-- This component must be inside of a form -->
+<apex:component controller="UploadMultipleFileToAmazonButtonCtrl" allowDML="true" >
+    <apex:attribute name="sObjectId" type="Id" required="true" assignto="{!parentId}" description="id of the parent object" />
+    <apex:attribute name="AmazonCredential" type="String" required="true" description="credential name to access to the amazon bucket" />
+    <apex:attribute name="path" type="String" required="true" assignto="{!folder}" description="destination folder"  />
+
+    <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/33.0/apex.js"/>
+    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+
+
+<script>
+
+    var fileCounter = {
+        value: 0,
+        reset: function(val) {  value = val; },
+        //increase: function() { value++; },
+        //decrease: function() { value--; },
+        refreshIfEmpty: function() {
+            value--;
+            if (value==0) refreshList();
+        }
+    }
+
+    
+
+    $( document ).ready(function() {
+        var fileInput = $("#file-field");
+
+        fileInput.bind("change", function() {
+            startLoading();
+            uploadFiles(this.files);
+        });
+    });
+
+    function uploadFiles(files) {
+        fileCounter.reset(files.length); 
+        $.each(files, function(i, file) {
+            uploadFile(file);
+        });
+    }
+
+    function browseFiles() {
+        $("#file-field").click();
+    }
+
+    function uploadFile(file) {
+        UploadMultipleFileToAmazonButtonCtrl.createUploadFile("{!sobjectId}",file.name,file.type, file.size, '{!path}', '{!AmazonCredential}', function(result, event){
+            if(event.type == "exception") {
+                alert("Exception!!");
+                stopLoading();
+                fileCounter.refreshIfEmpty();
+                return false;
+            }
+            if(!event.status) {
+                alert("Bad status " + event.status);
+                stopLoading();
+                fileCounter.refreshIfEmpty();
+                return false;
+            }
+            if( ! result["isSuccess"]){
+                alert(result["errorMessage"].replace("&#39;","'").replace("&amp", "&").replace(";",""));
+                stopLoading();
+                fileCounter.refreshIfEmpty();
+                return false;
+            }
+            var amazonCredentials = result;
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = function(e) {
+                var arrayBuffer = reader.result;
+                remoteFunctionPut(amazonCredentials, file, reader.result);
+            };
+        }, {buffer: true, escape: true, timeout: 120000} );
+
+    }
+
+    function remoteFunctionPut(amazonCredentials, file, fileBody) {
+        var amazonFilePath = amazonCredentials.endpoint+amazonCredentials.bucketName+'/'+amazonCredentials.fullFileNameEncoded;
+        sforce.connection.sessionId = "{!$Api.Session_ID}";
+        sforce.connection.init("{!$Api.Session_ID}", amazonFilePath);
+
+        //var progressBar;
+
+        var xhr = new XMLHttpRequest();
+        
+        // salesforce overrides original XMLHttpRequest in IE
+        if (!xhr.upload && window.Sarissa && window.Sarissa.originalXMLHttpRequest) {
+            xhr = new Sarissa.originalXMLHttpRequest();
+        }
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                fileCounter.refreshIfEmpty();
+                var status = this.status;
+                if (status == 200) { 
+                    ////progressUpload(100, this.progressBar);
+                    //uploadFile(file);
+                } else {
+                    if (this.responseText) {
+                        getResponseFromXML(this.responseText); 
+                        //uploadFile(file);
+                    } else {
+                        var message = '';
+                        if (this.statusText) {
+                            message = 'Status: '+this.status+'. Error: '+this.statusText; 
+                        }
+                        else if (this.responseText) {
+                            message = 'Status: '+this.status+'. Error: '+this.responseText;
+                        }
+                        else {
+                            message = 'Status:'+this.status+'. Error: Unknown error.'; 
+                        }
+                    }
+                }
+            }
+        };
+
+        xhr.open("PUT", amazonFilePath);
+
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Authorization",amazonCredentials.authorization);
+        xhr.setRequestHeader("X-Amz-Date",amazonCredentials.timestamp);
+        xhr.setRequestHeader("Content-Type",file.type+';charset=UTF-8');
+
+        xhr.send(fileBody);
+
+        callToCreateAmazonFileObject(file, amazonCredentials.fullFileName);
+    }
+
+    function getResponseFromXML(response) {
+        parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(response, "text/xml");
+        if (xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue) {
+            alert ('Error. Message from Amazon S3: '+xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue);
+            stopLoading();
+        }
+    }
+
+    function callToCreateAmazonFileObject(file, path) {
+        UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(path, file.size,"{!sobjectId}", function(result, event){
+        });
+    }
+</script>
+
+    <input id="file-field" multiple="true" name="file" style="display: none;" type="file" />
+    <input class="btn" id="btnUpload" value="{!$Label.Upload_File}" type="submit" onclick="browseFiles(); return false;" />
+
+</apex:component>

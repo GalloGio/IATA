@@ -1,0 +1,33 @@
+<table width="550" cellpadding="5" height="400" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td locked="0" style=" font-family:arial; bLabel:main; color:#000000; font-size:12pt; bEditID:r3st1; background-color:#FFFFFF;" aEditID="c1r1" tEditID="c1r1" >
+<![CDATA[<P><FONT size=4><STRONG>RETURN DOCUMENT FORM</STRONG></FONT></P>
+<P><STRONG><FONT size=4></FONT></STRONG>&nbsp;</P>
+<P><U>Form registered date/time: {!Case.CreatedDate}</U></P>
+<P>&nbsp;</P>
+<P><EM>IATA code</EM>: <STRONG>{!Account.Site}</STRONG></P>
+<P><EM>Agent name</EM>: <STRONG>{!Account.Name}</STRONG></P>
+<P><EM>Contact person at pick up location:</EM> <STRONG>{!Contact.Name}</STRONG></P>
+<P><EM>Telephone:</EM> <STRONG>{!Contact.Phone}</STRONG></P>
+<P><EM>Email:</EM> <STRONG>{!Contact.Email}</STRONG></P>
+<P><EM>Pick up location</EM>: </P>
+<P><STRONG>{!Case_Pick_up_address}</STRONG></P>
+<P><EM>Office hours Mon-Fri:</EM> <STRONG>{!Case_Office_Hours_Mon_Fri}</STRONG></P>
+<P><EM>Pick up date:</EM> <STRONG>{!Case_Requested_pick_up_date}</STRONG></P>
+<P><EM>Pick up hours:</EM> <STRONG>{!Case_Requested_pick_up_hours}</STRONG></P>
+<P>&nbsp;</P>
+<P><EM>Total number of cartons/packages</EM>: <STRONG>{!Case_Total_number_of_cartons_packages}</STRONG></P>
+<P><EM>Total gross weight</EM>: <STRONG>{!Case_Total_gross_weight}</STRONG></P>
+<P><EM>Status</EM>: <STRONG>{!Case_Status_cartons}</STRONG></P>
+<P><EM>If Other Status</EM>: <STRONG>{!Case.Other_status__c}</STRONG></P>
+<P><EM>Document type</EM>: <STRONG>{!Case_Document_type_Description}</STRONG></P>
+<P><EM>Reason for returning documents</EM>:<STRONG> {!Case_Reason_for_returning_documents}</STRONG></P>
+<P><EM>If Other Reason</EM>: <STRONG>{!Case_Other_reason}</STRONG></P>
+<P>Document numbers:</P>
+<P><STRONG>{!Case_Document_numbers}</STRONG></P>
+<P>&nbsp;</P>
+<P><EM>Form received and handled by</EM>:<STRONG> {!Case.OwnerFullName}, {!User.Division}</STRONG></P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>]]></td>
+</tr>
+</table>

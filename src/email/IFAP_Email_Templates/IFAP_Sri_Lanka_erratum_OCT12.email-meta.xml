@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Erratum message for Sri Lanka agents on wrong amount input on original template</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>IFAP Sri Lanka erratum - OCT12</name>
+    <style>freeForm</style>
+    <subject>Financial Review 2012 - Erratum</subject>
+    <type>html</type>
+</EmailTemplate>

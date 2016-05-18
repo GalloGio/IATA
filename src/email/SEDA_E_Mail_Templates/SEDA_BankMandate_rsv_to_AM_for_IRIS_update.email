@@ -1,0 +1,15 @@
+Case link: {!Case.Link}
+
+CS has been received the Bank Mandate of this agent.
+
+Please update the Bank Mandate to IRIS and fill the field "IRIS Updated Date" in the SEDA case.
+
+Case information:
+
+IATA code: {!Account.Site} 
+Account name: {!Account.Name} 
+Country: {!Case.BSPCountry__c} 
+BSP/CASS: {!Case.BSP_CASS__c} 
+Case number: {!Case.CaseNumber} 
+Case subject: {!Case.Subject}
+Current Outstanding Amount : {!Case.Currency__c}{!Case.Outstanding_Amount__c}

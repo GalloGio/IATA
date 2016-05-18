@@ -1,0 +1,235 @@
+public with sharing class ISSP_CaseList {
+
+    public string selectedList {get;set;}
+    public string currNavState {get;set;}
+    public map<string,ISSPCaseListView__c> caseListViewMap {get;set;} 
+    public list<string> ListViewNameList {get;set;}
+    
+    private String sortDirection = 'ASC';
+    private String sortExp  = 'CaseNumber';
+    private boolean isExtinstion = false ; 
+
+    public boolean isPWCProfile {get;set;}
+    public boolean isDPCUser {get;set;}
+    public boolean isAdmin {get;set;}
+        
+    public boolean apList {get;set;}
+    public boolean apUser {get;set;}
+    
+    public string soqlOrder {get;set;}
+
+    public String sortExpression {
+     get { return sortExp; }
+     set {
+       //if the column is clicked on then switch between Ascending and Descending modes
+       if (value == sortExp)
+         sortDirection = (sortDirection == 'ASC')? 'DESC' : 'ASC';
+       else
+         sortDirection = 'ASC';
+       sortExp = value;
+     }
+    }
+
+    public String getSortDirection() {
+        //if not column is selected 
+        if (sortExpression == null || sortExpression == '')
+			return 'ASC';
+        else
+			return sortDirection;
+    }
+        
+    public void setSortDirection(String value) {  
+		sortDirection = value;
+    }
+    
+    public ISSP_CaseList(){}
+
+    public ISSP_CaseList(ISSP_Homepage controller) {
+        system.debug('KER1 START ISSP_CaseList(ISSP_Homepage controller)');
+        isExtinstion = true ;
+        initialization();
+    }
+    
+    public PageReference initialization() {
+        try {
+            if(!isExtinstion){
+                sortDirection = 'ASC';
+            }
+            else{
+				ApexPages.currentPage().getParameters().put('ListViewName', '3_MyRecentCases');
+                sortDirection = 'DESC';
+            }
+            
+            //AS
+            currNavState = ApexPages.currentPage().getParameters().get('mid');
+            
+            //TF
+            apList = false;
+            apUser = false;
+            User myUser = [select Id,ContactId from User where Id =:Userinfo.getUserId()];
+            if (myUser.ContactId != null){
+				List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
+																where Contact__c =: myUser.ContactId and
+																Right__c = 'Access Granted'  and
+																Portal_Application__r.Name = 'Airline Participation'];
+		        if (!appRightList.isEmpty()){
+		                apUser = true;
+		        }
+            }
+                
+            Id profileId=userinfo.getProfileId();
+            String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
+            if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
+            if(profileName.startsWith('ISS Portal DPC') ){  isDPCUser= true; }
+            
+            isAdmin = ApexPages.currentPage().getParameters().get('admin') == 'true'  ? true : false ;
+            
+            initFilters();
+            initCaseListViewMap();
+            
+        } catch(Exception exp) {
+                ISSP_Utilities.exceptionDump(exp);
+        }
+        return null;
+    }
+    
+    //AEF:
+    private list<ISSPCaseListView__c> csCaseListViews { 
+        get {
+			if(null == csCaseListViews)
+            	csCaseListViews = ISSPCaseListView__c.getAll().values();
+			return csCaseListViews;
+        } 
+        set; 
+    }
+    private ISSP_PermissionFilterFactory.PermissionSetFilter     thePermissionSetFilter { get; set; }
+    private ISSP_PermissionFilterFactory.ProfilePermissionFilter theProfilePermissionFilter { get; set; }   
+
+    private void initFilters() {
+        system.debug('initFilters user id >> ' + UserInfo.getUserId());
+        theProfilePermissionFilter = ISSP_PermissionFilterFactory.createProfilePermissionFilter();
+        thePermissionSetFilter =ISSP_PermissionFilterFactory.createPermissionSetFilter(csCaseListViews, 'Permission_set__c');
+    }
+    
+    private void initCaseListViewMap() {
+        ListViewNameList = new list<string>();
+        caseListViewMap = new map<string,ISSPCaseListView__c>();
+        for(ISSPCaseListView__c caseListViewItem : csCaseListViews){
+                   
+			Boolean resultPermission1 = true; 
+            if(!theProfilePermissionFilter.isDataEmpty(caseListViewItem, 'Profiles_Id__c')) {
+                resultPermission1 = theProfilePermissionFilter.isUserPermittedFor(caseListViewItem, 'Profiles_Id__c');
+            }
+                 
+            Boolean resultPermission2 = true; 
+            if(!thePermissionSetFilter.isDataEmpty(caseListViewItem, 'Permission_set__c')) {
+                resultPermission2 = thePermissionSetFilter.isUserPermittedFor(caseListViewItem, 'Permission_set__c');
+            }
+                
+            if(resultPermission1 && resultPermission2) {
+                system.debug('caseListViewItem.Name: ' + caseListViewItem.Name);
+                system.debug('apUser: ' + apUser);
+                if (caseListViewItem.Name == 'ISSP_AP_Cases'){
+                    if (apUser){
+                        caseListViewMap.put(caseListViewItem.Name,caseListViewItem);
+                        ListViewNameList.add(caseListViewItem.Name);
+                    }
+                }
+                else{
+                    if(!isAdmin && caseListViewItem.isAdmin__c == false){
+                        caseListViewMap.put(caseListViewItem.Name,caseListViewItem);
+                        ListViewNameList.add(caseListViewItem.Name);
+                    }else{
+                        if(isAdmin && caseListViewItem.isAdmin__c == true){
+                            caseListViewMap.put(caseListViewItem.Name,caseListViewItem);
+                            ListViewNameList.add(caseListViewItem.Name);
+                        } 
+                    }
+                }
+            }
+        }
+        ListViewNameList.sort();
+        if(ListViewNameList.size()>0){
+            selectedList = ListViewNameList.get(0);
+        }
+        
+        string ListViewName = ApexPages.currentPage().getParameters().get('ListViewName');
+        if( ListViewName!=null && caseListViewMap.containsKey(ListViewName)){
+            selectedList = ListViewName;
+        }
+    }
+    
+    public List<Schema.FieldSetMember> getFields() {
+       return selectedList==null||selectedList==''?
+            new list<Schema.FieldSetMember>():
+            sObjectType.Case.FieldSets.getMap().get(caseListViewMap.get(selectedList).Field_Set_API_Name__c).getFields();
+    }
+    
+    public Pagereference refresh(){ 
+        setCon = null;
+        return null;
+    }
+    public string getQueryConditions() {
+        system.debug('caseListViewMap >>> ' + caseListViewMap);
+        
+        if(caseListViewMap.isEmpty())
+			return 'WHERE ID = NULL';
+        
+        String queryConditions;
+        if(String.isNotBlank(selectedList))
+			queryConditions = caseListViewMap.get(selectedList).SOQL_Filter__c;             
+                
+        return String.isNotBlank(queryConditions) ? queryConditions : ''; 
+    }
+    
+    ////////////////////////////////
+    
+    Public Integer noOfRecords{get; set;}
+    Public Integer size{get;set;}
+    public ApexPages.StandardSetController setCon {
+        get{
+            if(setCon == null){
+                string sortFullExp = sortExpression  + ' ' + sortDirection;
+                size = 10;
+                //AEF:
+                Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
+                for(Schema.FieldSetMember f : this.getFields()) {
+                    fieldPathSet.add(f.getFieldPath());
+                }
+
+                String query = '  Account.Name , Contact.Name   ';
+                for(String fieldPath  : fieldPathSet) {
+                    query +=  ',' + fieldPath;
+                }
+                
+                string queryString ;
+                if(String.isNotBlank(selectedList)){
+                	if (caseListViewMap.containsKey(selectedList)){
+						soqlOrder = caseListViewMap.get(selectedList).SOQL_Order__c;
+                	}
+                }
+                system.debug('sortFullExp: ' + sortFullExp);
+                system.debug('selectedList: ' + selectedList);
+                system.debug('soqlOrder: ' + soqlOrder);
+                if(!isExtinstion){
+                	if (sortFullExp == 'CaseNumber ASC' && soqlOrder != '' & soqlOrder != null)
+                		sortFullExp = soqlOrder;
+					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by '+ sortFullExp;
+                }
+                else{
+                     queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
+                }
+                ISSP_Utilities.log('SQL String: ' + queryString);
+                setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
+                setCon.setPageSize(size);
+                noOfRecords = setCon.getResultSize();
+            }
+            return setCon;
+        }set;
+    }
+     
+    Public List<Case> getCases(){
+        return (List<Case>)setCon.getRecords();
+    }
+    
+}

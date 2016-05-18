@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>SIS Help Desk - Escalated Case Notification to L2 Support Team</name>
+    <style>freeForm</style>
+    <subject>Escalated Case: Case# {!Case.CaseNumber}</subject>
+    <type>html</type>
+</EmailTemplate>

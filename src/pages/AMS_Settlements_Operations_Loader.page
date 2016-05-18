@@ -1,0 +1,95 @@
+<apex:page controller="AMS_SettlementsAndOperationLoaderCtrl">
+      <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>
+      <apex:includeScript value="/soap/ajax/24.0/connection.js"/>
+      <apex:includeScript value="/soap/ajax/24.0/apex.js"/>
+      <c:Loading /> 
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4"> 
+            <apex:form >
+                <apex:inputCheckbox value="{!selected}" /> Use default files
+                <apex:selectRadio value="{!fileLoaderType}">
+                <apex:selectOptions value="{!items}"/>
+                </apex:selectRadio><p/>
+
+                 <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}"/>
+                 <apex:commandButton value="Import Data" action="{!importCSVFile}"/>
+             </apex:form>
+             <apex:form >
+                  <apex:commandButton rendered="{!csvAsString !=null}" action="{!saveRecord}" rerender="pendingISSTable,pendingoperation"  status="Loading"  value="Save found records" id="save" />
+             </apex:form>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{!fileLoaderType =='SETTLEMENTS'}" id="pendingSettlements" >    
+                     <table id="pendingISSTable" class="display" >
+                              <thead>
+                                  <tr>
+                                      <th>ISS</th>
+                                      <th>DPC</th>
+                                      <th>Country</th>
+                                      <th>BSP/CASS</th>
+                                  </tr>
+                              </thead> 
+                              <tbody>
+                                 <apex:repeat value="{!countriesPerBSPName }" var="bspName">    
+                                    <tr>
+                                        <td>{!countriesPerBSPName[bspName].Name}</td>
+                                        <td>{!countriesPerBSPName[bspName].DPC__c }</td>
+                                        <td>{!countriesPerBSPName[bspName].ISO_Code__c }</td>
+                                        <td>BSP</td>                                                                                
+                                    </tr>
+                                  </apex:repeat>
+                                  <apex:repeat value="{!countriesPerCASSName}" var="cassNAme">    
+                                    <tr>
+                                        <td>{!countriesPerCASSName[cassNAme].Name}</td>
+                                        <td>{!countriesPerCASSName[cassNAme].DPC__c }</td>
+                                        <td>{!countriesPerCassName[cassNAme].ISO_Code__c }</td>
+                                        <td>CASS</td>                                                                                
+                                    </tr>
+                                  </apex:repeat>
+                              </tbody>
+                          </table> 
+               
+                 <script>
+                     $(document).ready(function() {
+                        $('#pendingISSTable').dataTable();
+                    });
+                 </script>
+         </apex:pageBlock>
+   
+   
+         <apex:pageBlock rendered="{!fileLoaderType =='OPERATIONS'}" id="pendingoperation" >    
+                     <table id="pendingOperationsTable" class="display" >
+                              <thead>
+                                  <tr>
+                                      <th>Operations </th>
+                                      <th>CASS Operations </th>
+                                      <th>Country</th>
+                                      <th>Currency</th>
+                                      <th>Market</th>
+                                      <th>Settlement</th>
+                                  </tr>
+                              </thead> 
+                              <tbody>
+                                  <apex:repeat value="{!operations}" var="op">   
+                                     <tr>
+                                       <td>{!operations[op].Name}</td>
+                                       <td>{!operations[op].CASS_Operations__c}</td>
+                                       <td>{!operations[op].Country__c }</td>
+                                       <td>{!operations[op].currencyIsoCode}</td>
+                                       <td>{!operations[op].Market__c}</td>
+                                       <td>{!operations[op].Settlement__c}</td>
+                                      </tr>
+                                  </apex:repeat>
+                              </tbody>
+                          </table> 
+               
+                 <script>
+                     $(document).ready(function() {
+                    $('#pendingOperationsTable').dataTable();
+                    });
+                 </script>
+         </apex:pageBlock>
+</apex:page>

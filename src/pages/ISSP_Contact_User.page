@@ -1,0 +1,4 @@
+<apex:page standardController="Contact" extensions="ISSP_Contact_User" >
+<apex:outputLabel for="theFlag" value="Portal User Inactive more than 90 days" />
+<apex:outputField label="Portal User Inactive more than 90 days" value="{!thisUser.Portal_User_Frozen_Checkbox__c}" id="theFlag" />
+</apex:page>

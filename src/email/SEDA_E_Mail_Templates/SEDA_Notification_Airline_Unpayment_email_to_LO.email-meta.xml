@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>SEDA_Notification Airline Unpayment - email to LO</name>
+    <style>none</style>
+    <subject>SEDA - Unpayment of Airline {!Account.Name}</subject>
+    <type>text</type>
+</EmailTemplate>

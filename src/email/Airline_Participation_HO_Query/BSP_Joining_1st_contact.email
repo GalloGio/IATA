@@ -1,0 +1,34 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">Dear&nbsp;</SPAN><SPAN style="FONT-FAMILY: Calibri, sans-serif; COLOR: rgb(33,88,104); FONT-SIZE: 11pt">&nbsp;</SPAN><SPAN style="BACKGROUND-COLOR: white; FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Contact.Name}</SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt"><BR>We are pleased to welcome <B><I>{!Account.Name}</I></B></SPAN><B><I><SPAN style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt">, {!Account.IATACode__c} / {!Account.Airline_designator__c} </SPAN></I></B><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">as BSP&nbsp; <STRONG>{!Case.Country__c}</STRONG> Member as from the <B><I>(insert date DD-MMM-YYYY)</I></B> <?xml:namespace prefix = o /><o:p></o:p></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;</SPAN></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">We are </SPAN><FONT size=2 face="Arial, sans-serif">sending you herewith the calendar of reporting and remittance for this year.<o:p></o:p></FONT></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><FONT size=2 face="Arial, sans-serif">&nbsp;</FONT></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><FONT size=2 face="Arial, sans-serif">BSPLink (<U><SPAN style="COLOR: blue"><A title=http://www.bsplink.iata.org/ href="http://www.bsplink.iata.org/">www.bsplink.iata.org</A></SPAN></U>)&nbsp;is an innovative, internet-based system that facilitates the interaction and exchange of information between all participants in the BSP. It is the global interface for travel agents and airlines to access the IATA Billing and Settlement Plan (BSP).<SPAN style="COLOR: blue"><o:p></o:p></SPAN></FONT></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><FONT size=2 face="Arial, sans-serif">&nbsp;</FONT></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><FONT size=2 face="Arial, sans-serif">Furthermore, BSPlink is IATA’s main communication tool for the BSP. As a BSP participant we encourage you to check BSPlink regularly for important notices and information updates. The designated person will receive login details to access this system.<o:p></o:p></FONT></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><FONT size=2 face="Arial, sans-serif">&nbsp;</FONT></P>
+<P style="TEXT-ALIGN: justify" class=MsoNormal><FONT size=2 face="Arial, sans-serif">Please note that the Ticketing Authority feature is open in </FONT><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">BSPlink and you should use it to allow your chosen agents to issue STDs on your behalf. All concerned GDS’s will be automatically notified when you update BSPlink.<o:p></o:p></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;</SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">IATA Currency Clearance Service, ICCS, allows Member airlines to centrally manage, control, transfer and optionally convert their world-wide BSP and CASS settlements quickly, seamlessly and at low cost. For more information please go to <A href="http://www.iata.org/iccs">www.iata.org/iccs</A></SPAN><SPAN style="FONT-SIZE: 10pt"><o:p></o:p></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-SIZE: 10pt">&nbsp;</SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">If you require any further assistance please contact our Customer Services&nbsp;Team at </SPAN><SPAN style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: blue; FONT-SIZE: 10pt"><A href="http://www.iata.org/customer-portal/Pages/contactus.aspx">http://www.iata.org/customer-portal/Pages/contactus.aspx</A></SPAN><SPAN style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #002060; FONT-SIZE: 10pt"><o:p></o:p></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;</SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">&nbsp;<o:p></o:p></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt">Thank you,<o:p></o:p></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><SPAN style="FONT-FAMILY: 'Arial','sans-serif'; FONT-SIZE: 10pt"><BR></SPAN></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal>
+<P class=MsoNormal><SPAN style="BACKGROUND-COLOR: white; FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.OwnerFullName}</SPAN><o:p></o:p></P>
+<P></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><FONT size=2 face="Arial, sans-serif">Global Airline Participation Team</FONT></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><FONT size=2 face="Arial, sans-serif"><BR></FONT></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal>
+<P style="BACKGROUND: white" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">----------------------------<BR>Your message received on&nbsp;{!Case.CreatedDate}:<o:p></o:p></SPAN></P>
+<P style="BACKGROUND: white" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; FONT-SIZE: 10pt">{!Case.Subject}<BR>{!Case.Description}<o:p></o:p></SPAN></P>
+<P></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><FONT size=2 face="Arial, sans-serif"><BR></FONT></P>
+<P style="TEXT-ALIGN: justify; FONT-FAMILY: arial; FONT-SIZE: 12pt" class=MsoNormal><FONT size=2 face="Arial, sans-serif"><BR></FONT></P>]]></td>
+</tr>
+</table>

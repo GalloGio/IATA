@@ -1,0 +1,27 @@
+<apex:page showHeader="false" title="{!$Label.site.in_maintenance}">
+
+  <div id="logo" style="text-align:center; margin: 5px; margin-top:10px">
+                    <h1><img src="{!URLFOR($Resource.IATAlogo)}" alt="IATA logo" /></h1>
+                    
+                </div>
+                <div style="text-align:center">
+                    <h4></h4>
+                </div>
+                <br />
+                <center>
+    <apex:define name="icon">
+      <apex:image url="{!$Site.Prefix}{!$Label.site.img_path}/warning.gif"/>
+    </apex:define>
+    <apex:define name="error">
+   
+        
+    
+      <br/>
+      <br/>
+    
+      
+   
+    <p style = "font-size: 2em">This website is no longer active and has moved to our <a href="#" onclick="javascript:window.open('http://www.iata.org/cs', 500, 600);">Customer Portal</a></p>
+   </apex:define>
+ </center>
+</apex:page>

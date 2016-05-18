@@ -1,0 +1,3 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" standardController="IATA_ISO_State__c" TabStyle="IATA_ISO_State__c">
+    <c:AMS_Translated_Panel ciataIsoStateId="{!IATA_ISO_State__c.Id}"/>
+</apex:page>

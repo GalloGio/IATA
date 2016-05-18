@@ -1,0 +1,39 @@
+<apex:component layout="none"  controller="VfIECSiteHeaderComponent">
+
+    
+  <style>
+  
+    .bigBg.gray2{ 
+        padding-bottom: 20px; 
+        padding-top: 20px;       
+
+    } 
+   </style>
+  
+  <div class="bigBg gray2 footer">
+    <div class="content-container">
+      <div class="callout-banner big">
+        <div class="footerRight">
+          <p>Products : 
+
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}">Global Systems Solution</a> <span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdMDP}">Marketing Data Package</a> <span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}">Global Agency Directory</a> <span class="sep">|</span>            
+            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}">CheckACode</a>  
+             
+
+
+          </p>
+          <p>Info : 
+            <a href="https://{!$Site.Domain}/iec/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
+            <a href="mailto:{!sContactEmail}?subject={!sContactSubject}" class="header__navigation-link">Contact Us</a><span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}/iec/IECCustomers">Customers</a> <span class="sep">|</span> 
+            <a href="https://{!$Site.Domain}/iec/IECTerms">Terms of Use</a>       
+          </p>
+        </div>
+         <apex:image url="{!URLFOR($Resource.IECStyles,'img/')}logo.png" />
+      </div>
+    </div>
+  </div>
+
+</apex:component>

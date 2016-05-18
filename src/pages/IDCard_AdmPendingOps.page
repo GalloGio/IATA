@@ -1,0 +1,251 @@
+<apex:page setup="false" docType="html"   language="{!Language}"  cache="false" title="IATA/IATAN ID Card Online Platform"   action="{!rediredctoToLogin}" sidebar="false" showHeader="false" controller="IDCard_AdmPendingOpsController">
+    <html>
+        <head>
+        	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <title>IATA/IATAN ID Card Online Platform</title>
+            <meta http-equiv="Cache-Control" content="no-store" />
+        </head>
+        <body>
+        <c:IDCard_HeaderComponent />
+         <c:Loading />
+      <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
+      <apex:stylesheet value="{!URLFOR($Resource.jquerytools,'/jquery.dataTables.css')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery-1.10.2.min.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.jquerytools, '/jquery.dataTables.js')}"/>
+      <apex:includeScript value="/soap/ajax/24.0/connection.js"/>
+      <apex:includeScript value="/soap/ajax/24.0/apex.js"/>
+      <style>
+           .pendingApplicationTable td, .pendingApplicationTable th {padding:0.5em;}
+       </style>
+       <div id="page_wrapper">
+           <div class="HeaderIMGSmall"> 
+               <apex:form forceSSL="true" id="formSF">
+               <table width="80%">
+                   <tr>
+                      
+                    <td>
+                        <div class="select-style" style="width:120px;display:{!if(availableIataCodeSize>1,'none','none')}">
+                          <apex:actionRegion >
+                             <apex:selectList id="cIataCodeSelect" value="{!IataCodeParameter}" size="1" required="true">
+                             <apex:selectOptions value="{!IataCodesItems}" />
+                             <apex:actionSupport event="onchange" onsubmit="refreshIataCode()" reRender=""></apex:actionSupport>
+                             </apex:selectList>
+                          </apex:actionRegion>
+                        </div>
+                    </td>
+                     <td><apex:image styleClass="IATALogo" url="{!URLFOR($Resource.IDCard_Styles,'img/IATA_LOGO.png')}" /></td>
+                        <td>
+                        <div class="select-style">
+                          <apex:actionRegion >
+                             <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
+                             <apex:selectOptions value="{!LangItems}" />
+                             <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+                             </apex:selectList>
+                          </apex:actionRegion>
+                        </div>
+                    </td>
+                     <td><c:IDCard_logoutComponent /></td>
+                    </tr>
+               </table>
+               </apex:form>
+               <h1>{!$Label.IDCard_Landing_Title}</h1>
+           </div>
+           <div class="background" style="min-height:600px;background-color:#C9E5FF">
+          		<div class="tabs">
+				    <ul class="tab-links" style="margin-bottom:0px;">
+				        <li ><a href="{! pagesurl['prefix']}/IDCard_AdmUserList"  >
+                      {!$Label.IDCard_PortalPage_MenuuserManagment}
+                    	</a>  </li>
+				        <li class="active"><a> {!$Label.IDCard_PortalPage_MenuPendingOps}</a></li>
+				        <li><a href="{! pagesurl['prefix']}/IDCard_AdmPayments"  >
+                        {!$Label.IDCard_PortalPage_MenuPaymentSlip}
+                      </a></li>
+				    </ul>
+				</div>
+                <div class="tab-content">
+		                <apex:form forceSSL="true" id="applicationForm">
+		                    <apex:pageMessages id="Msgs2" escape="false" />
+		                    <div style="width:80%; float:left;">
+		                          <table id="pendingApplicationTable" class="display" >
+		                              <thead>
+		                                  <tr>
+		                                  		
+		                                      <th>{!$Label.IDCard_ka_applicant}</th>
+		                                      <th>{!$Label.IDCard_ka_agency}</th>
+		                                      <th>{!$Label.IDCard_ka_Nature}</th>
+		                                      <th>{!$Label.IDCard_ka_Amount}</th>
+		                                      <th>{!$Label.IDCard_ka_date_Request}</th>
+		                                      <th > <input type="checkbox" class="selectAll" name="checkAll"  onclick="checkAllApp();" />Select all </th>
+		                                      <th >{!$Label.IDCard_ka_actions}</th >
+		                                      <th >
+		                                       
+		                                      </th >
+		                                  </tr>
+		                              </thead> 
+		                              <tbody>
+		                                  <apex:repeat value="{!pendingApplications}" var="application" >
+		                                      <tr>
+		                                          <td>
+		                                         		 
+		                                                 <a href="{!if(contactsPerApplication[application.Id].verNum!='','IDCard_AdmUserForm?ver='+contactsPerApplication[application.Id].verNum+'&edit=true','#')}">
+		                                                 {!contactsPerApplication[application.Id].Name}
+		                                                </a>
+		                                            	 <!--
+		                                            	 {!contactsPerApplication[application.Id].Name}
+		                                            	 -->
+		                                            </td>
+		                                          <td><apex:outputField value="{!application.IATA_Code__c}" /></td>
+		                                          <td><apex:outputField value="{!application.Type_of_application__c}" /></td>
+		                                          <td><apex:outputField value="{!application.Applicable_Fee__c}" /></td> 
+		                                          
+		                                          <td><apex:outputField value="{!application.CreatedDate}" /></td>
+		                                          <td>
+		                                              <p style="display:{!IF(isApplicationreadyMap[application.Id],'block','none')}">
+		                                              <input type="radio" class= "radioClass" name="groupb['{!application.Id}']" value="" id ="b_{!application.Id}_0"  onclick="validationApplication('{!application.Id}')" /><label for="b_{!application.Id}_0">{!$Label.IDCard_ka_accept}</label>
+		                                              </p>
+		                                              <p style="display:{!IF(isApplicationreadyMap[application.Id],'none','block')};color:red">
+		                                                  {!$Label.IDCard_ka_missing_detials}
+		                                              </p>
+		                                          </td><td>  
+		                                               <input type="radio"  name="groupb['{!application.Id}']" value="" id ="b['{!application.Id}'][1]" onclick="unvalidationApplication('{!application.Id}')" /><label for="b['{!application.Id}'][1]">{!$Label.IDCard_ka_reject}</label>
+		                                           </td><td>  
+		                                              <input type="radio" class= "radiodoNothingClass"  name="groupb['{!application.Id}']" value="" id ="b['{!application.Id}'][2]" checked="checked" onclick="doNotProcessApplication('{!application.Id}')" /><label for="b['{!application.Id}'][2]">{!$Label.IDCard_ka_noprocess}</label>
+		                                          </td>
+		                                      </tr>
+		                                  </apex:repeat>
+		                              </tbody>
+		                          </table> 
+		                          
+		                    </div>
+		                    <div  style="padding: 10px;border-left:solid 1px  gray;float:right;width:15%;">
+		                        <apex:outputPanel id="pageHeader">
+		                            <p><b>{!$Label.IDCard_Total}:</b> {!tPrice} {!appsCurrency}</p>
+		                             <p><b>Taxes : </b> {!vatPrice} {!appsCurrency}</p>
+		                             <p><b>{!$Label.IDCard_Fees}:</b>  {!deliveryPrice} {!appsCurrency}</p>
+		                             <p><b>{!$Label.IDCard_rejected}:</b>  {!rejectedSize}</p>
+		                            
+		                             <p><b>{!$Label.IDCard_CheckoutConfirm_CC}: </b>
+		                             	<apex:selectList value="{!paymentMode}" multiselect="false" id="paymentModePickList" >
+		                                    <apex:selectOptions value="{!paymentModeItems}"/>
+		                                </apex:selectList></p>
+		                              
+		                              <p style="color:red;display:{!if(IsExpediteAvailable,'block','none')}">
+		                              	 <b>{!$Label.IDCard_Expedite_Delivery}:</b>  
+		                              	 	<apex:inputCheckbox value="{!fastExpedition}" rendered="{!IsExpediteAvailable}"  >
+					                             <apex:actionsupport event="onchange" rerender="pageHeader" />    
+											  </apex:inputCheckbox>
+									  </p>
+									  <p>
+		                              <apex:commandButton action="{!createMassUpdateIdCardApplication}" rerender="applicationForm,credidtCardPaymentBlock"  onclick="startLoading()"  value="{!$Label.IDCard_Purchase}" id="order" />
+		                              </p>
+		                                <script>function startLoading(){$('[id$="Loading.start"]').show();}</script>
+		                                 <apex:pageMessages id="Msgs3" escape="false" />
+		                        </apex:outputPanel>
+		                    </div>
+                          <div style="clear:both" class="clear"></div>    
+		                     <apex:actionFunction status="Loading" action="{!validationApplication}" name="validationApplication" rerender="pageHeader">
+		                        <apex:param name="id" value=""/>
+		                    </apex:actionFunction>
+		                      <apex:actionFunction status="Loading" action="{!unvalidationApplication}" name="unvalidationApplication" rerender="pageHeader" >
+		                        <apex:param name="id" value=""/>
+		                    </apex:actionFunction>
+		                    <apex:actionFunction status="Loading" action="{!doNotProcessApplication}" name="doNotProcessApplication" rerender="pageHeader"  >
+		                        <apex:param name="id" value=""/>
+		                    </apex:actionFunction>
+		                    <apex:actionFunction status="Loading"  action="{!validateAllApplication}" name="validateAllApplication" rerender="pageHeader"  >
+		                    </apex:actionFunction>
+		               </apex:form>
+		            </div>
+           </div> 
+        </div>
+         <apex:outputPanel id="credidtCardPaymentBlock">
+             <form name="formCyberSource" action="{!$Label.IDCard_Cybersourcelink}"   method="post">
+             
+                  <apex:repeat value="{!cyberSrcData}" var="cbsKey">
+                       <input type="hidden" name="{!cbsKey}" value="{!cyberSrcData[cbsKey]}" />
+                  </apex:repeat>
+                  
+                  <input type="hidden" name="signature" value="{!calculatedSignature}" />
+                  
+              </form>
+               <script>
+                function checkAllApp(){
+		         
+		            /*jQuery.each( arr, function( i, val ) {
+		            	if(val!=='')
+		                	$("#b_"+val+"_0").checked = true;
+					});*/
+					var b =  $(".selectAll")[0].checked;
+					
+						var allRows = $("#pendingApplicationTable").DataTable().column(5).nodes();
+						 $.each($(allRows).find(".radioClass"),function(){
+	                    		this.checked = b;
+	                    		});
+	                    allRows = $("#pendingApplicationTable").DataTable().column(6).nodes();
+						 $.each($(allRows).find("input"),function(){
+	                    		this.checked = false;
+                   		});
+                   		allRows = $("#pendingApplicationTable").DataTable().column(7).nodes();
+						 $.each($(allRows).find(".radiodoNothingClass"),function(){
+	                    		this.checked = !b;
+                   		});
+                    
+		            validateAllApplication();
+		       }
+		      
+		      
+                function submitToCyberSource() {
+                    //submit form to CyberSource
+                     var paymenttype ='{!paymentMode}' ;
+	
+                     if(paymenttype.toLowerCase().indexOf("credit card")>-1){
+                     		$('[id$="Loading.start"]').show();
+                    		document.formCyberSource.submit();
+                     }else {
+                      	$('[id$="Loading.start"]').hide();
+                     
+                     }
+                }
+                
+                function refreshDataTable(){
+                          $('#pendingApplicationTable').dataTable(
+                                    {
+                                            "language": {
+                                               "emptyTable":     "{!$Label.IDCard_ka_table_no_data}",
+                                                    "info":           "{!$Label.IDCard_ka_table}",
+                                                    "infoEmpty":      "Showing 0 to 0 of 0 entries",
+                                                    "infoFiltered":   "(filtered from _MAX_ total entries)",
+                                                    "infoPostFix":    "",
+                                                    "thousands":      ",",
+                                                    "lengthMenu":     "{!$Label.IDCard_ka_table_show_n_entries}",
+                                                    "loadingRecords": "{!$Label.IDCard_ka_table_loading}",
+                                                    "processing":     "{!$Label.IDCard_ka_table_Processing}",
+                                                    "search":         "{!$Label.IDCard_ka_table_search}",
+                                                    "zeroRecords":    "{!$Label.IDCard_ka_table_no_match}",
+                                                    "paginate": {
+                                                        "first":      "{!$Label.IDCard_ka_table_first}",
+                                                        "last":       "{!$Label.IDCard_ka_table_last}",
+                                                        "next":       "{!$Label.IDCard_ka_table_next}",
+                                                        "previous":   "{!$Label.IDCard_ka_table_previous}"
+                                                    },
+                                                    "aria": {
+                                                        "sortAscending":  ": activate to sort column ascending",
+                                                        "sortDescending": ": activate to sort column descending"
+                                                      }
+                                    }
+                              } );
+                                   
+                }
+                
+                 $(document).ready(function() {
+                
+                             refreshDataTable();
+                             submitToCyberSource();
+                  } );
+         </script>
+         </apex:outputPanel>
+               
+         <c:IDCard_footerComponent />
+        </body>
+    </html>
+</apex:page>

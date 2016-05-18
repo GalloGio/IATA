@@ -6,11 +6,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>Translations</name>
+        <name>Group</name>
     </types>
     <types>
         <members>*</members>
-        <name>Group</name>
-    </types>	
+        <name>Translations</name>
+    </types>
     <version>31.0</version>
 </Package>

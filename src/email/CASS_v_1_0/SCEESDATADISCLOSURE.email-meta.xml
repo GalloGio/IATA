@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Email to send attached a paying list of Agents or Carriers after acceptation of costs.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CustomerPortalEurope</letterhead>
+    <name>SCE-ES DATA DISCLOSURE</name>
+    <style>freeForm</style>
+    <subject>Lista de los participantes en CASS</subject>
+    <textOnly>Estimado/a {!Contact.Name}, 
+ 
+ 
+Tenemos el gusto de mandarle el fichero que nos pidió bajo nuestra referencia {!Case.CaseNumber}.
+ 
+El coste del mismo será incluido en una de sus próximas liquidaciones CASS mediante BTA (véase la sección &quot;Additional Collection&quot;) y su factura disponible en myIATA (www.myiata.org/ssp).
+ 
+Le recordamos que para cualquier información adicional deberá contactarnos a través de nuestro Portal del Cliente: www.iata.org/europe/cs, utilizando la opción Contáctenos. Todas las consultas gestionadas a través de esta página serán tratadas de forma prioritaria.
+ 
+ 
+Atentamente,
+ 
+{!Case.OwnerFullName}
+ 
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

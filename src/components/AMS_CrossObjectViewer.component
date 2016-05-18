@@ -1,0 +1,54 @@
+<apex:component controller="AMS_masterAndSlavePanelCtrl" allowDML="true">
+    <apex:includeScript value="/support/console/33.0/integration.js"/>
+    <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
+    <script>
+        //globale JS variables
+        var recordid;
+        var recordname;
+        
+        function openTab(recid, recname) {
+             recordid = recid;
+             recordname = recname;
+          if(!sforce.console.isInConsole())
+             window.parent.location.replace('/'+recid);
+          else
+             sforce.console.getEnclosingPrimaryTabId(callBackopenTab);
+          }
+        function callBackopenTab(result) {
+             sforce.console.openSubtab(result.id, '/'+recordid , true,recordname,null);
+         }; 
+    </script>
+
+    <style>
+      td{
+        font-size: 91%;
+      }
+      label {
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: bold;
+          color: #4a4a56;
+      }
+
+    </style>
+
+    <apex:attribute name="displayedObject" type="SObject" assignTo="{!masterObject}" required="true" description="The Master object in relationship" />
+    <apex:pageBlock title="Details" id="block">
+            <apex:pageBlockSection id="resultsBlock" columns="4">           
+                <!-- List of item --> 
+                <apex:repeat var="t" value="{!objectFieldsData}">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel >
+                            <apex:outputLabel value="{!t.first}"/>:
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel >
+                            <apex:outputText value="{!t.second}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:repeat>
+           </apex:pageBlockSection>
+        </apex:pageBlock>
+        <A HREF="#" onClick="openTab('{!slaveObject.Id}', '{!slaveObject['Name']}'); return false">Details</A>
+
+</apex:component>

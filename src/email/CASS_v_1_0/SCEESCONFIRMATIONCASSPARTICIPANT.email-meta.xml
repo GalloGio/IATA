@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>To be sent to Airlines exclusively regarding situation of an Agent</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSky</letterhead>
+    <name>SCE-ES CONFIRMATION CASS PARTICIPANT</name>
+    <style>freeForm</style>
+    <subject>CONFIRMATION PARTICIPATION IN CASS</subject>
+    <textOnly>A QUIEN CONCIERNA
+ 
+
+ 
+El Agente de Carga XXXXXXXX (Agent&apos;s Name)
+ 
+Participa en CASS (Country) desde el (CASS Start Date)
+ 
+como (Operador de Carga IATA / CASS Asociado) bajo el número (XX-X XXXX / XXXX).
+ 
+ 
+ 
+Situación actual del Agente:        
+               - Conforme a los requisitos de CASS
+               - Suspendido en CASS desde el (Default Date)
+
+
+ 
+ 
+{!Case.OwnerFullName}
+ 
+Service Centre Europe
+International Air Transport Association
+www.iata.org/europe/cs</textOnly>
+    <type>html</type>
+</EmailTemplate>

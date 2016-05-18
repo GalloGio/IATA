@@ -1,0 +1,49 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true"  standardController="Archived_Attachment__c" extensions="ArchivedAttachmentControllerExtension" >
+
+       <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/core-min.js')}"/>
+       <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/hmac-min.js')}"/>
+       <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/sha1-min.js')}"/>
+       <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/enc-base64-min.js')}"/>
+       <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/jquery.js')}"/>
+       <div  class="bPageBlock brandSecondaryBrd bDetailBlock secondaryPalette">
+            <div class="pbBody">
+               <div class="pbSubsection">
+                  
+                   <table class="detailList" width="100%" cellspacing="0" cellpadding="0" border="0" >
+                       <tbody>
+                            <tr>
+                            <td class="labelCol">Link</td>
+                            <td class="dataCol col02 inlineEditLock"><div id="AWSLink"></div></td>
+                            <td class="labelCol">Link Validity:</td>
+                            <td class="dataCol inlineEditWrite"><div id="AWSLinkValidity"></div></td>
+                            </tr>
+                      </tbody>
+                   </table>
+              </div>
+           </div>
+        </div>
+        <script >
+            function getAWSLink(){
+                var filePath = "{!Archived_Attachment__c.AWS_S3_URL__c}";
+                var secretAccessKey='{!awsCredential.Secret__c}';
+                var accessKeyId ='{!awsCredential.Key__c}';
+                var dateTime = Math.floor(new Date().getTime() / 1000) + 300; // allows for 5 minutes clock diff
+                var stringToSign = "GET\n\n\n" + dateTime + "\n" + filePath;
+                var signature = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(stringToSign, secretAccessKey));
+                var queryString = "?AWSAccessKeyId=" + accessKeyId + "&Expires=" + dateTime + "&Signature=" + encodeURIComponent(signature);
+                
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "{!awsCredential.AWS_ENDPOINT_URL__c}{!Archived_Attachment__c.AWS_S3_URL__c}" + queryString;
+                $("head").append(script); // jQuery version
+                
+                 $("#AWSLinkValidity").html(new Date());
+                return "{!awsCredential.AWS_ENDPOINT_URL__c}{!Archived_Attachment__c.AWS_S3_URL__c}" + queryString;
+                
+            }
+            var a = getAWSLink();//"<a href='"+getAWSLink()+"'>"+getAWSLink()+"</a>";
+            $("#AWSLink").html("<a href='"+a+"' target='_blank' style='color:#333435;'>{!Archived_Attachment__c.Name}</a>");
+            
+        </script>
+        
+</apex:page>

@@ -1,0 +1,1027 @@
+@isTest
+private class IFAP_BusinessRulesTest {
+
+    /**
+     * Test the method IFAP_BusinessRules.isCountryValid()
+     */
+
+    static testMethod void testCountryValidation() {
+
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        // create test account
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        insert contact1;
+
+        Case case1 = new Case();
+        case1.ContactId = contact1.Id;
+        //case1.RecordTypeId = IFAPcaseRecordTypeID;
+        case1.AccountId = account1.Id;
+        case1.Subject = 'Test Case 1';
+        case1.Description = 'Test Case 1';
+        insert case1;
+
+        Map<id, Account> accountMap = new Map<id, Account>();
+        accountMap.put(case1.id, account1);
+
+        /////////////////////////
+        // Positive test case #1
+        system.assertEquals(IFAP_BusinessRules.isCountryValid(case1, accountMap), true);
+
+        /////////////////////////
+        // Negative test case #1
+
+        account1.BillingCountry = 'Rohan';
+        update account1;
+
+
+        //system.assertEquals(IFAP_BusinessRules.isCountryValid(case1,accountMap), false);
+
+
+    }
+
+    /**
+     *
+     */
+    static testMethod void testAgentType() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        // create test account
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Type = 'IATA Passenger Sales Agent';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        insert contact1;
+
+        Case case1 = new Case();
+        case1.ContactId = contact1.Id;
+        case1.AccountId = account1.Id;
+        case1.Subject = 'Test Case 2';
+        case1.Description = 'Test Case 2';
+        //case1.RecordTypeId = IFAPcaseRecordTypeID;
+        insert case1;
+
+        Map<id, Contact> contactMap = new Map<id, Contact>();
+        contactMap.put(case1.id, contact1);
+
+        /////////////////////////
+        // Positive test case #1
+
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+
+
+        /////////////////////////
+        // Positive test case #2
+
+        account1.Type = 'IATA Cargo Agent';
+        update account1;
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+
+
+        /////////////////////////
+        // Negative test case #1
+
+        account1.Type = 'Jedi Agent';   // inexisting account type
+        update account1;
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+
+
+        /////////////////////////
+        // Negative test case #2
+
+        account1.Type = 'Other1';
+        update account1;
+        system.assertEquals(IFAP_BusinessRules.isAgentTypeValid(case1, contactMap), false);
+
+
+    }
+
+    /**
+     *
+     */
+    static testMethod void testAgentCode() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        // create test account
+        Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Type = 'IATA Passenger Sales Agent';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        insert contact1;
+
+        Case case1 = new Case();
+        case1.ContactId = contact1.Id;
+        case1.AccountId = account1.Id;
+        case1.Subject = 'Test Case 1';
+        case1.Description = 'Test Case 1';
+        //case1.RecordTypeId = IFAPcaseRecordTypeID;
+        insert case1;
+
+        Map<id, Account> accountMap = new Map<id, Account>();
+        accountMap.put(case1.id, account1);
+
+
+        system.assertEquals(IFAP_BusinessRules.isAgentCodeValid(case1, accountMap), true);
+
+
+
+    }
+
+    /**
+     *
+     */
+    static testmethod void testCaseMassCreation() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        List<string> contactIds = new List<string>();
+        List<Case> cList = new List<Case>();
+        string status = 'Agent Notified';
+        string subject = 'Test case';
+        string description = 'Test case desc';
+        string reviewType = 'Annual';
+        date deadline = date.today() + 7;
+        String finYear = '2012';
+        String finMonth = '';
+        // create test account
+        Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Type = 'IATA Passenger Sales Agent';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test BatchNumber
+        BatchNumber__c batch = new BatchNumber__c();
+        insert batch;
+
+        // create contact
+        for (Integer i = 0; i < 4; i++) {
+
+            Contact c = new Contact();
+            c.FirstName = 'Dummy';
+            c.LastName = 'Contact' + i.format();
+            c.Type_of_Contact__c = 'IFAP Contact';
+            c.AccountId = account1.Id;
+            c.Email = 'some' + i.format() + '@email.org';
+            insert c;
+
+            Case aCase = new Case();
+            aCase.ContactId = c.Id;
+            aCase.AccountId = c.accountId;
+            aCase.RecordTypeId = IFAPcaseRecordTypeID;
+            aCase.Origin = 'Agent Financial Review Notification';
+            aCase.BatchNumber__c = batch.Id;
+            aCase.Status = status;
+            aCase.Subject = subject;
+            aCase.Description = description;
+            aCase.Financial_Review_Type__c = reviewType;
+            aCase.Deadline_Date__c = deadline ;
+
+            // aCase.EmailTemplate__c = 'CA CASS Annual EN';
+
+            cList.add(aCase);
+
+            contactIds.add(c.Id);
+        }
+
+        // insert inexisting contact id
+        //contactIds.add('321asdf5sdf25');
+
+
+
+        IFAP_BusinessRules.massCreateCase(contactIds, batch.Id, status, subject, description, reviewType, deadline, 'E-0001', finYear, finMonth, 'E-0001', '', false);
+
+
+        //test batch
+        System.debug('***** STARTING BATCH ' ) ;
+        Test.startTest();
+        clsMassCaseCreationBatch cBatch = new clsMassCaseCreationBatch();
+        cBatch.caseList = cList;
+        cBatch.caseContact = contactIds;
+        cBatch.nCases = cList.size();
+        cBatch.batchName = batch.Name;
+        cBatch.status = status;
+        cBatch.subject = subject;
+        cBatch.description = description;
+        cBatch.reviewType = '';
+        cBatch.deadlineDate = deadline;
+        ID batchprocessid = Database.executeBatch(cBatch, 5);
+        Test.stopTest();
+
+
+    }
+
+    static testmethod void testCheckFinancialAssessmentContactExist() {
+        RecordType StandardAccountRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Account' limit 1];
+        RecordType StandardContactRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Standard Contact' limit 1];
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        List<Account> accounts = new List<Account>();
+
+        Account aAccount = new Account();
+        aAccount.RecordTypeId = StandardAccountRecordType.Id;
+        aAccount.Name = 'UnitTestAccount1';
+        aAccount.BillingCity = 'Montreal';
+        aAccount.BillingCountry = 'Canada';
+        aAccount.Type = 'IATA Cargo Agent';
+        aAccount.IATACode__c = '12312312';
+        aAccount.Location_Type__c = 'AO';
+        accounts.add(aAccount);
+
+        aAccount = new Account();
+        aAccount.RecordTypeId = StandardAccountRecordType.Id;
+        aAccount.Name = 'UnitTestAccount2';
+        aAccount.BillingCity = 'Montreal';
+        aAccount.BillingCountry = 'Canada';
+        aAccount.Type = 'IATA Passenger Sales Agent';
+        aAccount.IATACode__c = '12312314';
+        aAccount.Location_Type__c = 'HO';
+        accounts.add(aAccount);
+
+        insert accounts;
+
+        Test.startTest();
+        Contact aContact;
+
+        for (Account existingAccount : accounts) {
+            aContact = new Contact();
+            aContact.RecordTypeId = StandardContactRecordType.Id;
+            aContact.FirstName = 'Unit';
+            aContact.LastName = 'Test Contact';
+            aContact.AccountId = existingAccount.Id;
+            acontact.Financial_Assessment_Contact__c = true;
+
+
+            insert aContact;
+
+            aContact = new Contact();
+            aContact.RecordTypeId = StandardContactRecordType.Id;
+            aContact.FirstName = 'Unit';
+            aContact.LastName = 'Test Contact #2';
+            aContact.AccountId = existingAccount.Id;
+            acontact.Financial_Assessment_Contact__c = true;
+
+            try {
+                insert aContact;
+            } catch (Exception e) {
+                //System.assert(e.getMessage().contains('Only one Contact per Account can be defined as Financial Assessment Contact'));
+            }
+        }
+        Test.stopTest();
+    }
+
+    static testmethod void testVFEmailTemplateController() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        List<RecordType> emailTemplateRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
+        ID IFAPEmailTemplateRecordTypeID = emailTemplateRecordTypes[0].Id;
+
+        EmailTemplate__c e = new EmailTemplate__c();
+        IATA_ISO_Country__c ic = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'XY', AIMS_Area_Name__c = 'Test');
+        insert ic;
+        ic = [Select id, name, ISO_Code__c from IATA_ISO_Country__c where id = : ic.Id];
+        //e.recordType.Name = 'IFAP';
+        e.RecordTypeId = IFAPEmailTemplateRecordTypeID;
+        e.Agent_Types__c = 'IATA Cargo Agent';
+        e.Review_Types__c = 'Annual';
+        e.Subject__c = 'Financial Review';
+        e.Deadline_Date_Required__c = true;
+        e.Greeting_Line__c = 'Dear Agent';
+        e.IATA_ISO_Country__c = ic.id;
+        e.Signature_Details__c = 'Yours Sincerely';
+        e.Is_reminder__c = false;
+        e.Default_Template__c = false;
+        e.Template_Language__c = 'English';
+        e.Body_Section_1__c = 'Test Email Template';
+        e.Template_Type__c = 'FA - Financial Assessment';
+        e.Text_1__c = '';
+        e.Text_2__c = '';
+        e.Text_3__c = '';
+        e.Text_4__c = '';
+        e.Text_5__c = '';
+
+        insert e;
+
+        Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Type = 'IATA Passenger Sales Agent';
+        //account1.IATACode__c = '2345678';
+        insert account1;
+
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        insert contact1;
+
+        EmailTemplate et = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP'];
+
+
+        Case cObj = new Case();
+        cObj.Subject = 'Test FR';
+        //cObj.RecordTypeId = IFAPcaseRecordTypeID;
+        cObj.ContactId = contact1.Id;
+        cObj.IFAP_Financial_Year__c = '2012';
+        cObj.IFAP_Country_ISO__c = ic.ISO_Code__c;
+        cObj.EmailTemplate__c = e.Id;
+        cObj.Deadline_Date__c = Date.today() + 30;
+        cObj.Financial_Review_Type__c = 'Adhoc';
+        cObj.Status = 'Agent Notified (Mail)';
+        cObj.Mass_Case_Creation_Email_Send__c = true;
+        //cObj.Mode_of_Assessment__c = 'Express';
+
+        insert cObj;
+        VFEmailTemplateController vtc = new VFEmailTemplateController();
+        vtc.caseId = cObj.Id;
+        vtc.greeting = 'Dear Agent';
+        vtc.caseURL = 'http://www.google.com';
+        vtc.displayDeadline = true;
+        vtc.isEnglish = true;
+
+        vtc.VFEmailTemplateController();
+
+        EmailTemplate et1 = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP FA Reminder'];
+        EmailTemplate__c e1 = new EmailTemplate__c();
+        //e1.recordType.Name = 'IFAP';
+        e.RecordTypeId = IFAPEmailTemplateRecordTypeID;
+        e1.Agent_Types__c = 'IATA Cargo Agent';
+        e1.Review_Types__c = 'Annual';
+        e1.Subject__c = 'Financial Review reminder';
+        e1.Deadline_Date_Required__c = true;
+        e1.Greeting_Line__c = 'Dear Agent';
+        e1.IATA_ISO_Country__c = ic.id;
+        e1.Signature_Details__c = 'Yours Sincerely';
+        e1.Is_reminder__c = true;
+        e1.Default_Template__c = false;
+        e1.Template_Language__c = 'English';
+        e1.Body_Section_1__c = 'Test Email Template';
+        e1.Template_Type__c = 'FA - Financial Assessment';
+
+        insert e1;
+
+
+        Case cObj1 = new Case();
+        cObj1.Subject = 'Test FR';
+        //cObj1.RecordTypeId = IFAPcaseRecordTypeID;
+        cObj1.ContactId = contact1.Id;
+        cObj1.IFAP_Financial_Year__c = '2012';
+        cObj1.IFAP_Country_ISO__c = ic.ISO_Code__c;
+        cObj1.Reminder_EmailTemplate__c = e1.Id;
+        cObj1.Deadline_Date__c = Date.today() + 30;
+        cObj1.Financial_Review_Type__c = 'Adhoc';
+
+        insert cObj1;
+        VFEmailTemplateController vtc1 = new VFEmailTemplateController();
+        vtc1.caseId = cObj1.Id;
+        vtc1.greeting = 'Dear Agent';
+        vtc1.caseURL = 'http://www.google.com';
+        vtc1.displayDeadline = true;
+        vtc1.isEnglish = true;
+
+        vtc1.VFEmailTemplateController();
+
+
+        EmailTemplate et2 = [Select id, name from EmailTemplate where templatetype = 'Visualforce' and name = 'IFAP FS Reminder'];
+        EmailTemplate__c e2 = new EmailTemplate__c();
+        //e2.recordType.Name = 'IFAP';
+        e2.RecordTypeId = IFAPEmailTemplateRecordTypeID;
+        e2.Agent_Types__c = 'IATA Cargo Agent;IATA Passenger Sales Agent';
+        e2.Review_Types__c = 'Annual';
+        e2.Subject__c = 'Financial Review reminder';
+        e2.Deadline_Date_Required__c = true;
+        e2.Greeting_Line__c = 'Dear Agent';
+        e2.IATA_ISO_Country__c = ic.id;
+        e2.Signature_Details__c = 'Yours Sincerely';
+        e2.Is_reminder__c = true;
+        e2.Default_Template__c = false;
+        e2.Template_Language__c = 'English';
+        e2.Body_Section_1__c = 'Test Email Template';
+        e2.Template_Type__c = 'FS - Financial Security';
+        e2.FA_Result__c = 'Satisfactory - New Financial Security';
+
+        insert e2;
+
+        Case cObj2 = new Case();
+        cObj2.Subject = 'Test FR';
+        cObj2.ContactId = contact1.Id;
+        //cObj2.RecordTypeId = IFAPcaseRecordTypeID;
+        cObj2.IFAP_Financial_Year__c = '2012';
+        cObj2.Status = 'Financial Security Requested';
+        cObj2.Financial_Review_Result__c = 'Satisfactory - New Financial Security';
+        cObj2.IFAP_Country_ISO__c = ic.ISO_Code__c;
+        cObj2.FS_Reminder_EmailTemplate__c = e2.Id;
+        cObj2.Deadline_Date__c = Date.today() + 30;
+        cObj2.Financial_Review_Type__c = 'Annual';
+
+        insert cObj2;
+        VFEmailTemplateController vtc2 = new VFEmailTemplateController();
+        vtc2.caseId = cObj2.Id;
+        vtc2.greeting = 'Dear Agent';
+        vtc2.caseURL = 'http://www.google.com';
+        vtc2.displayDeadline = true;
+        vtc2.isEnglish = true;
+
+        vtc2.VFEmailTemplateController();
+
+    }
+
+    static testmethod void testIsStatusCanBeSelected() {
+
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        /*non Sys Admin, non Portal user profile*/
+        Profile p = new Profile(Name = 'IFAP Profile');
+
+        List<Case> allIfapCaseStatus = new List<Case>();
+
+        /*0*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Action Needed'));
+        /*1*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Agent Notified (Email)'));
+        /*2*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Agent Notified (Mail)'));
+        /*3*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Agent to be Notified'));
+        /*4*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Assessment Cancelled'));
+        /*5*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Assessment Performed'));
+        /*6*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Closed'));
+        /*7*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Financial Security Provided'));
+        /*8*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Financial Security Rejected'));
+        /*9*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Financial Security Requested'));
+        /*10*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Financial Statements Uploaded'));
+        /*11*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Quality Issue Rejected'));
+        /*12*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Quality Issue Request Approved'));
+        /*13*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Quality Issue Requested'));
+        /*14*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Quality Issue Request Pending Approval'));
+        /*15*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Re-open/ed'));
+        /*16*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Sanity Check Failure'));
+        /*17*/allIfapCaseStatus.add(new Case(RecordTypeId = IFAPcaseRecordTypeID, Status = 'Submitted'));
+
+        //loop over all cases, instead of having to check each combination individually
+        for (Integer i = 0; i < allIfapCaseStatus.size(); i++)
+            for (Integer j = 0; j < allIfapCaseStatus.size(); j++) {
+                if (i == j)
+                    continue;
+
+                //check only the combinations of allowed changes that have no dependencies on case fields
+                if (
+                    (i == 0 && (j == 1 || j == 2 || j == 3 || j == 7) ) ||
+                    (i == 1 && (j == 2)) ||
+                    (i == 2 && (j == 1)) ||
+                    (i == 3 && (j == 1 || j == 2)) ||
+                    (i == 5 && (j == 14)) ||
+                    (i == 8 && (j == 7)) ||
+                    (i == 9 && (j == 7 || j == 8 || j == 14)) ||
+                    (i == 10 && (j == 1 || j == 2 || j == 16)) ||
+                    (i == 11 && (j == 5 || j == 7 || j == 16)) ||
+                    (i == 16 && (j == 14))
+                ) {
+                    System.assert(IFAP_BusinessRules.IsStatusCanBeSelected(false, false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
+                    continue;
+                }
+
+                System.debug('##STATUS CHECK### old status ' + allIfapCaseStatus[i].Status + ' new status ' + allIfapCaseStatus[j].Status);
+                //combinations not stated avove should not be allowed
+                System.assert(!IFAP_BusinessRules.IsStatusCanBeSelected(false, false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
+            }
+
+
+    }
+
+    static testmethod void testFSValidationCheckBox() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        Profile p = new Profile();
+        p.Name = 'system administrator';
+        Case c1 = new Case();
+        c1.Status = 'agent notified (email)';
+        Case c2 = new Case();
+        c2.status = 'closed';
+        c2.FS_Submitted_Date__c = Date.today();
+        c2.Agent_Name_chkbx__c = false;
+        c2.Financial_Security_Amount_chkbx__c = false;
+        c2.Financial_Security_Currency_chkbx__c = false;
+        c2.Financial_Security_Provider_chkbx__c = false;
+        c2.Financial_Security_Template_chkbx__c = false;
+        c2.Financial_Security_Type_chkbx__c = false;
+        c2.Expiry_Date_chkbx__c = false;
+
+
+
+        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        p.Name = 'ifap customer portal user';
+        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        p.Name = 'TEST';
+        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+        c2.Status = 'Financial Security Requested';
+        c2.Agent_Name_chkbx__c = true;
+        c2.Financial_Security_Amount_chkbx__c = true;
+        c2.Financial_Security_Currency_chkbx__c = true;
+        c2.Financial_Security_Provider_chkbx__c = true;
+        c2.Financial_Security_Template_chkbx__c = true;
+        c2.Financial_Security_Type_chkbx__c = true;
+        c2.Expiry_Date_chkbx__c = true;
+        IFAP_BusinessRules.FSValidationCheckBox(c1, c2, p);
+
+    }
+
+    static testmethod void testSetCountryAreaAndISOCode() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        // create test account
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        insert contact1;
+
+        Case case1 = new Case();
+        case1.ContactId = contact1.Id;
+        //case1.RecordTypeId = IFAPcaseRecordTypeID;
+        case1.AccountId = account1.Id;
+        case1.Subject = 'Test Case 1';
+        case1.Description = 'Test Case 1';
+        insert case1;
+
+        Map<id, Account> accountMap = new Map<id, Account>();
+        accountMap.put(case1.id, account1);
+
+        IFAP_BusinessRules.setCountryAreaAndISOCode(case1, accountMap);
+
+        //error case
+        account1.BillingCountry = 'USA';
+        account1.BillingCity = 'New york';
+        update account1;
+        //IFAP_BusinessRules.setCountryAreaAndISOCode(case1,accountMap);
+    }
+
+    static testmethod void testEmailTemplateCountryValidation() {
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        List<RecordType> emailTemplateRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
+        ID IFAPEmailTemplateRecordTypeID = emailTemplateRecordTypes[0].Id;
+        IATA_ISO_Country__c ic = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'XY', AIMS_Area_Name__c = 'Test');
+        insert ic;
+
+        EmailTemplate__c e = new EmailTemplate__c();
+        ic = [Select id, name, ISO_Code__c from IATA_ISO_Country__c where id = : ic.Id];
+        //e.recordType.Name = 'IFAP';
+        e.RecordTypeId = IFAPEmailTemplateRecordTypeID;
+        e.Agent_Types__c = 'IATA Cargo Agent';
+        e.Review_Types__c = 'Annual';
+        e.Subject__c = 'Financial Review';
+        e.Deadline_Date_Required__c = true;
+        e.Greeting_Line__c = 'Dear Agent';
+        e.IATA_ISO_Country__c = ic.id;
+        e.Signature_Details__c = 'Yours Sincerely';
+        e.Is_reminder__c = false;
+        e.Default_Template__c = false;
+        e.Template_Language__c = 'English';
+        e.Body_Section_1__c = 'Test Email Template';
+        insert e;
+
+        // reselect template
+        e = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : e.Id and et.recordType.Name = 'IFAP' limit 1];
+
+        // invalid country test
+        system.assert(IFAP_BusinessRules.isTemplateCountryValid(e, 'AA') == false);
+
+        // valid country test
+        system.assert(IFAP_BusinessRules.isTemplateCountryValid(e, 'XY') == true);
+    }
+
+    static testmethod void testProcessISSTrigger() {
+
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+
+        ///////////////////////////////////
+        // create parent case of type IFAP
+
+        // create test account
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        account1.IATACode__c = '1234567';
+        account1.Type = 'IATA Passenger Sales Agent';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        contact1.Financial_Assessment_Contact__c = true;
+        insert contact1;
+
+        Case caseParent = new Case();
+        caseParent.ContactId = contact1.Id;
+
+        caseParent.AccountId = account1.Id;
+        caseParent.Subject = 'Test Case 1';
+        caseParent.Description = 'Test Case 1';
+        caseParent.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        caseParent.Status = 'Agent Notified (Mail)';
+        caseParent.Origin = 'Agent Financial Review Notification';
+        caseParent.FA_Letter_Sent__c = false;
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Financial_Review_Type__c = 'Annual';
+        caseParent.IFAP_Financial_Year__c = '2012';
+        caseParent.Deadline_Date__c = Date.today().addDays(30);
+        insert caseParent;
+
+
+        /////////////////////////////////////////
+        // create child case of type Process ISS
+
+        Case caseChild = new Case();
+        caseChild.ParentId = caseParent.Id;
+        caseChild.ContactId = contact1.Id;
+        caseChild.AccountId = account1.Id;
+        caseChild.Subject = 'Test Case child';
+        caseChild.Description = 'Test Case child';
+        caseChild.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+
+        Test.startTest();
+
+        // should throw error
+        try {
+            insert caseChild;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        caseParent.FA_Letter_Sent__c = true;
+        update caseParent;
+
+        // should not throw error
+        try {
+            insert caseChild;
+            system.assert(true);
+        } catch (Exception ex) {
+            system.assert(false);
+        }
+
+        caseParent.FS_Letter_Sent__c = false;
+        caseParent.Status = 'Financial Security Requested';
+        update caseParent;
+
+        // should throw error
+        try {
+            update caseChild;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        caseParent.FS_Letter_Sent__c = true;
+        caseParent.Status = 'Financial Security Requested';
+        update caseParent;
+
+        // should not throw error
+        try {
+            update caseChild;
+            system.assert(true);
+        } catch (Exception ex) {
+            system.assert(false);
+        }
+
+        Test.stopTest();
+    }
+
+    static testmethod void testEmailTemplateBusinesRules() {
+
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        List<RecordType> emailTemplateRecordTypes = [Select r.Name, r.Id From RecordType r where r.SobjectType = 'EmailTemplate__c' and r.Name = 'IFAP' limit 1];
+        ID IFAPEmailTemplateRecordTypeID = emailTemplateRecordTypes[0].Id;
+        IATA_ISO_Country__c[] countryCA = [Select i.Name, i.ISO_Code__c From IATA_ISO_Country__c i where i.ISO_Code__c = 'CA'];
+        IATA_ISO_Country__c[] countryFR = [Select i.Name, i.ISO_Code__c From IATA_ISO_Country__c i where i.ISO_Code__c = 'FR'];
+
+        // create test account
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        account1.IATACode__c = '1234567';
+        account1.Type = 'IATA Passenger Sales Agent';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        contact1.Financial_Assessment_Contact__c = true;
+        insert contact1;
+
+        Case case1 = new Case();
+        case1.ContactId = contact1.Id;
+        case1.AccountId = account1.Id;
+        case1.Subject = 'Test Case 1';
+        case1.Description = 'Test Case 1';
+        case1.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        case1.Status = 'Agent Notified (Mail)';
+        case1.Origin = 'Agent Financial Review Notification';
+        case1.FA_Letter_Sent__c = false;
+        case1.IFAP_Financial_Year__c = '2012';
+        case1.Financial_Review_Type__c = 'Annual';
+        case1.IFAP_Financial_Year__c = '2012';
+        case1.Deadline_Date__c = Date.today().addDays(30);
+
+        EmailTemplate__c email1 = new EmailTemplate__c();
+        //email1.recordType.Name = 'IFAP';
+        email1.RecordTypeId = IFAPEmailTemplateRecordTypeID;
+        email1.Name = 'TemplateTest';
+        email1.Template_Type__c = 'FA - Financial Assessment';
+        email1.Agent_Types__c = 'Domestic Agent';
+        email1.IATA_ISO_Country__c = countryFR[0].Id;
+        insert email1;
+
+        // test #1 - FA template country does not match case country
+        case1.IFAP_Country_ISO__c = countryCA[0].ISO_Code__c;
+        case1.EmailTemplate__c = email1.Id;
+        try {
+            insert case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        // test #2 - FA reminder template does not match case country
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = email1.Id;
+        try {
+            insert case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        // test #3 - FS template does not match case country
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = null;
+        case1.FS_EmailTemplate__c = email1.Id;
+        try {
+            insert case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        // test #4 - FS reminder template does not match case country
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = null;
+        case1.FS_EmailTemplate__c = null;
+        case1.FS_Reminder_EmailTemplate__c = email1.Id;
+        try {
+            insert case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        ////////////////////////////////////////
+        // now sames test when updating a case
+
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = null;
+        case1.FS_EmailTemplate__c = null;
+        case1.FS_Reminder_EmailTemplate__c = null;
+        insert case1;
+
+        // test #5 - FA template country does not match case country
+        case1.IFAP_Country_ISO__c = countryCA[0].ISO_Code__c;
+        case1.EmailTemplate__c = email1.Id;
+        try {
+            update case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        // test #6 - FA reminder template does not match case country
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = email1.Id;
+        try {
+            update case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        // test #7 - FS template does not match case country
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = null;
+        case1.FS_EmailTemplate__c = email1.Id;
+        try {
+            update case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+        // test #8 - FS reminder template does not match case country
+        case1.EmailTemplate__c = null;
+        case1.Reminder_EmailTemplate__c = null;
+        case1.FS_EmailTemplate__c = null;
+        case1.FS_Reminder_EmailTemplate__c = email1.Id;
+        try {
+            update case1;
+            system.assert(false);
+        } catch (Exception ex) {
+            system.assert(true);
+        }
+
+
+    }
+
+    /*static testmethod void testAccountCountryChange() {
+      ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+      // create test account1
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.IATACode__c = '4242424';
+        //account1.Account_Type__c = 'IATA Passenger Sales Agent';
+        account1.Type = 'IATA Passenger Sales Agent';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test account2
+        Account account2 = new Account();
+        account2.Name = 'Test account 2';
+        account2.IATACode__c = '1111111';
+        //account2.Account_Type__c = 'IATA Passenger Sales Agent';
+        account2.Type = 'IATA Passenger Sales Agent';
+        account2.BillingCity = 'Paris';
+        account2.BillingCountry = 'France';
+        account2.BillingStreet = 'some street';
+        account2.Location_Type__c = 'HO';
+        insert account2;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        contact1.Financial_Assessment_Contact__c = true;
+        insert contact1;
+
+        Case case1 = new Case();
+        case1.ContactId = contact1.Id;
+        case1.AccountId = account1.Id;
+        case1.Subject = 'Test Case 1';
+        case1.Description = 'Test Case 1';
+        case1.RecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        case1.IFAP_Financial_Year__c = '2012';
+        insert case1;
+
+        // reselect case1
+        case1 = [Select c.IFAP_Country_ISO__c from Case c where c.Id = :case1.Id limit 1];
+
+        //system.assertEquals('CA', case1.IFAP_Country_ISO__c);
+
+        // change to a France account
+        case1.AccountId = account2.Id;
+        update case1;
+
+        // reselect case1
+        case1 = [Select c.IFAP_Country_ISO__c from Case c where c.Id = :case1.Id limit 1];
+
+        //system.assertEquals('FR', case1.IFAP_Country_ISO__c);
+    }*/
+
+    static testmethod void testPhase4stuff() {
+        // get some recordtype IDs
+        ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+        RecordType SAAMcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'SAAM' limit 1];
+
+        // create test account1
+        Account account1 = new Account();
+        account1.Name = 'Test account';
+        account1.IATACode__c = '4242424';
+        account1.Type = 'IATA Passenger Sales Agent';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+        // create test contact
+        Contact contact1 = new Contact();
+        contact1.FirstName = 'Dummy';
+        contact1.LastName = 'Contact';
+        contact1.Type_of_Contact__c = 'IFAP Contact';
+        contact1.AccountId = account1.Id;
+        contact1.Email = 'some@email.org';
+        contact1.Financial_Assessment_Contact__c = true;
+        insert contact1;
+
+        Case saamCase = new Case();
+        saamCase.ContactId = contact1.Id;
+        saamCase.AccountId = account1.Id;
+        saamCase.Subject = 'Test SAAM case';
+        saamCase.Description = 'Test SAAM case';
+        saamCase.Status = 'Open';
+        saamCase.RecordTypeId = SAAMcaseRecordType.Id;
+        insert saamCase;
+
+        Test.startTest();
+
+        // Test #1 - Saam case has no child IFAP case
+        system.assert(IFAP_BusinessRules.caseHasChildIFAPCases(saamCase.Id) == false);
+
+        Case ifapCase = new Case();
+        ifapCase.ParentId = saamCase.Id;
+        ifapCase.ContactId = contact1.Id;
+        ifapCase.AccountId = account1.Id;
+        ifapCase.Subject = 'Test IFAP case';
+        ifapCase.Description = 'Test IFAP case';
+        ifapCase.RecordTypeId = IFAPcaseRecordTypeID;
+        ifapCase.IFAP_Financial_Year__c = '2013';
+        insert ifapCase;
+
+        // Test #2 - Saam case has no child IFAP case
+        system.assert(IFAP_BusinessRules.caseHasChildIFAPCases(saamCase.Id) == true);
+
+        // Test #3 - Test the update of fields from the IFAP case to the SAAM case
+        Date submittedDate = Date.today();
+        Date assessmentPerformedDate = Date.today().addDays(3);
+        String financialReviewResult = 'Satisfactory - Update Financial Security';
+
+        ifapCase.Submitted_Date__c = submittedDate;
+        ifapCase.Assessment_Performed_Date__c = assessmentPerformedDate;
+        ifapCase.Financial_Review_Result__c = financialReviewResult;
+        update ifapCase;
+
+        // reselect the SAAM case
+        saamCase = [Select c.Id, c.Financial_Assessment_requested__c, c.Financial_Assessment_deadline__c, c.Financial_Assessment_received__c, c.Financial_Assessment_compliant__c from Case c where c.Id = :saamCase.Id limit 1];
+
+        system.assert(saamCase.Financial_Assessment_requested__c == submittedDate);
+        system.assert(saamCase.Financial_Assessment_deadline__c == submittedDate.addDays(5));
+        system.assert(saamCase.Financial_Assessment_received__c == assessmentPerformedDate);
+        system.assert(saamCase.Financial_Assessment_compliant__c == 'Satisfactory');
+
+        // Test #4 - test if case has reassessments
+        IFAP_BusinessRules.caseHasReassesments(ifapCase.Id);
+
+        Test.stopTest();
+    }
+}
