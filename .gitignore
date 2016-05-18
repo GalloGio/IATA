@@ -1,0 +1,62 @@
+# Compiled source #
+#src/codePackage.xml
+#src/objectPackage.xml
+.project
+src/profiles/Admin.profile
+Referenced Packages/
+.settings/com.salesforce.ide.core.prefs
+salesforce.schema
+src/workflows/SocialPersona.workflow
+src/workflows/SocialPost.workflow
+src/workflows/Lead.workflow
+src/workflows/Contact.workflow
+src/workflows/ACCA_Notification_on_new_Application_Change_Request.workflow
+src/workflows/ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D.workflow
+src/workflows/ACCA_Send_notification_on_case_being_older_than_1hr_and_not_taken_ownership_of.workflow
+src/workflows/ACCA_Notification_on_new_Customer_Service_Request.workflow
+src/workflows/SCE_New_Communciation_Web_Upload_case.workflow
+src/workflows/ITDI_Email_Alert.workflow
+src/workflows/AlertsRSNBLocaloffice.workflow
+src/workflows/ExternalEventMapping.workflow
+src/workflows/IFAP_Notify_agent_to_upload_financial_documents.workflow
+src/workflows/IFAP_Email_Reminder.workflow
+src/workflows/IFAP_Notify_agent_files_uploaded_ready_to_process.workflow
+src/workflows/IFAP_FS_Email_Reminder.workflow
+src/workflows/IFAP_Financial_Security_Request_Email.workflow
+src/workflows/Notification_on_Priority_1_Case_for_InvoiceWorks	.workflow
+src/workflows/ICCS_Notification_on_Case_submitted_to_Airline_Participation.workflow
+src/workflows/ICCS_Notification_on_PA_Case_closed_to_Contact.workflow
+src/workflows/ICCS_Notification_on_PR_Case_closed_to_Contact.workflow
+src/workflows/SEDA_Agent_Over_Remittance_inform_to_I_C_team.workflow
+src/workflows/SIS_Escalated_case_notification_to_CS_Manager.workflow
+src/workflows/SIS_HD_New_case_comment_notification.workflow
+src/workflows/ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed.workflow
+src/workflows/Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application.workflow
+*.sublime-project
+*.sublime-settings
+*.sublime-workspace
+#build.xml
+salesforce.schema
+config
+*.bak
+build/SfApexDocs
+SfApexDocLog.txt
+.project
+src/profiles/Admin.profile
+Referenced Packages/
+.settings/com.salesforce.ide.core.prefs
+salesforce.schema
+src/objects/idea.object
+src/package.xml
+*.sublime-project
+*.sublime-settings
+*.sublime-workspace
+salesforce.schema
+config
+*.bak
+build/SfApexDocs
+SfApexDocLog.txt
+src/layouts/Case-IDFS InvoiceWorks %28Customer Portal%29.layout
+src/layouts/User-SIS User Layout.layout
+src/layouts/User-TTBS User Layout.layout
+config/*
