@@ -211,4 +211,18 @@
     <pluralLabel>Tracked Emails</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <webLinks>
+        <fullName>Refresh_Events</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Refresh Events</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/apex.js&quot;)}
+
+var result = sforce.apex.execute(&quot;WSJavascript&quot;,&quot;refreshSignaturitEvents &quot;,{signaturitid:&quot;{!Tracked_Email__c.Id}&quot;});
+window.location.reload();</url>
+    </webLinks>
 </CustomObject>

@@ -84,16 +84,16 @@ public with sharing class SignaturitRest {
         MailInfoResponse response = SignaturitRest.getMailInfo(trackedEmail);
 
         // get events from all certificates, it is grouped by recipient to remove duplicities
-        map<String,list<SignaturitRestEvents.EventData>> mapEvents = new map<String,list<SignaturitRestEvents.EventData>>();
-        for ( SignaturitRestEvents.Certificate certificate: response.certificates) {
+        map<String,list<EventDataInfoResponse>> mapEvents = new map<String,list<EventDataInfoResponse>>();
+        for ( CertificateInfoResponse certificate: response.certificates) {
             mapEvents.put(certificate.recipient_email, certificate.events);
         }
 
         // creates a list of Tracked_Email_Event__c ready to insert in the Tracked_Email__c record
-        SignaturitRestEvents.EventData lastEvent = null;
+        EventDataInfoResponse lastEvent = null;
         list<Tracked_Email_Event__c> listNewEvents = new list<Tracked_Email_Event__c>();
         for (String mail: mapEvents.keyset() ) {
-            for (SignaturitRestEvents.EventData ev: mapEvents.get(mail) ) {
+            for (EventDataInfoResponse ev: mapEvents.get(mail) ) {
                 listNewEvents.add( new Tracked_Email_Event__c(
                     Timestamp__c = ev.getDate(),
                     Status__c = ev.type,
@@ -104,6 +104,8 @@ public with sharing class SignaturitRest {
                 }
             }
         }
+
+        System.debug('updateEventList listNewEvents: ' + listNewEvents);
 
         if ( !listNewEvents.isEmpty() ) {
             Savepoint sp = Database.setSavepoint();
@@ -162,7 +164,27 @@ public with sharing class SignaturitRest {
     public class MailInfoResponse {
         public String id;
         public String created_at;
-        public SignaturitRestEvents.Certificate[] certificates;
+        public CertificateInfoResponse[] certificates;
+    }
+
+    public class CertificateInfoResponse {
+		public String created_at;
+		public EventDataInfoResponse [] events;
+		public String id;
+		public EventDataInfoResponse last_event;
+		public String recipient_email;
+		public String recipient_name;
+
+	}
+
+    public class EventDataInfoResponse {
+        public String date_x;
+        public String created_at;
+        public String type;
+
+        public DateTime getDate() {
+            return SignaturitRestEvents.parseDateString(date_x);
+        }
     }
 
 }

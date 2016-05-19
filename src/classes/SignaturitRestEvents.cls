@@ -114,7 +114,7 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 	global class Certificate {
 		//global CertifiedEmail certified_email;
 		global String created_at;
-		global EventData [] events;
+		//global EventData [] events;
 		global String id;
 		global EventData last_event;
 		global String recipient_email;
@@ -132,7 +132,7 @@ https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 		}
 	}
 
-	private static DateTime parseDateString(String dateStr) {
+	public static DateTime parseDateString(String dateStr) {
 		try {
 			list<Integer> timeParts = new list<Integer>();
 			for ( String part: dateStr.split('[T:+-]') ) {

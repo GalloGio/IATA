@@ -1,11 +1,11 @@
 global class SignaturitEventsBatch implements Database.Batchable<sObject>, Database.AllowsCallouts{
 
-    global final String query;
+    global String query;
 
     global SignaturitEventsBatch(){
         this.query = 'SELECT Id,BccAddress__c,Case__c,CcAddress__c,ConnectionReceivedId,EmailMessage__c,FromAddress__c,FromName__c,Name,Signaturit_Certificate_Ids__c,Signaturit_Id__c,Status__c,Subject__c,ToContact__c'
             + ' FROM Tracked_Email__c'
-            + ' where Status__c in (\'sent\',\'processed\') '
+            + ' where Status__c in (\'sent\',\'processed\',\'bounce\') '
             + ' and Signaturit_Id__c != null';
     }
 
