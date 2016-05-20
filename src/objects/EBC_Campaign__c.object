@@ -369,6 +369,53 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Test_Email_Last_Send_Time_Stamp__c</fullName>
+        <description>Time stamp of the last test email of this campaign.
+This is used to count the number of test email per day.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time stamp of the last test email of this campaign.</inlineHelpText>
+        <label>Test Email Last Send Time Stamp</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Test_Email_Total_Sent_On_Stamp_Period__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>The total number of test emails that were sent during the period when the last email was sent, e.g. the day of the last email sent. 
+E.g. in the last test email was sent last April 1 at 9pm, this stores the total emails sent since the beginning of that day.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The total number of emails that were sent during the period when the last email was sent, e.g. the day of the last email sent.</inlineHelpText>
+        <label>Test Email Total Sent On Stamp Period</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Test_Email_Total_Sent_Today__c</fullName>
+        <description>The number of test email sent today.</description>
+        <externalId>false</externalId>
+        <formula>IF ( TODAY() = DATEVALUE(Test_Email_Last_Send_Time_Stamp__c)
+   , Test_Email_Total_Sent_On_Stamp_Period__c
+   , 0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The number of test email sent today.</inlineHelpText>
+        <label>Test Email Total Sent Today</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>EBC Campaign</label>
     <listViews>
         <fullName>All</fullName>
