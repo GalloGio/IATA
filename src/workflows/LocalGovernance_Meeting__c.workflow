@@ -315,7 +315,7 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
         </criteriaItems>
         <description>Notification that Legal has signed off the Agenda. Used for IDFS ISS.
 ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ALWG%2FLCAG-C%2FCEC%2FICAP - Notification that Minutes have been signed off</fullName>
@@ -335,7 +335,7 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         </criteriaItems>
         <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
 ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ALWG%2FLCAG-C%2FCEC%2FICAP - Request for Legal to sign off Agenda</fullName>
@@ -451,7 +451,7 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         </criteriaItems>
         <description>Notification that Legal has signed off the agenda. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>APJC%2FJALWG%2FLCAG-P - Notification that Minutes have been signed off</fullName>
@@ -471,7 +471,7 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         </criteriaItems>
         <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>APJC%2FJALWG%2FLCAG-P - Request for Legal to sign off Agenda</fullName>

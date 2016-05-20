@@ -6,7 +6,8 @@ trigger trgCase_SIS_ICH_AreaVsType on Case(before insert, before update) {
 
             if (newCase.Type != null && newCase.CaseArea__c != null) {
                 if (newCase.CaseArea__c == 'ICH' && (newCase.Type == 'SIS Feature Request' || newCase.Type == 'SIS Technical Problem' || newCase.Type == 'SIS Internal Case'
-                                                     || newCase.Type == 'SIS Question/Problem' || newCase.Type == 'SIS Member Profile Update' || newCase.Type == 'SIS Membership')) {
+                                                     || newCase.Type == 'SIS Question/Problem' || newCase.Type == 'SIS Member Profile Update' || newCase.Type == 'SIS Membership'
+                                                     || newCase.Type == 'Feature Request' || newCase.Type == 'General Question' || newCase.Type == 'Problem / Issue')) {
 
                     //system.debug('\n case area:' + newCase.CaseArea__c + ' type: ' + newCase.Type );
                     system.debug('\n Assert error2 caught .......');
@@ -14,7 +15,8 @@ trigger trgCase_SIS_ICH_AreaVsType on Case(before insert, before update) {
                 }
 
                 if (newCase.CaseArea__c == 'SIS' && (newCase.Type != 'SIS Feature Request' && newCase.Type != 'SIS Technical Problem' && newCase.Type != 'SIS Internal Case'
-                                                     && newCase.Type != 'SIS Question/Problem' && newCase.Type != 'SIS Member Profile Update' && newCase.Type != 'SIS Membership')) {
+                                                     && newCase.Type != 'SIS Question/Problem' && newCase.Type != 'SIS Member Profile Update' && newCase.Type != 'SIS Membership'
+                                                     && newCase.Type != 'Feature Request' && newCase.Type != 'General Question' && newCase.Type != 'Problem / Issue')) {
 
                     //system.debug('\n case area:' + newCase.CaseArea__c + ' type: ' + newCase.Type);
                     system.debug('\n Assert error1 caught .......');

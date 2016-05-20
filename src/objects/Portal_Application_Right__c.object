@@ -394,6 +394,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;CASSLink Export&quot;, $Label.ISSP_CASSLink_Export, 
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import, 
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics, 
+&quot;ASD&quot;, $Label.ISSP_ASD, 
 Name
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
