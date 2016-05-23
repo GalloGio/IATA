@@ -105,6 +105,10 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Min_Paidup_capital__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISSP_AMS_VAT_number__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
@@ -166,10 +170,6 @@
         <editHeading>true</editHeading>
         <label>Agency Contacts</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ISSP_AMS_Total_Ownership__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Portal_admin__c</field>
