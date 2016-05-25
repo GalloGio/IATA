@@ -17,7 +17,7 @@
                         <div class="main-container columns small-12 medium-8">
                                 <div class="group-container campaigns">
                                     <h2 class="group-title">Campaigns</h2>
-                                    <c:IECEBC_CampaignList campaigns="{!campaigns}" campaignsCount="{!CampaignsCount}" />
+                                    <c:IECEBC_CampaignList limited="true" />
                                 </div>
             
                             <apex:outputText rendered="{!IF(CampaignsCount == 0, true, false)}">
