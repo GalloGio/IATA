@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,700,600">
         <link rel="stylesheet" href="assets/css/main.min.css">    
-        <title>Setup - IATA eBroadcast</title>
+        <title>Sample Forms - IATA eBroadcast</title>
         
     </head>
     <body data-is-modal-open="false">
@@ -115,40 +115,41 @@
     </div>
     <h1 class="page-title">Campaign Info</h1>
 
-    <div class="alert">
-        <h2 class="alert-title">Account balance</h2>
-        <div class="alert-message icon check-circle">
-            <p>Your current account balance is <strong>50,000 emails</strong></p>
-        </div>
+    <div class="alert error">
+        <p>Please fill in the highlighted fields below.</p>
     </div>
-
     
     
     <div class="row">
         <div class="columns medium-6">
-            <div class="field-group text">
+
+            <div class="field-group text error">
                 <label>
                     <span class="input-label">Name your campaign</span>
                     <input class="user-input text" type="text">
+                    
                 </label>
                 <p class="input-description">Internal use only. Ex: "Newsletter Test#4"</p>
                 <div class="input-aid">
-                    <p>Please fill in your first name.</p>
+                    <p>Please fill in your campaign name.</p>
                 </div>
             </div>
 
-            <div class="field-group text">
+            <div class="field-group text disabled">
                 <label>
                     <span class="input-label">Email subject</span>
-                    <input class="user-input text js-remaining-characters" value="test" type="text" data-target-element=".js-remaining-count" data-target-id="email-subject" data-max-length="10">
+                    <span class="disabled-user-input text"></span>
                 </label>
                 <div class="input-remaining">
                     <span class="js-remaining-count" data-id="email-subject">10</span>
                 </div>
                 <p class="input-description">This is the email subject that your recipients will see</p>
+                <div class="input-aid">
+                    <p>Please fill in your email subject.</p>
+                </div>
             </div>
 
-            <div class="field-group text">
+            <div class="field-group text error">
                 <label>
                     <span class="input-label">From name</span>
                     <input class="user-input text js-remaining-characters" type="text" data-target-element=".js-remaining-count" data-target-id="from-name" data-max-length="96">
@@ -157,10 +158,52 @@
                     <span class="js-remaining-count" data-id="from-name">96</span>
                 </div>
                 <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                <div class="input-aid">
+                    <p>Please fill in your from name.</p>
+                </div>
+            </div>
+            
+            
+
+            <div class="field-group textarea disabled">
+                <label>
+                    <span class="input-label">From name</span>
+                    <span class="disabled-user-input textarea"></span>
+                </label>
+                <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                <div class="input-aid">
+                    <p>Please fill in your from name.</p>
+                </div>
+            </div>
+
+
+            <div class="field-group checkbox disabled">
+                <div class="checkbox-box">
+                    <div class="custom-user-input checkbox">
+                        <span class="disabled-user-input checkbox"></span>
+                        <label class="custom-checkbox" for="somethign-1"><i class="icon"></i></label>
+                    </div>
+                    <label class="input-label" for="somethign-1">Somethign</label>
+                    <div class="input-aid">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis vitae assumenda mollitia, voluptatum autem est alias aliquam ab at asperiores odit expedita libero maxime saepe minima dolores accusantium quae similique.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="field-group radio disabled">
+                <div class="checkbox-box">
+                    <div class="custom-user-input radio">
+                        <span class="disabled-user-input radio"></span>
+                        <label class="custom-radio" for="somethign-2"><i class="icon"></i></label>
+                    </div>
+                    <label class="input-label" for="somethign-2">Somethign</label>
+                    <div class="input-aid">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis vitae assumenda mollitia, voluptatum autem est alias aliquam ab at asperiores odit expedita libero maxime saepe minima dolores accusantium quae similique.</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="columns medium-6">
-            <div class="field-group checkbox google-analytics">
+            <div class="field-group checkbox google-analytics error">
                 <div class="checkbox-box">
                     <div class="custom-user-input checkbox">
                         <input class="user-input checkbox" type="checkbox" id="google-analytics">
@@ -169,8 +212,24 @@
                     <label class="input-label" for="google-analytics">Google Analytics <sup>TM</sup> tracker</label>
                     <input class="user-input text" type="text">
                     <p class="input-description">Track clicks from your campaigns all the way to your website.</p>
+                    <div class="input-aid">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis vitae assumenda mollitia, voluptatum autem est alias aliquam ab at asperiores odit expedita libero maxime saepe minima dolores accusantium quae similique.</p>
+                    </div>
                 </div>
             </div>
+
+
+            <div class="field-group textarea error">
+                <label>
+                    <span class="input-label">From name</span>
+                    <textarea class="user-input textarea" rows="5"></textarea>
+                </label>
+                <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                <div class="input-aid">
+                    <p>Please fill in your from name.</p>
+                </div>
+            </div>
+
         </div>
     </div>
     
@@ -178,7 +237,7 @@
         <a class="button" href="?page=setup&amp;has_error=true">Continue</a>
     </div>
 
-    
+
 
 </div>
 </main>    <footer class="page-footer" data-is-sticky="false">

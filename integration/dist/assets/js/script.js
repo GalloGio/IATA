@@ -12611,6 +12611,18 @@ jQuery.noConflict();
 
 jQuery(document).ready(function($) {
 
+    var userInputs = $('.js-remaining-characters');
+
+    for (var i = 0; i < userInputs.length; i++) {
+        if ($(userInputs[i]).val().length) {
+            var maxCharacterLength = $(userInputs[i]).data('max-length'),
+                defaultCharacters = $(userInputs[i]).val().length;
+            $(userInputs[i]).parents('.field-group').find('.js-remaining-count').text(maxCharacterLength-defaultCharacters);
+        }
+    }
+
+    $('.js-remaining-characters').parents('.field-group text');
+
     $('.js-remaining-characters').on('keyup',  function() {
         var targetElement = $(this).data('target-element'),
         targetID = $(this).data('target-id'),
@@ -12641,6 +12653,10 @@ jQuery(document).ready(function($) {
         $(this).next('.sub-nav').toggleClass(className.open);
     });
 
+    $('.js-multi-select').on('click', function() {
+        $(this).toggleClass(className.open).next().toggleClass(className.open);
+    });
+
     /* ---------------------------------------- */
     /*  Tooltip                                 */
     /* ---------------------------------------- */
@@ -12662,6 +12678,24 @@ jQuery(document).ready(function($) {
     /* ---------------------------------------- */
     $('.js-match-height .group-container').matchHeight();
 
+    /* ---------------------------------------- */
+    /*  Payment Method                            */
+    /* ---------------------------------------- */
+    $('.js-payment-method').on('change', '.user-input:checked', function() {
+        var value = $(this).val();
+        console.log(0);
+        if (value === 'ich') {
+            $('.payment-method-container').addClass(className.hidden);
+        }
+        if (value === 'creditCard') {
+            $('.payment-method-container').removeClass(className.hidden);
+        }
+    });
+
+    $('.js-card-data-table .user-input').on('change', function() {
+        $(this).parents('tr').addClass(className.selected).siblings().removeClass(className.selected);
+    });
+    
     /* ---------------------------------------- */
     /*  Radio Checkbox List                     */
     /* ---------------------------------------- */
@@ -12687,6 +12721,31 @@ jQuery(document).ready(function($) {
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
 
+    
+    $('.button').on('click', function(event) {
+        if ($(this).is('.disabled')) {
+            event.preventDefault();
+        }
+    });
+
+    /* ----------------------------------------
+        From Validation
+    ------------------------------------------- */
+
+    $('.user-input').on('focus', function() {
+        $(this).parents('.field-group').addClass('is-focus');
+    }).on('blur', function() {
+        $(this).parents('.field-group').removeClass('is-focus');
+    }).on('keyup', function() {
+        if ($(this).val().length) {
+            $(this).parents('.field-group').removeClass('is-focus').removeClass('error');
+        }
+    }).on('change', function() {
+        if ($(this).val() !== 'select') {
+            $(this).parents('.field-group').removeClass('is-focus').removeClass('error');
+        }
+    });
+    
     /* ---------------------------------------- */
     /*  Sticky Footer                           */
     /* ---------------------------------------- */
@@ -12801,8 +12860,33 @@ jQuery(document).ready(function($) {
         $('#js-radio-list-geo-selection li').removeClass(className.selected);
     });
 
+    var removableFields,
+        numberOfFields,
+        fieldCounter;
+
     $(document).on('click', '.js-remove-field', function() {
         $(this).parents('.js-target-field').remove();
+        numberOfFields--;
+        if (numberOfFields < 2) {
+            $('.js-remove-field').addClass(className.hidden);
+        }
+    });
+
+    
+    if ($('.js-count-removable-field').length) {
+        removableFields= $('.js-target-field');
+        numberOfFields = removableFields.length;
+        console.log(numberOfFields);
+    }
+
+    var countRemovableField = function() {
+        if (fieldCounter) {
+
+        }
+    };
+
+    $('.js-multi-select').on('click', 'li', function() {
+        $(this).addClass(className.selected).siblings().removeClass(className.selected);
     });
 
     $('.js-add-field').on('click', function(event) {
@@ -12810,7 +12894,8 @@ jQuery(document).ready(function($) {
         var target = $(this).data('target-field'),
             html = $(target).html();
         $(this).parents('.add-field').before(html);
-        console.log(html);
+        $('.js-remove-field').removeClass(className.hidden);
+        numberOfFields++;
     });
 
     /* ---------------------------------------- */
@@ -12821,4 +12906,5 @@ jQuery(document).ready(function($) {
     });
     
 });
+
 

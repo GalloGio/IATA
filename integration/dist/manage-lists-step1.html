@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,700,600">
         <link rel="stylesheet" href="assets/css/main.min.css">    
-        <title>Setup - IATA eBroadcast</title>
+        <title>Manage Lists - Create List - Step 1 - IATA eBroadcast</title>
         
     </head>
     <body data-is-modal-open="false">
@@ -89,97 +89,94 @@
 </div>
 
 </div>
-</header><main class="main-content">
+</header><main class="main-content create-list-steps">
 <div class="inner-wrapper">
-    <div class="process process-6-steps">
+    <h1 class="page-title">Create list</h1>
+    
+    
+    <div class="process process-2-steps is-hidden">
         <ol class="list steps">
             <li class="step step-1 active">
-                <a href="#">Setup</a>
+                <a class="" data-target-modal="#js-modal-new-list-audience" href="#">Audience</a>
             </li>
             <li class="step step-2 disabled">
-                <a href="javascript:void(0);">Recipients</a>
-            </li>
-            <li class="step step-3 disabled">
-                <a href="javascript:void(0);">Template</a>
-            </li>
-            <li class="step step-4 disabled">
-                <a href="javascript:void(0);">Design</a>
-            </li>
-            <li class="step step-5 disabled">
-                <a href="javascript:void(0);">Summary &amp; schedule</a>
-            </li>
-            <li class="step step-6 disabled">
-                <a href="javascript:void(0);">Payment</a>
+                <a class="" data-target-modal="" href="javascript:void(0);">Confirmation</a>
             </li>
         </ol>
     </div>
-    <h1 class="page-title">Campaign Info</h1>
 
-    <div class="alert">
-        <h2 class="alert-title">Account balance</h2>
-        <div class="alert-message icon check-circle">
-            <p>Your current account balance is <strong>50,000 emails</strong></p>
-        </div>
+    <div class="process process-4-steps">
+
+        <ol class="list steps">
+            <li class="step step-1 active">
+                <a href="#">Audience</a>
+            </li>
+            <li class="step step-2 disabled">
+                <a href="javascript:void(0);">Geo Selection</a>
+            </li>
+            <li class="step step-3 disabled">
+                <a href="javascript:void(0);">Refinement</a>
+            </li>
+            <li class="step step-4 disabled">
+                <a href="javascript:void(0);">Confirmation</a>
+            </li>
+        </ol>
     </div>
+    <h3 class="step-title">Audience</h3>
+    <p>Please select lorem dolor sit amet nulla vel sodales mauris. Maecenas ante magna, henderite at mollis quis.</p>
 
+    <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
+        <li>
+            <div class="radio-box">
+                <div class="custom-user-input radio">
+                    <input class="user-input radio" type="radio" name="new-list" id="new-list-1" value="audience-option-1" data-assign-target="#js-modal-new-list-geo-selection">
+                    <label class="custom-radio" for="new-list-1"><i class="icon"></i></label>
+                </div>
+                <label class="input-label" for="new-list-1">IATA Travel Agencies</label>
+            </div>
+        </li>
+        <li>
+            <div class="radio-box">
+                <div class="custom-user-input radio">
+                    <input class="user-input radio" type="radio" name="new-list" id="new-list-2" value="audience-option-2" data-assign-target="#js-modal-new-list-geo-selection">
+                    <label class="custom-radio" for="new-list-2"><i class="icon"></i></label>
+                </div>
+                <label class="input-label" for="new-list-2">IATA/IATAN ID Cardholders</label>
+            </div>
+        </li>
+        <li>
+            <div class="radio-box">
+                <div class="custom-user-input radio">
+                    <input class="user-input radio" type="radio" name="new-list" id="new-list-3" value="audience-option-3" data-assign-target="#js-modal-new-list-confirmation">
+                    <label class="custom-radio" for="new-list-3"><i class="icon"></i></label>
+                </div>
+                <label class="input-label" for="new-list-3">Provide a list of IATA Numeric Codes</label>
+            </div>
+            <div class="toggle-container show-hide-toggle">
+
+                <div class="field-group textarea">
+                    <label>
+                        <span class="input-label">Paste your list of IATA numeric codes in the box below:</span>
+                        <textarea class="user-input textarea" rows="3"></textarea>
+                    </label>
+                    <p class="input-description">Each IATA code needs to be entered seperated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
+                </div>
+            </div>
+        </li>
+    </ul>
     
-    
-    <div class="row">
-        <div class="columns medium-6">
-            <div class="field-group text">
-                <label>
-                    <span class="input-label">Name your campaign</span>
-                    <input class="user-input text" type="text">
-                </label>
-                <p class="input-description">Internal use only. Ex: "Newsletter Test#4"</p>
-                <div class="input-aid">
-                    <p>Please fill in your first name.</p>
-                </div>
-            </div>
-
-            <div class="field-group text">
-                <label>
-                    <span class="input-label">Email subject</span>
-                    <input class="user-input text js-remaining-characters" value="test" type="text" data-target-element=".js-remaining-count" data-target-id="email-subject" data-max-length="10">
-                </label>
-                <div class="input-remaining">
-                    <span class="js-remaining-count" data-id="email-subject">10</span>
-                </div>
-                <p class="input-description">This is the email subject that your recipients will see</p>
-            </div>
-
-            <div class="field-group text">
-                <label>
-                    <span class="input-label">From name</span>
-                    <input class="user-input text js-remaining-characters" type="text" data-target-element=".js-remaining-count" data-target-id="from-name" data-max-length="96">
-                </label>
-                <div class="input-remaining">
-                    <span class="js-remaining-count" data-id="from-name">96</span>
-                </div>
-                <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
-            </div>
-        </div>
-        <div class="columns medium-6">
-            <div class="field-group checkbox google-analytics">
-                <div class="checkbox-box">
-                    <div class="custom-user-input checkbox">
-                        <input class="user-input checkbox" type="checkbox" id="google-analytics">
-                        <label class="custom-checkbox" for="google-analytics"><i class="icon"></i></label>
-                    </div>
-                    <label class="input-label" for="google-analytics">Google Analytics <sup>TM</sup> tracker</label>
-                    <input class="user-input text" type="text">
-                    <p class="input-description">Track clicks from your campaigns all the way to your website.</p>
-                </div>
-            </div>
-        </div>
+    <div class="footer-actions text-right process-4-steps">
+        <ul class="list actions">
+            <li><a href="#">Cancel</a></li>
+            <li><a class="button disabled" data-default-state="disabled" id="js-continue-to-geo-selection" href="?page=create_list_step2">Continue</a></li>
+        </ul>
     </div>
-    
-    <div class="footer-actions text-right">
-        <a class="button" href="?page=setup&amp;has_error=true">Continue</a>
+    <div class="footer-actions text-right is-hidden process-2-steps">
+        <ul class="list actions">
+            <li><a href="#">Cancel</a></li>
+            <li><a class="button" href="?page=create_list_step4b">Continue</a></li>
+        </ul>
     </div>
-
-    
-
 </div>
 </main>    <footer class="page-footer" data-is-sticky="false">
 <div class="inner-wrapper">

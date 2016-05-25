@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:300,400,700,600">
         <link rel="stylesheet" href="assets/css/main.min.css">    
-        <title>Setup - IATA eBroadcast</title>
+        <title>Manage Lists - IATA eBroadcast</title>
         
     </head>
     <body data-is-modal-open="false">
@@ -91,95 +91,68 @@
 </div>
 </header><main class="main-content">
 <div class="inner-wrapper">
-    <div class="process process-6-steps">
-        <ol class="list steps">
-            <li class="step step-1 active">
-                <a href="#">Setup</a>
-            </li>
-            <li class="step step-2 disabled">
-                <a href="javascript:void(0);">Recipients</a>
-            </li>
-            <li class="step step-3 disabled">
-                <a href="javascript:void(0);">Template</a>
-            </li>
-            <li class="step step-4 disabled">
-                <a href="javascript:void(0);">Design</a>
-            </li>
-            <li class="step step-5 disabled">
-                <a href="javascript:void(0);">Summary &amp; schedule</a>
-            </li>
-            <li class="step step-6 disabled">
-                <a href="javascript:void(0);">Payment</a>
-            </li>
-        </ol>
-    </div>
-    <h1 class="page-title">Campaign Info</h1>
-
-    <div class="alert">
-        <h2 class="alert-title">Account balance</h2>
-        <div class="alert-message icon check-circle">
-            <p>Your current account balance is <strong>50,000 emails</strong></p>
+    <h1 class="page-title">Manage your lists</h1>
+    <div class="sort-by">
+        <div class="custom-user-input select">
+            <i class="icon angle-down"></i>
+            <select class="user-input select">
+                <option value="default">Sort by</option>
+            </select>
         </div>
     </div>
-
-    
-    
-    <div class="row">
-        <div class="columns medium-6">
-            <div class="field-group text">
-                <label>
-                    <span class="input-label">Name your campaign</span>
-                    <input class="user-input text" type="text">
-                </label>
-                <p class="input-description">Internal use only. Ex: "Newsletter Test#4"</p>
-                <div class="input-aid">
-                    <p>Please fill in your first name.</p>
-                </div>
-            </div>
-
-            <div class="field-group text">
-                <label>
-                    <span class="input-label">Email subject</span>
-                    <input class="user-input text js-remaining-characters" value="test" type="text" data-target-element=".js-remaining-count" data-target-id="email-subject" data-max-length="10">
-                </label>
-                <div class="input-remaining">
-                    <span class="js-remaining-count" data-id="email-subject">10</span>
-                </div>
-                <p class="input-description">This is the email subject that your recipients will see</p>
-            </div>
-
-            <div class="field-group text">
-                <label>
-                    <span class="input-label">From name</span>
-                    <input class="user-input text js-remaining-characters" type="text" data-target-element=".js-remaining-count" data-target-id="from-name" data-max-length="96">
-                </label>
-                <div class="input-remaining">
-                    <span class="js-remaining-count" data-id="from-name">96</span>
-                </div>
-                <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
-            </div>
-        </div>
-        <div class="columns medium-6">
-            <div class="field-group checkbox google-analytics">
-                <div class="checkbox-box">
-                    <div class="custom-user-input checkbox">
-                        <input class="user-input checkbox" type="checkbox" id="google-analytics">
-                        <label class="custom-checkbox" for="google-analytics"><i class="icon"></i></label>
+    <table class="data-table manage-lists">
+        <tr>
+            <th class="name">List name</th>
+            <th class="type">List type</th>
+            <th class="date created-on">Created on</th>
+            <th class="date last-edited">Last edited</th>
+            <th class="actions"><a class="button" href="#">Create new list</a></th>
+        </tr>
+        <tr>
+            <td class="name">
+                AS &amp; RC
+                <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                <div class="tooltip-container">
+                    <div class="tooltip-description">
+                        <p>You cannot edit this list as it is used in a campaign and is <strong>pending approval</strong>.</p>
                     </div>
-                    <label class="input-label" for="google-analytics">Google Analytics <sup>TM</sup> tracker</label>
-                    <input class="user-input text" type="text">
-                    <p class="input-description">Track clicks from your campaigns all the way to your website.</p>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer-actions text-right">
-        <a class="button" href="?page=setup&amp;has_error=true">Continue</a>
-    </div>
+                
+            </td>
+            <td class="type">Agency</td>
+            <td class="date created-on">Sun Feb 28, 2016 7:00 pm</td>
+            <td class="date last-edited">Sun Feb 28, 2016 7:00 pm</td>
+            <td class="actions">
 
-    
+                <div class="custom-user-input select">
+                    <i class="icon angle-down"></i>
+                    <select class="user-input select">
+                        <option value="default">Actions</option>
+                    </select>
+                </div>
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="name">
+                Campaign 1
+                
+            </td>
+            <td class="type">Agency (ID card)</td>
+            <td class="date created-on">Fri Feb 26, 2016 7:00 pm</td>
+            <td class="date last-edited">Fri Feb 26, 2016 7:00 pm</td>
+            <td class="actions">
 
+                <div class="custom-user-input select">
+                    <i class="icon angle-down"></i>
+                    <select class="user-input select">
+                        <option value="default">Actions</option>
+                    </select>
+                </div>
+                
+            </td>
+        </tr>
+    </table>
 </div>
 </main>    <footer class="page-footer" data-is-sticky="false">
 <div class="inner-wrapper">

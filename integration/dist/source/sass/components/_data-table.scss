@@ -1,0 +1,277 @@
+.data-table {
+    width: 100%;
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        font-weight: $font-weight-normal;
+    }
+
+    caption {
+        text-align: left;
+        padding-bottom: 20px;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-larger;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    &.campaign {
+
+        th,
+        td {
+            border-top: 1px solid #23828c;
+            border-bottom: 1px solid #23828c;
+        }
+
+        .label,
+        .value {
+            display: block;
+            text-align: center;
+        }
+
+        .action {
+            text-align: right;
+            
+            .user-input {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        .custom-user-input.select {
+            min-width: 220px;
+        }
+
+
+    }
+
+    &.manage-lists {
+        th {
+            font-weight: bold;
+            background: #fff;
+        }
+
+        td {
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-top: 1px solid #23828c;
+            border-bottom: 1px solid #23828c;
+        }
+
+        .actions {
+            text-align: right;
+            font-weight: normal;
+        }
+
+        td.name {
+            position: relative;
+            font-weight: bold;
+        }
+
+        td.type {
+            font-weight: bold;
+        }
+
+        th.actions {
+            padding-right: 0;
+        }
+
+        .custom-user-input.select {
+            min-width: 200px;
+        }
+
+        td.date {
+            color: #666;
+        }
+
+        .user-input.select {
+            display: block;
+            width: 100%;
+        }
+
+        .tooltip-container {
+            top: 26px;
+            left: 110px;
+            font-weight: normal;
+        }
+    }
+
+    &.new-campaign {
+
+        th,
+        td {
+            border-bottom: 1px dotted #ccc;
+            padding: 0;
+        }
+
+        th {
+            padding: 15px 10px 15px 0;
+            vertical-align: top;
+            width: 150px;
+        }
+
+        td {
+            padding: 15px 0 15px 10px;
+        }
+
+        .label {
+            display: block;
+            color: #666;
+        }
+
+        .list {
+            margin-left: -30px;
+        }
+
+        li {
+            display: inline-block;
+            margin-left: 30px;
+        }
+    }
+
+    &.cost {
+        border-top: 1px solid #23828c;
+        border-bottom: 1px solid #23828c;
+
+        th,
+        td {
+        }
+
+        .item-name {
+            margin: 0;
+        }
+    }
+
+    td.icon {
+        width: 50px;
+        text-align: center;
+        padding: 0;
+    }
+
+}
+
+.zibra {
+    tr:nth-child(odd) th,
+    tr:nth-child(odd) td {
+        background: #e0f1f1;
+    }
+}
+
+.campaign {
+    tr:nth-child(even) th,
+    tr:nth-child(even) td {
+        background: #F5F5F5;
+    }
+}
+
+.manage-lists {
+    tr:nth-child(odd) {
+        background: #F5F5F5;
+    }
+}
+
+.total-recipients {
+    th,
+    td {
+        background: #e9f2f3;
+    }
+}
+
+.new-balance {
+    th,
+    td {
+        background: #65a7ae;
+        color: #fff;
+    }
+}
+
+.table-payment {
+    font-size: 1.8rem;
+
+    th,
+    td {
+        padding: 15px 20px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+    }
+
+    .item {
+        th,
+        td {
+            padding: 43px 20px;
+        }
+    }
+    .total {
+        th,
+        td {
+            background: #2a3940;
+            color: #fff;
+            font-size: 1.8rem;
+        }
+    }
+
+    .price {
+        text-align: right;
+    }
+}
+
+
+/*------------------------------------*\
+    #$saved-cards
+\*------------------------------------*/
+
+.table-saved-cards {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    
+    td {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+    
+    td.card {
+        border-left: 1px solid #ccc;
+    }
+
+    td.action {
+        border-right: 1px solid #ccc;
+    }
+
+    th {
+        font-weight: bold;
+    }
+    
+    .radio-box {
+        margin: 0;
+    }
+
+    .radio-box:after {
+        display: inline;
+    }
+
+    .input-label {
+        margin-bottom: 0;
+    }
+
+    .card-image {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .ending-number {
+        font-weight: normal;
+    }
+
+    .custom-user-input {
+        margin-top: 10px;
+        margin-bottom: -10px;
+    }
+
+    .is-selected td {
+        background: #E9F2F3;
+    }
+}
