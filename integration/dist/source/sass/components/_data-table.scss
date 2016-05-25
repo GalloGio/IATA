@@ -45,6 +45,59 @@
         .custom-user-input.select {
             min-width: 220px;
         }
+
+
+    }
+
+    &.manage-lists {
+        th {
+            font-weight: bold;
+            background: #fff;
+        }
+
+        td {
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-top: 1px solid #23828c;
+            border-bottom: 1px solid #23828c;
+        }
+
+        .actions {
+            text-align: right;
+            font-weight: normal;
+        }
+
+        td.name {
+            position: relative;
+            font-weight: bold;
+        }
+
+        td.type {
+            font-weight: bold;
+        }
+
+        th.actions {
+            padding-right: 0;
+        }
+
+        .custom-user-input.select {
+            min-width: 200px;
+        }
+
+        td.date {
+            color: #666;
+        }
+
+        .user-input.select {
+            display: block;
+            width: 100%;
+        }
+
+        .tooltip-container {
+            top: 26px;
+            left: 110px;
+            font-weight: normal;
+        }
     }
 
     &.new-campaign {
@@ -111,6 +164,12 @@
 .campaign {
     tr:nth-child(even) th,
     tr:nth-child(even) td {
+        background: #F5F5F5;
+    }
+}
+
+.manage-lists {
+    tr:nth-child(odd) {
         background: #F5F5F5;
     }
 }

@@ -12653,6 +12653,10 @@ jQuery(document).ready(function($) {
         $(this).next('.sub-nav').toggleClass(className.open);
     });
 
+    $('.js-multi-select').on('click', function() {
+        $(this).toggleClass(className.open).next().toggleClass(className.open);
+    });
+
     /* ---------------------------------------- */
     /*  Tooltip                                 */
     /* ---------------------------------------- */
@@ -12715,6 +12719,13 @@ jQuery(document).ready(function($) {
     $('.js-checkbox-list').on('click', '.user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
+    });
+
+    
+    $('.button').on('click', function(event) {
+        if ($(this).is('.disabled')) {
+            event.preventDefault();
+        }
     });
 
     /* ----------------------------------------
@@ -12849,8 +12860,33 @@ jQuery(document).ready(function($) {
         $('#js-radio-list-geo-selection li').removeClass(className.selected);
     });
 
+    var removableFields,
+        numberOfFields,
+        fieldCounter;
+
     $(document).on('click', '.js-remove-field', function() {
         $(this).parents('.js-target-field').remove();
+        numberOfFields--;
+        if (numberOfFields < 2) {
+            $('.js-remove-field').addClass(className.hidden);
+        }
+    });
+
+    
+    if ($('.js-count-removable-field').length) {
+        removableFields= $('.js-target-field');
+        numberOfFields = removableFields.length;
+        console.log(numberOfFields);
+    }
+
+    var countRemovableField = function() {
+        if (fieldCounter) {
+
+        }
+    };
+
+    $('.js-multi-select').on('click', 'li', function() {
+        $(this).addClass(className.selected).siblings().removeClass(className.selected);
     });
 
     $('.js-add-field').on('click', function(event) {
@@ -12858,7 +12894,8 @@ jQuery(document).ready(function($) {
         var target = $(this).data('target-field'),
             html = $(target).html();
         $(this).parents('.add-field').before(html);
-        console.log(html);
+        $('.js-remove-field').removeClass(className.hidden);
+        numberOfFields++;
     });
 
     /* ---------------------------------------- */

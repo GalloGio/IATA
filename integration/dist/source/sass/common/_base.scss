@@ -437,6 +437,11 @@ figure {
     }
 }
 
+.create-list-steps .footer-actions {
+    margin-top: 80px;
+}
+
+
 .list-actions {
     margin: 1em 0;
 }
@@ -544,4 +549,23 @@ figure {
 
 .group-container.use-html-code {
     margin: 30px 0 150px;
+}
+
+.action-header {
+    border-bottom: 1px solid #23828c;
+    padding: 0 0 15px;
+    margin: 0 0 30px;
+
+    .group-title {
+        font-size: 1.8rem;
+        font-weight: normal;
+    }
+
+    .field-group {
+        margin: 0;
+    }
+
+    .user-input {
+        display: block;
+    }
 }
