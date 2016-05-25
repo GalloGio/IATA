@@ -80,6 +80,8 @@
                             <apex:commandLink rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
                             <apex:commandLink rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
                             <apex:commandLink rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" action="{!next}" value="Next" />
+                            
+                            <apex:commandLink action="{!submitForApproval}" value="Submit for approval" />
                         </div>
                 
                     </apex:form>

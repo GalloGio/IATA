@@ -8,6 +8,26 @@ public class vfIECEBC_Campaign {
         private set;
     }
     
+    public PageReference submitForApproval() {
+        // Create an approval request for the account
+        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
+        //req1.setComments('Submitting request for approval.');
+        req1.setObjectId(campaign.id);
+        
+        // Submit on behalf of a specific submitter
+        req1.setSubmitterId(UserInfo.getUserId());
+        // Submit the record to specific process and skip the criteria evaluation
+        req1.setProcessDefinitionNameOrId('EBC_Campaign_Approval');
+        // Submit the approval request for the account
+        Approval.ProcessResult result = Approval.process(req1);
+        // Verify the result
+        System.assert(result.isSuccess());
+         
+
+    
+        return null;
+    }
+    
     private Map<Integer, PageReference> stepToPageReference = new Map<Integer, PageReference>{
         1 => Page.IECEBC_Campaign,
         2 => Page.IECEBC_CampaignRecipients,
