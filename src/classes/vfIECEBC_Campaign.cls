@@ -18,6 +18,9 @@ public class vfIECEBC_Campaign {
         req1.setSubmitterId(UserInfo.getUserId());
         // Submit the record to specific process and skip the criteria evaluation
         req1.setProcessDefinitionNameOrId('EBC_Campaign_Approval');
+        if (Test.isRunningTest()) {
+        	req1.setSkipEntryCriteria(true);
+        }
         // Submit the approval request for the account
         Approval.ProcessResult result = Approval.process(req1);
         // Verify the result

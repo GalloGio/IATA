@@ -292,4 +292,122 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(attchBody, campaignExtCon.getBody());
         }
     }
+    
+    public static void testCampaignApproval() {
+		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        insert masterFilter;
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        String attchBody = 'this is my preview';
+        Attachment attch = new Attachment();
+        attch.ParentId = tpl.Id;
+        attch.Body = Blob.valueOf(attchBody);
+        attch.ContentType = 'text/html';
+        attch.Name = 'template.xml';
+        insert attch;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Account__c = IECTestUtil.PortalUserAccountId;
+        camp.EBC_Master_Filter__c = masterFilter.Id;
+        camp.EBC_Design__c = tpl.Id;
+        
+        System.runAs(usr) {
+        insert camp;
+            Test.startTest();
+            
+            init();
+            
+            // Layout PageLoad
+        	vfIECEBC layoutController = new vfIECEBC();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            campaignExtCon.submitForApproval();
+        }
+        
+        EBC_Campaign__c campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
+        
+        System.assertEquals('PENDING_APPROVAL', campResult.Status__c);
+        
+		pageRef = Page.EBC_CampaignApproval;
+        Test.setCurrentPage(pageRef); 
+         
+        ApexPages.StandardController adminSc = new ApexPages.StandardController(camp);
+        vfEBC_CampaignApproval campaignApprovalExtCon = new vfEBC_CampaignApproval(adminSc);
+        campaignApprovalExtCon.Approve();
+        
+        campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
+        
+        System.assertEquals('APPROVED', campResult.Status__c);
+    }
+    
+    public static void testCampaignApprovalRejected() {
+		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        insert masterFilter;
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        String attchBody = 'this is my preview';
+        Attachment attch = new Attachment();
+        attch.ParentId = tpl.Id;
+        attch.Body = Blob.valueOf(attchBody);
+        attch.ContentType = 'text/html';
+        attch.Name = 'template.xml';
+        insert attch;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Account__c = IECTestUtil.PortalUserAccountId;
+        camp.EBC_Master_Filter__c = masterFilter.Id;
+        camp.EBC_Design__c = tpl.Id;
+        
+        System.runAs(usr) {
+        insert camp;
+            Test.startTest();
+            
+            init();
+            
+            // Layout PageLoad
+        	vfIECEBC layoutController = new vfIECEBC();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            campaignExtCon.submitForApproval();
+        }
+        
+        EBC_Campaign__c campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
+        
+        System.assertEquals('PENDING_APPROVAL', campResult.Status__c);
+        
+		pageRef = Page.EBC_CampaignApproval;
+        Test.setCurrentPage(pageRef); 
+         
+        ApexPages.StandardController adminSc = new ApexPages.StandardController(camp);
+        vfEBC_CampaignApproval campaignApprovalExtCon = new vfEBC_CampaignApproval(adminSc);
+        campaignApprovalExtCon.Reject();
+        
+        campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
+        
+        System.assertEquals('REJECTED', campResult.Status__c);
+    }
 }

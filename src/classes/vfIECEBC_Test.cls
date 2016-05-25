@@ -21,4 +21,10 @@ public class vfIECEBC_Test {
 	public static testMethod void testCampaignPreview() {
         vfIECEBC_TestSuite.testCampaignPreview();
     }
+	public static testMethod void testCampaignApproval() {
+        vfIECEBC_TestSuite.testCampaignApproval();
+    }
+	public static testMethod void testCampaignApprovalRejected() {
+        vfIECEBC_TestSuite.testCampaignApprovalRejected();
+    }
 }

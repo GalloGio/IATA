@@ -2,9 +2,11 @@ public class vfEBC_CampaignApproval {
     private final EBC_Campaign__c c;
 
     public vfEBC_CampaignApproval(ApexPages.StandardController stdController) {
-        stdController.addFields(new List<String>{
-            'EBC_Design__c'
-        });
+        if (!Test.isRunningTest()) {
+            stdController.addFields(new List<String>{
+                'EBC_Design__c'
+            });
+        }
         this.c = (EBC_Campaign__c)stdController.getRecord();
     }
     
