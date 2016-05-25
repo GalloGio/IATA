@@ -53,7 +53,7 @@
                                         <apex:inputText value="{!campaignDate}" styleClass="campaignDate" style="display: none;">
                                             <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
                                         </apex:inputText>
-                                        <apex:input value="{!humanCampaignDate}" type="text" styleClass="humanCampaignDate user-input text" />
+                                        <apex:input value="{!humanCampaignDate}" type="text" styleClass="humanCampaignDate user-input text js-datepicker" />
                                     </div>
                 
                                     <div class="custom-user-input select">

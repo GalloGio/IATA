@@ -27,13 +27,13 @@
                             </apex:outputText>
             
 						</div>
-            
+                        
                         <div class="sub-container columns small-12 medium-4">
                             <div class="summary-box">
                                 <div class="box-body fit">
                                     <table class="data-table zibra">
                                         <caption>Account Summary</caption>
-                                        <tr>
+                                        <tbody><tr>
                                             <th>
                                                 <div class="item-name">Current Billing Plan</div>
                                                 <p class="item-description">Pay-As-You-Go</p>
@@ -68,7 +68,7 @@
                                                 <a href="#">View Add Ons Options</a>
                                             </td>
                                         </tr>
-                                    </table>
+                                    </tbody></table>
                                     <div class="action-box text-right">
                                         <a href="#">Manage account</a>
                                     </div>
