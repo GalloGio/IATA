@@ -16112,7 +16112,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <value>Process</value>
         </criteriaItems>
         <description>Assign ICCS Team value on the Groups picklist on Case</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Portal - Uncheck Visible in Self-Service</fullName>
