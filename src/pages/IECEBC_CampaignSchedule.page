@@ -5,25 +5,7 @@
             <title>eBroadcast Campaign - Schedule</title>
             <!-- End of Page </head> -->
         </apex:define>
-        <apex:define name="pageScriptAdditions">
-            <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
-                <script type="text/javascript">
-                jQuery(document).ready(function($) {
-                    $('.humanCampaignDate').datepicker({
-                        minDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!minDatetime}" /></apex:outputText>'),
-                        
-                        onSelect: function(a, b, c){
-                            $('.campaignDate').trigger('change');
-                        },
-                        
-                        dateFormat:"MM dd yy",
-                        altFormat: "mm/dd/yy",
-                        altField: '.campaignDate'
-                    });
-                });
-                </script>
-            </apex:outputText>
-        </apex:define>
+        <apex:define name="pageScriptAdditions" />
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
             <main class="main-content">
