@@ -139,7 +139,7 @@
         <fullName>AMS_Target_Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>AMS Target Agency</label>
+        <label>Target Agency</label>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>OSCARs (AMS Target Agency)</relationshipLabel>
         <relationshipName>OSCARs1</relationshipName>
@@ -1555,6 +1555,16 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <externalId>false</externalId>
         <label>Flag Data to SAPECC</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Flag_IATACode_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c  &lt;&gt; Null</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag IATACode Formula</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3347,7 +3357,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <picklistValues>
             <picklist>Agreement_result__c</picklist>
             <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4015,6 +4033,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -4058,6 +4080,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklist>Finalization_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4159,16 +4185,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>N%2FA</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Process__c</picklist>
+            <values>
+                <fullName>BANK%2EACCOUNT%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>CHANGE%2E1%2E0</fullName>
                 <default>false</default>
@@ -4178,7 +4204,23 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR%2EDGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAJOR%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR%2EABROAD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4216,6 +4258,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -4224,6 +4270,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklist>Rejection_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4741,6 +4791,14 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reopen</fullName>
                 <default>false</default>
             </values>
@@ -4825,6 +4883,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -4856,7 +4918,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <picklistValues>
             <picklist>Agreement_result__c</picklist>
             <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5524,6 +5594,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -5567,6 +5641,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklist>Finalization_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5668,16 +5746,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>N%2FA</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Process__c</picklist>
+            <values>
+                <fullName>BANK%2EACCOUNT%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>CHANGE%2E1%2E0</fullName>
                 <default>false</default>
@@ -5687,7 +5765,23 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR%2EDGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAJOR%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR%2EABROAD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5725,6 +5819,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -5733,6 +5831,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklist>Rejection_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6306,6 +6408,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -6337,7 +6443,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <picklistValues>
             <picklist>Agreement_result__c</picklist>
             <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7005,6 +7119,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -7048,6 +7166,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklist>Finalization_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7149,16 +7271,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>N%2FA</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Process__c</picklist>
+            <values>
+                <fullName>BANK%2EACCOUNT%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>CHANGE%2E1%2E0</fullName>
                 <default>false</default>
@@ -7168,7 +7290,23 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR%2EDGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MAJOR%2ECHANGES</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2E1%2E1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EBR%2EABROAD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7206,6 +7344,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -7214,6 +7356,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklist>Rejection_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7779,6 +7925,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
             </values>
@@ -7814,21 +7964,37 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
     <webLinks>
         <fullName>CongaSession</fullName>
         <availability>online</availability>
-        <displayType>link</displayType>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Conga Tab</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>var openSubtab = function(result)
+                {    
+                    sforce.console.openSubtab(result.id, &apos;/apex/AMS_Conga_Viewer?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;OscarId={!AMS_OSCAR__c.Id}&amp;ReportId=00O7E000000FLNM&apos;, true, &apos;Conga&apos;, null, changeTab);  
+                };
+                sforce.console.getEnclosingPrimaryTabId(openSubtab);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Conga_Test_Popup</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <hasMenubar>false</hasMenubar>
         <hasScrollbars>true</hasScrollbars>
         <hasToolbar>false</hasToolbar>
-        <height>600</height>
+        <height>550</height>
         <isResizable>true</isResizable>
         <linkType>url</linkType>
-        <masterLabel>CongaSession</masterLabel>
+        <masterLabel>Conga Popup</masterLabel>
         <openType>newWindow</openType>
         <position>none</position>
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>/apex/AMS_Conga_Viewer?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;OscarId={!AMS_OSCAR__c.Id}&amp;TemplateId={! $Request.TemplateId}&amp;ReportId={! $Request.ReportId}</url>
+        <url>/apex/AMS_CONGA_TestPage?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!AMS_OSCAR__c.Id} 
+&amp;ReportId=00O7E000000FLNM&amp;EmailRelatedToId={!AMS_OSCAR__c.Id}&amp;OFN={!AMS_OSCAR__c.Name}</url>
+        <width>750</width>
     </webLinks>
     <webLinks>
         <fullName>IATA_Code_Gen</fullName>

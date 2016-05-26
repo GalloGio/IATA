@@ -222,10 +222,6 @@
                 <field>License_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NPrimaryAddresses__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Parent_Reference_Number__c</field>
             </layoutItems>
@@ -345,8 +341,7 @@
         <fields>NAME</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>Date_Organisation_Status_attained__c</fields>
-        <fields>AMS_Accreditation_Organization__c.Air_Code__c</fields>
-        <fields>AMS_Accreditation_Organization__c.NAME</fields>
+        <fields>Accreditation_Endorsement_organisation__c</fields>
         <relatedList>AMS_Inspection__c.Agency__c</relatedList>
     </relatedLists>
     <relatedLists>

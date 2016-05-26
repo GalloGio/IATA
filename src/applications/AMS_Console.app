@@ -6,6 +6,9 @@
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <detailPageRefreshMethod>none</detailPageRefreshMethod>
+    <domainWhitelist>
+        <domain>iata--AmsDev1.cs86.my.salesforce.com</domain>
+    </domainWhitelist>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableMultiMonitorComponents>true</enableMultiMonitorComponents>
     <isServiceCloudConsole>true</isServiceCloudConsole>
@@ -162,7 +165,15 @@
     <tab>standard-Case</tab>
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
+    <tab>IATA_Code_Loader</tab>
+    <tab>Code_Range__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>Code_Range__c</tab>
+        </mapping>
+        <mapping>
+            <tab>IATA_Code_Loader</tab>
+        </mapping>
         <mapping>
             <tab>standard-Account</tab>
         </mapping>

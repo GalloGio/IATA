@@ -1,29 +1,16 @@
 @isTest
 private class AMS_TreeViewTest {
 
-	@testSetup static void setup(){
-        //Account acc = new Account(Name='Test Account1', IATAcode__c = '12345678');
-        //insert acc;
+    @testSetup static void setup(){
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-        List<Account> accountList = new List<Account>();
-        Account acc1 = new Account(Name='Test1 Account');
-        Account acc2 = new Account(Name='Test2 Account');
-        Account acc3 = new Account(Name='Test3 Account');
-        Account acc4 = new Account(Name='Test4 Account');
-        accountList.add(acc1);
-        accountList.add(acc2);
-        accountList.add(acc3);
-        accountList.add(acc4);
-        insert accountList;
+		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
         
-        AMS_Agency__c a1 = new AMS_Agency__c(Account__c=acc1.Id,Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test1 Agency', IATAcode__c = '1234567', Chk_dgt__c = '7', Legal_Name_1__c = 'Test1 Agency', Legacy_External_ID__c = '12345677', Legacy_System__c = 'AIMS');
-        AMS_Agency__c a2 = new AMS_Agency__c(Account__c=acc2.Id,Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test2 Agency', IATAcode__c = '1234567', Chk_dgt__c = '8', Legal_Name_1__c = 'Test2 Agency', Legacy_External_ID__c = '12345678', Legacy_System__c = 'AIMS');
-        AMS_Agency__c a3 = new AMS_Agency__c(Account__c=acc3.Id,Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test3 Agency', IATAcode__c = '1234567', Chk_dgt__c = '9', Legal_Name_1__c = 'Test3 Agency', Legacy_External_ID__c = '12345679', Legacy_System__c = 'AIMS');
-        List<AMS_Agency__c> listOfAgencies = new List<AMS_Agency__c>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test1 Agency', IATAcode__c = '1234567', Short_Name__c = 'Test1 Agency', /*Legacy_External_ID__c = '12345677',*/ Source_System__c = 'AIMS');
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test2 Agency', IATAcode__c = '1234565', Short_Name__c = 'Test2 Agency', /*Legacy_External_ID__c = '12345678',*/ Source_System__c = 'AIMS');
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test3 Agency', IATAcode__c = '1234564', Short_Name__c = 'Test3 Agency', /*Legacy_External_ID__c = '12345679',*/ Source_System__c = 'AIMS');
+        List<Account> listOfAgencies = new List<Account>();
         listOfAgencies.add(a1);
         listOfAgencies.add(a2);
         listOfAgencies.add(a3);
@@ -32,41 +19,41 @@ private class AMS_TreeViewTest {
         AMS_Agencies_Hierarchy__c ah = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='MAIN');
         insert ah;
 
-        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Hierarchy__c = ah.id, Parent_agency__c = a1.id, Child_Agency__c = a2.id);
-        AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Hierarchy__c = ah.id, Parent_agency__c = a2.id, Child_Agency__c = a3.id);
+        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Hierarchy__c = ah.id, Parent_Account__c = a1.id, Child_Account__c = a2.id);
+        AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Hierarchy__c = ah.id, Parent_Account__c = a2.id, Child_Account__c = a3.id);
         List<AMS_Agencies_relationhip__c> listOfRelationships = new List<AMS_Agencies_relationhip__c>();
         listOfRelationships.add(ar1);
         listOfRelationships.add(ar2);
         insert listOfRelationships;
     }
-	
-	@isTest static void test_TreeViewChild() {
-		PageReference pageRef = Page.AMS_DemoTreeViewPage;
-    	Test.setCurrentPageReference(pageRef);
+    
+    @isTest static void test_TreeViewChild() {
+        PageReference pageRef = Page.AMS_DemoTreeViewPage;
+        Test.setCurrentPageReference(pageRef);
 
-    	AMS_Agency__c ag = [select id from AMS_Agency__c where Name = 'Test2 Agency'];
+        Account ag = [select id from Account where Name = 'Test2 Agency'];
 
-        ApexPages.CurrentPage().getparameters().put('pid', ag.id);
+        ApexPages.CurrentPage().getparameters().put('id', ag.id);
         ApexPages.StandardController sc = new ApexPages.standardController(ag);
 
         Test.startTest();
         AMS_DemoTreeview sic = new AMS_DemoTreeview(sc);
         sic.getChilds();
         Test.stopTest();
-	}
+    }
 
-	@isTest static void test_TreeViewParent() {
-		PageReference pageRef = Page.AMS_DemoTreeViewPage;
-    	Test.setCurrentPageReference(pageRef);
+    @isTest static void test_TreeViewParent() {
+        PageReference pageRef = Page.AMS_DemoTreeViewPage;
+        Test.setCurrentPageReference(pageRef);
 
-    	AMS_Agency__c ag = [select id from AMS_Agency__c where Name = 'Test1 Agency'];
+        Account ag = [select id from Account where Name = 'Test1 Agency'];
 
-        ApexPages.CurrentPage().getparameters().put('pid', ag.id);
+        ApexPages.CurrentPage().getparameters().put('id', ag.id);
         ApexPages.StandardController sc = new ApexPages.standardController(ag);
 
         Test.startTest();
         AMS_DemoTreeview sic = new AMS_DemoTreeview(sc);
         sic.getChilds();
         Test.stopTest();
-	}
+    }
 }

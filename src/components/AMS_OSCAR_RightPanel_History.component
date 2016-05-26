@@ -1,0 +1,47 @@
+<apex:component controller="AMS_OSCAR_HistoryController" allowDML="true">
+    <apex:attribute name="coscarid" type="String" assignTo="{!oscarId}" required="false" description="The OSCAR Id" />
+    <apex:attribute type="AMS_IntegerCarrier" name="theValue" description="The siz of the list" required="false" assignTo="{!nhist}"/>
+    
+    <apex:includeScript value="/support/console/34.0/integration.js"/>
+    <script>
+    	function openSubtab(subtabUrl, subTabTitle)
+        {
+           // Use the results primary tab id and open a new subtab
+           var openSubtab = function(result)
+           {            
+                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);    
+           };
+           sforce.console.getEnclosingPrimaryTabId(openSubtab);
+         }
+    </script>
+        <apex:form >
+          <table id="tableHistory" class="display">
+            <thead>
+              <tr>
+                <th>Created Date</th>
+                <th>Created By</th>
+                <th>Step</th>
+                <th>Old Value</th>
+                <th>New Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <apex:repeat value="{!OSCARHistory}" var="item">    
+                <tr>
+                	<td>{!item.CreatedDate}</td>
+                    <td>{!item.CreatedBy.Name}</td>
+                    <td>{!$Label['AMS_OSCAR_' + item.Related_Step__c]}</td>
+                    <td>{!item.Old_Value__c}</td>
+                    <td>{!item.New_Value__c}</td>
+                </tr>
+              </apex:repeat>
+            </tbody>
+          </table>
+        </apex:form>
+    <script>
+    j$(document).ready(function() {
+      j$('#tableHistory').dataTable();
+    });
+    </script>
+        
+</apex:component>

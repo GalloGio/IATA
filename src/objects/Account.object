@@ -4637,6 +4637,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </picklistValues>
             <picklistValues>
                 <fullName>Non-IATA Cargo Agent</fullName>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
@@ -4831,8 +4832,7 @@ P - Partnership
 R - Limited Partnership
 S - Sole Proprietorship
 T - Trust Company
-V - Co-operative
-J - Joint Venture</inlineHelpText>
+V - Co-operative</inlineHelpText>
         <label>Company Type</label>
         <picklist>
             <picklistValues>
@@ -4873,10 +4873,6 @@ J - Joint Venture</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>V</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>J</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -7378,7 +7374,7 @@ WSPN-Worldspan</inlineHelpText>
         <label>ISO Billing State</label>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>Accounts (ISO Billing State)</relationshipLabel>
-        <relationshipName>Accounts_iso_state</relationshipName>
+        <relationshipName>Accounts1</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
@@ -7387,7 +7383,7 @@ WSPN-Worldspan</inlineHelpText>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>ISO Billing Country</label>
+        <label>ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts</relationshipLabel>
         <relationshipName>Accounts_ISO_Country</relationshipName>
@@ -7402,7 +7398,7 @@ WSPN-Worldspan</inlineHelpText>
         <label>ISO Shipping Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Accounts (ISO Shipping Country)</relationshipLabel>
-        <relationshipName>Accounts_Shipping_Country</relationshipName>
+        <relationshipName>Accounts</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
@@ -7414,7 +7410,7 @@ WSPN-Worldspan</inlineHelpText>
         <label>ISO Shipping State</label>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>Accounts (ISO Shipping State)</relationshipLabel>
-        <relationshipName>Accounts1</relationshipName>
+        <relationshipName>Accounts2</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
@@ -8356,7 +8352,8 @@ P-Passenger
 S-SSI
 T-TIDS
 V-Travel Service Intermediaries-TSI (USA Only) 
-X-Handling Agents and Shipping Lines</inlineHelpText>
+X-Handling Agents and Shipping Lines
+J-Joint Vent</inlineHelpText>
         <label>Location Class</label>
         <picklist>
             <picklistValues>
@@ -8427,7 +8424,11 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
                 <fullName>X</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
+            <picklistValues>
+                <fullName>J</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -61337,6 +61338,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -61398,6 +61403,49 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Company_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61712,6 +61760,81 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63490,6 +63613,13 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorMessage>Billing City and Billing Country are mandatory fields</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>CASS_Number_3_Digits</fullName>
+        <active>true</active>
+        <description>The CASS Number must have 3 digits</description>
+        <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX(  CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
+        <errorMessage>The CASS Number must have 3 digits.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>CategoryOtherRequired</fullName>
         <active>true</active>
         <description>If Category= Airline, then Category_Other_Value__c must be filled</description>
@@ -63659,6 +63789,13 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorConditionFormula>Merged_Account__c &lt;&gt; &apos;Merged&apos; &amp;&amp; RecordType.DeveloperName = &apos;IATA_Airline_BR&apos; &amp;&amp; ( Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline_BR&apos; &amp;&amp; Parent.RecordType.DeveloperName &lt;&gt; &apos;IATA_Airline&apos;)</errorConditionFormula>
         <errorDisplayField>ParentId</errorDisplayField>
         <errorMessage>The parent account must be an airline</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Passenger_Abbreviated_name_lenght</fullName>
+        <active>true</active>
+        <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
+        <errorConditionFormula>AND( ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)  ,  ISPICKVAL(IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, &apos;Maestro&apos;),LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
+        <errorMessage>Max of 30 Chars to Passenger Agencies</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Reason_for_creation_is_required</fullName>

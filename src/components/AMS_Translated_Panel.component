@@ -4,6 +4,7 @@
     <apex:attribute name="camsAddressId" type="String" assignTo="{!amsAddressId}" required="false" description="The Address id" />
     <apex:attribute name="ciataIsoStateId" type="String" assignTo="{!iataIsoStateId}" required="false" description="The State Id" />
     <apex:attribute name="camsPersonId" type="String" assignTo="{!amsPersonId}" required="false" description="The Person id" />
+    <apex:attribute name="caccountId" type="String" assignTo="{!accountId}" required="false" description="The Account Id" />
     <apex:includeScript value="/soap/ajax/33.0/connection.js" />
     <apex:includeScript value="/soap/ajax/33.0/apex.js" />
     <style type="text/css">

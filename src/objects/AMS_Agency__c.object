@@ -963,21 +963,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>NPrimaryAddresses__c</fullName>
-        <externalId>false</externalId>
-        <label>NPrimaryAddresses</label>
-        <summaryFilterItems>
-            <field>AMS_Address__c.Address_1__c</field>
-            <operation>equals</operation>
-            <value>Primary</value>
-        </summaryFilterItems>
-        <summaryForeignKey>AMS_Address__c.Agency__c</summaryForeignKey>
-        <summaryOperation>count</summaryOperation>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Summary</type>
-    </fields>
-    <fields>
         <fullName>N_Code__c</fullName>
         <externalId>false</externalId>
         <label>N Code</label>

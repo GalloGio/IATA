@@ -1,0 +1,8 @@
+<apex:component >
+    <h3>
+        Calls
+    </h3>
+    <h3>
+    Note: The Calls section is not in scope for the initial release of the OSCAR Console.
+    </h3>
+</apex:component>

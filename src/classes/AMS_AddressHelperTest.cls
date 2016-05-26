@@ -6,9 +6,9 @@ public class AMS_AddressHelperTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-        AMS_Agency__c ag = new AMS_Agency__c(RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test Agency', IATAcode__c = '1234567', Legal_Name_1__c = 'Test Agency', Country__c = isoc.id);
+        Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        
+        Account ag = new Account(RecordTypeId = standardAccountRt, Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', IATA_ISO_Country__c = isoc.id);
         insert ag;
                 
         IATA_ISO_State__c s = new IATA_ISO_State__c(ISO_Code__c='TS01', IATA_ISO_Country__c=isoc.Id, Name='TestAMS');
@@ -17,7 +17,7 @@ public class AMS_AddressHelperTest {
         Test.startTest();
         
         AMS_Address__c add1 = new AMS_Address__c(
-            Agency__c = ag.id,
+            Account__c = ag.id,
             Address_Type__c = 'Primary',
         	Country__c = isoc.id,
             State__c = s.id, 
@@ -31,8 +31,8 @@ public class AMS_AddressHelperTest {
         insert add1;
         
         //The primary address should be reported on the agency
-        AMS_Agency__c newag = [SELECT Primary_Address__c //Main_address__c,Main_address_city__c,Main_address_country__c,Main_address_state__c,Main_address_zip_code__c
-                              FROM AMS_Agency__c 
+        Account newag = [SELECT Primary_Address__c //Main_address__c,Main_address_city__c,Main_address_country__c,Main_address_state__c,Main_address_zip_code__c
+                              FROM Account 
                                WHERE Id = :ag.id];
         system.assertEquals(add1.Id, newag.Primary_Address__c);
 
@@ -46,7 +46,7 @@ public class AMS_AddressHelperTest {
         system.assertEquals(1,adds.size());
 
         AMS_Address__c add2 = new AMS_Address__c(
-            Agency__c = ag.id,
+            Account__c = ag.id,
             Address_Type__c = 'Primary'
         );
         try{
@@ -56,10 +56,10 @@ public class AMS_AddressHelperTest {
         system.assertEquals(2,adds.size());
         
         newag = [SELECT Primary_Address__c //Main_address__c,Main_address_city__c,Main_address_country__c,Main_address_state__c,Main_address_zip_code__c
-                              FROM AMS_Agency__c 
+                              FROM Account 
                                WHERE Id = :ag.id 
                  			   LIMIT 1];
-        system.assertEquals(add2.id,newag.Primary_address__c);
+        system.assertEquals(add2.id, newag.Primary_address__c);
         /*
         system.assertEquals(null, newag.Main_address__c);
         system.assertEquals(null, newag.Main_address_city__c);
@@ -81,6 +81,7 @@ public class AMS_AddressHelperTest {
     public static testmethod void testAddressHelper(){
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         
+        /*
 		List<Account> accountList = new List<Account>();
         Account acc1 = new Account(Name='Test1 Account');
         Account acc2 = new Account(Name='Test2 Account');
@@ -91,20 +92,19 @@ public class AMS_AddressHelperTest {
         accountList.add(acc3);
         accountList.add(acc4);
         insert accountList;
-
+		*/
+		
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
         insert isoc;
         
         IATA_ISO_State__c s = new IATA_ISO_State__c(ISO_Code__c='TS01', IATA_ISO_Country__c=isoc.Id, Name='TestAMS');
         insert s;
 
-        Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-        List<AMS_Agency__c> agencylist = new List<AMS_Agency__c>();
-        AMS_Agency__c a1 = new AMS_Agency__c(Name='Test1 Parent Agency',Account__c=acc1.Id, Country__c = isoc.id);
-        AMS_Agency__c a2 = new AMS_Agency__c(Name='Test1 Child Agency',Account__c=acc2.Id, Country__c = isoc.id);
-        AMS_Agency__c a3 = new AMS_Agency__c(Name='Test2 Parent Agency',Account__c=acc3.Id, Country__c = isoc.id);
-        AMS_Agency__c a4 = new AMS_Agency__c(Name='Test2 Child Agency',Account__c=acc4.Id, Country__c = isoc.id);
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(Name='Test1 Parent Agency', IATA_ISO_Country__c = isoc.id);
+        Account a2 = new Account(Name='Test1 Child Agency', IATA_ISO_Country__c = isoc.id);
+        Account a3 = new Account(Name='Test2 Parent Agency', IATA_ISO_Country__c = isoc.id);
+        Account a4 = new Account(Name='Test2 Child Agency', IATA_ISO_Country__c = isoc.id);
         agencylist.add(a1);
         agencylist.add(a2);
         agencylist.add(a3);
@@ -114,10 +114,10 @@ public class AMS_AddressHelperTest {
         Test.startTest();
         
         List<AMS_Address__c> addresslist = new List<AMS_Address__c>();
-        AMS_Address__c add1 = new AMS_Address__c(Agency__c = a1.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
-        AMS_Address__c add2 = new AMS_Address__c(Agency__c = a2.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
-        AMS_Address__c add3 = new AMS_Address__c(Agency__c = a3.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
-        AMS_Address__c add4 = new AMS_Address__c(Agency__c = a4.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
+        AMS_Address__c add1 = new AMS_Address__c(Account__c = a1.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
+        AMS_Address__c add2 = new AMS_Address__c(Account__c = a2.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
+        AMS_Address__c add3 = new AMS_Address__c(Account__c = a3.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
+        AMS_Address__c add4 = new AMS_Address__c(Account__c = a4.id,Address_Type__c = 'Primary',Country__c = isoc.id,State__c = s.id, AMS_ZipCode__c = '10100',City__c = 'Torino',Address_1__c = 'Corso',Address_2__c = 'via',Address_3__c = 'viale');
         
         addresslist.add(add1);
         addresslist.add(add2);
@@ -130,21 +130,16 @@ public class AMS_AddressHelperTest {
         System.assertEquals(i, 4);
        
        
-        AMS_AddressHelper.setPrimaryAddressesOnAgencies(addresslist);
+        	//AMS_AddressHelper.setPrimaryAddressesOnAgencies(addresslist); JH 18/02/2016: method doesn't exist anymore ??
         System.assertEquals(i, 4);
         
         try{
-        AMS_AddressHelper.UpdatePrimaryAddresses(addresslist); 
+        	//AMS_AddressHelper.UpdatePrimaryAddresses(addresslist); JH 18/02/2016: method doesn't exist anymore ??
         }catch(Exception e){}
         System.assertEquals(i, 4);       
         
-        /*try{
-        AMS_AddressHelper.setBillingShippingAddressesOnAccount(addresslist); 
-        }catch(Exception e){}
-        System.assertEquals(i, 4);*/
-        
         try{
-        AMS_AddressHelper.updateBillingShippingAddressesOnAccount(addresslist); 
+        	AMS_AddressHelper.updateBillingShippingAddressesOnAccount(addresslist); 
         }catch(Exception e){}
         System.assertEquals(i, 4);
         

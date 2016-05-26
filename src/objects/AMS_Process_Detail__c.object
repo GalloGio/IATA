@@ -94,8 +94,20 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Hierarchy Account Selections</pluralLabel>
+    <recordTypes>
+        <fullName>Agency_Involved</fullName>
+        <active>true</active>
+        <label>Agency Involved</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>AMS_BlockInsertOscarAccount</fullName>
+        <active>true</active>
+        <description>Does not allow the Account related to the OSCAR to be added</description>
+        <errorConditionFormula>Account__r.Id = OSCAR__r.Account__r.Id</errorConditionFormula>
+        <errorMessage>The account related to the OSCAR cannot be inserted on this list</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Add_all_hierarchy</fullName>
         <availability>online</availability>

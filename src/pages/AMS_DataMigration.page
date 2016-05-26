@@ -1,0 +1,111 @@
+<apex:page controller="AMS_DataMigration" showHeader="true" sidebar="false">
+    <script type="text/javascript">
+    Visualforce.remoting.timeout = 120000; // Set timeout at page level
+    
+    document.getElementById('script').addEventListener("change", function(){
+        
+        if(this.value == null){
+        
+            document.getElementById('sobject').readOnly = true;
+            document.getElementById('sobject').selected = null;
+        }
+    });
+    
+    var numberOfRuns;
+    
+    function processBulk(){
+        
+        numberOfRuns = 1;
+        
+        var threads = document.getElementById('threads').value;
+
+        for(i = 0; i < threads; i++){
+
+            process();
+        }
+    }
+    
+    function process() {
+
+        var sObjectSelect = document.getElementById("sobject");
+        var sObject = sObjectSelect.options[sObjectSelect.selectedIndex].value;
+        var scriptSelect = document.getElementById("script");
+        var script = scriptSelect.options[scriptSelect.selectedIndex].value;
+        var bulk = document.getElementById('bulk').value;
+        var recId = document.getElementById('specificRecId').value;
+        var debugLogs = document.getElementById('debugLogs').checked;
+        var whereClause = document.getElementById('whereClause').value;
+        var excludeItems = document.getElementById('excludeItems').value;
+
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AMS_DataMigration.process}',
+            recId,
+            sObject,
+            script,
+            bulk,
+            debugLogs,
+            whereClause,
+            excludeItems,
+            function(result, event){
+                if (event.status) {
+                    var div = document.getElementById('outputMessage');
+                    div.innerHTML = '('+numberOfRuns+') Runned for ' + sObject + '<br/>' + div.innerHTML;
+                    numberOfRuns++;
+                    
+                    if(result){
+                        
+                        process();
+                    }else{
+                        
+                        var div = document.getElementById('outputMessage');
+                        div.innerHTML = 'Finished run ('+numberOfRuns+') for ' + sObject + '<br/>' + div.innerHTML;
+                    }
+                } else if (event.type === 'exception') {
+                    var div = document.getElementById('outputMessage');
+                    div.innerHTML = '('+numberOfRuns+') Error for ' + sObject + ': '+result+'<br/>' + div.innerHTML;
+                    numberOfRuns++;
+                } else {
+                    var div = document.getElementById('outputMessage');
+                    div.innerHTML = 'Unknown error ('+numberOfRuns+') for ' + sObject + '<br/>' + div.innerHTML;
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    </script>
+    <select id="script">
+        <option value="">-- Script --</option>
+        <option value="agency_account">Agency to Account</option>
+        <option value="agency_account_parent">Agency to Account (Parent)</option>
+        <option value="agency_account_child">Agency to Account (Child)</option>
+        <option value="primary_address">Primary Address</option>
+        <option value="account_role">Account Role</option>
+        <!-- <option value="account_role_e">Account Role Employee</option> -->
+        <!-- <option value="account_role_o">Account Role Ownership</option> -->
+        <option value="account_dirty">Account Dirty</option>
+    </select>  
+    <select id="sobject">
+        <option value="">-- sObject --</option>
+        <option value="AMS_Agencies_relationhip__c">AMS_Agencies_relationhip__c</option>
+        <option value="AMS_Agency_Updates__c">AMS_Agency_Updates__c</option>
+        <option value="AMS_Agency_Affiliation__c">AMS_Agency_Affiliation__c</option>
+        <option value="AMS_Agency_Airport__c">AMS_Agency_Airport__c</option>
+        <option value="AMS_Agency_Segment__c">AMS_Agency_Segment__c</option>
+        <option value="AMS_Agency_Profile__c">AMS_Agency_Profile__c</option>
+        <option value="AMS_Address__c">AMS_Address__c</option>
+        <option value="AMS_Agency_Operations__c">AMS_Agency_Operations__c</option>
+        <option value="AMS_Inspection__c">AMS_Inspection__c</option>
+        <option value="AMS_OSCAR__c">AMS_OSCAR__c</option>
+        <option value="Agency_Applied_Change_code__c">Agency_Applied_Change_code__c</option>
+    </select>
+    <input id="threads" type="number" value="1" min="1" max="10" placeholder="Threads" style="width: 100px;"/>
+    <input id="bulk" type="number" value="10000" min="1" placeholder="Bulk" style="width: 100px;"/>
+    <input id="specificRecId" type="text" placeholder="Record Id" style="width: 100px;"/>
+    <input id="debugLogs" type="checkbox" placeholder="Debug Logs"/>
+    <input id="whereClause" type="text" placeholder="Specific where clause" style="width: 300px;"/>
+    <input id="excludeItems" type="text" placeholder="Exclude Items: xxx,xxx" style="width: 300px;"/>
+    <button onclick="processBulk();" style="cursor: pointer;">Process</button>
+    <div id="outputMessage">
+        
+    </div>
+</apex:page>

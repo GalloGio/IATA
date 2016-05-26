@@ -54,6 +54,266 @@
     <enableReports>true</enableReports>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>AMS_legalstatus</fullName>
+        <description>fields to be migrated when we have a change of legal status process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Legal_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>LegalStatus</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_location</fullName>
+        <description>fields to be migrated when we have a change of location process</description>
+        <displayedFields>
+            <field>Branch_Office_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Street_name_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATA_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Street__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Postal_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Location</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_locationtype</fullName>
+        <description>fields to be migrated when we have a change of location type process</description>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>LocationType</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_locationwithinspection</fullName>
+        <description>fields to be migrated when we have a change of location with inspection process</description>
+        <displayedFields>
+            <field>Branch_Office_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Street_name_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATA_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Street__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Postal_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>LocationWithInspection</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_majorshareholding</fullName>
+        <description>fields to be migrated when we have a change of major shareholding</description>
+        <displayedFields>
+            <field>ISSP_AMS_Total_Ownership__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>MajorShareholding</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_minorshareholding</fullName>
+        <description>fields to be migrated when we have a change of minor shareholding</description>
+        <displayedFields>
+            <field>ISSP_AMS_Total_Ownership__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>MinorShareholding</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_name</fullName>
+        <description>fields to be migrated when we have a change of name process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Name</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_ownershiptoiataagent</fullName>
+        <description>fields to be migrated when we have a change of ownership process</description>
+        <displayedFields>
+            <field>ISSP_AMS_Total_Ownership__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>OwnershipToIATAAgent</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_ownershiptononiataagent</fullName>
+        <description>fields to be migrated when we have a change of ownership process</description>
+        <displayedFields>
+            <field>ISSP_AMS_Total_Ownership__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>OwnershipToNonIATAAgent</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>AMS_vmfr</fullName>
+        <description>fields to be migrated when we have a vmfr process</description>
+        <displayedFields>
+            <field>Remittance_frequency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>VMFR</label>
+    </fieldSets>
     <fields>
         <fullName>AMS_Agency_Id__c</fullName>
         <externalId>false</externalId>
@@ -966,7 +1226,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>IATA_ISO_State__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>IATA ISO State</label>
+        <label>Billing ISO State</label>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
@@ -988,7 +1248,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>ISO Country</label>
+        <label>Billing ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>AMS Online Accreditations (ISO Country)</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
@@ -2332,10 +2592,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>I</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>K</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2356,14 +2612,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>S</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2377,6 +2625,22 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>X</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>I</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>R</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Q</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -12986,6 +13250,20 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>CASS_Number_3_Digits</fullName>
+        <active>true</active>
+        <description>The CASS Number must have 3 digits.</description>
+        <errorConditionFormula>NOT(OR(ISBLANK(CASS_Number__c) , REGEX( CASS_Number__c , &quot;[0-9]{3}&quot;)))</errorConditionFormula>
+        <errorMessage>The CASS Number must have 3 digits.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>CassNumberCannotBeChanged</fullName>
+        <active>true</active>
+        <description>CASS Number cannot be changed if IATA Code is already generated.</description>
+        <errorConditionFormula>AND(ISCHANGED( CASS_Number__c ) , NOT(ISBLANK(IATACode__c)))</errorConditionFormula>
+        <errorMessage>CASS Number cannot be changed if IATA Code is already filled.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>
         <active>false</active>

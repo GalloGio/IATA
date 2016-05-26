@@ -1,0 +1,52 @@
+@isTest
+private class AMS_OSCAR_ProcessViewerControllerTest {
+
+    @testSetup static void setup(){
+		AMS_OSCAR_TestDataFactory.createOSCARtestData();
+        
+        AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP8__c, STEP9__c, STEP10__c, STEP2__c, STEP6__c, STEP11__c, STEP15__c FROM AMS_OSCAR__c limit 1];
+        
+        System.assertEquals('Not Started', oscar.STEP8__c);
+        System.assertEquals('Not Started', oscar.STEP9__c);
+        System.assertEquals('Passed', oscar.STEP10__c);
+        System.assertEquals('Not Started', oscar.STEP2__c);
+        System.assertEquals('Not Started', oscar.STEP6__c);
+        System.assertEquals('Not Started', oscar.STEP11__c);
+        System.assertEquals('Not Started', oscar.STEP15__c);    
+	}
+    
+    @isTest static void test_ProcessViewer() {
+        AMS_OSCAR__c oscar = [SELECT Id, Account__c, STEP8__c, STEP9__c, STEP10__c, STEP2__c, STEP6__c, STEP11__c, STEP15__c FROM AMS_OSCAR__c limit 1];
+
+        System.assertEquals('Not Started', oscar.STEP8__c);
+        System.assertEquals('Not Started', oscar.STEP9__c);
+        System.assertEquals('Passed', oscar.STEP10__c);
+        System.assertEquals('Not Started', oscar.STEP2__c);
+        System.assertEquals('Not Started', oscar.STEP6__c);
+        System.assertEquals('Not Started', oscar.STEP11__c);
+        System.assertEquals('Not Started', oscar.STEP15__c);
+
+        oscar.STEP8__c = 'Passed';
+        oscar.STEP9__c = 'Failed';
+        oscar.STEP10__c = 'Not Applicable';
+        oscar.STEP2__c = 'Late';
+        oscar.STEP6__c = 'In Progress';
+        oscar.STEP11__c = 'Not Started';
+        oscar.STEP15__c = 'Something else';
+        oscar.STEP12__c = 'Something else';
+        
+        update oscar;
+        
+        Test.startTest();
+
+        PageReference pageAMS_OSCAR_ProcessViewer = Page.AMS_OSCAR_ProcessViewer;
+        pageAMS_OSCAR_ProcessViewer.getParameters().put('Id', oscar.Id);
+        Test.setCurrentPage(pageAMS_OSCAR_ProcessViewer);
+
+        //ApexPages.StandardController sc = new ApexPages.StandardController(oscar);
+        AMS_OSCAR_ProcessViewerController controller = new AMS_OSCAR_ProcessViewerController();
+        
+        Test.stopTest();
+    }
+
+}

@@ -1,5 +1,8 @@
 trigger trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete on Account (after delete, after insert, after undelete, 
 after update, before delete, before insert, before update) {
+
+    if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete')) { return; }
+    
     if( //Test.isRunningTest()||
      TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndeleteGet()) return ; 
 

@@ -1,0 +1,3 @@
+<apex:page standardController="AMS_OSCAR__c" extensions="AMS_OSCAR_Attachments" >
+	<c:GenericAttachmentList sobjectId="{!oscCase.Id}" uploaderWizard="AMS_File" sourceSystem="Internal" scrollable="true"/>
+</apex:page>
