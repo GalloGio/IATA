@@ -26,25 +26,11 @@
                                 <apex:selectOptions value="{!sortByOptions}"/>
                                 <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
                             </apex:selectList> 
-                        </div>
+                        </div> 
                     </apex:form>
-                        <apex:outputPanel id="campaignList" style="padding: 10px 0;" layout="block">
-	                        <c:IECEBC_CampaignList campaigns="{!campaigns}" campaignsCount="{!CampaignsCount}" />
-                        </apex:outputPanel>
-                    <apex:form >
-                        
-                        <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
-                            Page 
-                            <div class="custom-user-input select">
-                                <i class="icon angle-down"></i>
-                                <apex:selectList value="{!page}" styleClass="user-input select js-champaign-actions" size="1">
-                                    <apex:selectOptions value="{!pageOptions}"/>
-                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
-                                </apex:selectList> 
-                            </div>
-                            of {!maxPage}
-                        </apex:outputPanel>
-                    </apex:form>
+                    <apex:outputPanel id="campaignList" style="padding: 10px 0;" layout="block">
+                        <c:IECEBC_CampaignList limited="false" />
+                    </apex:outputPanel>
                 </div>
             </main>
             <!-- End of Page Content -->

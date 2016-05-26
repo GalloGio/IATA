@@ -1,6 +1,34 @@
 public class vfIECEBC_CampaignList {
-    public static Integer CAMPAIGNS_PER_PAGE = 25;
+    public Boolean isLimitedComponent { get; set; }
+    public static Integer CAMPAIGNS_PER_PAGE = 3;
     
+    public Id selectedCampaignId { get; set; }
+    public EBC_Campaign__c selectedCampaign {
+        get {
+            if (selectedCampaign == null || selectedCampaign.Id != selectedCampaignId) {
+            	Map<Id, EBC_Campaign__c> campaignsMapping = new Map<Id, EBC_Campaign__c>(campaigns);
+                selectedCampaign = campaignsMapping.get(selectedCampaignId);
+            }
+            
+            return selectedCampaign;
+        }
+        set;
+	}
+    public PageReference deleteCampaign() {
+        delete selectedCampaign;
+        
+        clear();
+        
+        return null;
+    }
+    public PageReference save() {
+        update selectedCampaign;
+        
+        clear();
+        
+        return null;
+    }
+     
     public Integer page {
         get {
             if (page == null) page = 1;
@@ -15,7 +43,7 @@ public class vfIECEBC_CampaignList {
             campaigns = null;
         }
     }
-    
+     
     public Integer maxPage {
         get {
             if (maxPage == null) maxPage = Integer.valueOf(Math.ceil(Double.valueOf(campaignsCount) / Double.valueOf(CAMPAIGNS_PER_PAGE)));
@@ -38,7 +66,9 @@ public class vfIECEBC_CampaignList {
     
     public String sortBy {
         get {
-            if (sortBy == null) sortBy = 'CreatedDate ASC';
+            if (sortBy == null) {
+                sortBy = 'CreatedDate ASC';
+            }
             
             return sortBy;
         }
@@ -82,7 +112,7 @@ public class vfIECEBC_CampaignList {
             fields.add('Owner.Name');
         }
         
-        return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Account__c = \'' + u.AccountId + '\' AND Status__c != \'DELETED\'';
+        return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Account__c = \'' + u.AccountId + '\'';
     }
     
     public Integer campaignsCount {
@@ -103,6 +133,15 @@ public class vfIECEBC_CampaignList {
             return campaigns;
         }
         private set;
+    }
+    
+    private void clear() {
+        campaignsCount = null;
+        campaigns = null;
+        maxPage = null;
+        if (page > maxPage) {
+            page = maxPage;
+        }
     }
     
     public vfIECEBC_CampaignList() {

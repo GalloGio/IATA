@@ -83,6 +83,21 @@
             </div>
         </section>
         
+                <script type="text/javascript">
+                jQuery(document).ready(function($) {
+                    $('.humanCampaignDate').datepicker({
+                        minDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!minDatetime}" /></apex:outputText>'),
+                        
+                        onSelect: function(a, b, c){
+                            $('.campaignDate').trigger('change');
+                        },
+                        
+                        dateFormat:"MM dd yy",
+                        altFormat: "mm/dd/yy",
+                        altField: '.campaignDate'
+                    });
+                });
+                </script>
         
     </apex:form>
 </apex:component>
