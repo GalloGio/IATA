@@ -14,6 +14,23 @@
             text-decoration: none;
         }
     }
+
+    .group-title.schedule {
+        margin-bottom: 20px;
+    }
+
+    .group-container.schedule {
+        margin-bottom: 0;
+
+        p {
+            margin-top: 10px;
+        }
+        
+        .footer-actions {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+    }
 }
 
 .overlay {

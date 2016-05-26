@@ -46,6 +46,7 @@ jQuery(document).ready(function($) {
         targetPane = self.parent('li').data('target');
         self.parents('li').addClass(className.active).siblings().removeClass(className.active);
         parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
+        activateEllipsisTooltip();
     });
 
     $('#js-main-nav').on('click', function(event) {
@@ -55,6 +56,24 @@ jQuery(document).ready(function($) {
 
     $('.js-multi-select').on('click', function() {
         $(this).toggleClass(className.open).next().toggleClass(className.open);
+    });
+
+    var ellipsisWidth = 199;
+    var ellipsisElements = $('.ellipsis');
+    var activateEllipsisTooltip = function() {
+        for (var i = 0; i < ellipsisElements.length; i++) {
+            if ($(ellipsisElements[i]).width() > ellipsisWidth) {
+                $(ellipsisElements[i]).addClass('is-ellipsis');
+            }
+        }
+    };
+
+    activateEllipsisTooltip();
+
+    $(document).on('mouseenter', '.is-ellipsis',function() {
+        $(this).next('.js-ellipsis-details').addClass(className.open);
+    }).on('mouseout', '.is-ellipsis',function() {
+        $(this).next('.js-ellipsis-details').removeClass(className.open);
     });
 
     /* ---------------------------------------- */
@@ -296,6 +315,31 @@ jQuery(document).ready(function($) {
         $(this).parents('.add-field').before(html);
         $('.js-remove-field').removeClass(className.hidden);
         numberOfFields++;
+    });
+
+    $('.js-input-file').on('change', function() {
+        var value = $(this).val();
+        $(this).next('.user-input').val(value);
+    });
+
+    var stickyConfirmation = $('.is-sticky-confirmation'),
+        stickyConfirmationPositionTop = (stickyConfirmation.length) ? stickyConfirmation.offset().top : '';
+
+    var stickyElement = function() {
+        var scrollTop = $(window).scrollTop();
+        var containerWidth = $('.is-sticky-confirmation').width();
+        if (scrollTop > stickyConfirmationPositionTop) {
+            stickyConfirmation.addClass('fixed');
+            stickyConfirmation.css('width', containerWidth);
+        } else {
+            stickyConfirmation.removeClass('fixed');
+            stickyConfirmation.removeAttr('style');
+        }
+    };
+
+
+    $(window).scroll(function() {
+        stickyElement();
     });
 
     /* ---------------------------------------- */

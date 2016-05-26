@@ -118,7 +118,31 @@
     <div class="alert error">
         <p>Please fill in the highlighted fields below.</p>
     </div>
-    
+
+    <span id="j_id0:j_id1:j_id45:j_id46"><span id="j_id0:j_id1:j_id45:j_id46:j_id47:j_id48:0:j_id49">
+        <div class="message errorM3" role="alert">
+            <table border="0" cellpadding="0" cellspacing="0" class="messageTable" style="padding:0px;margin:0px;">
+                <tr valign="top">
+                    <td>
+                        <img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR">
+                    </td>
+                    <td class="messageCell">
+                        <div id="j_id0:j_id1:j_id45:j_id46:j_id47:j_id48:0:j_id49:j_id50:j_id52" class="messageText">
+                            <span id="j_id0:j_id1:j_id45:j_id46:j_id47:j_id48:0:j_id49:j_id50:j_id53" style="color:#cc0000">
+                                <h4>Error:</h4>
+                            </span>
+                            Subject: You must enter a value<br>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </span>
+
     
     <div class="row">
         <div class="columns medium-6">
@@ -162,8 +186,23 @@
                     <p>Please fill in your from name.</p>
                 </div>
             </div>
-            
-            
+
+            <div class="field-group text">
+                <label>
+                    <span class="input-label">Email subject</span>
+                    <div class="requiredInput">
+                        <div class="requiredBlock"></div>
+                        <input class="user-input js-remaining-characters text error" data-max-length="255" data-target-element=".js-remaining-count" data-target-id="email-subject" id="j_id0:j_id1:j_id45:j_id76" maxlength="255" name="j_id0:j_id1:j_id45:j_id76" required="required" size="20" type="text" value="">
+                        <div class="errorMsg">
+                            <strong>Error:</strong> You must enter a value
+                        </div>
+                    </div>
+                </label>
+                <span id="j_id0:j_id1:j_id45:j_id79" class="input-remaining">
+                    <span class="js-remaining-count" data-id="email-subject">255</span>
+                </span>
+                <p class="input-description">This is the email subject that your recipients will see</p>
+            </div>
 
             <div class="field-group textarea disabled">
                 <label>
@@ -217,7 +256,13 @@
                     </div>
                 </div>
             </div>
-
+            
+            <div class="field-group disabled">
+                <div class="custom-user-input select">
+                    <i class="icon angle-down"></i>
+                    <span class="disabled-user-input select">Actions</span>
+                </div>
+            </div>
 
             <div class="field-group textarea error">
                 <label>
@@ -234,11 +279,12 @@
     </div>
     
     <div class="footer-actions text-right">
-        <a class="button" href="?page=setup&amp;has_error=true">Continue</a>
+        <ul class="list actions">
+            <li>
+                <a class="button" href="?page=setup&amp;has_error=true">Continue</a>
+            </li>
+        </ul>
     </div>
-
-
-
 </div>
 </main>    <footer class="page-footer" data-is-sticky="false">
 <div class="inner-wrapper">

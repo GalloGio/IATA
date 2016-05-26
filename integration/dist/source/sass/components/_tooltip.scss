@@ -52,3 +52,34 @@
     color: #fe9e07;
     cursor: pointer;
 }
+
+
+.tooltip-container[data-placement='top'] {
+
+    .tooltip-description {
+        &::before,
+        &::after {
+            @include rotate(180);
+            top: -8px;
+            left: 40%;
+        }
+
+        &::before {
+            margin-left: 0;
+            margin-top: -2px;
+        }
+
+    }
+}
+
+.ellipsis-container {
+    @include box-shadow(2px, 2px, 5px, 0, rgba(173, 173, 173, .5), $inset: false);
+}
+
+.is-ellipsis {
+    cursor: pointer;
+}
+
+.ellipsis-inner {
+    display: inline-block;
+}

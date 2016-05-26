@@ -403,11 +403,11 @@
 
         &::before {
             padding: 0;
-            margin-top: -2px;
+            height: 37px;
+            line-height: 37px;
             display: block;
         }
     }
-
 
     &.checkbox,
     &.radio {
@@ -433,6 +433,16 @@
                 appearance: none;
     }
 
+    &.dark {
+
+        .icon {
+            background: #2a3940;
+        }
+
+        .user-input.select {
+            border: 1px solid #2a3940;
+        }
+    }
 
     .user-input::-ms-expand {
         display: none;
@@ -578,7 +588,8 @@
 
 .disabled-user-input {
     display: block;
-    padding: 8px 12px;
+    padding: 8px 50px 8px 12px;
+    min-width: 80px;
 
     &:hover {
         cursor: not-allowed;
@@ -667,3 +678,76 @@
         color: #fff;
     }
 }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.custom-user-input.file {
+    margin-bottom: 15px;
+    width: 100%;
+
+    .button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 15;
+        cursor: pointer;
+    }
+
+    .file {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 15;
+        width: 100%;
+        visibility: hidden;
+    }
+
+    .text {
+        min-height: 41px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+    }
+}
+
+.file-disabled:disabled, 
+.file-disabled[disabled] {
+    cursor: default !important;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+.errorMsg {
+    color: #ed1c24;
+    margin: 10px 0;
+
+}
+
+.field-group.disabled.inline {
+    display: inline-block;
+}
+
+.disabled .datepicker::before {
+    color: #999;
+    cursor: not-allowed;
+}
+

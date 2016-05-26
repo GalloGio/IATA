@@ -11,6 +11,12 @@
 .columns.payment-confirmation {
     width: 40%;
     border-left: 1px dotted #ccc;
+    position: relative;
+}
+
+.is-sticky-confirmation.fixed {
+    position: fixed;
+    top: 30px;
 }
 
 .row-payment {
