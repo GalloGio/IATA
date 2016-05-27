@@ -175,11 +175,14 @@
 
     &.actions {
         text-align: right;
-        margin: 0 -30px;
 
         li {
             display: inline-block;
-            margin: 0 30px;
+            padding: 0 0 0 30px;
+
+            &:last-child {
+                
+            }
         }
     }
 
@@ -200,12 +203,6 @@
         }
     }
 
-}
-
-.text-right .list.actions {
-    li {
-        margin: 0 30px 0 -15px;
-    }
 }
 
 .template-list {
