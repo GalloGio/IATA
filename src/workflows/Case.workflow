@@ -6786,6 +6786,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Uncheck_is_from_IfapRest_Checkbox</fullName>
+        <field>From_IFAPRest__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck is from IfapRest Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>UnchecknewcommentforACCA</fullName>
         <description>Removes case from ACCA: New comment added view when case is completed by ACCA</description>
         <field>New_Comment_for_ACCA__c</field>
@@ -16061,6 +16070,16 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <value>ICCS – Create Bank Account</value>
         </criteriaItems>
         <description>Send a notification to the Contact when an FDS ICCS Bank Account Management Case with a &quot;Create&quot; case area has been opened</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Owner Checkbox to False</fullName>
+        <actions>
+            <name>Uncheck_is_from_IfapRest_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(From_IFAPRest__c,true,null)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

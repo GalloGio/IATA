@@ -3271,6 +3271,10 @@ and
         <name>ISSP_AMS_Reason_New_HO</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Rejected_File --></label>
+        <name>ISSP_AMS_Rejected_File</name>
+    </customLabels>
+    <customLabels>
         <label>SECTION 1 - Informations générales</label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>

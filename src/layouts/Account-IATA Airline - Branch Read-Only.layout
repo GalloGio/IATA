@@ -348,14 +348,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Zuora__BillToCountry__c</fields>
         <fields>Zuora__Balance__c</fields>
-        <fields>Zuora__MRR__c</fields>
         <fields>Zuora__LastInvoiceDate__c</fields>
+        <fields>Zuora__MRR__c</fields>
         <fields>Zuora__AutoPay__c</fields>
-        <fields>Zuora__Status__c</fields>
-        <fields>Zuora__PaymentTerm__c</fields>
-        <fields>Zuora__CreditCard_Number__c</fields>
-        <fields>Zuora__CreditCard_Expiration__c</fields>
+        <fields>Zuora__DefaultPaymentMethod__c</fields>
+        <fields>Zuora__SalesRepName__c</fields>
         <relatedList>Zuora__CustomerAccount__c.Zuora__Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>

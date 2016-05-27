@@ -73,6 +73,7 @@
         <fields>NAME</fields>
         <fields>IATA_ISO_Country__c</fields>
         <fields>Method__c</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>GDP_Area_Country__c.GDP_Area_Definition__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -84,7 +85,6 @@
         <fields>Class__c</fields>
         <fields>Magnitude__c</fields>
         <fields>Product_Type__c</fields>
-        <fields>File_Naming_Convention__c</fields>
         <relatedList>GDP_File_Description__c.Geo_Coverage_Definition__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -93,7 +93,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hg0000000ai4O</masterLabel>
+        <masterLabel>00hw000000i1EKQ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -1610,6 +1610,15 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Enable_Minor_Changes_from_Portal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Enable change code generation and account update when portal users make minor changes to their Agency account information - Phone, FAX, Trade Name etc. (For OSCAR Enabled countries)</inlineHelpText>
+        <label>Enable Minor Changes from Portal</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Enable_Notice_of_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

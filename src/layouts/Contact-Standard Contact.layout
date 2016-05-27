@@ -527,8 +527,14 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>zqu__Status__c</fields>
+        <fields>zqu__Previewed_Total__c</fields>
+        <fields>zqu__Previewed_MRR__c</fields>
+        <fields>zqu__Previewed_TCV__c</fields>
+        <fields>CREATED_DATE</fields>
         <fields>zqu__StartDate__c</fields>
         <relatedList>zqu__Quote__c.zqu__BillToContact__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -644,21 +650,24 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Zuora__BillToCountry__c</fields>
         <fields>Zuora__Balance__c</fields>
-        <fields>Zuora__MRR__c</fields>
         <fields>Zuora__LastInvoiceDate__c</fields>
-        <fields>Zuora__Status__c</fields>
-        <fields>Zuora__CreditCard_Number__c</fields>
-        <fields>Zuora__CreditCard_Expiration__c</fields>
+        <fields>Zuora__MRR__c</fields>
+        <fields>Zuora__AutoPay__c</fields>
+        <fields>Zuora__DefaultPaymentMethod__c</fields>
+        <fields>Zuora__SalesRepName__c</fields>
         <relatedList>Zuora__CustomerAccount__c.Contact__c</relatedList>
         <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Active__c</fields>
         <fields>Related_Rate_Plan_Info__c</fields>
         <fields>Subscription_Number__c</fields>
         <fields>Usage_Unlimited__c</fields>
+        <fields>Usage_Qty_consumed__c</fields>
         <fields>Usage_Qty_Left__c</fields>
         <fields>Effective_Start_Date__c</fields>
         <fields>Effective_End_Date__c</fields>
@@ -680,23 +689,29 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>LAST_UPDATE</fields>
         <fields>Total_Items_in_Cart__c</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>IEC_Shopping_Cart__c.Related_Contact__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Purchased_Product_Category__c</fields>
+        <fields>Purchased_Product_Rate_Plan_Information__c</fields>
+        <fields>Selected_Payment_Method__c</fields>
+        <fields>Action__c</fields>
+        <fields>Subscription_Number__c</fields>
         <relatedList>IEC_Subscription_History__c.Related_Contact__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Trial_Date__c</fields>
         <fields>Related_Product__c</fields>
         <fields>Product_Rate_Plan_Information__c</fields>
-        <fields>Trial_Date__c</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>Trial__c.Contact__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>

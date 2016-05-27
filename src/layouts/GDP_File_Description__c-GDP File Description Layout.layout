@@ -15,15 +15,11 @@
                 <behavior>Edit</behavior>
                 <field>Description__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Is_Reference__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
+                <behavior>Readonly</behavior>
+                <field>Is_Reference__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -40,7 +36,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>File_Naming_Convention__c</field>
+                <field>File_Format__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -52,10 +48,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>File_Format__c</field>
+                <field>File_Naming_Convention__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geo_Coverage_Definition__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Magnitude__c</field>
@@ -67,10 +67,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Class__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Geo_Coverage_Definition__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -146,7 +142,7 @@
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
@@ -182,9 +178,8 @@
         <fields>Name__c</fields>
         <fields>API_Object_Name__c</fields>
         <fields>API_Name__c</fields>
-        <fields>Filter_Field_API_Name__c</fields>
-        <fields>Filter_Field_Value__c</fields>
         <fields>Size__c</fields>
+        <fields>Position__c</fields>
         <fields>Order__c</fields>
         <fields>Hidden_Column__c</fields>
         <relatedList>GDP_File_Fields_Description__c.GDP_File_Description__c</relatedList>
@@ -193,19 +188,23 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DeltaLastModifiedDate__c</fields>
-        <fields>Related_GDP_Product_Account_View__c</fields>
         <fields>Change_Code__c</fields>
+        <fields>Related_GDP_Product_Account_View__c</fields>
+        <fields>DeltaLastModifiedDate__c</fields>
         <relatedList>GDP_Delta__c.GDP_File_Description__c</relatedList>
         <sortField>DeltaLastModifiedDate__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>LAST_UPDATE</fields>
-        <fields>Status__c</fields>
         <fields>Production_Date__c</fields>
+        <fields>Status__c</fields>
+        <fields>Size__c</fields>
+        <fields>Duration__c</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>GDP_File_Production__c.File_Specification__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -233,7 +232,11 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>zqu__ProductRatePlan__c.zqu__ZProduct__c</fields>
+        <fields>zqu__ProductRatePlan__c.NAME</fields>
         <relatedList>GDP_File_Description_To_Rate_Plan__c.GDP_File_Description__c</relatedList>
+        <sortField>zqu__ProductRatePlan__c.zqu__ZProduct__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
@@ -244,7 +247,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hg0000000ZVpK</masterLabel>
+        <masterLabel>00hw000000i1EKU</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
