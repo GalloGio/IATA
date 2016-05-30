@@ -56,8 +56,8 @@
         }
 
         td {
-            padding-top: 30px;
-            padding-bottom: 30px;
+            padding-top: 15px;
+            padding-bottom: 15px;
             border-top: 1px solid #23828c;
             border-bottom: 1px solid #23828c;
         }
@@ -104,6 +104,10 @@
         .ellipsis-container {
             top: 80px;
             left: 0;
+        }
+
+        td.template img {
+            width: 50px;
         }
     }
 
