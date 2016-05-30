@@ -128,6 +128,7 @@ public class vfIECEBC_CampaignList {
             fields.add('Name');
             fields.add('Status__c');
             fields.add('Scheduled_Date__c');
+            fields.add('EBC_Design__c');
             fields.add('Is_Step5_Writable__c');
             fields.add('Is_Step4_Valid__c'); 
             fields.add('Owner.Name');

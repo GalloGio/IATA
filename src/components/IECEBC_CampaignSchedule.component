@@ -14,7 +14,7 @@
                             <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
                         </apex:inputText>
                         <apex:input rendered="{!c.Is_Step5_Writable__c}" value="{!humanCampaignDate}" type="text" styleClass="humanCampaignDate user-input text" />
-                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!humanCampaignDate}" styleClass="humanCampaignDate user-input text" />
+                        <apex:outputText value="{!humanCampaignDate}" rendered="{!NOT(campaign.Is_Step5_Writable__c)}"  styleClass="disabled-user-input humanCampaignDate text" />
                     </div>
                     
                     <div class="custom-user-input select">
@@ -35,7 +35,12 @@
                             
                             <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
                         </apex:selectList>
-                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!campaignHours}" styleClass="user-input select" />
+                        <apex:outputPanel layout="block" styleClass="field-group disabled" rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                        <div class="custom-user-input select">
+	                            <i class="icon angle-down"></i>
+	                            <span class="disabled-user-input select">{!campaignHours}</span>
+	                        </div>
+	                    </apex:outputPanel>
                     </div>
                     :
                     <div class="custom-user-input select">
@@ -56,7 +61,12 @@
                             
                             <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
                         </apex:selectList>
-                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!campaignMinutes}" styleClass="user-input select" />
+                        <apex:outputPanel layout="block" styleClass="field-group disabled" rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                        <div class="custom-user-input select">
+	                            <i class="icon angle-down"></i>
+	                            <span class="disabled-user-input select">{!campaignMinutes}</span>
+	                        </div>
+	                    </apex:outputPanel>
                     </div>
                     <div class="custom-user-input select">
                         <apex:outputText rendered="{!c.Is_Step5_Writable__c}"><i class="icon angle-down"></i></apex:outputText>
@@ -66,11 +76,16 @@
                             
                             <apex:actionSupport action="{!validate}" event="onchange" rerender="pageMessagesBlock"/> 
                         </apex:selectList>
-                        <apex:outputText rendered="{!NOT(c.Is_Step5_Writable__c)}" value="{!campaignMeridiem}" styleClass="user-input select" />
+                        <apex:outputPanel layout="block" styleClass="field-group disabled" rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                        <div class="custom-user-input select">
+	                            <i class="icon angle-down"></i>
+	                            <span class="disabled-user-input select">{!campaignMeridiem}</span>
+	                        </div>
+	                    </apex:outputPanel>
                     </div>
                     <strong>{!userTimezoneDisplayName} (UTC{!userTimezoneOffset})</strong>
                     <apex:outputPanel id="pageMessagesBlock">
-                        <apex:pageMessages />
+                        <apex:pageMessages rendered="{!c.Is_Step5_Writable__c}" />
                         <apex:outputText rendered="{!NOT(ISBLANK(validationMessage))}">
                             <p style="font-weight: bold; color: #c00;">{!validationMessage}</p>
                         </apex:outputText>
@@ -85,8 +100,14 @@
         
                 <script type="text/javascript">
                 jQuery(document).ready(function($) {
-                    $('.humanCampaignDate').datepicker({
+                    $('input.humanCampaignDate').datepicker({
+                        <apex:outputText rendered="{!c.Status__c != 'APPROVED'}">
                         minDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!minDatetime}" /></apex:outputText>'),
+                        </apex:outputText>
+                        <apex:outputText rendered="{!c.Status__c == 'APPROVED'}">
+                        minDate: new Date(),
+                        </apex:outputText>
+                        maxDate: new Date('<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!maxDatetime}" /></apex:outputText>'),
                         
                         onSelect: function(a, b, c){
                             $('.campaignDate').trigger('change');

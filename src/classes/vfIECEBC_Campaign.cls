@@ -76,7 +76,9 @@ public class vfIECEBC_Campaign {
             List<String> fields = new List<String>();
             fields.addAll(Schema.sObjectType.EBC_Campaign__c.fields.getMap().keySet());
             fields.addAll(new List<String>{
-                'EBC_Master_Filter__r.Audience__c'
+                'EBC_Master_Filter__r.Audience__c',
+                'EBC_Master_Filter__r.Name',
+                'EBC_Master_Filter__r.Number_of_Recipients__c'
             });
         	stdController.addFields(fields);
         }

@@ -1,4 +1,4 @@
-<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_Dashboard" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -19,12 +19,12 @@
                     
                     <apex:form >
                         <apex:pageMessages />
-                        <div class="alert">
+                        <apex:outputPanel layout="block" rendered="{!campaign.Status__c == 'DRAFT' || campaign.Id == null}" styleClass="alert">
                             <h2 class="alert-title">Account balance</h2>
                             <div class="alert-message icon check-circle">
-                                <p>Your current account balance is <strong>50,000 emails</strong></p>
+                                <p>Your current account balance is <strong>{!emailBalanceOnAccount} emails</strong></p>
                             </div>
-                        </div>
+                        </apex:outputPanel>
                         <div class="row">
                             <div class="columns medium-6">
                                 <div class="field-group text">

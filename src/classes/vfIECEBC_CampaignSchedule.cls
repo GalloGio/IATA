@@ -95,14 +95,21 @@ public class vfIECEBC_CampaignSchedule {
         return BusinessHours.add(bh[0].Id, Datetime.now(), Integer.valueOf(3600 * 2 * 9 * 1000)); // 2 business day in Montreal office
     }
     
+    public static Datetime getMaxDatetime() {
+        return Datetime.now().addDays(31);
+    }
+    
     public String validationMessage {
         get {
             if (validationMessage == null) {
                 Datetime dt = getMinDatetime();
+                Datetime dtMax = getMaxDatetime();
                 
-                if (this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c <= dt) {
+                if (this.campaign.Status__c != 'APPROVED' && this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c <= dt) {
                     validationMessage = 'A delay of minimum 2 business days is required. Date must be greater to ' + dt.format('EEEE, MMM d, h:mm a', UserInfo.getTimeZone().getID());
-                }
+                }/* else if (this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c > dtMax) {
+                    validationMessage = 'Scheduled Date must be within 31 days. Date must NOT be greater to ' + dtMax.format('EEEE, MMM d', UserInfo.getTimeZone().getID());
+                }*/
             }
             
             return validationMessage;

@@ -22,15 +22,12 @@
                         </td>
                         <td class="name">
                             <ul class="list campaign">
-                                <li><apex:outputLink value="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink></li>
+                                <li>
+                                    <apex:outputLink rendered="{!c.Status__c != 'REJECTED'}" value="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink>
+                                    <apex:outputText rendered="{!c.Status__c == 'REJECTED'}" styleClass="js-campaign-name">{!c.Name}</apex:outputText>
+                                </li>
                                 <li>TODO: what is this?: Regular - IP, AS &amp; LD</li>
-                                <li><strong class="js-campaign-status">
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT' || c.Status__c == '', true, false)}">Setup</apex:outputText>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL', true, false)}">Pending</apex:outputText>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'APPROVED', true, false)}">Scheduled</apex:outputText>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'REJECTED', true, false)}">Rejected</apex:outputText>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'SENT', true, false)}">Sent</apex:outputText>
-                                    </strong>
+                                <li><strong class="js-campaign-status"><apex:outputField value="{!c.Status__c}" /></strong>
                                 </li>
                                 <li>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">{!c.Scheduled_Date__c}</apex:outputText>
@@ -85,10 +82,10 @@
             
             <apex:form rendered="{!NOT(isLimitedComponent)}">
                 <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
-                    Page 
+                    Page
                     <div class="custom-user-input select">
                         <i class="icon angle-down"></i>
-                        <apex:selectList value="{!page}" styleClass="user-input select js-champaign-actions" size="1">
+                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
                             <apex:selectOptions value="{!pageOptions}"/>
                             <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
                         </apex:selectList> 
@@ -107,7 +104,8 @@
             <apex:repeat value="{!campaigns}" var="c">
                 campaigns['{!c.Id}'] = {
                     Id: '{!c.Id}',
-                    Name: '{!c.Name}'
+                    Name: '{!c.Name}',
+                    EBC_Design__c: '{!c.EBC_Design__c}'
                 }
             </apex:repeat>
         </script>
@@ -117,16 +115,16 @@
 		<div class="overlay"></div>
 		<div class="modal-dialog" id="js-modal-dialog">
             <apex:form >
-                <apex:actionFunction name="deleteCampaign" rerender="js-modal-delete-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="jQuery('#js-modal').removeClass('is-hidden');">
+                <apex:actionFunction name="deleteCampaign" rerender="js-modal-delete-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                     <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
                 </apex:actionFunction>
-                <apex:actionFunction name="renameCampaign" rerender="js-modal-rename-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="jQuery('#js-modal').removeClass('is-hidden');">
+                <apex:actionFunction name="renameCampaign" rerender="js-modal-rename-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                     <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
                 </apex:actionFunction>
-                <apex:actionFunction name="cancelCampaign" rerender="js-modal-cancel-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="jQuery('#js-modal').removeClass('is-hidden');">
+                <apex:actionFunction name="cancelCampaign" rerender="js-modal-cancel-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                     <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
                 </apex:actionFunction>
-                <apex:actionFunction name="scheduleCampaign" rerender="js-modal-schedule-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="jQuery('#js-modal').removeClass('is-hidden');">
+                <apex:actionFunction name="scheduleCampaign" rerender="js-modal-schedule-campaign-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                     <apex:param name="firstParam" assignTo="{!selectedCampaignId}" value="" />
                 </apex:actionFunction>
             </apex:form>
@@ -146,7 +144,7 @@
                                 <button class="text-link js-close-modal">Cancel</button>
                             </li>
                             <li>
-                                <apex:commandLink action="{!deleteCampaign}" styleClass="button" value="Delete" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteCampaign}" styleClass="button" value="Delete" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
@@ -172,7 +170,7 @@
                                 <button class="text-link js-close-modal">Cancel</button>
                             </li>
                             <li>
-                                <apex:commandLink action="{!save}" styleClass="button" value="Save" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="Save" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
@@ -196,9 +194,7 @@
                                 <button class="text-link js-close-modal">Cancel</button>
                             </li>
                             <li>
-                                <apex:commandLink action="{!save}" styleClass="button" value="Save" reRender="campaignListContainer" oncomplete="closeModal();">
-                                    <apex:param assignTo="{!selectedCampaign.Status__c}" value="DRAFT" />
-                                </apex:commandLink>
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!cancel}" styleClass="button" value="Save" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
@@ -213,7 +209,7 @@
                     <div class="modal-body">
                         
                         <c:IECEBC_CampaignSchedule c="{!selectedCampaign}">
-                            <apex:commandLink action="{!save}" styleClass="button" value="Update" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="Update" reRender="campaignListContainer" oncomplete="closeModal();" />
                         </c:IECEBC_CampaignSchedule>
                     </div>
                 </section>
@@ -224,12 +220,17 @@
     <script type="text/javascript">
     	jQuery.noConflict();
     
+    	function actionFunctionCompleted(){
+            jQuery('#js-modal').removeClass('is-hidden');
+            jQuery('body').css('cursor', 'auto');
+        }
+    
     	function closeModal() {
             $ = jQuery;
-            
             $('#js-modal').addClass('is-hidden');
             $('body').attr('data-is-modal-open', 'false');
             $('.js-champaign-actions').val('default');
+            jQuery('body').css('cursor', 'auto');
         }
     
     
@@ -247,6 +248,7 @@
             };
             
 			$(document).on('change', 'select[name="campaign-action"]', function(e){
+                jQuery('body').css('cursor', 'wait');
                 var campaign = campaigns[$(this).attr('data-target-campaign-id')];
                 switch ($(this).val()) {
                     case 'delete':
@@ -262,7 +264,8 @@
                         scheduleCampaign(campaign.Id);
                         break;
                     case 'preview':
-                        window.open('/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
+                        console.log(campaign);
+                        window.open('/iec/IECEBC_CampaignPreview?id=' + campaign.EBC_Design__c);
                         break;
                 	default:
                         alert('The action ' + $(this).val() + ' has not been defined yet.');

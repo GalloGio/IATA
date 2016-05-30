@@ -18,9 +18,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
-        <content>EBC_CampaignApproval</content>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Visualforce</type>
+        <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>Follow</actionName>
@@ -44,9 +42,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <content>EBC_CampaignApproval</content>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Visualforce</type>
+        <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
@@ -196,7 +192,7 @@
         <fullName>Is_Step3_Valid__c</fullName>
         <description>Verify if the Step 3 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c)</formula>
+        <formula>Is_Step2_Valid__c || (Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step3 Valid</label>
         <trackHistory>false</trackHistory>
@@ -218,7 +214,7 @@
         <fullName>Is_Step4_Valid__c</fullName>
         <description>Verify if the Step 4 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c)</formula>
+        <formula>true || (Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step4 Valid</label>
         <trackHistory>false</trackHistory>
@@ -240,7 +236,7 @@
         <fullName>Is_Step5_Valid__c</fullName>
         <description>Verify if the Step 5 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>(Scheduled_Date_Valid_Until__c &gt;= NOW()) &amp;&amp; Is_Step4_Valid__c</formula>
+        <formula>Is_Step4_Valid__c &amp;&amp; (TEXT(Status__c) == &apos;APPROVED&apos; || Scheduled_Date_Valid_Until__c &gt;= NOW())</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Step5 Valid</label>
         <trackHistory>false</trackHistory>
@@ -423,8 +419,11 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
     <label>EBC Campaign</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>EBC_Approvers_EBC_Campaign</fullName>
@@ -521,14 +520,24 @@ TEXT(PRIORVALUE(Status__c)) == &apos;PENDING_APPROVAL&apos; &amp;&amp;
         <description>Make sure that the Scheduled Date Valid Until is in the future</description>
         <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
 
-(
-    (PRIORVALUE(Scheduled_Date_Valid_Until__c) != Scheduled_Date_Valid_Until__c)
-) &amp;&amp;
+TEXT( Status__c) != &quot;APPROVED&quot; &amp;&amp;
+
+PRIORVALUE(Scheduled_Date_Valid_Until__c) != Scheduled_Date_Valid_Until__c &amp;&amp;
 
 
 Scheduled_Date_Valid_Until__c &lt; NOW()</errorConditionFormula>
         <errorDisplayField>Scheduled_Date__c</errorDisplayField>
         <errorMessage>The Scheduled Date does not respect the 2 business day criteria.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Scheduled_Date_31_Business_Days</fullName>
+        <active>true</active>
+        <description>Make sure that the Scheduled Date Valid Until is in the future</description>
+        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+(DATEVALUE(Scheduled_Date__c) - TODAY()) &gt; 31</errorConditionFormula>
+        <errorDisplayField>Scheduled_Date__c</errorDisplayField>
+        <errorMessage>The Scheduled Date MUST be within 31 days.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Scheduled_Date_vs_Status</fullName>
