@@ -28,6 +28,27 @@ public class vfIECEBC_CampaignList {
         
         return null;
     }
+    public PageReference cancel() {
+        if (selectedCampaign.Status__c == 'PENDING_APPROVAL') {
+            // RECALL
+            ProcessInstanceWorkitem piwi = [SELECT Id,Actor.Name,ElapsedTimeInHours,OriginalActor.Name,ProcessInstanceId FROM ProcessInstanceWorkitem Where ProcessInstance.Status = 'Pending' AND ProcessInstance.TargetObjectId = :selectedCampaign.Id LIMIT 1];
+            System.debug(piwi);
+            
+            Approval.ProcessWorkitemRequest req = new Approval.ProcessWorkitemRequest();
+            req.setAction('Removed');
+            req.setWorkitemId(piwi.Id);
+            System.debug(req);
+            Approval.ProcessResult result =  Approval.process(req);
+            
+        } else {
+            selectedCampaign.Status__c = 'DRAFT';
+            update selectedCampaign;
+        }
+        
+        clear();
+        
+        return null;
+    }
      
     public Integer page {
         get {

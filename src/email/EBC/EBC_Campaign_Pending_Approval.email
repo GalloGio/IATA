@@ -1,0 +1,9 @@
+Account: {!EBC_Campaign__c.Account__c}
+Owner: {!EBC_Campaign__c.OwnerFullName}
+
+Id: {!EBC_Campaign__c.Id}
+Name: {!EBC_Campaign__c.Name}
+
+Subject: {!EBC_Campaign__c.Subject__c}
+
+Review this campaign at https://iata--3b.cs87.my.salesforce.com/apex/EBC_CampaignApproval?id={!EBC_Campaign__c.Id}
