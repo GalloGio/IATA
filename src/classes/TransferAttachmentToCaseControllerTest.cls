@@ -1,7 +1,7 @@
 @isTest
 private class TransferAttachmentToCaseControllerTest {
-    
-    
+	
+	
   private static void loadCredentials() {
         
         Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
@@ -24,16 +24,16 @@ private class TransferAttachmentToCaseControllerTest {
 
 
 
-    @isTest static void test_method_one() {
+	@isTest static void test_method_one() {
 
 
-        loadCredentials();
+		loadCredentials();
 
 
 
 
 
-            ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+		    ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
        // ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
         ID europeRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
         ID chinaRTID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_China_North_Asia');
@@ -85,7 +85,7 @@ private class TransferAttachmentToCaseControllerTest {
         
         // create a child case to the first case
      /*   Case c2 = new Case(recordtypeID = IFAPcaseRecordTypeID,
-                          ParentId = c1.Id,
+        				  ParentId = c1.Id,
                           Status = 'Financial Security Requested',
                           Financial_Review_Result__c = 'Satisfactory - New Financial Security',
                           Financial_Review_Type__c = 'Annual',
@@ -107,7 +107,7 @@ private class TransferAttachmentToCaseControllerTest {
         
         // create 2 child cases for c2
         Case c3 = new Case(recordtypeID = europeRTId,
-                          ParentId = c1.Id,
+        				  ParentId = c1.Id,
                           Region__c = 'Europe (Americas Countries)',
                           BSPCountry__c = 'Turkey',
                           Status = 'Financial Security Requested',
@@ -128,7 +128,7 @@ private class TransferAttachmentToCaseControllerTest {
         //insert c3;
         
         Case c4 = new Case(recordtypeID = europeRTId,
-                          ParentId = c1.Id,
+        				  ParentId = c1.Id,
                           Region__c = 'Europe',
                           BSPCountry__c = 'France',
                           Status = 'Financial Security Requested',
@@ -227,37 +227,37 @@ private class TransferAttachmentToCaseControllerTest {
         insert lstAttachmentToInsert;
         
         test.startTest();
-            
-            // check there are 2 available attachments
-            list<Attachment> lstAllAttachments = [SELECT Id FROM Attachment];
-            system.assertEquals(2, lstAllAttachments.size());
-            
-            // instantiate the attachment transfer page controller 
-            ApexPages.StandardController std = new ApexPages.StandardController(c1);
-            TransferAttachmentToCaseController controller = new TransferAttachmentToCaseController(std);
-            
-            // check that the 3 related cases were correctly identified
-            system.assertEquals(2, controller.lstRelatedCases.size());
-            
-            // check that the 4 attachments were correctly taken into account
-         //   throw new transformationException(''+controller.lstAttachments);
-            system.assertEquals(4, controller.lstAttachments.size());
-            
-            // simultate the selection of the first attachment and of 2 of the related cases
-            controller.lstAttachments[0].isSelected = true;
-            controller.lstRelatedCases[0].isSelected = true;
-            controller.lstRelatedCases[1].isSelected = true;
-            
-            // request the transfer
-            controller.TransferAttachments();
-            
-            // check that the attachments have correctly been copied - there should be 4 now
-            lstAllAttachments = [SELECT Id FROM Attachment];
-            system.assertEquals(4, lstAllAttachments.size());
-            controller.cancel();
+        	
+        	// check there are 2 available attachments
+        	list<Attachment> lstAllAttachments = [SELECT Id FROM Attachment];
+        	system.assertEquals(2, lstAllAttachments.size());
+        	
+        	// instantiate the attachment transfer page controller 
+	        ApexPages.StandardController std = new ApexPages.StandardController(c1);
+	        TransferAttachmentToCaseController controller = new TransferAttachmentToCaseController(std);
+	        
+	        // check that the 3 related cases were correctly identified
+	        system.assertEquals(2, controller.lstRelatedCases.size());
+	        
+	        // check that the 2 attachments were correctly taken into account
+	     //   throw new transformationException(''+controller.lstAttachments);
+	        system.assertEquals(4, controller.lstAttachments.size());
+	        
+	        // simultate the selection of the first attachment and of 2 of the related cases
+	        controller.lstAttachments[0].isSelected = true;
+	        controller.lstRelatedCases[0].isSelected = true;
+	        controller.lstRelatedCases[1].isSelected = true;
+	        
+	        // request the transfer
+	        controller.TransferAttachments();
+	        
+	        // check that the attachments have correctly been copied - there should be 4 now
+	        lstAllAttachments = [SELECT Id FROM Attachment];
+        	system.assertEquals(4, lstAllAttachments.size());
+	        controller.cancel();
         test.stopTest();
-    }
-    
+	}
+	
 
-    
+	
 }

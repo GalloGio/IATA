@@ -70,8 +70,11 @@ public class WrapperAttachTest {
 		);
 		insert aFile;
 		
-		aFile = [Select isPublic__c, SystemModstamp, Size_MB__c, OwnerId, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, Full_Name_Unique__c, File_Identifier__c, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId, ConnectionReceivedId, Case__c, CreatedBy.Name
-			From AmazonFile__c where id = :aFile.Id];
+		aFile = [Select isPublic__c, SystemModstamp, Size_MB__c, OwnerId, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, 
+                 		Full_Name_Unique__c, File_Identifier__c, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId, 
+                 		ConnectionReceivedId, Case__c, CreatedBy.Name, File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, 
+                 		RecordType.DeveloperName
+                 From AmazonFile__c where id = :aFile.Id];
 		
 		list<AmazonRest.S3File> s3Files = AmazonRest.getListFiles(filename,AmazonCredentials.getCredentials('GenericAttach') );
 		

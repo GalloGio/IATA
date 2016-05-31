@@ -9,14 +9,16 @@
                 <region>Left</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
+                    <height>100</height>
                     <page>AMS_OSCAR_ProcessViewer</page>
+                    <unit>Percentage</unit>
                 </sidebarComponents>
-                <style>Tabs</style>
+                <style>Stack</style>
                 <unit>Pixel</unit>
                 <width>50</width>
             </containers>
             <containers>
-                <height>30</height>
+                <height>240</height>
                 <region>Top</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -25,7 +27,7 @@
                     <width>100</width>
                 </sidebarComponents>
                 <style>Stack</style>
-                <unit>Percentage</unit>
+                <unit>Pixel</unit>
             </containers>
         </primaryTabComponents>
         <subtabComponents>
@@ -38,8 +40,8 @@
                     <unit>Percentage</unit>
                 </sidebarComponents>
                 <style>Stack</style>
-                <unit>Percentage</unit>
-                <width>40</width>
+                <unit>Pixel</unit>
+                <width>400</width>
             </containers>
         </subtabComponents>
     </customConsoleComponents>
@@ -61,6 +63,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case_Remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -239,6 +245,20 @@
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
     </quickActionList>
+    <relatedContent>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>ContactId</field>
+            </layoutItem>
+        </relatedContentItems>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>AccountId</field>
+            </layoutItem>
+        </relatedContentItems>
+    </relatedContent>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
