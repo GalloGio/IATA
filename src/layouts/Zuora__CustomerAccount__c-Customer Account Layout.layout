@@ -1,74 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Sync_Data_from_ZBilling</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
-        <label>System Information</label>
+        <label>Information</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Zuora__AccountNumber__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Zuora__Account__c</field>
+                <field>Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CRMContactID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ICHCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax1ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax2ID__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Zuora__Parent__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Zuora__LastInvoiceDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Zuora__SoldToName__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CompanyType__c</field>
+                <field>SoldToName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ClientType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CompanyType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -82,7 +40,23 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Parent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SalesRepName__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ProfitCenter__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IINETUserID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -90,11 +64,46 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__SalesRepName__c</field>
+                <field>Default_Payment_Method__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>false</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>System Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AccountNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Zuora_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IINETUserID__c</field>
+                <field>SoldToId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CRMContactID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contact__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -107,45 +116,49 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToName__c</field>
+                <field>BillToId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToAddress1__c</field>
+                <field>BillToName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToAddress2__c</field>
+                <field>BillToAddress1__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToCity__c</field>
+                <field>BillToAddress2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToState__c</field>
+                <field>BillToCity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToPostalCode__c</field>
+                <field>BillToState__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToCountry__c</field>
+                <field>BillToPostalCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BillToCountry__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToWorkPhone__c</field>
+                <field>BillToWorkPhone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToWorkEmail__c</field>
+                <field>BillToWorkEmail__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__BillToFax__c</field>
+                <field>BillToFax__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -158,15 +171,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Zuora__CreditCardType__c</field>
+                <field>CreditCardType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Zuora__CreditCard_Number__c</field>
+                <field>CreditCard_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Zuora__CreditCard_Expiration__c</field>
+                <field>CreditCard_Expiration__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DefaultPaymentMethod__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -180,19 +197,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__AutoPay__c</field>
+                <field>AutoPay__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__PurchaseOrderNumber__c</field>
+                <field>PurchaseOrderNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__Currency__c</field>
+                <field>Currency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__PaymentTerm__c</field>
+                <field>PaymentTerm__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -229,15 +246,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__Balance__c</field>
+                <field>Balance__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__MRR__c</field>
+                <field>MRR__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Zuora__Credit_Balance__c</field>
+                <field>Credit_Balance__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -256,59 +273,50 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>Zuora__AutoRenew__c</fields>
-        <fields>Zuora__SubscriptionStartDate__c</fields>
-        <fields>Zuora__NextRenewalDate__c</fields>
-        <fields>Zuora__Status__c</fields>
-        <fields>Zuora__MRR__c</fields>
-        <fields>Zuora__TCV__c</fields>
-        <fields>Zuora__Version__c</fields>
-        <relatedList>Zuora__Subscription__c.Zuora__CustomerAccount__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Zuora__Balance2__c</fields>
-        <fields>Zuora__TotalAmount__c</fields>
-        <fields>Zuora__Status__c</fields>
-        <fields>Zuora__DueDate__c</fields>
-        <fields>Zuora__InvoiceDate__c</fields>
-        <fields>Zuora__PaymentTerm__c</fields>
-        <relatedList>Zuora__ZInvoice__c.Zuora__BillingAccount__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Zuora__PaymentMethod__c</fields>
-        <fields>Zuora__EffectiveDate__c</fields>
-        <fields>Zuora__Status__c</fields>
-        <fields>Zuora__Amount__c</fields>
-        <fields>Zuora__InvoiceNumber__c</fields>
-        <fields>Zuora__SubmittedOn__c</fields>
-        <relatedList>Zuora__Payment__c.Zuora__BillingAccount__c</relatedList>
-        <sortField>Zuora__EffectiveDate__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>zqu__Number__c</fields>
-        <fields>IEC_Opportunity_Id__c</fields>
-        <fields>zqu__StartDate__c</fields>
-        <fields>zqu__Previewed_Total__c</fields>
-        <relatedList>zqu__Quote__c.Related_Billing_Account__c</relatedList>
-        <sortField>zqu__StartDate__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Billing_Name__c</fields>
+        <fields>AutoRenew__c</fields>
+        <fields>SubscriptionStartDate__c</fields>
+        <fields>NextRenewalDate__c</fields>
         <fields>Status__c</fields>
-        <fields>Status_Date__c</fields>
-        <relatedList>IEC_SAP_Invoice__c.Billing_Account__c</relatedList>
+        <fields>MRR__c</fields>
+        <fields>TCV__c</fields>
+        <fields>Version__c</fields>
+        <relatedList>Subscription__c.CustomerAccount__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Balance2__c</fields>
+        <fields>TotalAmount__c</fields>
+        <fields>Status__c</fields>
+        <fields>DueDate__c</fields>
+        <fields>InvoiceDate__c</fields>
+        <fields>TargetDate__c</fields>
+        <fields>GeneratedDate__c</fields>
+        <fields>PaymentTerm__c</fields>
+        <relatedList>ZInvoice__c.BillingAccount__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>PaymentMethod__c</fields>
+        <fields>EffectiveDate__c</fields>
+        <fields>Status__c</fields>
+        <fields>Amount__c</fields>
+        <fields>AppliedInvoiceAmount__c</fields>
+        <fields>AppliedCreditBalanceAmount__c</fields>
+        <fields>RefundedAmount__c</fields>
+        <fields>SubmittedOn__c</fields>
+        <fields>GatewayStatus__c</fields>
+        <relatedList>Payment__c.BillingAccount__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -316,7 +324,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h2000000MXfKu</masterLabel>
+        <masterLabel>00h2000000MXfGG</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

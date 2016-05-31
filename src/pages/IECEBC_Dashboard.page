@@ -36,11 +36,11 @@
                                         <tbody><tr>
                                             <th>
                                                 <div class="item-name">Current Billing Plan</div>
-                                                <p class="item-description">Pay-As-You-Go</p>
+                                                <p class="item-description">{!billingPlanName}</p>
                                             </th>
                                             <td>
                                                 <div class="item-value">
-                                                    <strong>$0.10</strong>
+                                                    <strong>{!billingPlanRate}</strong>
                                                     <span class="per-unit">/email</span>
                                                 </div>
                                                 <a href="#">Upgrade to Pre-Paid plan</a>
@@ -52,7 +52,7 @@
                                             </th>
                                             <td>
                                                 <div class="item-value">
-                                                    <strong>15, 000 emails</strong>
+                                                    <strong>{!emailBalanceOnAccount} emails</strong>
                                                 </div>
                                                 <a href="#">Purchase credits</a>
                                             </td>
