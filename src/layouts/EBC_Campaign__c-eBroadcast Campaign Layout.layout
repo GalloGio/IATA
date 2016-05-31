@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Scheduled_Date_Valid_Until__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Billing_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -141,10 +141,10 @@
                     <footer class="modal-footer">
                         <ul class="list actions">
                             <li>
-                                <button class="text-link js-close-modal">Cancel</button>
+                                <button class="text-link js-close-modal">Discard</button>
                             </li>
                             <li>
-                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteCampaign}" styleClass="button" value="Delete" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteCampaign}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
@@ -167,10 +167,10 @@
                     <footer class="modal-footer">
                         <ul class="list actions">
                             <li>
-                                <button class="text-link js-close-modal">Cancel</button>
+                                <button class="text-link js-close-modal">Discard</button>
                             </li>
                             <li>
-                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="Save" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
@@ -191,17 +191,17 @@
                     <footer class="modal-footer">
                         <ul class="list actions">
                             <li>
-                                <button class="text-link js-close-modal">Cancel</button>
+                                <button class="text-link js-close-modal">Discard</button>
                             </li>
                             <li>
-                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!cancel}" styleClass="button" value="Save" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!cancel}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
                             </li>
                         </ul>
                     </footer>
                 </section>
             </apex:form> 
             <apex:outputPanel id="js-modal-schedule-campaign-wrapper"> 
-                <section id="js-modal-schedule-campaign" class="modal-content">
+                <section id="js-modal-schedule-campaign" class="modal-content wide">
                     <header class="modal-header">
                         <h2 class="modal-title">Change Schedule</h2>
                         <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
@@ -209,7 +209,16 @@
                     <div class="modal-body">
                         
                         <c:IECEBC_CampaignSchedule c="{!selectedCampaign}">
-                            <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="Update" reRender="campaignListContainer" oncomplete="closeModal();" />
+                            <div class="footer-actions text-right">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="campaignListContainer" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </div>
                         </c:IECEBC_CampaignSchedule>
                     </div>
                 </section>

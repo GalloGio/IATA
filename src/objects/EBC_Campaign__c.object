@@ -58,11 +58,27 @@
         <deleteConstraint>Restrict</deleteConstraint>
         <description>The Account that own this campaign</description>
         <externalId>false</externalId>
+        <inlineHelpText>The Account that own this campaign</inlineHelpText>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>EBC Campaigns</relationshipLabel>
         <relationshipName>eBroadcast_Campaigns</relationshipName>
         <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The Billing Account that pay for that campaign</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Billing Account that pay for that campaign</inlineHelpText>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>EBC Campaigns</relationshipLabel>
+        <relationshipName>EBC_Campaigns</relationshipName>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -101,6 +117,7 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Reusable template selected by the end user at the Step 3 of the Wizard</description>
         <externalId>false</externalId>
+        <inlineHelpText>Reusable template selected by the end user at the Step 3 of the Wizard</inlineHelpText>
         <label>EBC Selected Template</label>
         <referenceTo>EBC_Template__c</referenceTo>
         <relationshipLabel>EBC Campaigns (EBC Selected Template)</relationshipLabel>
@@ -114,6 +131,7 @@
         <fullName>From_Name__c</fullName>
         <description>The Email Sender Name</description>
         <externalId>false</externalId>
+        <inlineHelpText>The Email Sender Name</inlineHelpText>
         <label>From Name</label>
         <length>96</length>
         <required>true</required>
@@ -126,6 +144,7 @@
         <fullName>Google_Analytics_Tracking_Code__c</fullName>
         <description>The Google Analytics code</description>
         <externalId>false</externalId>
+        <inlineHelpText>The Google Analytics code</inlineHelpText>
         <label>Google Analytics Tracking Code</label>
         <length>50</length>
         <required>false</required>
@@ -139,6 +158,7 @@
         <defaultValue>false</defaultValue>
         <description>Should the Google Analytics Tracking Code be output on the HTML template</description>
         <externalId>false</externalId>
+        <inlineHelpText>Should the Google Analytics Tracking Code be output on the HTML template</inlineHelpText>
         <label>Is Google Analytics Tracker Active</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -150,6 +170,7 @@
         <externalId>false</externalId>
         <formula>!ISBLANK(Name) &amp;&amp; !ISBLANK(From_Name__c) &amp;&amp; !ISBLANK(Subject__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Verify if the Step 1 is valid and meet the validation.</inlineHelpText>
         <label>Is Step1 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -161,6 +182,7 @@
         <externalId>false</externalId>
         <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is Step1 is writable based on other fields values</inlineHelpText>
         <label>Is Step1 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -172,6 +194,7 @@
         <externalId>false</externalId>
         <formula>EBC_Master_Filter__c != null &amp;&amp; Is_Step1_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Verify if the Step 2 is valid and meet the validation.</inlineHelpText>
         <label>Is Step2 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -183,6 +206,7 @@
         <externalId>false</externalId>
         <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is Step2 is writable based on other fields values</inlineHelpText>
         <label>Is Step2 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -194,6 +218,7 @@
         <externalId>false</externalId>
         <formula>Is_Step2_Valid__c || (Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Verify if the Step 3 is valid and meet the validation.</inlineHelpText>
         <label>Is Step3 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -205,6 +230,7 @@
         <externalId>false</externalId>
         <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is Step3 is writable based on other fields values</inlineHelpText>
         <label>Is Step3 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -216,6 +242,7 @@
         <externalId>false</externalId>
         <formula>true || (Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Verify if the Step 4 is valid and meet the validation.</inlineHelpText>
         <label>Is Step4 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -227,6 +254,7 @@
         <externalId>false</externalId>
         <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is Step4 is writable based on other fields values</inlineHelpText>
         <label>Is Step4 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -238,6 +266,7 @@
         <externalId>false</externalId>
         <formula>Is_Step4_Valid__c &amp;&amp; (TEXT(Status__c) == &apos;APPROVED&apos; || Scheduled_Date_Valid_Until__c &gt;= NOW())</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Verify if the Step 5 is valid and meet the validation.</inlineHelpText>
         <label>Is Step5 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -249,6 +278,7 @@
         <externalId>false</externalId>
         <formula>TEXT(Status__c) == &apos;DRAFT&apos; || TEXT(Status__c) == &apos;APPROVED&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is Step5 is writable based on other fields values</inlineHelpText>
         <label>Is Step5 Writable</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -260,6 +290,7 @@
         <externalId>false</externalId>
         <formula>false &amp;&amp; Is_Step5_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Verify if the Step 6 is valid and meet the validation.</inlineHelpText>
         <label>Is Step6 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -291,6 +322,7 @@
 	)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Return the furthest allowed step in the wizard based on the Is_StepX_Valid__c formulas</inlineHelpText>
         <label>Maximum Allowed Step</label>
         <precision>18</precision>
         <required>false</required>
@@ -304,6 +336,7 @@
         <fullName>Scheduled_Date_Valid_Until__c</fullName>
         <description>Schedule date minus 17 business hours (2 business days)</description>
         <externalId>false</externalId>
+        <inlineHelpText>Schedule date minus 17 business hours (2 business days)</inlineHelpText>
         <label>Scheduled Date Valid Until</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -314,6 +347,7 @@
         <fullName>Scheduled_Date__c</fullName>
         <description>The scheduled date of the campaign</description>
         <externalId>false</externalId>
+        <inlineHelpText>The scheduled date of the campaign</inlineHelpText>
         <label>Scheduled Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -324,6 +358,7 @@
         <fullName>Status__c</fullName>
         <description>The current status of the campaign</description>
         <externalId>false</externalId>
+        <inlineHelpText>The current status of the campaign</inlineHelpText>
         <label>Status</label>
         <picklist>
             <picklistValues>
@@ -361,6 +396,7 @@
         <fullName>Subject__c</fullName>
         <description>The email subject of the campaign</description>
         <externalId>false</externalId>
+        <inlineHelpText>The email subject of the campaign</inlineHelpText>
         <label>Subject</label>
         <length>255</length>
         <required>true</required>

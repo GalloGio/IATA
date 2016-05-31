@@ -58,7 +58,13 @@ public with sharing class vfIECEBC_Dashboard {
 			
 		getEBCSubscriptionInformation();
 	} // end of vfIECEBC_Dashboard constructor
-	
+	public vfIECEBC_Dashboard(ApexPages.StandardController controller) {
+		thisUser = [select Id, ContactId, Contact.AccountId 
+			from User 
+			where id =: Userinfo.getUserid() limit 1];
+			
+		getEBCSubscriptionInformation();
+	}
 	
 	// ========================================================================
 	// get information related to EBC Subscription

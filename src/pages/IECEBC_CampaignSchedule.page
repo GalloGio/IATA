@@ -34,15 +34,25 @@
                     </div>
             
                     <c:IECEBC_CampaignSchedule c="{!campaign}">
-                            <ul>
-                                <li><apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!previous}" styleClass="button" value="Previous" /></li>
+                        <div class="footer-actions text-right">
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Exit" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step5_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step5_Writable__c)}">
+	                                <li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
                             </ul>
-                            
-                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink rendered="{!campaign.Is_Step5_Writable__c}" action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" />
-                            
-							<apex:commandLink rendered="{!NOT(campaign.Is_Step5_Writable__c)}" action="{!previous}" value="Previous" />
-                            <apex:commandLink rendered="{!NOT(campaign.Is_Step5_Writable__c)}" action="{!next}" value="Next" />
+                        </div>
                     </c:IECEBC_CampaignSchedule>
                 </div>
             </main>

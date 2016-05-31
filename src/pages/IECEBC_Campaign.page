@@ -78,11 +78,17 @@
                         </div>
                 
                         <div class="footer-actions text-right">
-                            <apex:commandLink rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
-                            <apex:commandLink rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" action="{!next}" value="Next" />
-                            
-                            <apex:commandLink action="{!submitForApproval}" value="Submit for approval" />
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}">
+									<li><apex:commandLink action="{!saveAndExit}" styleClass="button secondary" value="Save and Exit" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}">
+									<li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Save and Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}">
+									<li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
                         </div>
                 
                     </apex:form>

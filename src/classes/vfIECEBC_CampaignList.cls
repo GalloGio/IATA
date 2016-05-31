@@ -1,6 +1,12 @@
 public class vfIECEBC_CampaignList {
-    public Boolean isLimitedComponent { get; set; }
-    public static Integer CAMPAIGNS_PER_PAGE = 3;
+    public Boolean isLimitedComponent {
+        get;
+        set {
+            isLimitedComponent = value;
+            if (value == true) CAMPAIGNS_PER_PAGE = 3;
+        }
+    }
+    public static Integer CAMPAIGNS_PER_PAGE = 25;
     
     public Id selectedCampaignId { get; set; }
     public EBC_Campaign__c selectedCampaign {
@@ -88,7 +94,11 @@ public class vfIECEBC_CampaignList {
     public String sortBy {
         get {
             if (sortBy == null) {
-                sortBy = 'CreatedDate ASC';
+                if (isLimitedComponent) {
+                	sortBy = 'LastModifiedDate DESC';
+                } else {
+                	sortBy = 'CreatedDate ASC';
+                }
             }
             
             return sortBy;
@@ -102,8 +112,11 @@ public class vfIECEBC_CampaignList {
     
     public List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('CreatedDate ASC','First Created'));
-        options.add(new SelectOption('CreatedDate DESC','Last Created'));
+        options.add(new SelectOption('CreatedDate ASC','CreatedDate ASC'));
+        options.add(new SelectOption('CreatedDate DESC','CreatedDate DESC'));
+        options.add(new SelectOption('LastModifiedDate ASC','LastModifiedDate ASC'));
+        options.add(new SelectOption('LastModifiedDate DESC','LastModifiedDate DESC'));
+        
         return options;
     }
 
