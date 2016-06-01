@@ -285,7 +285,7 @@
                 <field>Count_Accumulated_Irregularities__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Financial_Year_End__c</field>
             </layoutItems>
             <layoutItems>
@@ -303,7 +303,7 @@
                 <field>Assessment_Performed_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Financial_Review_Result__c</field>
             </layoutItems>
             <layoutItems>
@@ -315,7 +315,7 @@
                 <field>Next_Financial_security_Expiry_date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Fin_statements_submission_deadline__c</field>
             </layoutItems>
         </layoutColumns>
@@ -354,11 +354,11 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>WebStar_ID__c</field>
             </layoutItems>
         </layoutColumns>
@@ -428,13 +428,17 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
+        <fields>Case_Type__c</fields>
         <fields>NAME</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <fields>CASES.STATUS</fields>
         <fields>OWNER_NAME</fields>
+        <fields>CASES.RECORDTYPE</fields>
         <relatedList>RelatedCaseList</relatedList>
+        <sortField>CASES.CASE_NUMBER</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -550,7 +554,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7E000000Imhq</masterLabel>
+        <masterLabel>00hw000000i1Enq</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
