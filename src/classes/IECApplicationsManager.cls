@@ -2,7 +2,8 @@
  * IECApplicationsManager 
  * Change log:
  *  20160324-sl: change getListProductAccessByContactByProductCategory/getListProductAccessByContactBySubscriptionNumber to use getSubscriptionEvergreenNameListByBillingContactId
- * 
+ *  20160531-sl: createProductAccessOnNewSubscription() will not create IEC_Product_Access record for ProductCategory_SF_EBROADCAST; add isEbcAccessGrantedForContact
+ *
  */
 public without sharing class IECApplicationsManager {
     public static List<Id> cachedAgencyIds;
@@ -652,27 +653,33 @@ public without sharing class IECApplicationsManager {
             // query all needed fields on Product Rate Plan Info
             List<Product_Rate_Plan_Information__c> lstRatePlanInfos = IECProductManager.getProductRatePlansInformationById(oSubscription.Product_Rate_Plan_Information__c);
             if (lstRatePlanInfos.isEmpty()) throw new IECApplicationException('Cannot find Product Rate Plan Info');
-                
-            IEC_Product_Access__c oProductAccess = new IEC_Product_Access__c();
-            oProductAccess.Related_Contact__c = sContactId;
-            oProductAccess.Related_Rate_Plan_Info__c = lstRatePlanInfos.get(0).Id;
-            oProductAccess.Zuora_Subscription_Id__c = oSubscription.Zuora__Zuora_Id__c;
-            oProductAccess.Subscription_Number__c = oSubscription.Name;
-            oProductAccess.Invoice_Number__c = sInvoiceNumber;
-            oProductAccess.Usage_Qty_consumed__c = 0;
             
-            if (lstRatePlanInfos.get(0).Subscription_Usage_Qty__c != null && lstRatePlanInfos.get(0).Subscription_Usage_Qty__c >= 0) {
-                oProductAccess.Usage_Qty_Start__c = lstRatePlanInfos.get(0).Subscription_Usage_Qty__c;
-                oProductAccess.Usage_Qty_Left__c = oProductAccess.Usage_Qty_Start__c;
+            Product_Rate_Plan_Information__c oProductRatePlan = lstRatePlanInfos.get(0);
+            if (oProductRatePlan.Related_Product_Information__r.Related_Product_Category__r.Name != IECConstants.ProductCategory_SF_EBROADCAST)
+            {
+                
+                IEC_Product_Access__c oProductAccess = new IEC_Product_Access__c();
+                oProductAccess.Related_Contact__c = sContactId;
+                oProductAccess.Related_Rate_Plan_Info__c = lstRatePlanInfos.get(0).Id;
+                oProductAccess.Zuora_Subscription_Id__c = oSubscription.Zuora__Zuora_Id__c;
+                oProductAccess.Subscription_Number__c = oSubscription.Name;
+                oProductAccess.Invoice_Number__c = sInvoiceNumber;
+                oProductAccess.Usage_Qty_consumed__c = 0;
+                
+                if (lstRatePlanInfos.get(0).Subscription_Usage_Qty__c != null && lstRatePlanInfos.get(0).Subscription_Usage_Qty__c >= 0) {
+                    oProductAccess.Usage_Qty_Start__c = lstRatePlanInfos.get(0).Subscription_Usage_Qty__c;
+                    oProductAccess.Usage_Qty_Left__c = oProductAccess.Usage_Qty_Start__c;
+                }
+                else {
+                    oProductAccess.Usage_Unlimited__c = true;
+                }
+                
+                oProductAccess.Active__c = true;
+                oProductAccess.Effective_Start_Date__c = oSubscription.Zuora__SubscriptionStartDate__c;
+                oProductAccess.Effective_End_Date__c = oSubscription.Zuora__SubscriptionEndDate__c;
+                
+                insert oProductAccess;
             }
-            else
-                oProductAccess.Usage_Unlimited__c = true;
-                
-            oProductAccess.Active__c = true;
-            oProductAccess.Effective_Start_Date__c = oSubscription.Zuora__SubscriptionStartDate__c;
-            oProductAccess.Effective_End_Date__c = oSubscription.Zuora__SubscriptionEndDate__c;
-            
-            insert oProductAccess;
         }
         catch(Exception ex) {
             throw new IECApplicationException('Could not insert Product Access: ' + ex.getMessage());
@@ -691,7 +698,24 @@ public without sharing class IECApplicationsManager {
             if (String.isBlank(sContactId)) throw new IECApplicationException('Contact is null');
             if (oSubscription == null) throw new IECApplicationException('Subscription is null');
             if (String.isBlank(oSubscription.Product_Rate_Plan_Information__c)) throw new IECApplicationException('Rate Plan Info is null');
-
+            
+            
+            // eBroadcast subscription should not have ProductAccess 
+            if (oProductAccess == null)
+            { // verify if this is expected
+                // query all needed fields on Product Rate Plan Info
+                List<Product_Rate_Plan_Information__c> lstRatePlanInfos = IECProductManager.getProductRatePlansInformationById(oSubscription.Product_Rate_Plan_Information__c);
+                if (lstRatePlanInfos.isEmpty()) throw new IECApplicationException('Cannot find Product Rate Plan Info');
+                
+                Product_Rate_Plan_Information__c oProductRatePlan = lstRatePlanInfos.get(0);
+                if (oProductRatePlan.Related_Product_Information__r.Related_Product_Category__r.Name != IECConstants.ProductCategory_SF_EBROADCAST) 
+                {
+                	throw new IECApplicationException( 'Product Access is null for non EBROADCAST SubscriptionId:' + oSubscription.Id);
+                }
+                // Subscription Product Category is EBROADCAST, do nothing and return.  
+                return;
+            }
+            
             // Update product access information
             oProductAccess.Related_Contact__c = sContactId;
             oProductAccess.Zuora_Subscription_Id__c = oSubscription.Zuora__Zuora_Id__c;
@@ -1338,4 +1362,30 @@ public without sharing class IECApplicationsManager {
                 && (String.isBlank(oAppFilter.Agency_Program__c) || oAppFilter.Agency_Program__c == '(All)')
                 && (String.isBlank(oAppFilter.Area_of_Activity__c) || oAppFilter.Area_of_Activity__c == 'All'));
     }
+    
+    
+    /**
+     * isEbcAccessGrantedForContact returns true if the idContact (community user) has access to eBroadcast
+     * oBillingAccount is used only to cache the last Zuora__CustomerAccount__c for isEbcAccessGrantedForContact 
+     */
+	private static Zuora__CustomerAccount__c oBillingAccount;
+	public static Boolean isEbcAccessGrantedForContact(Id idContact)
+	{
+		if (oBillingAccount == null || oBillingAccount.Contact__c != idContact)
+		{ // initialize oBillingAccount if necessary
+			List<Zuora__CustomerAccount__c> oZBillingAcctList = [select Id
+					, eBroadcast_Product_Access__c
+					// , eBroadcast_Add_On_Access__c
+				from Zuora__CustomerAccount__c
+				where Contact__c = : idContact
+					and  Zuora__Status__c = 'Active'
+				order by CreatedDate desc limit 1];
+			oBillingAccount = ( oZBillingAcctList.size()==0) ? null : oZBillingAcctList[0]; 
+		}
+		Boolean result = (oBillingAccount != null) && (oBillingAccount.eBroadcast_Product_Access__c);
+		return result;
+	} // isBillingAccountEbcChecked
+	
+
+
 }

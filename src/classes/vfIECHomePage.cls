@@ -63,8 +63,7 @@ public with sharing class vfIECHomePage extends IECPageController {
 			bProdAccessGSS = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_GSS) != -1); 
 			bProdAccessMDP = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_MDP) != -1);
 			//bProdAccessEBro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_EBROADCAST) != -1);
-			bProdAccessEBro = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_EBROADCAST) != -1)
-							|| isBillingAccountEbcAccessChecked();
+			bProdAccessEBro =  IECApplicationsManager.isEbcAccessGrantedForContact(loggedCustomer.RelatedContact.Id);
 			bProdAccessCACWeb = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CACWEB) != -1);
 			bProdAccessPAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_PAL) != -1);
 			bProdAccessCAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CAL) != -1);
@@ -79,21 +78,5 @@ public with sharing class vfIECHomePage extends IECPageController {
 		pgRef.setRedirect(true);
 		return pgRef;
 	}
-	
-	
-	//
-	private Boolean isBillingAccountEbcAccessChecked()
-	{
-		List<Zuora__CustomerAccount__c> oZBillingAcctList = [select Id
-					, eBroadcast_Product_Access__c
-					// , eBroadcast_Add_On_Access__c
-				from Zuora__CustomerAccount__c
-				where Contact__c = : loggedCustomer.RelatedContact.Id
-					and  Zuora__Status__c = 'Active'
-				order by CreatedDate desc limit 1]; 
-		
-		Boolean result = (oZBillingAcctList.size()>0) && (oZBillingAcctList[0].eBroadcast_Product_Access__c);
-		return result;
-	} // isBillingAccountEbcChecked
 	
 }
