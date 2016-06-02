@@ -6003,7 +6003,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Subject</name>
     </customLabels>
     <customLabels>
-        <label>登録</label>
+        <label>提出</label>
         <name>ISSP_Submit</name>
     </customLabels>
     <customLabels>

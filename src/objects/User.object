@@ -2546,19 +2546,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Profile_Name__c</field>
+            <field>CORE.USERS.EMAIL</field>
             <operation>equals</operation>
-            <value>IDFS Americas - Hub MGR AM/ARM</value>
-        </filters>
-        <filters>
-            <field>CORE.USERS.ACTIVE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>CORE.USER_ROLE.NAME</field>
-            <operation>equals</operation>
-            <value>China &amp; N. Asia Agency Management Mgr</value>
+            <value>jaradata@iata.org</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

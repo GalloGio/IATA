@@ -15291,7 +15291,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>,Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Airline Coding Application</value>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -15316,7 +15316,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>SAAM,OSCAR Communication</value>
+            <value>SAAM,OSCAR Communication,SIDRA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15331,7 +15331,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,Major Change,Bank Detail Update</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>

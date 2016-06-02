@@ -278,12 +278,12 @@
                                             <apex:outputlabel value="{!$ObjectType.Case.Fields.IATA_Code__c.Label}" />
                                             <apex:inputfield value="{!newCase.IATAcode__c}" html-placeholder="Enter IATA Code of Office to be closed" style="width:35%" required="true" styleclass="form-control" />
                                         </apex:pageblocksectionitem>
-                                        -->
+										-->
                                         <div class="well">
                                             <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Case_PDF_Download}"/>
-                                            <apex:dataList value="{!pdfPerAccreditationTypeList}" var="urlItem">
-                                                <apex:outputLink value="{!urlItem.Link_To_PDF__c}" target="_blank">{!urlItem.Address__c}</apex:outputLink>
-                                            </apex:dataList>
+                                        	<apex:dataList value="{!pdfPerAccreditationTypeList}" var="urlItem">
+                        						<apex:outputLink value="{!urlItem.Link_To_PDF__c}" target="_blank">{!urlItem.Address__c}</apex:outputLink>
+                   						 	</apex:dataList>
                                         </div>
                                     </apex:pageblocksection>
                                   </apex:pageBlock>
@@ -310,7 +310,7 @@
                                             <!--<apex:outputpanel rendered="{!IF(newCase.status != 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">-->
                                             <apex:outputpanel rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">
 
-                                               <!-- <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink> -->
+                                                <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink>
                                             </apex:outputpanel>
                                         </apex:pageblocksectionitem>
                                         <!-- Fields for non-DPC user -->
@@ -704,9 +704,9 @@
                                 </apex:actionstatus>
                             </apex:outputpanel>
 
-                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile))}" sobjectId="{!newCase.Id}" isPortal="true"/>
+                        	<c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile))}" sobjectId="{!newCase.Id}" isPortal="true"/>
                             
-                            <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),isPWCProfile)}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
+                       		<c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),isPWCProfile)}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
                             
                             <apex:form >
                                 <!-- <apex:detail subject="{!newCase.Id}" relatedList="true" title="false" rerender="{!!isNewCase}"/> -->
