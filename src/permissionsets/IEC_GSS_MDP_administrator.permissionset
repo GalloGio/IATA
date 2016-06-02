@@ -739,7 +739,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GDP_File_Production__c.Duration__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>GDP_File_Production__c.Duration_in_Minutes__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
