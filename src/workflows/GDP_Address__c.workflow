@@ -17,10 +17,10 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
             <name>GDP_Address_Line_1_Clear_Invalid_Char</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>This is added considering there are live records coming with illegal character &apos;|&apos;.
 As a temporary fix, it will remove the illegal char.
-Ref: INC253607 / PS-11</description>
+Ref: INC253607 / PS-11. THIS IS CANCELLED as we are using formula instead.</description>
         <formula>TRUE</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
