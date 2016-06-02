@@ -60,158 +60,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>AgRef__c</fullName>
-        <description>Output &quot;GDP&apos; if null (US Agencies) else. Trim out the trailing GDP</description>
-        <externalId>false</externalId>
-        <formula>IF(ISBLANK(AIMS_ID__c), &quot;GDP&quot;,
-IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_ID__c))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>AgRef</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>AgXRef__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
-                             &apos;&apos;, 
-  Parent_GDP_Account_View__r.AgRef__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>AgXRef</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Agency_Status_Code_Interpreted__c</fullName>
-        <description>Agency Status Code for non-Member  0 or 9</description>
-        <externalId>false</externalId>
-        <formula>if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3,
-9,
-0)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Agency Status Code Interpreted</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Area__c</fullName>
-        <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Area</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Eth2__c</fullName>
-        <description>Reserved   left blank</description>
-        <externalId>false</externalId>
-        <formula>&quot;  &quot;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Eth2</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Eth3__c</fullName>
-        <description>Reserved   left blank</description>
-        <externalId>false</externalId>
-        <formula>&quot;  &quot;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Eth3</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>GSS_MDP_Sort_Key_Formula__c</fullName>
-        <description>String formula field used to allow sorting for GSS and MDP master file generation. 
-This field is for system use  related to the GDP_REST_Payload, and GDP_File_Descripton.Order_By
-Please ensure the key is unique.
-The length is the total of the original fields (Area, Country_Code, Legal_Name, Id, plus separators).</description>
-        <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c 
-+ &apos;:&apos; 
-+ Related_GDP_Address__r.Address_ISO_Country_Code__c 
-+ &apos;:&apos; 
-+ Legal_Name_1__c + Legal_Name_2__c + Legal_Name_3__c 
-+ &apos;:&apos; 
-+ Id</formula>
-        <inlineHelpText>Key string used for sorting in GSS and MDP file generation. This field is for system use only.</inlineHelpText>
-        <label>GSS_MDP Sort Key Formula</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>XArea__c</fullName>
-        <description>Cross-reference Area 1, 2 or 3.</description>
-        <externalId>false</externalId>
-        <formula>IF
-(ISBLANK(Parent_GDP_Account_View__c), 
-                             Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c, 
-  Parent_GDP_Account_View__r.Related_GDP_Address__r.IATA_ISO_Country__r.AIMS_Area_ID__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>XArea</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>XIATACass__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
-                             CASS_Number__c, 
-  Parent_GDP_Account_View__r.CASS_Number__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>XIATACass</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>XIATAChk__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
-                             Check_Digit__c, 
-  Parent_GDP_Account_View__r.Check_Digit__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>XIATAChk</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>XIATACode__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(ISBLANK(Parent_GDP_Account_View__c), 
-                             IATA_Code__c, 
-  Parent_GDP_Account_View__r.IATA_Code__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>XIATACode</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>AIMS_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
@@ -787,16 +635,9 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <fullName>Json_WS_Complex__c</fullName>
         <description>JSON Response for the Complex Webservice in CAC Webservice</description>
         <externalId>false</externalId>
-        <formula>&quot;\&quot;Response\&quot;:\&quot;&quot;
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
 + IF (Agency_Status_Code__c &gt;= 4, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
-&quot;\&quot;Agency_Trading_Name\&quot;:\&quot;&quot;+ 	IF(ISBLANK(Trading_Name__c),Legal_Name__c,Trading_Name__c) + &quot;\&quot;,&quot;+
-&quot;\&quot;Agency_Class\&quot;:\&quot;&quot;+ 	Accreditation_Class__c + &quot;\&quot;,&quot;+
-&quot;\&quot;Site_Type\&quot;:\&quot;&quot;+ 	Location_Type__r.Name + &quot;\&quot;,&quot;+
-&quot;\&quot;Country\&quot;:\&quot;&quot;+ 	Country_Name__c + &quot;\&quot;,&quot;+
-&quot;\&quot;Address\&quot;:\&quot;&quot;+ 	Location_Address__c + &quot;\&quot;,&quot;+
-&quot;\&quot;Phone_Number\&quot;:\&quot;&quot;+ 	Related_Main_Phone__r.ISD_Code__c+Related_Main_Phone__r.STD_Code__c+Related_Main_Phone__r.Number__c + &quot;\&quot;,&quot;+
-&quot;\&quot;Approval_Date\&quot;:\&quot;&quot;+ TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c)) +&quot;-&quot;+TEXT(Day(Related_Accreditation_Class__r.Original_approval_date__c)) +&quot;-&quot;+
-TEXT(Year(Related_Accreditation_Class__r.Original_approval_date__c)) + &quot;\&quot;&quot;</formula>
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+ IF(ISBLANK(Trading_Name__c),Legal_Name__c,Trading_Name__c) + &quot;\&quot;,&quot;+ &quot;\&quot;agency-class\&quot;:\&quot;&quot;+ Accreditation_Class__c + &quot;\&quot;,&quot;+ &quot;\&quot;site-type\&quot;:\&quot;&quot;+ Location_Type__r.Name + &quot;\&quot;,&quot;+ &quot;\&quot;address\&quot;:\&quot;&quot;+ SUBSTITUTE(Location_Address__c,&quot;|&quot;,&quot;/&quot;) + &quot;\&quot;,&quot;+ &quot;\&quot;city\&quot;:\&quot;&quot;+ City__c + &quot;\&quot;,&quot;+ &quot;\&quot;postal-code\&quot;:\&quot;&quot;+ Zip_Postal_Code__c + &quot;\&quot;,&quot;+ &quot;\&quot;state\&quot;:\&quot;&quot;+ State_Province__c + &quot;\&quot;,&quot;+ &quot;\&quot;country\&quot;:\&quot;&quot;+ Country_Name__c + &quot;\&quot;,&quot;+ &quot;\&quot;phone-number\&quot;:\&quot;&quot;+ Related_Main_Phone__r.ISD_Code__c+Related_Main_Phone__r.STD_Code__c+Related_Main_Phone__r.Number__c + &quot;\&quot;&quot;</formula>
         <inlineHelpText>JSON Response for the Complex Webservice in CAC Webservice</inlineHelpText>
         <label>JSON WS Complex</label>
         <required>false</required>
@@ -808,7 +649,7 @@ TEXT(Year(Related_Accreditation_Class__r.Original_approval_date__c)) + &quot;\&q
         <fullName>Json_WS_Simple__c</fullName>
         <description>JSON Response for the Simple Webservice in CAC Webservice</description>
         <externalId>false</externalId>
-        <formula>&quot;\&quot;Response\&quot;:\&quot;&quot;
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
 + IF (Agency_Status_Code__c &gt;= 4, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;&quot;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>JSON Response for the Simple Webservice in CAC Webservice</inlineHelpText>
