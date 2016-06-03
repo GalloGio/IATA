@@ -21,6 +21,32 @@
             cursor: default;
         }
     }
+
+    &.secondary {
+        border-bottom: 0;
+        font-size: 1.4rem;
+        
+        li {
+            margin-right: 0;
+        }
+
+        a {
+            background: #e9f2f3;
+            display: block;
+            color: #308993;
+            padding: 5px 10px;
+        }
+        .active {
+            border-bottom: 0;
+
+            a {
+                background: #23828c;
+                color: #fff;
+            }
+        }
+
+    }
+
 }
 
 .tab-pane {

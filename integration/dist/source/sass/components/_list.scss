@@ -186,6 +186,30 @@
         }
     }
 
+    &.grid-3 {
+        font-size: 0;
+        margin: 0 -1px;
+
+        li {
+            width: 33.333333%;
+            display: inline-block;
+            font-size: 1.6rem;
+            border: 1px solid #fff;
+        }
+    }
+
+    &.grid-4 {
+        font-size: 0;
+        margin: 0 -1px;
+
+        li {
+            width: 25%;
+            display: inline-block;
+            font-size: 1.6rem;
+            border: 1px solid #fff;
+        }
+    }
+
     &.caret-right {
 
         margin-left: 20px;
@@ -378,6 +402,10 @@ $pagination-color: $link-color;
     text-align: center;
     margin: 1em 0;
     position: relative;
+    
+    &.text-left {
+        text-align: left;
+    }
 
     li {
         display: inline-block;
@@ -447,5 +475,72 @@ $pagination-color: $link-color;
     .prev,
     .next {
         display: inline-block;
+    }
+}
+
+.addon-list {
+    .list-item {
+        padding: 20px;
+        border: 1px solid #2ca4b1;
+        display: inline-block;
+        width: 45%;
+        margin-right: 4%;
+
+        &.is-selected {
+            background: #2ca4b1;
+        }
+    }
+
+    .checkbox-box {
+        margin: 0;
+    }
+
+    .input-label {
+        font-weight: 400;
+    }
+}
+
+.addon-name,
+.addon-description,
+.addon-price {
+    text-align: center;
+    margin: 0;
+}
+
+.addon-name,
+.addon-price {
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.addon-price {
+    margin-top: .5em;
+}
+
+.addon-list .is-selected .input-state {
+    color: #fff;
+}
+.addon-list .checkbox:checked ~ .custom-checkbox {
+    background: #fff;
+
+    .icon::before {
+        color: #000;
+    }
+}
+.is-selected {
+    .addon-name,
+    .addon-description,
+    .addon-price {
+        color: #fff;
+    }
+}
+
+.list.campaign-info {
+    text-align: center;
+    margin: 30px 0;
+
+    li {
+        display: inline-block;
+        margin: 0 30px;
     }
 }

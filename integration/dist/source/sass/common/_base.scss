@@ -242,7 +242,7 @@ figure {
 .alert {
     background: #e8f8f9;
     padding: 15px 20px;
-    margin: 30px 0 0;
+    margin: 30px 0 15px;
     color: #134045;
 
     p {
@@ -271,6 +271,39 @@ figure {
         &::before {
             content: '\f071';
             color: #ed1c24;
+        }
+    }
+
+    &.default {
+        background: #fff;
+        border: 1px solid #1ebec8;
+        padding: 15px 15px 15px 50px;
+
+        &::before {
+            content: '\f0eb';
+            color: #23828c;
+            font-size: 2.6rem;
+        }
+
+        p {
+            font-weight: 600;
+        }
+    }
+
+    &.warning {
+        background: #fff;
+        border: 1px solid #ccc;
+        padding: 30px 15px 30px 50px;
+
+        &::before {
+            content: '\f071';
+            color: #fe9e07;
+            font-size: 1.8rem;
+        }
+        
+        p {
+            font-size: 1.4rem;
+            font-weight: 600;
         }
     }
 }
@@ -344,6 +377,18 @@ figure {
 
 .row {
     .main-container {
+        padding-right: 15px;
+    }
+
+    .sub-container {
+        padding-left: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+.row {
+    .main-container {
         padding-right: 30px;
     }
 
@@ -351,7 +396,7 @@ figure {
         padding-left: 30px;
     }
 }
-
+}
 
 .info-box {
     border-top: 1px solid #23828c;
@@ -592,7 +637,8 @@ figure {
     }
 }
 
-.manage-resources {
+.manage-resources,
+.manage-account {
     .tab-pane {
         padding-top: 30px;
     }
@@ -640,4 +686,115 @@ figure {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.account-box {
+    background: #e9f2f3;
+    text-align: center;
+    padding: 16px;
+
+    .number {
+        font-size: 3rem;
+        font-weight: 600;
+        display: block;
+    }
+
+    .label {
+        font-size: 1.8rem;
+    }
+
+    .icon {
+        font-size: 5rem;
+        color: #a2e0e4;
+    }
+
+    &.dark {
+        background: #b4e1e5;
+
+        .icon {
+            color: #fff;
+        }
+    }
+}
+
+.group-container.account-activity {
+    margin: 50px 0;
+}
+
+.type-sort {
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    background: #fff;
+    width: 200px;
+    @include box-shadow(2px, 2px, 5px, 0, rgba(173,173,173,1), $inset: false);
+    margin-top: 11px;
+    display: none;
+    z-index: 10;
+
+    &.is-open {
+        display: block;
+    }
+    
+    .checkbox-box {
+        margin: 5px 0 0;
+    }
+    .input-label {
+        font-weight: normal;
+        margin-bottom: 0;
+    }
+
+    .checkbox:checked ~ .custom-checkbox {
+        background: #fff;
+        
+        .icon::before {
+            color: #000;
+        }
+    }
+
+}
+
+.back-to-list {
+    position: absolute;
+    top: 0;
+    right: 15px;
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.separator {
+    border-top: 1px solid #ccc;
+    margin: 50px 0;
+}
+
+.page-top {
+    position: fixed;
+    bottom: 20%;
+    right: 0;
+
+    a {
+        font-size: 1.4rem;
+        display: inline-block;
+        padding: 5px 10px;
+        background: #2ca4b1;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+.is-sticky-container {
+    top: 0;
+    background: #fff;
+    margin: 48px auto 0;    
+
+    &.fixed {
+        position: fixed;
+        margin-top: 0;
+    }
+}
+
+.stikcy-adjuster {
+    top: 0;
 }

@@ -499,9 +499,9 @@
 .sort-by {
     margin: 30px 0 10px;
 
-    @media #{$screen-desktop} {
+    /*@media #{$screen-desktop} {
         margin-top: 0;
-    }
+    }*/
 
     .input-label {
         padding-right: 10px;
@@ -756,3 +756,17 @@
     cursor: not-allowed;
 }
 
+tr.is-selected ,
+.checkbox-light {
+    .input-label {
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+    .checkbox:checked ~ .custom-checkbox {
+        background: #fff;
+
+        .icon::before {
+            color: #000;
+        }
+    }
+}

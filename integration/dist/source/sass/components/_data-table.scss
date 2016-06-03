@@ -7,7 +7,11 @@
         text-align: left;
         font-weight: $font-weight-normal;
     }
-
+    
+    td.top {
+        vertical-align: top;
+    }
+    
     caption {
         text-align: left;
         padding-bottom: 20px;
@@ -183,6 +187,13 @@
     tr:nth-child(odd) {
         background: #F5F5F5;
     }
+
+    tr.is-selected {
+        td {
+            background: #1dbec8;
+            color: #fff !important;
+        }
+    }
 }
 
 .total-recipients {
@@ -254,6 +265,8 @@
 
     th {
         font-weight: bold;
+        vertical-align: bottom;
+        white-space: nowrap;
     }
     
     .radio-box {
@@ -271,10 +284,12 @@
     .card-image {
         display: inline-block;
         vertical-align: middle;
+        float: left;
     }
 
     .ending-number {
         font-weight: normal;
+        display: block;
     }
 
     .custom-user-input {
@@ -284,5 +299,45 @@
 
     .is-selected td {
         background: #E9F2F3;
+    }
+}
+
+.table-contact-info {
+    th,
+    td {
+        padding: 20px 0;
+        border-top: 1px dashed #ccc;
+        font-size: 1.5rem;
+    }
+    
+    th {
+        font-weight: 600;
+        width: 28%;
+        padding-right: 15px;
+    }
+
+    tr:first-child {
+        th,
+        td {
+            border-top: 0;
+        }
+    }
+}
+
+.table-links {
+    margin-top: 15px;
+ 
+    tr {
+        border-bottom: 1px solid #ccc;
+    }
+
+    th {
+        padding-left: 0;
+        font-weight: 600;
+    }
+
+    td {
+        text-align: right;
+        font-weight: 600;
     }
 }

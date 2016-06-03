@@ -4,8 +4,12 @@
 \*------------------------------------*/
 .columns.campaign-cost {
     width: 60%;
-    border-right: 1px dotted #ccc;
     margin-right: -1px;
+    border-right: 1px dotted #ccc;
+
+    &.no-line {
+        border-right: 0;
+    }
 }
 
 .columns.payment-confirmation {
@@ -17,6 +21,11 @@
 .is-sticky-confirmation.fixed {
     position: fixed;
     top: 30px;
+
+    .wrapper {
+        width: 100%;
+        margin: auto;
+    }
 }
 
 .row-payment {
@@ -140,6 +149,42 @@
         background: #2ca4b1;
         color: #fff;
     }
+
+    .list-item.disabled {
+        background: #f7f7f7;
+    }
+}
+
+.plan-list .list-item {
+    position: relative;
+}
+.plan-list .light {
+    color: #aaa;
+    display: inline-block;
+}
+
+.list-item.disabled .tooltip-container {
+    left: 230px;
+
+    p {
+        font-size: 1.3rem;
+    }
+}
+
+.checkbox:checked:disabled ~ .custom-checkbox {
+    background: #e2e2e2;
+
+    .icon::before {
+        color: #919191;
+    }
+}
+
+
+.manage-account {
+    .plan-list,
+    .package-list {
+        margin-left: 0;
+    }
 }
 
 .package-list {
@@ -192,15 +237,25 @@
     font-weight: 600;
     width: 12%;
 }
-
 .plan-description {
-    width: 60%;
+    width: 45%;
+}
+@media (min-width: 1200px) {
+    .plan-description {
+        width: 60%;
+    }
 }
 
 .check-circle-list {
     .check-circle::before {
         margin-left: -19px;
         color: #2ca4b1;
+    }
+}
+
+.list-item.is-selected .check-circle-list {
+    .check-circle::before {
+        color: #000;
     }
 }
 
