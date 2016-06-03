@@ -1,6 +1,12 @@
 public class vfIECEBC_CampaignList {
-    public Boolean isLimitedComponent { get; set; }
-    public static Integer CAMPAIGNS_PER_PAGE = 3;
+    public Boolean isLimitedComponent {
+        get;
+        set {
+            isLimitedComponent = value;
+            if (value == true) CAMPAIGNS_PER_PAGE = 3;
+        }
+    }
+    public static Integer CAMPAIGNS_PER_PAGE = 25;
     
     public Id selectedCampaignId { get; set; }
     public EBC_Campaign__c selectedCampaign {
@@ -23,6 +29,27 @@ public class vfIECEBC_CampaignList {
     }
     public PageReference save() {
         update selectedCampaign;
+        
+        clear();
+        
+        return null;
+    }
+    public PageReference cancel() {
+        if (selectedCampaign.Status__c == 'PENDING_APPROVAL') {
+            // RECALL
+            ProcessInstanceWorkitem piwi = [SELECT Id,Actor.Name,ElapsedTimeInHours,OriginalActor.Name,ProcessInstanceId FROM ProcessInstanceWorkitem Where ProcessInstance.Status = 'Pending' AND ProcessInstance.TargetObjectId = :selectedCampaign.Id LIMIT 1];
+            System.debug(piwi);
+            
+            Approval.ProcessWorkitemRequest req = new Approval.ProcessWorkitemRequest();
+            req.setAction('Removed');
+            req.setWorkitemId(piwi.Id);
+            System.debug(req);
+            Approval.ProcessResult result =  Approval.process(req);
+            
+        } else {
+            selectedCampaign.Status__c = 'DRAFT';
+            update selectedCampaign;
+        }
         
         clear();
         
@@ -67,7 +94,11 @@ public class vfIECEBC_CampaignList {
     public String sortBy {
         get {
             if (sortBy == null) {
-                sortBy = 'CreatedDate ASC';
+                if (isLimitedComponent) {
+                	sortBy = 'LastModifiedDate DESC';
+                } else {
+                	sortBy = 'CreatedDate ASC';
+                }
             }
             
             return sortBy;
@@ -81,8 +112,11 @@ public class vfIECEBC_CampaignList {
     
     public List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('CreatedDate ASC','First Created'));
-        options.add(new SelectOption('CreatedDate DESC','Last Created'));
+        options.add(new SelectOption('CreatedDate ASC','CreatedDate ASC'));
+        options.add(new SelectOption('CreatedDate DESC','CreatedDate DESC'));
+        options.add(new SelectOption('LastModifiedDate ASC','LastModifiedDate ASC'));
+        options.add(new SelectOption('LastModifiedDate DESC','LastModifiedDate DESC'));
+        
         return options;
     }
 
@@ -107,6 +141,7 @@ public class vfIECEBC_CampaignList {
             fields.add('Name');
             fields.add('Status__c');
             fields.add('Scheduled_Date__c');
+            fields.add('EBC_Design__c');
             fields.add('Is_Step5_Writable__c');
             fields.add('Is_Step4_Valid__c'); 
             fields.add('Owner.Name');

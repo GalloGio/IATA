@@ -1,3 +1,11 @@
+/**  
+ * Description: 
+ *      
+ * History: 
+ *   - 20160531-sl: EBC: ProductCategory_SF_EBROADCAST category does not use IEC_Product_Access record 
+ */
+
+
 public without sharing class vfIECSubscriptionInfo {
     
     public String sApplicationName  {get; set;}
@@ -94,8 +102,13 @@ public without sharing class vfIECSubscriptionInfo {
         else {
             hasPageAccess = true;
             iUsageLeft = iValidation;
-        }       
-
+        }
+        
+        if ( sApplicationName == IECConstants.ProductCategory_SF_EBROADCAST )
+        { // EBROADCAST/EBC is a special case, set in the Zuora__ConsumerAccount instead of IEC_Product_Access
+            hasPageAccess = IECApplicationsManager.isEbcAccessGrantedForContact(loggedCustomer.RelatedContact.Id);
+        }
+        
         // if customer has a subscription for the application
         if (oSubscription != null) {
             

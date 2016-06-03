@@ -9,7 +9,7 @@ public class trgIECEBC_CampaignHandler {
         for(EBC_Campaign__c n : newCampaigns) {
             EBC_Campaign__c o = (EBC_Campaign__c)Trigger.oldMap.get(n.Id);
             
-            if (o.Scheduled_Date__c == n.Scheduled_Date__c) continue;
+            if (o.Scheduled_Date__c == n.Scheduled_Date__c || n.Status__c == 'APPROVED') continue;
             
             if (bh == null) bh = [select Id from BusinessHours where Name = 'EBC Campaign Approval'];
             

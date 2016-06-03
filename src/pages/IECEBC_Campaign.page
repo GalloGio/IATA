@@ -1,4 +1,4 @@
-<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_Dashboard" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -19,12 +19,12 @@
                     
                     <apex:form >
                         <apex:pageMessages />
-                        <div class="alert">
+                        <apex:outputPanel layout="block" rendered="{!campaign.Status__c == 'DRAFT' || campaign.Id == null}" styleClass="alert">
                             <h2 class="alert-title">Account balance</h2>
                             <div class="alert-message icon check-circle">
-                                <p>Your current account balance is <strong>50,000 emails</strong></p>
+                                <p>Your current account balance is <strong>{!emailBalanceOnAccount} emails</strong></p>
                             </div>
-                        </div>
+                        </apex:outputPanel>
                         <div class="row">
                             <div class="columns medium-6">
                                 <div class="field-group text">
@@ -78,11 +78,17 @@
                         </div>
                 
                         <div class="footer-actions text-right">
-                            <apex:commandLink rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
-                            <apex:commandLink rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" action="{!next}" value="Next" />
-                            
-                            <apex:commandLink action="{!submitForApproval}" value="Submit for approval" />
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}">
+									<li><apex:commandLink action="{!saveAndExit}" styleClass="button secondary" value="Save and Exit" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}">
+									<li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Save and Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}">
+									<li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
                         </div>
                 
                     </apex:form>

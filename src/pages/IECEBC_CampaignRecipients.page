@@ -19,9 +19,23 @@
                     <apex:form >
                         
                         <div class="footer-actions text-right">
-                            <apex:commandLink action="{!previous}" styleClass="button" value="Previous" />
-                            <apex:commandLink action="{!saveAndExit}" styleClass="button" value="Save and Exit" />
-                            <apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Save and Continue" />
+                            <ul class="list actions">
+                                <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
+	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Exit" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step2_Writable__c)}">
+	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!NOT(campaign.Is_Step2_Writable__c)}">
+	                                <li><apex:commandLink action="{!next}" value="Next" styleClass="button" /></li>
+                                </apex:outputText>
+                            </ul>
                         </div>
                     </apex:form>
                     

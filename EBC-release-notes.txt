@@ -1,3 +1,0 @@
-Todo post deploy:
-
-- Add users in the "eBroadcast Approvers" queue

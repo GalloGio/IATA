@@ -1,7 +1,8 @@
 public class vfIECEBC_Campaign {
     class Controller_Exception extends Exception{}
     
-    private User u = [Select ContactId, AccountId from User where id =: Userinfo.getUserid()];
+    private User u = [Select ContactId, Contact.AccountId from User where id =: Userinfo.getUserid()];
+    private Zuora__CustomerAccount__c ba = [Select Id from Zuora__CustomerAccount__c where Zuora__Account__c = :u.Contact.AccountId LIMIT 1];
     
     public ApexPages.StandardController con {
         public get;
@@ -76,17 +77,20 @@ public class vfIECEBC_Campaign {
             List<String> fields = new List<String>();
             fields.addAll(Schema.sObjectType.EBC_Campaign__c.fields.getMap().keySet());
             fields.addAll(new List<String>{
-                'EBC_Master_Filter__r.Audience__c'
+                'EBC_Master_Filter__r.Audience__c',
+                'EBC_Master_Filter__r.Name',
+                'EBC_Master_Filter__r.Number_of_Recipients__c'
             });
         	stdController.addFields(fields);
         }
         
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
         
-        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != u.AccountId) {
-            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Account__c + ':' + u.AccountId + ').');
+        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != u.Contact.AccountId) {
+            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Account__c + ':' + u.Contact.AccountId + ').');
         }
-        this.campaign.Account__c = u.AccountId;
+        this.campaign.Account__c = u.Contact.AccountId;
+        this.campaign.Billing_Account__c = ba.Id;
     }
     
     public PageReference saveAndExit() {

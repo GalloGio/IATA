@@ -107,6 +107,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_Line_1_Clean__c</fullName>
+        <description>Remove bar from Address line 1. 
+This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;)</formula>
+        <inlineHelpText>Remove bar from Address line 1. 
+This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</inlineHelpText>
+        <label>Address Line 1 Clean</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_Line_1__c</fullName>
         <externalId>false</externalId>
         <label>Address Line 1</label>
@@ -147,18 +161,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Address_Country_Name_Uppercase__c</fullName>
-        <description>IATA_ISO_Country Name in uppercase, this is intended for generating the GDP Files.</description>
-        <externalId>false</externalId>
-        <formula>UPPER(IATA_ISO_Country__r.Name)</formula>
-        <inlineHelpText>IATA_ISO_Country Name in uppercase</inlineHelpText>
-        <label>Address Country Name Uppercase</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Address_State_Code__c</fullName>
         <description>State Code without the preceding country code. 
 The source of information is taken from IATA_ISO_State.
@@ -174,17 +176,6 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>IATA_ISO_NCode__c</fullName>
-        <externalId>false</externalId>
-        <label>IATA ISO NCode</label>
-        <precision>2</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -234,7 +225,8 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <fields>
         <fullName>Address__c</fullName>
         <externalId>false</externalId>
-        <formula>Address_Line_1__c + &apos; &apos; + Address_Line_2__c + &apos; &apos; + Address_Line_3__c</formula>
+        <formula>SUBSTITUTE( Address_Line_1__c + &apos; &apos; + Address_Line_2__c + &apos; &apos; + Address_Line_3__c
+   , &apos;|&apos;, &apos;/&apos;)</formula>
         <label>Address</label>
         <required>false</required>
         <trackTrending>false</trackTrending>

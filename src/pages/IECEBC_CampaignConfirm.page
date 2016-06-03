@@ -21,6 +21,7 @@
                         <div class="footer-actions text-right">
                             <apex:commandLink action="{!previous}" styleClass="button" value="Previous" />
                             <apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" />
+                            <apex:commandLink action="{!submitForApproval}" value="Submit for approval" />
                         </div>
                     </apex:form>
                 </div>

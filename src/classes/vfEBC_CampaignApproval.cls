@@ -11,7 +11,10 @@ public class vfEBC_CampaignApproval {
     }
     
     public Attachment getTemplateAttachment() {
-        return [SELECT BodyLength,ContentType,Id,Name FROM Attachment Where ParentId = :c.EBC_Design__c];
+        List<Attachment> attchs = [SELECT BodyLength,ContentType,Id,Name FROM Attachment Where ParentId = :c.EBC_Design__c LIMIT 1];
+        if (attchs.size() > 0) return attchs[0];
+        
+        return null;
     }
     
     public ProcessInstanceWorkitem piWorkItem {

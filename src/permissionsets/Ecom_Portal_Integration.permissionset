@@ -176,6 +176,11 @@ If preferred, the setting here can be moved to the Ecom Portal Integration Profi
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GDP_Address__c.Address_Line_1_Clean__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GDP_Address__c.Address_Line_1__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -857,6 +862,11 @@ If preferred, the setting here can be moved to the Ecom Portal Integration Profi
     <fieldPermissions>
         <editable>false</editable>
         <field>GDP_Phone__c.AIMS_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>GDP_Phone__c.Full_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -14,10 +14,11 @@ Mathieu's Notes
 	        "IECEBC_CampaignDesign",
 	        "IECEBC_CampaignSchedule",
 	        "IECEBC_CampaignConfirm",
-	        "IECEBC_CampaignList"
+	        "IECEBC_CampaignList",
+	        "IECEBC_CampaignPreview"
 
-
-
+	Queue
+		- Add approvers in the "eBroadcast Approvers" queue
 
 
 
