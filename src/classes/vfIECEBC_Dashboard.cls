@@ -11,7 +11,7 @@
  *
  *  Change log:
  *   20160521: Mathieu Beausoleil
- *   20160601-sl: GDP-75/GDP-667/GDP-709: display the Account Summary section with EBC account status
+ *   20160603-sl: GDP-75/GDP-667/GDP-709: display the Account Summary section with EBC account status, selected subscription should also have Status = Active
  *
 */
 
@@ -71,6 +71,8 @@ public with sharing class vfIECEBC_Dashboard {
 	// get information related to EBC Subscription
 	// billingPlanName, emailBalanceOnAccount, billingPlanName
 	// source Zuora__Subscription, Zuora__CustomerAccount, zqu__ProductRatePlan__c
+	// if we cannot find subscription that still active and before SubscriptionEndDate,  
+	// we will give Pay As You Go subscription
 	private void getEBCSubscriptionInformation()
 	{
 		// get current subscription with Product Category = IECConstants.ProductCategory_SF_EBROADCAST
@@ -86,14 +88,16 @@ public with sharing class vfIECEBC_Dashboard {
 			where (Zuora__CustomerAccount__r.Contact__c = : thisUser.ContactId) 
 				and ( (Zuora__SubscriptionEndDate__c >=  today) 
 					or (Zuora__SubscriptionEndDate__c = null) )
+				and (Zuora__Status__c = 'Active')
 				and (Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name = : IECConstants.ProductCategory_SF_EBROADCAST)
+				and (Zuora__SubscriptionStartDate__c <=  today) 
 				order by Zuora__Status__c ASC
 						, Zuora__SubscriptionEndDate__c desc nulls first 
 						, Zuora__SubscriptionStartDate__c desc
 			];
 		
 		if (subsList.size() > 0) 
-		{
+		{ // we found active unexpired subscription
 			billingPlanRate = '$' + subsList[0].Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_Cost_Per_Email__c;
 			// emailBalanceOnAccount = subsList[0].Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c;
 			emailBalanceOnAccount = String.valueOf(subsList[0].Zuora__CustomerAccount__r.eBroadcast_Available_Email_Balance__c);
