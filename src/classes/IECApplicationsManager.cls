@@ -1369,6 +1369,15 @@ public without sharing class IECApplicationsManager {
      * oBillingAccount is used only to cache the last Zuora__CustomerAccount__c for isEbcAccessGrantedForContact 
      */
 	private static Zuora__CustomerAccount__c oBillingAccount;
+	// isEbcAccessGrantedForContact with option to refresh the previously cached resetBillingAccount
+	public static Boolean isEbcAccessGrantedForContact(Id idContact, Boolean resetBillingAccount)
+	{
+		if (resetBillingAccount) {
+			oBillingAccount = null;
+		}
+		return isEbcAccessGrantedForContact(idContact);
+	} // isBillingAccountEbcChecked
+	
 	public static Boolean isEbcAccessGrantedForContact(Id idContact)
 	{
 		if (oBillingAccount == null || oBillingAccount.Contact__c != idContact)
