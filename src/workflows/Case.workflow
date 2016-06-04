@@ -15261,6 +15261,56 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>ISS Portal - Make SIDRA Case Invisible</fullName>
+        <actions>
+            <name>ISS_Portal_Make_case_invisible</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.NOI_sent__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Update_AIMS_DEF__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISS Portal - Make SIDRA Case Visible</fullName>
+        <actions>
+            <name>ISS_Portal_Make_case_visible</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.NOI_sent__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Update_AIMS_DEF__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CreatedDate</field>
+            <operation>greaterOrEqual</operation>
+            <value>5/31/2016</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ISS Portal - Make case invisible</fullName>
         <actions>
             <name>ISS_Portal_Make_case_invisible</name>
