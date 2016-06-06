@@ -787,12 +787,20 @@ figure {
 .is-sticky-container {
     top: 0;
     background: #fff;
-    margin: 48px auto 0;    
+    margin: 48px auto 0;
 
     &.fixed {
         position: fixed;
         margin-top: 0;
     }
+}
+
+.manage-reports .group-container:before {
+    display: block; 
+    content: ''; 
+    margin-top: -498px; 
+    visibility: hidden; 
+    height: 498px;
 }
 
 .stikcy-adjuster {

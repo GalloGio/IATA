@@ -40,6 +40,7 @@ jQuery(document).ready(function($) {
     });
 
 
+
     var element = $('.is-sticky-container');
     var elementTop = $('.main-content > .inner-wrapper').offset().top;
     var elementWidth = element.width();
