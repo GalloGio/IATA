@@ -1,6 +1,8 @@
 @isTest
 private class AccountNoDuplicateBranchTest {
 
+ static testMethod void ACMEBugFix1Method() {}
+
 
  static testMethod void noParentButReasonForCreationIsCreatedByCustomer() {
                 
