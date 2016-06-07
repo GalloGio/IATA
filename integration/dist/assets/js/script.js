@@ -12790,7 +12790,7 @@ jQuery(document).ready(function($) {
         $(this).parents('li').addClass(className.selected).siblings().removeClass(className.selected);
     }).on('change', '.user-input:checked', function() {
         var value = $(this).val();
-        if (value === 'audience-option-3') {
+        if (value === 'Custom') {
             $('.process-2-steps').removeClass(className.hidden);
             $('.process-4-steps').addClass(className.hidden);
         } else {
