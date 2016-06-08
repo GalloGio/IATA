@@ -1267,10 +1267,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>armientoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>batagliaf@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1279,11 +1275,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciael@iata.org</recipient>
+            <recipient>gilj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
+            <recipient>iriartej@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -16170,7 +16166,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Assign_ICCS_Team</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8)</booleanFilter>
         <criteriaItems>
             <field>User.Profile_Name__c</field>

@@ -84,8 +84,7 @@ public with sharing class IECSubscriptionManager {
             WHERE Is_Triable__c = true
                 AND Related_Product_Information__c=:idProduct
                 AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-                AND Active__c = true
-                AND User_Interface_Display__c = 'YES'
+                AND Active__c = true                
                 AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__Deleted__c = false

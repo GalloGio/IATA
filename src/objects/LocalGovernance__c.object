@@ -74,11 +74,11 @@
         <label>Cargo / Passenger</label>
         <picklist>
             <picklistValues>
-                <fullName>BSP</fullName>
+                <fullName>Passenger</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CASS</fullName>
+                <fullName>Cargo</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -177,62 +177,62 @@
             <controllingField>Cargo_Passenger__c</controllingField>
             <picklistValues>
                 <fullName>ALWG</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>APJC</fullName>
-                <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>APJC / FAG</fullName>
-                <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>CAPJC</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>CGA</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>CEC</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>EACP JC</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>ICAP</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>JALWG</fullName>
-                <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>LCAG-C</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>LCAG-P</fullName>
-                <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>LCAG-P / Credit Card WG</fullName>
-                <controllingFieldValues>BSP</controllingFieldValues>
+                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -616,11 +616,11 @@ Record Type + Group Type + ISO_Country_Name</description>
         <picklistValues>
             <picklist>Cargo_Passenger__c</picklist>
             <values>
-                <fullName>BSP</fullName>
+                <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS</fullName>
+                <fullName>Passenger</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -74,9 +74,17 @@
     <fieldUpdates>
         <fullName>Accountsiteupdate</fullName>
         <field>Site</field>
-        <formula>if(ISPICKVAL(Industry,&apos;Travel Agent&apos;),Site, if( ISBLANK(IATACode__c), 
-Airline_designator__c + &apos; &apos;+IATA_ISO_Country__r.ISO_Code__c, 
-Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c))</formula>
+        <formula>if(
+  ISPICKVAL(Industry,&apos;Travel Agent&apos;),
+  Site,
+  if( ISBLANK(IATACode__c), 
+    if ( ISBLANK(Airline_Prefix__c),
+      Airline_designator__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c,
+      Airline_designator__c + &apos; &apos; + Airline_Prefix__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c
+    ),
+    Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c
+  )
+)</formula>
         <name>Account site update</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
