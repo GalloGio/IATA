@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Accreditation/IATALogo_d_3.zip</members>
+        <members>Accreditation/IATA_Logo1.zip</members>
+        <members>BLND_Logos_Identity/BLND_DreamFactory_Logo.gif</members>
+        <members>IATA_Corporate_Graphics/iata_blue_gif.gif</members>
+        <members>ISS_Portal/Application_icon.png</members>
+        <members>ISS_Portal/Application_list.png</members>
+        <members>ISS_Portal/IATA_Logo.png</members>
+        <members>ISS_Portal/My_Apps.png</members>
+        <members>Images/Clicktoolslogo.gif</members>
+        <members>Logos/awslogo.gif</members>
+        <members>PM_Icons_Basic/projects_logo_small_basic.jpeg</members>
+        <members>PublicFolder/ExactTargetforAppExchangeLogo.gif</members>
+        <members>Release_Planning_Icons/projectslogosmalljpg_d_2.jpg</members>
+        <members>SalesPublicFolder/IATAForce.gif</members>
+        <members>SalesforceMaterial/SARA_logo.png</members>
+        <members>StrategicAccountPlanning/Logo.gif</members>
+        <name>Document</name>
+    </types>
+    <version>34.0</version>
+</Package>
