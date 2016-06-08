@@ -1,0 +1,32 @@
+<apex:page standardController="AMS_OSCAR__c" extensions="AMS_OSCAR_CommunicationController" showHeader="false" sidebar="false">
+<apex:includeScript value="/support/console/34.0/integration.js"/>
+
+<style type="text/css">
+        .dataCol {
+            font-size:91%
+        }
+        .detailList {
+            font-size:91%;
+        }
+
+ </style>
+
+    <script>
+
+        function srcUp(URL){
+        
+            //sforce.console.openPrimaryTab(null,URL,true,'',null,null);
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result)
+            {            
+                sforce.console.openSubtab(result.id, URL, true, '', null);    
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        
+        }
+
+    </script>
+
+
+    <apex:detail subject="{!c.id}" rendered="{!NOT(ISNULL(c))}"/>
+</apex:page>

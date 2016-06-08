@@ -1,7 +1,6 @@
 public class TransformationHelper {
-  
-  
-      public static boolean NoStatusValidation = false;  
+    
+    public static boolean NoStatusValidation = false;  
     
     public static boolean trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete= false;
   

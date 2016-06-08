@@ -12,6 +12,7 @@ public with sharing class AMS_XML_Generator {
     public Map<String,String> mXMLFieldValues;
 
     public Map<Id, AMS_Agency_Updates__c> mAg_VS_AgUpdate;
+    public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCode;
     public Map<Id, String> mAg_VS_AgArea;
     public Map<Id, String> mAg_VS_AgSiteType;
     public Map<Id, Id> mAg_VS_ParentAg;
@@ -20,23 +21,36 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, Id> mAgAffiliation_VS_Affiliation;
     public Map<Id, Id> mAg_VS_Person;
     public Map<Id, Id> mEmp_VS_Person;
-    public Map<Id, AMS_Agency__c> mAg_VS_Agency;
+    //public Map<Id, AMS_Agency__c> mAg_VS_Agency; - #AMSFTS
     public Map<Id, String> mAg_VS_Segment;
-    public Map<Id, List<AMS_Employee__c>> mAg_VS_Employees;
+    //public Map<Id, List<AMS_Employee__c>> mAg_VS_Employees; - #AMSFTS
+    public Map<Id, List<AMS_Account_Role__c>> mAg_VS_Employees;
+    
     public Map<Id, Id> mAg_VS_HO;
 
-    public List<AMS_Agency_Updates__c> lAgencyUpdates;      
-    public List<AMS_Address__c> lAgencyArea;
+    public List<AMS_Agency_Updates__c> lAgencyUpdates;  
+    public List<Agency_Applied_Change_code__c> lAgencyChangeCode; 
+
+    //public List<AMS_Address__c> lAgencyArea; - #AMSFTS
+    public List<Account> lAgencyArea;
+
     public List<AMS_Address__c> lAddresses;
     public List<IATA_ISO_Country__c> lCountry;
     public List<IATA_ISO_State__c> lState;
-    public List<AMS_Agency_Ownership__c> lOwnership;
-    public List<AMS_Owner__c> lOwner;
-    public List<Account> lAccount;
+    
+    //public List<AMS_Agency_Ownership__c> lOwnership; - #AMSFTS
+    public List<AMS_Account_Role__c> lOwnership;
+    
+    //public List<AMS_Owner__c> lOwner; - #AMSFTS
+    public List<Account> lOwner;
+    public List<Account> lAccount; 
     public List<Contact> lContact;
     public List<User> lUser;
     public List<AMS_Person__c> lPerson;
-    public List<AMS_Employee__c> lEmployee;
+
+    //public List<AMS_Employee__c> lEmployee; - #AMSFTS
+    public List<AMS_Account_Role__c> lEmployee;
+
     //JFO 13/8/2015  deleted for new DM without GDS custom object
     //public List<AMS_Agency_Computer_Reservation__c> lAgComputerReservation;
     //public List<AMS_Computer_Reservation_System__c> lComputerReservation;
@@ -44,7 +58,8 @@ public with sharing class AMS_XML_Generator {
     public List<AMS_Agencies_relationhip__c> lAgRelationship;
     public List<AMS_Agencies_relationhip__c> lAgRelationshipParent;
     public List<AMS_Agencies_relationhip__c> lAgRelationshipChild;
-    public List<AMS_Agency__c> lAgRelationshipHierarchy;
+    //public List<AMS_Agency__c> lAgRelationshipHierarchy; - #AMSFTS
+    public List<Account> lAgRelationshipHierarchy;
     public List<AMS_Agencies_Hierarchy__c> lAgHierarchy;
     public List<AMS_Agency_Airport__c> lAgAirport;
     public List<AMS_Airport__c> lAirport;
@@ -60,26 +75,17 @@ public with sharing class AMS_XML_Generator {
     SET<String> sFieldsToInclude = new SET<String>();
     SET<String> sFieldsToExclude = new SET<String>();
 
+    //could use a custom setting for the future 
+    Set<String> lIgnoredAddressTypes = new Set<String>{'Primary', 'Billing', 'Shipping', 'Old'};
+
+    public Integer fixLimit = 100;
+
     public String sDebug = '';
     
     //CONSTRUCTOR                                            
     public AMS_XML_Generator() {
 
-        //Get values from Custom Setting Object - AMS_WAD_Settings__c
-        /*
-        if(mWadNameValues == null) {
-            mWadNameValues = new Map<String,AMS_WAD_Settings__c>();
-            mWadFieldValues = new Map<String,AMS_WAD_Settings__c>();
-            for (AMS_WAD_Settings__c wadSett : [SELECT Name, Field__c, Size__c, Position__c FROM AMS_WAD_Settings__c]) {
-                mWadNameValues.put(wadSett.Name.toLowerCase(), wadSett);  
-                mWadFieldValues.put(wadSett.Field__c == null ? '' : wadSett.Field__c.toLowerCase(), wadSett);   
-            }
-        } else {
-            mWadNameValues = new Map<String,AMS_WAD_Settings__c>();
-            mWadFieldValues = new Map<String,AMS_WAD_Settings__c>();
-        } 
-        */
-
+        
         //Get values from Custom Setting Object - AMS_XML_Tags__c
         if(mXMLTagValues == null) {
             mXMLTagValues = new Map<String,String>();
@@ -107,84 +113,55 @@ public with sharing class AMS_XML_Generator {
             }
         } 
 
-    }
-
-    //Get XML for AgencyList to send to AW WS (1º step)
-    public String getAgencyList(List<String> agenciesIDs, String groupBy, String indicator, String[] headerParams){
-
-        //Begin of XML tags
-        Dom.Document doc = new Dom.Document();
-    
-        Dom.Xmlnode rootNode = doc.createRootElement('AgencyList', null, null);
-
-        //Header Section
-        Dom.Xmlnode headerNode = rootNode.addChildElement('Header', null, null);
-
-        getElementNode(headerNode, 'PreviousID', headerParams[0]);
-        getElementNode(headerNode, 'GroupID', headerParams[1]);
-        getElementNode(headerNode, 'ChunkSize', headerParams[2]);
-        getElementNode(headerNode, 'ChunkKey', headerParams[3]);
-        getElementNode(headerNode, 'ChunkTotal', headerParams[4]);
-
-        //Agency Section
-        
-
-        for(String agId : agenciesIDs){
-            Dom.Xmlnode agNode = rootNode.addChildElement('Agency', null, null);
-
-            getElementNode(agNode, 'AgencyID', agId);
-            getElementNode(agNode, 'GroupBy', groupBy);
-            getElementNode(agNode, 'Indicator', indicator);
-
-        }
-
-        system.debug('--------- doc: ' + doc.toXmlString());        
-        return doc.toXmlString();   
+        System.debug('***** mXMLTagValues: ' + mXMLTagValues);
+        System.debug('***** sFieldsToInclude: ' + sFieldsToInclude);
 
     }
+
+   
 
     //Get XML for Agency SalesOrder to send to AW WS 
-    public String getAgencySalesOrder(AMS_Agency__c agency){
+    //public String getAgencySalesOrder(AMS_Agency__c agency){ #AMSFTS
+    //public String getAgencySalesOrder(Account agency){
+    public String getAgencySalesOrder(Agency_Applied_Change_code__c agency){
     
-        List<AMS_Agency__c> lAg = new List<AMS_Agency__c>();
-        lAg.add(agency);
+        //List<AMS_Agency__c> lAg = new List<AMS_Agency__c>(); #AMSFTS
+        //List<Account> lAg = new List<Account>();
+        List<Agency_Applied_Change_code__c> lAg = new List<Agency_Applied_Change_code__c>();
+                lAg.add(agency);
 
         return getAgencySalesOrder(lAg);
 
     }
 
     //Get XML for Agency SalesOrder to send to AW WS 
-    public String getAgencySalesOrder(List<AMS_Agency__c> agencies){
+    //public String getAgencySalesOrder(List<AMS_Agency__c> agencies){ #AMSFTS
+    //public String getAgencySalesOrder(List<Account> agencies){
+    public String getAgencySalesOrder(List<Agency_Applied_Change_code__c> agencies){
 
         //Begin of XML tags
         Dom.Document doc = new Dom.Document();
     
         Dom.Xmlnode rootNode = doc.createRootElement('sales_orders', null, null);
 
-        //Header Section
-        //Dom.Xmlnode headerNode = rootNode.addChildElement('Header', null, null);
-
-        //getElementNode(headerNode, 'PreviousID', headerParams[0]);
-        //getElementNode(headerNode, 'GroupID', headerParams[1]);
-        //getElementNode(headerNode, 'ChunkSize', headerParams[2]);
-        //getElementNode(headerNode, 'ChunkKey', headerParams[3]);
-        //getElementNode(headerNode, 'ChunkTotal', headerParams[4]);
-
         //Agency Section
         
         Date dToday = Date.today();
         Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
 
-        for(AMS_Agency__c ag : agencies){
+        //for(Account ag : agencies){
+        for(Agency_Applied_Change_code__c ag : agencies){
             Dom.Xmlnode liNode = rootNode.addChildElement('line_item', null, null);
 
-            getElementNode(liNode, 'agency_id', ag.Id);
-            getElementNode(liNode, 'hub', ag.Country__r.IATA_Regional_Office__c);
+          
+            getElementNode(liNode, 'agency_id', ag.Account__r.IATACode__c );
+            getElementNode(liNode, 'hub', ag.Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c);
             getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
             getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
-            getElementNode(liNode, 'product_id', ag.Location_Class__c + 'NEW');
+            getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c); 
             getElementNode(liNode, 'quantity', '1');
-
+            //#AMSFTS - END
+            
         }
 
         system.debug('--------- doc: ' + doc.toXmlString());        
@@ -209,7 +186,7 @@ public with sharing class AMS_XML_Generator {
         Date dToday = Date.today();
         Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
         
-        mHeaderValues.put('copymsg', '(C) International Air Transport Association (IATA) 2015. All rights reserved. No part of this file may be reproduced, stored in a retrieval system or transmitted in any form or by any means without prior permission from IATA.');
+        mHeaderValues.put('copymsg', AMS_SAP_Settings__c.getOrgDefaults().Copy_Right_Message__c);
         mHeaderValues.put('version', 'v1');
         mHeaderValues.put('rec_id', 'H');
         mHeaderValues.put('priority', 'High');
@@ -278,18 +255,23 @@ public with sharing class AMS_XML_Generator {
     }
     
     
-    
     //Get XML for AgencyDetail to send to AW WS (2º step)
-    public String getAgencyDetail(AMS_Agency__c agency, String[] r){
+    //public String getAgencyDetail(AMS_Agency__c agency, String[] r){  #AMSFTS
+    public String getAgencyDetail(Account agency, String[] r, String type, String caseId){
 
-        List<AMS_Agency__c> lAg = new List<AMS_Agency__c>();
+        //List<AMS_Agency__c> lAg = new List<AMS_Agency__c>(); #AMSFTS
+        List<Account> lAg = new List<Account>();
         lAg.add(agency);
 
-        return getAgencyDetail(lAg, r);
+        return getAgencyDetail(lAg, r, type, caseId);
     }
 
     //Get XML for AgencyDetail to send to AW WS (2º step)
-    public String getAgencyDetail(List<AMS_Agency__c> agency, String[] r){
+    //Type - determinates if it's "MasterData" or "ECC"
+    //case -  Brings the OSCAR case Id for getting the ECC data
+    //public String getAgencyDetail(List<AMS_Agency__c> agency, String[] r){ - #AMSFTS
+    public String getAgencyDetail(List<Account> agency, String[] r, String type, String caseId){
+        
         Integer inicioCPU = Limits.getCpuTime();
         Integer inicioCPUx = Limits.getLimitCpuTime();
         
@@ -297,6 +279,7 @@ public with sharing class AMS_XML_Generator {
         msObject = new Map<Id, sObject>();
 
         mAg_VS_AgUpdate = new Map<Id, AMS_Agency_Updates__c>();
+        mAg_VS_AgChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
         mAg_VS_AgArea = new Map<Id, String>();
         mAg_VS_AgSiteType = new Map<Id, String>();
         mAg_VS_ParentAg = new Map<Id, Id>();
@@ -306,7 +289,8 @@ public with sharing class AMS_XML_Generator {
         mAg_VS_Person = new Map<Id, Id>();
         mEmp_VS_Person = new Map<Id, Id>();
         mAg_VS_Segment = new Map<Id, String>();
-        mAg_VS_Employees = new Map<Id, List<AMS_Employee__c>>();
+        //mAg_VS_Employees = new Map<Id, List<AMS_Employee__c>>(); - #AMSFTS
+        mAg_VS_Employees = new Map<Id, List<AMS_Account_Role__c>>();
         mAg_VS_HO = new Map<Id, Id>();
 
         SET<Id> setAgencyKeys;
@@ -325,69 +309,96 @@ public with sharing class AMS_XML_Generator {
         SET<Id> setAgRelationshipKeys = new SET<Id>();
         SET<Id> setAirportKeys = new SET<Id>();
         SET<Id> setAffiliationKeys = new SET<Id>();
+        SET<Id> setHO = new SET<Id>();
         
         //Get AMS_Segment__c RecordType ID for "IATA Code Programs"
         Id rtProgram = Schema.SObjectType.AMS_Segment__c.getRecordTypeInfosByName().get('IATA Code Programs').getRecordTypeId();
         //Get AMS_Agencies_Hierarchy__c RecordType ID for "MAIN"
         Id rtHierarchy = Schema.SObjectType.AMS_Agencies_Hierarchy__c.getRecordTypeInfosByName().get('MAIN').getRecordTypeId();
 
+        //Begin - #AMSFTS
+        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id rtAccRoleEmployee = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Employee').getRecordTypeId();
+        //END - #AMSFTS
+
         System.debug('XML Generator - Requested Agencies from MDM PI - ' + agency);
         sDebug += '\nAgencies List:' + agency;
         
         //Get agenc
-        //for (AMS_Agency__c ag : agency) {
-        //    if(ag.Id != Null){
-        //      setAgencyKeys.add(ag.Id);
-        //    }
-        //}
-        setAgencyKeys = (new Map<Id,AMS_Agency__c>(agency)).keySet();
+        setAgencyKeys = (new Map<Id,Account>(agency)).keySet();
 
         //System.debug('XML Generator - setAgencyKeys - ' + setAgencyKeys);
 
-        for (AMS_Agency__c o : agency) {
-            setAccountKeys.add(o.Account__c);
-            setAgencyCountryKeys.add(o.Country__c);
+        for (Account o : agency) {
+            //setAccountKeys.add(o.Account__c); 
+            setAgencyCountryKeys.add(o.IATA_ISO_Country__c);
         }
-        
+        //END - #AMSFTS
+
         //MAIN
-        lAgencyUpdates = [SELECT Agency__c,Id,Name,RelationShip__c,Update_Type__c 
+        //Begin - #AMSFTS
+        //lAgencyUpdates = [SELECT Agency__c,Id,Name,RelationShip__c,Update_Type__c 
+        //                    FROM AMS_Agency_Updates__c
+        //                    where Agency__c in :setAgencyKeys];
+        lAgencyUpdates = [SELECT Account__c,Id,Name,RelationShip__c,Update_Type__c 
                             FROM AMS_Agency_Updates__c
-                            where Agency__c in :setAgencyKeys];
+                            where Account__c in :setAgencyKeys];
+        //END - #AMSFTS                                        
 
         for (AMS_Agency_Updates__c agUpd : lAgencyUpdates) {
-            mAg_VS_AgUpdate.put(agUpd.Agency__c,agUpd);
+            //mAg_VS_AgUpdate.put(agUpd.Agency__c,agUpd); #AMSFTS
+            mAg_VS_AgUpdate.put(agUpd.Account__c,agUpd);
         }
         
-       //Reference
-        lAgSegment = [SELECT Agency__c,Assignation_Type__c,Id,Name,Segment__c,Segment__r.label__c 
+
+        //
+        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c 
+                                FROM Agency_Applied_Change_code__c 
+                                WHERE Change_Code__c != null 
+                                AND Active__c = true 
+                                AND Account__c in :setAgencyKeys];
+
+    
+        for (Agency_Applied_Change_code__c agChgCode : lAgencyChangeCode) {
+            mAg_VS_AgChangeCode.put(agChgCode.Account__c,agChgCode);
+        }                            
+
+        //Reference
+        lAgSegment = [SELECT Account__c,Assignation_Type__c,Id,Name,Segment__c,Segment__r.label__c 
                             FROM AMS_Agency_Segment__c
                             where Segment__r.RecordTypeid = :rtProgram
-                            and Agency__c in :setAgencyKeys];
+                            and Account__c in :setAgencyKeys];
+        //END - #AMSFTS                     
 
         for (AMS_Agency_Segment__c agSeg : lAgSegment) {
-            mAg_VS_Segment.put(agSeg.Agency__c,agSeg.Segment__r.label__c);
+            //mAg_VS_Segment.put(agSeg.Agency__c,agSeg.Segment__r.label__c); #AMSFTS
+            mAg_VS_Segment.put(agSeg.Account__c,agSeg.Segment__r.label__c);
         }
 
         //MAIN
-        lAgencyArea = [SELECT Agency__c,Site_type__c,Country__r.AIMS_Area_ID__c 
-                            FROM AMS_Address__c
-                            where Agency__c in :setAgencyKeys];
+        lAgencyArea = [SELECT Id,IATA_ISO_Country__r.AIMS_Area_ID__c 
+                            FROM Account
+                            where Id in :setAgencyKeys];
+        
 
-        for (AMS_Address__c agArea : lAgencyArea) {
-            mAg_VS_AgArea.put(agArea.Agency__c,String.valueOf(agArea.Country__r.AIMS_Area_ID__c) );
-            mAg_VS_AgSiteType.put(agArea.Agency__c,String.valueOf(agArea.Site_type__c) );
+        for (Account agArea : lAgencyArea) {
+            mAg_VS_AgArea.put(agArea.Id,String.valueOf(agArea.IATA_ISO_Country__r.AIMS_Area_ID__c) );
         }
+        //END - #AMSFTS
 
         //MAIN - 
-        lAddresses = [SELECT Address_1__c,Address_2__c,Address_3__c,Agency__c,Address_Type__c,TTY__c,
+        lAddresses = [SELECT Address_1__c,Address_2__c,Address_3__c,Account__c,Address_Type__c,TTY__c,
                                     AMS_ZipCode__c,City__c,Country_postal_abbreviation__c,Country__c,Email__c,
-                                    Id,Legacy_External_ID__c,Legacy_System__c,Name,Site_type__c,State__c,
+                                    Id,Legacy_External_ID__c,Legacy_System__c,Name,State__c,
                                     Telephone__c,Telephone_Int__c,Telephone_STD__c,
                                     Fax__c,Fax_Int__c,Fax_STD__c,
                                     Mobile__c,Mobile_Int__c,Mobile_STD__c,
                                     Website__c,Country__r.Id,State__r.Id
                                     FROM AMS_Address__c 
-                                    where Agency__c in :setAgencyKeys];
+                                    WHERE Account__c in :setAgencyKeys
+                                    AND Send_to_External_System__c = true
+                                    limit :fixLimit];
+        //END - #AMSFTS                                    
 
         for (AMS_Address__c add : lAddresses) {
             setAddressKeys.add(add.Id);
@@ -405,85 +416,134 @@ public with sharing class AMS_XML_Generator {
         lState = [SELECT Name,ISO_Code__c FROM IATA_ISO_State__c where Id in :setAddressStateKeys];
 
         //MAIN
-        lOwnership = [SELECT Agency__c,AMS_Agency_Owner__c,Id,Name,Percentage__c FROM AMS_Agency_Ownership__c WHERE Agency__c in :setAgencyKeys];
+        //Begin - #AMSFTS
+        //lOwnership = [SELECT Agency__c,AMS_Agency_Owner__c,Id,Name,Percentage__c 
+        //                  FROM AMS_Agency_Ownership__c WHERE Agency__c in :setAgencyKeys];
         
-        for (AMS_Agency_Ownership__c o : lOwnership) {
-            setOwnershipKeys.add(o.AMS_Agency_Owner__c);
-        }
+        lOwnership = [SELECT Account__c,Owner_Account__c,Id,Name,Percentage__c,Person__c,RecordTypeId,Employee_type__c    
+                            FROM AMS_Account_Role__c WHERE Account__c in :setAgencyKeys
+                            AND RecordTypeId = :rtAccRoleOwnership
+                            limit :fixLimit];
+        //END - #AMSFTS 
 
-        //REFERENCE
-        lOwner = [SELECT Account__c,Id,Name,Person__c FROM AMS_Owner__c WHERE Id in :setOwnershipKeys];
-        
-        for (AMS_Owner__c o : lOwner) {
-            setAccountKeys.add(o.Account__c);
+        //Begin - #AMSFTS
+        //for (AMS_Agency_Ownership__c o : lOwnership) {
+        //    setOwnershipKeys.add(o.AMS_Agency_Owner__c);
+        //}
+        for (AMS_Account_Role__c o : lOwnership) {
+            setOwnershipKeys.add(o.Owner_Account__c);
             if(o.Person__c != Null){
                 setPersonKeys.add(o.Person__c);
             }
         }
+        //END - #AMSFTS 
+
+        //REFERENCE
+        //Begin - #AMSFTS
+        //lOwner = [SELECT Account__c,Id,Name,Person__c FROM AMS_Owner__c WHERE Id in :setOwnershipKeys];
+        //for (AMS_Owner__c o : lOwner) {
+        //    setAccountKeys.add(o.Account__c); 
+        //    if(o.Person__c != Null){
+        //        setPersonKeys.add(o.Person__c);
+        //    }
+        //}
+
+        lOwner = [SELECT Id,Name FROM Account WHERE Id in :setOwnershipKeys];
+        for (Account o : lOwner) {
+            setAccountKeys.add(o.Id); 
+        }
+        //Begin - #AMSFTS
+
 
         //MAIN
-        lEmployee = [SELECT Agency__c,DUTY__c,Earning__c,Employee_type__c,Hours__c,Id,isManager__c,isTicketingAgent__c,
+        lEmployee = [SELECT Account__c,Duty__c,Earning__c,Employee_type__c,Hours__c,Id,isManager__c,isTicketingAgent__c,
                     Name,Person__c,Position__c,Registration_Date__c,Stage__c,Start_date__c,
-                    Termination_Date__c,Title__c,Valid__c, Last_synchronization__c 
-                    FROM AMS_Employee__c WHERE Agency__c in :setAgencyKeys and (isManager__c = True OR isTicketingAgent__c = True ) limit 100];
-
-        for (AMS_Employee__c emp : lEmployee) {
+                    Termination_Date__c,Title__c,Valid__c,RecordTypeId,Owner_Account__c,Percentage__c
+                    FROM AMS_Account_Role__c 
+                    WHERE RecordTypeId = :rtAccRoleEmployee
+                        AND Account__c in :setAgencyKeys
+                        AND (isManager__c = True OR isTicketingAgent__c = True )                             
+                    limit :fixLimit];
+      
+        //for (AMS_Employee__c emp : lEmployee) { - #AMSFTS 
+        for (AMS_Account_Role__c emp : lEmployee) {    
             setEmployeeKeys.add(emp.Id);
             if(emp.Person__c != Null){
                 setPersonKeys.add(emp.Person__c);
             }
             mEmp_VS_Person.put(emp.Id, emp.Person__c);
-            if(!mAg_VS_Person.containsKey(emp.Agency__c)){
-                mAg_VS_Person.put(emp.Agency__c, emp.Person__c);
+            //Begin - #AMSFTS
+            //if(!mAg_VS_Person.containsKey(emp.Agency__c)){
+            //    mAg_VS_Person.put(emp.Agency__c, emp.Person__c);
+            //}
+            if(!mAg_VS_Person.containsKey(emp.Account__c)){
+                mAg_VS_Person.put(emp.Account__c, emp.Person__c);
             }
-            
-            if(mAg_VS_Employees.containsKey(emp.Agency__c)){
-                List<AMS_Employee__c> lEmp = mAg_VS_Employees.get(emp.Agency__c);
+            //END - #AMSFTS
+            if(mAg_VS_Employees.containsKey(emp.Account__c)){
+                List<AMS_Account_Role__c> lEmp = mAg_VS_Employees.get(emp.Account__c);
                 lEmp.add(emp);
-                mAg_VS_Employees.remove(emp.Agency__c);
-                mAg_VS_Employees.put(emp.Agency__c, lEmp);
+                mAg_VS_Employees.remove(emp.Account__c);
+                mAg_VS_Employees.put(emp.Account__c, lEmp);
             }else{
-                List<AMS_Employee__c> lEmp = new List<AMS_Employee__c>();
+                List<AMS_Account_Role__c> lEmp = new List<AMS_Account_Role__c>();
                 lEmp.add(emp);
-                mAg_VS_Employees.put(emp.Agency__c, lEmp);
+                mAg_VS_Employees.put(emp.Account__c, lEmp);
             }
+            //END - #AMSFTS
         }
 
         
         //MAIN
+        //Begin - #AMSFTS
+        //lInspection = [SELECT Accreditation_Endorsement_Status_code__c, Accreditation_Endorsement_organisation__r.Air_Code__c,
+        //                Date_Organisation_Status_attained__c,Id,Name,Agency__c,Agency__r.Organization_Last_Change_Date__c, 
+        //                Agency__r.Last_Inspection_Date__c,Agency__r.Original_Approval_DAte__c,Agency__r.Location_Class__c                        
+        //                FROM AMS_Inspection__c WHERE Agency__c in :setAgencyKeys];
         lInspection = [SELECT Accreditation_Endorsement_Status_code__c, Accreditation_Endorsement_organisation__r.Air_Code__c,
-                        Date_Organisation_Status_attained__c,Id,Name,Agency__c,Agency__r.Organization_Last_Change_Date__c, 
-                        Agency__r.Last_Inspection_Date__c,Agency__r.Original_Approval_DAte__c,Agency__r.Location_Class__c                        
-                        FROM AMS_Inspection__c WHERE Agency__c in :setAgencyKeys];
+                        Date_Organisation_Status_attained__c,Id,Name,
+                        Account__c,
+                        Account__r.Organization_Last_Change_Date__c, 
+                        Account__r.Last_Inspection_Date__c,
+                        Account__r.Original_Approval_DAte__c,
+                        Account__r.Location_Class__c                        
+                        FROM AMS_Inspection__c WHERE Account__c in :setAgencyKeys 
+                        ORDER BY Date_Organisation_Status_attained__c desc
+                        LIMIT :fixLimit];
+        //to add later when I've the correct codes
+        //AND Accreditation_Endorsement_organisation__r.Air_Code__c in ('IATA','IATAN','DOM','ARC','ATAC','DAPA','TSCOM','TRUE') 
+
+        //END - #AMSFTS
 
         //MAIN
-        lAgRelationship = [SELECT Parent_agency__c,Child_Agency__c,Hierarchy__c,HO_Flag__c,Id,Name,Relationship_details__c 
-                    FROM AMS_Agencies_relationhip__c WHERE Child_Agency__c in :setAgencyKeys AND Hierarchy__r.RecordTypeId = :rtHierarchy];
-                       
+        //Begin - #AMSFTS
+        //lAgRelationship = [SELECT Parent_agency__c,Child_Agency__c,Hierarchy__c,HO_Flag__c,Id,Name,Relationship_details__c 
+        //            FROM AMS_Agencies_relationhip__c WHERE Child_Agency__c in :setAgencyKeys AND Hierarchy__r.RecordTypeId = :rtHierarchy];
+        lAgRelationship = [SELECT Parent_Account__c,Child_Account__c,Hierarchy__c,HO_Flag__c,Id,Name,Relationship_details__c 
+                    FROM AMS_Agencies_relationhip__c 
+                    WHERE Child_Account__c in :setAgencyKeys 
+                    AND Hierarchy__r.RecordTypeId = :rtHierarchy
+                    limit :fixLimit];
+        //END - #AMSFTS               
        
         for (AMS_Agencies_relationhip__c rel : lAgRelationship) {
             setHierarchyKeys.add(rel.Hierarchy__c);
-            //COMENT on SPRINT 5
-            //setAgRelationshipKeys.add(rel.Child_Agency__c);
-
-            setAgRelationshipKeys.add(rel.Parent_agency__c);
-            mAg_VS_ParentAg.put(rel.Child_Agency__c, rel.Parent_agency__c);
+            
+            //Begin - #AMSFTS
+            //setAgRelationshipKeys.add(rel.Parent_agency__c);
+            //mAg_VS_ParentAg.put(rel.Child_Agency__c, rel.Parent_agency__c);
+            setAgRelationshipKeys.add(rel.Parent_Account__c);
+            mAg_VS_ParentAg.put(rel.Child_Account__c, rel.Parent_Account__c);
+            //END - #AMSFTS   
         }
 
         //REFERENCE
-        lAgRelationshipHierarchy = [SELECT Account__c,Administrator__c,Airline_Code__c,
-                    A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,
-                    Company_Type__c,C_Code__c,DPC_Operation__c,IATACode__c,Id,
-                    Last_Inspection_Date__c,Legacy_External_ID__c,
-                    Legacy_System__c,Legal_Name_2__c,Legal_Name_3__c,License_Number__c,
-                    Location_Category__c,Location_Class__c,Name,GDS__c,
-                    N_Code__c,Organization_Last_Change_Date__c,
-                    Original_Approval_DAte__c,Other_Tax_Reference_Number__c,OwnerId,
-                    Parent_Reference_Number__c,Phone_Number__c,Primary_address__c,
-                    Recert_Expiry_Date__c,RecordTypeId,RecordType.name,
-                    Reference_Number__c,STD_Code__c,SystemModstamp,Tax_Reference_Number__c,
-                    Trading_Name_1__c,Trading_Name_2__c,Unique_ID__c,Verification_Date__c 
-                    FROM AMS_Agency__c where id in :setAgRelationshipKeys];
+        lAgRelationshipHierarchy = [SELECT Id,AIMS_ID__c,
+                    CASS_Number__c,Check_Digit__c,IATACode__c,
+                    C_Code__c,ParentId,Parent.AIMS_ID__c,
+                    IATA_Area__c
+                    FROM Account where id in :setAgRelationshipKeys];
+        //END - #AMSFTS   
 
         //REFERENCE                    
         lAgHierarchy = [SELECT Hierarchy_Name__c,Id,Name,RecordTypeId 
@@ -494,23 +554,51 @@ public with sharing class AMS_XML_Generator {
         mHier_VS_HO = new Map<Id,Id>();
 
         //Get HO (Head Office) Id
-        List<AggregateResult> lAgHO = [SELECT Parent_agency__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
+        //Begin - #AMSFTS
+        //List<AggregateResult> lAgHO = [SELECT Parent_agency__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
+        //            where Hierarchy__c in :setHierarchyKeys
+        //            and HO_Flag__c = 'True' AND Hierarchy__r.RecordTypeId = :rtHierarchy
+        //            group by Parent_agency__c, Hierarchy__c ];
+        List<AggregateResult> lAgHO = [SELECT Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
                     where Hierarchy__c in :setHierarchyKeys
-                    and HO_Flag__c = 'True' AND Hierarchy__r.RecordTypeId = :rtHierarchy
-                    group by Parent_agency__c, Hierarchy__c ];
+                    AND Hierarchy__r.RecordTypeId = :rtHierarchy
+                    group by Parent_Account__c, Hierarchy__c ];
+
         for(AggregateResult agHO : lAgHO){
-            mHier_VS_HO.put((Id)agHO.get('Hierarchy__c') ,(Id)agHO.get('Parent_agency__c'));   
+            setHO.add((Id)agHO.get('Parent_Account__c'));
         }
+
+        lAgHO = [SELECT Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
+                    where Hierarchy__c in :setHierarchyKeys
+                    AND Hierarchy__r.RecordTypeId = :rtHierarchy
+                    AND Parent_Account__c in :setHO
+                    AND Child_Account__c not in :setHO
+                    group by Parent_Account__c, Hierarchy__c];             
+        //END - #AMSFTS  
+        
+        for(AggregateResult agHO : lAgHO){
+            mHier_VS_HO.put((Id)agHO.get('Hierarchy__c') ,(Id)agHO.get('Parent_Account__c'));   
+            setAccountKeys.add((Id)agHO.get('Parent_Account__c')); 
+        }
+        
         for (AMS_Agencies_relationhip__c agR : lAgRelationship) {
-            mAg_VS_HO.put((Id)agR.Child_Agency__c, (Id)mHier_VS_HO.get(agR.Hierarchy__c));
+            mAg_VS_HO.put((Id)agR.Child_Account__c, (Id)mHier_VS_HO.get(agR.Hierarchy__c));
         }
 
         //MAIN
-        lAgAirport = [SELECT Airport__c,Agency__c FROM AMS_Agency_Airport__c WHERE Agency__c in :setAgencyKeys];
+        //Begin - #AMSFTS
+        //lAgAirport = [SELECT Airport__c,Agency__c FROM AMS_Agency_Airport__c WHERE Agency__c in :setAgencyKeys];
+        lAgAirport = [SELECT Airport__c,Account__c FROM AMS_Agency_Airport__c 
+                        WHERE Account__c in :setAgencyKeys
+                        limit :fixLimit];
+        //END - #AMSFTS   
 
         for (AMS_Agency_Airport__c airp : lAgAirport) {
             setAirportKeys.add(airp.Airport__c);
-            mAgAirport_VS_Airport.put(airp.Airport__c,airp.Agency__c);
+            //Begin - #AMSFTS
+            //mAgAirport_VS_Airport.put(airp.Airport__c,airp.Agency__c);
+            mAgAirport_VS_Airport.put(airp.Airport__c,airp.Account__c);
+            //END - #AMSFTS  
         }
 
         //REFERENCE
@@ -518,11 +606,19 @@ public with sharing class AMS_XML_Generator {
                     WHERE id in :setAirportKeys];
 
         //MAIN
-        lAgAffiliation = [SELECT Affiliation__c,Agency__c FROM AMS_Agency_Affiliation__c WHERE Agency__c in :setAgencyKeys];
+        //Begin - #AMSFTS
+        //lAgAffiliation = [SELECT Affiliation__c,Agency__c FROM AMS_Agency_Affiliation__c WHERE Agency__c in :setAgencyKeys];
+        lAgAffiliation = [SELECT Affiliation__c,Account__c FROM AMS_Agency_Affiliation__c 
+                            WHERE Account__c in :setAgencyKeys
+                            limit :fixLimit];
+        //END - #AMSFTS
 
         for (AMS_Agency_Affiliation__c affil : lAgAffiliation) {
             setAffiliationKeys.add(affil.Affiliation__c);
-            mAgAffiliation_VS_Affiliation.put(affil.Affiliation__c,affil.Agency__c);
+            //Begin - #AMSFTS
+            //mAgAffiliation_VS_Affiliation.put(affil.Affiliation__c,affil.Agency__c);
+            mAgAffiliation_VS_Affiliation.put(affil.Affiliation__c,affil.Account__c);
+            //END - #AMSFTS
         }
 
         //REFERENCE
@@ -530,11 +626,27 @@ public with sharing class AMS_XML_Generator {
                     WHERE id in :setAffiliationKeys];            
 
         //MAIN
-        lAgProfile = [SELECT GR_Code__c,GR_Item__c,Id,Name,Agency__c FROM AMS_Agency_Profile__c 
-                    WHERE Agency__c in :setAgencyKeys];
+        //Begin - #AMSFTS
+        //lAgProfile = [SELECT GR_Code__c,GR_Item__c,Id,Name,Agency__c FROM AMS_Agency_Profile__c 
+        //            WHERE Agency__c in :setAgencyKeys];
+        lAgProfile = [SELECT GR_Code__c,GR_Item__c,Id,Name,Account__c FROM AMS_Agency_Profile__c 
+                        WHERE Account__c in :setAgencyKeys
+                        limit :fixLimit];
+        //END - #AMSFTS
 
         //REFERENCE                  
-        lAccount = [SELECT Id,Name,Short_Name__c FROM Account WHERE Id in :setAccountKeys];
+        lAccount = [SELECT Airline_Code__c,A_Code__c,
+                    CASS_Number__c,Check_Digit__c,GDS__c,
+                    Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+                    Last_Inspection_Date__c,Last_synchronization__c,
+                    License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
+                    N_Code__c,Organization_Last_Change_Date__c,
+                    Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
+                    Phone_Number__c,Primary_address__c,
+                    RecordTypeId,RecordType.name,
+                    STD_Code__c,VAT_Number__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c,
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c FROM Account WHERE Id in :setAccountKeys]; 
 
         //REFERENCE        
         //Sprint 7: removed "Contact__c,User__c, User__r.Name"
@@ -545,31 +657,13 @@ public with sharing class AMS_XML_Generator {
                         Name,Next_case_request_date_time__c,Phone__c,Region__c,Request_next_case__c 
                         FROM AMS_Person__c WHERE Id in :setPersonKeys]; //Contact__c,Contact__r.Name,
         
-        //Sprint 7: "User__c" was removed from the Person data... 
-        //for (AMS_Person__c p : lPerson) {
-        //    //setContactKeys.add(p.Contact__c);
-        //    setUserKeys.add(p.User__c);
-        //}
-
-        //Sprint 7: "Contact__c" was removed from the Person data... 
-        //for(Contact c: [select id, Name, Person__c from Contact where Person__c In :setPersonKeys]){
-        //    setContactKeys.add(c.id);
-        //}
-
-        //REFERENCE                        
-        //Sprint 7: "Contact__c" was removed from the Person data... 
-        //lContact = [SELECT Id,Name FROM Contact WHERE Id in :setContactKeys];                       
-
-        //REFERENCE       
-        //Sprint 7: "User__c" was removed from the Person data...                  
-        //lUser = [SELECT Id,Name FROM User WHERE Id in :setUserKeys];                    
-       
+          
         //MAIN
-        lFieldsTranslation = [SELECT Address__c,Agency_Hierarchy__c,Agency__c,AMSAirport__c,AMSEmployee__c,AMSOwner__c,
+        lFieldsTranslation = [SELECT Address__c,Agency_Hierarchy__c,Account__c,AMSAirport__c,AMSEmployee__c,AMSOwner__c,
                                     AMSPerson__c,Contact__c,Field_name__c,IATA_ISO_Country__c,
                                     IATA_ISO_State__c,Id,Language__c,Name,Translation__c,User__c 
                                     FROM AMS_Fields_Translation__c 
-                                    where (Agency__c in :setAgencyKeys
+                                    where (Account__c in :setAgencyKeys
                                         or Address__c in :setAddressKeys
                                         or Agency_Hierarchy__c in :setHierarchyKeys
                                         or AMSAirport__c in :setAirportKeys
@@ -580,6 +674,7 @@ public with sharing class AMS_XML_Generator {
                                         or IATA_ISO_Country__c in :setAddressCountryKeys
                                         or IATA_ISO_State__c in :setAddressStateKeys
                                         or User__c in :setUserKeys)];
+        //END - #AMSFTS
 
         //Field_name__c
         
@@ -593,7 +688,7 @@ public with sharing class AMS_XML_Generator {
         msObject.putAll(lAgHierarchy);
         msObject.putAll(lAgRelationship);
         msObject.putAll(lAgRelationshipHierarchy);
-        msObject.putAll(lAccount);
+        msObject.putAll(lAccount); 
         msObject.putAll(lPerson);
         msObject.putAll(lRecordType);
         msObject.putAll(agency);
@@ -606,7 +701,8 @@ public with sharing class AMS_XML_Generator {
         Date dToday = Date.today();
         Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
         
-        mHeaderValues.put('copymsg', '(C) International Air Transport Association (IATA) 2015. All rights reserved. No part of this file may be reproduced, stored in a retrieval system or transmitted in any form or by any means without prior permission from IATA.');
+        
+        mHeaderValues.put('copymsg', AMS_SAP_Settings__c.getOrgDefaults().Copy_Right_Message__c);
         mHeaderValues.put('version', 'v1');
         mHeaderValues.put('rec_id', 'H');
         mHeaderValues.put('priority', 'High');
@@ -641,48 +737,56 @@ public with sharing class AMS_XML_Generator {
         getHeaderNode(AMS_AgenciesNode, mHeaderValues);
         
         
-        
-        Map<String, Map<String, List<AMS_Agency__c>>> bsp_dpc_ag = new Map<String, Map<String, List<AMS_Agency__c>>>();
-        
-        //List<AggregateResult> agBspDpc = [SELECT Agency__c,Operation__r.Settlement__r.Name, Operation__r.Settlement__r.DPC__c
-        //                                            FROM AMS_Agency_Operations__c where Agency__c in :setAgencyKeys 
-        //                                            group by Agency__c,Operation__r.Settlement__r.Name, Operation__r.Settlement__r.DPC__c 
-        //                                            order by Operation__r.Settlement__r.Name, Operation__r.Settlement__r.DPC__c];
+        //Begin - #AMSFTS
+        //Map<String, Map<String, List<AMS_Agency__c>>> bsp_dpc_ag = new Map<String, Map<String, List<AMS_Agency__c>>>();
+        Map<String, Map<String, List<Account>>> bsp_dpc_ag = new Map<String, Map<String, List<Account>>>();
+        //END - #AMSFTS
 
-        String sPasCargo = agency[0].RecordType.Name;
+        String sPasCargo = agency[0].Sector__c == Null?'':agency[0].Sector__c;
+
+
+
         List<AggregateResult> agBspDpc = new List<AggregateResult>();
-        if(sPasCargo.equalsIgnoreCase('PASSENGER') ){
-            agBspDpc = [SELECT id Agency__c,Country__r.name,
-                                            Country__r.AMS_Settlement_System__r.name bsp,
-                                            Country__r.AMS_Settlement_System__r.DPC_System__c dpc
-                                        FROM AMS_Agency__c where id in :setAgencyKeys 
-                                        group by id, Country__r.name,
-                                            Country__r.AMS_Settlement_System__r.name,
-                                            Country__r.AMS_Settlement_System__r.DPC_System__c];
-        }else{
-            agBspDpc = [SELECT id Agency__c, Country__r.name,
-                                            Country__r.AMS_Settlement_System_CASS__r.name bsp,
-                                            Country__r.AMS_Settlement_System_CASS__r.DPC_System__c dpc
-                                            FROM AMS_Agency__c where id in :setAgencyKeys 
-                                            group by id, Country__r.name,
-                                            Country__r.AMS_Settlement_System_CASS__r.name,
-                                            Country__r.AMS_Settlement_System_CASS__r.DPC_System__c];
+        if(sPasCargo.equalsIgnoreCase('Travel Agent') ){
+            agBspDpc = [SELECT id Account__c,IATA_ISO_Country__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System__r.name bsp,
+                                            IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c dpc
+                                        FROM Account where id in :setAgencyKeys 
+                                        group by id, IATA_ISO_Country__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c];
+        }else if(sPasCargo.equalsIgnoreCase('Cargo Agent') ){
+            agBspDpc = [SELECT id Account__c, IATA_ISO_Country__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name bsp,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c dpc
+                                            FROM Account where id in :setAgencyKeys 
+                                            group by id, IATA_ISO_Country__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c];
         }
+        //END - #AMSFTS
        
         String auxBSP = '';
         String auxDPC = '';
-        List<AMS_Agency__c> lAuxAgBspDpc = new List<AMS_Agency__c>();
-        Map<Id,AMS_Agency__c> mlAuxAgBspDpc = new Map<Id,AMS_Agency__c>();
+        //Begin - #AMSFTS
+        //List<AMS_Agency__c> lAuxAgBspDpc = new List<AMS_Agency__c>();
+        //Map<Id,AMS_Agency__c> mlAuxAgBspDpc = new Map<Id,AMS_Agency__c>();
+        List<Account> lAuxAgBspDpc = new List<Account>();
+        Map<Id,Account> mlAuxAgBspDpc = new Map<Id,Account>();
+        //END - #AMSFTS
         
         //Map agency Id with AMS_Settlement_System__c Info
         Map<Id,AggregateResult> lAgencyOperations = new Map<Id,AggregateResult>();
             
         for (AggregateResult agOp : agBspDpc) {
             
+            //Begin - #AMSFTS
             //fill Map agency Id with AMS_Settlement_System__c
-            lAgencyOperations.put((Id)agOp.get('Agency__c'), agOp);
-                
-            AMS_Agency__c auxAg = (AMS_Agency__c)msObject.get((Id) agOp.get('Agency__c') );
+            //lAgencyOperations.put((Id)agOp.get('Agency__c'), agOp);
+            //AMS_Agency__c auxAg = (AMS_Agency__c)msObject.get((Id) agOp.get('Agency__c') );
+            lAgencyOperations.put((Id)agOp.get('Account__c'), agOp);
+            Account auxAg = (Account)msObject.get((Id) agOp.get('Account__c') );
+            //END - #AMSFTS
       
             auxBSP = agOp.get('bsp') == Null ? 'null' : (String)agOp.get('bsp');
             auxDPC = agOp.get('dpc') == Null ? 'null' : (String)agOp.get('dpc');
@@ -692,19 +796,19 @@ public with sharing class AMS_XML_Generator {
                 lAuxAgBspDpc.add(auxAg);
                 mlAuxAgBspDpc.put(auxAg.Id,auxAg);
             }
-            
+           
             //Check BSP
             if(bsp_dpc_ag.containsKey(auxBSP)){
-                Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(auxBSP);
+                Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(auxBSP); 
                 
                 //Check DPC
                 if(mAuxAgDPC.containsKey(auxDPC)){
-                    List<AMS_Agency__c> l = mAuxAgDPC.get(auxDPC);
+                    List<Account> l = mAuxAgDPC.get(auxDPC);
                     l.add(auxAg);
                     mAuxAgDPC.remove(auxDPC);
                     mAuxAgDPC.put(auxDPC,l);
                 }else{
-                    List<AMS_Agency__c> l = new List<AMS_Agency__c>();
+                    List<Account> l = new List<Account>();
                     l.add(auxAg);
                     mAuxAgDPC.put(auxDPC,l);
                 }
@@ -713,20 +817,22 @@ public with sharing class AMS_XML_Generator {
                 bsp_dpc_ag.put(auxBSP,mAuxAgDPC);
                 
             }else{
-                Map<String, List<AMS_Agency__c>> mAuxAgDPC = new Map<String, List<AMS_Agency__c>>();
-                List<AMS_Agency__c> l = new List<AMS_Agency__c>();
+                Map<String, List<Account>> mAuxAgDPC = new Map<String, List<Account>>();
+                List<Account> l = new List<Account>();
                 l.add(auxAg);
                 mAuxAgDPC.put(auxDPC,l);
                 bsp_dpc_ag.put(auxBSP,mAuxAgDPC);
             }
-           
+            //END - #AMSFTS
         }
        
-        Map<Id, AMS_Agency__c> mAg = new Map<Id, AMS_Agency__c>(lAuxAgBspDpc);
+        //Map<Id, AMS_Agency__c> mAg = new Map<Id, AMS_Agency__c>(lAuxAgBspDpc); - #AMSFTS
+        Map<Id, Account> mAg = new Map<Id, Account>(lAuxAgBspDpc);
 
 
         //add all agencies to compare later, because not all agencies have relation with AMS_Agency_Operations__c
-        for (AMS_Agency__c ag : agency) {
+        //for (AMS_Agency__c ag : agency) { - #AMSFTS
+        for (Account ag : agency) {
 
             if(!mAg.containsKey(ag.Id)){
                 
@@ -742,16 +848,19 @@ public with sharing class AMS_XML_Generator {
                 
                 //Check BSP
                 if(bsp_dpc_ag.containsKey(auxBSP)){
-                    Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(auxBSP);
+                    //Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(auxBSP); - #AMSFTS
+                    Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(auxBSP);
                     
                     //Check DPC
                     if(mAuxAgDPC.containsKey(auxDPC)){
-                        List<AMS_Agency__c> l = mAuxAgDPC.get(auxDPC);
+                        //List<AMS_Agency__c> l = mAuxAgDPC.get(auxDPC); - #AMSFTS
+                        List<Account> l = mAuxAgDPC.get(auxDPC);
                         l.add(ag);
                         mAuxAgDPC.remove(auxDPC);
                         mAuxAgDPC.put(auxDPC,l);
                     }else{
-                        List<AMS_Agency__c> l = new List<AMS_Agency__c>();
+                        //List<AMS_Agency__c> l = new List<AMS_Agency__c>(); - #AMSFTS
+                        List<Account> l = new List<Account>();
                         l.add(ag);
                         mAuxAgDPC.put(auxDPC,l);
                     }
@@ -760,8 +869,12 @@ public with sharing class AMS_XML_Generator {
                     bsp_dpc_ag.put(auxBSP,mAuxAgDPC);
                     
                 }else{
-                    Map<String, List<AMS_Agency__c>> mAuxAgDPC = new Map<String, List<AMS_Agency__c>>();
-                    List<AMS_Agency__c> l = new List<AMS_Agency__c>();
+                    //Begin - #AMSFTS
+                    //Map<String, List<AMS_Agency__c>> mAuxAgDPC = new Map<String, List<AMS_Agency__c>>();
+                    //List<AMS_Agency__c> l = new List<AMS_Agency__c>();
+                    Map<String, List<Account>> mAuxAgDPC = new Map<String, List<Account>>();
+                    List<Account> l = new List<Account>();
+                    //END - #AMSFTS
                     l.add(ag);
                     mAuxAgDPC.put(auxDPC,l);
                     bsp_dpc_ag.put(auxBSP,mAuxAgDPC);
@@ -770,34 +883,40 @@ public with sharing class AMS_XML_Generator {
         }
 
         for(String sBSP : bsp_dpc_ag.keySet()){
-            Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(sBSP); 
+            //Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(sBSP); - #AMSFTS
+            Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(sBSP);
+
             for(String sDPC : mAuxAgDPC.keySet()){
-                List<AMS_Agency__c> l = mAuxAgDPC.get(sDPC);
+                //List<AMS_Agency__c> l = mAuxAgDPC.get(sDPC); - #AMSFTS
+                List<Account> l = mAuxAgDPC.get(sDPC);
 
                 //get 1st agency, since all agencies must be from the same country the 1st will work!
-                AMS_Agency__c agForCtry = l[0];
+                //AMS_Agency__c agForCtry = l[0]; - #AMSFTS
+                Account agForCtry = l[0];
 
                 //get Country related to the agency 
                 IATA_ISO_Country__c ctry;
-                ctry = (IATA_ISO_Country__c)msObject.get(agForCtry.Country__c);
+                //ctry = (IATA_ISO_Country__c)msObject.get(agForCtry.Country__c); - #AMSFTS
+                ctry = (IATA_ISO_Country__c)msObject.get(agForCtry.IATA_ISO_Country__c);
 
                 //BEGIN Country tag
                 Dom.Xmlnode countryNode = AMS_AgenciesNode.addChildElement('country', null, null);
 
-                getElementNode(countryNode, 'name', ctry.Name);
 
-                if(sPasCargo.equalsIgnoreCase('PASSENGER') ){
+                getElementNode(countryNode, 'name', ctry.Name);
+                getElementNode(countryNode, 'iso_code', ctry.ISO_Code__c);
+
+                //if(sPasCargo.equalsIgnoreCase('PASSENGER') ){ - #AMSFTS
+                if(sPasCargo.equalsIgnoreCase('Travel Agent') ){
                     getElementNode(countryNode, 'bsp', sBSP);
                     getElementNode(countryNode, 'cass', Null);
-                }else{
+                }else if(sPasCargo.equalsIgnoreCase('Cargo Agent') ){
                     getElementNode(countryNode, 'bsp', Null);
                     getElementNode(countryNode, 'cass', sBSP);
                 }
                 
                 getElementNode(countryNode, 'dpc_system', sDPC);
 
-                
-                
 
                 getElementNode(countryNode, 'hub', ctry.IATA_Regional_Office__c);
 
@@ -811,26 +930,86 @@ public with sharing class AMS_XML_Generator {
                 Dom.Xmlnode agenciesNode = countryNode.addChildElement('agencies', null, null);
                 //try{
                
-                //agenciesNode.setAttribute('bsp', sBSP.equalsIgnoreCase('null') ? '' : sBSP);
-                //agenciesNode.setAttribute('dpc', sDPC.equalsIgnoreCase('null') ? '' : sDPC);
-                //}catch(Exception e){
-                //    myvariable += 'bsp_dpc_ag.keySet(): ' + bsp_dpc_ag.keySet();
-                //    myvariable += '\n|| sBSP: ' + sBSP;
-        
-                //    throw new transformationException( ' ' + myvariable);
-                //}
-
-                for (AMS_Agency__c ag : l) {
+                
+                //for (AMS_Agency__c ag : l) { - #AMSFTS
+                for (Account ag : l) {
 
                     Dom.Xmlnode agencyNode = agenciesNode.addChildElement('agency', null, null);
+
+                    //BEGIN - #AMSFTS
                     getAgencyNode(agencyNode, ag, True, False);
-                
+                    
                     
                     Dom.Xmlnode addressNode = agencyNode.addChildElement('addresses', null, null);
+                    
+                    AMS_Address__c billingAdd = new AMS_Address__c();
+                    billingAdd.Account__c = ag.Id;
+                    billingAdd.Address_Type__c = 'Billing;Primary';
+
+                    String[] billingStreet = AMS_Utils.splitAccName(ag.BillingStreet);
+                    billingAdd.Address_1__c = billingStreet[0];
+                    billingAdd.Address_2__c = billingStreet[1];
+                    billingAdd.Address_3__c = billingStreet[2];
+
+                    billingAdd.City__c = ag.BillingCity;
+                    billingAdd.State__c = ag.Iso_State__c;
+                    billingAdd.Country__c = ag.IATA_ISO_Country__c;
+                    billingAdd.AMS_ZipCode__c = ag.BillingPostalCode;
+
+                    /**
+                        NEW SOLUTION for PHONES on billing address!
+
+                        DECOMMENT AFTER APPROVAL!
+                    */
+                    //List<String> lPhone = splitPhone(ag.Phone);
+                    //if(lPhone != null){
+                    //    billingAdd.Telephone__c = lPhone.size() > 0  ? lPhone[0] : null;
+                    //    billingAdd.Telephone_STD__c = lPhone.size() > 1  ? lPhone[1] : null;
+                    //    billingAdd.Telephone_Int__c = lPhone.size() > 2  ? lPhone[2] : null;
+                    //}
+                    //List<String> lFax = splitPhone(ag.Fax);
+                    //if(lFax != null){
+                    //    billingAdd.Telephone__c = lFax.size() > 0  ? lPhone[0] : null;
+                    //    billingAdd.Telephone_STD__c = lFax.size() > 1  ? lPhone[1] : null;
+                    //    billingAdd.Telephone_Int__c = lFax.size() > 2  ? lPhone[2] : null;
+                    //}
+
+                    System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] billingAdd - ' + billingAdd);
+                    lAddresses.add(billingAdd);
+
+                    if(!AMS_Utils.isAddressEmpty(ag, 'Shipping')){
+                        AMS_Address__c shippingAdd = new AMS_Address__c();
+                        shippingAdd.Account__c = ag.Id;
+                        shippingAdd.Address_Type__c = 'Shipping';
+
+                        String[] shippingStreet = AMS_Utils.splitAccName(ag.ShippingStreet);
+                        shippingAdd.Address_1__c = shippingStreet[0];
+                        shippingAdd.Address_2__c = shippingStreet[1];
+                        shippingAdd.Address_3__c = shippingStreet[2];
+
+                        shippingAdd.City__c = ag.ShippingCity;
+                        shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState).Id;
+                        shippingAdd.Country__c = ag.ShippingCountry == null ? null : AMS_Utils.iataIsoCountries.get(ag.ShippingCountry).Id;
+                        shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
+                        
+                        System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
+                        lAddresses.add(shippingAdd);
+                    }
+                    
                     if(lAddresses.size() > 0){
                         for (AMS_Address__c add : lAddresses) {
-                            if(add.Agency__c == ag.Id){
-                                getObjectData(addressNode, 'AMS_Address__c', add );
+                            //if(add.Agency__c == ag.Id){ - #AMSFTS
+                            if(add.Account__c == ag.Id){
+
+                                if(add.Id != null){
+                                    //removes ignored address types from the string
+                                    for(String addressType : lIgnoredAddressTypes){
+                                        add.Address_Type__c = add.Address_Type__c.replace(addressType+';', '');
+                                        add.Address_Type__c = add.Address_Type__c.replace(';'+addressType, '');
+                                    }
+                                }
+                                //if address is a valid addres, add new node.
+                                if(String.isNotEmpty(add.Address_Type__c)) getObjectData(addressNode, 'AMS_Address__c', add );
                             }
                             
                 
@@ -839,57 +1018,50 @@ public with sharing class AMS_XML_Generator {
                         //addressNode.addTextNode('Missing');
                     }
                     
-                    Dom.Xmlnode ownershipNode = agencyNode.addChildElement('agency_ownerships', null, null);
+
+                    Dom.Xmlnode accountRoleNode = agencyNode.addChildElement('account_roles', null, null);
                     if(lOwnership.size() > 0){
-                        for (AMS_Agency_Ownership__c own : lOwnership) {
-                            if(own.Agency__c == ag.Id){
-                                getObjectData(ownershipNode, 'AMS_Agency_Ownership__c', own );
+                        //for (AMS_Agency_Ownership__c own : lOwnership) { - #AMSFTS
+                        for (AMS_Account_Role__c own : lOwnership) {    
+                            //if(own.Agency__c == ag.Id){ - #AMSFTS
+                            if(own.Account__c == ag.Id){
+                                getObjectData(accountRoleNode, 'AMS_Account_Role__c', own );
                             }
                         }
                     //}else{
                         //ownershipNode.addTextNode('Missing');
                     }
-                    
-                    Dom.Xmlnode employeesNode = agencyNode.addChildElement('employees', null, null);
                     if(lEmployee.size() > 0){
                         
-                        List<AMS_Employee__c> lEmpXML = mAg_VS_Employees.get(ag.Id);
+                        List<AMS_Account_Role__c> lEmpXML = mAg_VS_Employees.get(ag.Id);
                         
                         if(lEmpXML == Null){    //to avoid Null value
-                            lEmpXML = new List<AMS_Employee__c>();
+                            lEmpXML = new List<AMS_Account_Role__c>();
                         }
                         
-                        for (AMS_Employee__c emp : lEmpXML) {
-                                getObjectData(employeesNode, 'AMS_Employee__c', emp );
+                        for (AMS_Account_Role__c emp : lEmpXML) {
+                                getObjectData(accountRoleNode, 'AMS_Account_Role__c', emp );
                         }
                     //}else{
                         //employeesNode.addTextNode('Missing');
                     }
+
+                    //End - #AMSFTS
         
                     Boolean bHaveInspections = False;
-                    Dom.Xmlnode inspectionNode = agencyNode.addChildElement('inspections', null, null);
+                    Dom.Xmlnode inspectionNode = agencyNode.addChildElement('endorsements', null, null);
                     if(lInspection.size() > 0){
                         for (AMS_Inspection__c insp : lInspection) {
-                            if(insp.Agency__c == ag.Id){                
+                            //if(insp.Agency__c == ag.Id){ - #AMSFTS    
+                            if(insp.Account__c == ag.Id){                
                                 bHaveInspections = True;
                                 getObjectData(inspectionNode, 'AMS_Inspection__c', insp );
+
+
                             }
                         }
     
-                        if(bHaveInspections){
-                            Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
-                            Datetime dtLast_Inspection_Date = ag.Last_Inspection_Date__c == Null ? Null : Datetime.newInstance(ag.Last_Inspection_Date__c.year(), ag.Last_Inspection_Date__c.month(),ag.Last_Inspection_Date__c.day());
-                            Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
-                           
-                            getElementNode(inspectionNode, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
-                            getElementNode(inspectionNode, 'location_class', mAg_VS_Segment.get(ag.Id));
-                            getElementNode(inspectionNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                            getElementNode(inspectionNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
-                            
-                        }
-
-                    //}else{
-                    //    inspectionNode.addTextNode('Missing');
+                        
                     }
                     
                     Boolean bHier = False;
@@ -897,7 +1069,8 @@ public with sharing class AMS_XML_Generator {
                     if(lAgRelationship.size() > 0){
                         for (AMS_Agencies_relationhip__c rel : lAgRelationship) {
                             //if(rel.Parent_agency__c == ag.Id || rel.Child_Agency__c == ag.Id){
-                            if(rel.Parent_agency__c == ag.Id ){
+                            //if(rel.Parent_agency__c == ag.Id ){ - #AMSFTS    
+                            if(rel.Parent_Account__c == ag.Id ){
                                 bHier = True;
                                 getObjectData(agRelationshipsNode, 'AMS_Agencies_relationhip__c', rel );
                             }
@@ -906,21 +1079,17 @@ public with sharing class AMS_XML_Generator {
                     //    agRelationshipsNode.addTextNode('Missing');
                     }
                     if(!bHier){
-                        AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(ag.Id));
+                        //AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(ag.Id)); - #AMSFTS    
+                        Account parentAg = (Account)msObject.get(mAg_VS_ParentAg.get(ag.Id));
                         
                         Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
-                        Dom.Xmlnode agRelationshipHierNode = agRelationshipNode.addChildElement('hierarchies', null, null);
-                        Dom.Xmlnode agRelationshipHO_FlagNode = agRelationshipNode.addChildElement('ho_flag', null, null);
-                        Dom.Xmlnode agRelationshipIdNode = agRelationshipNode.addChildElement('id', null, null);
-                        Dom.Xmlnode agRelationshipNameNode = agRelationshipNode.addChildElement('name', null, null);
-                        Dom.Xmlnode agRelationshipRelDetailsNode = agRelationshipNode.addChildElement('relationship_details', null, null);
-                        
+                       
                         if(parentAg != Null){
-                            agRelationshipHO_FlagNode.addTextNode('False');
+                            //agRelationshipHO_FlagNode.addTextNode('False');
                             Dom.Xmlnode auxAgencyNode = agRelationshipNode.addChildElement('parent_agency', null, null);
                             getAgencyNode(auxAgencyNode, parentAg,False, True);
                         }else{
-                            agRelationshipHO_FlagNode.addTextNode('True');
+                            //agRelationshipHO_FlagNode.addTextNode('True');
                         }
                         
                     }
@@ -940,7 +1109,8 @@ public with sharing class AMS_XML_Generator {
                     Dom.Xmlnode profileNode = agencyNode.addChildElement('profiles', null, null);
                     if(lAgProfile.size() > 0){
                         for (AMS_Agency_Profile__c prof : lAgProfile) {
-                            if(prof.Agency__c == ag.Id){
+                            //if(prof.Agency__c == ag.Id){ - #AMSFTS 
+                            if(prof.Account__c == ag.Id){
                                 getObjectData(profileNode, 'AMS_Agency_Profile__c', prof );
                             }
                         }
@@ -966,283 +1136,12 @@ public with sharing class AMS_XML_Generator {
         Integer fimCPU = Limits.getCpuTime();
         Integer fimCPUx = Limits.getLimitCpuTime();
         
-        //System.debug('getAgencyDetail inicioCPU:' + inicioCPU);
-        //System.debug('getAgencyDetail fimCPU:' + fimCPU);
-        //System.debug('getAgencyDetail inicioCPUx:' + inicioCPUx);
-        //System.debug('getAgencyDetail fimCPUx:' + fimCPUx);
+      
         
         return doc.toXmlString();   
     }
 
 
-    //Get XML for AgencyDetail to send to AW WS (2º step)
-    public String getAgencyHierarchy(AMS_Agency__c agency, String[] r){
-
-        List<AMS_Agency__c> lAg = new List<AMS_Agency__c>();
-        lAg.add(agency);
-
-        return getAgencyHierarchy(lAg, r);
-    }
-
-    //Get XML for Agency Hierarchy to send to AW WS (2º step)
-    public String getAgencyHierarchy(List<AMS_Agency__c> agency, String[] r){
-        
-        //Map that will store all referenced objects
-        msObject = new Map<Id, sObject>();
-
-        lEmployee = new List<AMS_Employee__c>();
-
-        mAg_VS_AgUpdate = new Map<Id, AMS_Agency_Updates__c>();
-        mAg_VS_AgArea = new Map<Id, String>();
-        mAg_VS_AgSiteType = new Map<Id, String>();
-        mAg_VS_ParentAg = new Map<Id, Id>();
-        mAgComputerReservation_VS_ComputerReservation = new Map<Id, Id>();
-        mAgAirport_VS_Airport = new Map<Id, Id>();
-        mAgAffiliation_VS_Affiliation = new Map<Id, Id>();
-        mAg_VS_Person = new Map<Id, Id>();
-        mEmp_VS_Person = new Map<Id, Id>();
-        mAg_VS_Agency = new Map<Id, AMS_Agency__c>();
-        mAg_VS_HO = new Map<Id, Id>();
-        
-        SET<Id> setAgencyKeys = new SET<Id>();
-        SET<Id> setHierarchyKeys = new SET<Id>();
-        SET<Id> setAgRelationshipKeys = new SET<Id>();
-
-        //Get agenc
-        for (AMS_Agency__c ag : agency) {
-            setAgencyKeys.add(ag.Id);
-        }
-
-        //MAIN
-        lAgencyUpdates = [SELECT Agency__c,Id,Name,RelationShip__c,Update_Type__c 
-                            FROM AMS_Agency_Updates__c
-                            where Agency__c in :setAgencyKeys];
-
-        for (AMS_Agency_Updates__c agUpd : lAgencyUpdates) {
-            mAg_VS_AgUpdate.put(agUpd.Agency__c,agUpd);
-        }
-        
-
-        
-
-
-        //MAIN
-        lAgRelationshipParent = [SELECT Child_Agency__c,Parent_agency__c,Hierarchy__c,HO_Flag__c,Id,Name,Relationship_details__c 
-                    FROM AMS_Agencies_relationhip__c WHERE Child_Agency__c in :setAgencyKeys];
-
-        //MAIN
-        lAgRelationshipChild = [SELECT Child_Agency__c,Parent_agency__c,Hierarchy__c,HO_Flag__c,Id,Name,Relationship_details__c 
-                    FROM AMS_Agencies_relationhip__c WHERE Parent_agency__c in :setAgencyKeys];            
-                       
-        lAgRelationship = new List<AMS_Agencies_relationhip__c>();
-
-        if(lAgRelationshipParent != Null && lAgRelationshipParent.size() > 0){
-            lAgRelationship.addAll(lAgRelationshipParent);
-        }
-        if(lAgRelationshipChild != Null && lAgRelationshipChild.size() > 0){
-            lAgRelationship.addAll(lAgRelationshipChild);
-        }
-
-        for (AMS_Agencies_relationhip__c rel : lAgRelationshipParent) {
-            setHierarchyKeys.add(rel.Hierarchy__c);
-            setAgRelationshipKeys.add(rel.Parent_agency__c);
-            mAg_VS_ParentAg.put(rel.Child_Agency__c, rel.Parent_agency__c);
-        }
-
-        for (AMS_Agencies_relationhip__c rel : lAgRelationshipChild) {
-            setHierarchyKeys.add(rel.Hierarchy__c);
-            setAgRelationshipKeys.add(rel.Child_Agency__c);
-
-            mAg_VS_ParentAg.put(rel.Child_Agency__c, rel.Parent_agency__c);
-        }
-
-        //REFERENCE
-        lAgRelationshipHierarchy = [SELECT Account__c,Administrator__c,Airline_Code__c,
-                    A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,
-                    Company_Type__c,C_Code__c,DPC_Operation__c,IATACode__c,Id,
-                    Last_Inspection_Date__c,Legacy_External_ID__c,
-                    Legacy_System__c,Legal_Name_2__c,Legal_Name_3__c,License_Number__c,
-                    Location_Category__c,Location_Class__c,Name,GDS__c,
-                    N_Code__c,Organization_Last_Change_Date__c,
-                    Original_Approval_DAte__c,Other_Tax_Reference_Number__c,OwnerId,
-                    Parent_Reference_Number__c,Phone_Number__c,Primary_address__c,
-                    Recert_Expiry_Date__c,RecordTypeId,RecordType.name,
-                    Reference_Number__c,STD_Code__c,SystemModstamp,Tax_Reference_Number__c,
-                    Trading_Name_1__c,Trading_Name_2__c,Unique_ID__c,Verification_Date__c,
-                    Site_type__c
-                    FROM AMS_Agency__c where id in :setAgRelationshipKeys];
-
-        for (AMS_Agency__c agRel : lAgRelationshipHierarchy) {
-            mAg_VS_Agency.put(agRel.Id, agRel);
-        }
-
-        //REFERENCE                    
-        lAgHierarchy = [SELECT Hierarchy_Name__c,Id,Name,RecordTypeId,RecordType.name
-                        FROM AMS_Agencies_Hierarchy__c WHERE Id in :setHierarchyKeys];
-
-        //MAIN
-        lAgencyArea = [SELECT Agency__c,Site_type__c,Country__r.AIMS_Area_ID__c 
-                            FROM AMS_Address__c
-                            where Agency__c in :setAgRelationshipKeys];
-
-        for (AMS_Address__c agArea : lAgencyArea) {
-            mAg_VS_AgArea.put(agArea.Agency__c,String.valueOf(agArea.Country__r.AIMS_Area_ID__c) );
-            mAg_VS_AgSiteType.put(agArea.Agency__c,String.valueOf(agArea.Site_type__c) );
-        }
-
-        //REFERENCE                        
-        lRecordType = [SELECT Id,Name FROM RecordType];
-        
-        msObject.putAll(lAgHierarchy);
-        msObject.putAll(lAgRelationship);
-        msObject.putAll(lAgRelationshipHierarchy);
-        msObject.putAll(lRecordType);
-        
-        //Header Values
-        Map<String, String> mHeaderValues = new Map<String, String>();
-        Date dToday = Date.today();
-        Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
-        
-        mHeaderValues.put('copymsg', '(C) International Air Transport Association (IATA) 2015. All rights reserved. No part of this file may be reproduced, stored in a retrieval system or transmitted in any form or by any means without prior permission from IATA.');
-        mHeaderValues.put('version', 'v1');
-        mHeaderValues.put('rec_id', 'H');
-        mHeaderValues.put('priority', 'High');
-        mHeaderValues.put('prodsys', 'AMS');
-        mHeaderValues.put('proddate', dtToday.format('yyyyMMdd'));
-        mHeaderValues.put('prodtime', dtToday.format('HHmmss'));
-
-        //Begin of XML tags
-        Dom.Document doc = new Dom.Document();
-    
-        Dom.Xmlnode rootNode = doc.createRootElement('agencies_message', null, null);
-
-        Dom.Xmlnode ResponseHeaderNode = rootNode.addChildElement('response_header', null, null);
-        
-        Dom.Xmlnode PreviousIdNode = ResponseHeaderNode.addChildElement('previous_id', null, null);
-        PreviousIdNode.addTextNode('Dummy');
-        Dom.Xmlnode GroupIDNode = ResponseHeaderNode.addChildElement('group_id', null, null);
-        GroupIDNode.addTextNode(r[0]);
-        Dom.Xmlnode ChunkSizeNode = ResponseHeaderNode.addChildElement('chunk_size', null, null);
-        ChunkSizeNode.addTextNode(r[1]);
-        Dom.Xmlnode ChunkKeyNode = ResponseHeaderNode.addChildElement('chunk_key', null, null);
-        ChunkKeyNode.addTextNode(r[2]);
-        Dom.Xmlnode ChunkTotalNode = ResponseHeaderNode.addChildElement('chunk_total', null, null);
-        ChunkTotalNode.addTextNode(r[3]);
-
-        Dom.Xmlnode AMS_AgenciesNode = rootNode.addChildElement('agency_hierarchy', null, null);
-
-        ////Header Section
-        getHeaderNode(AMS_AgenciesNode, mHeaderValues);
-        
-        //BEGIN Agencies
-        Dom.Xmlnode agenciesNode = AMS_AgenciesNode.addChildElement('agencies', null, null);
-        agenciesNode.setAttribute('bsp', 'BSP');
-        agenciesNode.setAttribute('dpc', 'DPC');
-
-        
-        for (AMS_Agency__c ag : agency) {
-
-            Dom.Xmlnode agencyNode = agenciesNode.addChildElement('agency', null, null);
-            getAgencyNode(agencyNode, ag, False, True);
-        
-           
-//<hierarchies>
-//        <!--Zero or more repetitions:-->
-//        <agencies_hierarchy>
-//          <id>string</id>
-//          <name>string</name>
-//          <record_type>string</record_type>
-//          <hierarchy_name>string</hierarchy_name>
-//          <!--Zero or more repetitions:-->
-//          <agency_relationships>
-//            <!--Zero or more repetitions:-->
-//            <agencies_relationship>
-//              <id>string</id>
-//              <name>string</name>
-//              <ho_flag>string</ho_flag>
-//              <relationship_details>string</relationship_details>
-//              <!--Optional:-->
-//              <parent_agency>
-//                <area>s</area>
-//              <!--Zero or more repetitions:-->
-//              <child_agencies>
-//                <child_agency>
-            Set<Id> done = new Set<Id>();
-
-            Dom.Xmlnode hierarchyNode = agencyNode.addChildElement('hierarchies', null, null);
-            if(lAgRelationship.size() > 0){
-                for (AMS_Agencies_relationhip__c rel : lAgRelationship) {
-                    if(rel.Parent_agency__c == ag.Id || rel.Child_Agency__c == ag.Id){
-                        //getObjectData(agRelationshipsNode, 'AMS_Agencies_relationhip__c', rel );
-
-                        if(!done.contains(rel.Hierarchy__c)){
-
-                            done.add(rel.Hierarchy__c);
-
-                            AMS_Agencies_Hierarchy__c hier = (AMS_Agencies_Hierarchy__c)msObject.get(rel.Hierarchy__c);
-
-                            Dom.Xmlnode agHierarchyNode = hierarchyNode.addChildElement('agencies_hierarchy', null, null);
-                            getElementNode(agHierarchyNode, 'id', hier.Id);
-                            getElementNode(agHierarchyNode, 'name', hier.Name);
-                            getElementNode(agHierarchyNode, 'record_type', hier.recordType.Name);
-                            getElementNode(agHierarchyNode, 'hierarchy_name', hier.Hierarchy_Name__c);
-
-                            Dom.Xmlnode agRelationshipsNode = agHierarchyNode.addChildElement('agency_relationships', null, null);
-                            if(lAgRelationship.size() > 0){
-                                for (AMS_Agencies_relationhip__c rel2 : lAgRelationship) {
-
-                                    if((rel2.Parent_agency__c == ag.Id || rel2.Child_Agency__c == ag.Id )
-                                            && rel2.Hierarchy__c == hier.Id){
-                                        
-                                        Dom.Xmlnode agRelationshipNode = agRelationshipsNode.addChildElement('agencies_relationship', null, null);
-                                        getElementNode(agRelationshipNode, 'id', rel2.Id);
-                                        getElementNode(agRelationshipNode, 'name', rel2.Name);
-                                        getElementNode(agRelationshipNode, 'ho_flag', rel2.HO_Flag__c == Null ? 'False':rel2.HO_Flag__c);
-                                        getElementNode(agRelationshipNode, 'relationship_details', rel2.Relationship_details__c);
-
-
-
-                                        //Dom.Xmlnode parentAgsNode = agRelationshipNode.addChildElement('parent_agencies', null, null);
-                                        //Dom.Xmlnode childAgsNode = agRelationshipNode.addChildElement('child_agencies', null, null);
-                                        Dom.Xmlnode parentAgNode = agRelationshipNode.addChildElement('parent_agency', null, null);
-                                        Dom.Xmlnode childAgNode = agRelationshipNode.addChildElement('child_agency', null, null);
-
-                                        if(rel2.Parent_agency__c != null && rel2.Parent_agency__c != ag.Id){
-                                            //Dom.Xmlnode parentAgNode = parentAgsNode.addChildElement('parent_agency', null, null);
-                                            AMS_Agency__c agParent = mAg_VS_Agency.get(rel2.Parent_agency__c);
-                                            getAgencyNode(parentAgNode, agParent, False, True);
-                                        }
-                                        if(rel2.Child_Agency__c != null && rel2.Child_Agency__c != ag.Id){
-                                            //Dom.Xmlnode childAgNode = childAgsNode.addChildElement('child_agency', null, null);
-                                            AMS_Agency__c agChild = mAg_VS_Agency.get(rel2.Child_Agency__c);
-
-//System.debug('----- rel2.Child_Agency__c: ' + rel2.Child_Agency__c);
-//System.debug('----- agChild: ' + agChild);                                            
-                                            
-                                            getAgencyNode(childAgNode, agChild, False, True);
-                                        }
-
-                                    }
-                                }
-                            //}else{
-                            //    agRelationshipsNode.addTextNode('Missing');
-                            }
-                        }
-                    }
-                }
-            //}else{
-            //    agRelationshipsNode.addTextNode('Missing');
-            }
-
-        }
-
-        ////Header Section
-        getFooterNode(AMS_AgenciesNode, agency.size());
-
-        system.debug('--------- doc: ' + doc.toXmlString());     
-        system.debug(sDebug);
-        return doc.toXmlString();   
-    }
 
 
     public void getHeaderNode(Dom.Xmlnode rootNode, Map<String, String> mValues){
@@ -1281,24 +1180,21 @@ public with sharing class AMS_XML_Generator {
 
     }
 
+    //public void getAgencyNode(Dom.Xmlnode agencyNode, AMS_Agency__c agency, Boolean lookupParent, Boolean redux){ - #AMSFTS
+    public void getAgencyNode(Dom.Xmlnode agencyNode, Account agency, Boolean lookupParent, Boolean redux){
 
-    public void getAgencyNode(Dom.Xmlnode agencyNode, AMS_Agency__c agency, Boolean lookupParent, Boolean redux){
+       
+        Account parentAg;
 
-        //get account related to the agency, just in case it's necessary (was needed for the short name, but no more)
-        Account acc;
-        acc = (Account)msObject.get(agency.Account__c);
-
-        //Only Lookups the Parent for the Main Agency data, the ones on the Hierarchy are not looked up!
-        AMS_Agency__c parentAg;
         if(lookupParent){
-            parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(agency.Id));
+            parentAg = (Account)msObject.get(mAg_VS_ParentAg.get(agency.Id));
             if(parentAg == Null){
-                parentAg = new AMS_Agency__c();
+                parentAg = new Account();
             }
         }else{
-            parentAg = new AMS_Agency__c();
+            parentAg = new Account();
         }
-
+        //End - #AMSFTS
      
         //get "Lang" from Person object
         AMS_Person__c oPerson;
@@ -1319,8 +1215,10 @@ public with sharing class AMS_XML_Generator {
         String sQmpl_name = '';
         String sQmpf_name = '';
     
-        for(AMS_Employee__c emp : lEmployee){
-            if(emp.Agency__c == agency.Id){
+        //for(AMS_Employee__c emp : lEmployee){ - #AMSFTS 
+        for(AMS_Account_Role__c emp : lEmployee){    
+            //if(emp.Agency__c == agency.Id){ - #AMSFTS
+            if(emp.Account__c == agency.Id){
 
                 if(mEmp_VS_Person.containsKey(emp.Id)){
                     oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
@@ -1349,22 +1247,24 @@ public with sharing class AMS_XML_Generator {
         //AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(agency.Id));
         
         /*Agencies Section*/
+        String sRec_id = Null;
+        String sChangeCode = Null;
+
+        //Indicates if record is A=Added, C=Changed or D=Deleted.  Changes files only, blank for Masters.
+        AMS_Agency_Updates__c agUpd = mAg_VS_AgUpdate.get(agency.Id);
+        Agency_Applied_Change_code__c agChangeCode = mAg_VS_AgChangeCode.get(agency.Id);
+
         
+        if(agChangeCode != Null){
+            sRec_id = AMS_Utils.getRecIdFromChangeCode(agChangeCode.Change_Code__c);
+            sChangeCode = agChangeCode.Change_Code__c;
+        }else{
+            //in case of no change code!!
+            sRec_id = 'C';
+        }
+            
         if(!redux){
 
-             //Indicates if record is A=Added, C=Changed or D=Deleted.  Changes files only, blank for Masters.
-            AMS_Agency_Updates__c agUpd = mAg_VS_AgUpdate.get(agency.Id);
-
-            String sRec_id = '';
-            
-            //Validates if it's Null, null values belong to parent and child agencies processing
-            if(agUpd != null){
-                sRec_id = agUpd.Update_Type__c.equalsIgnoreCase('Create_Sent') ? 'A' : 
-                                    agUpd.Update_Type__c.equalsIgnoreCase('Update_Sent') ? 'C' : 
-                                        agUpd.Update_Type__c.equalsIgnoreCase('Delete_Sent') ? 'D' : 'A';
-            }
-
-            
             getElementNode(agencyNode, 'rec_id', sRec_id);
 
             //File Identifier AM-Airline Master, AC-Airline Changes, TM-Third Party Master, TC-Third Party Changes 
@@ -1384,27 +1284,47 @@ public with sharing class AMS_XML_Generator {
         getElementNode(agencyNode, 'area', mAg_VS_AgArea.get(agency.Id));
         getElementNode(agencyNode, 'ams_id', agency.Id);
 
-        //Sprint 7: Inserting "agref" and "agxref" for Agencies with Legacy "AIMS", for now we use the legacy ID
-        if(((String)agency.Legacy_System__c).startsWithIgnoreCase('AIMS')){
-            //getElementNode(agencyNode, 'ag_ref', agency.Legacy_External_ID__c == Null?'':agency.Legacy_External_ID__c);
-            //getElementNode(agencyNode, 'ag_x_ref', parentAg.Legacy_External_ID__c == Null?'':parentAg.Legacy_External_ID__c);
-            getElementNode(agencyNode, 'ag_ref', agency.Legacy_External_ID__c);
-            getElementNode(agencyNode, 'ag_x_ref', parentAg.Legacy_External_ID__c);
-        }else{
-            getElementNode(agencyNode, 'ag_ref', Null);
-            getElementNode(agencyNode, 'ag_x_ref', Null);
-        }
-
         if(!redux){
-             getElementNode(agencyNode, 'ho_id',  mAg_VS_HO.get(agency.Id));
+            //Sprint 10: removed condition for Inserting "agref" and "agxref", Now they are always inserted
+            //Sprint 7: Inserting "agref" and "agxref" for Agencies with Legacy "AIMS", for now we use the legacy ID
+            //if(((String)agency.Legacy_System__c).startsWithIgnoreCase('AIMS')){
+                //Begin - #AMSFTS
+                //getElementNode(agencyNode, 'ag_ref', agency.Legacy_External_ID__c == Null?'':agency.Legacy_External_ID__c);
+                //getElementNode(agencyNode, 'ag_x_ref', parentAg.Legacy_External_ID__c == Null?'':parentAg.Legacy_External_ID__c);
+            
+                getElementNode(agencyNode, 'ag_ref', agency.AIMS_ID__c == Null?Null:agency.AIMS_ID__c);
+                getElementNode(agencyNode, 'ag_x_ref', parentAg.AIMS_ID__c == Null?Null:parentAg.AIMS_ID__c);
+                //End - #AMSFTS
+                //getElementNode(agencyNode, 'ag_ref', agency.Legacy_External_ID__c);
+                //getElementNode(agencyNode, 'ag_x_ref', parentAg.Legacy_External_ID__c);
+            //}else{
+            //    getElementNode(agencyNode, 'ag_ref', Null);
+            //    getElementNode(agencyNode, 'ag_x_ref', Null);
+            //}
+
+        
+            //getElementNode(agencyNode, 'ho_id',  mAg_VS_HO.get(agency.Id));
+            Id auxAgHOid = (Id)mAg_VS_HO.get(agency.Id);
+            Account auxAgHO = (Account) msObject.get(auxAgHOid);
+            getElementNode(agencyNode, 'ho_id', auxAgHO != Null ? auxAgHO.IATACode__c : Null); 
+        
+
+            //Sprint 7: Inserting "LCtryCode" in the Agencies since now we are using the "C_Code" as country code
+            //Begin - #AMSFTS
+            getElementNode(agencyNode, 'l_country_code', agency.C_Code__c);
+            //Getting the 1st 2 digits of the IATA code corresponding to the "C_CODE"
+            //getElementNode(agencyNode, 'l_country_code', agency.IATACode__c == Null?'':agency.IATACode__c.substring(0,3));
+            //End - #AMSFTS
         }
 
+        if(agency.IATACode__c != null && agency.IATACode__c.length() > 7){
+                getElementNode(agencyNode, 'iata_code', agency.IATACode__c.substring(0, 7) );
+                
+        }else{
+                getElementNode(agencyNode, 'iata_code', agency.IATACode__c);
+        }
 
-        //Sprint 7: Inserting "LCtryCode" in the Agencies since now we are using the "C_Code" as country code
-        getElementNode(agencyNode, 'l_country_code', agency.C_Code__c);
-
-        getElementNode(agencyNode, 'iata_code', agency.IATACode__c);
-        getElementNode(agencyNode, 'iata_chk', String.valueOf(agency.Chk_Dgt__c));        
+        getElementNode(agencyNode, 'iata_chk', String.valueOf(agency.Check_Digit__c)); 
         
         String sCASS = '';
         if(agency.CASS_Number__c != Null){
@@ -1419,28 +1339,42 @@ public with sharing class AMS_XML_Generator {
         
 
         if(!redux){
-            getElementNode(agencyNode, 'site_type', agency.Site_Type__c);
+            getElementNode(agencyNode, 'change_code', sChangeCode); //- #AMSFTS
+
+            //getElementNode(agencyNode, 'site_type', agency.Site_Type__c); - #AMSFTS
+            getElementNode(agencyNode, 'site_type', agency.Location_Type__c);
+
             getElementNode(agencyNode, 'air_code', agency.Airline_Code__c);
-            //getElementNode(agencyNode, 'legal_1', agency.Name);
-            //getElementNode(agencyNode, 'legal_2', agency.Legal_Name_2__c);
-            //getElementNode(agencyNode, 'legal_3', agency.Legal_Name_3__c);
-            //getElementNode(agencyNode, 'dba_1', agency.Trading_Name_1__c);
-            //getElementNode(agencyNode, 'dba_2', agency.Trading_Name_2__c);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.name', 'legal_1', agency.Name);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_2__c', 'legal_2', agency.Legal_Name_2__c);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_3__c', 'legal_3', agency.Legal_Name_3__c);
             
+            List<String> lsLegalName = AMS_Utils.splitAccName(agency.Name);
+
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.name', 'legal_1', lsLegalName[0] == ''?null:lsLegalName[0]);
+
+            //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_2__c', 'legal_2', agency.Legal_Name_2__c); - #AMSFTS
+            //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_3__c', 'legal_3', agency.Legal_Name_3__c); - #AMSFTS
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_2__c', 'legal_2', lsLegalName[1] == ''?null:lsLegalName[1]);
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_3__c', 'legal_3', lsLegalName[2] == ''?null:lsLegalName[2]);
+
             //short_name
-            getElementNode(agencyNode, 'short_name', agency.Abbreviated_name__c);
+            //getElementNode(agencyNode, 'short_name', agency.Abbreviated_name__c); 
+            getElementNode(agencyNode, 'short_name', agency.Short_Name__c);
 
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_1__c', 'dba_1', agency.Trading_Name_1__c);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_2__c', 'dba_2', agency.Trading_Name_2__c);
+            //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_1__c', 'dba_1', agency.Trading_Name_1__c); - #AMSFTS
+            //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_2__c', 'dba_2', agency.Trading_Name_2__c); - #AMSFTS
             
 
-            //Removed from XML
-            //getElementNode(agencyNode, 'XArea', '1');
-            //getElementNode(agencyNode, 'XIATACode', parentAg.IATACode__c);
-            //getElementNode(agencyNode, 'XIATAChk', String.valueOf(parentAg.Chk_Dgt__c));
+            List<String> lsTradeName = Null;
+            if(agency.TradeName__c != Null){
+                lsTradeName = AMS_Utils.splitAccTradeName(agency.TradeName__c);
+            }else{
+                lsTradeName = new List<String>();
+                lsTradeName.add(''); //1
+                lsTradeName.add(''); //2 
+            }
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_1__c', 'dba_1', lsTradeName[0] == ''?null:lsTradeName[0]);
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_2__c', 'dba_2', lsTradeName[1] == ''?null:lsTradeName[1]);
+            
+
             //Sprint 7: Insert Category, replacing the "cat_1", "cat_2" and "cat_3" fields by multipick list values 
             //getElementNode(agencyNode, 'cat_1', agency.Location_Category__c);
             //getElementNode(agencyNode, 'cat_2', Null); //Empty, all values on field "cat_1"
@@ -1453,14 +1387,32 @@ public with sharing class AMS_XML_Generator {
                     getElementNode(nodeCat, 'cat_code', s);
                 }            
             }
-            getElementNode(agencyNode, 'pas_cgo', agency.recordType.Name.equalsIgnoreCase('passenger')?'P':'C');
+            //Begin - #AMSFTS
+            //getElementNode(agencyNode, 'pas_cgo', agency.recordType.Name.equalsIgnoreCase('passenger')?'P':'C');
+            String sPasCargo = Null;
+            if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Travel Agent') ){
+                sPasCargo = 'P';
+            }else if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Cargo Agent') ){
+                sPasCargo = 'C';
+            }
+            getElementNode(agencyNode, 'pas_cgo', sPasCargo);
+            //END - #AMSFTS
+
             getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Company_Type__c', 'co_type', agency.Company_Type__c);
-            getElementNode(agencyNode, 'solicit', agency.Solicitation_Flag__c == True ? 'Y' : 'N');
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', agency.Tax_Reference_Number__c);
-            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', agency.Other_Tax_Reference_Number__c);
-            getElementNode(agencyNode, 'bsp_code', agency.BSP_Code__c);
+            
+            //getElementNode(agencyNode, 'solicit', agency.Solicitation_Flag__c == True ? 'Y' : 'N'); - #AMSFTS
+            getElementNode(agencyNode, 'solicit', agency.GDP_Opt_In__c == True ? 'Y' : 'N');
+            
+            //Begin - #AMSFTS
+            //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', agency.Tax_Reference_Number__c);
+            //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', agency.Other_Tax_Reference_Number__c);
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Tax_Reference_Number__c', 'tax_ref_1', agency.VAT_Number__c);
+            getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Other_Tax_Reference_Number__c', 'tax_ref_2', agency.VAT_Number_2__c);
+            //END - #AMSFTS
 
-
+            //getElementNode(agencyNode, 'bsp_code', agency.BSP_Code__c); - #AMSFTS
+            getElementNode(agencyNode, 'bsp_code', agency.BSP_CASS_Code__c);
+            
             Dom.Xmlnode nodeAffil = agencyNode.addChildElement('affil', null, null);
             String sAffil = '';
             List<String> lAffil = new List<String>();
@@ -1497,6 +1449,20 @@ public with sharing class AMS_XML_Generator {
                 }
             }
 
+            Datetime dtOrganization_Last_Change_Date = agency.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(agency.Organization_Last_Change_Date__c.year(), agency.Organization_Last_Change_Date__c.month(),agency.Organization_Last_Change_Date__c.day());
+            Datetime dtLast_Inspection_Date = agency.Last_Inspection_Date__c == Null ? Null : Datetime.newInstance(agency.Last_Inspection_Date__c.year(), agency.Last_Inspection_Date__c.month(),agency.Last_Inspection_Date__c.day());
+            Datetime dtOriginal_Approval_DAte = agency.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(agency.Original_Approval_DAte__c.year(), agency.Original_Approval_DAte__c.month(),agency.Original_Approval_DAte__c.day());
+           
+            //getElementNode(agencyNode, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
+            ////getElementNode(agencyNode, 'location_class2', mAg_VS_Segment.get(agency.Id));
+            getElementNode(agencyNode, 'location_class',agency.Location_Class__c);
+            //getElementNode(agencyNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+            //getElementNode(agencyNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
+            
+            getElementNode(agencyNode, 'email',agency.Email__c);
+            getElementNode(agencyNode, 'tty',agency.TTY__c);
+            getElementNode(agencyNode, 'website',agency.Website);
+
             getElementNode(agencyNode, 'eth_2', Null); //Empty, reserved field
             getElementNode(agencyNode, 'eth_3', Null); //Empty, reserved field
             //Removed from XML
@@ -1508,9 +1474,73 @@ public with sharing class AMS_XML_Generator {
     }
 
 
+   
+
+
     /*****************************************
         Utility Methods section
     ******************************************/
+
+    /**
+    Split the phone number from a String, removing spaces and non-numeric Chars 
+    Returns List with:
+        [0] - phone number - size 12
+        [1] - STD codes    - size 6
+        [2] - INT code     - size 6
+    */
+    public List<String> splitPhone(String num){ 
+        List<String> lRes = new List<String>();
+        List<String> lNum = new List<String>();
+        
+        String numRes = '';
+        Integer i=0;
+        
+        //Check for value
+        if(num == null){
+            return null;
+        }
+
+        //test if less or equal 12 chars
+        if(num.length() <= 12){
+            lRes.add(num);
+        }else{
+            //Remove spaces and special chars
+            //lNum = num.split('|');
+            do{
+                if(i<num.length()){
+                    String s = num.substring(i,i+1);
+                    if (s.isNumeric()){
+                        numRes += s;
+                    }
+                    system.debug('s: ' + s + ' || numRes:' + numRes);
+                }
+                i=i+1;
+            }while(i < num.length());
+        
+            
+            //test again if less or equal 12 chars
+            if(numRes.length() <= 12){
+                lRes.add(numRes);
+            }else{
+                //test again if less or equal 18 chars (phone + std)
+                if(numRes.length() <= 18){
+                    lRes.add(numRes.substring(numRes.length()-12, numRes.length()));
+                    lRes.add(numRes.substring(0, numRes.length()-12));
+                }else{
+                    //24 chars (phone + std + int)
+                    lRes.add(numRes.substring(numRes.length()-12, numRes.length()));
+                    lRes.add(numRes.substring(numRes.length()-18, numRes.length()-12));  
+                    if(numRes.length() <= 24){
+                        lRes.add(numRes.substring(0, numRes.length()-18));                        
+                    }else{
+                        lRes.add(numRes.substring(numRes.length()-24, numRes.length()-18));                            
+                    }
+                    
+                }
+            }
+        }
+        return lRes;
+    }
 
     public static String PadZeros(String s, Integer Len) {
         while (s.length() < Len) s = '0' + s;
@@ -1519,7 +1549,7 @@ public with sharing class AMS_XML_Generator {
     
     public String getPersonLanguageOfCorrespondence(String value){
         if(value == Null){
-            return '';
+            return Null;
         }else if(value.equalsIgnoreCase('EN')){
             return 'ENG';
         }else if(value.equalsIgnoreCase('FR')){
@@ -1527,41 +1557,10 @@ public with sharing class AMS_XML_Generator {
         }else if(value.equalsIgnoreCase('SP')){
             return 'SPA';
         }
-        return '';
+        return Null;
     }
 
-    //Get the WAD files values to include
-    public String getWadValue(String name, String type){
-        
-        name = name.toLowerCase();
-
-        if(mWadNameValues.containsKey(name)){
-            AMS_WAD_Settings__c wadSett = mWadNameValues.get(name); 
-            if(type.equalsIgnoreCase('Size')){
-                return String.valueOf(wadSett.Size__c);
-            }else if(type.equalsIgnoreCase('Position')){
-                return String.valueOf(wadSett.Position__c);
-            }
-        }else if(mWadFieldValues.containsKey(name)){
-            AMS_WAD_Settings__c wadSett = mWadFieldValues.get(name); 
-            if(type.equalsIgnoreCase('Size')){
-                return String.valueOf(wadSett.Size__c);
-            }else if(type.equalsIgnoreCase('Position')){
-                return String.valueOf(wadSett.Position__c);
-            }
-        }
-
-        return '';
-    } 
-
-
-    //Set WAD attributes to the XML Element
-    public void getWadAttributes(Dom.Xmlnode node, String field){
-        if(mWadNameValues.containsKey(field.toLowerCase()) || mWadFieldValues.containsKey(field.toLowerCase())){
-            //node.setAttribute('wadsize', getWadValue(field,'Size'));
-            //node.setAttribute('wadposition', getWadValue(field,'Position'));
-        }
-    }
+    
 
     //Get the WAD files values to include
     public String getXMLTag(String name){
@@ -1616,7 +1615,8 @@ public with sharing class AMS_XML_Generator {
             Boolean bTranslate = False;
             if(field.equalsIgnoreCase(ft.Field_name__c)){
 
-                if(strObject.equalsIgnoreCase('ams_agency__c') && ft.Agency__c == iid){
+                //if(strObject.equalsIgnoreCase('ams_agency__c') && ft.Agency__c == iid){ - #AMSFTS
+                if(strObject.equalsIgnoreCase('Account') && ft.Account__c == iid){
                     bTranslate = True;
                 }else if(strObject.equalsIgnoreCase('ams_address__c') && ft.Address__c == iid){
                     bTranslate = True;
@@ -1707,6 +1707,12 @@ public with sharing class AMS_XML_Generator {
                     if(displayFieldName.contains('__c')){
                         displayFieldName = displayFieldName.substringBeforeLast('__c');
                     }
+
+                    //Special case for ISO_State
+                    if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
+                        displayFieldName = 'state_iso_code';
+                    }
+
                     displayFieldName = getXMLTag(displayFieldName);
 
                     //Set the plural for some fields
@@ -1758,21 +1764,33 @@ public with sharing class AMS_XML_Generator {
                                     //Special case - need to split field in 2...
                                     //Sprint 7: Removed "country_code" from "State"... "ISO_CODE" stay has is...
                                     ////Special case - need to split field in 2...
-                                    //if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
-                                    //    String sValue = String.valueOf(obj.get(f));
-                                    //    String sISO_code = '';
-                                    //    String sCountryCode = '';
-                                    //    if(sValue.length() == 4){
-                                    //        sISO_code = sValue.substring(0,2);
-                                    //        sCountryCode = sValue.substring(2,4);
-                                    //    }else{
-                                    //        sISO_code = sValue;
-                                    //        sCountryCode = '';
-                                    //    }
-                                    //    auxNode.addTextNode(sISO_code );
-                                    //    Dom.Xmlnode auxNodeCountryCode = auxParentNode.addChildElement('country_code', null, null);
-                                    //    auxNodeCountryCode.addTextNode(sCountryCode );
-                                    //}else 
+                                    if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
+                                        IATA_ISO_State__c auxState =  (IATA_ISO_State__c)obj;
+                                        String sAuxName = auxState.Name;
+                                        String sValue = String.valueOf(obj.get(f));
+                                        String sISO_code = '';
+                                        String sCountryCode = '';
+                                        if(sValue.length() == 4){
+                                            sISO_code = sValue.substring(0,2);
+                                            sCountryCode = sValue.substring(2,4);
+                                        //Test to check US, Canada and Australia states
+                                        }else if(sValue.indexOf('-') > 1){
+                                            sISO_code = sValue.substring(sValue.indexOf('-')+1,sValue.length());
+                                            sCountryCode = Null;
+                                        }else{
+                                            sISO_code = sValue;
+                                            sCountryCode = Null;
+                                        }
+
+                                        auxNode.addTextNode(sISO_code );
+                                        Dom.Xmlnode auxNodeStateName = auxParentNode.addChildElement('name', null, null);
+                                        //auxNodeStateName.addTextNode(sAuxName );
+                                        getTranslationNode(auxNodeStateName, (Id) obj.get('Id'), sObjectName, f, sAuxName );
+                                        Dom.Xmlnode auxNodeCountryCode = auxParentNode.addChildElement('numeric_code', null, null);
+                                        if(sCountryCode != Null){
+                                            auxNodeCountryCode.addTextNode(sCountryCode );
+                                        }
+                                    }else 
                                         
                                     if(displayFieldName.equalsIgnoreCase('language_of_correspondence') ){ 
                                         //Sprint 7: Removed "contacts", this part was hardcoded for XSD v103 because contacts was changed from "Person" object to the "employee" Obj
@@ -1847,7 +1865,8 @@ public with sharing class AMS_XML_Generator {
                                 }else if(f.equalsIgnoreCase('Parent_agency__c')){ //Special threatment for the Parent agencies on the Hierarchy data
 
                                     Dom.Xmlnode auxAgencyNode = auxParentNode.addChildElement(displayFieldName, null, null);
-                                    getAgencyNode(auxAgencyNode, (AMS_Agency__c)msObject.get((Id)obj.get(f)),False, True);
+                                    //getAgencyNode(auxAgencyNode, (AMS_Agency__c)msObject.get((Id)obj.get(f)),False, True); - #AMSFTS
+                                    getAgencyNode(auxAgencyNode, (Account)msObject.get((Id)obj.get(f)),False, True);
 
                                 }else{
 
@@ -1916,6 +1935,23 @@ public with sharing class AMS_XML_Generator {
                 getElementNode(auxParentNode, 'toll_int', Null);
                 getElementNode(auxParentNode, 'toll_std', Null);
             }
+
+            //Sprint 12 - workaround while fields are not created on SFDC
+            if(sObjectName.equalsIgnoreCase('AMS_Inspection__c') ){
+                AMS_Inspection__c x = (AMS_Inspection__c)obj;
+                String sAuxValue = (String)x.Accreditation_Endorsement_organisation__r.Air_Code__c;
+                
+                Account ag = (Account)msObject.get(x.Account__c);
+
+                Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
+                Datetime dtLast_Inspection_Date = ag.Last_Inspection_Date__c == Null ? Null : Datetime.newInstance(ag.Last_Inspection_Date__c.year(), ag.Last_Inspection_Date__c.month(),ag.Last_Inspection_Date__c.day());
+                Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
+               
+                getElementNode(auxParentNode, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
+                //getElementNode(auxParentNode, 'location_class',ag.Location_Class__c);
+                getElementNode(auxParentNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+                getElementNode(auxParentNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
+            }       
 
         } catch (SObjectException e)    { 
             //getObjectData SObjectException e:System.SObjectException: SObject row was retrieved via SOQL without querying the requested field: AMS_Employee__c.IsDeleted

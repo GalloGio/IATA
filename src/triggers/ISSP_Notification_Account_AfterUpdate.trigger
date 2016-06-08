@@ -9,6 +9,9 @@
  */
 trigger ISSP_Notification_Account_AfterUpdate on Account (after update) 
 {
+
+    if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'ISSP_Notification_Account_AfterUpdate')) { return; }
+    
     if(!ISSP_AccountTriggerHandler.preventTrigger)
     {
     	ISSP_AccountTriggerHandler.preventTrigger = true;

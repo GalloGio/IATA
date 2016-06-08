@@ -3245,6 +3245,10 @@ and
         <name>ISSP_AMS_Reason_New_HO</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Rejected_File --></label>
+        <name>ISSP_AMS_Rejected_File</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_1 Branch Title --></label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>
@@ -7338,6 +7342,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Subject --></label>
         <name>Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
+        <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
         <label><!-- The attachments you select will be copied to the target case --></label>

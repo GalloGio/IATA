@@ -5932,6 +5932,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Rejected_File</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Rejected_File</shortDescription>
+        <value>Please upload file(s) for each requirement where a file has been rejected by IATA (indicated with a X). &lt;br/&gt; Once completed please return to the case and add a comment to let IATA know they can proceed with your application.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -13804,6 +13811,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>Subject</shortDescription>
         <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>SurveyCustomerRecoveriesAnnFARRELL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
+        <value>005w0000003XCG8</value>
     </labels>
     <labels>
         <fullName>The_attachments_you_select_will_be_copied_to_the_target_case</fullName>

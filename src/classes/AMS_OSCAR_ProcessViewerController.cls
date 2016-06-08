@@ -1,0 +1,243 @@
+public class AMS_OSCAR_ProcessViewerController {
+    
+    public AMS_OSCAR__c oscar {get;set;}
+
+    public Case oscarCase{get;set;}
+
+    public Id oscarId{get;set;}
+
+    public Id caseId{get;set;}
+
+    public AMS_OSCAR_JSON accreditationProcesses {get;set;}
+    public Map<String, AMS_OSCAR_JSON.Process> process {get;set;}
+ 
+    public Map<String,String> statusIcons {get;set;}
+    public Map<String,String> statusLabel {get;set;}
+    public Map<String,StepFieldsDataWrapper> stepFieldsData {get;set;}
+    
+    public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
+    
+    public AMS_OSCAR_ProcessViewerController() {
+        
+        
+
+        Id objectId = ApexPages.currentPage().getParameters().get('id');
+
+        if(objectId == null)
+            return;
+       
+        if(isObjectCase(objectId)){
+
+            this.oscarCase = fetchCaseFields(objectId,false);
+            this.caseId = this.oscarCase.Id;
+
+            if(this.oscarCase.OSCAR__c != null){
+             
+                this.oscar = fetchOscarFields(this.oscarCase.OSCAR__c);
+                this.oscarId = this.oscar.Id;
+                loadJsonFile();
+            }
+
+
+        }else{
+
+            this.oscar = fetchOscarFields(objectId);
+            this.oscarId = this.oscar.Id;
+            loadJsonFile();
+            
+            this.oscarCase = fetchCaseFields(objectId,true);
+            this.caseId = this.oscarCase.Id;
+
+        }   
+        
+  
+    }
+
+    public String convertToString(Blob value){
+        return EncodingUtil.urlDecode(value.toString(), 'UTF-8');
+    }
+    
+    /**
+     *  Get the 
+     */
+    public void getDisplayFieldsPickValues(AMS_OSCAR_JSON.Process process){
+        
+        for(AMS_OSCAR_JSON.Flow flow: process.flows){
+            for(AMS_OSCAR_JSON.Step step: flow.steps){
+                for(String stepFieldName: step.displayFields){
+                    //check if the field is already in the map
+                    if(stepFieldsData.get(stepFieldName) == null){
+                        
+                        Schema.DescribeFieldResult fr = fieldMap.get(stepFieldName).getDescribe();
+                        List<SelectOption> pickValues;
+                        String fieldLabel = fr.getLabel();
+                        
+                        if(stepFieldName.startsWithIgnoreCase('STEP'))
+                            fieldLabel = 'Stage status';
+                        
+                        Schema.DisplayType fieldType = fr.getType();
+                        //remove "--None--" from picklists
+                        if(fieldType == Schema.DisplayType.PICKLIST)
+                            pickValues = getPicklistValues(fr);
+                            
+                        StepFieldsDataWrapper wrapper = new StepFieldsDataWrapper(stepFieldName, fieldLabel, pickValues);
+
+                        stepFieldsData.put(stepFieldName, wrapper);
+                    }
+                }
+                
+                step.label = 'AMS_OSCAR_' + step.name;
+            }
+        }
+        
+    }
+    
+    /**
+     *  Get the status of all the steps in the Process
+     */
+    public void getStatus(AMS_OSCAR_JSON.Process process){
+        
+        for(AMS_OSCAR_JSON.Flow flow: process.flows)
+            for(AMS_OSCAR_JSON.Step step: flow.steps){
+                
+                String stepApiName = step.name + '__c';
+                
+                system.debug('MAC name ' + stepApiName);
+                String stepValue = (String)this.oscar.get(stepApiName);
+                system.debug('MAC value ' + stepValue);
+                String iconFileName = (stepValue+'.png').replace(' ', '_').toLowerCase();
+    
+                statusIcons.put(step.name,iconFileName);
+                statusLabel.put(step.name, stepValue);
+            }
+    }
+    
+    public List<SelectOption> getPicklistValues(Schema.DescribeFieldResult fr){
+        
+        List<SelectOption> picklistValues = new List<SelectOption>();
+      
+        List<Schema.PicklistEntry> ple = fr.getPicklistValues();
+      
+        String fieldName = fr.getName();
+        
+        String currentPickValue = String.valueOf(oscar.get(fieldName));
+        System.debug('FOR FIELD: '+ fieldName + ' value is: '+ currentPickValue);
+        
+        if(currentPickValue != null)
+            picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
+        
+        for( Schema.PicklistEntry f : ple)
+        {
+            //this is a workaround to make the current value of the field the default value of the picklist
+            if(currentPickValue != f.getValue())
+                picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
+        }
+        
+        return picklistValues;
+    }
+    
+    public class StepFieldsDataWrapper{
+        public String fieldApiName{get;set;}
+        public String fieldLabel{get;set;}
+        public List<SelectOption> picklistValues{get;set;}
+        
+        public StepFieldsDataWrapper(String fieldApiName, String fieldLabel, List<SelectOption> picklistValues){
+            this.fieldApiName = fieldApiName;
+            this.fieldLabel = fieldLabel;
+            this.picklistValues = picklistValues;
+        }
+    }
+
+    private boolean isObjectCase(Id objectToFind){
+
+        return AMS_Utils.findObjectNameFromRecordIdPrefix(objectToFind).equalsIgnoreCase('CASE');
+
+    }
+
+    private Case fetchCaseFields(ID objectId, Boolean isIdFromOscar){
+        
+        Case toReturn = null;
+
+        List<Case> cases = new List<Case>();
+
+        if(isIdFromOscar){
+
+            ID oSCARCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
+
+            cases =  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c =: objectId AND RecordTypeID =: oSCARCaseRecordTypeID LIMIT 1];
+
+        }
+        else{
+
+            cases = [SELECT Id, OSCAR__c FROM Case WHERE id = :objectId LIMIT 1];
+
+        }   
+
+        if(!cases.isEmpty())
+            return cases.get(0);
+
+       return toReturn;
+
+    }
+
+
+    private AMS_OSCAR__c fetchOscarFields(ID oscarId){
+        
+        AMS_OSCAR__c toReturn = null;
+
+        List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+
+        oscars =    [SELECT Id, Status__c, Account__c, Process__c,RPM_Approval__c,Issue_credit_note_withdrawal__c,Bank_Guarantee_Currency__c,
+                    Send_FS_request__c, Comments_validate__c,Comments_approval__c, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Name,
+                    Release_FS_withdrawal__c,Issue_Withdrawal_notification__c,Issue_disapproval_pack__c,Issue_credit_note_if_applicable__c,
+                    Release_FS_if_applicable__c, Billing_Document_Number__c, Financial_Review_Result__c,Send_invoice__c,Send_inspection_request__c,
+                    Send_agreement__c,Update_DPC__c,Update_IRIS__c,Update_BSPLink_CASSLink__c,Update_Portal_Setup__c,Welcome_pack__c,Off_site_storage__c,
+                    Welcome_call__c,Change_effective_as_of__c,Bank_Guarantee_amount__c,CurrencyIsoCode,STEP1__c, STEP2__c, STEP3__c, STEP4__c, STEP5__c,
+                    STEP6__c, STEP7__c, STEP8__c, STEP9__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c,
+                    STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
+                    Late_notified_change__c, Confirm_DGR_DGA__c,Update_IRIS_processing__c, Send_approval_letter__c, Issue_rejection_notification_pack__c,
+                    AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c 
+                    from AMS_OSCAR__c where Id =: oscarId LIMIT 1];
+
+        if(!oscars.isEmpty())
+            return oscars.get(0);
+
+       return toReturn;
+
+    }
+
+    private void loadJsonFile(){
+
+
+        /*
+         *  LOAD JSON TO OBJECT
+         */
+        StaticResource jsonFile = [select Id , Name , Body from StaticResource where Name = 'JSON_OSCAR_Process'];
+
+        String JSONContent = convertToString(jsonFile.Body);
+        
+        JSONParser parser = JSON.createParser(JSONContent);
+        
+        parser.nextToken();
+        parser.nextToken();
+        parser.nextToken();
+        
+        accreditationProcesses = (AMS_OSCAR_JSON)parser.readValueAs(AMS_OSCAR_JSON.class);
+        List<AMS_OSCAR_JSON.Process> pr = accreditationProcesses.processes;
+        
+        process = new Map<String, AMS_OSCAR_JSON.Process>();
+        
+        stepFieldsData = new Map<String,StepFieldsDataWrapper>();
+
+        statusIcons = new Map<String,String>();
+        statusLabel = new Map<String,String>();
+
+        for(AMS_OSCAR_JSON.Process p: pr){
+            process.put(p.Name, p);
+            getStatus(p);
+            getDisplayFieldsPickValues(p);
+        }
+
+    }
+
+}

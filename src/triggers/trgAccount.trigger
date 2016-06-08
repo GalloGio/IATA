@@ -1,5 +1,8 @@
 trigger trgAccount on Account (before update, before insert) {
-    if (!IECConstants.GDPReplication_ProfileIDswithAccess.contains(UserInfo.getProfileId().substring(0, 15))) {
+
+    if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'trgAccount')) { return; }
+    
+    if (!IECConstants.GDPReplication_ProfileIDswithAccess.contains(UserInfo.getProfileId().substring(0, 15)) && !AMS_Utils.isAMSProfile(UserInfo.getProfileId().substring(0, 15))) {
         if (trigger.isBefore && trigger.isInsert) {
             for (Account a : trigger.new){      
                 if (a.Is_AIMS_Account__c || a.WebStar_ID__c != null) {

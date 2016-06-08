@@ -59,7 +59,6 @@
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>Inspections (AMS)</relationshipLabel>
         <relationshipName>Inspections_AMS</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -153,17 +152,15 @@
     </fields>
     <fields>
         <fullName>Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
-        <relationshipLabel>Inspections (AMS)</relationshipLabel>
         <relationshipName>Inspections</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Date_Organisation_Status_attained__c</fullName>

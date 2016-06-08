@@ -1,0 +1,238 @@
+@isTest
+private class AMS_AccountTriggerHandlerTest {
+	
+	@testSetup static void setup(){
+
+		List<Account> acctsToInsert = new List<Account>();
+
+		Account acc1 = new Account();
+		acc1.Name = 'HO Account 1';
+		acc1.Type = 'IATA Cargo Agent';
+		acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+
+		insert acc1;
+
+		Account acc2 = new Account();
+		acc2.Name = 'BR Account 2';
+		acc2.Type = 'IATA Cargo Agent';
+		acc2.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc2.ParentId = acc1.Id;
+		acc2.Sector__c = 'Cargo Agent';
+		acc2.REASON_FOR_CREATION__C = 'Created by customer';
+		
+		Account acc3 = new Account();
+		acc3.Name = 'BR Account 3';
+		acc3.Type = 'IATA Cargo Agent';
+		acc3.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc3.ParentId = acc1.Id;
+		acc3.Sector__c = 'Cargo Agent';
+		acc3.REASON_FOR_CREATION__C = 'Created by customer';
+	   
+		Account acc4 = new Account();
+		acc4.Name = 'BR Account 4';
+		acc4.Type = 'IATA Cargo Agent';
+		acc4.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc4.ParentId = acc1.Id;
+		acc4.Sector__c = 'Cargo Agent';
+		acc4.REASON_FOR_CREATION__C = 'Created by customer';
+		
+		// different set
+
+		Account acc1d = new Account();
+		acc1d.Name = 'HO Account Diff 1';
+		acc1d.Type = 'IATA Cargo Agent';
+		acc1d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		
+		insert acc1d;
+		
+		Account acc2d = new Account();
+		acc2d.Name = 'BR Account Diff 2';
+		acc2d.Type = 'IATA Cargo Agent';
+		acc2d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc2d.ParentId = acc1d.Id;
+		acc2d.Sector__c = 'Cargo Agent';
+		acc2d.REASON_FOR_CREATION__C = 'Created by customer';
+
+		Account acc3d = new Account();
+		acc3d.Name = 'BR Account Diff 3';
+		acc3d.Type = 'IATA Cargo Agent';
+		acc3d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc3d.ParentId = acc1d.Id;
+		acc3d.Sector__c = 'Cargo Agent';
+		acc3d.REASON_FOR_CREATION__C = 'Created by customer';
+
+		Account acc4d = new Account();
+		acc4d.Name = 'BR Account Diff 4';
+		acc4d.Type = 'IATA Cargo Agent';
+		acc4d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc4d.ParentId = acc1d.Id;
+		acc4d.Sector__c = 'Cargo Agent';
+		acc4d.REASON_FOR_CREATION__C = 'Created by customer';
+
+		acctsToInsert.add(acc2);
+		acctsToInsert.add(acc3);
+		acctsToInsert.add(acc4);
+
+		acctsToInsert.add(acc2d);
+		acctsToInsert.add(acc3d);
+		acctsToInsert.add(acc4d);
+
+		insert acctsToInsert;
+
+		// now for the hierarchies
+
+		List<AMS_Agencies_Hierarchy__c> hierarchiesToInsert = new List<AMS_Agencies_Hierarchy__c>();
+
+		AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+		
+		AMS_Agencies_Hierarchy__c ah2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2');
+
+		hierarchiesToInsert.add(ah1);
+		hierarchiesToInsert.add(ah2);
+
+		insert hierarchiesToInsert;
+
+
+		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc2.id,Parent_Account__c=acc1.id);
+		AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc3.id,Parent_Account__c=acc1.id);
+		AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc4.id,Parent_Account__c=acc1.id);
+
+
+		AMS_Agencies_relationhip__c ar1d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc2d.id,Parent_Account__c=acc1d.id);
+		AMS_Agencies_relationhip__c ar2d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc3d.id,Parent_Account__c=acc1d.id);
+		AMS_Agencies_relationhip__c ar3d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc4d.id,Parent_Account__c=acc1d.id);
+
+		List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+
+		rels.add(ar1);
+		rels.add(ar2);
+		rels.add(ar3);
+
+		rels.add(ar1d);
+		rels.add(ar2d);
+		rels.add(ar3d);     
+
+		insert rels;
+	}
+
+
+	@isTest static void verifychangeCassNumberError() {
+		
+		Test.StartTest();
+
+		Boolean exceptionVar = false;
+
+		List<Account> accountListToUpdate = new List<Account>();
+
+		List<Account> accountList = [SELECT Id, Name , Cass_Number__c, ParentId from Account];
+
+		if(accountList.isEmpty())
+			System.assertEquals(true,false);
+
+		for(Account acc: accountList){
+
+			System.debug('Analyzing Account name '+ acc.Name + ' that has cass number ' + acc.CASS_Number__c);
+
+			if(acc.ParentId != null){
+			
+				System.assert(acc.Cass_Number__c != null);
+			
+				if(acc.CASS_Number__c == '001'){
+					acc.CASS_Number__c = '002';
+					System.debug('Account name '+ acc.Name + ' now has cass number ' + acc.CASS_Number__c);
+					accountListToUpdate.add(acc);
+				}else{
+					System.debug('Account name '+ acc.Name + ' has not been updated because has cass number ' + acc.CASS_Number__c);
+				}
+			}else{
+				System.debug('The Account name '+ acc.Name + ' does not have parent id ');
+			}
+		}
+
+	   
+
+		if(!accountListToUpdate.isEmpty()){
+			try{
+				update accountListToUpdate;
+			}catch(Exception e){
+				System.Assert(e.getMessage().contains('FIELD_CUSTOM_VALIDATION_EXCEPTION'));
+				System.Assert(e.getMessage().contains('already has an agency with that cass number'));
+				exceptionVar = true;
+			}
+		}
+		else{
+			System.assertEquals(true,false);
+		}
+
+		System.assert(exceptionVar,true);
+		
+		Test.StopTest();
+	}
+	
+	@isTest static void verifychangeCassNumberSuccess() {
+
+		Test.StartTest();
+
+		List<Account> accountListToUpdate = new List<Account>();
+
+		List<Account> accountList = [SELECT Id, Name , Cass_Number__c, ParentId from Account];
+
+		if(accountList.isEmpty())
+			System.assertEquals(true,false);
+
+		for(Account acc: accountList){
+
+			if(acc.ParentId != null){
+			
+				System.assert(acc.Cass_Number__c != null);
+			
+				if(acc.CASS_Number__c == '001'){
+					acc.CASS_Number__c = '002';
+					accountListToUpdate.add(acc);
+				}else{
+					if(acc.CASS_Number__c == '002'){
+						acc.CASS_Number__c = '001';
+						accountListToUpdate.add(acc);
+					}
+				}
+			}
+		}
+
+		
+
+		if(!accountListToUpdate.isEmpty()){
+			update accountListToUpdate;
+		}
+		else{
+			System.assertEquals(true,false);
+		}
+		
+		Test.StopTest();
+	}
+
+
+	//Test the trigger trgAccount
+	static testMethod void test_trgAccount() {
+		IECTestUtil.bIgnoreCurrentUserProfile = true;
+		Account acc1 = new Account();
+		acc1.Name = 'HO Account 1';
+		acc1.Type = 'IATA Cargo Agent';
+		acc1.WebStar_ID__c = 'Some Test';
+		acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+
+		try{
+			insert acc1;
+		}catch(Exception e){
+			System.assert(e.getMessage().contains(Label.Cannot_Update_AIMS_values));	
+
+			IECTestUtil.bIgnoreCurrentUserProfile = false;	
+			insert acc1;	
+		}
+
+
+		IECTestUtil.bIgnoreCurrentUserProfile = true;
+		acc1.Last_Modified_by_Source__c = System.now();
+		update acc1;
+	}
+	
+}

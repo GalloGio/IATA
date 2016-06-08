@@ -1,0 +1,286 @@
+public with sharing class AMS_AccreditationContactHelper
+{
+    
+    public static Map<String, AMS_Account_Role__c> findRolesAndPersonsByEmail(Set<String> emailSet, Set<Id> acPersonSet)
+    {
+        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
+        String query = 'select ' + commaSeparatedFields;
+        query = query + ', Person__r.Email__c, Person__r.Contact__r.Id, Person__r.First_Name__c, Person__r.LastName__c, Person__r.Phone__c, ' + 
+                        'Person__r.Contact__r.Email, Contact__r.Id, Contact__r.AccountId ';
+        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Employee') + '\' and (Person__r.Email__c in :emailSet or Person__r.Id in :acPersonSet)';
+        List<AMS_Account_Role__c> roleList = Database.query(query);
+        Map<String, AMS_Account_Role__c> rolePersonMap = new Map<String, AMS_Account_Role__c>();
+        for(AMS_Account_Role__c ar : roleList)
+        {
+            if(rolePersonMap.get(ar.Person__r.Email__c) == null){
+                rolePersonMap.put(ar.Person__r.Email__c, ar);
+            } else {
+                // TODO at a later stage. Right now we are safe to assume that emails are unique and there should not be Persons using the same email.
+            }
+        }
+        return rolePersonMap;
+    }
+    
+    public static Map<String, AMS_Account_Role__c> findRolesAndContactsByEmail(Set<String> emailSet, Set<Id> acContactSet)
+    {
+        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
+        String query = 'select ' + commaSeparatedFields;
+        query = query + ', Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.Title, Contact__r.Membership_Main_Contact__c ';
+        //query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Employee') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
+        query = query + ' from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Ownership') + '\' and Person__c = null and (Contact__r.Email in :emailSet or Contact__r.Id in :acContactSet)';
+        List<AMS_Account_Role__c> roleList = Database.query(query);
+        Map<String, AMS_Account_Role__c> roleContactMap = new Map<String, AMS_Account_Role__c>();
+        for(AMS_Account_Role__c ar : roleList)
+        {
+            if(roleContactMap.get(ar.Contact__r.Email) == null){
+                roleContactMap.put(ar.Contact__r.Email, ar);
+            } else {
+                // TODO at a later stage. Right now we are safe to assume that emails are unique and there should not be Persons using the same email.
+            }
+        }
+        return roleContactMap;
+    }
+    
+    public static List<AMS_Account_Role__c> findAllRolesForAccount(String accountId)
+    {
+        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
+        String query = 'select ' + commaSeparatedFields;
+        query = query + ', Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.Title, Contact__r.Membership_Main_Contact__c ';
+        query = query + ' Person_AMS__r.Email__c from AMS_Account_Role__c where RecordTypeId = \'' + AMS_Utils.getId('AMS_Account_Role__c', 'Employee') + '\' and Account = :accountId';
+        List<AMS_Account_Role__c> roleList = Database.query(query);
+        return roleList;
+    }
+    
+    
+    
+    public static Map<Id, Contact> findContactsByEmail(Set<String> emailSet)
+    {
+        Map<ID, Contact> contactMap = new Map<Id, Contact>([select Id, Email from Contact where Email in :emailSet limit 49999]);
+        return contactMap;
+    }
+    
+    public static Map<ID, AMS_Person__c> findPersonsByEmail(Set<String> emailSet)
+    {
+        Map<ID, AMS_Person__c> personMap = new Map<Id, AMS_Person__c>([select Id, Email__c from AMS_Person__c where Email__c in :emailSet limit 49999]);
+    	return personMap;
+    }
+    
+    
+    public static void insertAmsRolesForAccreditationContacts(List<AMS_AccreditationContactController.AccreditationContactWrapper> wrapperList)
+    {
+    	// remember to check whether the Contact__c linking on Person has a value. If it does, utilize that Contact instead of the Person
+    	List<AMS_Account_Role__c> roleList = new List<AMS_Account_Role__c>();
+    	List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
+    	Set<Id> idSet = new Set<Id>();
+    	for(AMS_AccreditationContactController.AccreditationContactWrapper wrapped : wrapperList)
+    	{
+    		idSet.add(wrapped.recordId);
+    		acList.add(wrapped.ac);
+    	}
+    	Map<Id, AMS_Person__c> idPersonMap = new Map<Id, AMS_Person__c>([select id, Contact__c, Email__c from AMS_Person__c where id in :idSet]);
+    	for(AMS_AccreditationContactController.AccreditationContactWrapper wrapped : wrapperList)
+    	{
+    		if(idPersonMap.get(wrapped.recordId) != null) // check if the AMS_Person__c record has a link to a Contact
+    		{
+    			if(IdPersonMap.get(wrapped.recordId).Contact__c != null) // linked, so update ac.Contact__c so it gets handled properly in the next step
+    			{
+					wrapped.ac.Contact__c = IdPersonMap.get(wrapped.recordId).Contact__c;
+    				roleList.add(createAmsAccountRole(wrapped.ac));
+    			} else // no linking to Contact
+    			{
+    				roleList.add(createAmsAccountRole(wrapped.ac));
+    			}
+    		} else // handle the ones with no linking at all
+    		{
+    			roleList.add(createAmsAccountRole(wrapped.ac));
+    		}
+    	}
+    	System.debug('**** new Roles: '+roleList);
+        
+    	insert roleList;
+    }
+    
+    public static AMS_Account_Role__c createAmsAccountRole(AMS_Accreditation_Contact__c ac)
+    {
+    	AMS_Account_Role__c role = new AMS_Account_Role__c();
+        if(ac.Contact__c != null)
+        {
+			role.Contact__c = ac.Contact__c;
+			role.Person__c = null;
+        }
+        else if(ac.Person_AMS__c != null)
+        {
+        	role.Person__c = ac.Person_AMS__c;
+        }
+        else // no linking, contact already created before calling this method
+        {}
+        
+         
+    	role.Account__c 		= ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+		role.Duty__c 			= ac.Job_Title__c;
+		role.Employee_Name__c 	= ac.First_Name__c + ' ' + ac.Last_Name__c;
+		role.Hours__c 			= String.valueOf(ac.Time_devoted_to_Agency_business__c);
+		role.IsManager__c 		= ac.Agency_role__c;
+		role.Percentage__c 		= ac.Financial_Interest__c;
+		role.Position__c 		= ac.Job_title__c;
+		// role.Registration_Date__c = ac.AMS_Pax_Accreditation_Form__r.CreatedDate.date(); TODO: confirm this
+		
+		if(ac.Agency_owner__c)
+		{
+			role.Owner_Name__c 		= ac.First_Name__c + ' ' + ac.Last_Name__c;
+			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+			
+			// This is actually not needed for person owners
+            if(ac.RecordTypeId == AMS_Utils.AccreditationContactCompanyRT)
+                 role.Owner_Account__c = ac.Company__c;
+		}
+		//TD: Removed Employee from Role. Keep them on Contact object only
+		/* else
+		{
+			// DANI: remove this! role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
+			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
+		}*/
+		return role;
+    }
+    
+    public static AMS_Account_Role__c updateAmsAccountRole(AMS_Account_role__c role, AMS_Accreditation_Contact__c ac)
+    {
+    	if(ac.Contact__c != null)
+        {
+			role.Contact__c = ac.Contact__c;
+        }
+        else if(ac.Person_AMS__c != null)
+        {
+        	role.Person__c = ac.Person_AMS__c;
+        }
+        else // no linking, contact already created before calling this method
+        {}
+        
+    	role.Account__c 		= ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+		role.Duty__c 			= ac.Job_Title__c;
+		//role.Employee_Name__c 	= ac.First_Name__c + ' ' + ac.Last_Name__c;
+		role.Hours__c 			= String.valueOf(ac.Time_devoted_to_Agency_business__c);
+		role.IsManager__c 		= ac.Agency_role__c;
+		role.Percentage__c 		= ac.Financial_Interest__c;
+		role.Position__c 		= ac.Job_title__c;
+		
+		if(ac.Agency_owner__c)
+		{
+			// role.Owner_Account__c 	= ac.Company__c;
+			//role.Owner_Name__c 		= ac.First_Name__c + ' ' + ac.Last_Name__c;
+			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		}
+		//TD: Removed Employee from Role. Keep them on Contact object only
+		/*
+		 else
+		{
+			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
+		}*/
+		return role;
+    }
+    
+	public static AMS_Account_Role__c createAmsRoleForAccount(AMS_Accreditation_Contact__c ac)
+    {
+    	AMS_Account_Role__c role;// = new AMS_Account_Role__c();
+        if(ac.Company__c != null)
+        {
+            role = new AMS_Account_Role__c();
+	        role.Account__c 		= ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+			role.Owner_Account__c 	= ac.Company__c;
+			role.Percentage__c 		= ac.Financial_Interest__c;
+	    	role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+	    }
+		return role;
+    }
+    
+    public static AMS_Account_Role__c updateAmsRoleForAccount(AMS_Account_Role__c role, AMS_Accreditation_Contact__c ac)
+    {
+        if(role != null && ac.Company__c != null)
+        {
+	        role.Account__c 		= ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+			role.Owner_Account__c 	= ac.Company__c;
+			role.Percentage__c 		= ac.Financial_Interest__c;
+	    	role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+	    }
+		return role;
+    }
+    
+    public static Contact populateNewContactFields(Contact con, AMS_Accreditation_Contact__c ac)
+    {
+    	con.FirstName = ac.First_Name__c;
+    	con.LastName = ac.Last_Name__c;
+    	con.Title = ac.Job_Title__c;
+        if(con.AccountId==null)
+    	   con.AccountId = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+    	con.Membership_Main_Contact__c = ac.Membership_Main_Contact__c;
+    	con.Financial_Assessment_Contact__c = ac.Financial_Assessment_Contact__c;
+    	con.Phone = ac.Phone__c;
+    	con.Mobilephone = ac.Mobile__c;
+    	con.Fax = ac.FAX__c;
+    	con.Birthdate = ac.Birthdate__c;
+    	con.Email = ac.Email__c;
+    	con.ISO_Country__c = ac.ISO_Country__c;
+    	con.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
+    	con.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
+    	con.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
+    	return con;
+    }
+    
+    public static String loadFieldsDynamically(String SobjectApiName)
+    {
+        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        Map<String, Schema.SObjectField> fieldMap = schemaMap.get(SobjectApiName).getDescribe().fields.getMap();
+        String commaSeparatedFields = '';
+        for(String fieldName : fieldMap.keyset())
+        {
+            if(commaSeparatedFields == null || commaSeparatedFields == '')
+            {
+                commaSeparatedFields = fieldName;
+            } else
+            {
+                commaSeparatedFields = commaSeparatedFields + ', ' + fieldName;
+            }
+        }
+        return commaSeparatedFields;
+    }
+    
+    public static List<Contact> findContactsByNameOrEmail(String firstName, String lastName, String email)
+    {
+    	String standardContactRtId = AMS_Utils.getId('Contact', 'Standard_Contact');
+
+    	String query = 'select Id, FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, MailingCountry, MailingState, ' + 
+    					'MailingStreet, MailingCity, MailingPostalCode, Phone, Mobilephone, Fax, Financial_Assessment_Contact__c, Birthdate, Email, ISO_Country__c, RecordTypeId ' +
+    					'from Contact where RecordTypeId = \'' +standardContactRtId + '\' ';
+
+        if(firstName != '' && lastName != '' && email != '')
+        {
+        	query = query + ' and ((firstName like \'%' + firstName + '%\' and lastName like \'%' + lastName + '%\') or email = \'' + email + '\')'; 
+        } else if (firstName != '' && lastName != '' && email == '')
+        {
+        	query = query + ' and (firstName like \'%' + firstName + '%\' and lastName like \'%' + lastName + '%\')';
+        } else if((firstName == '' || lastName == '') && email != '')
+        {
+        	query = query + ' and email = \'' + email + '\'';
+        }
+        System.debug('**** query: '+query);
+        return Database.query(query);
+    	
+    }
+    
+    public static List<AMS_Person__c> findPersonsByNameOrEmail(String firstName, String lastName, String email)
+    {
+    	String query = 'select Id, First_Name__c, LastName__c, Contact__c, Fax__c, Mobile__c, Phone__c, Email__c, Industry_start_date__c from AMS_Person__c where';
+		if(firstName != '' && lastName != '' && email != '')
+        {
+        	query = query + ' ((First_Name__c like \'%' + firstName + '%\' and LastName__c like \'%' + lastName + '%\') or email__c = \'' + email + '\')'; 
+        } else if (firstName != '' && lastName != '' && email == '')
+        {
+        	query = query + ' (First_Name__c like \'%' + firstName + '%\' and LastName__c like \'%' + lastName + '%\')';
+        } else if((firstName == '' || lastName == '') && email != '')
+        {
+        	query = query + ' email__c = \'' + email + '\'';
+        }
+        
+		return Database.query(query);
+    }
+}

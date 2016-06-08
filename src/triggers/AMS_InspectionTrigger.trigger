@@ -1,9 +1,13 @@
-trigger AMS_InspectionTrigger on AMS_Inspection__c (after insert, after update) {
+trigger AMS_InspectionTrigger on AMS_Inspection__c (before insert, before update, after insert, after update) {
+
+    if(!AMS_TriggerExecutionManager.checkExecution(AMS_Inspection__c.getSObjectType(), 'AMS_InspectionTrigger')) { return; }
+    
     if(Trigger.isAfter){
         if(Trigger.isUpdate)
             AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
 
         AMS_InspectionHelper.setStatusCodeOnAgency(Trigger.new);
+    	AMS_InspectionHelper.setRecertExpiryDateOnAccount(Trigger.oldMap, Trigger.newMap);
     }
 /*trigger AMS_InspectionTrigger on AMS_Inspection__c (after update) {
 	if(Trigger.isAfter)

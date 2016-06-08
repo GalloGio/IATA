@@ -301,15 +301,14 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Prefix__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>IATA_ISO_State__c</columns>
         <columns>Area_Code__c</columns>
         <columns>Min_Range__c</columns>
         <columns>Max_Range__c</columns>
-        <columns>ProgramCode__c</columns>
         <columns>Area__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>IATA_ISO_State__c</columns>
         <columns>Country_Code__c</columns>
+        <columns>ProgramCode__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

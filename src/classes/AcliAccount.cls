@@ -120,14 +120,26 @@ global  class AcliAccount  {
     public Boolean updateAccount(Account account){
         Boolean isUpdated = false;
 
-        isUpdated |= nvl(account.IATACode__c) != nvl(this.AccountingCode);
-        account.IATACode__c=this.AccountingCode;
+        if (nvl(account.IATACode__c) != nvl(this.AccountingCode)) {
+            isUpdated = true;
+            account.Old_IATA_Code__c = account.IATACode__c;
+            account.IATACode__c=this.AccountingCode;
+        }
 
-        isUpdated |= nvl(account.Airline_designator__c) != nvl(this.TwoCaracterCode);
-        account.Airline_designator__c=this.TwoCaracterCode;
+        if (nvl(account.Airline_designator__c) != nvl(this.TwoCaracterCode)) {
+            isUpdated = true;
+            account.Old_Airline_designator__c = account.Airline_designator__c;
+            account.Airline_designator__c=this.TwoCaracterCode;
+        }
 
-        isUpdated |= nvl(account.Airline_designator__c) != nvl(this.TwoCaracterCode);
-        account.ICAO_designator__c   =this.ThreeLetterCode;
+        if (nvl(account.Airline_Prefix__c) != nvl(this.AirlinePrefix)) {
+            isUpdated = true;
+            account.Old_Airline_Prefix__c = account.Airline_Prefix__c;
+            account.Airline_Prefix__c=this.AirlinePrefix;
+        }
+
+        isUpdated |= nvl(account.ICAO_designator__c) != nvl(this.ThreeLetterCode);
+        account.ICAO_designator__c=this.ThreeLetterCode;
 
         isUpdated |= account.Membership_SITA__c != this.SITA;
         account.Membership_SITA__c=this.SITA;
@@ -146,9 +158,6 @@ global  class AcliAccount  {
 
         isUpdated |= nvl(account.Account_code_secondary_flag__c) != nvl(this.AccountingCodeSecondaryFlag);
         account.Account_code_secondary_flag__c=this.AccountingCodeSecondaryFlag;
-
-        isUpdated |= nvl(account.Airline_Prefix__c) != nvl(this.AirlinePrefix);
-        account.Airline_Prefix__c=this.AirlinePrefix;
 
         isUpdated |= nvl(account.ACLI_Status__c) != nvl(this.AcliStatus);
         account.ACLI_Status__c = this.AcliStatus;
@@ -172,29 +181,32 @@ global  class AcliAccount  {
             account.Category__c = sectorCategory.Category__c;
         }
 
-        if ( this.Membership_status != 'IATA member') {
-            // this data is only for MER to edit
-            isUpdated |= nvl(account.Name_on_AOC__c) != nvl(this.AirlineName);
-            account.Name_on_AOC__c =  this.AirlineName;
+        isUpdated |= nvl(account.Name_on_AOC__c) != nvl(this.AirlineName);
+        account.Name_on_AOC__c =  this.AirlineName;
 
-            isUpdated |= nvl(account.billingStreet) != nvl(this.Address);
-            account.billingStreet=this.Address;
+        isUpdated |= nvl(account.billingStreet) != nvl(this.Address);
+        account.billingStreet=this.Address;
 
-            isUpdated |= nvl(account.billingCity) != nvl(this.City);
-            account.billingCity=this.City;
+        isUpdated |= nvl(account.billingCity) != nvl(this.City);
+        account.billingCity=this.City;
 
-            isUpdated |= nvl(account.billingState) != nvl(this.State);
-            account.billingState = this.State;
+        isUpdated |= nvl(account.billingState) != nvl(this.State);
+        account.billingState = this.State;
 
-            isUpdated |= nvl(account.billingCountry) != nvl(this.Country);
+        isUpdated |= nvl(account.billingPostalCode) != nvl(this.PostalCode);
+        account.billingPostalCode=this.PostalCode;
+
+        if ( this.Country != null && nvl(account.billingCountry) != this.Country) {
+            isUpdated = true;
             account.billingCountry=this.Country;
+        }
 
-            isUpdated |= nvl(account.billingPostalCode) != nvl(this.PostalCode);
-            account.billingPostalCode=this.PostalCode;
-
-            isUpdated |= nvl(account.IATA_ISO_Country__c) != nvl(this.IsoCountryID);
+        // if the country is not specified in the ACLI file it is not changed
+        if ( this.IsoCountryID != null && nvl(account.IATA_ISO_Country__c) != this.IsoCountryID) {
+            isUpdated = true;
             account.IATA_ISO_Country__c=this.IsoCountryID;
         }
+
         return isUpdated;
     }
 

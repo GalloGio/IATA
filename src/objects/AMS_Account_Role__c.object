@@ -543,15 +543,14 @@
     </fields>
     <fields>
         <fullName>Unique_Identifier__c</fullName>
-        <caseSensitive>false</caseSensitive>
-        <externalId>true</externalId>
+        <externalId>false</externalId>
         <label>Unique Identifier</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>true</unique>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Valid__c</fullName>
@@ -1033,23 +1032,23 @@
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Employee_Validation</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Employee&apos;,OR(ISBLANK(Account__c),ISBLANK(Contact__c)),ISBLANK(Legacy_External_ID__c)
+        <active>false</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &quot;Employee&quot;,OR(ISBLANK(Account__c),ISBLANK(Contact__c)),ISBLANK(Legacy_External_ID__c)
 )</errorConditionFormula>
         <errorMessage>For &quot;Employee&quot; Account Role please fill the Account, Contact and Person.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Ownership_Validation</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Ownership&apos;, 
+        <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Ownership&apos;,
 
-OR(ISBLANK(Account__c), ( 
+OR(ISBLANK(Account__c), (
 
-AND ( 
-ISBLANK(Owner_Account__c), ISBLANK(Person__c), ISBLANK(Contact__c), ISBLANK(Legacy_External_ID__c) 
-) 
+AND (
+ISBLANK(Owner_Account__c), ISBLANK(Person__c), ISBLANK(Legacy_External_ID__c),ISBLANK(Contact__c)
+)
 )))</errorConditionFormula>
-        <errorMessage>For &quot;Ownership&quot; Account Role please fill the Account, Person or Owner Account.</errorMessage>
+        <errorMessage>For Ownership Account Role please fill the Account, Person or Owner Account.</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Assign_New_Financial_Assessment_Contact</fullName>

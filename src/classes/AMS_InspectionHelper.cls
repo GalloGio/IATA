@@ -13,16 +13,17 @@ public class AMS_InspectionHelper {
             for(AMS_Inspection__c i:inspections){
                 if(dom.get(i.Accreditation_Endorsement_organisation__c)!=null){
                     iataInspections.add(i);
-                    agencyIds.add(i.agency__c);
+                    agencyIds.add(i.Account__c);
                 }
 
             }
 
-            Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
+            //Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
+            Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
 
             for(AMS_Inspection__c i:iataInspections){
-                if(mapAgencies.get(i.Agency__c) != null){
-                    mapAgencies.get(i.Agency__c).Agency_Status__c = getIATAReadableStatus(i.Accreditation_Endorsement_Status_code__c);
+                if(mapAgencies.get(i.Account__c) != null){
+                    mapAgencies.get(i.Account__c).Status__c = AMS_Utils.getIATAReadableStatus(i.Accreditation_Endorsement_Status_code__c);
                 }
             }
             if(mapAgencies.values().size() > 0)
@@ -33,16 +34,17 @@ public class AMS_InspectionHelper {
             for(AMS_Inspection__c i:inspections){
                 if(iata.get(i.Accreditation_Endorsement_organisation__c)!=null){
                     iataInspections.add(i);
-                    agencyIds.add(i.agency__c);
+                    agencyIds.add(i.Account__c);
                 }
 
             }
 
-            Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
-
+            //Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
+            Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
+            
             for(AMS_Inspection__c i:iataInspections){
-                if(mapAgencies.get(i.Agency__c) != null){
-                    mapAgencies.get(i.Agency__c).Agency_Status__c = getIATAReadableStatus(i.Accreditation_Endorsement_Status_code__c);
+                if(mapAgencies.get(i.Account__c) != null){
+                    mapAgencies.get(i.Account__c).Status__c = AMS_Utils.getIATAReadableStatus(i.Accreditation_Endorsement_Status_code__c);
                 }
             }
             if(mapAgencies.values().size() > 0)
@@ -57,16 +59,17 @@ public class AMS_InspectionHelper {
             for(AMS_Inspection__c i:inspections){
                 if(iatan.get(i.Accreditation_Endorsement_organisation__c)!=null){
                     iataInspections.add(i);
-                    agencyIds.add(i.agency__c);
+                    agencyIds.add(i.Account__c);
                 }
 
             }
 
-            Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
-            
+            //Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
+            Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
+
             for(AMS_Inspection__c i:iataInspections){
-                if(mapAgencies.get(i.Agency__c) != null){
-                    mapAgencies.get(i.Agency__c).Agency_Status__c = getIATANReadableStatus(i.Accreditation_Endorsement_Status_code__c);
+                if(mapAgencies.get(i.Account__c) != null){
+                    mapAgencies.get(i.Account__c).Status__c = AMS_Utils.getIATANReadableStatus(i.Accreditation_Endorsement_Status_code__c);
                 }
             }
             if(mapAgencies.values().size() > 0)
@@ -76,7 +79,7 @@ public class AMS_InspectionHelper {
         
     }
     
-        public static String getIATAReadableStatus(String endorsmentCode){
+        /*public static String getIATAReadableStatus(String endorsmentCode){
         
                     if(endorsmentCode == '0'){
                         return 'Terminated';
@@ -146,6 +149,46 @@ public class AMS_InspectionHelper {
                     }
             
                     return null;
-            }
+            }*/
+            
+            
+	public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
+	{
+		Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
+		List<Account> accountsToProcess = new List<Account>();
+		accountsToProcess = [select id, Expiry_Date__c from Account where id in :statusCodeChanged.keySet()];
+		if(accountsToProcess.size() > 0)
+		{
+			for(Account acc : accountsToProcess)
+			{
+				acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
+			}
+			update accountsToProcess;
+		}
+	}
+	
+	private static Map<Id, AMS_Inspection__c> findAMSInspectionsWhereStatusCodeChangedToZero(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
+	{
+		Map<Id, AMS_Inspection__c> changedRecords = new Map<Id, AMS_Inspection__c>();
+		for(AMS_Inspection__c current : newValues.values())
+		{
+			if(oldValues != null && oldValues.get(current.Id) != null)
+			{
+				AMS_Inspection__c currentOldRecord = oldValues.get(current.Id);
+				if(current.Accreditation_Endorsement_Status_code__c != currentOldRecord.Accreditation_Endorsement_Status_code__c && current.Accreditation_Endorsement_Status_code__c.equals('0'))
+				{
+					changedRecords.put(current.Account__c, current);
+				}
+			} else if(current.Accreditation_Endorsement_Status_code__c.equals('0'))
+			{
+				// inserting with status code 0, so let's consider this an updatable record
+				changedRecords.put(current.Account__c, current);
+			} else
+			{
+				// This is just an insert of StatusCode != 0, so no need to do any updates
+			}
+		}
+		return changedRecords;
+	}
     
 }

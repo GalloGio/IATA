@@ -607,6 +607,18 @@
         <template>unfiled$public/Clicktools_Contact_Email_VN</template>
     </alerts>
     <alerts>
+        <fullName>DPC_Close_Notification_to_Contact</fullName>
+        <description>DPC - Close Notification to Contact</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>CaseManagement/DPC_Close_Notification_to_Contact</template>
+    </alerts>
+    <alerts>
         <fullName>DPC_Email_notification_to_Case_owner_action_required</fullName>
         <description>DPC - Email notification to Case owner action required</description>
         <protected>false</protected>
@@ -1255,10 +1267,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>armientoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>batagliaf@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1267,11 +1275,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciael@iata.org</recipient>
+            <recipient>gilj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gilj@iata.org</recipient>
+            <recipient>iriartej@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -6786,6 +6794,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Uncheck_is_from_IfapRest_Checkbox</fullName>
+        <field>From_IFAPRest__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck is from IfapRest Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>UnchecknewcommentforACCA</fullName>
         <description>Removes case from ACCA: New comment added view when case is completed by ACCA</description>
         <field>New_Comment_for_ACCA__c</field>
@@ -11784,6 +11801,26 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>DPC - Close Notification to Contact</fullName>
+        <actions>
+            <name>DPC_Close_Notification_to_Contact</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>DPC Service Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Notification to DPC contact when DPC Service Request case is closed.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>DPC - Email Alert to Case Owner Action Required</fullName>
         <actions>
             <name>DPC_Email_notification_to_Case_owner_action_required</name>
@@ -15220,6 +15257,56 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>ISS Portal - Make SIDRA Case Invisible</fullName>
+        <actions>
+            <name>ISS_Portal_Make_case_invisible</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.NOI_sent__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Update_AIMS_DEF__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISS Portal - Make SIDRA Case Visible</fullName>
+        <actions>
+            <name>ISS_Portal_Make_case_visible</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.NOI_sent__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Update_AIMS_DEF__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CreatedDate</field>
+            <operation>greaterOrEqual</operation>
+            <value>5/31/2016</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ISS Portal - Make case invisible</fullName>
         <actions>
             <name>ISS_Portal_Make_case_invisible</name>
@@ -15250,7 +15337,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>,Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Airline Coding Application</value>
+            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked)</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -15275,7 +15362,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
-            <value>SAAM,OSCAR Communication</value>
+            <value>SAAM,OSCAR Communication,SIDRA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15290,7 +15377,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,Major Change,Bank Detail Update</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -16064,12 +16151,22 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Owner Checkbox to False</fullName>
+        <actions>
+            <name>Uncheck_is_from_IfapRest_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF(From_IFAPRest__c,true,null)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Populate Case Groups picklist for ICCS Team</fullName>
         <actions>
             <name>Assign_ICCS_Team</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8)</booleanFilter>
         <criteriaItems>
             <field>User.Profile_Name__c</field>
@@ -16112,7 +16209,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <value>Process</value>
         </criteriaItems>
         <description>Assign ICCS Team value on the Groups picklist on Case</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Portal - Uncheck Visible in Self-Service</fullName>

@@ -1,0 +1,11 @@
+<apex:page controller="AMS_IataCodeRangesLoaderCtrl" contentType="text/csv#CodeRangeLoader_Result_{!($CurrentPage.parameters.type)}.csv" >
+	<apex:outputText value="LineInOriginalFile;CountryCode;CountryDesc;StateCode;StateDesc;CountryStateCode;StateNumber;ClassCode;ClassDesc;Prefix;MinAreaCode;MinLastFour;MaxAreaCode;MaxLastFour;Message"  rendered="{!($CurrentPage.parameters.type)=='errors'}"/>
+	<apex:repeat value="{!mapCSVErrors}" var="csv" rendered="{!($CurrentPage.parameters.type)=='errors'}">
+		{!csv};{!mapCSVErrors[csv].CountryCode};{!mapCSVErrors[csv].CountryDesc};{!mapCSVErrors[csv].StateCode};{!mapCSVErrors[csv].StateDesc};{!mapCSVErrors[csv].CountryStateCode};{!mapCSVErrors[csv].StateNumber};{!mapCSVErrors[csv].ClassCode};{!mapCSVErrors[csv].ClassDesc};{!mapCSVErrors[csv].Prefix};{!mapCSVErrors[csv].MinAreaCode};{!mapCSVErrors[csv].MinLastFour};{!mapCSVErrors[csv].MaxAreaCode};{!mapCSVErrors[csv].MaxLastFour};{!mapCSVErrors[csv].Message}
+	</apex:repeat>
+		
+	<apex:outputText value="LineInOriginalFile;RecordId;CountryCode;CountryDesc;StateCode;StateDesc;CountryStateCode;StateNumber;ClassCode;ClassDesc;Prefix;MinAreaCode;MinLastFour;MaxAreaCode;MaxLastFour;Message"  rendered="{!($CurrentPage.parameters.type)=='success'}"/>
+	<apex:repeat value="{!mapCSVSuccess}" var="csv" rendered="{!($CurrentPage.parameters.type)=='success'}">
+		{!csv};{!mapCSVSuccess[csv].RecordId};{!mapCSVSuccess[csv].CountryCode};{!mapCSVSuccess[csv].CountryDesc};{!mapCSVSuccess[csv].StateCode};{!mapCSVSuccess[csv].StateDesc};{!mapCSVSuccess[csv].CountryStateCode};{!mapCSVSuccess[csv].StateNumber};{!mapCSVSuccess[csv].ClassCode};{!mapCSVSuccess[csv].ClassDesc};{!mapCSVSuccess[csv].Prefix};{!mapCSVSuccess[csv].MinAreaCode};{!mapCSVSuccess[csv].MinLastFour};{!mapCSVSuccess[csv].MaxAreaCode};{!mapCSVSuccess[csv].MaxLastFour};{!mapCSVSuccess[csv].Message}
+	</apex:repeat>
+</apex:page>

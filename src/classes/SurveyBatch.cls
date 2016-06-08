@@ -117,8 +117,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
                                Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
-                               WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c
-
+                               WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
+							   WhoClosedCase__r.Profile.Name
                                FROM Case
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
@@ -172,7 +172,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
 
-    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c
+    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name
                                FROM Case
                                WHERE Id IN :lstCaseIds
                                AND RecordType.DeveloperName IN :lstRecordTypesInScope]);
@@ -314,7 +314,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       system.debug(LoggingLevel.error, '################### ESAMINO CASE ' + c.Subject + ' - ' + c.id);
 
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
-
+      String ProfileName = c.WhoClosedCase__r.Profile.Name != null ? c.WhoClosedCase__r.Profile.Name : 'none';
 
       // Using the country data from the contact's account and not from the  AccountCountry anymore, to minimize the risk of select the wrong language
       String AccountCountry = '';
@@ -333,11 +333,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
 
       /****** Clicktools Workflow_AM_CX_.... *****/
-      if(RoleName.contains('Distribution - Airline Coding & MITA'))
-      {
-        template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-      }
-      else if (/*1*/ c.RecordType.DeveloperName == 'ProcessEuropeSCE' &&
+      if (/*1*/ c.RecordType.DeveloperName == 'ProcessEuropeSCE' &&
                 /*2 aggregate the country for all the Clicktools AM_CX*/
                 /*3*/!c.Contact.Email.contains('@iata.org') &&
                 !c.Contact.Email.contains('@salesforce.com') &&
@@ -646,9 +642,17 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         countersMap.put(c.Region__c, ++n);
 
     system.debug('RoleName ------>> ' + RoleName);
-    system.debug('userroleid ------>> ' + userroleid);
+    system.debug('ProfileName ------>> ' + ProfileName);
     
-        if (
+        if(RoleName.contains('Distribution - Airline Coding & MITA')){
+          template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');            
+        } 
+        
+        else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){
+          template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');   
+        } 
+    
+        else if (
           RoleName.contains('China & N. Asia Customer Service') &&
           c.Region__c == 'China & North Asia' &&
           AccountCountry == 'People\'s Republic of China'
@@ -950,6 +954,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     List<Case> lstCasesToUpdate = new List<Case>();
 
     for (Case c : scope) {
+      String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       system.debug(LoggingLevel.error, '#### case ' + c.Subject + '; Region: ' + c.Region__c + '; c.RecordTypeId: ' + c.RecordTypeId + '; cond2: ' + mapComplaintQueueNamePerRegion.get(c.Region__c) + '; cond3: ' + mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c)));
       // Only handle cases for the defined regions; if the case region is not mapped to a complaint queue then the case is out of scope
       if (c.Region__c != null &&
@@ -960,7 +965,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         c.Customer_recovery__c = true ;
         c.Status = 'Customer Recovery';
         c.RecordTypeId = RT_ComplaintIDFS_Id;
-        c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
+              
+        if(RoleName.contains('Distribution - Airline Coding & MITA'))
+            c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
+        else
+        	c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
         lstCasesToUpdate.add(c);
       }

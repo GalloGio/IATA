@@ -43,7 +43,7 @@ public with sharing class DAL_ISSP {
                		Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,Account.Email__c,Account.WebSite,
                     Account.ICAO_designator__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.IATA_ISO_Country__r.ISO_Code__c,Account.IATA_ISO_Country__r.OSCAR_enabled__c,
                		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,
+					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
@@ -91,7 +91,7 @@ public with sharing class DAL_ISSP {
                 QA_Effort__c, Documentation_Effort__c, Implementation_Effort__c, Other_Impact_and_Effort__c,
                 Estimated_Total_Person_days__c, Estimated_Delivery_Date__c, Applicable_to_Which_Version_s__c,
                 Impact_Analysis_Completed_By__c, Deployment_date_to_acca__c, Expected_Deadline__c,OwnerId, Owner.Name,
-                CurrencyIsoCode, Estimated_Total_Development_Cost__c, Estimated_Processing_Cost_if_appl__c,
+                CurrencyIsoCode, Estimated_Total_Development_Cost__c, Estimated_Processing_Cost_if_appl__c,Case_Language__c,
                 Account_Concerned__c, IATAcode__c, Reason1__c,Planned_Implementation_Date__c,Documentation_Complete__c,Planned_Documentation_Date__c,
                 PO_Number__c, Visible_on_ISS_Portal__c,Instant_Survey_Last_feedback_received__c,Dossier_reception_date__c, IFAP_Country_ISO__c
                 FROM Case where Id=:caseId];

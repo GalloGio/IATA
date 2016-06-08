@@ -21,7 +21,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Owner_Name__c</field>
+                <field>Employee_Name__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

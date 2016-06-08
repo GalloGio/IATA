@@ -3,20 +3,22 @@ public class AMS_AgencyHelper {
     private static Map<String, List<Ams_operation__c>> cassOperationsPerCountriesIds = new Map<String, List<Ams_operation__c>>();
     private static Map<String, List<Ams_operation__c>> bspOperationsPerCountriesIds = new Map<String, List<Ams_operation__c>>();
 
+    /*#AMSFTS
     public static boolean isAgencyAccredited(String anAgencyId){
         try{
-            AMS_Agency__c anAgency = [Select Id, Original_Approval_DAte__c from AMS_Agency__c  ];
-            return isAgencyAccredited(anAgency );
+            Account anAgency = [Select Id, Original_Approval_DAte__c from Account];
+            return isAgencyAccredited(anAgency);
         }catch(Exception e){
             return false;
         }
     }
 
 
-    public static boolean isAgencyAccredited(AMS_Agency__c anAgency){
+    public static boolean isAgencyAccredited(Account anAgency){
         return anAgency.Original_Approval_DAte__c !=null;
-    }
+    }*/
 
+    /*#AMSFTS
     public static void assignRT(List<AMS_Agency__c> agencies){
         Id rtcargo = Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('CARGO').getRecordTypeId();
         Id rtpassenger = Schema.SObjectType.AMS_Agency__c.getRecordTypeInfosByName().get('PASSENGER').getRecordTypeId();
@@ -126,7 +128,7 @@ public class AMS_AgencyHelper {
 
         //LM:08/12/2015*/                                          
 
-        for(AMS_Agency__c ag : agencies){
+        /*for(AMS_Agency__c ag : agencies){
             Account theAccount = null;
             //if(ag.CASS_Number__c!=null)
             //    theAccount= IATAcodesToAccount.get(agencyiatacode+''+ag.CASS_Number__c);
@@ -153,7 +155,16 @@ public class AMS_AgencyHelper {
                 String cassN  = getFormattedCassNumber(ag);
                 String chkDgt = ag.Chk_Dgt__c;//getFormattedCheckDigit(ag);     
               
-                String acctype = ag.RecordTypeId==rtcargo ? 'IATA Cargo Agent' : 'IATA Passenger Sales Agent';
+                // !! removed  
+                //String acctype = ag.RecordTypeId==rtcargo ? 'IATA Cargo Agent' : 'IATA Passenger Sales Agent';
+
+                String acctype = fillType(ag.Location_Class__c);
+                String acctcategory = acctype;
+                String acctIndustry = fillIndustry(acctype);
+                String acctSector = acctIndustry;
+
+
+
 
                 //Get Employee field info
                 //List<AMS_Employee__c> lAMS_Employee = AMS_EmployeeHelper.getAgencyEmployees(ag.Id);
@@ -187,7 +198,7 @@ public class AMS_AgencyHelper {
                 }*/
 
                 
-                String keyAccount =  ag.iatacode__c + (cassN !=null?''+cassN:'') + (chkDgt==null?'':''+chkDgt) ;
+                /*String keyAccount =  ag.iatacode__c + (cassN !=null?''+cassN:'') + (chkDgt==null?'':''+chkDgt) ;
                 keyAccount = keyAccount.replace('.', '');
                 String aName = ag.Legal_Name_1__c;
                 if(ag.Legal_Name_2__c!= null && !ag.Legal_Name_2__c.equals(ag.Legal_Name_1__c))
@@ -205,15 +216,22 @@ public class AMS_AgencyHelper {
                 if(ag.Trading_Name_2__c!= null && !ag.Trading_Name_2__c.equals(ag.Trading_Name_1__c))
                     tName += ' '+ag.Trading_Name_2__c;
                 
+                //jfo 2016-02-01: we won't set IATA code on account if not needed
+                String keyAccountIATACOde  =null;
+                if(ag.RecordTypeId==rtcargo && keyAccount.length()>=10 )
+                    keyAccountIATACOde =keyAccount ;
+                else if(keyAccount .length()>=7)
+                     keyAccountIATACOde =keyAccount ;
+                
                 Account newAccount = new Account(Name=aName ,
                                 Short_Name__c = ag.Legal_Name_1__c,
                                 RecordTypeId = rtagency,
                                 Site =ag.iatacode__c,
-                                IATACode__c =keyAccount ,
+                                IATACode__c =keyAccountIATACOde ,
                                 TradeName__c = tName, 
                                 Phone = (ag.Phone_Number_Int__c==null?'':ag.Phone_Number_Int__c + ' ') + (ag.Phone_Number_STD__c==null?'':ag.Phone_Number_STD__c) + (ag.Phone_Number__c==null?'':ag.Phone_Number__c),
                                 Ownerid = ag.OwnerId, 
-                                Sector__c = acctype ,
+                                Sector__c = acctSector ,
                                 Expiry_Date__c = ag.Recert_Expiry_Date__c,
                                 Accreditation_date__c = ag.Original_Approval_DAte__c,
                                 Source_System__c = ag.Legacy_System__c,
@@ -239,7 +257,10 @@ public class AMS_AgencyHelper {
                                 Ticketing_Agent_First_Name__c = sTicketing_Agent_First_Name,
                                 Ticketing_Agent_Last_Name__c = sTicketing_Agent_Last_Name,
                                 Manager_First_Name__c = sManager_First_Name,
-                                Manager_Last_Name__c = sManager_Last_Name);
+                                Manager_Last_Name__c = sManager_Last_Name,
+                                Category__c = acctcategory,
+                                Industry = acctIndustry
+                                );
                 
                  if(gdpReferencesTable.get('LGLTYP'+    ag.Company_Type__c)!=null)                  
                      newAccount.Incorporation_Type__c = gdpReferencesTable.get('LGLTYP'+    ag.Company_Type__c).Id; 
@@ -288,8 +309,141 @@ public class AMS_AgencyHelper {
             update updateAccounts;
         }
         return;
+    }*/
+
+    public static String fillType(String locationClass){
+
+        if(locationClass == null)
+            return null;
+
+        if(locationClass.equalsIgnoreCase('A'))
+          return 'Airline Point of Sale';
+        if(locationClass.equalsIgnoreCase('C'))
+          return 'IATA Cargo Agent';
+        if(locationClass.equalsIgnoreCase('D'))
+          return 'Domestic Agent';
+        if(locationClass.equalsIgnoreCase('G'))
+          return 'GSA General Sales Agent';
+        if(locationClass.equalsIgnoreCase('K'))
+          return 'CATO';
+        if(locationClass.equalsIgnoreCase('P'))
+          return 'IATA Passenger Sales Agent';
+        if(locationClass.equalsIgnoreCase('Q'))
+          return 'Courier';
+        if(locationClass.equalsIgnoreCase('R'))
+          return 'CASS Associates';
+        if(locationClass.equalsIgnoreCase('T'))
+          return 'TIDS Agent';
+        if(locationClass.equalsIgnoreCase('X'))
+          return 'Handling Agent';
+        if(locationClass.equalsIgnoreCase('M'))
+          return 'MSO Member Sales Office';
+        if(locationClass.equalsIgnoreCase('I'))
+          return 'Import Agent';
+
+          return null;
+
     }
 
+
+    public static String fillIndustry(String type){
+
+        if(type == null)
+            return null;
+
+        if( type.equalsIgnoreCase('IATA Cargo Agent') || 
+            type.equalsIgnoreCase('Courier') ||
+            type.equalsIgnoreCase('CASS Associates') ||
+            type.equalsIgnoreCase('Import Agent')
+          )
+          return 'Cargo Agent';
+
+          return 'Travel Agent';
+
+    }
+
+    /**
+    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation)
+    */
+    public static String transformCompanyType(String companyType){
+
+        if(companyType == null)
+            return null;
+
+        if(companyType.equalsIgnoreCase('A'))
+            return 'Association';
+        if(companyType.equalsIgnoreCase('C'))
+            return 'Corporation';
+        if(companyType.equalsIgnoreCase('P'))
+            return 'Partnership';
+        if(companyType.equalsIgnoreCase('R'))
+            return 'Limited Partnership';
+        if(companyType.equalsIgnoreCase('S'))
+            return 'Sole Proprietorship';
+        if(companyType.equalsIgnoreCase('T'))
+            return 'Trust Company';
+        if(companyType.equalsIgnoreCase('V'))
+            return 'Co-operative';
+        if(companyType.equalsIgnoreCase('J'))
+            return 'Joint Venture';
+        if(companyType.equalsIgnoreCase('L'))
+            return 'Limited Company';
+        if(companyType.equalsIgnoreCase('E'))
+            return 'State Owned Enterprise';
+        if(companyType.equalsIgnoreCase('O'))
+            return 'Other';
+        return null;
+
+    }
+
+        /**
+    Method to help the transformation between GDS (Acccount) and Specify GDS with signed contract (AMS Online Accreditation)
+    */
+    public static String transformGDS(String gds){
+
+        if(gds == null)
+            return null;
+
+        if(gds.equalsIgnoreCase('ABAC'))
+            return 'Abacus';
+        if(gds.equalsIgnoreCase('AGTD'))
+            return 'Amadeus';
+        if(gds.equalsIgnoreCase('AXSS'))
+            return 'Axess';
+        if(gds.equalsIgnoreCase('CMAS'))
+            return 'Kiu System';
+        if(gds.equalsIgnoreCase('DERD'))
+            return 'Deutsche Reiseburo';
+        if(gds.equalsIgnoreCase('FLGX'))
+            return 'Farelogix';
+        if(gds.equalsIgnoreCase('GDSL'))
+            return 'Travelport (Galileo)';
+        if(gds.equalsIgnoreCase('INFI'))
+            return 'Infini';
+        if(gds.equalsIgnoreCase('KOTI'))
+            return 'Kotis Travel Info SE';
+        if(gds.equalsIgnoreCase('MINS'))
+            return 'Travelsky';
+        if(gds.equalsIgnoreCase('RESI'))
+            return 'Resiber';
+        if(gds.equalsIgnoreCase('SABR'))
+            return 'Sabre';
+        if(gds.equalsIgnoreCase('SITA'))
+            return 'SITA';
+        if(gds.equalsIgnoreCase('STRA'))
+            return 'Sirena';           
+        if(gds.equalsIgnoreCase('TOPAS'))
+            return 'Topas';
+        if(gds.equalsIgnoreCase('UALA'))
+            return 'Travelport (Apollo)';
+        if(gds.equalsIgnoreCase('WSPN'))
+            return 'Travelport (Worldspan)';
+  
+        return null;
+
+    }
+
+    /*AMSFTS
     public static void Ensure0to1AccountLookup(list<AMS_Agency__c> agents){
         Map<Id,AMS_Agency__c> accountIdToAgency = new Map<Id,AMS_Agency__c>();
         
@@ -310,13 +464,15 @@ public class AMS_AgencyHelper {
         }
         
         return;
-    }
+    }*/
 
     /*
     RP
     31/08/2015
     helper method to update account when agency fields are updated
     */
+
+    /*#AMSFTS 12/02/2016
     public static void updateAccounts(Map<Id, AMS_Agency__c> oldAgencies, Map<Id, AMS_Agency__c> newAgencies, Set<String> accounts){
         Map<Id, Account> theAccounts = new Map<Id, Account>([select id, Name, Short_Name__c, IATACode__c, TradeName__c, Phone, Ownerid, Sector__c,
                                                                 Type, Passenger_And_Cargo__c, Expiry_Date__c, Accreditation_date__c, Source_System__c,
@@ -351,8 +507,10 @@ public class AMS_AgencyHelper {
                     tName += ' '+newRecord.Trading_Name_2__c;
         
             String cassN  = getFormattedCassNumber(newRecord);
+
             String chkDgt = newRecord.Chk_Dgt__c;
-            String iataCode = newRecord.iatacode__c + (cassN !=null?''+cassN:'') + (chkDgt==null?'':''+chkDgt) ;
+
+            String iataCode = (newRecord.iatacode__c != null ?  newRecord.iatacode__c : '') + (cassN !=null?''+cassN:'') + (chkDgt==null?'':''+chkDgt) ;
             
             theAccounts.get(newRecord.Account__c).Name =aName ;
  
@@ -366,12 +524,13 @@ public class AMS_AgencyHelper {
             theAccounts.get(newRecord.Account__c).VAT_Number_2__c = newRecord.Other_Tax_Reference_Number__c;
             theAccounts.get(newRecord.Account__c).CASS_Number__c = newRecord.CASS_Number__c;//cassN  ;//String.valueOf(newRecord.CASS_Number__c);
             
-            if(newRecord.RecordTypeId==rtcargo)
-                theAccounts.get(newRecord.Account__c).Site = iataCode;
-            else
-                theAccounts.get(newRecord.Account__c).Site = newRecord.iatacode__c;
-            
-            theAccounts.get(newRecord.Account__c).IATACode__c = iataCode;
+            if(newRecord.RecordTypeId==rtcargo && iataCode.length()>=10 )
+                theAccounts.get(newRecord.Account__c).IATACode__c = iataCode;
+            else if(iataCode.length()>=7)
+               theAccounts.get(newRecord.Account__c).IATACode__c = iataCode;
+               
+               
+            theAccounts.get(newRecord.Account__c).Site = iataCode;
             theAccounts.get(newRecord.Account__c).Status__c = mapAccountStatusFromAgency(newRecord.Agency_Status__c);
             //theAccounts.get(newRecord.Account__c).Financial_Year_End__c = newRecord.Financial_Year_End__c;
             theAccounts.get(newRecord.Account__c).Accumulated_Irregularities__c = newRecord.Accumulated_Irregularities__c;
@@ -391,12 +550,29 @@ public class AMS_AgencyHelper {
             if(oldRecord.Phone_Number__c != newRecord.Phone_Number__c){
                 theAccounts.get(newRecord.Account__c).Phone = (newRecord.Phone_Number_Int__c==null?'':newRecord.Phone_Number_Int__c + ' ') + (newRecord.Phone_Number_STD__c==null?'':newRecord.Phone_Number_STD__c) + (newRecord.Phone_Number__c==null?'':newRecord.Phone_Number__c);
             }
+            
+
+            /*
             if(oldRecord.RecordTypeId != newRecord.RecordTypeId){
                 String type = newRecord.RecordTypeId==rtcargo ? 'IATA Cargo Agent' : 'IATA Passenger Sales Agent';
 
                 theAccounts.get(newRecord.Account__c).Sector__c = type;
                 theAccounts.get(newRecord.Account__c).Type = type;
+            }*/
+
+            /*if(newRecord.Location_Class__c != null){
+
+                String acctype = fillType(newRecord.Location_Class__c);
+                String acctcategory = acctype;
+                String acctIndustry = fillIndustry(acctype);
+                String acctSector = acctIndustry;
+
+                theAccounts.get(newRecord.Account__c).Type = acctype;
+                theAccounts.get(newRecord.Account__c).Category__c = acctcategory;
+                theAccounts.get(newRecord.Account__c).Industry = acctIndustry;
+                theAccounts.get(newRecord.Account__c).Sector__c = acctSector;
             }
+
             //jfo 2015-11-17
             //force to set the legacy data on account if needed for GDP
             //theAccounts.get(newRecord.Account__c).AIMS_ID__c  ==null && theAccounts.get(newRecord.Account__c).Webstar_ID__c ==null && (   
@@ -417,6 +593,7 @@ public class AMS_AgencyHelper {
             update updateAccounts;
         }
     }
+    #AMSFTS END*/
         
     /*
     jfo
@@ -424,15 +601,11 @@ public class AMS_AgencyHelper {
     helper method call by trigger to force Agency Operation assignment
     
     */
-    public static void updateAgenciesOperations(List<AMS_Agency__c > operationHelpercandidate ){
+    public static void updateAgenciesOperations(List<Account> operationHelpercandidate){
         Savepoint sp = Database.setSavepoint();
-        Map<string, Id> agencyRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-
-        List<String> agenciesIds = new List<String>();
         
         if( cassOperationsPerCountriesIds.size()==0 || bspOperationsPerCountriesIds.size()==0 ){
-            List<Ams_operation__c> allOperations = [select Id,Country__c,CASS_Operations__c from Ams_operation__c ];
+            List<Ams_operation__c> allOperations = [select Id,Country__c,CASS_Operations__c from Ams_operation__c];
             for(Ams_operation__c op:allOperations ){
                 if(op.CASS_Operations__c !=null){
                     if(cassOperationsPerCountriesIds.get(op.Country__c) ==null)
@@ -447,22 +620,22 @@ public class AMS_AgencyHelper {
         }
         
          //new operations to create
-        List<AMS_Agency_Operations__c > newAgencyOperations = new List<AMS_Agency_Operations__c >();
-        for(AMS_Agency__c a:operationHelpercandidate ){
-           if(a.recordtypeId ==agencyRT.get('CARGO')){
-               system.debug('[OPERATION]CARGO AGT look for OP. CTRY = '+a.Country__c );
-               if(cassOperationsPerCountriesIds.get(a.Country__c )!=null)
-                    for(Ams_operation__c op:cassOperationsPerCountriesIds.get(a.Country__c )){
-                        AMS_Agency_Operations__c aao = new AMS_Agency_Operations__c (Agency__c =a.Id, Operation__c=op.Id);
+        List<AMS_Agency_Operations__c> newAgencyOperations = new List<AMS_Agency_Operations__c>();
+        for(Account acc:operationHelpercandidate ){
+           if(acc.Sector__c == 'Cargo Agent'){
+               system.debug('[OPERATION]CARGO AGT look for OP. CTRY = '+acc.IATA_ISO_Country__c);
+               if(cassOperationsPerCountriesIds.get(acc.IATA_ISO_Country__c)!=null)
+                    for(Ams_operation__c op:cassOperationsPerCountriesIds.get(acc.IATA_ISO_Country__c)){
+                        AMS_Agency_Operations__c aao = new AMS_Agency_Operations__c (Account__c =acc.Id, Operation__c=op.Id);
                         newAgencyOperations.add(aao);
                     }
             }
-            else {
+            else if(acc.Sector__c == 'Travel Agent') {
                  //CASE for PASSENGER
-               system.debug('[OPERATION]PAXAGT look for OP. CTRY = '+a.Country__c );
-                 if(bspOperationsPerCountriesIds.get(a.Country__c )!=null)
-                    for(Ams_operation__c op:bspOperationsPerCountriesIds.get(a.Country__c )){
-                        AMS_Agency_Operations__c aao = new AMS_Agency_Operations__c (Agency__c =a.Id, Operation__c=op.Id);
+               system.debug('[OPERATION]PAXAGT look for OP. CTRY = '+acc.IATA_ISO_Country__c);
+                 if(bspOperationsPerCountriesIds.get(acc.IATA_ISO_Country__c)!=null)
+                    for(Ams_operation__c op:bspOperationsPerCountriesIds.get(acc.IATA_ISO_Country__c)){
+                        AMS_Agency_Operations__c aao = new AMS_Agency_Operations__c (Account__c = acc.Id, Operation__c=op.Id);
                         newAgencyOperations.add(aao);
                     }
                  else{
@@ -474,7 +647,6 @@ public class AMS_AgencyHelper {
       
        
         try{
-            delete [select Id from AMS_Agency_Operations__c where Agency__c in :agenciesIds];
             insert  newAgencyOperations;
             system.debug('[OPERATIONS][SUCCESS] Update Agencies operation for '+newAgencyOperations.size()+ 'From request '+operationHelpercandidate.size());
             //DevsTools.sendSFDevsAlertMessage('[SUCCESS] Update Agencies operation for '+newAgencyOperations.size(), 'From request '+operationHelpercandidate.size());
@@ -495,7 +667,8 @@ public class AMS_AgencyHelper {
     //    return chkDgt;
     //}
     
-    public static String getFormattedCassNumber(Ams_agency__c ag){
+    /*AMSFTS
+    public static String getFormattedCassNumber(Account ag){
         String cassN =null;
         if(ag.CASS_Number__c!= null){
             cassN =  ag.CASS_Number__c;
@@ -504,10 +677,11 @@ public class AMS_AgencyHelper {
             }
         }
         return cassN;
-    }
+    }*/
    
     //LM: 01/10/2015
-    public static void fillAgencyCodes(AMS_Agency__c ag){
+    /*AMSFTS TO BE DONE IN ONLINE ACCREDITATION
+    public static void fillAgencyCodes(Account ag){
     
         ag.A_Code__c = ag.IATACode__c.substring(2,3);
         ag.C_Code__c = ag.IATACode__c.substring(0,2);
@@ -520,11 +694,12 @@ public class AMS_AgencyHelper {
     jfo 2015-11-05 agency is accreditated and account is approved. Other values are fine.
     
     */
+    /*AMSFTS
     public static String mapAccountStatusFromAgency(String agStatus){
         if(agStatus!=null && agStatus.equals('Accredited'))
             return 'Approved';
          return agStatus;
-    }
+    }*/
    
     public static String  resizeNumericString(String aString, integer expectedSize){
         String s = aString;
@@ -536,7 +711,8 @@ public class AMS_AgencyHelper {
         return s;
     }
     
-    public static boolean isMissingCodes(AMS_Agency__c ag){
+    /*AMSFTS TO BE DONE IN ONLINE ACCREDITATION
+    public static boolean isMissingCodes(Account ag){
         if(ag.IATACode__c != null && (ag.C_Code__c== null || ag.C_Code__c=='' ||
             ag.A_Code__c== null || ag.A_Code__c=='' || ag.N_Code__c == null || ag.N_Code__c== ''))
             return true;
@@ -544,54 +720,9 @@ public class AMS_AgencyHelper {
         return false;
     }
     
-    public static String genIATACodeFromCodes(AMS_Agency__c ag){
+    public static String genIATACodeFromCodes(Account ag){
         //String cassN  = getFormattedCassNumber(ag);
-        return (ag.C_Code__c!=null?''+ag.C_Code__c:'') + (ag.A_Code__c!=null?''+ag.A_Code__c:'') + '' + (ag.N_Code__c!=null?''+ag.N_Code__c:'')/* + (cassN !=null?''+cassN:'')*/;
-    }
-    
-    /////TEMP
- 
-    public static void checkDigitCreation(Ams_Agency__c agt){
-        Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-        Map<String,String> letterIndex = new Map<String,String>{'A'=> '10','B'=> '11','C'=> '12','D'=> '13','E'=> '14','F'=> '15','G'=> '16','H'=> '17','I'=> '18','J'=> '19','K'=> '20','L'=> '21','M'=> '22','N'=> '23','O'=> '24','P'=> '25','Q'=> '26','R'=> '27','S'=> '28','T'=> '29','U'=> '30','V'=> '31','W'=> '32','X'=> '33','Y'=> '34','Z'=> '35'};
-        String nACode = agt.A_code__c;
-        String nCCode  ='' ; 
-        String cNCode = agt.N_code__c;
-        String cCassNumber ='' ;  
-        
-        //'country' digits can be Chars. We need to replace them by the values from Map
-        system.debug('Agency IATA Code: '+agt.IATACode__c + ' C Code: '+ agt.C_code__c);
-        if(!agt.C_code__c.isNumeric()){
-            String[] stringCharacters = agt.C_code__c.split('');
-            stringCharacters.remove(0);
-            for(String c:stringCharacters){
-                //sometime, split method is adding null
-                if(c!=null){
-                    String s = c.toUpperCase();
-                    system.debug('[CHECKDIGIT]  LETTER INDEX: for char'+s+' returned '+letterIndex.get(s));
-                    if(!c.isNumeric())
-                        nCCode +=  letterIndex.get(c.toUpperCase());
-                    else
-                        nCCode += c;
-                }
-            }
-        }else
-            //STD case: directly set the Country code
-            nCCode = agt.C_code__c;
-        if(agt.RecordTypeID == agenciesRT.get('CARGO'))
-            cCassNumber = resizeNumericString(agt.CASS_Number__c+'',3);
- 
-        String code = nCCode + nACode + cNCode + cCassNumber ;
-        system.debug('[CHECKDIGIT] built '+code+' from Values'+nCCode   +'/'+nACode +'/'+cNCode +'/'+cCassNumber );
-        system.debug('[CHECKDIGIT]  from AGT values '+agt.C_code__c+'/'+agt.A_code__c+'/'+agt.N_code__c+'/'+agt.CASS_Number__c);
-        Long l = Long.valueOf(code);
-        String checkDigit = math.mod(l,7)+'';
-        agt.Chk_Dgt__c = checkDigit ;
-    }
-    
-    public static void checkDigitCreation(list<Ams_Agency__c> agts){
-        for(Ams_Agency__c agt:agts)
-            checkDigitCreation(agt);
-    }
-    
+        return (ag.C_Code__c!=null?''+ag.C_Code__c:'') + (ag.A_Code__c!=null?''+ag.A_Code__c:'') + '' + (ag.N_Code__c!=null?''+ag.N_Code__c:'');
+    }*/
+
  }
