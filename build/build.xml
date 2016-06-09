@@ -11,6 +11,22 @@
     <property file="${basedir}/build/build.properties"/>
     <property environment="env"/>
 
+	
+	
+ 
+    <target name="deployRetrieveToQA">
+      <echo level="info">Testing the deploy</echo>
+      <sf:deploy
+          logType="Detail"
+          username="${sfdc.username}"
+          password="${sfdc.password}"
+          serverurl="${sfdc.serverurl}"
+          deployRoot="${basedir}/retrieve"
+          pollWaitMillis="${sfdc.pollWaitMillis}"
+          maxPoll="${sfdc.maxPoll}" 
+				/>
+    </target>
+    	
 
 <target name="retrieveToDeploy">
       <echo level="info">Retrieving the server's version of code</echo>
