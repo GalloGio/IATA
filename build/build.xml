@@ -27,7 +27,6 @@
   </target>
 
 
-
 <target name="retrieveToRetrieve">
       <echo level="info">Retrieving the server's version of code</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
