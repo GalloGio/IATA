@@ -3,6 +3,7 @@
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
                 <region>Left</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -20,6 +21,7 @@
             </containers>
             <containers>
                 <height>90</height>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
                 <region>Top</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -33,6 +35,7 @@
         </primaryTabComponents>
         <subtabComponents>
             <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
                 <region>Right</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
