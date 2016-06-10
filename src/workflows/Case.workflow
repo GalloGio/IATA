@@ -2115,12 +2115,9 @@
     </alerts>
     <alerts>
         <fullName>Inform_Deskom_of_new_case_assignment_escalation</fullName>
+        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Inform Deskom of new case assignment/escalation</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>kupferm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/IW_Caseassignmentqueue</template>
     </alerts>
@@ -4755,7 +4752,7 @@
         <fullName>DPC_Update_case_reason</fullName>
         <description>Update the case reason when the case origin is &quot;Global Data Update&quot;</description>
         <field>Reason1__c</field>
-        <literalValue>Tax Miscellaneous Fee Management</literalValue>
+        <literalValue>Airline Master List and Details</literalValue>
         <name>DPC - Update case reason</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>

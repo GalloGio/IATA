@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <customSettingsVisibility>Public</customSettingsVisibility>
     <description>Holds Topic / Subtopic view Permissions according to Account Sector</description>
     <enableFeeds>false</enableFeeds>
     <fields>
@@ -35,4 +34,5 @@
         <unique>false</unique>
     </fields>
     <label>ISSP FAQ2Case Permissions</label>
+    <visibility>Public</visibility>
 </CustomObject>
