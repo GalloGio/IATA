@@ -2115,12 +2115,9 @@
     </alerts>
     <alerts>
         <fullName>Inform_Deskom_of_new_case_assignment_escalation</fullName>
+        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Inform Deskom of new case assignment/escalation</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>kupferm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/IW_Caseassignmentqueue</template>
     </alerts>
