@@ -180,14 +180,14 @@
             <controllingField>Active__c</controllingField>
             <picklistValues>
                 <fullName>On</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>true</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Off</fullName>
+                <default>false</default>
                 <controllingFieldValues>checked</controllingFieldValues>
                 <controllingFieldValues>unchecked</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

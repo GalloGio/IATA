@@ -125,13 +125,13 @@
             <controllingField>Type__c</controllingField>
             <picklistValues>
                 <fullName>#007FFF</fullName>
-                <controllingFieldValues>Information</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Information</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>#FF5E4D</fullName>
-                <controllingFieldValues>Action</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Action</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
