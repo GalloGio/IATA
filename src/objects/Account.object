@@ -4535,6 +4535,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>GSSA Cargo</fullName>
                 <default>false</default>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
@@ -4895,7 +4896,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>Count_Accumulated_Irregularities__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(SUM_W_Irregularities__c - SUM_A_Irregularities__c &lt; 0, 0, SUM_W_Irregularities__c - SUM_A_Irregularities__c)</formula>
+        <formula>IF(SUM_A_Irregularities__c - SUM_W_Irregularities__c &lt; 0, 0, SUM_A_Irregularities__c - SUM_W_Irregularities__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Accumulated Irregularities</label>
         <precision>18</precision>
@@ -9143,7 +9144,7 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
-        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
+        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D7E0000008eXt&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
 IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;IATA_GSA&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
@@ -9489,6 +9490,14 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Send_Irregularity_Email__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send Irregularity Email</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Sent_to_External_System__c</fullName>
@@ -12643,6 +12652,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_Accounts</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>IATACode__c</columns>
+        <columns>Status__c</columns>
+        <columns>ACCOUNT.CREATED_DATE</columns>
+        <columns>ACCOUNT.LAST_UPDATE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Category__c</columns>
+        <columns>Sector__c</columns>
+        <columns>ACCOUNT.INDUSTRY</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Accounts</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Americas_Airline_HQ</fullName>
@@ -61274,6 +61303,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Hotel</fullName>
                 <default>false</default>
             </values>
@@ -63600,6 +63633,13 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
+        <active>true</active>
+        <description>BR and SA Standard Account Parent Id must be filled.</description>
+        <errorConditionFormula>AND($RecordType.Name=&quot;Standard Account&quot;, OR(ISPICKVAL(Sector__c,&apos;Cargo Agent&apos;),ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)), ISBLANK(ParentId), OR(ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISPICKVAL(Location_Type__c,&apos;SA&apos;)))</errorConditionFormula>
+        <errorMessage>Standard Accounts of type BR and SA must have Parent Id filled for Travel and Cargo Agents.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Billing_Address</fullName>
         <active>false</active>
         <description>To prevent null values in billing city &amp; country field</description>
@@ -63852,7 +63892,7 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <protected>false</protected>
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
-        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account_Name}
+        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account.Name}
 %22</url>
     </webLinks>
     <webLinks>
@@ -64259,12 +64299,12 @@ myuser={!User.Id}</url>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>https://www.dreamfactory.com/orgview/orgview.html?
-sessionid={!API_Session_ID}&amp;
-serverurl={!API_Partner_Server_URL_60}&amp;
-username={!User_Username}&amp;
-fullname={!User_FullName}&amp;
-linkid={!Account_ID}&amp;
-userid={!User_ID}</url>
+sessionid={!API.Session_ID}&amp;
+serverurl={!API.Partner_Server_URL_60}&amp;
+username={!User.Username}&amp;
+fullname={!User.Name}&amp;
+linkid={!Account.Id}&amp;
+userid={!User.Id}</url>
         <width>800</width>
     </webLinks>
     <webLinks>

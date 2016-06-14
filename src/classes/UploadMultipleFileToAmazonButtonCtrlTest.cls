@@ -50,7 +50,7 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		String amazonKey = 'path/testfileName.pdf';
 		
 		Test.StartTest();
-		Boolean result = UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, null, null, null);
+		Boolean result = UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId);
 		Test.StopTest();
 		
 		System.assert(result);
@@ -64,7 +64,7 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		String amazonKey = null;
 		
 		Test.StartTest();
-		Boolean result = UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, null, null, null);
+		Boolean result = UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId);
 		Test.StopTest();
 		
 		System.assert(!result);

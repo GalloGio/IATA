@@ -2,18 +2,24 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>IW_Notify_user_when_status_is_9a_e</fullName>
-        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Notify user when status is 9a-e</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>kupferm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Work_Order_Email_Templates/Work_Order_Notification_status_9a_e</template>
     </alerts>
     <alerts>
         <fullName>IW_Notify_user_when_status_is_9f_10</fullName>
-        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Notify user when status is 9f - 10</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>kupferm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>Work_Order_Email_Templates/Work_Order_Notification_status_9f</template>

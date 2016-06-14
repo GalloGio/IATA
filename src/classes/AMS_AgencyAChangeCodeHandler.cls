@@ -1,37 +1,73 @@
 public class AMS_AgencyAChangeCodeHandler {
-
+	public static boolean firstRun = true;
+	 
 	public static void handleAfterInsert(List<Agency_Applied_Change_code__c> aacc) {
-
 		verifyActiveAACCuniqueness(aacc);
-
 	}
 
 	public static void handleAfterUpdate(List<Agency_Applied_Change_code__c> aacc) {
-
 		verifyActiveAACCuniqueness(aacc);
 	}
 
 	public static void handleBeforeInsert(List<Agency_Applied_Change_code__c> aacc){
-
 		migrateFieldsFromStagingToAccount(aacc);
 	}
-
+	
+	
+	//DTULLO: NEED to bulkify it. Now change codes are bring via dataloader from aims. batch size = 50.
+	//because of a requirement, they are coming as active. so, if more than 1 is coming, we should check inside the trigger to set them to false
+	//Use of field "Created_Date_To_Show__c" to set only the last one as active.
 	public static void verifyActiveAACCuniqueness(List<Agency_Applied_Change_code__c> aaccodes){
-
+		map<id, list<Agency_Applied_Change_code__c>> mapLastAACC = new map<id, list<Agency_Applied_Change_code__c>>();
+		
 		List<Agency_Applied_Change_code__c> aACCtoUpdate = new List<Agency_Applied_Change_code__c>();
 
 	    Set<Id> agencyIds = new Set<Id>();
 
 	    for(Agency_Applied_Change_code__c aacc : aaccodes){
-	        
-	        if(aacc.Active__c){
-	       		
+	        //DTULLO: get ALL agencies involved
+	        //if(aacc.Active__c){
 	       		agencyIds.add(aacc.Account__c);
-	        }
+	        //}
 	    }
 
 		if(agencyIds.size() > 0){
-
+			List<Agency_Applied_Change_code__c> allCCPerAgency = [select id, Created_Date_To_Show__c, Active__c , Account__c 
+																  from Agency_Applied_Change_code__c
+																  where Account__c IN :agencyIds
+																  order by Account__c, Created_Date_To_Show__c desc];
+			for(Agency_Applied_Change_code__c aac: allCCPerAgency){
+				if(mapLastAACC.containsKey(aac.Account__c)){
+					list<Agency_Applied_Change_code__c> ls = mapLastAACC.get(aac.Account__c);
+					if(aac.active__c == true){
+						aac.Active__c = false;
+						ls.add(aac);
+						mapLastAACC.put(aac.Account__c, ls);
+					}
+				}else{
+					system.debug('DTULLO: setting the last as active');
+					aac.Active__c = true;
+					mapLastAACC.put(aac.Account__c, new list<Agency_Applied_Change_code__c>{aac});
+				}
+			}
+			
+			//do the update
+			if(!mapLastAACC.isEmpty()){
+				system.debug('DTULLO map is not empty');
+				for(id acc:mapLastAACC.keyset())
+					aACCtoUpdate.addAll(mapLastAACC.get(acc));
+				
+				
+				if(!aACCtoUpdate.isEmpty()){
+					system.debug('DTULLO acctoUpdate not empty');
+					for(Agency_Applied_Change_code__c c:aACCtoUpdate){
+						system.debug('DTULLO --> ' + c);
+					}
+					update aACCtoUpdate;
+				}
+			}
+			/*
+			DTULLO: FULLY COMMENTED. Need to set only the latest one as active
 			List<Agency_Applied_Change_code__c> elementsToUpdate = new List<Agency_Applied_Change_code__c>();
 			
 			for(Agency_Applied_Change_code__c aacc : [select id, Active__c , Account__c from Agency_Applied_Change_code__c where Active__c = true AND Account__c IN :agencyIds]){
@@ -46,7 +82,7 @@ public class AMS_AgencyAChangeCodeHandler {
 			if(elementsToUpdate.size() > 0){
 				
 				update elementsToUpdate;
-			}
+			}*/
 		}
 
 	}

@@ -1030,6 +1030,27 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Change_of_location_type_behavior__c</fullName>
+        <description>This field is only applicable when the OSCAR is opened on an SA Account. It&apos;s used to define the behavior in terms of hierarchy change, that will be applied to the SA Account.</description>
+        <externalId>false</externalId>
+        <label>Change of location type behavior</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Swap with the parent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Don’t change the parent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Comments_approval__c</fullName>
         <externalId>false</externalId>
         <label>Comments</label>
@@ -1967,6 +1988,30 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>NEW.BR.ABROAD</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>NEW.TIDS.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW.MSO.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW.GSA.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW.GSSA.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW.AHA.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW.SA.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackFeedHistory>false</trackFeedHistory>
@@ -1989,21 +2034,96 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <externalId>false</externalId>
         <label>Manager Approval</label>
         <picklist>
+            <controllingField>Process__c</controllingField>
             <picklistValues>
                 <fullName>Not Started</fullName>
                 <default>false</default>
+                <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
+                <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
+                <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
+                <controllingFieldValues>DGR.DGA</controllingFieldValues>
+                <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
+                <controllingFieldValues>NEW.1.1</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.BR</controllingFieldValues>
+                <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
+                <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Authorize Approval</fullName>
                 <default>false</default>
+                <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
+                <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
+                <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
+                <controllingFieldValues>DGR.DGA</controllingFieldValues>
+                <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
+                <controllingFieldValues>NEW.1.1</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.BR</controllingFieldValues>
+                <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
+                <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reject approval</fullName>
+                <default>false</default>
+                <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Authorize Disapproval</fullName>
                 <default>false</default>
+                <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
+                <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
+                <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
+                <controllingFieldValues>DGR.DGA</controllingFieldValues>
+                <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
+                <controllingFieldValues>NEW.1.1</controllingFieldValues>
+                <controllingFieldValues>NEW.BR</controllingFieldValues>
+                <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
+                <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
+                <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+                <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Reprocess case</fullName>
                 <default>false</default>
+                <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
+                <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
+                <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
+                <controllingFieldValues>DGR.DGA</controllingFieldValues>
+                <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
+                <controllingFieldValues>NEW.1.1</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.BR</controllingFieldValues>
+                <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
+                <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -4029,6 +4149,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_location_type_behavior__c</picklist>
+            <values>
+                <fullName>Don%E2%80%99t change the parent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swap with the parent</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Disapproval_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -4218,6 +4349,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>NEW%2EAHA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2EBR</fullName>
                 <default>false</default>
             </values>
@@ -4226,8 +4361,28 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>NEW%2EGSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2EHO%2E1%2E0</fullName>
                 <default>true</default>
+            </values>
+            <values>
+                <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ESA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
             </values>
             <values>
                 <fullName>TERMINATED%2E1%2E0</fullName>
@@ -4246,6 +4401,14 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5590,6 +5753,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_location_type_behavior__c</picklist>
+            <values>
+                <fullName>Don%E2%80%99t change the parent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swap with the parent</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Disapproval_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -5779,6 +5953,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>NEW%2EAHA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2EBR</fullName>
                 <default>false</default>
             </values>
@@ -5787,8 +5965,28 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>NEW%2EGSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2EHO%2E1%2E0</fullName>
                 <default>true</default>
+            </values>
+            <values>
+                <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ESA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
             </values>
             <values>
                 <fullName>TERMINATED%2E1%2E0</fullName>
@@ -5807,6 +6005,14 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7115,6 +7321,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Change_of_location_type_behavior__c</picklist>
+            <values>
+                <fullName>Don%E2%80%99t change the parent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swap with the parent</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Disapproval_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -7304,6 +7521,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>NEW%2EAHA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2EBR</fullName>
                 <default>false</default>
             </values>
@@ -7312,8 +7533,28 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>NEW%2EGSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EGSSA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEW%2EHO%2E1%2E0</fullName>
                 <default>true</default>
+            </values>
+            <values>
+                <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ESA%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2ETIDS%2E1%2E0</fullName>
+                <default>false</default>
             </values>
             <values>
                 <fullName>TERMINATED%2E1%2E0</fullName>
@@ -7332,6 +7573,14 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject Disapproval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>

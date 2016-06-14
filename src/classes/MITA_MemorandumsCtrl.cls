@@ -8,7 +8,7 @@ public with sharing class MITA_MemorandumsCtrl {
 	public String memorandumNumber {get;set;}
 	private boolean printErrors = true;
 	public boolean showMemorandum {get;set;}
-
+	
 	public PageReference getMEMOConcurrences(){
 		if ( !checkMemorandumNumber() ) {
 			return null;
@@ -36,7 +36,7 @@ public with sharing class MITA_MemorandumsCtrl {
 		fromDate = new MITA_Agreement__c();
 		toDate = new MITA_Agreement__c();
 		showMemorandum = false;
-
+		
 		list<Schema.PicklistEntry> listTypes = MITA_Agreement__c.MITAorBIETA__c.getDescribe().getPicklistValues();
 		this.agreementTypes = new list<SelectOption>();
 		for ( Schema.PicklistEntry entry: MITA_Agreement__c.MITAorBIETA__c.getDescribe().getPicklistValues() ) {
@@ -59,57 +59,54 @@ public with sharing class MITA_MemorandumsCtrl {
 			11=>'November',
 			12=>'December'
 	};
-
+	
 	public void showMemorandum(){
 		showMemorandum = true;
 	}
 	public void hideMemorandum(){
 		showMemorandum = false;
 	}
-
-
+	
+	
 	// Memorandum header
 	public MITA_Agreement__c fromdate {get;set;} //I need only a date but there is no standard way to have a date picker if the date is not belonging to a sobject. I'll use Agreement_Processed_Date__c
 	public MITA_Agreement__c todate {get;set;}	 //I need only a date but there is no standard way to have a date picker if the date is not belonging to a sobject. I'll use Cancellation_Processed_Date__c
-
-
+	
+	
 	// Memorandum 1: CONCURRENCES
 	public List<MITA_Agreement__c> getConcurrencesAgreements(){
-		List<MITA_Agreement__c> res = [SELECT Airline_1__c, Airline_1__r.Name, Airline_2__r.Name, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c
-									  FROM MITA_Agreement__c
-									  WHERE Agreement_Processed_Date__c >= :fromDate.Agreement_Processed_Date__c
-									  AND Agreement_Processed_Date__c <= :toDate.Agreement_Processed_Date__c
+		List<MITA_Agreement__c> res = [SELECT Airline_1__c, Airline_1__r.Name, Airline_2__r.Name, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c  
+									  FROM MITA_Agreement__c 
+									  WHERE Agreement_Processed_Date__c >= :fromDate.Agreement_Processed_Date__c AND Agreement_Processed_Date__c <= :toDate.Agreement_Processed_Date__c 
 									  AND MITAorBIETA__c = :selectedAgreement
 									  ORDER BY Airline_1__r.Name, Effective_Date__c];
 		for(MITA_Agreement__c agr : res)
 			agr.Agreement_type__c = getPorC(agr.Agreement_type__c);
-		return res;
+		return res; 
 	}
-
+	
 	// Memorandum 2: WITHDRAWALS
 	public List<MITA_Agreement__c> getWithdrawalsAgreements(){
-		List<MITA_Agreement__c> res = [SELECT Airline_1__c, Airline_1__r.Name, Airline_2__r.Name, Cancellation_Date__c, Cancellation_Processed_Date__c, Agreement_type__c
-									  FROM MITA_Agreement__c
-									  WHERE Cancellation_Processed_Date__c >= :fromDate.Cancellation_Processed_Date__c
-									  AND Cancellation_Processed_Date__c <= :toDate.Cancellation_Processed_Date__c
+		List<MITA_Agreement__c> res = [SELECT Airline_1__c, Airline_1__r.Name, Airline_2__r.Name, Cancellation_Date__c, Cancellation_Processed_Date__c, Agreement_type__c  
+									  FROM MITA_Agreement__c 
+									  WHERE Cancellation_Processed_Date__c >= :fromDate.Cancellation_Processed_Date__c AND Cancellation_Processed_Date__c <= :toDate.Cancellation_Processed_Date__c 
 									  AND MITAorBIETA__c = :selectedAgreement
-									  AND Cancellation_Reason__c in ('Requested by Airline 1','Requested by Airline 2')
 									  ORDER BY Airline_1__r.Name, Cancellation_Date__c];
 		for(MITA_Agreement__c agr : res)
 			agr.Agreement_type__c = getPorC(agr.Agreement_type__c);
-		return res;
+		return res; 
 	}
-
-
-
+	
+	
+	
 	///// METHODS FOR PRINTING PDFS /////
 	public List<SelectOption> getMemorandumTypes(){
 		List<SelectOption> sos = new List<SelectOption>();
 		for(Integer i : memorandumTypes.keyset())
 			sos.add(new SelectOption(''+i, memorandumTypes.get(i)));
 		return sos;
-	}
-
+	}	
+	
 	public String getPorC(String agrtype){
 		Map<String,String> typeToPC = new Map<String,String>{
 			'The Passenger and Cargo Interline Traffic Agreement' => 'P&C',

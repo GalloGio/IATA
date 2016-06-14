@@ -96,6 +96,7 @@ public with sharing class IECTestUtil {
             prpi.Active__c = true;
             prpi.Monthly_Price__c = 10.00;
             prpi.Display_As_Monthly_Fee__c = !triable;
+            prpi.User_Interface_Display__c = 'Yes';
             prpi.Order__c = 1;
             prpi.Short_Description__c = 'Sample Product Rate Plan Information';
             prpi.Long_Description__c = 'long desc';

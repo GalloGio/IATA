@@ -6,20 +6,18 @@
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
-                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
                 <region>Left</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
-                    <height>100</height>
                     <page>AMS_OSCAR_ProcessViewer</page>
-                    <unit>Percentage</unit>
                 </sidebarComponents>
-                <style>Stack</style>
+                <style>Tabs</style>
                 <unit>Pixel</unit>
                 <width>50</width>
             </containers>
             <containers>
-                <height>240</height>
+                <height>30</height>
                 <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
                 <region>Top</region>
                 <sidebarComponents>
@@ -29,12 +27,12 @@
                     <width>100</width>
                 </sidebarComponents>
                 <style>Stack</style>
-                <unit>Pixel</unit>
+                <unit>Percentage</unit>
             </containers>
         </primaryTabComponents>
         <subtabComponents>
             <containers>
-                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
                 <region>Left</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -43,8 +41,8 @@
                     <unit>Percentage</unit>
                 </sidebarComponents>
                 <style>Stack</style>
-                <unit>Pixel</unit>
-                <width>400</width>
+                <unit>Percentage</unit>
+                <width>40</width>
             </containers>
         </subtabComponents>
     </customConsoleComponents>
@@ -66,10 +64,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Case_Remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -106,11 +100,11 @@
                 <field>Priority</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CaseArea__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Reason1__c</field>
             </layoutItems>
             <layoutItems>
@@ -248,20 +242,6 @@
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
     </quickActionList>
-    <relatedContent>
-        <relatedContentItems>
-            <layoutItem>
-                <behavior>Readonly</behavior>
-                <field>ContactId</field>
-            </layoutItem>
-        </relatedContentItems>
-        <relatedContentItems>
-            <layoutItem>
-                <behavior>Readonly</behavior>
-                <field>AccountId</field>
-            </layoutItem>
-        </relatedContentItems>
-    </relatedContent>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
     </relatedLists>
@@ -270,7 +250,6 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>Case_Type__c</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>
@@ -320,7 +299,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hw000000i1Enr</masterLabel>
+        <masterLabel>00h7E000000ImMc</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

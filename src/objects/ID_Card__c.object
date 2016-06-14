@@ -1222,11 +1222,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Valid_To_Date__c</columns>
         <columns>MustSyncWithAIMS__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>VER_Number__c</field>
-            <operation>equals</operation>
-            <value>6124043832</value>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>

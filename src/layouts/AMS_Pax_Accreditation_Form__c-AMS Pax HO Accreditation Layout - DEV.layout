@@ -12,8 +12,8 @@
                 <field>SAAM_Case__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Operation_Type__c</field>
+                <behavior>Readonly</behavior>
+                <field>Type_of_Operation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

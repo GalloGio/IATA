@@ -306,6 +306,16 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Created_Date_To_Show__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( Date_time_of_change__c ,  CreatedDate )</formula>
+        <label>Created Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Date_Memo_Sent__c</fullName>
         <externalId>false</externalId>
         <label>Date Memo Sent</label>
@@ -685,6 +695,29 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIDRA_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SIDRA Case</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>You can only select SIDRA cases, make sure the selected case has the correct record type</errorMessage>
+            <filterItems>
+                <field>Case.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>SIDRA</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
+        <relationshipName>Agencies_Applied_Change_codes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Sent_to_external_system__c</fullName>
