@@ -2566,9 +2566,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.USERS.EMAIL</field>
-            <operation>equals</operation>
-            <value>jaradata@iata.org</value>
+            <field>CORE.PROFILE.NAME</field>
+            <operation>contains</operation>
+            <value>DPC</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

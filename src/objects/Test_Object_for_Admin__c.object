@@ -91,8 +91,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Argentina</fullName>
-                <controllingFieldValues>Americas</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Armenia</fullName>
@@ -120,8 +120,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Bahrain</fullName>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Bangladesh</fullName>
@@ -205,8 +205,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Canada1</fullName>
-                <controllingFieldValues>Americas</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Cape Verde</fullName>
@@ -330,8 +330,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>France</fullName>
-                <controllingFieldValues>Europe</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>French Polynesia</fullName>
@@ -351,8 +351,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Germany</fullName>
-                <controllingFieldValues>Europe</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Ghana</fullName>
@@ -404,8 +404,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>India</fullName>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Indonesia</fullName>
@@ -421,8 +421,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Ireland</fullName>
-                <controllingFieldValues>Europe</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Israel</fullName>
@@ -430,8 +430,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Italy</fullName>
-                <controllingFieldValues>Europe</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Jamaica</fullName>
@@ -479,8 +479,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Lebanon</fullName>
-                <controllingFieldValues>Europe</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Lesotho</fullName>
@@ -608,8 +608,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Nigeria</fullName>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Niue</fullName>
@@ -777,8 +777,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Singapore</fullName>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Slovenia</fullName>
@@ -794,8 +794,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>South Africa</fullName>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Spain &amp; Andorra</fullName>
@@ -803,8 +803,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Sri Lanka</fullName>
-                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Sudan</fullName>
@@ -820,8 +820,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Switzerland &amp; Liechtenstein</fullName>
-                <controllingFieldValues>Europe</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Europe</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Syria</fullName>
@@ -893,8 +893,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>United Arab Emirates</fullName>
-                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>United Kingdom</fullName>
@@ -902,8 +902,8 @@
             </picklistValues>
             <picklistValues>
                 <fullName>United States</fullName>
-                <controllingFieldValues>Americas</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Americas</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Uruguay</fullName>
@@ -947,13 +947,13 @@
             </picklistValues>
             <picklistValues>
                 <fullName>People&apos;s Republic of China</fullName>
-                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Hong Kong (SAR), China</fullName>
-                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
