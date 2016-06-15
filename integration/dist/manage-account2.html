@@ -195,81 +195,85 @@
                                 
                             </div>
                             <div class="tab-pane" id="pane-1-b">
-                                <table class="data-table manage-lists">
-                                    <tr>
-                                        <th class="activity-type">
-                                            <a class="js-toggle-type-sort" href="#">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                            <div class="type-sort">
-                                                <ul class="list">
-                                                    <li class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="type-1" data-target-row="js-sort-type-adjustments" checked>
-                                                            <label class="custom-checkbox" for="type-1"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="type-1">Adjustments</label>
-                                                    </li>
-                                                    <li class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="type-2" data-target-row="js-sort-type-credits" checked>
-                                                            <label class="custom-checkbox" for="type-2"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="type-2">Credits</label>
-                                                    </li>
-                                                    <li class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="type-3" data-target-row="js-sort-type-sends" checked>
-                                                            <label class="custom-checkbox" for="type-3"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="type-3">Sends</label>
-                                                    </li>
-                                                </ul>
+                                <div class="table-container data-table-container">
+                                
+                                    <table class="data-table manage-lists">
+                                        <tr>
+                                            <th class="activity-type">
+                                                <a class="js-toggle-type-sort" href="#">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                                <div class="type-sort">
+                                                    <ul class="list">
+                                                        <li class="checkbox-box">
+                                                            <div class="custom-user-input checkbox">
+                                                                <input class="user-input checkbox" type="checkbox" id="type-1" data-target-row="js-sort-type-adjustments" checked>
+                                                                <label class="custom-checkbox" for="type-1"><i class="icon"></i></label>
+                                                            </div>
+                                                            <label class="input-label" for="type-1">Adjustments</label>
+                                                        </li>
+                                                        <li class="checkbox-box">
+                                                            <div class="custom-user-input checkbox">
+                                                                <input class="user-input checkbox" type="checkbox" id="type-2" data-target-row="js-sort-type-credits" checked>
+                                                                <label class="custom-checkbox" for="type-2"><i class="icon"></i></label>
+                                                            </div>
+                                                            <label class="input-label" for="type-2">Credits</label>
+                                                        </li>
+                                                        <li class="checkbox-box">
+                                                            <div class="custom-user-input checkbox">
+                                                                <input class="user-input checkbox" type="checkbox" id="type-3" data-target-row="js-sort-type-sends" checked>
+                                                                <label class="custom-checkbox" for="type-3"><i class="icon"></i></label>
+                                                            </div>
+                                                            <label class="input-label" for="type-3">Sends</label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </th>
+                                            <th class="name">Campaign Name</th>
+                                            <th class="id">Campaign ID</th>
+                                            <th class="activity-date">Activity Date</th>
+                                            <th class="total-count">Total Count</th>
+                                        </tr>
+                                                                                    <tr class="js-sort-type-credits">
+                                                <td class="activity-type">Credits</td>
+                                                <td class="name">Campaign 1</td>
+                                                <td class="id">C-00000011</td>
+                                                <td class="activity-date">01 Mar. 2016</td>
+                                                <td class="total-count">5 email(s)</td>
+                                            </tr>
+                                                                                    <tr class="js-sort-type-adjustments">
+                                                <td class="activity-type">Adjustments</td>
+                                                <td class="name">Campaign 2</td>
+                                                <td class="id">C-00000011</td>
+                                                <td class="activity-date">01 Mar. 2016</td>
+                                                <td class="total-count">5 email(s)</td>
+                                            </tr>
+                                                                                    <tr class="js-sort-type-sends">
+                                                <td class="activity-type">Sends</td>
+                                                <td class="name">Campaign 3</td>
+                                                <td class="id">C-00000011</td>
+                                                <td class="activity-date">01 Mar. 2016</td>
+                                                <td class="total-count">5 email(s)</td>
+                                            </tr>
+                                                                                    <tr class="js-sort-type-sends">
+                                                <td class="activity-type">Sends</td>
+                                                <td class="name">Campaign 4</td>
+                                                <td class="id">C-00000011</td>
+                                                <td class="activity-date">01 Mar. 2016</td>
+                                                <td class="total-count">5 email(s)</td>
+                                            </tr>
+                                                                            </table>  
+                                    <div class="pagination">
+                                        <div class="page-number">
+                                            Page
+                                            <div class="custom-user-input select">
+                                                <i class="icon angle-down"></i>
+                                                <select class="user-input select">
+                                                    <option value="1">1</option>
+                                                </select>
                                             </div>
-                                        </th>
-                                        <th class="name">Campaign Name</th>
-                                        <th class="id">Campaign ID</th>
-                                        <th class="activity-date">Activity Date</th>
-                                        <th class="total-count">Total Count</th>
-                                    </tr>
-                                                                            <tr class="js-sort-type-credits">
-                                            <td class="activity-type">Credits</td>
-                                            <td class="name">Campaign 1</td>
-                                            <td class="id">C-00000011</td>
-                                            <td class="activity-date">01 Mar. 2016</td>
-                                            <td class="total-count">5 email(s)</td>
-                                        </tr>
-                                                                            <tr class="js-sort-type-adjustments">
-                                            <td class="activity-type">Adjustments</td>
-                                            <td class="name">Campaign 2</td>
-                                            <td class="id">C-00000011</td>
-                                            <td class="activity-date">01 Mar. 2016</td>
-                                            <td class="total-count">5 email(s)</td>
-                                        </tr>
-                                                                            <tr class="js-sort-type-sends">
-                                            <td class="activity-type">Sends</td>
-                                            <td class="name">Campaign 3</td>
-                                            <td class="id">C-00000011</td>
-                                            <td class="activity-date">01 Mar. 2016</td>
-                                            <td class="total-count">5 email(s)</td>
-                                        </tr>
-                                                                            <tr class="js-sort-type-sends">
-                                            <td class="activity-type">Sends</td>
-                                            <td class="name">Campaign 4</td>
-                                            <td class="id">C-00000011</td>
-                                            <td class="activity-date">01 Mar. 2016</td>
-                                            <td class="total-count">5 email(s)</td>
-                                        </tr>
-                                                                    </table>  
-                                <div class="pagination text-left">
-                                    <div class="page-number">
-                                        Page
-                                        <div class="custom-user-input select">
-                                            <i class="icon angle-down"></i>
-                                            <select class="user-input select">
-                                                <option value="1">1</option>
-                                            </select>
+                                            of 3
                                         </div>
-                                        of 3
                                     </div>
+
                                 </div>
                             </div>
                         </div>
