@@ -69,6 +69,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Audience__c</fullName>
+        <description>Audience targeted by the Master Filter</description>
+        <externalId>false</externalId>
+        <formula>TEXT(EBC_Master_Filter__r.Audience__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Audience targeted by the Master Filter</inlineHelpText>
+        <label>Audience</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Billing_Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>The Billing Account that pay for that campaign</description>
@@ -327,6 +341,22 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Recipients__c</fullName>
+        <description>Number of recipients targeted by the Master Filter</description>
+        <externalId>false</externalId>
+        <formula>EBC_Master_Filter__r.Number_of_Recipients__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Number of recipients targeted by the Master Filter</inlineHelpText>
+        <label>Number of Recipients</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>

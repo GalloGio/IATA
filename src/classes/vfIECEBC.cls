@@ -1,4 +1,9 @@
 public class vfIECEBC extends IECPageController {
+    
+    public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
+    public static Zuora__CustomerAccount__c billingAccount = [Select Id from Zuora__CustomerAccount__c where Zuora__Account__c = :usr.Contact.AccountId LIMIT 1];
+    
+    
     public vfIECSubscriptionInfo ctrSubsInfo  {
     	get {
     		if (ctrSubsInfo == null) {
