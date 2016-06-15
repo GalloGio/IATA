@@ -970,10 +970,10 @@ private class ISSP_AMS_Accreditation_Test
             Double ownership_total = ctrl.Curr_Ownership_Total;
             ownership_total = ctrl.Prev_Ownership_Total;
             
-            
+            ctrl.agencyCodesConcerned = new List<String> {'12345678'};
             ctrl.amsOfficeType = 'Branch';
             ctrl.sector = 'Cargo Agent';
-            ctrl.iatacode = '100';
+            ctrl.iatacode = '12345678';
             ctrl.newCase = testCase ;
             ctrl.editContactId =  newContact.Id;
             ctrl.brAccountId = parent.Id;
@@ -988,7 +988,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.editAgencyContact();
             ctrl.updateAgencyDetails();
             ctrl.isocountry.OSCAR_enabled__c = true;
-            ctrl.updateNoCAgencyInfo();
+            ctrl.updateNoCAgencyLocation();
             ctrl.goToStep3Section1();
             ctrl.goToStep3Section2();
             ctrl.goToStep3Section3();
@@ -1143,6 +1143,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.brAccountId = parent.Id;
             
             ctrl.getBranchAccounts();
+            ctrl.agencyCodesConcerned = new List<String> {'12345678'};
             ctrl.newForm.Is_change_location__c = true;
             ctrl.newForm.Is_change_legal_name__c = true;
             ctrl.newForm.Is_change_ownership_or_shareholding__c = true;
@@ -1156,7 +1157,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.cancelFormUpdate();
             ctrl.editAgencyContact();
             ctrl.updateAgencyDetails();
-            ctrl.updateNoCAgencyInfo();
+            ctrl.updateNoCAgencyLocation();
             ctrl.goToStep3Section1();
             ctrl.goToStep3Section2();
             ctrl.goToStep3Section3();
@@ -1313,6 +1314,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.brAccountId = parent.Id;
             
             ctrl.getBranchAccounts();
+            ctrl.agencyCodesConcerned = new List<String> {'12345678'};
             ctrl.newForm.Is_change_location__c = true;
             ctrl.newForm.Is_change_legal_name__c = true;
             ctrl.newForm.Is_change_ownership_or_shareholding__c = true;
@@ -1326,7 +1328,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.cancelFormUpdate();
             ctrl.editAgencyContact();
             ctrl.updateAgencyDetails();
-            ctrl.updateNoCAgencyInfo();
+            ctrl.updateNoCAgencyLocation();
             ctrl.goToStep3Section1();
             ctrl.goToStep3Section2();
             ctrl.goToStep3Section3();
