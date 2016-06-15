@@ -1,0 +1,32 @@
+<apex:component controller="vfIECEBC_TemplateCreation" allowDML="true">
+    <apex:attribute name="campaign" description="The eBroadcast Campaign" type="EBC_Campaign__c" required="false"/>
+    <apex:attribute name="global" description="Display global templates" type="Boolean" required="true"/>
+    
+    <!--<apex:inputHidden value="{!campaign.EBC_Selected_Template__c}" id="selectedTemplate" />-->
+    
+    <script type="text/javascript">
+    function updateSelectedTemplate(templateId) {
+        document.getElementById('{!$Component.selectedTemplate}').value = templateId;
+    }
+    </script>
+                                    
+    
+    <ul class="list template-list js-template-list">
+        <apex:repeat value="{!IF(global, globalTemplates, userEditableTemplates)}" var="templateSrc" id="repeat" >
+            <li class="list-item{!IF(campaign.EBC_Selected_Template__c == templateSrc.Id, ' is-selected', '')}">
+                <div class="checkbox-box">
+                    <div class="custom-user-input checkbox">
+                        <apex:outputText rendered="{!campaign.EBC_Selected_Template__c == templateSrc.Id}"><input class="user-input checkbox" type="checkbox" id="item{!templateSrc.Id}" value="{!templateSrc.Id}" onchange="updateSelectedTemplate('{!templateSrc.Id}');" checked="checked" /></apex:outputText>
+                        <apex:outputText rendered="{!NOT(campaign.EBC_Selected_Template__c == templateSrc.Id)}"><input class="user-input checkbox" type="checkbox" id="item{!templateSrc.Id}" value="{!templateSrc.Id}" onchange="updateSelectedTemplate('{!templateSrc.Id}');" /></apex:outputText>
+                        <label class="custom-checkbox" for="item{!templateSrc.Id}"><i class="icon"></i></label>
+                    </div>
+                    <label class="input-label" for="item{!templateSrc.Id}"><span class="input-state unselected">Select</span> <span class="input-state selected">Selected</span></label>
+                </div>
+                <h2 class="item-name">{!templateSrc.Template_Name__c}</h2>
+                <figure class="item-image">
+                    <apex:image url="{!URLFOR($Resource.eBroadcastAssets, 'assets/img/components/templates/template-1.png')}" alt="{!templateSrc.Template_Name__c}" />
+                </figure>
+            </li>
+        </apex:repeat>
+    </ul>
+</apex:component>
