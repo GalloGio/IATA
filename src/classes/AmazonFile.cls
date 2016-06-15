@@ -1,7 +1,7 @@
 public class AmazonFile {
 
 	private AmazonRest.S3File s3File;
-	public AmazonFile__c amazonFile;
+    public AmazonFile__c amazonFile{get;set;}
 
 	public AmazonFile(AmazonRest.S3File s3File, AmazonFile__c aFile ) {
 		this.s3File = s3File;
@@ -62,7 +62,27 @@ public class AmazonFile {
 	public String getFileIdentifier() {
 		return amazonFile == null? null: this.amazonFile.File_Identifier__c;
 	}
-
+    
+	public String getSource() {
+		return amazonFile == null? null: this.amazonFile.Source__c;
+	}
+    
+	public String getFileIdentifierPick() {
+		return amazonFile == null? null: this.amazonFile.File_Identifier_picklist__c;
+	}
+    
+	public String getReviewStatus() {
+		return amazonFile == null? null: this.amazonFile.Review_Status__c;
+	}
+    
+	public String getRecordTypeId() {
+		return amazonFile == null? null: this.amazonFile.RecordTypeId;
+	}
+    
+	public String getRecordTypeDeveloperName() {
+		return amazonFile == null? null: this.amazonFile.RecordType.DeveloperName;
+	}
+    
 	// for compatibility with AmazonFinancial.page
 	public PageReference deleteFile() {
 		delFile();
@@ -146,7 +166,8 @@ public class AmazonFile {
 			//get the amazonFile Object
 			AmazonFile__c aFile;
 			list<AmazonFile__c> aFiles = [
-				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+                File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName
 				From AmazonFile__c 
 				Where id = :sobjectId
 			];
@@ -185,7 +206,8 @@ public class AmazonFile {
 		// for cases
 		if ( String.ValueOf(sobjectId.getSObjectType()) == 'Case') {
 			listFiles = [
-				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+                File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName
 				From AmazonFile__c
 				Where Case__c = :sobjectId
 			];
@@ -196,5 +218,4 @@ public class AmazonFile {
 		}
 		return mapFiles;
 	}
-
 }

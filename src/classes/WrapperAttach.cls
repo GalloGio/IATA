@@ -17,6 +17,11 @@ global class WrapperAttach implements Comparable {
     public DateTime createdDate {get;set;}
     public Id createdBy {get;set;}
     public String fileIdentifier {get;set;}
+    public String fileIdentifierPick {get;set;}
+    public String reviewStatus {get;set;}
+    public String source {get;set;}
+    public String recordTypeId {get;set;}
+    public String recordTypeDeveloperName {get;set;}
     //public Contact createdByContact {get;set;}
     public String createdByName {get;set;}
     public String viewURL {get;set;}
@@ -44,7 +49,8 @@ global class WrapperAttach implements Comparable {
         this.fileIdentifier = '';
         this.createdByName = file.createdBy.Name;
         this.viewURL = new PageReference('/servlet/servlet.FileDownload?file=' + file.Id).getUrl();
-        setPermission(); 
+        setPermission();
+        
     }
 
     public WrapperAttach(Archived_Attachment__c file) {
@@ -77,6 +83,11 @@ global class WrapperAttach implements Comparable {
         this.createdDate = file.getCreatedDate();
         this.createdBy = file.getCreatedById();
         this.fileIdentifier = file.getFileIdentifier();
+        this.fileIdentifierPick = file.getFileIdentifierPick();
+        this.reviewStatus = file.getReviewStatus();
+        this.source = file.getSource();
+        this.recordTypeId = file.getRecordTypeId();
+        this.recordTypeDeveloperName = file.getRecordTypeDeveloperName();
         this.createdByName = file.getCreatedBy();
         this.viewURL = '';
         this.fullName = file.getFullName();
@@ -210,7 +221,7 @@ global class WrapperAttach implements Comparable {
         Get all attachments related to an object
     **/
     public static list<WrapperAttach> getListAttachments(Id sobjectId) {
-    	return getListAttachments(sobjectId, false);
+        return getListAttachments(sobjectId, false);
     }
     public static list<WrapperAttach> getListAttachments(Id sobjectId,Boolean withBody) {
         list<WrapperAttach> listAttachments = getSalesforceAttachments(sobjectId, withBody);
@@ -238,10 +249,9 @@ global class WrapperAttach implements Comparable {
         return listAttachments;
     }
     
-
     /**
         Get all standard salesforce attachments related to an object
-        @param withBody	query Body field in attachmets, only for these cases where the size is not a problem
+        @param withBody query Body field in attachmets, only for these cases where the size is not a problem
     **/
     private static list<WrapperAttach> getSalesforceAttachments(Id sobjectId, Boolean withBody) {
         list<WrapperAttach> listAttach = new list<WrapperAttach>();
@@ -249,14 +259,14 @@ global class WrapperAttach implements Comparable {
             list<Attachment> listAttachment = new list<Attachment>();
             
             if(withBody) {
-            	// query with body field
-            	listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name, Body
+                // query with body field
+                listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name, Body
                 FROM Attachment 
                 WHERE ParentId = :sobjectId];
-            	
+                
             }  else {
-            	// query without body field
-            	listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name
+                // query without body field
+                listAttachment = [SELECT  Id,  Name, BodyLength, CreatedById, CreatedDate, ContentType, Description, IsPrivate, LastModifiedDate, LastModifiedById, OwnerId, ParentId, CreatedBy.Name
                 FROM Attachment 
                 WHERE ParentId = :sobjectId];
             }

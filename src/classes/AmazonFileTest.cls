@@ -62,10 +62,16 @@ public class AmazonFileTest {
 		amazonFile.getCreatedById();
 		amazonFile.getIsPublic();
 		amazonFile.getFileIdentifier();
+        amazonFile.getSource();
+        amazonFile.getFileIdentifierPick();
+        amazonFile.getReviewStatus();
+        amazonFile.getRecordTypeId();
+        amazonFile.getRecordTypeDeveloperName(); 
 		amazonFile.getCreatedBy();
 		amazonFile.getId();
 		amazonFile.deleteFile();
 		amazonFile.deleteAmazonFile();
+
 		Test.StopTest();
 	}
 	

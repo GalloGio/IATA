@@ -1,6 +1,5 @@
 public class AMS_OSCARTriggerHandler {
 
-	class AMSException extends Exception {}
 
 	public static void handleBeforeInsert(List<AMS_OSCAR__c> oscars) {
 
@@ -203,11 +202,17 @@ public class AMS_OSCARTriggerHandler {
 					accountsChangeCode.put(accId, changeCode);
 		}
 
-		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, ParentId, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		//Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Status__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
+
+		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c FROM Account WHERE Id IN :accountIds]);
 
+		/*Map<Id, Account> accountsDataMigration = new Map<Id, Account>([SELECT Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c FROM Account WHERE Id IN :accountIds]);*/
 
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
 		        ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
@@ -271,24 +276,12 @@ public class AMS_OSCARTriggerHandler {
 							oscar.addError(error);
 					}
 
-					
+					//block change of location type in Head Office
 					Account oscarAccount = accounts.get(oscar.Account__c);
-					if (oscar.Type_of_change__c.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)){
-						//block change of location type in Head Office
-						if(oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.HO))
-							oscar.addError('OSCAR for Change of Location Type cannot be performed in an HO.');
+					if (oscar.Type_of_change__c.containsIgnoreCase(AMS_Utils.LOCATION_TYPE) && !oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.BR))
+						oscar.addError('Change of Location Type cannot be performed in an HO. Please open the OSCAR in a BR Account.');
 
-						if(oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.BR))
-							if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP)
-								oscar.Change_of_location_type_behavior__c.addError('This option cannot be used when the OSCAR is opened for a Branch.');
-
-					}else{
-						//Only allowed to be filled in for change of Location Type
-						if(oscar.Change_of_location_type_behavior__c != null)
-							oscar.Change_of_location_type_behavior__c.addError('This field can only be filled for changes of Location Type.');
-					}
-
-					//TODO: LOCATION TYPE -> SHOULD NOT BE ALLOWED TO ADD PROCESS DETAILS
+					//TODO: LOCATION TYPE -> SHOULD NOT BE ALLOWED TO ADD PROCESS DETAILS AND SHOULD APPLY CHANGE CODE TO THE HEAD OFFICE
 					//Location Type will always be selected as a single change.
 					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on sanity Check.');
@@ -310,7 +303,7 @@ public class AMS_OSCARTriggerHandler {
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
-					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
+					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.toLowerCase().contains(AMS_Utils.LOCATION_TYPE.toLowerCase())) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Authorize Approval.');
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, new Set<Id> {oscar.Account__c, hierarchyHO}));
@@ -350,7 +343,7 @@ public class AMS_OSCARTriggerHandler {
 
 
 				} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
-					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
+					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.toLowerCase().contains(AMS_Utils.LOCATION_TYPE.toLowerCase())) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Withdrawal.');
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.WITHDRAWAL, new Set<Id> {oscar.Account__c, hierarchyHO}));
@@ -457,23 +450,12 @@ public class AMS_OSCARTriggerHandler {
 
 		Id oscarAccountId = oscar.Account__c;
 
-		//get the parent of the oscar account
-		Account child = accounts.get(oscarAccountId);
-		String childLocationType = child.Location_Type__c;
 
-		Account parent;
-
-		if(child != null && child.parentId != null) 
-			parent = accounts.get(child.parentId);
-
-		system.debug('AGENCY CHANGES: the parent that will become child: ' + parent);
 
 		List<AMS_Agencies_relationhip__c> hierarchyRelationships = hierarchies.get(oscar.Account__c);
 
-		if(child != null && parent != null)
-			return AMS_HierarchyHelper.switchParentWithChild(child.Id, parent.Id, oscar.Change_of_location_type_behavior__c, accounts, hierarchyRelationships);
 
-		throw new AMSException('Data inconsistency issue.');
+		return AMS_HierarchyHelper.switchBRwithHO(oscarAccountId, hierarchyRelationships);
 
 	}
 

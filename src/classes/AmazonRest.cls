@@ -34,6 +34,7 @@ public  class AmazonRest {
             req.setHeader('Date',timestamp);
             HttpResponse res;
           if(!Test.isRunningTest())  res = http.send(req);
+          else{ res = new HttpResponse(); res.setBody('Test'); }
             
             body = res.getBody();
             system.debug('' +res);

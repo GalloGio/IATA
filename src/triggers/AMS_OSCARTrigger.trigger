@@ -86,8 +86,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 }
             }
 
-            //ON INSERT
-            //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
+            //NEW HO LOGIC ON INSERT
             oscar.Dossier_Reception_Date__c = Date.today();
             oscar.Sanity_check_deadline__c = Date.today() + 15;
 
@@ -116,16 +115,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             caseOscars.put(caseOscar.OSCAR__r.Id, caseOscar);
         }
 
-        //processes to ignore in the creation of the DIS change code
-        Set<String> ProcessesToIgnoreCreateChangeCode = new Set <String>{'NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0'};
-
         for (AMS_OSCAR__c updatedOSCAR : Trigger.new) {
             AMS_OSCAR__c oldOSCAR = Trigger.oldMap.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
-            if(!ProcessesToIgnoreCreateChangeCode.contains(updatedOscar.Process__c))
-                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
+            applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
 
             processFieldsTracking(oldOSCAR, updatedOscar);
 
@@ -201,8 +196,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     }
                     casesToUpdate.add(caseToUpdate);
                 }
+
+                if (updatedOSCAR.Status__c.startsWithIgnoreCase('closed'))
+                    closedOscars.add(updatedOSCAR);
+
             }
         }
+
+        // only with Change codes FIN / DIS and NEw this should happen.
+
+        /*
+        if (!closedOscars.isEmpty()){
+            AMS_Utils.copyDataToAccount(closedOscars);
+        }
+        */
 
         if (!casesToUpdate.isEmpty())
             update casesToUpdate;
@@ -219,8 +226,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.reasonCode = '91';
                 if (updatedOscar.Process__c == 'NEW.HO.1.0' || updatedOscar.Process__c == 'NEW.BR.ABROAD')
                     changeCode.memoText = 'New application - Head Office finalized';
-                else if (updatedOscar.Process__c == 'NEW.SA.1.0')
-                    changeCode.memoText = 'New application - SA finalized';
                 else
                     changeCode.memoText = 'New application - Branch finalized';
                 changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
@@ -239,8 +244,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 changeCode.reasonCode = '00';
                 if (updatedOscar.Process__c == 'NEW.HO.1.0' || updatedOscar.Process__c == 'NEW.BR.ABROAD')
                     changeCode.memoText = 'New application disapproved';
-                else if (updatedOscar.Process__c == 'NEW.SA.1.0')
-                    changeCode.memoText = 'New application - SA disapproved';
                 else
                     changeCode.memoText = 'New application - Branch disapproved';
                 changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';

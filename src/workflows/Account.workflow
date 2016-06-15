@@ -42,17 +42,6 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching2</template>
     </alerts>
-    <alerts>
-        <fullName>Irregularity_Thresold_Met</fullName>
-        <description>Irregularity Thresold Met</description>
-        <protected>false</protected>
-        <recipients>
-            <type>accountOwner</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
-    </alerts>
     <fieldUpdates>
         <fullName>AIMS_Accounts_RT_Assignment</fullName>
         <description>Assign &quot;Agenciy&quot; as Record Type when an AIMS Account is created</description>
@@ -85,9 +74,17 @@
     <fieldUpdates>
         <fullName>Accountsiteupdate</fullName>
         <field>Site</field>
-        <formula>if(ISPICKVAL(Industry,&apos;Travel Agent&apos;),Site, if( ISBLANK(IATACode__c), 
-Airline_designator__c + &apos; &apos;+IATA_ISO_Country__r.ISO_Code__c, 
-Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c))</formula>
+        <formula>if(
+  ISPICKVAL(Industry,&apos;Travel Agent&apos;),
+  Site,
+  if( ISBLANK(IATACode__c), 
+    if ( ISBLANK(Airline_Prefix__c),
+      Airline_designator__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c,
+      Airline_designator__c + &apos; &apos; + Airline_Prefix__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c
+    ),
+    Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_Country__r.ISO_Code__c
+  )
+)</formula>
         <name>Account site update</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -149,15 +146,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <name>Rename Branch</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Reset_irregularity_email</fullName>
-        <field>Send_Irregularity_Email__c</field>
-        <literalValue>0</literalValue>
-        <name>Reset irregularity email</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -595,25 +583,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>SIS</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Send Irregularity Email</fullName>
-        <actions>
-            <name>Irregularity_Thresold_Met</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Reset_irregularity_email</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.Send_Irregularity_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Sends email when the account reaches the irregularity thresold for the country. This validation is made on the AccountTrigger trigger</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Site Index</fullName>

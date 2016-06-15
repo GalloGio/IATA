@@ -695,16 +695,11 @@
         <columns>Product_Type__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Product_Type__c</field>
-            <operation>equals</operation>
-            <value>GSS</value>
-        </filters>
-        <filters>
             <field>Is_Reference__c</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>0</value>
         </filters>
-        <label>All</label>
+        <label>All Non Reference</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -728,7 +723,7 @@
         <filters>
             <field>Product_Type__c</field>
             <operation>contains</operation>
-            <value>CAC</value>
+            <value>CAC,CACSWS</value>
         </filters>
         <label>All CAC Non Reference</label>
         <language>en_US</language>
