@@ -2829,6 +2829,22 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC Current Legal details --></label>
+        <name>ISSP_AMS_NOC_Current_Legal_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Current Location --></label>
+        <name>ISSP_AMS_NOC_Current_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Instructions --></label>
+        <name>ISSP_AMS_NOC_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
+        <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Name of employer --></label>
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
@@ -3543,7 +3559,7 @@ Por favor seleccione al menos un signatario autorizado.</label>
         <name>ISSP_AMS_Step3_IATA_Reg_Cargo_Agent</name>
     </customLabels>
     <customLabels>
-        <label>Indique los GDS con los que ha firmado un contrato</label>
+        <label>* Indique los GDS con los que ha firmado un contrato</label>
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>

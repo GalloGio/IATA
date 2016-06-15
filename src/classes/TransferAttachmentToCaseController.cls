@@ -93,7 +93,7 @@ public with sharing class TransferAttachmentToCaseController {
             return;
         }
         
-		for(CaseWrapper cw : listTargetCaseSelected  ){
+        for(CaseWrapper cw : listTargetCaseSelected  ){
                      if(sourceCase.id == cw.caserecord.id ){
                      ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You selected the same source case as destination, please reselect a proper case'));
                         return;
@@ -101,7 +101,7 @@ public with sharing class TransferAttachmentToCaseController {
                      }
              
          
-		
+        
         // list of attachments to be created
         list<Attachment> lstNewAttachments = new list<Attachment>();
         //list<Archived_Attachment__c> lstNewArchived = new list<Archived_Attachment__c>();
@@ -118,6 +118,7 @@ public with sharing class TransferAttachmentToCaseController {
                     Attachment newAtt = attach.fileAttachment.clone();
                     newAtt.Body = attach.fileAttachment.Body;
                     newAtt.ParentId = cw.CaseRecord.Id;
+                    newAtt.OwnerId = UserInfo.getUserId();//added by MGO INC254433
                     lstNewAttachments.add(newAtt);
                 }
                 /*

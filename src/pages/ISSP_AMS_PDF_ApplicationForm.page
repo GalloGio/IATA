@@ -56,7 +56,7 @@
                 <table class="aptable">
                     <tr>
                         <td colspan="3" class="bluebg">
-                            <p class="whitetext">{!$Label.ISSP_AMS_First_Page_Summary_Header}</p>
+                           	<p class="whitetext">{!$Label.ISSP_AMS_First_Page_Summary_Header}</p>
                         </td>
                     </tr>
                     <tr>
@@ -370,15 +370,15 @@
                 <br/>
             </div>
             
-            <!-- ************************* section Local Agency Details (Local language) ************************* -->
+			<!-- ************************* section Local Agency Details (Local language) ************************* -->
             <div style="display:{!IF(isocountry.Local_language_Agency_details_required__c,'','none')}; page-break-after:always;">
-             <table class="aptable" >
-                <tr>
-                    <td colspan="3" class="bluebg">
-                        <p class="whitetext">{!txtLocalAgencyDetailsTitle}</p>
-                    </td>
-                </tr>
-                <tr>
+          	 <table class="aptable" >
+              	<tr>
+                	<td colspan="3" class="bluebg">
+                 		<p class="whitetext">{!txtLocalAgencyDetailsTitle}</p>
+                  	</td>
+              	</tr>
+              	<tr>
                     <td colspan="3">{!txtLocalAgencyDetailsPleaseEnter}</td>
                  </tr>
                  <tr style="font-family: Arial Unicode MS;">
@@ -390,18 +390,18 @@
                      <td width="40%" >
                         <strong>{!newForm.Local_Physical_Address_Street__c}</strong><br/>
                         <apex:outputField value="{!newForm.Local_Physical_Address_City__c}" /><br/>
-                        <apex:outputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" /><br/>
-                        <apex:outputField value="{!newForm.Local_Physical_Address_Province__c}" /><br/>
-                        <apex:outputField value="{!newForm.Local_Physical_Address_Area__c}" /><br/>
-                        <apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" /><br/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_Province__c}" /><br/>
+                       	<apex:outputField value="{!newForm.Local_Physical_Address_Area__c}" /><br/>
+                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
                      </td>
                      <td>
-                        <strong>{!newForm.Local_Postal_Address_Street__c}</strong><br/>
+                     	<strong>{!newForm.Local_Postal_Address_Street__c}</strong><br/>
                         <apex:outputField value="{!newForm.Local_Postal_Address_City__c}" /><br/>
-                        <apex:outputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" /><br/>
-                        <apex:outputField value="{!newForm.Local_Postal_Address_Province__c}" /><br/>
-                        <apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" /><br/>
-                        <apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
+                       	<apex:outputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" /><br/>
+                       	<apex:outputField value="{!newForm.Local_Postal_Address_Province__c}" /><br/>
+                       	<apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" /><br/>
+                       	<apex:outputText value="{!isocountry.IATA_Country_ZH__c}" label="Country"/>
                      </td>
                  </tr>
                 </table>    
@@ -452,9 +452,9 @@
                         </tr>
                         <tr style="display: {!IF(List_AgencyContacts.size == 0,'none','')}">
                             <td colspan="3" >
-                                <apex:outputpanel >
+                            	<apex:outputpanel >
                                     <strong>{!$Label.ISSP_AMS_Step3_4_People_SubTitle}</strong>    
-                                </apex:outputpanel>
+                        		</apex:outputpanel>
                                 <apex:form >
                                     <table class="pdf-table">
                                         <tr class="table-header">
@@ -526,11 +526,11 @@
                             <td colspan="2" class="label"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Previous_Default_Details}"/></td>                            
                             <td>{!newForm.ISSP_AMS_Prev_default_explanation__c}</td>
                         </tr>
-                         <tr style="display: {!IF(List_AgencyCompanies.size == 0,'none','')}">
+						 <tr style="display: {!IF(List_AgencyCompanies.size == 0,'none','')}">
                             <td colspan="3" >
-                                <apex:outputpanel >
-                                    {!$Label.ISSP_AMS_Step3_4_Companies_SubTitle}    
-                                </apex:outputpanel>
+								<apex:outputpanel >
+                            		{!$Label.ISSP_AMS_Step3_4_Companies_SubTitle}    
+                        		</apex:outputpanel>
                                 <apex:form >
                                     <table class="pdf-table">
                                         <tr class="table-header">
@@ -577,7 +577,7 @@
             </div>
 
             <!-- ************************* section 6 ************************* -->
-            <div style="page-break-after:always; display:{!IF(amsOfficeType != 'HO','none','')}">
+            <div style="page-break-after:always;">
                 <table class="aptable" style="width:100%">
                     <tr>
                         <td colspan="3" class="bluebg">
@@ -597,7 +597,7 @@
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c} {!newForm.CurrencyIsoCode}</td>
                     </tr>   
-                    <tr>
+                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
                         <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>
                         <td colspan="2">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes',$Label.ISSP_Yes, $Label.ISSP_No)}</td>
                     </tr>
@@ -607,7 +607,7 @@
                             <td colspan="2">{!newForm.IATA_Cargo_Code__c}</td>
                         </tr>
                     <!-- </apex:outputPanel> -->
-                    <tr>
+                    <tr style="display:{!IF(amsOfficeType != 'HO','none','')}">
                         <td class="label">{!$Label.ISSP_AMS_Step3_Indicate_GDSs}</td>
                         <td colspan="2">{!newForm.ISSP_AMS_GDS_with_signed_contract__c}</td>
                     </tr>               
@@ -621,7 +621,7 @@
                     <table class="aptable">
                         <tr>
                             <td colspan="3" class="bluebg">
-                                <p class="whitetext"> {!IF(amsOfficeType == 'HO', $Label.ISSP_AMS_International_Sales,$Label.ISSP_AMS_International_Sales_Branch)}</p>
+                                <p class="whitetext"> {!$Label.ISSP_AMS_International_Sales}</p>
                             </td>
                         </tr>
                         <tr>
@@ -663,9 +663,9 @@
                                                 </td>
                                                 <td class="total-amount">
                                                     <strong>
-                                                        <apex:outputText value="{!newForm.CurrencyIsoCode} {!ROUND(newForm.Total_International_Sales__c,2)} (USD {0, number, ###,##0.00})">
-                                                            <apex:param value="{!InternationalSales_Total}"/>
-                                                        </apex:outputText>
+                                                    	<apex:outputText value="{!newForm.CurrencyIsoCode} {!ROUND(newForm.Total_International_Sales__c,2)} (USD {0, number, ###,##0.00})">
+                                                        	<apex:param value="{!InternationalSales_Total}"/>
+                                                    	</apex:outputText>
                                                     </strong>
                                                 </td>
                                             </tr>

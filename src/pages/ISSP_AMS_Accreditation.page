@@ -338,7 +338,7 @@
                    
         function togglePageItem(v, fldId) {
             var el = document.getElementById(fldId);
-            if(v=='Branch') {
+            if(v=='HO - Selected Branches' || v=='Selected Branches Only') {
                 el.style.display='block';
             } else {
                 el.style.display='none';
@@ -415,7 +415,6 @@
             </div>
     <div class="panel-body" id="body-enquiries">
         
-       
     <apex:form id="step1Form" styleClass="form-horizontal">
         <div class="progress">
           
@@ -432,13 +431,13 @@
                     <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;">
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
                 <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4">
                     <apex:param value="4" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!$Label.ISSP_AMS_Step5_ProgressBar}" id="Next5">
+                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NOC_StepD_ProgressBar, $Label.ISSP_AMS_Step5_ProgressBar)}" id="Next5">
                     <apex:param value="5" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
@@ -453,8 +452,16 @@
       
         <apex:pageBlock id="step1Block" mode="edit" >
             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
-                <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true"/>
-                <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}"/>
+                <apex:actionStatus id="buttonLoadingStep1">
+                    <apex:facet name="stop"><apex:outputPanel >
+                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="step1Form"/>
+                        <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_Next}" rendered="{!NOT(amsIsGSA=='YES')}" status="buttonLoadingStep1" reRender="step1Form"/>
+                    </apex:outputPanel></apex:facet>
+                    <apex:facet name="start"><apex:outputPanel >
+                        <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="step1Form"/>
+                        <apex:commandButton styleclass="btn btn-default"  value="{!$Label.ISSP_Next}..." rendered="{!NOT(amsIsGSA=='YES')}" disabled="true" reRender="step1Form"/>
+                    </apex:outputPanel></apex:facet>
+                </apex:actionStatus>
             </apex:pageBlockButtons>
          <apex:pageMessages ></apex:pageMessages>
         <apex:outputPanel id="formContainer" rendered="{!NOT(amsIsGSA=='YES')}">
@@ -483,8 +490,6 @@
                     </div>
                     </div>
 
-                
-               
                     <div class="form-group"> 
                         <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</label>
                         <div class="col-lg-9">
@@ -512,7 +517,7 @@
             </apex:outputPanel>
             
                 <apex:outputpanel rendered="{!isNoticeOfChange}">
-
+						<!--
                                 <apex:outputPanel rendered="{!isBankAccountChange==false}">
                                     <div class="form-group">
                                         <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
@@ -540,26 +545,29 @@
                                         </div>
                                     </div>
                                 </apex:outputText>
-
-                                <apex:outputpanel rendered="{!BranchAccounts.size>1}">
+								-->
+                    
+                                <apex:outputpanel >
                                     <div class="form-group">
                                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_NoC_Change_for}</label>
                                     <div class="col-lg-9" style="padding-top:7px">
-                                        <apex:selectRadio required="true" id="LocationType" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:35%" value="{!noCLocationType}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
-                                            <apex:selectOption itemValue="HO" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}"/>
-                                            <apex:selectOption itemValue="Branch" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}"/>
+                                        <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
+                                            <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" />
+                                            <apex:selectOption itemValue="HO - All Branches" itemLabel="Head Office & All Branch Offices" rendered="{!BranchAccounts.size>=1}" />
+                                            <apex:selectOption itemValue="HO - Selected Branches" itemLabel="Head Office & one or more Branch Offices" rendered="{!BranchAccounts.size>=1}"/>
+                                            <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!BranchAccounts.size>=1}"/>
                                         </apex:selectRadio>
                                     </div>
                                     </div>
 
-                                   
-                                    <apex:outputPanel id="branchaccountsel" style="display:{!IF(noCLocationType=='Branch', '', 'none')}">
+                                    <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only'), '', 'none')}">
                                     <div class="form-group"> 
                                         <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}</label>
                                         <div class="col-lg-9">
-                                            <apex:selectList label="{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}" styleClass="form-control" style="width:45%" value="{!brAccountId}" size="1"> 
+                                            <apex:selectList label="{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}" styleClass="form-control" style="width:55%" multiselect="true" value="{!agencyCodesConcerned}" size="3"> 
                                                 <apex:selectOptions value="{!BranchAccounts}"/>
-                                            </apex:selectList>                           
+                                            </apex:selectList>
+                                           
                                         </div>
                                     </div>  
                                     </apex:outputPanel>
@@ -582,10 +590,7 @@
                             </div>
                             </div>
 
-                       
-                       
-                            
-                            
+                         
                             <apex:outputpanel id="langGSA">
                             <apex:outputpanel rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}">
                                 <div class="form-group">
@@ -655,11 +660,11 @@
                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                         <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),$Label.ISSP_AMS_Step3_ProgressBar, $Label.ISSP_AMS_NoC_StepC)}" id="Next3"/>
                     </div>
-                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%">
+                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
                         <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4"/>
                     </div>
                      <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!$Label.ISSP_AMS_Step5_ProgressBar}" id="Next5"/>
+                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NOC_StepD_ProgressBar, $Label.ISSP_AMS_Step5_ProgressBar)}" id="Next5"/>
                     </div>
                 </div>
                 </apex:form>
@@ -729,11 +734,11 @@
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_AMS_Step3_ProgressBar}" id="Prev3"/>
             </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%">
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Prev4"/>
             </div>
              <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                {!$Label.ISSP_AMS_Step5_ProgressBar}    
+                {!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NOC_StepD_ProgressBar, $Label.ISSP_AMS_Step5_ProgressBar)}
             </div>
         </div>
        </apex:form>
