@@ -2,21 +2,25 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
 
     if(!AMS_TriggerExecutionManager.checkExecution(Agency_Applied_Change_code__c.getSObjectType(), 'AMS_AgencyAChangeCode')) { return; }
     
-    if(Trigger.isBefore) {
-        if(Trigger.isInsert){
-            System.debug('Entering handleBeforeInsert');
-            AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
-            System.debug('Finished handleBeforeInsert');
-        }
+    //DTULLO: Prevent trigger from running more than once
+    if(AMS_AgencyAChangeCodeHandler.firstRun){
+    	AMS_AgencyAChangeCodeHandler.firstRun = false;
+	    if(Trigger.isBefore) {
+	        if(Trigger.isInsert){
+	            System.debug('Entering handleBeforeInsert');
+	            AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
+	            System.debug('Finished handleBeforeInsert');
+	        }
+	    }
+	
+	    if(Trigger.isAfter) {
+	        if(Trigger.isUpdate)
+	            AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new);
+	        if(Trigger.isInsert)
+	            AMS_AgencyAChangeCodeHandler.handleAfterInsert(Trigger.new);
+	    }
+	    AMS_AgencyAChangeCodeHandler.firstRun = true;
     }
-
-    if(Trigger.isAfter) {
-        if(Trigger.isUpdate)
-            AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new);
-        if(Trigger.isInsert)
-            AMS_AgencyAChangeCodeHandler.handleAfterInsert(Trigger.new);
-    }
-
 
 
 /*
