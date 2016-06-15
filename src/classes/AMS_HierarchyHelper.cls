@@ -1,5 +1,34 @@
 global class AMS_HierarchyHelper {
 
+	//bulk
+	/*public static void setBranchAsHeadOffice(List<Account> brs){
+
+	}
+	
+	//atomic
+	public static void setBranchAsHeadOffice(Account br){
+
+		Boolean needUpdate = false;
+		//given an agency get the hierarchy it belongs to
+		AMS_Agencies_relationhip__c relationship = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c WHERE Child_Account__c =: br.Id limit 1];
+
+		List<AMS_Agencies_relationhip__c> hierarchyRelationships = new List<AMS_Agencies_relationhip__c>([SELECT Id, Parent_Account__c, Child_Account__c FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c =: relationship.Hierarchy__c]);
+		
+		//define the new HO as the parent of all the relationships in the hierarchy
+		for(AMS_Agencies_relationhip__c relation: hierarchyRelationships){
+			//the existing HO(parent) is moved to BR(child)
+			if(relation.Child_Account__c == br.Id)
+				relation.Child_Account__c = relation.Parent_Account__c;
+			
+			//all the parents replaced with the new Ho
+			relation.Parent_Account__c = br.Id;
+
+		}
+
+		update hierarchyRelationships;
+
+	}*/
+
 	// returns the list of relationships
 	// NOTE: this is making the assumption that each agency is involved in max 1 hierarhcy
 	public static Map<Id, List<AMS_Agencies_relationhip__c>>  getAccountsHierarchies(Set<Id> accountsIds){
@@ -9,7 +38,7 @@ global class AMS_HierarchyHelper {
 		
 		system.debug(LoggingLevel.ERROR,'getAccountsHierarchies() --> accountsIds '+accountsIds);
 		
-		for(AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
+		for(AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c
 											FROM AMS_Agencies_relationhip__c
 											WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]){
 			
@@ -84,66 +113,6 @@ global class AMS_HierarchyHelper {
 			System.debug('AGENCY CHANGES:AFTER RELID' + rel.Id + ' RELCHILD' + rel.Child_Account__c + ' RELPARENT' + rel.Parent_Account__c);
 		}
 		
-		return new HierarchyStruct(relToUpdate, null, null);
-	}
-
-	// return hierarchy relationships that need to be updated
-	// the first parameter is the account which will become the new HO
-	public static HierarchyStruct switchParentWithChild(Id newParent, Id oldParent, String changeLocationTypeBehavior, Map<Id, Account> accounts, List<AMS_Agencies_relationhip__c> hierarchyRelationships){
-
-		// loop over all the relationships and switch the child with the parent
-		List<AMS_Agencies_relationhip__c> relToUpdate = new List<AMS_Agencies_relationhip__c>();
-
-		for(AMS_Agencies_relationhip__c rel : hierarchyRelationships){
-
-			System.debug('Processing relation: Parent -> ' + accounts.get(rel.Parent_Account__c).Name + ' Child -> ' + accounts.get(rel.Child_Account__c).Name);
-
-			Id hierarchyHO = getHierarchyHO(hierarchyRelationships);
-			System.debug('Hierarchy HO: '+ accounts.get(hierarchyHO).Name);
-
-			Boolean relNeedsUpdate = false;
-
-			//exception to te general rule, no switch between parent <-> child in this situation
-			//here only one relation will need to be updated, the one where the SA(for which the oscar was opened) is a child.
-			if(changeLocationTypeBehavior == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP && accounts.get(newParent).Location_Type__c == AMS_Utils.SA){
-				if(rel.Child_Account__c == newParent){
-					rel.Parent_Account__c = hierarchyHO;
-					relNeedsUpdate = true;
-				}
-			}
-			else{
-				//relations having the parent equal to the old parent must be updated with the new parent
-				//child of the relation which have location type SA is an exception and should keep the parent UNLESS the new parent is an SA
-				if(rel.Parent_Account__c == oldParent && (accounts.get(rel.Child_Account__c).Location_Type__c != AMS_Utils.SA || /*rel.Child_Account__c == newParent || */accounts.get(newParent).Location_Type__c == AMS_Utils.SA)){
-					System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' WITH ' + accounts.get(newParent).Name);
-					rel.Parent_Account__c = newParent;
-					relNeedsUpdate = true;
-				}
-				//relations having the parent equal to the new parent must be updated with the old parent
-				//child of the relation which have location type SA is an exception and should keep the parent
-				else if(rel.Parent_Account__c == newParent && (accounts.get(rel.Child_Account__c).Location_Type__c != AMS_Utils.SA /*|| rel.Child_Account__c == newParent || accounts.get(newParent).Location_Type__c == AMS_Utils.SA*/)){
-					System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' WITH ' + accounts.get(oldParent).Name);
-					rel.Parent_Account__c = oldParent;
-					relNeedsUpdate = true;
-				}
-				//relations having the child equal to the new parent must be updated with the old parent
-				if(rel.Child_Account__c == newParent){
-					System.debug('CHILD REPLACE: ' + accounts.get(rel.Child_Account__c).Name + ' WITH ' + accounts.get(oldParent).Name);
-					rel.Child_Account__c = oldParent;
-					relNeedsUpdate = true;
-				}
-				//relations having the child equal to the old parent must be updated with the new parent
-				else if(rel.Child_Account__c == oldParent){
-					System.debug('CHILD REPLACE: ' + accounts.get(rel.Child_Account__c).Name + ' WITH ' + accounts.get(newParent).Name);
-					rel.Child_Account__c = newParent;
-					relNeedsUpdate = true;
-				}
-			}
-			
-			if(relNeedsUpdate)
-				relToUpdate.add(rel);
-		}
-
 		return new HierarchyStruct(relToUpdate, null, null);
 	}
 

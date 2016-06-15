@@ -196,32 +196,5 @@ public class AMS_OscarCaseTriggerHelper {
 
     }
 
-    //creates new change codes when a sidra case is closed
-    public static void createSidraIrregularities() {
-        List<Case> sidraCases = new List<Case>();
-
-        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-        for(Case c : (List<Case>)Trigger.new){
-            Case cOld = (Case)Trigger.oldMap.get(c.Id);
-            if(c.RecordTypeId == sidraRecTypeId && c.isClosed && !cOld.isClosed) sidraCases.add(c);
-        }
-
-        if(sidraCases.isEmpty()) return;
-
-        List<Agency_Applied_Change_code__c> irregularities = new List<Agency_Applied_Change_code__c>();
-        for(Case c : sidraCases){
-            Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c();
-            irr.Account__c = c.AccountId;
-            irr.Change_Code__c = 'IRR';
-            irr.SIDRA_Case__c = c.Id;
-            irr.Operation__c = ( c.AG_Request_IRR_Withdrawal__c == null ? 'A': 'W');
-            //TODO: other field mappings
-            irr.Irregularity_Type__c = c.IRR_Type__c;
-
-            irregularities.add(irr);
-        }
-
-        insert irregularities;
-    }
 
 }

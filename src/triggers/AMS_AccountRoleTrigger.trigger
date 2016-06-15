@@ -1,4 +1,4 @@
-trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after update , before insert, after insert) {
+trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after update , before insert) {
     
     if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate))
         for(AMS_Account_Role__c ar : Trigger.new){
@@ -26,12 +26,6 @@ trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after upda
 
         if(bindToContact.size()>0)
             AMS_EmployeeHelper.addContactIfEmpty(bindToContact);
-    }
-
-    //merge owners coming from AIMS. (AIMS sometimes split records that have long names)
-    if(Trigger.isAfter && (Trigger.isInsert || trigger.isUpdate)){
-        AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
-        handler.aimsOwnerMerge();
     }
 
 }

@@ -50,20 +50,14 @@ global class AmsIataCodeGenerator{
         allowedProgramCodes.add('R');
         allowedProgramCodes.add('Q');
         allowedProgramCodes.add('I');
-        allowedProgramCodes.add('T');
-        allowedProgramCodes.add('M');
-        allowedProgramCodes.add('G');
-        allowedProgramCodes.add('X');
-        
         
         // This means handling these program codes as if they were Cargo agencies,
         // which means having cass number included in the IATACode field
         Set<String> longCodePrograms = new Set<String>();
-        longCodePrograms.add('C-Cargo Agent');
-        longCodePrograms.add('R-Cargo Agent');
-        longCodePrograms.add('Q-Cargo Agent');
-        longCodePrograms.add('I-Cargo Agent');
-        longCodePrograms.add('G-Cargo Agent');
+        longCodePrograms.add('C');
+        longCodePrograms.add('R');
+        longCodePrograms.add('Q');
+        longCodePrograms.add('I');
         
         Map<String, String> programCategoryMap = constructProgramCategoryMap();
         
@@ -75,10 +69,10 @@ global class AmsIataCodeGenerator{
             //AMS_Agency__c theAgency = [select Id, RecordTypeId, IATACode__c,Country__c,CASS_Number__c,  Iso_State__c,N_Code__c,A_Code__c,C_Code__c, Account__r.IATACode__c, Account__c from AMS_Agency__c where Id =:agencyId FOR UPDATE];#AMSFTS
             Account theAccount = [select Id, Sector__c, Location_Class__c, Check_Digit__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, CASS_Number__c,  Iso_State__c from Account where Id = :accountId FOR UPDATE];
             AMS_Pax_Accreditation_Form__c theAccreditation = [select Id, Chk_Dgt__c, SAAM_Case__r.Account.Top_Parent__c, SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c, Branch_Office_Country__c, SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c, SAAM_Case__r.Account.Top_Parent__r.N_Code__c, SAAM_Case__r.Account.Top_Parent__r.C_Code__c, SAAM_Case__r.Account.Top_Parent__r.A_Code__c, SAAM_Case__r.Account.Top_Parent__r.IATACode__c, IATA_ISO_State__c, ISO_country__c, CASS_Number__c, Location_Class__c, IATACode__c, N_Code__c, A_Code__c, C_Code__c from AMS_Pax_Accreditation_Form__c where Id = :onlineAccreditationId FOR UPDATE];
-            if(longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.CASS_Number__c == null)
+            if(longCodePrograms.contains(theAccreditation.Location_Class__c) && theAccreditation.CASS_Number__c == null)
             {
                 returnedValues[0] = '2';
-                returnedValues[1] = 'C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA CODE.';
+                returnedValues[1] = 'C, I, R and Q Location Types must have a CASS number defined before generating the IATA CODE.';
                 return returnedValues;
             }
             if(theAccreditation.IATACode__c != null || theAccount.IATACode__c != null)
@@ -90,7 +84,7 @@ global class AmsIataCodeGenerator{
             if(!allowedProgramCodes.contains(theAccreditation.Location_Class__c))
             {
                 returnedValues[0]='2';
-                returnedValues[1]='IATA Code Generation is only allowed for C, I, P, Q, R, T, M, G, X and P Location Classes.';
+                returnedValues[1]='IATA Code Generation is only allowed for C, I, P, Q, R Location Classes.';
                 return returnedValues;
             }
             
@@ -100,10 +94,8 @@ global class AmsIataCodeGenerator{
             
             // For Cargo Agency branches, the IATA code should be the same as for the top-level Agency
             // So if the account has a top-level parent with IATA Code, we shall use it and utilize the C, A and N codes based on the IATA Code.
-            if( longCodePrograms.contains(theAccreditation.Location_Class__c + '-' + theAccount.Sector__c) && theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c != null)
+            if( longCodePrograms.contains(theAccreditation.Location_Class__c) && theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c != null)
             {
-                System.debug('*** Entered based on longCodePrograms with value ' + theAccreditation.Location_Class__c + '-' + theAccount.Sector__c);
-
                 theAccreditation.IATACode__c = theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c.subString(0, 7)+theAccreditation.CASS_Number__c;
                 //theAccreditation.Chk_Dgt__c = theAccreditation.SAAM_Case__r.Account.Top_Parent__r.Check_Digit__c;
                 theAccreditation.C_Code__c = theAccreditation.IATACode__c.subString(0, 2);
@@ -168,9 +160,6 @@ global class AmsIataCodeGenerator{
             
             if(theAccreditation.Branch_Office_Country__c != null)
             {
-
-                System.debug('*** Entered based on theAccreditation.Branch_Office_Country__c with value ' + theAccreditation.Branch_Office_Country__c);
-                
                 List<Code_Range__c> acceptableRanges = new List<Code_Range__c>();
                 
                 /*    
@@ -510,7 +499,7 @@ global class AmsIataCodeGenerator{
     {
         checkDigitCreation(agt, act, false);
         
-        if(agt.Location_Class__c.equalsIgnoreCase('P') || agt.Location_Class__c.equalsIgnoreCase('M') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Travel Agent') || agt.Location_Class__c.equalsIgnoreCase('X') || agt.Location_Class__c.equalsIgnoreCase('T'))
+        if(agt.Location_Class__c.equalsIgnoreCase('P'))
         {
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c;
@@ -604,7 +593,7 @@ global class AmsIataCodeGenerator{
         }
         
         
-        if( (agt.Location_Class__c.equalsIgnoreCase('C') || agt.Location_Class__C.equalsIgnoreCase('R') || agt.Location_Class__C.equalsIgnoreCase('Q') || agt.Location_Class__C.equalsIgnoreCase('I') || (agt.Location_Class__c.equalsIgnoreCase('G') && act.Sector__c == 'Cargo Agent')) && agt.CASS_Number__c != null)
+        if( (agt.Location_Class__c.equalsIgnoreCase('C') || agt.Location_Class__C.equalsIgnoreCase('R') || agt.Location_Class__C.equalsIgnoreCase('Q') || agt.Location_Class__C.equalsIgnoreCase('I')) && agt.CASS_Number__c != null)
         {
             cCassNumber = resizeNumericString(agt.CASS_Number__c+'',3);
         }

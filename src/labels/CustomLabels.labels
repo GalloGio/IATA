@@ -590,7 +590,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -1024,14 +1024,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Footer</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D7E0000008eXt</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_VFEmailTemplate_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D7E0000008eXt</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -5936,7 +5936,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Rejected_File</shortDescription>
-        <value>Please upload file(s) for each requirement where a file has been rejected by IATA (indicated with an &lt;span style=&quot;font-size:110%;font-weight:bold &quot; &gt;X&lt;/span&gt;). &lt;br/&gt; Once completed please return to the case and add a comment to let IATA know they can proceed with your application.</value>
+        <value>Please upload file(s) for each requirement where a file has been rejected by IATA (indicated with a X). &lt;br/&gt; Once completed please return to the case and add a comment to let IATA know they can proceed with your application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title</fullName>
@@ -7196,7 +7196,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Banner_img</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D7E0000008eXt&amp;lastMod=1433764815000</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D2000000008TF&amp;lastMod=1433764815000</value>
     </labels>
     <labels>
         <fullName>ISSP_Banner_link</fullName>
@@ -13811,6 +13811,13 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>Subject</shortDescription>
         <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>SurveyCustomerRecoveriesAnnFARRELL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SurveyCustomerRecoveriesAnnFARRELL</shortDescription>
+        <value>005w0000003XCG8</value>
     </labels>
     <labels>
         <fullName>The_attachments_you_select_will_be_copied_to_the_target_case</fullName>

@@ -152,8 +152,7 @@ public with sharing class IECProductManager {
 				FROM Product_Rate_Plan_Information__c
 				WHERE Related_Product_Information__c = :oProductInformation.Id
 					AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-					AND Active__c = true
-					AND User_Interface_Display__c = 'YES'
+					AND Active__c = true					
 					AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
 					AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
 					AND Product_Rate_Plan__r.zqu__Deleted__c = false
@@ -180,8 +179,7 @@ public with sharing class IECProductManager {
 				FROM Product_Rate_Plan_Information__c
 				WHERE Id = :idProductRatePlan
 					AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-					AND Active__c = true
-					AND User_Interface_Display__c = 'YES'
+					AND Active__c = true					
 					AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
 					AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
 					AND Product_Rate_Plan__r.zqu__Deleted__c = false
@@ -207,8 +205,7 @@ public with sharing class IECProductManager {
 				FROM Product_Rate_Plan_Information__c
 				WHERE Product_Rate_Plan__r.zqu__ZuoraId__c = :sZuoraIdProductRatePlan
 					AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-					AND Active__c = true
-					AND User_Interface_Display__c = 'YES'
+					AND Active__c = true					
 					AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
 					AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
 					AND Product_Rate_Plan__r.zqu__Deleted__c = false
@@ -409,8 +406,7 @@ public with sharing class IECProductManager {
 			[SELECT Id 
 			 FROM Product_Rate_Plan_Information__c
 			 WHERE Id = :idRatePlanInfo
-			 	AND Active__c = true
-			 	AND User_Interface_Display__c = 'Yes'
+			 	AND Active__c = true			 	
 			 	AND Related_Product_Information__r.Product_Audience__c IN :getAvailableProductAudienceByClientType(sClientType)
 			 	AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
 			 	AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY
@@ -453,8 +449,7 @@ public with sharing class IECProductManager {
 					FROM Product_Rate_Plan_Information__c
 					WHERE Id IN :upgradeIds
 						AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-						AND Active__c = true
-						AND User_Interface_Display__c = 'YES'
+						AND Active__c = true						
 						AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
 						AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
 						AND Product_Rate_Plan__r.zqu__Deleted__c = false
@@ -470,8 +465,7 @@ public with sharing class IECProductManager {
 					FROM Product_Rate_Plan_Information__c
 					WHERE Id IN :upgradeIds
 						AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-						AND Active__c = true
-						AND User_Interface_Display__c = 'YES'
+						AND Active__c = true						
 						AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
 						AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
 						AND Product_Rate_Plan__r.zqu__Deleted__c = false

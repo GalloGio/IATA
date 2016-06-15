@@ -58,13 +58,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <externalId>false</externalId>
-        <formula>AND(
- TODAY()&gt;= Effective_date__c,
- OR(
-  ISNULL(Cancellation_date__c), 
-  TODAY() &lt; Cancellation_date__c
- )
-)</formula>
+        <formula>OR( Status__c == &apos;Active&apos;, Status__c = &apos;Pending To Deactivate&apos; )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Active</label>
         <trackHistory>false</trackHistory>
@@ -170,7 +164,7 @@
         <fullName>Airline_1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Airline</label>
+        <label>Airline 1</label>
         <lookupFilter>
             <active>true</active>
             <filterItems>
@@ -192,7 +186,7 @@
         <fullName>Airline_2__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Airline</label>
+        <label>Airline 2</label>
         <lookupFilter>
             <active>true</active>
             <filterItems>
@@ -209,6 +203,34 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cancellation_Reason__c</fullName>
+        <description>The reason why this agreement was cancelled</description>
+        <externalId>false</externalId>
+        <label>Cancellation Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Requested by Airline 1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Requested by Airline 2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline 1 leaves agreement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline 2 leaves agreement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Cancellation_date__c</fullName>
@@ -275,6 +297,27 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Status__c</fullName>
+        <description>Describes the situtation of the agreement</description>
+        <externalId>false</externalId>
+        <formula>IF( ISNULL(Cancellation_processed_date__c),
+  IF ( Effective_date__c &lt;= TODAY(), &apos;Active&apos;, &apos;Not Active Yet&apos;),
+  IF ( Cancellation_date__c &lt;= TODAY(), &apos;Inactive&apos;, &apos;Pending To Deactivate&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Possible values are:
+ - Not Active Yet,
+ - Active
+ - Pending To Deactivate
+ - Inactive</inlineHelpText>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Withdrawal_Request_Reception_Date__c</fullName>
         <externalId>false</externalId>
         <label>Withdrawal Request Reception Date</label>
@@ -316,7 +359,7 @@
     </validationRules>
     <validationRules>
         <fullName>N2_No_agreements_for_non_MITA_account</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
  ISNEW(),
  ISPICKVAL(MITAorBIETA__c, &apos;MITA&apos;),

@@ -3,6 +3,7 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>All the CORE modules used by our community of IATA users</description>
     <label>IATAforce</label>
+    <logo>SalesPublicFolder/IATAForce.gif</logo>
     <tab>standard-Chatter</tab>
     <tab>standard-Campaign</tab>
     <tab>standard-Lead</tab>

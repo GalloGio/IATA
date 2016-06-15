@@ -2,6 +2,7 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>Release_Task__c</defaultLandingTab>
     <label>Release Planning</label>
+    <logo>Release_Planning_Icons/projectslogosmalljpg_d_2.jpg</logo>
     <tab>Release__c</tab>
     <tab>Release_Task__c</tab>
     <tab>Lesson_Learned__c</tab>
