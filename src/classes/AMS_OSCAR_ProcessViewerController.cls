@@ -113,6 +113,17 @@ public class AMS_OSCAR_ProcessViewerController {
     }
     
     public List<SelectOption> getPicklistValues(Schema.DescribeFieldResult fr){
+
+        Set<String> dependentPicklistValues = new  Set<String> ();
+        
+        if(fr.isDependentPicklist())
+        {
+            
+            Map<String,List<String>> dependentPicklistMap = AMS_Utils.GetDependentOptions('AMS_OSCAR__c',fr.getController().getDescribe().getName(),fr.getName());
+            if(!dependentPicklistMap.isEmpty())
+                dependentPicklistValues.addAll(dependentPicklistMap.get(String.valueOf(oscar.Process__c)));
+            System.debug('Lista Dependente: ' + dependentPicklistValues);
+        }
         
         List<SelectOption> picklistValues = new List<SelectOption>();
       
@@ -126,16 +137,22 @@ public class AMS_OSCAR_ProcessViewerController {
         if(currentPickValue != null)
             picklistValues.add(new SelectOption(currentPickValue, currentPickValue));
         
+
+
         for( Schema.PicklistEntry f : ple)
         {
             //this is a workaround to make the current value of the field the default value of the picklist
-            if(currentPickValue != f.getValue())
+            if(currentPickValue != f.getValue() 
+                && (dependentPicklistValues.isEmpty() ||  dependentPicklistValues.contains(f.getValue()))
+                )
                 picklistValues.add(new SelectOption(f.getValue(), f.getLabel()));
+                 System.debug('FOR FIELD: '+ fieldName + ' select value is: '+ f.getValue() + ' isActive: ' + f.isActive());
         }
         
         return picklistValues;
     }
-    
+
+
     public class StepFieldsDataWrapper{
         public String fieldApiName{get;set;}
         public String fieldLabel{get;set;}
