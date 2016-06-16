@@ -38,7 +38,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
             accountsInTheOldHierarchy.add(rel.Child_Account__c);
         }
 
-        setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
+        //setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
 
     }
 
@@ -61,146 +61,6 @@ public class AMS_AgencyRelationshipTriggerHandler {
         return relationChildrenIds;
     }
 
-
-
-    // when a main hierarchy is set, this method will update the standard hierarchy and the location type
-    public static void setStandardHierarchyRelationship2(List<AMS_Agencies_relationhip__c> rels, Map<Id, AMS_Agencies_Hierarchy__c> mainHierarchies, Map<Id, AMS_Agencies_relationhip__c> oldMap) {
-        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> start!');
-        // retrieve all the account involved in the updated relationships (received from the trigger)
-        Set<Id> accountIds = new Set<Id>();
-        for (AMS_Agencies_relationhip__c rel : rels) {
-            system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look at rel ' + rel.Parent_Account__c + ' to ' + rel.Child_Account__c);
-            //if (mainHierarchies.get(rel.Hierarchy__c) != null ){
-            accountIds.add(rel.Parent_Account__c);
-            accountIds.add(rel.Child_Account__c);
-            //}
-        }
-
-        Set<Id> parentAccountIds = new Set<Id>();
-        // retrieve all the hierarchies for the relationships received from the trigger
-        // for each hierarchy I extract the parent (I may process twice the same hierarchy but I add the parent to a set so that I am sure I get parents only once)
-        for (List<AMS_Agencies_relationhip__c> hier : AMS_HierarchyHelper.getAccountsHierarchies(accountIds).values()) {
-            parentAccountIds.add(AMS_HierarchyHelper.getHierarchyHO(hier));
-        }
-
-        // retrieve all the accounts: the ones directly involved in the relationshipi changes + the HO of those hierarchies
-        Map<Id, Account> accounts = new Map<Id, Account>([SELECT ParentId, Location_Type__c, IATAcode__c, Name
-                FROM Account
-                WHERE Id IN :accountIds  OR Id IN :parentAccountIds
-                ORDER BY IATAcode__c]);
-
-        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look for accountIds ' + accountIds);
-        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look for parentAccountIds ' + parentAccountIds);
-        for (Account a : accounts.values()) {
-            if (parentAccountIds.contains(a.Id)) {
-                a.ParentId = null;
-                a.Location_Type__c = 'HO';
-                system.debug('setStandardHierarchyRelationship() --> update parent account ' + a.Name + ' with Parentid = ' + a.ParentId + ', Location type = ' + a.Location_Type__c);
-            }
-            system.debug('setStandardHierarchyRelationship() --> found account ' + a.Name + ' with id ' + a.id + ' and location type = ' + a.Location_Type__c);
-
-        }
-
-        // for each relationship, I update parentid and location type on the accounts
-        for (AMS_Agencies_relationhip__c rel : rels) {
-            system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> retrieve parent ' + rel.Parent_Account__c + ' and child ' + rel.Child_Account__c);
-            system.debug('PANIC: setStandardHierarchyRelationship() --> retrieve parent lt ' + accounts.get(rel.Parent_Account__c).Name + ' and child lt' + accounts.get(rel.Child_Account__c).Name);
-            system.debug('PANIC: setStandardHierarchyRelationship() --> retrieve parent lt ' + accounts.get(rel.Parent_Account__c).Location_Type__c + ' and child lt' + accounts.get(rel.Child_Account__c).Location_Type__c);
-            // whatever is the level of the relationship I update parentid and location type of the child
-            accounts.get(rel.Child_Account__c).ParentId = rel.Parent_Account__c;
-
-            if (accounts.get(rel.Child_Account__c).Location_Type__c == 'HO')
-                accounts.get(rel.Child_Account__c).Location_Type__c = 'BR';
-
-            //when an SA is switched with a BR or an HO we must update the location type
-            //also when an SA parent changes from BR to HO its Location type must change to BR
-            /*if(oldMap!=null)
-                //verify if there was an update on the relation. only in this situation the location type needs to be updated
-                if(rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c){
-                   //SA is parent meaning that it was switched with a BR or HO
-                   if(accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.SA){
-                        system.debug('PANIC: SA ISA PARENT');
-                        String newParentOldLocType = accounts.get(rel.Parent_Account__c).Location_Type__c;
-                        accounts.get(rel.Parent_Account__c).Location_Type__c = accounts.get(oldMap.get(rel.Id).Parent_Account__c).Location_Type__c;
-                        accounts.get(rel.Child_Account__c).Location_Type__c = newParentOldLocType;
-                   }
-                   //SA is a child meaning that it was reparented from a BR to an HO
-                   else if(accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.SA){
-                        system.debug('PANIC: SA ISA CHILD');
-                        accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
-                   }
-                }*/
-        }
-
-        /*system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> look for accountIds '+accountIds);
-        system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> look for parentAccountIds '+parentAccountIds);
-        for(Account a : accounts.values()){
-            if(parentAccountIds.contains(a.Id)){
-                a.ParentId = null;
-                a.Location_Type__c = 'HO';
-                system.debug('setStandardHierarchyRelationship() --> update parent account '+a.Name+' with Parentid = '+a.ParentId+ ', Location type = '+a.Location_Type__c);
-            }
-            system.debug('setStandardHierarchyRelationship() --> found account '+a.Name+' with id '+a.id+ ' and location type = '+a.Location_Type__c);
-
-        }
-
-        for(AMS_Agencies_relationhip__c rel : rels){
-            if(accounts.get(rel.Child_Account__c).Location_Type__c == 'HO')
-                accounts.get(rel.Child_Account__c).Location_Type__c = 'BR';
-        }*/
-
-        List<Account> accsToUpdate = new List<Account>();
-
-        for (Account acc : accounts.values()) {
-            if (acc.ParentId == null) {
-                accsToUpdate.add(acc);
-                system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and location type = ' + acc.Location_Type__c);
-            }
-        }
-        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
-        update accsToUpdate;
-        accsToUpdate = new List<Account>();
-
-        for (Account acc : accounts.values()) {
-            if (acc.ParentId != null) {
-                accsToUpdate.add(acc);
-                system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and location type = ' + acc.Location_Type__c);
-            }
-        }
-
-        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
-        update accsToUpdate;
-
-
-
-        /*checks all the relationships (in the trigger context) parent accounts and sets them as the parent Account
-        * of the repsective child Account on the relationship
-        */
-        /*
-        //jfo 16/10/15 hotfix to set ChildAgency;Account.Parent to ParentAgency;Account
-        Map<String, String> parentChildrenMap = new map<String, String>();
-        for (AMS_Agencies_relationhip__c r : rels) {
-            if (mainHierarchies.get(r.Hierarchy__c) != null)
-                parentChildrenMap.put(r.Parent_Account__c, r.Child_Account__c);
-        }
-        if (parentChildrenMap.size() > 0) {
-            Map<Id, Account> parentAgencies = new Map<Id, Account>([select Id, ParentId from Account where Id in :parentChildrenMap.keySet()]);
-            Map<Id, Account> childAgencies = new Map<Id, Account>([select Id, ParentId from Account where Id in :parentChildrenMap.values()]);
-            List<Account> accounts2update = new List<Account>();
-            for (String parentAgencyId : parentChildrenMap.keySet()) {
-                Account parentAccount =  parentAgencies.get(parentAgencyId);
-                Account childAccount =  childAgencies.get(parentChildrenMap.get(parentAgencyId));
-                //jfo 2016-02-01 bug fix when no account
-                //dng 2016-04-12 added another verification. If it's already set the parentId, do not update child Account again.
-                if (childAccount != null && parentAccount != null && childAccount.parentId != parentAccount.Id) {
-                    childAccount.parentId = parentAccount.Id;
-                    accounts2update.add(childAccount);
-                }
-            }
-            if (accounts2update.size() > 0)
-                update accounts2update ;
-        }*/
-    }
 
     // when a main hierarchy is set, this method will update the standard hierarchy and the location type
     public static void setStandardHierarchyRelationship(List<AMS_Agencies_relationhip__c> rels, Map<Id, AMS_Agencies_Hierarchy__c> mainHierarchies, Map<Id, AMS_Agencies_relationhip__c> oldMap) {
@@ -237,38 +97,41 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         // for each relationship, I update parentid and location type on the accounts
         for (AMS_Agencies_relationhip__c rel : rels) {
-            system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> retrieve parent ' + rel.Parent_Account__c + ' and child ' + rel.Child_Account__c);
+            system.debug('setStandardHierarchyRelationship() --> retrieve parent ' + rel.Parent_Account__c + ' and child ' + rel.Child_Account__c);
     
             // whatever is the level of the relationship I update parentid and location type of the child
             accounts.get(rel.Child_Account__c).ParentId = rel.Parent_Account__c;
 
-            //when an SA is switched with a BR or an HO we must update the location type
-            //also when an SA parent changes from BR to HO its Location type must change to BR
-            if (oldMap != null)
-                //verify if there was an update on the relation. only in this situation the location type needs to be updated
+            //the following logic is not to be applied when a change of location is being performed on an SA
+            if(AMS_OSCARTriggerHandler.keepSALocationTypeFlag == false){
+                //when an SA is switched with a BR or an HO we must update the location type
+                //also when an SA parent changes from BR to HO its Location type must change to BR
+                if (oldMap != null){
+                    //verify if there was an update on the relation. only in this situation the location type needs to be updated
+                    //SA is parent meaning that it was switched with a BR or HO
+                    if (accountsInitialLocType.get(rel.Parent_Account__c) == AMS_Utils.SA ) {
 
-                //SA is parent meaning that it was switched with a BR or HO
-                if (accountsInitialLocType.get(rel.Parent_Account__c) == AMS_Utils.SA ) {
-
-                    String newParentOldLocType = accountsInitialLocType.get(rel.Parent_Account__c);
-                    System.debug('Parent SA Location type: ' + newParentOldLocType);
-                    if (rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c && rel.Child_Account__c != oldMap.get(rel.Id).Child_Account__c) {
-                        System.debug('Parent SA Location type Change to : ' + accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c));
-                        accounts.get(rel.Parent_Account__c).Location_Type__c = accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c);
-                        System.debug('Child Location type Change to : ' + newParentOldLocType);
-                        accounts.get(rel.Child_Account__c).Location_Type__c = newParentOldLocType;
+                        String newParentOldLocType = accountsInitialLocType.get(rel.Parent_Account__c);
+                        if (rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c && rel.Child_Account__c != oldMap.get(rel.Id).Child_Account__c) {
+                            System.debug('Parent SA Location type Change to : ' + accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c));
+                            accounts.get(rel.Parent_Account__c).Location_Type__c = accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c);
+                            System.debug('Child Location type Change to : ' + newParentOldLocType);
+                            accounts.get(rel.Child_Account__c).Location_Type__c = newParentOldLocType;
+                        }
+                    }
+                    //parent of relation changed, the child remains the same and its location type is SA.
+                    //This means the SA was reparented from a BR to an HO, so we need to change the location type from SA to BR
+                    else if (accountsInitialLocType.get(rel.Child_Account__c) == AMS_Utils.SA) {
+                        if (rel.Child_Account__c == oldMap.get(rel.Id).Child_Account__c && rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c)
+                            accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
                     }
                 }
-                //parent of relation changed, the child remains the same and its location type is SA.
-                //This means the SA was reparented from a BR to an HO, so we need to change the location type from SA to BR
-                else if (accountsInitialLocType.get(rel.Child_Account__c) == AMS_Utils.SA) {
-                    if (rel.Child_Account__c == oldMap.get(rel.Id).Child_Account__c && rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c)
-                        accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
-                }
+            }
 
 
-            if (accounts.get(rel.Child_Account__c).Location_Type__c == 'HO' && accounts.get(rel.Parent_Account__c).Location_Type__c == 'BR')
-                accounts.get(rel.Child_Account__c).Location_Type__c = 'BR';
+            if (accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO && (accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.BR || accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.HO))
+                accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
+            
         }
 
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look for accountIds ' + accountIds);
@@ -294,11 +157,6 @@ public class AMS_AgencyRelationshipTriggerHandler {
             }
         }
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
-
-        for(Account toDebug: accsToUpdate){
-            System.debug('Preparing to update Account with ID/name ' + toDebug.Name + ' ' + toDebug.Id);
-        }
-
         update accsToUpdate;
         accsToUpdate = new List<Account>();
 
@@ -310,11 +168,6 @@ public class AMS_AgencyRelationshipTriggerHandler {
         }
 
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
-
-        for(Account toDebug: accsToUpdate){
-            System.debug('Preparing to update(2) Account with ID/name ' + toDebug.Name + ' ' + toDebug.Id);
-        }
-
         update accsToUpdate;
 
     }

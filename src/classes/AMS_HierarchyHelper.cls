@@ -34,7 +34,7 @@ global class AMS_HierarchyHelper {
 		for(Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-		for(AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c
+		for(AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c
 											FROM AMS_Agencies_relationhip__c
 											WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]){
 			
@@ -54,7 +54,7 @@ global class AMS_HierarchyHelper {
 
 	// return hierarchy relationships that need to be updated
 	// the first parameter is the account which will become the new HO
-	public static HierarchyStruct switchBRwithHO(Id newHO, List<AMS_Agencies_relationhip__c> hierarchyRelationships){
+	/*public static HierarchyStruct switchBRwithHO(Id newHO, List<AMS_Agencies_relationhip__c> hierarchyRelationships){
 		
 		//Id newHO = newHeadOffice.Id;
 		Id oldHO = getHierarchyHO(hierarchyRelationships);
@@ -85,7 +85,7 @@ global class AMS_HierarchyHelper {
 		}
 		
 		return new HierarchyStruct(relToUpdate, null, null);
-	}
+	}*/
 
 	// return hierarchy relationships that need to be updated
 	// the first parameter is the account which will become the new HO
@@ -147,17 +147,38 @@ global class AMS_HierarchyHelper {
 		return new HierarchyStruct(relToUpdate, null, null);
 	}
 
+	public static HierarchyStruct reparentChildSA(Id child, Id newParent, Map<Id, Account> accounts, List<AMS_Agencies_relationhip__c> hierarchyRelationships){
+
+		List<AMS_Agencies_relationhip__c> relToUpdate = new List<AMS_Agencies_relationhip__c>();
+
+		for(AMS_Agencies_relationhip__c rel : hierarchyRelationships){
+
+			System.debug('Processing relation: Parent -> ' + accounts.get(rel.Parent_Account__c).Name + ' Child -> ' + accounts.get(rel.Child_Account__c).Name);
+
+			if(rel.Child_Account__c == child){
+				System.debug('PARENT REPLACE: ' + accounts.get(rel.Parent_Account__c).Name + ' WITH ' + accounts.get(newParent).Name);
+				rel.Parent_Account__c = newParent;			
+				relToUpdate.add(rel);
+				break;
+			}
+
+		}
+
+		return new HierarchyStruct(relToUpdate, null, null);
+	}
+
 
 	// return hierarchy relationships that need to be updated
 	// this is covering the scenarios NON-IATA BUYS IATA
 	// newHO = the agency for which the OSCAR was opened
 	// hierarchyRelationships = newHO's hierarhcy
 	// agenciesToMigrate = the list of the agencies which will be migrated: newHO + all the others
-	public static HierarchyStruct migrateAccountsToNewHierarchy(Id newHO, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Set<Id> agenciesToMigrate){
+	public static HierarchyStruct migrateAccountsToNewHierarchy(Id newHO, Map<Id, Account> accounts, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Set<Id> agenciesToMigrate){
 		
 		// check if the old hierarchy is completely migrated
 		Set<Id> agenciesNotMigrated = getAccountNotMigrated(hierarchyRelationships, agenciesToMigrate);
 		boolean completeMigration = (agenciesNotMigrated.size()==0);
+		boolean singleAgencyMigration = (agenciesToMigrate.size()==1);
 		
 		system.debug(LoggingLevel.ERROR, 'COMPLETE MIGRATION ? '+completemigration);
 		
@@ -166,10 +187,12 @@ global class AMS_HierarchyHelper {
 		
 		if(completeMigration){
 			// Scenario 1) all the hierarchy is moved
-			if(newHO==oldHO)
+			//when HO is not changed or the oscar was opened on an SA nothing is changed on the hierarchy
+			if(newHO==oldHO || accounts.get(newHO).Location_Type__c==AMS_Utils.SA)
 				return new HierarchyStruct();
-			else
-				return switchBRwithHO(newHO,hierarchyRelationships);
+			else 
+				return switchParentWithChild(newHO, oldHO, null, accounts, hierarchyRelationships);
+				//return switchBRwithHO(newHO,hierarchyRelationships);
 		}else{
 			String errorMigration = validateIncompleteMigration(agenciesNotMigrated);
 			
@@ -177,6 +200,24 @@ global class AMS_HierarchyHelper {
 			if(errorMigration!=null)
 				return new HierarchyStruct(errorMigration);
 			
+			AMS_Agencies_Hierarchy__c newHierarchy;
+
+			if(!singleAgencyMigration){
+				newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+				insert newHierarchy;
+				System.debug('AGENCY CHANGES: Hierarchy Id: '+ newHierarchy.id);
+			}else{
+				Account acc = accounts.get(newHO);
+				acc.Location_Type__c = AMS_Utils.HO;
+				acc.ParentId = null;
+				update acc;
+			}
+
+			HierarchyStruct result = new HierarchyStruct();
+			// Now I create relationships for the agencies in the new hieararchy
+			result.relationsToInsert = new List<AMS_Agencies_relationhip__c>();
+			result.relationsToUpdate = new List<AMS_Agencies_relationhip__c>();
+
 			// Scenario 2) only some branches. One of them will became the new HO
 			// Separate the relationships in three:
 			//  - the ones which links agencies in the old hierarchy to agencies in the old hierarchy --> nothing to do
@@ -187,7 +228,7 @@ global class AMS_HierarchyHelper {
 			List<AMS_Agencies_relationhip__c> newHier = new List<AMS_Agencies_relationhip__c>();
 			List<AMS_Agencies_relationhip__c> oldnewHier = new List<AMS_Agencies_relationhip__c>();
 			
-			for(AMS_Agencies_relationhip__c rel : hierarchyRelationships){
+			/*for(AMS_Agencies_relationhip__c rel : hierarchyRelationships){
 				if(agenciesNotMigrated.contains(rel.Parent_account__c) && agenciesNotMigrated.contains(rel.Child_account__c))
 					oldHier.add(rel);
 				else if(agenciesNotMigrated.contains(rel.Parent_account__c) && agenciesToMigrate.contains(rel.Child_account__c))
@@ -196,6 +237,29 @@ global class AMS_HierarchyHelper {
 					oldnewHier.add(rel);
 				else if(agenciesToMigrate.contains(rel.Parent_account__c) && agenciesToMigrate.contains(rel.Child_account__c))
 					newHier.add(rel);
+			}*/
+
+			for(AMS_Agencies_relationhip__c rel : hierarchyRelationships){
+				if(agenciesNotMigrated.contains(rel.Parent_account__c) && agenciesNotMigrated.contains(rel.Child_account__c))
+					oldHier.add(rel);
+				else if(agenciesNotMigrated.contains(rel.Parent_account__c) && agenciesToMigrate.contains(rel.Child_account__c)){
+					oldnewHier.add(rel);
+					//children being migrated without their parents will become child of the newHO
+					if(rel.Child_account__c != newHO)
+						result.relationsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = newHO, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+				}
+				//LM: This situation should never happen since it would leave a child without parent in the original hierarchy
+				//else if(agenciesToMigrate.contains(rel.Parent_account__c) && agenciesNotMigrated.contains(rel.Child_account__c))
+				//	oldnewHier.add(rel);
+				else if(agenciesToMigrate.contains(rel.Parent_account__c) && agenciesToMigrate.contains(rel.Child_account__c)){
+					oldnewHier.add(rel);
+					if(rel.Child_account__c != newHO)
+						//An SA will remain as child of its parent
+						if(accounts.get(rel.Child_account__c).Location_Type__c == AMS_Utils.SA)
+							result.relationsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = rel.Parent_account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+						else
+							result.relationsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = newHO, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
+				}
 			}
 			
 			system.debug('migrateAccountsToNewHierarchy() SCENARIO 2: only some branches!');
@@ -207,24 +271,8 @@ global class AMS_HierarchyHelper {
 			system.debug('migrateAccountsToNewHierarchy() newHier = '+newHier);
 			system.debug('migrateAccountsToNewHierarchy() oldnewHier = '+oldnewHier);
 
-			HierarchyStruct result = new HierarchyStruct();
+			
 			result.relationsToDelete = oldnewHier;
-			
-			
-			// Now I create relationships for the agencies in the new hieararchy (only br to ho, I ignore SAs)
-			result.relationsToInsert = new List<AMS_Agencies_relationhip__c>();
-			//result.hierarchyToInsert = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-
-			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-			insert newHierarchy;
-
-			System.debug('AGENCY CHANGES: Hierarchy Id: '+ newHierarchy.id);
-
-			for(Account acc : [SELECT Location_Type__c FROM Account WHERE Id IN :agenciesToMigrate AND ID <> :newHO]){
-				if(acc.Location_Type__c == 'BR'){
-					result.relationsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = newHO, Child_Account__c = acc.Id, Hierarchy__c = newHierarchy.id));
-				}
-			}
 			
 			return result;
 			
@@ -239,7 +287,7 @@ global class AMS_HierarchyHelper {
 	// currentHierarchy = mainAccount's hierarhcy
 	// targetHO = the HO of the target hierarchy
 	// agenciesToMigrate = the list of the agencies which will be migrated: the mainAccount + all the others
-	public static HierarchyStruct migrateAccountsToExistingHierarchy(/*Account mainAccount, */List<AMS_Agencies_relationhip__c> currentHierarchy, Id targetAccount, List<AMS_Agencies_relationhip__c> newHierarchy, Set<Id> agenciesToMigrate){
+	public static HierarchyStruct migrateAccountsToExistingHierarchy(List<AMS_Agencies_relationhip__c> currentHierarchy, Id targetAccount, List<AMS_Agencies_relationhip__c> newHierarchy, Set<Id> agenciesToMigrate){
 		// check if the old hierarchy is completely migrated
 		Set<Id> agenciesNotMigrated = getAccountNotMigrated(currentHierarchy, agenciesToMigrate);
 		boolean completeMigration = (agenciesNotMigrated.size()==0);
@@ -279,11 +327,13 @@ global class AMS_HierarchyHelper {
 			HierarchyStruct res = new HierarchyStruct();
 			res.relationsToUpdate = new List<AMS_Agencies_relationhip__c>();
 			for(AMS_Agencies_relationhip__c rel : currentHierarchy){
-				if(rel.Parent_Account__c == oldHO)
+				//BRs under the oldHO will move under the targetHO
+				if(rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR)
 					rel.Parent_Account__c = targetHO;
  				rel.Hierarchy__c = newHierarchyName;
 				res.relationsToUpdate.add(rel);
 			}
+			//still need to create a new relation to move the oldHO under the targetHO
 			res.relationsToInsert = new List<AMS_Agencies_relationhip__c>();
 			res.relationsToInsert.add(new AMS_Agencies_relationhip__c(Hierarchy__c = newHierarchyName, Parent_Account__c = targetHO, 
 																	  Child_Account__c = oldHO));
@@ -307,11 +357,25 @@ global class AMS_HierarchyHelper {
 			result.relationsToUpdate = new List<AMS_Agencies_relationhip__c>();
 
 			for(AMS_Agencies_relationhip__c rel : currentHierarchy){
-				if(agenciesToMigrate.contains(rel.Child_account__c) && rel.Parent_account__c == oldHO){
+
+				if(agenciesToMigrate.contains(rel.Child_account__c)){
+					//Branch will be moved under the targetHO
+					if(rel.Child_account__r.Location_Type__c == AMS_Utils.BR){
+						rel.Parent_Account__c = targetHO;
+					}
+					else if(rel.Child_account__r.Location_Type__c == AMS_Utils.SA){
+						//SA will move under the targetHO if the parent is not being migrated
+						if(!agenciesToMigrate.contains(rel.Parent_account__c))
+							rel.Parent_Account__c = targetHO;
+					}
+					rel.Hierarchy__c = newHierarchyName;
+					result.relationsToUpdate.add(rel);
+				}
+				/*if(agenciesToMigrate.contains(rel.Child_account__c) && rel.Parent_account__c == oldHO){
 					rel.Hierarchy__c = newHierarchyName;
 					rel.Parent_Account__c = targetHO;
 					result.relationsToUpdate.add(rel);
-				}
+				}*/
 				
 			}
 
@@ -363,13 +427,13 @@ global class AMS_HierarchyHelper {
 	public static String validateIncompleteMigration(Set<Id> agenciesNotMigrated){
 		List<Account> accountsNotMigrated = [SELECT Id, Name, Status__c, IATAcode__c, Location_Type__c, ParentId FROM Account WHERE Id IN :agenciesNotMigrated];
 		String errorMessage = '';
-system.debug('NON MIGRATE = '+agenciesNotMigrated);
+		system.debug('NON MIGRATE = '+agenciesNotMigrated);
 		for(Account a : accountsNotMigrated){
 
 
-system.debug('DEVO VALIDARE '+a.Name+' - iata code '+a.IATAcode__c+' - Location type '+a.Location_Type__c+' - ParentId '+a.ParentId);
+			system.debug('DEVO VALIDARE '+a.Name+' - iata code '+a.IATAcode__c+' - Location type '+a.Location_Type__c+' - ParentId '+a.ParentId);
 
-			// if the agency is active, is not an HO and was related to an HO which was moved I raise an error
+			//whenever a child agency (active) is left without a parent an error should be raised
 			if(a.Location_Type__c!=AMS_Utils.HO && !agenciesNotMigrated.contains(a.ParentId) &&
 				a.Status__c != AMS_Utils.ACC_S0_TERMINATED && a.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)
 				 

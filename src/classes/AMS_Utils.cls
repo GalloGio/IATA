@@ -55,6 +55,8 @@ public without sharing class AMS_Utils {
     public static final String AUTH_APPROVAL = 'Authorize Approval';
 
     public static final String LOCATION_TYPE = 'Location type';
+    public static final String LOCATION = 'Location';
+    public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
 
