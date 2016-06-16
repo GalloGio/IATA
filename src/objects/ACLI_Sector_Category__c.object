@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <customSettingsVisibility>Public</customSettingsVisibility>
     <description>Account Sector and Category values per Type of Operations code.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
@@ -25,4 +24,5 @@
         <unique>false</unique>
     </fields>
     <label>ACLI Sector Category</label>
+    <visibility>Public</visibility>
 </CustomObject>

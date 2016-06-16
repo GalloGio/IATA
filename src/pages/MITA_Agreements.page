@@ -285,7 +285,7 @@
 									<apex:PageBlockSectionItem rendered="{!!wrapper.isNew}" />
 									<apex:PageBlockSectionItem />
 
-									<apex:commandLink action="{!viewGroupedAgreement}" value="Show bilateral agreement" rerender="MITAagreementInfoPanel, messages" rendered="{!wrapper.viewSeparated}" status="Loading"/>
+									<apex:commandLink action="{!viewGroupedAgreement}" value="Show joint Passenger and Cargo agreement" rerender="MITAagreementInfoPanel, messages" rendered="{!wrapper.viewSeparated}" status="Loading"/>
 									<apex:commandLink action="{!viewSeparatedAgreements}" value="Show agreements separated" rerender="MITAagreementInfoPanel, messages" rendered="{!!wrapper.viewSeparated}" status="Loading"/>
 									<apex:PageBlockSectionItem />
 

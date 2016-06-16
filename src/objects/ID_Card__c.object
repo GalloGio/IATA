@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>ID Cards information
@@ -56,6 +57,7 @@ two record types:
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -772,13 +774,12 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>JSON_WS_Complex__c</fullName>
         <description>CAC Web Service Complex Response for IDCard</description>
         <externalId>false</externalId>
-        <formula>&quot;\&quot;Response\&quot;:\&quot;&quot;
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
 + IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
-&quot;\&quot;CardHolder Name\&quot;:\&quot;&quot;
-+  FirstName__c +&quot; &quot;+ LastName__c  + &quot;\&quot;,&quot;+
-&quot;\&quot;Expiration Date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+
-&quot;\&quot;Agency Code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+
-&quot;\&quot;Agency Name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
+&quot;\&quot;cardholder-name\&quot;:\&quot;&quot; +  FirstName__c +&quot; &quot;+ LastName__c  + &quot;\&quot;,&quot;+
+&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+Agency_Name__c + &quot;\&quot;&quot;</formula>
         <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
         <label>JSON WS Complex</label>
         <required>false</required>
@@ -810,7 +811,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Json_WS_Simple__c</fullName>
         <description>CAC Web Service Simple Response for IDCard</description>
         <externalId>false</externalId>
-        <formula>&quot;\&quot;Response\&quot;:\&quot;&quot;
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;
 + IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;&quot;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>CAC Web Service Simple Response for IDCard</inlineHelpText>

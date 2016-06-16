@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Charges requests from local offices</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -653,16 +655,16 @@
             <controllingField>Type__c</controllingField>
             <picklistValues>
                 <fullName>USD</fullName>
+                <default>true</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
                 <controllingFieldValues>ICCS</controllingFieldValues>
-                <default>true</default>
             </picklistValues>
             <picklistValues>
                 <fullName>EUR</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -842,336 +844,336 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <controllingField>Type__c</controllingField>
             <picklistValues>
                 <fullName>AGTCOD_GSA</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>AGTCOD_MSO</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>AIRERU_CASS</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>AIRSBL_CAIR</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>AIRSBL_PAIR</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ADELW</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ADHOC</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ADMIN</fullName>
-                <controllingFieldValues>BSP</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSP</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_BIBIT</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_CCARD</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_COMAN</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ELWRN</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_FILES</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_JOIN</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_JOINS</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_LEGAL</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_PALMS</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_RFABA</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_RPACT</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_RSBCH</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_STATM</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_TRAIN</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPLNK_MSG</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_DGRR1</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_DGRR2</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_DGRTR</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_DGRVA</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_JOIN</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_SEMNR</fullName>
-                <controllingFieldValues>CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>FDS_TDPMS</fullName>
-                <controllingFieldValues>ICCS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>ICCS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>FDS_TDSUP</fullName>
-                <controllingFieldValues>ICCS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>ICCS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_ANUAL</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_APPL</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_FEE</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_FEEN</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_REGI</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_JOINA</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_JOINE</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_JOINF</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_SWICH</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_YEAR</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>NOIATA_ANUAL</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>NOIATA_CASS</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>TEST_CASS</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>TEST_FILE</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>TSF_ADPX</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>TSF_AGTD</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>VATTAX_CHARG</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>WEBLK_SCU</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>WEBLK_SCUX</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
@@ -1273,11 +1275,12 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <controllingField>Product_Service__c</controllingField>
             <picklistValues>
                 <fullName>0.00</fullName>
-                <controllingFieldValues>WEBLK_SCUX</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>WEBLK_SCUX</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>0.01</fullName>
+                <default>false</default>
                 <controllingFieldValues>AGTCOD_GSA</controllingFieldValues>
                 <controllingFieldValues>AGTCOD_MSO</controllingFieldValues>
                 <controllingFieldValues>AIRERU_CASS</controllingFieldValues>
@@ -1298,64 +1301,64 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>CASFEE_SEMNR</controllingFieldValues>
                 <controllingFieldValues>VATTAX_CHARG</controllingFieldValues>
                 <controllingFieldValues>WEBLK_SCU</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>0.10</fullName>
-                <controllingFieldValues>BSPFEE_PALMS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_PALMS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>0.14</fullName>
-                <controllingFieldValues>TSF_AGTD</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>TSF_AGTD</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>0.29</fullName>
-                <controllingFieldValues>TSF_ADPX</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>TSF_ADPX</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>0.50</fullName>
-                <controllingFieldValues>BSPFEE_RSBCH</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_RSBCH</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>48.60</fullName>
-                <controllingFieldValues>BSPFEE_ADHOC</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_ADHOC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>50.00</fullName>
-                <controllingFieldValues>BSPFEE_STATM</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_STATM</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>200.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>CASFEE_DGRVA</controllingFieldValues>
                 <controllingFieldValues>GSSA_APPL</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINE</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>226.55</fullName>
-                <controllingFieldValues>TEST_FILE</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>TEST_FILE</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>300.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>CASFEE_DGRVA</controllingFieldValues>
                 <controllingFieldValues>GSSA_FEE</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>400.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>GSSA_FEEN</controllingFieldValues>
                 <controllingFieldValues>GSSA_REGI</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>500.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSPFEE_ADMIN</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRR1</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRTR</controllingFieldValues>
@@ -1364,27 +1367,26 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>IBCS_YEAR</controllingFieldValues>
                 <controllingFieldValues>NOIATA_ANUAL</controllingFieldValues>
                 <controllingFieldValues>NOIATA_CASS</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>1000.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
                 <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINA</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINF</controllingFieldValues>
                 <controllingFieldValues>IBCS_SWICH</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>2500.00</fullName>
-                <controllingFieldValues>CASFEE_JOIN</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASFEE_JOIN</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>3000.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
                 <controllingFieldValues>FDS_TDSUP</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>3400.00</fullName>
@@ -1392,46 +1394,46 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>3500.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>CASFEE_JOIN</controllingFieldValues>
                 <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <controllingFieldValues>FDS_TDSUP</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>4000.00</fullName>
-                <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>4500.00</fullName>
-                <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>5000.00</fullName>
-                <controllingFieldValues>BSPFEE_JOIN</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_JOIN</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>7500.00</fullName>
-                <controllingFieldValues>BSPFEE_JOIN</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BSPFEE_JOIN</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>750.00</fullName>
+                <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR1</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRTR</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>1500.00</fullName>
-                <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>100.00</fullName>
-                <controllingFieldValues>TEST_CASS</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>TEST_CASS</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

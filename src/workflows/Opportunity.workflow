@@ -284,29 +284,14 @@
         <fullName>Africa Deal Alert</fullName>
         <active>false</active>
         <description>Identifies an opportunity closing in IATA&apos;s Africa RCT</description>
-        <formula>AND (
-    ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),
-    OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Asia Pac Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s Asia Pacific RCT</description>
-        <formula>AND (
-
-        OR (
-               ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),
-               ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),
-               ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)
-                ),
-     OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),                ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -428,16 +413,7 @@
         <fullName>Europe Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s Europe RCT</description>
-        <formula>AND (
-
-        OR (
-               ISPICKVAL(Geographic_Region__c, &apos;Europe&apos;),
-               ISPICKVAL(Geographic_Region__c, &apos;Russia and CIS&apos;)
-                ),
-     OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Europe&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Russia and CIS&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -467,37 +443,21 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <fullName>MENA Deal Alert</fullName>
         <active>false</active>
         <description>Identifies an opportunity closing in IATA&apos;s MENA RCT</description>
-        <formula>AND (
-    ISPICKVAL(Geographic_Region__c, &apos;MENA&apos; ),
-    OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;MENA&apos; ),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>North America Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s North America RCT</description>
-        <formula>AND  (
-    ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),
-    OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND  (     ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>North Asia Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s North Asia RCT</description>
-        <formula>AND (
-
-     ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),
-     OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND (       ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -666,12 +626,7 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <fullName>The Americas Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s The Americas RCT</description>
-        <formula>AND (
-    ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),
-    OwnerId = LastModifiedById, Amount   &gt;= 10000,
-     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
-     $User.Division = &apos;MACS&apos;
-           )</formula>
+        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <tasks>

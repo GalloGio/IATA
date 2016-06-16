@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -51,6 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -312,443 +314,443 @@
             <controllingField>Time_Zone__c</controllingField>
             <picklistValues>
                 <fullName>Pacific/Kiritimati</fullName>
-                <controllingFieldValues>(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Chatham</fullName>
-                <controllingFieldValues>(GMT+13:45) Chatham Daylight Time (Pacific/Chatham)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+13:45) Chatham Daylight Time (Pacific/Chatham)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Auckland</fullName>
-                <controllingFieldValues>(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Enderbury</fullName>
-                <controllingFieldValues>(GMT+13:00) Phoenix Islands Time (Pacific/Enderbury)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+13:00) Phoenix Islands Time (Pacific/Enderbury)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Tongatapu</fullName>
-                <controllingFieldValues>(GMT+13:00) Tonga Time (Pacific/Tongatapu)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+13:00) Tonga Time (Pacific/Tongatapu)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Fiji</fullName>
-                <controllingFieldValues>(GMT+12:00) Fiji Time (Pacific/Fiji)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+12:00) Fiji Time (Pacific/Fiji)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Norfolk</fullName>
-                <controllingFieldValues>(GMT+11:30) NorFolk Islands Time (Pacific/Norfolk)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+11:30) NorFolk Islands Time (Pacific/Norfolk)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Kamchatka</fullName>
-                <controllingFieldValues>(GMT+11:00) PetroPavlovsk-Kamchatski (Asia/Kamchatka)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+11:00) PetroPavlovsk-Kamchatski (Asia/Kamchatka)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Australia/Lord_Howe</fullName>
-                <controllingFieldValues>(GMT+11:00) Lord Howe Daylight Time (Australia/Lord Howe)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+11:00) Lord Howe Daylight Time (Australia/Lord Howe)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Australia/Sydney</fullName>
-                <controllingFieldValues>(GMT+11:00) Australian Eastern Dayligth Time (Australia/Sydney)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+11:00) Australian Eastern Dayligth Time (Australia/Sydney)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Guadalcanal</fullName>
-                <controllingFieldValues>(GMT+11:00) Solomon Island Time (Pacific/Guadalcanal)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+11:00) Solomon Island Time (Pacific/Guadalcanal)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Australia/Adelaide</fullName>
-                <controllingFieldValues>(GMT+10:30) Australian Central Daylight Time (Australia/Adelaide)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+10:30) Australian Central Daylight Time (Australia/Adelaide)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Australia/Brisbane</fullName>
-                <controllingFieldValues>(GMT+10:00) Australian Eastern Standard Time (Australia/Brisbane)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+10:00) Australian Eastern Standard Time (Australia/Brisbane)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Australia/Darwin</fullName>
-                <controllingFieldValues>(GMT+09:30) Australian Central Stasndard Time (Australia/Darwin)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+09:30) Australian Central Stasndard Time (Australia/Darwin)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Seoul</fullName>
-                <controllingFieldValues>(GMT+09:00) Korean Standard Time (Asia/Seoul)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+09:00) Korean Standard Time (Asia/Seoul)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Tokyo</fullName>
-                <controllingFieldValues>(GMT+09:00) Japan Standard Time (Asia/Tokyo)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+09:00) Japan Standard Time (Asia/Tokyo)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Hong_Kong</fullName>
-                <controllingFieldValues>(GMT+08:00) Hong Kong Time (Asia/Hong Kong)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) Hong Kong Time (Asia/Hong Kong)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Kuala_Lumpur</fullName>
-                <controllingFieldValues>(GMT+08:00) Malaysia Time (Asia/Kuala Lumpur)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) Malaysia Time (Asia/Kuala Lumpur)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Manila</fullName>
-                <controllingFieldValues>(GMT+08:00) Philippine Time (Asia/Manila)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) Philippine Time (Asia/Manila)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Shanghai</fullName>
-                <controllingFieldValues>(GMT+08:00) China Standard Time (Asia/Shanghai)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) China Standard Time (Asia/Shanghai)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Singapore</fullName>
-                <controllingFieldValues>(GMT+08:00) Singapore Standard Time (Asia/Singapore)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) Singapore Standard Time (Asia/Singapore)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Taipei</fullName>
-                <controllingFieldValues>(GMT+08:00) Taipei Standard Time (Asia/Taipei)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) Taipei Standard Time (Asia/Taipei)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Australia/Perth</fullName>
-                <controllingFieldValues>(GMT+08:00) Australian Western Standard Time (Australia/Perth)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+08:00) Australian Western Standard Time (Australia/Perth)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Bangkok</fullName>
-                <controllingFieldValues>(GMT+07:00) Indochina Time (Asia/Bangkok)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+07:00) Indochina Time (Asia/Bangkok)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Jakarta</fullName>
-                <controllingFieldValues>(GMT+07:00) Western Indonesia Time (Asia/Jakarta)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+07:00) Western Indonesia Time (Asia/Jakarta)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Saigon</fullName>
-                <controllingFieldValues>(GMT+07:00) Indochina Time (Asia/Saigon)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+07:00) Indochina Time (Asia/Saigon)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Rangoon</fullName>
-                <controllingFieldValues>(GMT+06:30) Myanmar Time (Asia/Rangoon)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+06:30) Myanmar Time (Asia/Rangoon)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Dacca</fullName>
-                <controllingFieldValues>(GMT+06:00) Bangladesh Time (Asia/Dacca)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+06:00) Bangladesh Time (Asia/Dacca)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Katmandu</fullName>
-                <controllingFieldValues>(GMT+05:45) Nepal Time (Asia/Katmandu)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+05:45) Nepal Time (Asia/Katmandu)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Calcutta</fullName>
-                <controllingFieldValues>(GMT+05:30) India Standard Time (Asia/Calcutta)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+05:30) India Standard Time (Asia/Calcutta)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Colombo</fullName>
-                <controllingFieldValues>(GMT+05:30) India Standard Time (Asia/Colombo)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+05:30) India Standard Time (Asia/Colombo)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Karachi</fullName>
-                <controllingFieldValues>(GMT+05:00) Pakistan Time (Asia/Karachi)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+05:00) Pakistan Time (Asia/Karachi)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Tashkent</fullName>
-                <controllingFieldValues>(GMT+05:00) Uzbekistan Time (Asia/Tashkent)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+05:00) Uzbekistan Time (Asia/Tashkent)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Yekaterinburg</fullName>
-                <controllingFieldValues>(GMT+05:00) Yekaterinburg time (Asia/Yekaterinburg)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+05:00) Yekaterinburg time (Asia/Yekaterinburg)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Kabul</fullName>
-                <controllingFieldValues>(GMT+04:30) Afghanistan Time(Asia/Kabul)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+04:30) Afghanistan Time(Asia/Kabul)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Dubai</fullName>
-                <controllingFieldValues>(GMT+04:00) Gulf Standard Time(Asia/)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+04:00) Gulf Standard Time(Asia/)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Tbilisi</fullName>
-                <controllingFieldValues>(GMT+04:00) Georgia Time (Asia/Tbilisi)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+04:00) Georgia Time (Asia/Tbilisi)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Tehran</fullName>
-                <controllingFieldValues>(GMT+03:30) Iran Standard Time (Asia/Tehran)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+03:30) Iran Standard Time (Asia/Tehran)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Africa/Nairobi</fullName>
-                <controllingFieldValues>(GMT+03:00) East Africa Time (Africa/Nairobi)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+03:00) East Africa Time (Africa/Nairobi)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Baghdad</fullName>
-                <controllingFieldValues>(GMT+03:00) Arabian Standard Time (Asia/Baghdad)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+03:00) Arabian Standard Time (Asia/Baghdad)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Kuwait</fullName>
-                <controllingFieldValues>(GMT+03:00) Arabian Standard Time (Asia/Kuwait)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+03:00) Arabian Standard Time (Asia/Kuwait)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Riyadh</fullName>
-                <controllingFieldValues>(GMT+03:00) Arabian Standard Time (Asia/Riyadh)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+03:00) Arabian Standard Time (Asia/Riyadh)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Moscow</fullName>
-                <controllingFieldValues>(GMT+03:00) Moscow Standard Time (Europe/Moscow)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+03:00) Moscow Standard Time (Europe/Moscow)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Africa/Cairo</fullName>
-                <controllingFieldValues>(GMT+02:00) Eastern European Time (Africa/Cairo)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Eastern European Time (Africa/Cairo)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Africa/Johannesburg</fullName>
-                <controllingFieldValues>(GMT+02:00) South Africa Standard Time (Africa/Johannesburg)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) South Africa Standard Time (Africa/Johannesburg)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Asia/Jerusalem</fullName>
-                <controllingFieldValues>(GMT+02:00) Israel Standard Time (Asia/Jerusalem)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Israel Standard Time (Asia/Jerusalem)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Athens</fullName>
-                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Athens)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Athens)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Bucharest</fullName>
-                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Bucharest)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Bucharest)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Helsinki</fullName>
-                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Helsinki)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Helsinki)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Istanbul</fullName>
-                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Istanbul)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Istanbul)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Minsk</fullName>
-                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Minsk)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+02:00) Eastern European Time (Europe/Minsk)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Africa/Algiers</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Africa/Algiers)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Africa/Algiers)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Amsterdam</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Amsterdam)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Amsterdam)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Berlin</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Berlin)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Berlin)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Brussels</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Brussels)</controllingFieldValues>
                 <default>true</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Brussels)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Paris</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Paris)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Paris)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Prague</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Prague)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Prague)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Rome</fullName>
-                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Rome)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+01:00) Central European Time (Europe/Rome)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Dublin</fullName>
-                <controllingFieldValues>(GMT+00:00) Greenwich Mean Time (Europe/Dublin)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+00:00) Greenwich Mean Time (Europe/Dublin)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/Lisbon</fullName>
-                <controllingFieldValues>(GMT+00:00) Western European Time (Europe/Lisbon)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+00:00) Western European Time (Europe/Lisbon)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe/London</fullName>
-                <controllingFieldValues>(GMT+00:00) Greenwich Mean Time (Europe/London)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+00:00) Greenwich Mean Time (Europe/London)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GMT</fullName>
-                <controllingFieldValues>(GMT+00:00) Greenwich Mean Time (GMT)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT+00:00) Greenwich Mean Time (GMT)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Atlantic/Cape_Verde</fullName>
-                <controllingFieldValues>(GMT-01:00) Cape Verde Time (Atlantic/Cape Verde)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-01:00) Cape Verde Time (Atlantic/Cape Verde)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Sao_Paulo</fullName>
-                <controllingFieldValues>(GMT-02:00) Brasilia Summer Time (America/Sao Paulo)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-02:00) Brasilia Summer Time (America/Sao Paulo)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Atlantic/South_Georgia</fullName>
-                <controllingFieldValues>(GMT-02:00) South Georgia Time (Atlantic/South Georgia)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-02:00) South Georgia Time (Atlantic/South Georgia)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Buenos_Aires</fullName>
-                <controllingFieldValues>(GMT-03:00) Argentina Time (America/Buenos Aires)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-03:00) Argentina Time (America/Buenos Aires)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Santiago</fullName>
-                <controllingFieldValues>(GMT-03:00) Chile Summer Time (America/Santiago)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-03:00) Chile Summer Time (America/Santiago)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/St_Johns</fullName>
-                <controllingFieldValues>(GMT-03:00) Newfoundland Standard Time (America/St Johns)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-03:00) Newfoundland Standard Time (America/St Johns)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Halifax</fullName>
-                <controllingFieldValues>(GMT-04:00) Atlantic Standard Time (America/Halifax)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-04:00) Atlantic Standard Time (America/Halifax)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Puerto_Rico</fullName>
-                <controllingFieldValues>(GMT-04:00) Atlantic Standard Time (America/Puerto Rico)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-04:00) Atlantic Standard Time (America/Puerto Rico)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Atlantic/Bermuda</fullName>
-                <controllingFieldValues>(GMT-04:00) Atlantic Standard Time (Atlantic/Bermuda)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-04:00) Atlantic Standard Time (Atlantic/Bermuda)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Caracas</fullName>
-                <controllingFieldValues>(GMT-04:30) Venezuela Time (America/Caracas)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-04:30) Venezuela Time (America/Caracas)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Bogota</fullName>
-                <controllingFieldValues>(GMT-05:00) Colombia Time (America/Bogota)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-05:00) Colombia Time (America/Bogota)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Indianapolis</fullName>
-                <controllingFieldValues>(GMT-05:00) Eastern Standard Time (America/Indianapolis)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-05:00) Eastern Standard Time (America/Indianapolis)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Lima</fullName>
-                <controllingFieldValues>(GMT-05:00) Peru Time (America/Lima)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-05:00) Peru Time (America/Lima)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/New_York</fullName>
-                <controllingFieldValues>(GMT-05:00) Eastern Standard Time (America/New York)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-05:00) Eastern Standard Time (America/New York)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Panama</fullName>
-                <controllingFieldValues>(GMT-05:00) Eastern Standard Time (America/Panama)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-05:00) Eastern Standard Time (America/Panama)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Chicago</fullName>
-                <controllingFieldValues>(GMT-06:00) Central Standard Time (America/Chicago)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-06:00) Central Standard Time (America/Chicago)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/El_Salvador</fullName>
-                <controllingFieldValues>(GMT-06:00) Central Standard Time (America/El Salvador)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-06:00) Central Standard Time (America/El Salvador)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Mexico_City</fullName>
-                <controllingFieldValues>(GMT-06:00) Central Standard Time (America/Mexico City)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-06:00) Central Standard Time (America/Mexico City)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Denver</fullName>
-                <controllingFieldValues>(GMT-07:00) Mountain Standard Time (America/Denver)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-07:00) Mountain Standard Time (America/Denver)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Phoenix</fullName>
-                <controllingFieldValues>(GMT-07:00) Mountain Standard Time (America/Phoenix)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-07:00) Mountain Standard Time (America/Phoenix)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Los_Angeles</fullName>
-                <controllingFieldValues>(GMT-08:00) Pacific Standard Time (America/Los Angeles)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-08:00) Pacific Standard Time (America/Los Angeles)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Tijuana</fullName>
-                <controllingFieldValues>(GMT-08:00) Pacific Standard Time (America/Tijuana)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-08:00) Pacific Standard Time (America/Tijuana)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>America/Anchorage</fullName>
-                <controllingFieldValues>(GMT-09:00) Alaska Standard Time (America/Anchorage)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-09:00) Alaska Standard Time (America/Anchorage)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Honolulu</fullName>
-                <controllingFieldValues>(GMT-10:00) Hawaii-Aleutian Standard Time(Pacific/Honolulu)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-10:00) Hawaii-Aleutian Standard Time(Pacific/Honolulu)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Niue</fullName>
-                <controllingFieldValues>(GMT-11:00) Niue Time (Pacific/Niue)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-11:00) Niue Time (Pacific/Niue)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pacific/Pago_Pago</fullName>
-                <controllingFieldValues>(GMT-11:00) Samoa Standard Time (Pacific/Pago Pago)</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>(GMT-11:00) Samoa Standard Time (Pacific/Pago Pago)</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -51,6 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -80,53 +82,53 @@
             <controllingField>MITAorBIETA__c</controllingField>
             <picklistValues>
                 <fullName>The Passenger and Cargo Interline Traffic Agreement</fullName>
-                <controllingFieldValues>MITA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>The Passenger Interline Agreement</fullName>
-                <controllingFieldValues>MITA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>The Cargo Interline Agreement</fullName>
-                <controllingFieldValues>MITA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>The One Way Issuing Airline</fullName>
-                <controllingFieldValues>MITA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>The One Way Participating Airline</fullName>
-                <controllingFieldValues>MITA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Bilateral, both carriers can issue electronic tickets</fullName>
-                <controllingFieldValues>BIETA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BIETA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>One Way Passenger Issuing Airline</fullName>
-                <controllingFieldValues>BIETA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BIETA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>One Way Passenger Participating</fullName>
-                <controllingFieldValues>BIETA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BIETA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>One Way Intermodal Issuing Date</fullName>
-                <controllingFieldValues>BIETA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BIETA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>One Way Intermodal Participating Date</fullName>
-                <controllingFieldValues>BIETA</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>BIETA</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -357,7 +359,7 @@
     </validationRules>
     <validationRules>
         <fullName>N2_No_agreements_for_non_MITA_account</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
  ISNEW(),
  ISPICKVAL(MITAorBIETA__c, &apos;MITA&apos;),

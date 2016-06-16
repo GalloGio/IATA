@@ -555,23 +555,23 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             <controllingField>Third_Party_Involved__c</controllingField>
             <picklistValues>
                 <fullName>Flight Scape</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airports Council International</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Berlitz</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Accomodations Plus International</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
