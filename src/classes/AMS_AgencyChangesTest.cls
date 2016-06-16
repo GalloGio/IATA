@@ -242,7 +242,7 @@ public class AMS_AgencyChangesTest {
 		// Initialize the hierarchy and create an OSCAR
 
 		init2Hierarchies(true);
-		createOSCAR(HO1, C1, CHANGEOWNERSHIPIATA, null);
+		createOSCAR(HO1, C1, CHANGEOWNERSHIPNONIATA, null);
 		
 		Test.startTest();
 		

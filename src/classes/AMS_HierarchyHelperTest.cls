@@ -116,7 +116,7 @@ private class AMS_HierarchyHelperTest {
     }
 
     
-    static testMethod void switchBRwithHOTestScenario1() {
+    /*static testMethod void switchBRwithHOTestScenario1() {
         initHierarchy(5, 5);
         Test.startTest();
         
@@ -154,10 +154,10 @@ private class AMS_HierarchyHelperTest {
         
         Test.stopTest();
         
-    }
+    }*/
      
     
-    static testMethod void migrateAccountsToNewHierarchyTestScenario1() {
+    /*static testMethod void migrateAccountsToNewHierarchyTestScenario1() {
         initHierarchy(5, 0);
         Test.startTest();
         
@@ -228,7 +228,7 @@ private class AMS_HierarchyHelperTest {
         
         Test.stopTest();
         
-    }
+    }*/
 
 
 
