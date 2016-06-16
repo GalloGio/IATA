@@ -30,9 +30,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-ISCHANGED(NumComments), 
-OR(CommunityId = &quot;09aw0000000c4uZ&quot;))</formula>
+        <formula>AND( ISCHANGED(NumComments),  OR(CommunityId = &quot;09aw0000000c4uZ&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

@@ -4,6 +4,7 @@
     <customButtons>E2CP__New_Comment</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Change_Routing</customButtons>
+    <customButtons>IDFS_Request_Operational_Improvement</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
