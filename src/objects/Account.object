@@ -4534,8 +4534,8 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA Cargo</fullName>
-                <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
