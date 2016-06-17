@@ -17,6 +17,8 @@ public class AMS_OSCAR_ProcessViewerController {
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
     
+    public Boolean existOscarInsp {get;set;}
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
@@ -35,6 +37,8 @@ public class AMS_OSCAR_ProcessViewerController {
              
                 this.oscar = fetchOscarFields(this.oscarCase.OSCAR__c);
                 this.oscarId = this.oscar.Id;
+                this.existOscarInsp = existOscarInspections(this.oscar);
+             
                 loadJsonFile();
             }
 
@@ -43,6 +47,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
             this.oscar = fetchOscarFields(objectId);
             this.oscarId = this.oscar.Id;
+            this.existOscarInsp = existOscarInspections(this.oscar);
+             
             loadJsonFile();
             
             this.oscarCase = fetchCaseFields(objectId,true);
@@ -220,6 +226,18 @@ public class AMS_OSCAR_ProcessViewerController {
             return oscars.get(0);
 
        return toReturn;
+
+    }
+    
+    private Boolean existOscarInspections(AMS_OSCAR__c oscar){
+        ID oscarId = oscar.Id;
+        if (database.countQuery('select count() from AMS_Inspection__c where oscar__c = : oscarId') == 0 
+                && 
+            AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c) 
+            )
+            return false;
+
+       return true;
 
     }
 

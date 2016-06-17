@@ -117,15 +117,22 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         //processes to ignore in the creation of the DIS change code
-        Set<String> ProcessesToIgnoreCreateChangeCode = new Set <String>{'NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0'};
+        Set<String> ProcessesToIgnoreChangeCode = new Set <String> {AMS_Utils.new_TIDS,
+                                                                    AMS_Utils.new_MSO,
+                                                                    AMS_Utils.new_GSA,
+                                                                    AMS_Utils.new_GSSA,
+                                                                    AMS_Utils.new_AHA
+                                                                    };
 
         for (AMS_OSCAR__c updatedOSCAR : Trigger.new) {
             AMS_OSCAR__c oldOSCAR = Trigger.oldMap.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
-            if(!ProcessesToIgnoreCreateChangeCode.contains(updatedOscar.Process__c))
+            if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
                 applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
+
+
 
             processFieldsTracking(oldOSCAR, updatedOscar);
 
@@ -217,9 +224,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
-                if (updatedOscar.Process__c == 'NEW.HO.1.0' || updatedOscar.Process__c == 'NEW.BR.ABROAD')
+                if (updatedOscar.Process__c == AMS_Utils.new_HO || updatedOscar.Process__c == AMS_Utils.new_BR_ABROAD)
                     changeCode.memoText = 'New application - Head Office finalized';
-                else if (updatedOscar.Process__c == 'NEW.SA.1.0')
+                else if (updatedOscar.Process__c == AMS_Utils.new_SA)
                     changeCode.memoText = 'New application - SA finalized';
                 else
                     changeCode.memoText = 'New application - Branch finalized';
@@ -237,9 +244,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'DIS';
                 changeCode.reasonCode = '00';
-                if (updatedOscar.Process__c == 'NEW.HO.1.0' || updatedOscar.Process__c == 'NEW.BR.ABROAD')
+                if (updatedOscar.Process__c == AMS_Utils.new_HO || updatedOscar.Process__c == AMS_Utils.new_BR_ABROAD)
                     changeCode.memoText = 'New application disapproved';
-                else if (updatedOscar.Process__c == 'NEW.SA.1.0')
+                else if (updatedOscar.Process__c == AMS_Utils.new_SA)
                     changeCode.memoText = 'New application - SA disapproved';
                 else
                     changeCode.memoText = 'New application - Branch disapproved';
