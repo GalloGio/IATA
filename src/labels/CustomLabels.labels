@@ -148,6 +148,13 @@
         <value>Change Withdrawal</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_CODEASSIGNMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CODEASSIGNMENT</shortDescription>
+        <value>Code Assignment</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_DISAPPROVAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -384,6 +391,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR VALIDATION</shortDescription>
         <value>Validation</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Warning_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Warning_1</shortDescription>
+        <value>There are still no Appointments created for this OSCAR Process</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
