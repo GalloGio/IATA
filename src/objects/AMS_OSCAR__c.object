@@ -2051,9 +2051,11 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
                 <controllingFieldValues>NEW.1.1</controllingFieldValues>
                 <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.BR</controllingFieldValues>
                 <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
                 <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
@@ -2071,9 +2073,11 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
                 <controllingFieldValues>NEW.1.1</controllingFieldValues>
                 <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.BR</controllingFieldValues>
                 <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
                 <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
@@ -2084,9 +2088,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklistValues>
                 <fullName>Reject approval</fullName>
                 <default>false</default>
-                <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
-                <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
-                <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Authorize Disapproval</fullName>
@@ -2097,8 +2098,13 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>DGR.DGA</controllingFieldValues>
                 <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
                 <controllingFieldValues>NEW.1.1</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.BR</controllingFieldValues>
                 <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0.BSP</controllingFieldValues>
+                <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
@@ -2119,9 +2125,11 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>MAJOR.CHANGES</controllingFieldValues>
                 <controllingFieldValues>NEW.1.1</controllingFieldValues>
                 <controllingFieldValues>NEW.AHA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.AHA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.BR</controllingFieldValues>
                 <controllingFieldValues>NEW.BR.ABROAD</controllingFieldValues>
                 <controllingFieldValues>NEW.GSA.1.0</controllingFieldValues>
+                <controllingFieldValues>NEW.GSA.1.0.BSP</controllingFieldValues>
                 <controllingFieldValues>NEW.GSSA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.HO.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.MSO.1.0</controllingFieldValues>
