@@ -63852,7 +63852,7 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <protected>false</protected>
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
-        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account_Name}
+        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account.Name}
 %22</url>
     </webLinks>
     <webLinks>
@@ -64259,12 +64259,12 @@ myuser={!User.Id}</url>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>https://www.dreamfactory.com/orgview/orgview.html?
-sessionid={!API_Session_ID}&amp;
-serverurl={!API_Partner_Server_URL_60}&amp;
-username={!User_Username}&amp;
-fullname={!User_FullName}&amp;
-linkid={!Account_ID}&amp;
-userid={!User_ID}</url>
+sessionid={!API.Session_ID}&amp;
+serverurl={!API.Partner_Server_URL_60}&amp;
+username={!User.Username}&amp;
+fullname={!User.Name}&amp;
+linkid={!Account.Id}&amp;
+userid={!User.Id}</url>
         <width>800</width>
     </webLinks>
     <webLinks>
