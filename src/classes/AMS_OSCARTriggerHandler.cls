@@ -588,8 +588,8 @@ public class AMS_OSCARTriggerHandler {
 				oscar.addError(error);
 		}
 
-		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA && oscar.AMS_Target_Agency__c == null)
-			oscar.addError('The field "Target Agency" is mandatory when a change of ownership to IATA agent is being performed.');
+		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) && oscar.AMS_Target_Agency__c == null)
+			oscar.AMS_Target_Agency__c.addError('The field "Target Agency" is mandatory when a change of ownership to IATA agent is being performed.');
 
 
 		Account oscarAccount = accounts.get(oscar.Account__c);
@@ -605,7 +605,7 @@ public class AMS_OSCARTriggerHandler {
 		}else{
 			//Only allowed to be filled in for change of Location Type
 			if(oscar.Change_of_location_type_behavior__c != null)
-				oscar.Change_of_location_type_behavior__c.addError('This field can only be filled for changes of Location Type.');
+				oscar.Change_of_location_type_behavior__c.addError('The field "Change of location type behavior" can only be filled for changes of Location Type.');
 		}
 
 
