@@ -15,14 +15,83 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void handleAfterUpdate(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
 		list<AMS_OSCAR__c> lsOscarToUpdate = new list<AMS_OSCAR__c>();
+		list<AMS_OSCAR__c> lsOscarInsToUpdate = new list<AMS_OSCAR__c>();
+		
+
+		 //processes to assign Account to Inspection
+        Set<String> ProcessesToAssignInspections = new Set <String> {AMS_Utils.new_GSA_BSP,
+                                                                     AMS_Utils.new_GSSA,
+                                                                     AMS_Utils.new_AHA_BSP
+                                                                    };
+
+ 		Set<String> ProcessesToAssignInspectionsWithoutBSP = new Set <String> {AMS_Utils.new_GSA,
+                                                                     AMS_Utils.new_AHA
+                                                                    };                                                                   
+
 		for (AMS_OSCAR__c oscar : oscars) {
 			if ( (oscar.Reason_For_KPI__c != oldMap.get(oscar.id).Reason_For_KPI__c) ||
 			        (oscar.Process_Start_Date__c != oldMap.get(oscar.id).Process_Start_Date__c) ||
 			        (oscar.Dossier_Reception_Date__c != oldMap.get(oscar.id).Dossier_Reception_Date__c))
 				lsOscarToUpdate.add(oscar);
+			
+
+
+			//Process inspections to assign the account
+			if( ProcessesToAssignInspections.contains(oscar.Process__c)
+				&& (
+					oldMap.get(oscar.Id).RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL 
+				 	&& oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL
+				 	)
+				)
+				lsOscarInsToUpdate.add(oscar);
+
+			else if( ProcessesToAssignInspectionsWithoutBSP.contains(oscar.Process__c)
+				&& (
+					oldMap.get(oscar.Id).STEP10__c <> AMS_Utils.PASSED 
+				 	&& oscar.STEP10__c == AMS_Utils.PASSED
+				 	)
+				)
+				lsOscarInsToUpdate.add(oscar);
+			
+
+
 		}
+
+		
 		if (!lsOscarToUpdate.isEmpty())
 			UpdateCaseKPIFields(lsOscarToUpdate);
+
+		if(!lsOscarInsToUpdate.isEmpty())
+			UpdateInspectionsFromOscar(lsOscarInsToUpdate);
+
+
+
+	}
+	//get Inspections from oscar
+	public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
+
+		//query the the AMS Inspections to update the Account
+		List<AMS_Inspection__c> lsInsToUpdate = new List<AMS_Inspection__c>();
+
+		//Update Account Id on Inspections
+		for(AMS_Inspection__c amsIns : [SELECT Id, Account__c,OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscars])
+		{
+
+			amsIns.Account__c = amsIns.OSCAR__r.Account__c;
+			
+			amsIns.Date_Organisation_Status_attained__c = (amsIns.Date_Organisation_Status_attained__c == null) ? system.today() : amsIns.Date_Organisation_Status_attained__c;
+			amsIns.Accreditation_Endorsement_Status_code__c = '9';
+			amsIns.Last_synchronization__c = system.today();
+			
+			lsInsToUpdate.add(amsIns);
+		}
+		
+		try {
+			update lsInsToUpdate;
+		} catch (DmlException e) {
+			system.debug('Exception updating Inspection: ' + e.getMessage());
+		}
+
 	}
 
 	//TD: udpate case reason. Used for calculating KPIs
@@ -588,6 +657,9 @@ public class AMS_OSCARTriggerHandler {
 				oscar.addError(error);
 		}
 
+		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) && oscar.AMS_Target_Agency__c == null)
+			oscar.AMS_Target_Agency__c.addError('The field "Target Agency" is mandatory when a change of ownership to IATA agent is being performed.');
+
 
 		Account oscarAccount = accounts.get(oscar.Account__c);
 		if (tocList.contains(AMS_Utils.LOCATION_TYPE)){
@@ -602,7 +674,7 @@ public class AMS_OSCARTriggerHandler {
 		}else{
 			//Only allowed to be filled in for change of Location Type
 			if(oscar.Change_of_location_type_behavior__c != null)
-				oscar.Change_of_location_type_behavior__c.addError('This field can only be filled for changes of Location Type.');
+				oscar.Change_of_location_type_behavior__c.addError('The field "Change of location type behavior" can only be filled for changes of Location Type.');
 		}
 
 
