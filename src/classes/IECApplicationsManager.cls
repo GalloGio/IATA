@@ -3,6 +3,7 @@
  * Change log:
  *  20160324-sl: change getListProductAccessByContactByProductCategory/getListProductAccessByContactBySubscriptionNumber to use getSubscriptionEvergreenNameListByBillingContactId
  *  20160531-sl: createProductAccessOnNewSubscription() will not create IEC_Product_Access record for ProductCategory_SF_EBROADCAST; add isEbcAccessGrantedForContact
+ *  20160617-sl: createProductAccessOnNewSubscription() will always create IEC_Product_Access record regardless ProductCategory
  *
  */
 public without sharing class IECApplicationsManager {
@@ -654,37 +655,32 @@ public without sharing class IECApplicationsManager {
             List<Product_Rate_Plan_Information__c> lstRatePlanInfos = IECProductManager.getProductRatePlansInformationById(oSubscription.Product_Rate_Plan_Information__c);
             if (lstRatePlanInfos.isEmpty()) throw new IECApplicationException('Cannot find Product Rate Plan Info');
             
-            Product_Rate_Plan_Information__c oProductRatePlan = lstRatePlanInfos.get(0);
-            if (oProductRatePlan.Related_Product_Information__r.Related_Product_Category__r.Name != IECConstants.ProductCategory_SF_EBROADCAST)
-            {
-                
-                IEC_Product_Access__c oProductAccess = new IEC_Product_Access__c();
-                oProductAccess.Related_Contact__c = sContactId;
-                oProductAccess.Related_Rate_Plan_Info__c = lstRatePlanInfos.get(0).Id;
-                oProductAccess.Zuora_Subscription_Id__c = oSubscription.Zuora__Zuora_Id__c;
-                oProductAccess.Subscription_Number__c = oSubscription.Name;
-                oProductAccess.Invoice_Number__c = sInvoiceNumber;
-                oProductAccess.Usage_Qty_consumed__c = 0;
-                
-                if (lstRatePlanInfos.get(0).Subscription_Usage_Qty__c != null && lstRatePlanInfos.get(0).Subscription_Usage_Qty__c >= 0) {
-                    oProductAccess.Usage_Qty_Start__c = lstRatePlanInfos.get(0).Subscription_Usage_Qty__c;
-                    oProductAccess.Usage_Qty_Left__c = oProductAccess.Usage_Qty_Start__c;
-                }
-                else {
-                    oProductAccess.Usage_Unlimited__c = true;
-                }
-                
-                oProductAccess.Active__c = true;
-                oProductAccess.Effective_Start_Date__c = oSubscription.Zuora__SubscriptionStartDate__c;
-                oProductAccess.Effective_End_Date__c = oSubscription.Zuora__SubscriptionEndDate__c;
-                
-                insert oProductAccess;
+            IEC_Product_Access__c oProductAccess = new IEC_Product_Access__c();
+            oProductAccess.Related_Contact__c = sContactId;
+            oProductAccess.Related_Rate_Plan_Info__c = lstRatePlanInfos.get(0).Id;
+            oProductAccess.Zuora_Subscription_Id__c = oSubscription.Zuora__Zuora_Id__c;
+            oProductAccess.Subscription_Number__c = oSubscription.Name;
+            oProductAccess.Invoice_Number__c = sInvoiceNumber;
+            oProductAccess.Usage_Qty_consumed__c = 0;
+            
+            if (lstRatePlanInfos.get(0).Subscription_Usage_Qty__c != null && lstRatePlanInfos.get(0).Subscription_Usage_Qty__c >= 0) {
+                oProductAccess.Usage_Qty_Start__c = lstRatePlanInfos.get(0).Subscription_Usage_Qty__c;
+                oProductAccess.Usage_Qty_Left__c = oProductAccess.Usage_Qty_Start__c;
             }
+            else {
+                oProductAccess.Usage_Unlimited__c = true;
+            }
+            
+            oProductAccess.Active__c = true;
+            oProductAccess.Effective_Start_Date__c = oSubscription.Zuora__SubscriptionStartDate__c;
+            oProductAccess.Effective_End_Date__c = oSubscription.Zuora__SubscriptionEndDate__c;
+            
+            insert oProductAccess;
         }
         catch(Exception ex) {
             throw new IECApplicationException('Could not insert Product Access: ' + ex.getMessage());
         }
-    }
+    } 
     
     /**
      * Adjusts existing IEC_Product_Access__c according to the new changes in the subscription
