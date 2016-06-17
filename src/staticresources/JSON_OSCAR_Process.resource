@@ -1661,11 +1661,7 @@
               {
                 "Name": "STEP1",
                 "Required": [],
-                "Actions": [{
-          "FunctionName": "generateIataCode",
-          "ActionLabel": "AMS_OSCAR_Action1",
-          "args": ["agencyid", "accreditationid", "oscarid"]
-        }],
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -1709,7 +1705,7 @@
           "ChangeCode": {
             "Name": "DIS",
             "ReasonCode": "00",
-            "MemoText": "New application - GSSA disapproved",
+            "MemoText": "New application - TIDS disapproved",
             "ReasonDesc": "NON COMPLIANCE TO CRITERIA",
             "Status": "0"
             }
@@ -1783,8 +1779,7 @@
                 ],
                 "DisplayFields": [
                   "Issue_Withdrawal_notification__c",
-                  "Issue_credit_note_withdrawal__c",
-                  "Release_FS_withdrawal__c",
+                  "Issue_credit_note_withdrawal__c"
                   "STEP4__c"
                 ],
                 "IsDependent": false
@@ -2100,7 +2095,6 @@
                 ],
                 "DisplayFields": [
                   "Issue_Withdrawal_notification__c",
-                  "Issue_credit_note_withdrawal__c",
                   "STEP4__c"
                 ],
                 "IsDependent": false
@@ -2273,11 +2267,7 @@
         {
           "Name": "STEP1",
           "Required": [],
-          "Actions": [{
-            "FunctionName": "generateIataCode",
-            "ActionLabel": "AMS_OSCAR_Action1",
-            "args": ["agencyid", "accreditationid", "oscarid"]
-        }],
+          "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
