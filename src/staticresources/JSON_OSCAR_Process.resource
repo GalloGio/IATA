@@ -1779,7 +1779,7 @@
                 ],
                 "DisplayFields": [
                   "Issue_Withdrawal_notification__c",
-                  "Issue_credit_note_withdrawal__c"
+                  "Issue_credit_note_withdrawal__c",
                   "STEP4__c"
                 ],
                 "IsDependent": false

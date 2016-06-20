@@ -63591,6 +63591,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <searchFilterFields>Location_Type__c</searchFilterFields>
         <searchFilterFields>Category__c</searchFilterFields>
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
+        <searchFilterFields>ACCOUNT.RECORDTYPE</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.INDUSTRY</searchResultsAdditionalFields>
