@@ -1,5 +1,11 @@
 public class AMS_AgencyAChangeCodeHandler {
-	public static boolean firstRun;
+	public static boolean firstRun{
+		get{
+			if(firstRun == null) firstRun = true;
+			return firstRun;
+		}
+		set;
+	}
 	 
 	public static void handleAfterInsert(List<Agency_Applied_Change_code__c> aacc) {
 		verifyActiveAACCuniqueness(aacc);
