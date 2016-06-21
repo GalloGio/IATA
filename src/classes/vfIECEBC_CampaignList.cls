@@ -1,6 +1,9 @@
 public class vfIECEBC_CampaignList {
     public Boolean isLimitedComponent {
-        get;
+        get {
+            if (isLimitedComponent == null) isLimitedComponent = false;
+            return isLimitedComponent;
+        }
         set {
             isLimitedComponent = value;
             if (value == true) CAMPAIGNS_PER_PAGE = 3;
@@ -37,15 +40,15 @@ public class vfIECEBC_CampaignList {
     public PageReference cancel() {
         if (selectedCampaign.Status__c == 'PENDING_APPROVAL') {
             // RECALL
-            ProcessInstanceWorkitem piwi = [SELECT Id,Actor.Name,ElapsedTimeInHours,OriginalActor.Name,ProcessInstanceId FROM ProcessInstanceWorkitem Where ProcessInstance.Status = 'Pending' AND ProcessInstance.TargetObjectId = :selectedCampaign.Id LIMIT 1];
+            List<ProcessInstanceWorkitem> piwis = [SELECT Id,Actor.Name,ElapsedTimeInHours,OriginalActor.Name,ProcessInstanceId FROM ProcessInstanceWorkitem Where ProcessInstance.Status = 'Pending' AND ProcessInstance.TargetObjectId = :selectedCampaign.Id LIMIT 1];
+            ProcessInstanceWorkitem piwi = piwis[0];
             System.debug(piwi);
             
             Approval.ProcessWorkitemRequest req = new Approval.ProcessWorkitemRequest();
             req.setAction('Removed');
-            req.setWorkitemId(piwi.Id);
+            req.setWorkitemId(piwi.Id); 
             System.debug(req);
             Approval.ProcessResult result =  Approval.process(req);
-            
         } else {
             selectedCampaign.Status__c = 'DRAFT';
             update selectedCampaign;

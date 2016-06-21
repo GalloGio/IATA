@@ -142,6 +142,22 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Exact_Target_Campaign_Id__c</fullName>
+        <description>Exact Target Campaign Record Id. 
+The value is determined by ExactTarget, and this is is only populated once a campaign is uploaded to ExactTarget
+Actual maximum length is unknown, so we use 18 char to make it safe.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Exact Target Campaign Record Id. 
+The value is determined by ExactTarget, and this is is only populated once a campaign is uploaded to ExactTarget</inlineHelpText>
+        <label>Exact Target Campaign Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>From_Name__c</fullName>
         <description>The Email Sender Name</description>
         <externalId>false</externalId>
@@ -230,7 +246,7 @@
         <fullName>Is_Step3_Valid__c</fullName>
         <description>Verify if the Step 3 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step2_Valid__c || (Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c))</formula>
+        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 3 is valid and meet the validation.</inlineHelpText>
         <label>Is Step3 Valid</label>
@@ -254,7 +270,7 @@
         <fullName>Is_Step4_Valid__c</fullName>
         <description>Verify if the Step 4 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>true || (Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c))</formula>
+        <formula>Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 4 is valid and meet the validation.</inlineHelpText>
         <label>Is Step4 Valid</label>

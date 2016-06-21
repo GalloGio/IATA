@@ -35,6 +35,10 @@
                 <behavior>Edit</behavior>
                 <field>IATA_Codes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Global_Filter__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

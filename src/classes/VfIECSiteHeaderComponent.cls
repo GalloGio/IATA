@@ -7,19 +7,19 @@ public without sharing class VfIECSiteHeaderComponent {
 	public String sProdMDP		{get; set;}
 	public String sProdGSS 		{get; set;}
 	//public String sProdCACWeb 	{get; set;}
-	//public String sProdEBro 	{get; set;}
+	public String sProdEBro 	{get; set;}
 	
 	public Boolean bAvailCACPro 	{get; set;}
 	public Boolean bAvailGAD		{get; set;}
 	public Boolean bAvailMDP		{get; set;}
 	public Boolean bAvailGSS 		{get; set;}
 	//public Boolean bAvailCACWeb 	{get; set;}
-	//public Boolean bAvailEBro 		{get; set;}
+	public Boolean bAvailEBro 		{get; set;}
 
 	public Decimal shoppingCartTotalBeforeTax {get; private set;}
 	public Decimal shoppingCartTax {get; private set;}
 	public Decimal shoppingCartTotal {get; private set;}
-	
+ 	
 	public String sContactEmail { get { return IEC_Settings__c.getOrgDefaults().IEC_Contact_Us_Email__c; } }
 	public String sContactSubject { get { return IEC_Settings__c.getOrgDefaults().IEC_Contact_Us_Subject__c; } }
 	
@@ -40,7 +40,7 @@ public without sharing class VfIECSiteHeaderComponent {
         sProdMDP 	= IEC_Settings__c.getOrgDefaults().Prod_MDP__c;
         sProdGSS 	= IEC_Settings__c.getOrgDefaults().Prod_GSS__c;
         //sProdCACWeb = IEC_Settings__c.getOrgDefaults().Prod_CACWeb__c;
-        //sProdEBro 	= IEC_Settings__c.getOrgDefaults().Prod_EBro__c;
+        sProdEBro 	= IEC_Settings__c.getOrgDefaults().Prod_EBro__c;
     }
 	
 	/**
@@ -57,7 +57,7 @@ public without sharing class VfIECSiteHeaderComponent {
 					, IECConstants.ProductCategory_SF_MDP
 					, IECConstants.ProductCategory_SF_GSS
 					//, IECConstants.ProductCategory_SF_CACWEB
-					//, IECConstants.ProductCategory_SF_EBROADCAST
+					, IECConstants.ProductCategory_SF_EBROADCAST
 				});
 
 			bAvailCACPro = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_CACPRO);
@@ -65,7 +65,7 @@ public without sharing class VfIECSiteHeaderComponent {
 			bAvailMDP = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_MDP);
 			bAvailGSS = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_GSS);
 			//bAvailCACWeb = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_CACWEB);
-			//bAvailEBro = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_EBROADCAST);
+			bAvailEBro = mapProductCategoryAvailable.get(IECConstants.ProductCategory_SF_EBROADCAST);
 
 			shoppingCartTotalBeforeTax = 0.0;
 

@@ -10,13 +10,15 @@ public class IECEBC_Utility {
                 Field_Name__c,
                 Field_Operator__c,
                 Field_Value__c,
-                EBC_Application_Filter__r.Search_Level__c
+                EBC_Application_Filter__r.Search_Level__c,
+                EBC_Application_Filter__r.Filter_RelatedList__c,
+                EBC_Application_Filter__r.Filter_RelatedList_Field__c
                 From EBC_Customer_Filters__r
             )
             FROM EBC_Master_Filter__c
             WHERE Id = :masterFilterId
         ];
-        
+         
         return getSOQLFromMasterFilter(columns, masterFilter); 
     }
     public static String getSOQLFromMasterFilter(List<String> columns, EBC_Master_Filter__c masterFilter) {
@@ -35,12 +37,13 @@ public class IECEBC_Utility {
             
             String fieldName = cf.Field_Name__c;
             String searchLevel = cf.EBC_Application_Filter__r.Search_Level__c;
-            if (cf.EBC_Application_Filter__r == null) {
-                EBC_Application_Filter__c af = [Select Id, Filter_Field__c, Search_Level__c From EBC_Application_Filter__c Where Id = :cf.EBC_Application_Filter__c];
+            EBC_Application_Filter__c af = cf.EBC_Application_Filter__r;
+            if (af == null) {
+                af = [Select Id, Filter_Field__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Id = :cf.EBC_Application_Filter__c];
                 fieldName = af.Filter_Field__c;
                 searchLevel = af.Search_Level__c;
             } else if (cf.EBC_Application_Filter__c == null) {
-                EBC_Application_Filter__c af = [Select Id, Filter_Field__c, Search_Level__c From EBC_Application_Filter__c Where Developer_Name__c = :cf.EBC_Application_Filter__r.Developer_Name__c];
+                af = [Select Id, Filter_Field__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Developer_Name__c = :cf.EBC_Application_Filter__r.Developer_Name__c];
                 fieldName = af.Filter_Field__c;
                 searchLevel = af.Search_Level__c;
             }
@@ -52,8 +55,16 @@ public class IECEBC_Utility {
             
             String filter = fieldName + ' ' + cf.Field_Operator__c + ' ' + filterValue;
             
+            if (af.Filter_RelatedList__c != null) {
+                filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
+            }
+            
             if (searchLevel == 'Geo-Selection') {
-                queryGeoFilters.add(filter);
+                if (masterFilter.Audience__c == 'Agent') { 
+                	queryGeoFilters.add('GDP_Products_Account_View__c  in (Select Id From GDP_Products_Account_View__c Where ' + filter + ')');
+                } else {
+                	queryGeoFilters.add(filter);
+                }
             } else {
                 queryRefinementFilters.add(filter);
             }
@@ -62,7 +73,7 @@ public class IECEBC_Utility {
         System.debug(masterFilter);
         
         String query = 'Select ' + String.join(queryFields, ', ') + ' ';
-        query += 'From ' + (masterFilter.Audience__c == 'Agency' ? 'GDP_Products_Account_View__c' : 'TBD') + ' ';
+        query += 'From ' + (masterFilter.Audience__c == 'Agency' ? 'GDP_Products_Account_View__c' : 'ID_Card__c') + ' ';
         
         String queryWhereClause = '';
         if (masterFilter.Audience__c == 'Custom') {

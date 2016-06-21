@@ -104,12 +104,19 @@
             <apex:repeat value="{!campaigns}" var="c">
                 campaigns['{!c.Id}'] = {
                     Id: '{!c.Id}',
-                    Name: '{!c.Name}',
+                    Name: '{!JSENCODE(c.Name)}',
                     EBC_Design__c: '{!c.EBC_Design__c}'
                 }
             </apex:repeat>
         </script>
     </apex:outputPanel>
+    
+    
+    <apex:outputText rendered="{!IF(CampaignsCount > 0, false, true)}">
+        <div class="action-box">
+            <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
+        </div>
+    </apex:outputText>
     
 	<div class="modal-container is-hidden" id="js-modal">
 		<div class="overlay"></div>

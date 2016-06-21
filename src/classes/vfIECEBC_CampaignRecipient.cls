@@ -15,7 +15,7 @@ public class vfIECEBC_CampaignRecipient {
     }
     
     public List<SelectOption> getMasterFilters() {
-        List<EBC_Master_Filter__c> filters = [Select Id, Name, Number_of_Recipients__c, Audience__c From EBC_Master_Filter__c Where Billing_Account__c = :vfIECEBC.billingAccount.Id];
+        List<EBC_Master_Filter__c> filters = [Select Id, Name, Number_of_Recipients__c, Audience__c From EBC_Master_Filter__c Where Billing_Account__c = :vfIECEBC.billingAccount.Id AND Is_Global_Filter__c = false]; 
         
         List<SelectOption> options = new List<SelectOption>();
         for (EBC_Master_Filter__c filter : filters) {
@@ -140,7 +140,7 @@ public class vfIECEBC_CampaignRecipient {
     // New List - Customer Filters
     public Map<Id, EBC_Application_Filter__c> allAvailableApplicationFilters {
         get {
-        	if (allAvailableApplicationFilters == null) allAvailableApplicationFilters = new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c From EBC_Application_Filter__c Where Audience__c = :newFilter.Audience__c]);
+        	if (allAvailableApplicationFilters == null) allAvailableApplicationFilters = new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Audience__c = :newFilter.Audience__c]);
 
             return allAvailableApplicationFilters;
         }
@@ -155,7 +155,7 @@ public class vfIECEBC_CampaignRecipient {
                     if (af.Data_Type__c != 'Picklist') continue;
                     if (af.Data_Source_Object__c == null || af.Data_Source_Value_Field__c == null) continue;
                     
-                    String soql = 'SELECT Id, ' + af.Data_Source_Value_Field__c + ' FROM ' + af.Data_Source_Object__c + (af.Data_Source_Where_Clause__c != null ? ' WHERE ' + af.Data_Source_Where_Clause__c : '');
+                    String soql = 'SELECT ' + (af.Data_Source_Value_Field__c.toLowerCase() != 'id' ? 'Id, ' : '') + af.Data_Source_Value_Field__c + ' FROM ' + af.Data_Source_Object__c + (af.Data_Source_Where_Clause__c != null ? ' WHERE ' + af.Data_Source_Where_Clause__c : '');
                     List<sObject> results = Database.query(soql);
                     
                     List<SelectOption> options = new List<SelectOption>();
@@ -174,9 +174,18 @@ public class vfIECEBC_CampaignRecipient {
         set;
     }
     // New List - Geo Customer Filters
-    public Map<String, List<EBC_Customer_Filter__c>> geoFilterPresets {
+    public Map<Id, EBC_Master_Filter__c> geoFilterPresets {
         get {
             if (geoFilterPresets == null) {
+                geoFilterPresets = new Map<Id, EBC_Master_Filter__c>([
+                    Select
+                    	Id,
+                    	Name,
+                    	(Select Id, EBC_Application_Filter__c, EBC_Application_Filter__r.Filter_RelatedList__c, Field_Operator__c, Field_Value__c From EBC_Customer_Filters__r)
+                    From EBC_Master_Filter__c
+                    Where Is_Global_Filter__c = true
+                ]);
+                /*
                 geoFilterPresets = new Map<String, List<EBC_Customer_Filter__c>>{
                     'The Americas' => new List<EBC_Customer_Filter__c>{
                         new EBC_Customer_Filter__c(
@@ -201,6 +210,7 @@ public class vfIECEBC_CampaignRecipient {
                     },
                     'Worldwide' => new List<EBC_Customer_Filter__c>()
                 };
+*/
             }
             
             return geoFilterPresets;
@@ -212,10 +222,10 @@ public class vfIECEBC_CampaignRecipient {
         set {
             geoFilterPreset = value;
               
-            /*if (value != 'custom-filter') {
-                geoFilters = null;
-            }*/
-            geoFilters = geoFilterPresets.get(value);
+            if (value != 'custom-filter') {
+                geoFilters = geoFilterPresets.get(value).EBC_Customer_Filters__r.deepClone(false, false, false);
+            }
+            
             System.debug(JSON.serialize(geoFilters));
         }
     }

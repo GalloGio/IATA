@@ -176,6 +176,30 @@ Dedicated to the eBroadcast application.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Filter_RelatedList_Field__c</fullName>
+        <description>This field will specify the related list relation field name to search in relation to the filter.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will specify the related list relation field name to search in relation to the filter.</inlineHelpText>
+        <label>Filter Related List Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Filter_RelatedList__c</fullName>
+        <description>This field will specify the related list name to search in relation to the filter.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will specify the related list name to search in relation to the filter.</inlineHelpText>
+        <label>Filter Related List</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Filter_Value__c</fullName>
         <description>This field will record the value that the eBroadcast application will use the retrieve the end-user selectable values.</description>
         <externalId>false</externalId>
@@ -215,6 +239,9 @@ Dedicated to the eBroadcast application.</description>
         <columns>Filter_Description__c</columns>
         <columns>Data_Type__c</columns>
         <columns>Data_Source_Object__c</columns>
+        <columns>Data_Source_Where_Clause__c</columns>
+        <columns>Filter_RelatedList__c</columns>
+        <columns>Filter_RelatedList_Field__c</columns>
         <columns>Filter_Value__c</columns>
         <columns>Filter_Field__c</columns>
         <columns>Data_Source_Value_Field__c</columns>

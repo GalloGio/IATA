@@ -126,6 +126,16 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Is_Global_Filter__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is a global filter that can be used by any users (like pre-made geo filters)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is a global filter that can be used by any users (like pre-made geo filters)</inlineHelpText>
+        <label>Is Global Filter</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Number_of_Recipients__c</fullName>
         <description>Number of recipients returned by the query using the filters selected by the customer</description>
         <externalId>false</externalId>
