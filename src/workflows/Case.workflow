@@ -1260,6 +1260,7 @@
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_DP01_KAM_case_created_assign</fullName>
+        <ccEmails>madsceacc@iata.org</ccEmails>
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
@@ -1271,15 +1272,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gilj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>iriartej@iata.org</recipient>
+            <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1287,35 +1280,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinyuks@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ogandoi@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sanchezc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sanchoj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>schuchardm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
