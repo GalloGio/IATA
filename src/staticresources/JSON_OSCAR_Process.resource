@@ -1600,13 +1600,7 @@
         }],
         "Automations": [{
         "Status": "Passed",
-        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded",
-                    "ChangeCode": {
-                      "Name": "NEW",
-                      "ReasonCode": "21",
-                      "MemoText": "New application - TIDS in progress",
-                      "ReasonDesc": "NEW APPLICATION",
-                      "Status": "2"}
+        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
         }],
         "DisplayFields": [
         "STEP10__c"],
@@ -1925,14 +1919,7 @@
         }],
         "Automations": [{
         "Status": "Passed",
-        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded",
-                    "ChangeCode": {
-                      "Name": "NEW",
-                      "ReasonCode": "21",
-                      "MemoText": "New application - GSA in progress",
-                      "ReasonDesc": "NEW APPLICATION",
-                      "Status": "2"
-                    }
+        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
         }],
         "DisplayFields": [
         "STEP10__c"],
@@ -2174,15 +2161,7 @@
         "args": ["agencyid", "accreditationid", "oscarid"]
         }],
         "Automations": [{
-        "Status": "Passed",
-        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded",
-                    "ChangeCode": {
-                      "Name": "NEW",
-                      "ReasonCode": "21",
-                      "MemoText": "New application - GSSA in progress",
-                      "ReasonDesc": "NEW APPLICATION",
-                      "Status": "2"
-                    }
+        "Status": "Passed"
         }],
         "DisplayFields": [
         "STEP10__c"],
@@ -2474,14 +2453,7 @@
         }],
         "Automations": [{
         "Status": "Passed",
-        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded",
-                    "ChangeCode": {
-                      "Name": "NEW",
-                      "ReasonCode": "21",
-                      "MemoText": "New application - AHA in progress",
-                      "ReasonDesc": "NEW APPLICATION",
-                      "Status": "2"
-            }
+        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
         }],
         "DisplayFields": [
         "STEP10__c"],

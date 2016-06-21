@@ -90,7 +90,7 @@ public class AMS_AgencyAChangeCodeHandler {
 
 	public static void migrateFieldsFromStagingToAccount(List<Agency_Applied_Change_code__c> aacc){
 
-		// this method aaplies only to change codes that have an OSCAR filled. That OSCAR must be of record type NEW and have process of type NEW.HO.1.0, NEW.BR OR NEW.BR.ABROAD
+		// this method aaplies only to change codes that have an OSCAR filled. That OSCAR must be of record type NEW and have process of type AMS_Utils.oscarAMSProcesses
 		// when creating a change code of type FIN or DIS, it should copy the information from staging Area (AMS_Pax_Accreditation_Form__c) into Master Data (Account)
 
 		Id rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
@@ -108,7 +108,7 @@ public class AMS_AgencyAChangeCodeHandler {
 
 		//aacclist = [SELECT ID, OSCAR__c, OSCAR__r.Account__c , OSCAR__r.AMS_Online_Accreditation__c from Agency_Applied_Change_code__c where id in :aaccIds and OSCAR__r.RecordTypeId = :rtNew and OSCAR__r.Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD') ];
 
-		oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId = :rtNew and Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD')  ];
+		oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId = :rtNew and Process__c in :AMS_Utils.oscarAMSProcesses];
 
 		if(!oscarsToCopyData.isEmpty()){
 			AMS_Utils.copyDataToAccount(oscarsToCopyData);
