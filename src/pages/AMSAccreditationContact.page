@@ -297,11 +297,11 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-5" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Email__c.Label}">
-                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Email__c}" id="email"/>
+                                                                <apex:inputField required="true" html-class="slds-input inputPointer" value="{!s.ac.Email__c}" id="email"/>
                                                             </td>
                                                            
                                                            <td class="slds-size--1-of-5" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Phone__c.Label}">
-                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Phone__c}" id="businessPhone"/>
+                                                                <apex:inputField required="true" html-class="slds-input inputPointer" value="{!s.ac.Phone__c}" id="businessPhone"/>
                                                             </td>
                                                             
                                                            
