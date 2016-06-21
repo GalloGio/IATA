@@ -196,48 +196,6 @@ public class AMS_OscarCaseTriggerHelper {
 
     }
 
-    //only way to add a withdrawal is if there's already a irr approved.
-    public static void checkIrregularities() {
-        Map<Id, Decimal> irrAccounts = new Map<Id, Decimal>();
-        List<Case> IRRWDCases = new List<Case>();
-
-        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-
-        //checks for irregularities withdrawals
-        for(Case c : (List<Case>)Trigger.new){
-            Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
-            if(c.RecordTypeId == sidraRecTypeId){
-                if(c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Withdrawal_Approval_Rejection__c != 'Approved')){
-                    irrAccounts.put(c.AccountId, 0);
-                    IRRWDCases.add(c);
-                }
-            }
-        }
-
-        if(IRRWDCases.isEmpty()) return;
-
-        //get number of account irregularities
-        for(Account a : [SELECT Count_Accumulated_Irregularities__c FROM Account WHERE Id IN :irrAccounts.keySet()]) {
-            irrAccounts.put(a.Id, a.Count_Accumulated_Irregularities__c);
-        }
-
-        //get cases on the same insert list
-        for(Case c : (List<Case>)Trigger.new){
-            Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
-            if(irrAccounts.containsKey(c.AccountId) && c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved')){
-                if(c.IRR_Type__c == 'Single Irregularity') irrAccounts.put(c.AccountId, irrAccounts.get(c.AccountId) + 1);
-                if(c.IRR_Type__c == 'Double Irregularity') irrAccounts.put(c.AccountId, irrAccounts.get(c.AccountId) + 2);
-            }
-        }
-
-        //check if the irregularity wihdrawal may occur
-        for(Case c : IRRWDCases){
-            Decimal count = irrAccounts.get(c.AccountId);
-            if(count < 1) c.addError('This account has no irregularity to withdrawn');
-            irrAccounts.put(c.AccountId, count -1);
-        }
-    }
-
     public static Set<Id> caseIrregularityCreated{
         get{
             if(caseIrregularityCreated == null) caseIrregularityCreated = new Set<Id>();
@@ -257,8 +215,8 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c : (List<Case>)Trigger.new){
             Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
             if(c.RecordTypeId == sidraRecTypeId){
-                if(c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
                 if(c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Withdrawal_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRWDCases.add(c);
+                if(c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
             }
         }
 
@@ -280,7 +238,7 @@ public class AMS_OscarCaseTriggerHelper {
         irr.Operation__c = operation;
 
         irr.Irregularities_Points__c = 0;
-        if(c.IRR_Type__c == 'Single Irregularity' || operation == 'W') irr.Irregularities_Points__c = 1;
+        if(c.IRR_Type__c == 'Single Irregularity') irr.Irregularities_Points__c = 1;
         if(c.IRR_Type__c == 'Double Irregularity') irr.Irregularities_Points__c = 2;
 
         return irr;
