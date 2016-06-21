@@ -5,6 +5,7 @@
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
+    <customButtons>IDFS_Request_Operational_Improvement</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
@@ -439,13 +440,16 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
+        <fields>Case_Type__c</fields>
         <fields>CASES.SUBJECT</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>CaseArea__c</fields>
         <fields>CASES.CREATED_DATE</fields>
         <fields>CASES.CLOSED_DATE</fields>
         <fields>CASES.STATUS</fields>
         <fields>OWNER_NAME</fields>
         <relatedList>RelatedChildCaseList</relatedList>
+        <sortField>CASES.CREATED_DATE</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
