@@ -551,7 +551,7 @@
 		                                                    </td>
 		                                                    
 															<td class="slds-size--1-of-5" data-label="Financial Interest (%)">
-		                                                        <apex:inputText label="Account Financial Interest" maxlength="3" required="true" html-class="slds-input inputPointer" value="{!aw.financialInterest}" id="accountFI"/>
+		                                                        <apex:inputText label="Account Financial Interest" maxlength="5" required="true" html-class="slds-input inputPointer" value="{!aw.financialInterest}" id="accountFI"/>
 		                                                    </td>
 		                                                    
 		                                                    <td class="slds-size--1-of-5" data-label="Account">
