@@ -3,7 +3,7 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
     if(!AMS_TriggerExecutionManager.checkExecution(Agency_Applied_Change_code__c.getSObjectType(), 'AMS_AgencyAChangeCode')) { return; }
     
     //DTULLO: Prevent trigger from running more than once
-    if(AMS_AgencyAChangeCodeHandler.firstRun){
+    if(AMS_AgencyAChangeCodeHandler.firstRun == true){
     	AMS_AgencyAChangeCodeHandler.firstRun = false;
 	    if(Trigger.isBefore) {
 	        if(Trigger.isInsert){
