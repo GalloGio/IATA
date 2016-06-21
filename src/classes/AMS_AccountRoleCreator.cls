@@ -17,6 +17,12 @@
 public with sharing class AMS_AccountRoleCreator
 {
 	public static Set<String> aoaIdSet;
+
+	private static final String recordTypesPerson = createContactRecordTypes(new List<String>{'Person','Current_Owner'});
+	private static final String recordTypesCompany = createContactRecordTypes(new List<String>{'Company','Current_Company_Owner'});
+	
+	private static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
+	private static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
 	
 	// This funny looking method is a workaround to be able to use a variable (Set<Id>) in a dynamic query
 	public static List<AMS_Accreditation_Contact__c> retrieveACsDynamically(String soqlString, String setName)
@@ -52,11 +58,13 @@ public with sharing class AMS_AccountRoleCreator
     	Set<String> currentAcEmails = new Set<String>();
     	
     	String accountId;
-    	
+
     	String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
+        
         String query = 'select ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Person_AMS__r.Contact__c ';
-        query = query + ' from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c in :ABC and RecordTypeId = ';
-        query = query + '\''+AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')+'\'';
+        query = query + ' from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c in :ABC and RecordTypeId in ';
+        query = query + '(' + recordTypesPerson + ')';
+
         List<AMS_Accreditation_Contact__c> acList = retrieveACsDynamically(query, 'aoaIdSet');
 		
         if(acList.size() > 0)
@@ -459,6 +467,15 @@ public with sharing class AMS_AccountRoleCreator
    			update conListToUpdate;
    		}
     }
+
+    private static String createContactRecordTypes(List<String> types){
+    	String toReturn = '';
+
+    	for(String tp: types)
+    		toReturn += '\'' + AMS_Utils.getId('AMS_Accreditation_Contact__c', tp) + '\'' + ',';
+    
+    	return toReturn.removeEnd(',');
+    }
     
     private static List<Contact> verifyNoDuplicateIFAPcontactExists(List<Contact> conList)
     {
@@ -524,9 +541,11 @@ public with sharing class AMS_AccountRoleCreator
     	AMS_AccountRoleCreator.aoaIdSet = aoaIds;
 
     	String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
+
         String query = 'select ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Company__r.Id, Company__r.Name ';
-        query = query + ' from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c in :ABC and RecordTypeId = ';
-        query = query + '\''+AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')+'\'';
+        query = query + ' from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c in :ABC and RecordTypeId in ';
+        query = query + '(' + recordTypesCompany +')';
+
 		List<AMS_Accreditation_Contact__c> acList = retrieveACsDynamically(query, 'aoaIdSet');
 		
 		String accountId = '';
@@ -825,10 +844,10 @@ public with sharing class AMS_AccountRoleCreator
     	
     	String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
         String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Person_AMS__r.Contact__c, RecordType.DeveloperName ';
-        query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c IN :aoIds AND (RecordTypeId = ';
-        query = query + '\''+AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')+'\'';
-        query = query + ' OR RecordTypeId = ';
-        query = query + '\''+AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')+'\')';
+        query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c IN :aoIds AND (RecordTypeId in ';
+        query = query + '(' + recordTypesPerson +' ) ';
+        query = query + ' OR RecordTypeId in ';
+        query = query + '(' + recordTypesCompany+' ) ' + ')';
         
 
     	system.debug('DTULLO 826 --> Query: ' + Query);
@@ -848,15 +867,15 @@ public with sharing class AMS_AccountRoleCreator
  	        		
  	        		system.debug('DTULLO 840 --> ' + ac.RecordType.DeveloperName + ';accId: ' + accId + ';ac.Contact__c: ' + ac.Contact__c + ';ac.Person_AMS__c ' + ac.Person_AMS__c + ';ac.Company__c ' + ac.Company__c);
  	        		//DTULLO: Improvement: using recordtType DEVELOPERNAME rather then NAME...
-	        		if(ac.RecordType.DeveloperName=='Person' && ac.Contact__c != null){
+	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
 	        			system.debug('DTULLO XX1 --> Adding as person, contact not null');
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Contact__c = \''+ac.Contact__c+'\' AND Account__c = \''+accId+'\')';
 	        		}
-	        		else if(ac.RecordType.DeveloperName=='Person' && ac.Person_AMS__c != null){
+	        		else if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Person_AMS__c != null){
 	        			system.debug('DTULLO XX2 --> Adding as person, person not null');
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Person__c = \''+ac.Person_AMS__c+'\' AND Account__c = \''+accId+'\')';
 	        		}
-	        		else if(ac.RecordType.DeveloperName=='Company' && ac.Company__c != null){
+	        		else if(companyDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Company__c != null){
 	        			system.debug('DTULLO XX3 --> Adding as company, company not null');
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Owner_Account__c = \''+ac.Company__c+'\' AND Account__c = \''+accId+'\')';
 	        		}
@@ -886,8 +905,8 @@ public with sharing class AMS_AccountRoleCreator
 				Set<Id> myAccounts = aoMap.get(ac.AMS_Pax_Accreditation_Form__c);
 
     			if(myAccounts.contains(r.Account__c)){
-	    			if((ac.RecordType.DeveloperName=='Person' && r.Contact__c==ac.Contact__c && r.Person__c==ac.Person_AMS__c ) || 
-	    				(ac.RecordType.DeveloperName=='Company'  && r.Owner_Account__c==ac.Company__c)){
+	    			if((personDeveloperName.containsKey(ac.RecordType.DeveloperName) && r.Contact__c==ac.Contact__c && r.Person__c==ac.Person_AMS__c ) || 
+	    				(companyDeveloperName.containsKey(ac.RecordType.DeveloperName)  && r.Owner_Account__c==ac.Company__c)){
 		    			if(acToRoles.get(ac.Id)==null)
 		    				acToRoles.put(ac.Id, new List<AMS_Account_Role__c>());
 		    			acToRoles.get(ac.Id).add(r);
@@ -914,7 +933,7 @@ public with sharing class AMS_AccountRoleCreator
     	for(Id aoId : aoToAcList.keySet()){
      		for(AMS_Accreditation_Contact__c ac: aoToAcList.get(aoId)){
      			system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 3) check ac '+ac.First_name__c+' '+ ac.Last_name__c);
-				if( ac.RecordType.DeveloperName=='Person' &&
+				if( personDeveloperName.containsKey(ac.RecordType.DeveloperName) &&
 				   ((ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null) ||
 				   (ac.Person_AMS__c == null && ac.Contact__c == null))){
 		        	
@@ -926,7 +945,7 @@ public with sharing class AMS_AccountRoleCreator
 		        	if(ac.Person_AMS__c != null)
 		        		personsToContactEmail.put(ac.Person_AMS__c, temp.email);
 	        	
-	        	}else if(ac.RecordType.DeveloperName=='Person' &&
+	        	}else if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) &&
 	        		 ((ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null) ||
 				     (ac.Person_AMS__c == null && ac.Contact__c != null))){
 	        	
@@ -946,7 +965,7 @@ public with sharing class AMS_AccountRoleCreator
 
    		for(Id aoId : aoToAcList.keySet()){
      		for(AMS_Accreditation_Contact__c ac: aoToAcList.get(aoId)){
-     			if(ac.RecordType.developerName=='Person' && ac.Contact__c == null){
+     			if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c == null){
      				String myContactEmail = ac.Email__c;//personsToContactEmail.get(ac.Person_AMS__c);
      				Id myContactId = newContactsToInsert.get(myContactEmail).Id;
      				ac.Contact__c = myContactId;
