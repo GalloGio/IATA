@@ -53,7 +53,8 @@ var dyn_functions = {
                     	//sforce.connection.update(records);
                         bUpdate = true;
                     }else{
-                        sResult = '- Generate IATACode - Bypassed! \n\r';
+					
+                        sResult = '- IATA code already generated \n\r';
                     }
 
                     if (recordsFlag[0].Flag_IATACode_Formula__c == 'true' && recordsCC.length == 0)

@@ -1163,7 +1163,7 @@
     <startsWith>Vowel</startsWith>
     <validationRules>
         <fullName>No_IATA_Governance_Groups_if_not_member</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Block &quot;Participates in IATA Governance Group&quot; once the field IATA Member is &quot;No&quot;.</description>
         <errorConditionFormula>AND (
 

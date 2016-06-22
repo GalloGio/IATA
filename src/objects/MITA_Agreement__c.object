@@ -359,7 +359,7 @@
     </validationRules>
     <validationRules>
         <fullName>N2_No_agreements_for_non_MITA_account</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND(
  ISNEW(),
  ISPICKVAL(MITAorBIETA__c, &apos;MITA&apos;),
@@ -373,7 +373,7 @@
     </validationRules>
     <validationRules>
         <fullName>N3_BIETA_Agreement_type_not_enabled</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND(
  Active__c,
 
@@ -401,7 +401,7 @@
     </validationRules>
     <validationRules>
         <fullName>N3_MITA_Agreement_type_not_enabled</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>AND(
  Active__c,
  IF(CASE(TEXT(Agreement_type__c),
