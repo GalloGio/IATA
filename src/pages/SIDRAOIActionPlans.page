@@ -2,7 +2,6 @@
 	<style>
 		.fullLength {
 			width: 98%;
-			height: 17px;
 		}
 	</style>
 
@@ -16,8 +15,6 @@
 
 		<apex:PageMessages />
 
-		<apex:variable var="rowNum" value="{!1}" />
-
 		<apex:pageBlock >
 
 			<apex:pageBlockButtons location="top" >
@@ -30,21 +27,21 @@
 
 			<apex:pageBlockTable value="{! listOIActionPlans }" var="actionPlan" >
 
-					<apex:column headerValue="#" >
-						<apex:outputText value="{!rowNum}"/>
-						<apex:variable var="rowNum" value="{!rowNum + 1}"/>
-					</apex:column>
+				<apex:column headerValue="">
+					<apex:commandLink action="{!deleteLine}" onclick="return confirmDelete();"  value="Del" rendered="{! isEditMode }">
+						<apex:param name="actionPlanIdToDelete" value="{!actionPlan.Id}" assignTo="{!actionPlanIdToDelete}"/>
+					</apex:commandLink>
+<!-- 					<apex:outputLink value="/{!oi.Id}" rendered="{! NOT(isEditMode) }" >View</apex:outputLink> -->
+				</apex:column>
 
-					<apex:column headerValue="Actions" rendered="{! isEditMode }">
-						<apex:commandLink action="{!deleteLine}" onclick="return confirmDelete();"  value="Del" >
-							<apex:param name="actionPlanIdToDelete" value="{!actionPlan.Id}" assignTo="{!actionPlanIdToDelete}"/>
-						</apex:commandLink>
-						<!--<apex:outputLink value="/{!oi.Id}" rendered="{! NOT(isEditMode) }" >View</apex:outputLink> -->
+					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Name.label}" >
+						<apex:outputField value="{!actionPlan.Name}" rendered="{! NOT(isEditMode) }" />
+						<apex:inputField value="{!actionPlan.Name}" rendered="{! isEditMode }" />
 					</apex:column>
 
 					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Description__c.label}" >
 						<apex:outputField value="{!actionPlan.Description__c}" rendered="{! NOT(isEditMode) }" />
-						<apex:inputTextArea styleclass="fullLength" value="{!actionPlan.Description__c}" rendered="{! isEditMode }" />
+						<apex:inputText styleclass="fullLength" value="{!actionPlan.Description__c}" rendered="{! isEditMode }" />
 					</apex:column>
 
 					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Due_Date__c.label}" >
@@ -64,7 +61,7 @@
 
 					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Comment__c.label}" >
 						<apex:outputField value="{!actionPlan.Comment__c}" rendered="{! NOT(isEditMode) }" />
-						<apex:inputTextArea styleclass="fullLength" value="{!actionPlan.Comment__c}" rendered="{! isEditMode }" />
+						<apex:inputText styleclass="fullLength" value="{!actionPlan.Comment__c}" rendered="{! isEditMode }" />
 					</apex:column>
 
 					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Met_Due_Date__c.label}" >
