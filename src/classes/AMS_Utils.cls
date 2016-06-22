@@ -1151,6 +1151,26 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+public static String getChangeCodeMemoText(String process) {
+
+    String memoText = 'New application finalized';
+
+    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
+        memoText = 'New application - Head Office finalized';
+    else if (process == AMS_Utils.new_BR)
+        memoText = 'New application - Branch finalized';
+    else if (process == AMS_Utils.new_TIDS)
+        memoText = 'New application - TIDS finalized';
+    else if (process == AMS_Utils.new_SA)
+        memoText = 'New application - SA finalized';
+    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+        memoText = 'New application - GSA finalized';
+    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+        memoText = 'New application - AHA finalized';
+ 
+    return memoText;
+}
 
 
 // Converts a base64 string into a list of integers representing the encoded bytes
