@@ -3,23 +3,23 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
     if(!AMS_TriggerExecutionManager.checkExecution(Agency_Applied_Change_code__c.getSObjectType(), 'AMS_AgencyAChangeCode')) { return; }
     
     //DTULLO: Prevent trigger from running more than once
-    if(AMS_AgencyAChangeCodeHandler.firstRun == true){
-    	AMS_AgencyAChangeCodeHandler.firstRun = false;
-	    if(Trigger.isBefore) {
-	        if(Trigger.isInsert){
-	            System.debug('Entering handleBeforeInsert');
-	            AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
-	            System.debug('Finished handleBeforeInsert');
-	        }
-	    }
-	
-	    if(Trigger.isAfter) {
-	        if(Trigger.isUpdate)
-	            AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new);
-	        if(Trigger.isInsert)
-	            AMS_AgencyAChangeCodeHandler.handleAfterInsert(Trigger.new);
-	    }
-	    AMS_AgencyAChangeCodeHandler.firstRun = true;
+    if(AMS_AgencyAChangeCodeHandler.firstRun){
+        AMS_AgencyAChangeCodeHandler.firstRun = false;
+        if(Trigger.isBefore) {
+            if(Trigger.isInsert){
+                System.debug('Entering handleBeforeInsert');
+                AMS_AgencyAChangeCodeHandler.handleBeforeInsert(Trigger.new);
+                System.debug('Finished handleBeforeInsert');
+            }
+        }
+    
+        if(Trigger.isAfter) {
+            if(Trigger.isUpdate)
+                AMS_AgencyAChangeCodeHandler.handleAfterUpdate(Trigger.new);
+            if(Trigger.isInsert)
+                AMS_AgencyAChangeCodeHandler.handleAfterInsert(Trigger.new);
+        }
+        AMS_AgencyAChangeCodeHandler.firstRun = true;
     }
 
 
@@ -31,28 +31,28 @@ trigger AMS_AgencyAChangeCode on Agency_Applied_Change_code__c (before insert, a
     for(Agency_Applied_Change_code__c aacc : Trigger.New){
         
         if(aacc.Active__c){
-       		
-       		agencyIds.add(aacc.Account__c);
+            
+            agencyIds.add(aacc.Account__c);
         }
     }
 
-	if(agencyIds.size() > 0){
+    if(agencyIds.size() > 0){
 
-		List<Agency_Applied_Change_code__c> elementsToUpdate = new List<Agency_Applied_Change_code__c>();
-		for(Agency_Applied_Change_code__c aacc : [select id, Active__c , Account__c from Agency_Applied_Change_code__c where Active__c = true AND Account__c IN :agencyIds]){
-	
-	    	if(Trigger.newMap.containsKey(aacc.id) == false) {
-	    		
-	    		aacc.Active__c = false;
-	    		elementsToUpdate.add(aacc);
-	    	}	
-		}
-	
-		if(elementsToUpdate.size() > 0){
-			
-			update elementsToUpdate;
-		}
-	}
+        List<Agency_Applied_Change_code__c> elementsToUpdate = new List<Agency_Applied_Change_code__c>();
+        for(Agency_Applied_Change_code__c aacc : [select id, Active__c , Account__c from Agency_Applied_Change_code__c where Active__c = true AND Account__c IN :agencyIds]){
+    
+            if(Trigger.newMap.containsKey(aacc.id) == false) {
+                
+                aacc.Active__c = false;
+                elementsToUpdate.add(aacc);
+            }   
+        }
+    
+        if(elementsToUpdate.size() > 0){
+            
+            update elementsToUpdate;
+        }
+    }
     */
 
 /*
