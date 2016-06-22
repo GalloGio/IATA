@@ -224,12 +224,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
-                if (updatedOscar.Process__c == AMS_Utils.new_HO || updatedOscar.Process__c == AMS_Utils.new_BR_ABROAD)
-                    changeCode.memoText = 'New application - Head Office finalized';
-                else if (updatedOscar.Process__c == AMS_Utils.new_SA)
-                    changeCode.memoText = 'New application - SA finalized';
-                else
-                    changeCode.memoText = 'New application - Branch finalized';
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c);
                 changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
                 changeCode.status  = '9';
 

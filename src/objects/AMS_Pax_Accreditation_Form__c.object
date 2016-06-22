@@ -162,6 +162,11 @@
     <fieldSets>
         <fullName>AMS_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>LocationType</label>
     </fieldSets>
     <fieldSets>
@@ -782,7 +787,7 @@
         <fullName>Agency_Codes_Concerned__c</fullName>
         <description>List of Agency IATA Codes for all Accounts involved in a Notice of Change</description>
         <externalId>false</externalId>
-        <label>Agency Codes Concerned</label>
+        <label>Branch Agency Codes affected</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -967,7 +972,7 @@
     <fields>
         <fullName>Branch_Office_Email__c</fullName>
         <externalId>false</externalId>
-        <label>Email</label>
+        <label>Office Email</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -996,7 +1001,7 @@
     <fields>
         <fullName>Branch_Office_Phone_National__c</fullName>
         <externalId>false</externalId>
-        <label>* Phone</label>
+        <label>* Office Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1005,7 +1010,7 @@
     <fields>
         <fullName>Branch_Office_Phone__c</fullName>
         <externalId>false</externalId>
-        <label>* Phone</label>
+        <label>* Office Phone</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1271,6 +1276,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Current_VAT_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>SAAM_Case__r.Account_Concerned__r.VAT_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current VAT Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>DG_Air_Freight_Charges__c</fullName>
         <externalId>false</externalId>
         <label>* DG Air Freight Charges</label>
@@ -1514,6 +1531,20 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>HO_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to HO for the Online application (not necessarily the account on the case)</inlineHelpText>
+        <label>HO Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (HO Account)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>HO_Billing_Address__c</fullName>
@@ -3148,6 +3179,29 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Map_Company_Type_to_Legal_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( HO_Account__r.Company_Type__c ,
+&apos;A&apos;, &apos;Association&apos;,
+&apos;C&apos;, &apos;Corporation&apos;,
+&apos;E&apos;, &apos;Government Owned Enterprise&apos;,
+&apos;L&apos;, &apos;Limited Company&apos;,
+&apos;O&apos;, &apos;Other&apos;,
+&apos;P&apos;, &apos;Partnership&apos;,
+&apos;R&apos;, &apos;Limited Partnership&apos;,
+&apos;T&apos;, &apos;Trust Company&apos;,
+&apos;V&apos;, &apos;Co-operative&apos;,
+&apos;Sole Proprietorship&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Map Company Type of HO to Legal Status</inlineHelpText>
+        <label>Current Legal Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>MobileNational__c</fullName>
         <externalId>false</externalId>
         <label>MobileNational</label>
@@ -3339,7 +3393,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingCity</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous City</label>
+        <label>Current City</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3351,7 +3405,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Email__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Email</label>
+        <label>Current Office Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3363,7 +3417,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Fax</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous FAX</label>
+        <label>Current FAX</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3373,9 +3427,9 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
     <fields>
         <fullName>Previous_Legal_Registered_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>SAAM_Case__r.Account_Concerned__r.Legal_name__c</formula>
+        <formula>SAAM_Case__r.Account_Concerned__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Legal / Registered Name</label>
+        <label>Current Legal / Registered Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3399,7 +3453,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Mobile__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Mobile</label>
+        <label>Current Mobile</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3423,7 +3477,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Phone</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Phone</label>
+        <label>Current Office Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3435,7 +3489,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingPostalCode</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Postal code</label>
+        <label>Current Postal code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3447,7 +3501,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingState</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous State/Province</label>
+        <label>Current State/Province</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3459,7 +3513,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.BillingStreet</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Street Name &amp; Number</label>
+        <label>Current Street Name &amp; Number</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3471,7 +3525,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.TradeName__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous Trade Name</label>
+        <label>Current Trade Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3483,7 +3537,7 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <externalId>false</externalId>
         <formula>SAAM_Case__r.Account_Concerned__r.Fax</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Previous fax</label>
+        <label>Current FAX</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -11219,6 +11273,77 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Operation_Type__c</picklist>
             <values>
                 <fullName>Cargo_Agent</fullName>
@@ -14211,6 +14336,77 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

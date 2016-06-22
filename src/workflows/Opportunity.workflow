@@ -134,10 +134,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hubblem@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>itania@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -158,15 +154,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>seifeddinh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>siponenp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>wangw@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>webbj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
