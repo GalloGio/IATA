@@ -73,6 +73,14 @@ var dyn_functions = {
                         sResult = sResult + '- Move Data To Account - ByPassed! \n\r';
                     }
                
+                    if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
+                            && records[0].Flag_Data_to_SAPECC__c == 'false') {
+                        
+                        records[0].Flag_Data_to_SAPECC__c = 'true';
+                        records[0].STEP8__c = 'In Progress';
+                        
+                    }
+
                     if(bUpdate){
                         sforce.connection.update(records);
                     }
