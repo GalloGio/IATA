@@ -3593,6 +3593,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
                 <fullName>10 days</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -4945,6 +4949,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5622,6 +5633,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6307,6 +6325,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -6984,6 +7009,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7670,6 +7702,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -8348,6 +8387,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9034,6 +9080,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9712,6 +9765,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10443,6 +10503,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11227,6 +11291,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -11904,6 +11975,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12635,6 +12713,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13759,6 +13841,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -14486,6 +14575,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15266,6 +15359,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
