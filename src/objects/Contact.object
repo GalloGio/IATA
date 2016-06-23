@@ -26357,28 +26357,24 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         </picklistValues>
     </recordTypes>
     <searchLayouts>
-        <customTabListAdditionalFields>FULL_NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.SITE</customTabListAdditionalFields>
-        <customTabListAdditionalFields>CONTACT.EMAIL</customTabListAdditionalFields>
-        <customTabListAdditionalFields>CONTACT.PHONE1</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airline_Contact_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Financial_Assessment_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.SALUTATION</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
+        <lookupFilterFields>00Nw0000008j6ci</lookupFilterFields>
+        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
         <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
         <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
-        <lookupFilterFields>00N20000003Jdqe</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
