@@ -122,6 +122,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AMS_Generate_COR_change_code__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If selected, once the sanity checks will be set as passed, a COR change code will be generated for each agency involved</inlineHelpText>
+        <label>Generate COR change code</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>AMS_Online_Accreditation__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
