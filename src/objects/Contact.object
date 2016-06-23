@@ -3485,7 +3485,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7702,7 +7702,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7714,7 +7714,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CÃ´te d&apos;Ivoire</fullName>
+                <fullName>Côte d&apos;Ivoire</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -8198,11 +8198,11 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>RÃ©union</fullName>
+                <fullName>Réunion</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Saint BarthÃ©lemy</fullName>
+                <fullName>Saint Barthélemy</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -19412,7 +19412,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21772,7 +21772,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -24258,7 +24258,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26357,6 +26357,12 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         </picklistValues>
     </recordTypes>
     <searchLayouts>
+        <customTabListAdditionalFields>FULL_NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.SITE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CONTACT.EMAIL</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CONTACT.PHONE1</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
@@ -26826,7 +26832,7 @@ myuser={!User.Id}</url>
     <webLinks>
         <fullName>Contact_exception_report</fullName>
         <availability>online</availability>
-        <description>Contacts that doesnâ€™t have any cases since 2006</description>
+        <description>Contacts that doesn’t have any cases since 2006</description>
         <displayType>link</displayType>
         <hasMenubar>false</hasMenubar>
         <hasScrollbars>true</hasScrollbars>
