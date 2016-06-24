@@ -116,15 +116,16 @@ public class AMS_AgencyAChangeCodeHandler {
 
     public static void migrateFieldsFromStagingToAccount(List<Agency_Applied_Change_code__c> aacc){
 
-        // this method aaplies only to change codes that have an OSCAR filled. That OSCAR must be of record type NEW and have process of type AMS_Utils.oscarAMSProcesses
+        // this method aaplies only to change codes that have an OSCAR filled. That OSCAR must be of record type NEW and have process of type NEW.HO.1.0, NEW.BR OR NEW.BR.ABROAD
         // when creating a change code of type FIN or DIS, it should copy the information from staging Area (AMS_Pax_Accreditation_Form__c) into Master Data (Account)
 
         Id rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        Id rtCorr = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
 
         Set<Id> oscarIds = new Set<Id>();
 
         for(Agency_Applied_Change_code__c code: aacc){
-            if(code.OSCAR__c != null && ( code.change_code__c == 'FIN' || code.change_code__c == 'DIS')){
+            if(code.OSCAR__c != null && ( code.change_code__c == 'FIN' || code.change_code__c == 'DIS' || code.change_code__c == 'COR')){
                 oscarIds.add(code.OSCAR__c);
             }
         }
@@ -134,7 +135,10 @@ public class AMS_AgencyAChangeCodeHandler {
 
         //aacclist = [SELECT ID, OSCAR__c, OSCAR__r.Account__c , OSCAR__r.AMS_Online_Accreditation__c from Agency_Applied_Change_code__c where id in :aaccIds and OSCAR__r.RecordTypeId = :rtNew and OSCAR__r.Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD') ];
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId = :rtNew and Process__c in :AMS_Utils.oscarAMSProcesses];
+        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId 
+                            FROM AMS_OSCAR__C 
+                            WHERE Id in :oscarIds and (RecordTypeId = :rtNew OR RecordTypeId =:rtCorr) 
+                                    and Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD', 'CORRECTION.1.0')  ];
 
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
