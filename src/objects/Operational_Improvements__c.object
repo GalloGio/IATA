@@ -53,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -2463,6 +2464,31 @@
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>open</fullName>
+        <columns>NAME</columns>
+        <columns>Affected_Process__c</columns>
+        <columns>OI_Status_auto__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Open_Date__c</columns>
+        <columns>OI_Type__c</columns>
+        <columns>Region__c</columns>
+        <columns>OI_effective_age__c</columns>
+        <columns>Status_Image__c</columns>
+        <columns>Closest_Action_Plan_due_date__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Date_Time_Closed__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OI_Status_auto__c</field>
+            <operation>notEqual</operation>
+            <value>Closed</value>
+        </filters>
+        <label>Open</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>OI-{0000}</displayFormat>
