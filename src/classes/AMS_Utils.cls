@@ -79,9 +79,10 @@ public without sharing class AMS_Utils {
     public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
     public static final String new_SA           = 'NEW.SA.1.0'      ;
 
-    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
 
     public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
+
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -107,6 +108,8 @@ public without sharing class AMS_Utils {
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
+    public static final Set<String> LocationClassCARGO = new Set<String>{'C'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P'};
 
     static {
         refreshCache();
@@ -1151,26 +1154,6 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
-//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
-public static String getChangeCodeMemoText(String process) {
-
-    String memoText = 'New application finalized';
-
-    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
-        memoText = 'New application - Head Office finalized';
-    else if (process == AMS_Utils.new_BR)
-        memoText = 'New application - Branch finalized';
-    else if (process == AMS_Utils.new_TIDS)
-        memoText = 'New application - TIDS finalized';
-    else if (process == AMS_Utils.new_SA)
-        memoText = 'New application - SA finalized';
-    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
-        memoText = 'New application - GSA finalized';
-    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
-        memoText = 'New application - AHA finalized';
- 
-    return memoText;
-}
 
 
 // Converts a base64 string into a list of integers representing the encoded bytes
