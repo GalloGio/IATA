@@ -182,6 +182,22 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>DataLoader_All_Errors</fullName>
+        <columns>NAME</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>IATACODE__c</columns>
+        <columns>Source__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source__c</field>
+            <operation>startsWith</operation>
+            <value>DataLoader</value>
+        </filters>
+        <label>DataLoader - All Errors</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Errors_GSS_CACWEB</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
