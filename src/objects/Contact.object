@@ -26366,19 +26366,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airline_Contact_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Financial_Assessment_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.SALUTATION</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
-        <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
-        <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
-        <lookupFilterFields>00N20000003Jdqe</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
@@ -26387,15 +26385,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE4</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE5</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE6</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00N20000000pQOX</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00N20000000pQOZ</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwe</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwf</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwg</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaT</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaU</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaV</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaW</lookupPhoneDialogsAdditionalFields>
         <searchFilterFields>CONTACT.FIRST_NAME</searchFilterFields>
         <searchFilterFields>CONTACT.LAST_NAME</searchFilterFields>
         <searchFilterFields>ACCOUNT.NAME</searchFilterFields>
