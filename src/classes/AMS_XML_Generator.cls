@@ -13,6 +13,7 @@ public with sharing class AMS_XML_Generator {
 
     public Map<Id, AMS_Agency_Updates__c> mAg_VS_AgUpdate;
     public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCode;
+    public Map<Id, Agency_Applied_Change_code__c> mAg_VS_AgChangeCodeFIN;
     public Map<Id, String> mAg_VS_AgArea;
     public Map<Id, String> mAg_VS_AgSiteType;
     public Map<Id, Id> mAg_VS_ParentAg;
@@ -20,7 +21,9 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, Id> mAgAirport_VS_Airport;
     public Map<Id, Id> mAgAffiliation_VS_Affiliation;
     public Map<Id, Id> mAg_VS_Person;
+    public Map<Id, Id> mAg_VS_Contact;
     public Map<Id, Id> mEmp_VS_Person;
+    public Map<Id, Id> mEmp_VS_Contact;
     //public Map<Id, AMS_Agency__c> mAg_VS_Agency; - #AMSFTS
     public Map<Id, String> mAg_VS_Segment;
     //public Map<Id, List<AMS_Employee__c>> mAg_VS_Employees; - #AMSFTS
@@ -68,6 +71,10 @@ public with sharing class AMS_XML_Generator {
     public List<AMS_Affiliation__c> lAffiliation;
     public List<AMS_Fields_Translation__c> lFieldsTranslation;
     public List<AMS_Agency_Segment__c> lAgSegment;
+    public List<Agency_Applied_Change_code__c> lAgAppChangeCode;
+    
+
+    public List<String> orderedAgencyIds;
     
     
     Boolean bSetFields = False;
@@ -280,6 +287,7 @@ public with sharing class AMS_XML_Generator {
 
         mAg_VS_AgUpdate = new Map<Id, AMS_Agency_Updates__c>();
         mAg_VS_AgChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+        mAg_VS_AgChangeCodeFIN = new Map<Id, Agency_Applied_Change_code__c>();
         mAg_VS_AgArea = new Map<Id, String>();
         mAg_VS_AgSiteType = new Map<Id, String>();
         mAg_VS_ParentAg = new Map<Id, Id>();
@@ -287,7 +295,9 @@ public with sharing class AMS_XML_Generator {
         mAgAirport_VS_Airport = new Map<Id, Id>();
         mAgAffiliation_VS_Affiliation = new Map<Id, Id>();
         mAg_VS_Person = new Map<Id, Id>();
+        mAg_VS_Contact = new Map<Id, Id>();
         mEmp_VS_Person = new Map<Id, Id>();
+        mEmp_VS_Contact = new Map<Id, Id>();
         mAg_VS_Segment = new Map<Id, String>();
         //mAg_VS_Employees = new Map<Id, List<AMS_Employee__c>>(); - #AMSFTS
         mAg_VS_Employees = new Map<Id, List<AMS_Account_Role__c>>();
@@ -310,7 +320,11 @@ public with sharing class AMS_XML_Generator {
         SET<Id> setAirportKeys = new SET<Id>();
         SET<Id> setAffiliationKeys = new SET<Id>();
         SET<Id> setHO = new SET<Id>();
-        
+
+
+        orderedAgencyIds = r[5].split(',');
+        System.debug('orderedAgencyIds:' + orderedAgencyIds);
+
         //Get AMS_Segment__c RecordType ID for "IATA Code Programs"
         Id rtProgram = Schema.SObjectType.AMS_Segment__c.getRecordTypeInfosByName().get('IATA Code Programs').getRecordTypeId();
         //Get AMS_Agencies_Hierarchy__c RecordType ID for "MAIN"
@@ -332,6 +346,7 @@ public with sharing class AMS_XML_Generator {
         for (Account o : agency) {
             //setAccountKeys.add(o.Account__c); 
             setAgencyCountryKeys.add(o.IATA_ISO_Country__c);
+            setAddressStateKeys.add(o.Iso_State__c);
         }
         //END - #AMSFTS
 
@@ -413,14 +428,14 @@ public with sharing class AMS_XML_Generator {
                 FROM IATA_ISO_Country__c where Id in :setAddressCountryKeys or Id in :setAgencyCountryKeys];
         
         //REFERENCE
-        lState = [SELECT Name,ISO_Code__c FROM IATA_ISO_State__c where Id in :setAddressStateKeys];
+        lState = [SELECT Name,ISO_Code__c,ISO_CODE_STANDARD__c FROM IATA_ISO_State__c where Id in :setAddressStateKeys];
 
         //MAIN
         //Begin - #AMSFTS
         //lOwnership = [SELECT Agency__c,AMS_Agency_Owner__c,Id,Name,Percentage__c 
         //                  FROM AMS_Agency_Ownership__c WHERE Agency__c in :setAgencyKeys];
         
-        lOwnership = [SELECT Account__c,Owner_Account__c,Id,Name,Percentage__c,Person__c,RecordTypeId,Employee_type__c    
+        lOwnership = [SELECT Account__c,Owner_Account__c,Id,Name,Percentage__c,Person__c,Contact__c,RecordTypeId,Employee_type__c    
                             FROM AMS_Account_Role__c WHERE Account__c in :setAgencyKeys
                             AND RecordTypeId = :rtAccRoleOwnership
                             limit :fixLimit];
@@ -435,6 +450,9 @@ public with sharing class AMS_XML_Generator {
             if(o.Person__c != Null){
                 setPersonKeys.add(o.Person__c);
             }
+            if(o.Contact__c != Null){
+                setContactKeys.add(o.Contact__c);
+            }
         }
         //END - #AMSFTS 
 
@@ -448,7 +466,20 @@ public with sharing class AMS_XML_Generator {
         //    }
         //}
 
-        lOwner = [SELECT Id,Name FROM Account WHERE Id in :setOwnershipKeys];
+        lOwner = [SELECT Airline_Code__c,A_Code__c,
+                    CASS_Number__c,Check_Digit__c,GDS__c,
+                    Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+                    Last_Inspection_Date__c,Last_synchronization__c,
+                    License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
+                    N_Code__c,Organization_Last_Change_Date__c,
+                    Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
+                    RecordTypeId,RecordType.Name,
+                    STD_Code__c,VAT_Number__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c
+                    FROM Account WHERE Id in :setOwnershipKeys];
+
         for (Account o : lOwner) {
             setAccountKeys.add(o.Id); 
         }
@@ -457,7 +488,7 @@ public with sharing class AMS_XML_Generator {
 
         //MAIN
         lEmployee = [SELECT Account__c,Duty__c,Earning__c,Employee_type__c,Hours__c,Id,isManager__c,isTicketingAgent__c,
-                    Name,Person__c,Position__c,Registration_Date__c,Stage__c,Start_date__c,
+                    Name,Person__c,Position__c,Registration_Date__c,Stage__c,Start_date__c,Contact__c,
                     Termination_Date__c,Title__c,Valid__c,RecordTypeId,Owner_Account__c,Percentage__c
                     FROM AMS_Account_Role__c 
                     WHERE RecordTypeId = :rtAccRoleEmployee
@@ -471,13 +502,24 @@ public with sharing class AMS_XML_Generator {
             if(emp.Person__c != Null){
                 setPersonKeys.add(emp.Person__c);
             }
+            if(emp.Contact__c != Null){
+                setContactKeys.add(emp.Contact__c);
+            }
             mEmp_VS_Person.put(emp.Id, emp.Person__c);
+            mEmp_VS_Contact.put(emp.Id, emp.Contact__c);
             //Begin - #AMSFTS
             //if(!mAg_VS_Person.containsKey(emp.Agency__c)){
             //    mAg_VS_Person.put(emp.Agency__c, emp.Person__c);
             //}
-            if(!mAg_VS_Person.containsKey(emp.Account__c)){
-                mAg_VS_Person.put(emp.Account__c, emp.Person__c);
+            if(emp.Person__c != null){
+                if(!mAg_VS_Person.containsKey(emp.Account__c)){
+                    mAg_VS_Person.put(emp.Account__c, emp.Person__c);
+                }
+            }
+            if(emp.Contact__c != null){
+                if(!mAg_VS_Contact.containsKey(emp.Account__c)){
+                    mAg_VS_Contact.put(emp.Account__c, emp.Contact__c);
+                }
             }
             //END - #AMSFTS
             if(mAg_VS_Employees.containsKey(emp.Account__c)){
@@ -541,7 +583,7 @@ public with sharing class AMS_XML_Generator {
         lAgRelationshipHierarchy = [SELECT Id,AIMS_ID__c,
                     CASS_Number__c,Check_Digit__c,IATACode__c,
                     C_Code__c,ParentId,Parent.AIMS_ID__c,
-                    IATA_Area__c
+                    IATA_Area__c,Sector__c
                     FROM Account where id in :setAgRelationshipKeys];
         //END - #AMSFTS   
 
@@ -568,22 +610,56 @@ public with sharing class AMS_XML_Generator {
             setHO.add((Id)agHO.get('Parent_Account__c'));
         }
 
-        lAgHO = [SELECT Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
+        //lAgHO = [SELECT Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
+        //            where Hierarchy__c in :setHierarchyKeys
+        //            AND Hierarchy__r.RecordTypeId = :rtHierarchy
+        //            AND Parent_Account__c in :setHO
+        //            AND Child_Account__c not in :setHO
+        //            group by Parent_Account__c, Hierarchy__c];   
+        List<AggregateResult> lAgParentHO = [SELECT Parent_Account__c,Hierarchy__c FROM AMS_Agencies_relationhip__c 
                     where Hierarchy__c in :setHierarchyKeys
                     AND Hierarchy__r.RecordTypeId = :rtHierarchy
-                    AND Parent_Account__c in :setHO
-                    AND Child_Account__c not in :setHO
-                    group by Parent_Account__c, Hierarchy__c];             
+                    group by Hierarchy__c,Parent_Account__c]; 
+
+        Map<Id,Id> mAgParentHO = new Map<Id,Id>();
+        for(AggregateResult agAux1 : lAgParentHO){
+            mAgParentHO.put( (Id)agAux1.get('Parent_Account__c') , (Id)agAux1.get('Hierarchy__c') );
+        }
+
+        List<AggregateResult> lAgChildHO = [SELECT Child_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c 
+                    where Hierarchy__c in :setHierarchyKeys
+                    AND Hierarchy__r.RecordTypeId = :rtHierarchy
+                    group by Hierarchy__c, Child_Account__c];      
+
+        List<Id> lAgChildHOtoCheck = new List<Id>();
+        for(AggregateResult agAux2 : lAgChildHO){
+            lAgChildHOtoCheck.add( (Id)agAux2.get('Child_Account__c') );
+        }                           
         //END - #AMSFTS  
         
-        for(AggregateResult agHO : lAgHO){
-            mHier_VS_HO.put((Id)agHO.get('Hierarchy__c') ,(Id)agHO.get('Parent_Account__c'));   
-            setAccountKeys.add((Id)agHO.get('Parent_Account__c')); 
+        for(Id agChildId : lAgChildHOtoCheck){
+            if( mAgParentHO.containsKey(agChildId) ){
+                mAgParentHO.remove(agChildId);
+            }
+        }
+        
+        
+        //for(AggregateResult agHO : lAgHO){
+        //    mHier_VS_HO.put((Id)agHO.get('Hierarchy__c') ,(Id)agHO.get('Parent_Account__c'));   
+        //    setAccountKeys.add((Id)agHO.get('Parent_Account__c')); 
+        //}
+        for(Id parentId : mAgParentHO.keySet() ){
+            Id auxRelId = (Id)mAgParentHO.get(parentId);
+            mHier_VS_HO.put(auxRelId ,parentId); 
+            setAccountKeys.add(parentId); 
         }
         
         for (AMS_Agencies_relationhip__c agR : lAgRelationship) {
             mAg_VS_HO.put((Id)agR.Child_Account__c, (Id)mHier_VS_HO.get(agR.Hierarchy__c));
         }
+
+        //System.debug('mHier_VS_HO: ' + mHier_VS_HO);
+        //System.debug('mAg_VS_HO: ' + mAg_VS_HO);
 
         //MAIN
         //Begin - #AMSFTS
@@ -642,10 +718,10 @@ public with sharing class AMS_XML_Generator {
                     License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
                     N_Code__c,Organization_Last_Change_Date__c,
                     Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
-                    Phone_Number__c,Primary_address__c,
-                    RecordTypeId,RecordType.name,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
+                    RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
-                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c FROM Account WHERE Id in :setAccountKeys]; 
 
         //REFERENCE        
@@ -657,6 +733,25 @@ public with sharing class AMS_XML_Generator {
                         Name,Next_case_request_date_time__c,Phone__c,Region__c,Request_next_case__c 
                         FROM AMS_Person__c WHERE Id in :setPersonKeys]; //Contact__c,Contact__r.Name,
         
+        lContact = [SELECT AccountId,AMS_isManager__c,AMS_isTicketingAgent__c,AMS_Position__c,
+                            AMS_Valid__c,FirstName,Id,LastName,Name,Person__c,Status__c,Title,Email,Preferred_Language__c  
+                            FROM Contact
+                             WHERE Id in :setContactKeys];
+
+        //R3.1 - For inspections/appointments/Endorsments "Org1Adate" field (<original_approval_date>string</original_approval_date>)
+        lAgAppChangeCode = [SELECT Account__c,Change_Code__c,CreatedDate,Id FROM Agency_Applied_Change_code__c 
+                                where Change_Code__c = 'FIN'
+                                and Account__c in :setAgencyKeys
+                                order by Account__c,CreatedDate desc];
+
+        //System.debug('lAgAppChangeCode: ' + lAgAppChangeCode);
+
+        for(Agency_Applied_Change_code__c agAppChangeCode : lAgAppChangeCode){
+            if(!mAg_VS_AgChangeCodeFIN.containsKey(agAppChangeCode.Account__c)){
+                mAg_VS_AgChangeCodeFIN.put(agAppChangeCode.Account__c,agAppChangeCode);
+            }
+        }
+        //R3.1 - END                         
           
         //MAIN
         lFieldsTranslation = [SELECT Address__c,Agency_Hierarchy__c,Account__c,AMSAirport__c,AMSEmployee__c,AMSOwner__c,
@@ -692,7 +787,7 @@ public with sharing class AMS_XML_Generator {
         msObject.putAll(lPerson);
         msObject.putAll(lRecordType);
         msObject.putAll(agency);
-        //msObject.putAll(lContact);
+        msObject.putAll(lContact);
         //msObject.putAll(lUser);
         
         
@@ -742,29 +837,62 @@ public with sharing class AMS_XML_Generator {
         Map<String, Map<String, List<Account>>> bsp_dpc_ag = new Map<String, Map<String, List<Account>>>();
         //END - #AMSFTS
 
-        String sPasCargo = agency[0].Sector__c == Null?'':agency[0].Sector__c;
+        //String sPasCargo = agency[0].Sector__c == Null?'':agency[0].Sector__c;
 
+        //List<AggregateResult> agBspDpc = new List<AggregateResult>();
+        //if(sPasCargo.equalsIgnoreCase('Travel Agent') ){
+        //    agBspDpc = [SELECT id Account__c,IATA_ISO_Country__r.name,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System__r.name bsp,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c dpc
+        //                                FROM Account where id in :setAgencyKeys 
+        //                                group by id, IATA_ISO_Country__r.name,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System__r.name,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c];
+        //}else if(sPasCargo.equalsIgnoreCase('Cargo Agent') ){
+        //    agBspDpc = [SELECT id Account__c, IATA_ISO_Country__r.name,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name bsp,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c dpc
+        //                                    FROM Account where id in :setAgencyKeys 
+        //                                    group by id, IATA_ISO_Country__r.name,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name,
+        //                                    IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c];
+        //}
+        //END - #AMSFTS
 
+        SET<Id> setAgencyPaxKeys = new SET<Id>();
+        SET<Id> setAgencyCargoKeys = new SET<Id>();
+        for (Account ag : agency) {
+            if( ag.Sector__c.equalsIgnoreCase('Travel Agent') ){
+                setAgencyPaxKeys.add(ag.Id);
+            }else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') ){
+                setAgencyCargoKeys.add(ag.Id);
+            }
+        }
 
         List<AggregateResult> agBspDpc = new List<AggregateResult>();
-        if(sPasCargo.equalsIgnoreCase('Travel Agent') ){
-            agBspDpc = [SELECT id Account__c,IATA_ISO_Country__r.name,
+        List<AggregateResult> agBspDpcPax = new List<AggregateResult>();
+        List<AggregateResult> agBspDpcCargo = new List<AggregateResult>();
+        
+        agBspDpcPax = [SELECT id Account__c,IATA_ISO_Country__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System__r.name bsp,
                                             IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c dpc
-                                        FROM Account where id in :setAgencyKeys 
+                                        FROM Account where id in :setAgencyPaxKeys 
                                         group by id, IATA_ISO_Country__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c];
-        }else if(sPasCargo.equalsIgnoreCase('Cargo Agent') ){
-            agBspDpc = [SELECT id Account__c, IATA_ISO_Country__r.name,
+        
+        agBspDpcCargo = [SELECT id Account__c, IATA_ISO_Country__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name bsp,
                                             IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c dpc
-                                            FROM Account where id in :setAgencyKeys 
+                                            FROM Account where id in :setAgencyCargoKeys 
                                             group by id, IATA_ISO_Country__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c];
-        }
-        //END - #AMSFTS
+
+
+        agBspDpc.addAll(agBspDpcPax);
+        agBspDpc.addAll(agBspDpcCargo);
+
        
         String auxBSP = '';
         String auxDPC = '';
@@ -893,6 +1021,7 @@ public with sharing class AMS_XML_Generator {
                 //get 1st agency, since all agencies must be from the same country the 1st will work!
                 //AMS_Agency__c agForCtry = l[0]; - #AMSFTS
                 Account agForCtry = l[0];
+                String sPasCargo = l[0].Sector__c == Null?'':agency[0].Sector__c;
 
                 //get Country related to the agency 
                 IATA_ISO_Country__c ctry;
@@ -930,23 +1059,41 @@ public with sharing class AMS_XML_Generator {
                 Dom.Xmlnode agenciesNode = countryNode.addChildElement('agencies', null, null);
                 //try{
                
+
+                //Order the agencies in order to return on the same order they were asked!
+                List<Account> lAgOrdered = new List<Account>();
+                Map<Id, Account> mapAgToOrder = new Map<Id, Account>(l);
+                for(Integer i=0;i<orderedAgencyIds.size();i++){
+                    if(mapAgToOrder.containsKey(orderedAgencyIds[i])){
+                        lAgOrdered.add(mapAgToOrder.get(orderedAgencyIds[i]) );
+                    }
+                } 
+
                 
                 //for (AMS_Agency__c ag : l) { - #AMSFTS
-                for (Account ag : l) {
+                //for (Account ag : l) {
+                for(Integer j=0;j<lAgOrdered.size();j++){
+
+                    Account ag = lAgOrdered[j];
 
                     Dom.Xmlnode agencyNode = agenciesNode.addChildElement('agency', null, null);
 
                     //BEGIN - #AMSFTS
                     getAgencyNode(agencyNode, ag, True, False);
-                    
+
                     
                     Dom.Xmlnode addressNode = agencyNode.addChildElement('addresses', null, null);
                     
                     AMS_Address__c billingAdd = new AMS_Address__c();
+                    
+
                     billingAdd.Account__c = ag.Id;
                     billingAdd.Address_Type__c = 'Billing;Primary';
 
-                    String[] billingStreet = AMS_Utils.splitAccName(ag.BillingStreet);
+                    String[] billingStreet;
+
+                    billingStreet = AMS_Utils.splitAccName(ag.BillingStreet == null?'':ag.BillingStreet);
+                    
                     billingAdd.Address_1__c = billingStreet[0];
                     billingAdd.Address_2__c = billingStreet[1];
                     billingAdd.Address_3__c = billingStreet[2];
@@ -956,40 +1103,53 @@ public with sharing class AMS_XML_Generator {
                     billingAdd.Country__c = ag.IATA_ISO_Country__c;
                     billingAdd.AMS_ZipCode__c = ag.BillingPostalCode;
 
-                    /**
-                        NEW SOLUTION for PHONES on billing address!
-
-                        DECOMMENT AFTER APPROVAL!
-                    */
-                    //List<String> lPhone = splitPhone(ag.Phone);
-                    //if(lPhone != null){
-                    //    billingAdd.Telephone__c = lPhone.size() > 0  ? lPhone[0] : null;
-                    //    billingAdd.Telephone_STD__c = lPhone.size() > 1  ? lPhone[1] : null;
-                    //    billingAdd.Telephone_Int__c = lPhone.size() > 2  ? lPhone[2] : null;
-                    //}
-                    //List<String> lFax = splitPhone(ag.Fax);
-                    //if(lFax != null){
-                    //    billingAdd.Telephone__c = lFax.size() > 0  ? lPhone[0] : null;
-                    //    billingAdd.Telephone_STD__c = lFax.size() > 1  ? lPhone[1] : null;
-                    //    billingAdd.Telephone_Int__c = lFax.size() > 2  ? lPhone[2] : null;
-                    //}
+                    List<String> lPhone = splitPhone(ag.Phone, ag.IATA_ISO_Country__r.Name);
+                    if(lPhone != null){
+                        billingAdd.Telephone_Int__c = lPhone[0];
+                        billingAdd.Telephone_STD__c = lPhone[1];
+                        billingAdd.Telephone__c     = lPhone[2];
+                    }
+                    
+                    List<String> lFax = splitPhone(ag.Fax, ag.IATA_ISO_Country__r.Name);
+                    if(lFax != null){
+                        billingAdd.Fax_Int__c = lFax[0];
+                        billingAdd.Fax_STD__c = lFax[1];
+                        billingAdd.Fax__c     = lFax[2];
+                    }
 
                     System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] billingAdd - ' + billingAdd);
                     lAddresses.add(billingAdd);
+
+                    //R3.1 - Fix to include abbreviated address if not empty
+                    if(ag.Abbreviated_address__c != null){
+                        AMS_Address__c abbreviatedAdd = new AMS_Address__c();
+                        abbreviatedAdd = billingAdd.clone(false, true);
+
+                        String[] abbreviatedStreet;
+                        abbreviatedStreet = AMS_Utils.splitAccName(ag.Abbreviated_address__c == null ? '' : ag.Abbreviated_address__c);
+
+                        abbreviatedAdd.Address_Type__c = 'Abbreviated';
+
+                        abbreviatedAdd.Address_1__c = abbreviatedStreet[0];
+                        abbreviatedAdd.Address_2__c = abbreviatedStreet[1];
+                        abbreviatedAdd.Address_3__c = abbreviatedStreet[2];
+
+                        lAddresses.add(abbreviatedAdd);
+                    }
 
                     if(!AMS_Utils.isAddressEmpty(ag, 'Shipping')){
                         AMS_Address__c shippingAdd = new AMS_Address__c();
                         shippingAdd.Account__c = ag.Id;
                         shippingAdd.Address_Type__c = 'Shipping';
 
-                        String[] shippingStreet = AMS_Utils.splitAccName(ag.ShippingStreet);
+                        String[] shippingStreet = AMS_Utils.splitAccName(ag.ShippingStreet == null ? '' : ag.ShippingStreet);
                         shippingAdd.Address_1__c = shippingStreet[0];
                         shippingAdd.Address_2__c = shippingStreet[1];
                         shippingAdd.Address_3__c = shippingStreet[2];
 
                         shippingAdd.City__c = ag.ShippingCity;
-                        shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState).Id;
-                        shippingAdd.Country__c = ag.ShippingCountry == null ? null : AMS_Utils.iataIsoCountries.get(ag.ShippingCountry).Id;
+                        shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()).Id;
+                        shippingAdd.Country__c = ag.ShippingCountry == null ? null : AMS_Utils.iataIsoCountries.get(ag.ShippingCountry.trim().toLowerCase()).Id;
                         shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
                         
                         System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
@@ -1056,15 +1216,24 @@ public with sharing class AMS_XML_Generator {
                             if(insp.Account__c == ag.Id){                
                                 bHaveInspections = True;
                                 getObjectData(inspectionNode, 'AMS_Inspection__c', insp );
-
-
                             }
                         }
-    
-                        
+                    }
+                    //R3.1 - If we don't have inspections we still need to send the agency status 
+                    if(!bHaveInspections){
+                        Dom.Xmlnode agEndorsementNode = inspectionNode.addChildElement('endorsement', null, null);
+                        getElementNode(agEndorsementNode, 'accreditation_endorsement_status_code',  AMS_Utils.getIATANumericStatus(ag.Status__c) );
+
+                        Agency_Applied_Change_code__c auxAgAppChangeCode = mAg_VS_AgChangeCodeFIN.get(ag.Id);
+                        if(auxAgAppChangeCode != null){
+                            Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCode.CreatedDate.year(), auxAgAppChangeCode.CreatedDate.month(),auxAgAppChangeCode.CreatedDate.day());
+                            getElementNode(agEndorsementNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
+                        }
                     }
                     
+                   
                     Boolean bHier = False;
+                    Boolean bHierChild = False;
                     Dom.Xmlnode agRelationshipsNode = agencyNode.addChildElement('agency_relationships', null, null);
                     if(lAgRelationship.size() > 0){
                         for (AMS_Agencies_relationhip__c rel : lAgRelationship) {
@@ -1072,13 +1241,16 @@ public with sharing class AMS_XML_Generator {
                             //if(rel.Parent_agency__c == ag.Id ){ - #AMSFTS    
                             if(rel.Parent_Account__c == ag.Id ){
                                 bHier = True;
-                                getObjectData(agRelationshipsNode, 'AMS_Agencies_relationhip__c', rel );
+                                //getObjectData(agRelationshipsNode, 'AMS_Agencies_relationhip__c', rel );
+                            }
+                            if(rel.Child_Account__c == ag.Id ){
+                                bHierChild = True;
                             }
                         }
                     //}else{
                     //    agRelationshipsNode.addTextNode('Missing');
                     }
-                    if(!bHier){
+                    if(!bHier || bHierChild){
                         //AMS_Agency__c parentAg = (AMS_Agency__c)msObject.get(mAg_VS_ParentAg.get(ag.Id)); - #AMSFTS    
                         Account parentAg = (Account)msObject.get(mAg_VS_ParentAg.get(ag.Id));
                         
@@ -1204,9 +1376,26 @@ public with sharing class AMS_XML_Generator {
             oPerson = new AMS_Person__c();
             oPerson.Language_of_correspondence__c = '';
         }
+
+        if(mAg_VS_Contact.containsKey(agency.Id)){
+            Contact oContact = (Contact) msObject.get(mAg_VS_Contact.get(agency.Id));
+
+            if(oPerson.Language_of_correspondence__c == '' && oContact.Preferred_Language__c != null){
+                if( oContact.Preferred_Language__c.equalsIgnoreCase('English') ){
+                    oPerson.Language_of_correspondence__c = 'EN';
+                }
+                if( oContact.Preferred_Language__c.equalsIgnoreCase('French') ){
+                    oPerson.Language_of_correspondence__c = 'FR';
+                }
+                if( oContact.Preferred_Language__c.equalsIgnoreCase('Spanish') ){
+                    oPerson.Language_of_correspondence__c = 'SP';
+                } 
+            }
+        }
         
         //get "Manager" and "Ticketing Agent" First and Last Names from Person object
         AMS_Person__c oEmpPerson;
+        Contact oEmpContact;
 
         Id iQta = Null;
         Id iQmp = Null;
@@ -1220,23 +1409,46 @@ public with sharing class AMS_XML_Generator {
             //if(emp.Agency__c == agency.Id){ - #AMSFTS
             if(emp.Account__c == agency.Id){
 
-                if(mEmp_VS_Person.containsKey(emp.Id)){
-                    oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
-                }else{
-                    oEmpPerson = new AMS_Person__c();
-                    oEmpPerson.First_Name__c = '';
-                    oEmpPerson.Lastname__c = '';
+                if(emp.Person__c != null){
+                    if(mEmp_VS_Person.containsKey(emp.Id)){
+                        oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
+                    }else{
+                        oEmpPerson = new AMS_Person__c();
+                        oEmpPerson.First_Name__c = '';
+                        oEmpPerson.Lastname__c = '';
+                    }
+
+                    if(emp.isManager__c){
+                        iQmp = oEmpPerson.Id;
+                        sQmpf_name = oEmpPerson.First_Name__c;
+                        sQmpl_name = oEmpPerson.Lastname__c;
+                    }
+                    if(emp.isTicketingAgent__c){
+                        iQta = oEmpPerson.Id;
+                        sQtaf_name = oEmpPerson.First_Name__c;
+                        sQtal_name = oEmpPerson.Lastname__c;
+                    }
                 }
 
-                if(emp.isManager__c){
-                    iQmp = oEmpPerson.Id;
-                    sQmpf_name = oEmpPerson.First_Name__c;
-                    sQmpl_name = oEmpPerson.Lastname__c;
-                }
-                if(emp.isTicketingAgent__c){
-                    iQta = oEmpPerson.Id;
-                    sQtaf_name = oEmpPerson.First_Name__c;
-                    sQtal_name = oEmpPerson.Lastname__c;
+                if(emp.Contact__c != null){
+                    if(mEmp_VS_Contact.containsKey(emp.Id)){
+                        oEmpContact = (Contact) msObject.get(mEmp_VS_Contact.get(emp.Id));
+                    }else{
+                        oEmpContact = new Contact();
+                        oEmpContact.FirstName = '';
+                        oEmpContact.LastName = '';
+                    }
+
+                    if(emp.isManager__c){
+                        iQmp = oEmpContact.Id;
+                        sQmpf_name = oEmpContact.FirstName;
+                        sQmpl_name = oEmpContact.LastName;
+                    }
+                    if(emp.isTicketingAgent__c){
+                        iQta = oEmpContact.Id;
+                        sQtaf_name = oEmpContact.FirstName;
+                        sQtal_name = oEmpContact.LastName;
+                    }
                 }
             }
         } 
@@ -1249,6 +1461,14 @@ public with sharing class AMS_XML_Generator {
         /*Agencies Section*/
         String sRec_id = Null;
         String sChangeCode = Null;
+
+        //Get the type of agency, used for some fields in order to get different values foe each type
+        String sPasCargo = Null;
+        if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Travel Agent') ){
+            sPasCargo = 'P';
+        }else if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Cargo Agent') ){
+            sPasCargo = 'C';
+        }
 
         //Indicates if record is A=Added, C=Changed or D=Deleted.  Changes files only, blank for Masters.
         AMS_Agency_Updates__c agUpd = mAg_VS_AgUpdate.get(agency.Id);
@@ -1305,7 +1525,10 @@ public with sharing class AMS_XML_Generator {
         
             //getElementNode(agencyNode, 'ho_id',  mAg_VS_HO.get(agency.Id));
             Id auxAgHOid = (Id)mAg_VS_HO.get(agency.Id);
+            system.debug('mAg_VS_HO-agency.Id: ' + agency.Id);
+            system.debug('mAg_VS_HO: ' + mAg_VS_HO);
             Account auxAgHO = (Account) msObject.get(auxAgHOid);
+            system.debug('auxAgHO: ' + auxAgHO);
             getElementNode(agencyNode, 'ho_id', auxAgHO != Null ? auxAgHO.IATACode__c : Null); 
         
 
@@ -1347,7 +1570,6 @@ public with sharing class AMS_XML_Generator {
             getElementNode(agencyNode, 'air_code', agency.Airline_Code__c);
             
             List<String> lsLegalName = AMS_Utils.splitAccName(agency.Name);
-
             getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.name', 'legal_1', lsLegalName[0] == ''?null:lsLegalName[0]);
 
             //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_2__c', 'legal_2', agency.Legal_Name_2__c); - #AMSFTS
@@ -1356,8 +1578,9 @@ public with sharing class AMS_XML_Generator {
             getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Legal_Name_3__c', 'legal_3', lsLegalName[2] == ''?null:lsLegalName[2]);
 
             //short_name
-            //getElementNode(agencyNode, 'short_name', agency.Abbreviated_name__c); 
-            getElementNode(agencyNode, 'short_name', agency.Short_Name__c);
+            //DECISION R3.1 - Always send "Abbreviated_name__c"
+            getElementNode(agencyNode, 'short_name', agency.Abbreviated_name__c); 
+            //getElementNode(agencyNode, 'short_name', agency.Short_Name__c);
 
             //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_1__c', 'dba_1', agency.Trading_Name_1__c); - #AMSFTS
             //getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Trading_Name_2__c', 'dba_2', agency.Trading_Name_2__c); - #AMSFTS
@@ -1389,12 +1612,12 @@ public with sharing class AMS_XML_Generator {
             }
             //Begin - #AMSFTS
             //getElementNode(agencyNode, 'pas_cgo', agency.recordType.Name.equalsIgnoreCase('passenger')?'P':'C');
-            String sPasCargo = Null;
-            if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Travel Agent') ){
-                sPasCargo = 'P';
-            }else if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Cargo Agent') ){
-                sPasCargo = 'C';
-            }
+            //String sPasCargo = Null;
+            //if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Travel Agent') ){
+            //    sPasCargo = 'P';
+            //}else if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Cargo Agent') ){
+            //    sPasCargo = 'C';
+            //}
             getElementNode(agencyNode, 'pas_cgo', sPasCargo);
             //END - #AMSFTS
 
@@ -1484,61 +1707,68 @@ public with sharing class AMS_XML_Generator {
     /**
     Split the phone number from a String, removing spaces and non-numeric Chars 
     Returns List with:
-        [0] - phone number - size 12
+        [0] - INT code     - size 6
         [1] - STD codes    - size 6
-        [2] - INT code     - size 6
+        [2] - phone number - size 12
     */
-    public List<String> splitPhone(String num){ 
-        List<String> lRes = new List<String>();
-        List<String> lNum = new List<String>();
-        
-        String numRes = '';
-        Integer i=0;
+    public List<String> splitPhone(String num, String countryName){ 
         
         //Check for value
-        if(num == null){
+        if(String.isEmpty(num)){
             return null;
         }
-
-        //test if less or equal 12 chars
-        if(num.length() <= 12){
-            lRes.add(num);
-        }else{
-            //Remove spaces and special chars
-            //lNum = num.split('|');
-            do{
-                if(i<num.length()){
-                    String s = num.substring(i,i+1);
-                    if (s.isNumeric()){
-                        numRes += s;
-                    }
-                    system.debug('s: ' + s + ' || numRes:' + numRes);
-                }
-                i=i+1;
-            }while(i < num.length());
+        List<String> lRes = new String[3];
         
-            
-            //test again if less or equal 12 chars
-            if(numRes.length() <= 12){
-                lRes.add(numRes);
-            }else{
-                //test again if less or equal 18 chars (phone + std)
-                if(numRes.length() <= 18){
-                    lRes.add(numRes.substring(numRes.length()-12, numRes.length()));
-                    lRes.add(numRes.substring(0, numRes.length()-12));
-                }else{
-                    //24 chars (phone + std + int)
-                    lRes.add(numRes.substring(numRes.length()-12, numRes.length()));
-                    lRes.add(numRes.substring(numRes.length()-18, numRes.length()-12));  
-                    if(numRes.length() <= 24){
-                        lRes.add(numRes.substring(0, numRes.length()-18));                        
-                    }else{
-                        lRes.add(numRes.substring(numRes.length()-24, numRes.length()-18));                            
-                    }
-                    
-                }
+        Boolean isIntNumber = num.startsWith('00') || num.startsWith('+');
+
+        String code;
+        String numRes = '';
+        Integer i=0;
+
+
+        //Remove spaces and special chars
+        while(i < num.length()){
+            String s = num.substring(i,i+1);
+
+            if (s.isNumeric()){
+                numRes += s;
             }
+            //system.debug('s: ' + s + ' || numRes:' + numRes);
+            i++;
         }
+
+        ITU_Country_Code__c country = ITU_Country_Code__c.getAll().get(countryName);
+        if(country != null){
+
+            List<String> countryCodes = country.Code__c.split(',');
+
+            if(isIntNumber){
+
+                numRes = numRes.removeStart('00');
+
+                for(String c : countryCodes){
+                    if(numRes.startsWith(c)) code = c;
+                }
+
+                if(String.isEmpty(code)) code = countryCodes[0];
+                else numRes = numRes.substring(code.length());
+
+            }
+            else code = countryCodes[0];
+        }
+
+        if(String.isNotEmpty(code)) lRes.add(0, '00'+code);
+            
+        if(numRes.length() <= 12){
+            lRes.add(2, numRes);
+        }else if(numRes.length() <= 18){
+            lRes.add(1, numRes.substring(0, numRes.length()-12));
+            lRes.add(2, numRes.substring(numRes.length()-12));
+        }else{
+            lRes.add(1, numRes.substring(numRes.length()-18, numRes.length()-12));  
+            lRes.add(2, numRes.substring(numRes.length()-12));
+        }
+
         return lRes;
     }
 
@@ -1709,7 +1939,8 @@ public with sharing class AMS_XML_Generator {
                     }
 
                     //Special case for ISO_State
-                    if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
+                    //if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
+                    if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code_standard__c')){
                         displayFieldName = 'state_iso_code';
                     }
 
@@ -1764,7 +1995,9 @@ public with sharing class AMS_XML_Generator {
                                     //Special case - need to split field in 2...
                                     //Sprint 7: Removed "country_code" from "State"... "ISO_CODE" stay has is...
                                     ////Special case - need to split field in 2...
-                                    if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
+                                    //if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code__c')){
+                                    if(sObjectName.equalsIgnoreCase('iata_iso_state__c') && f.equalsIgnoreCase('iso_code_standard__c')){
+                                        
                                         IATA_ISO_State__c auxState =  (IATA_ISO_State__c)obj;
                                         String sAuxName = auxState.Name;
                                         String sValue = String.valueOf(obj.get(f));
@@ -1862,7 +2095,7 @@ public with sharing class AMS_XML_Generator {
                                     String sAuxValue = (String)x.Accreditation_Endorsement_organisation__r.Air_Code__c;
                                     auxInspectionNode.addTextNode(sAuxValue);
 
-                                }else if(f.equalsIgnoreCase('Parent_agency__c')){ //Special threatment for the Parent agencies on the Hierarchy data
+                                }else if(f.equalsIgnoreCase('Parent_Account__c')){ //Special threatment for the Parent agencies on the Hierarchy data
 
                                     Dom.Xmlnode auxAgencyNode = auxParentNode.addChildElement(displayFieldName, null, null);
                                     //getAgencyNode(auxAgencyNode, (AMS_Agency__c)msObject.get((Id)obj.get(f)),False, True); - #AMSFTS

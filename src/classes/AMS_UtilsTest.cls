@@ -1,8 +1,8 @@
 @isTest
 private class AMS_UtilsTest {
-	
-	
-	 
+    
+    
+     
     static testmethod void testEncriptDecript() {
         
         AMS_Utils util = new AMS_Utils();
@@ -35,147 +35,161 @@ private class AMS_UtilsTest {
         Test.stopTest();
     }
     static testmethod void testAMSPROFILES() {
-    	
-    	Profile p = new Profile(Name = 'IDFS Americas - Hub Staff');
-    	Profile p2 = new Profile(Name = 'FDS Hub Analyst ARM');
-    	Profile p3 = new Profile(Name = 'FDS – Agency Management - Supervisor (Approver)');
-    	
-    	Test.startTest();
-    	Set<Id> amsProfiles = AMS_Utils.AMSPROFILES;
-    	Test.stopTest();
+        
+        Profile p = new Profile(Name = 'IDFS Americas - Hub Staff');
+        Profile p2 = new Profile(Name = 'FDS Hub Analyst ARM');
+        Profile p3 = new Profile(Name = 'FDS – Agency Management - Supervisor (Approver)');
+        
+        Test.startTest();
+        Set<Id> amsProfiles = AMS_Utils.AMSPROFILES;
+        Test.stopTest();
     }
     static testmethod void testIataIsoStatesAndCountries() {
-    	
-    	AMS_OSCAR_TestDataFactory.createOSCARtestData();
-    	
-    	 
-    	Test.startTest();
-    	
-    	Map<String, IATA_ISO_State__c> iataStates = AMS_Utils.iataIsoStates;
-    	Map<String, IATA_ISO_Country__c> iataIsoCountries = AMS_Utils.iataIsoCountries;
+        
+        AMS_OSCAR_TestDataFactory.createOSCARtestData();
+        
+         
+        Test.startTest();
+        
+        Map<String, IATA_ISO_State__c> iataStates = AMS_Utils.iataIsoStates;
+        Map<String, IATA_ISO_Country__c> iataIsoCountries = AMS_Utils.iataIsoCountries;
 
-    	Test.stopTest();
+        //IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        //IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
+
+        Boolean bState = AMS_Utils.isValidState('test '); //State Name = 'Test' - Res = OK
+        Boolean bCountry = AMS_Utils.isValidCountry(' us '); //Country Name = 'US' - Res = OK
+        Boolean bState2 = AMS_Utils.isValidState('test1'); //State Name = 'Test' - Res = NOK
+        Boolean bCountry2 = AMS_Utils.isValidCountry('US2'); //Country Name = 'US' - Res = NOK
+
+        Test.stopTest();
     }
     static testmethod void testsendEmailAmsSupport() {
-      	 
-    	Test.startTest();
-    	//no code coverage for sending emails
-    	AMS_Utils.sendEmailAmsSupport( 'test subject', 'test message');
-    	Test.stopTest();
+         
+        Test.startTest();
+        //no code coverage for sending emails
+        AMS_Utils.sendEmailAmsSupport( 'test subject', 'test message');
+        Test.stopTest();
     }
     
     static testmethod void testCreateEmployeePersonFromAccountContact() {
-      	 
-    	Test.startTest();
-    	AMS_Utils.createEmployeePersonFromAccountContact( '001234567891235');
-    	Test.stopTest();
+         
+        Test.startTest();
+        AMS_Utils.createEmployeePersonFromAccountContact( '001234567891235');
+        Test.stopTest();
     }
     
     static testmethod void testgetRecIdFromChangeCode() {
-      	
-      	List <String> sChangeCodeList = new List<String>();
-		sChangeCodeList.add('AAA');
-      	sChangeCodeList.add('NEW');
-      	sChangeCodeList.add('FIN');
-		sChangeCodeList.add('DIS');
-		sChangeCodeList.add('NWD');
-		sChangeCodeList.add('TER');
-		sChangeCodeList.add('CLO');
+        
+        List <String> sChangeCodeList = new List<String>();
+        sChangeCodeList.add('AAA');
+        sChangeCodeList.add('NEW');
+        sChangeCodeList.add('FIN');
+        sChangeCodeList.add('DIS');
+        sChangeCodeList.add('NWD');
+        sChangeCodeList.add('TER');
+        sChangeCodeList.add('CLO');
 
-    	Test.startTest();
+        sChangeCodeList.add('CON');
+        sChangeCodeList.add('NCA');
+        sChangeCodeList.add('NFN');
+        sChangeCodeList.add('NWH');
+        sChangeCodeList.add('REC');
 
- 		for (String sChangeCode : sChangeCodeList)
- 		{
- 			AMS_Utils.getRecIdFromChangeCode(sChangeCode);
- 		}
-    	
-    	Test.stopTest();
+        Test.startTest();
+
+        for (String sChangeCode : sChangeCodeList)
+        {
+            AMS_Utils.getRecIdFromChangeCode(sChangeCode);
+        }
+        
+        Test.stopTest();
     }
     
      static testmethod void testisAddressEmpty() {
-      	
-      	Account account = new Account();
-		account.Name = 'TestAccount';
-		account.Type = 'Airport';
-		account.IATACode__c = '1234567';
-		insert account; 
-      	
-    	List <String> addressTypeList = new List<String>();
-		addressTypeList.add('Billing');
-      	addressTypeList.add('Shipping');
-      	
+        
+        Account account = new Account();
+        account.Name = 'TestAccount';
+        account.Type = 'Airport';
+        account.IATACode__c = '1234567';
+        insert account; 
+        
+        List <String> addressTypeList = new List<String>();
+        addressTypeList.add('Billing');
+        addressTypeList.add('Shipping');
+        
 
-    	Test.startTest();
-		
- 		for (String addressType : addressTypeList)
- 		{
- 			AMS_Utils.isAddressEmpty(account,addressType);
- 		}
-    	
-    	Test.stopTest();
+        Test.startTest();
+        
+        for (String addressType : addressTypeList)
+        {
+            AMS_Utils.isAddressEmpty(account,addressType);
+        }
+        
+        Test.stopTest();
     }
     
     static testmethod void testsplitAccAndAccTradeName() {
-      	
-    	List <String> accountNamesList = new List<String>();
-		accountNamesList.add('Nome usado para o teste com mais de 32 caracteres.. banana banana banana');
-      	accountNamesList.add('Nome com - 32 caracteres');
-      	
+        
+        List <String> accountNamesList = new List<String>();
+        accountNamesList.add('Nome usado para o teste com mais de 32 caracteres.. banana banana banana');
+        accountNamesList.add('Nome com - 32 caracteres');
+        
 
-    	Test.startTest();
-		
- 		for (String accountName : accountNamesList)
- 		{
- 			AMS_Utils.splitAccName(accountName);
- 			AMS_Utils.splitAccTradeName(accountName);
- 			
- 		}
-    	
-    	Test.stopTest();
+        Test.startTest();
+        
+        for (String accountName : accountNamesList)
+        {
+            AMS_Utils.splitAccName(accountName);
+            AMS_Utils.splitAccTradeName(accountName);
+            
+        }
+        
+        Test.stopTest();
     }
     static testmethod void testgetIATAReadableStatus() {
-      	
-    	List <String> iATAReadableStatusList = new List<String>();
-		iATAReadableStatusList.add('');
-		iATAReadableStatusList.add('1');
-		iATAReadableStatusList.add('2');
-		iATAReadableStatusList.add('3');
-		iATAReadableStatusList.add('4');
-		iATAReadableStatusList.add('5');
-		iATAReadableStatusList.add('6');
-		iATAReadableStatusList.add('7');
-		iATAReadableStatusList.add('8');
-		iATAReadableStatusList.add('9');
-		iATAReadableStatusList.add('0');
+        
+        List <String> iATAReadableStatusList = new List<String>();
+        iATAReadableStatusList.add('');
+        iATAReadableStatusList.add('1');
+        iATAReadableStatusList.add('2');
+        iATAReadableStatusList.add('3');
+        iATAReadableStatusList.add('4');
+        iATAReadableStatusList.add('5');
+        iATAReadableStatusList.add('6');
+        iATAReadableStatusList.add('7');
+        iATAReadableStatusList.add('8');
+        iATAReadableStatusList.add('9');
+        iATAReadableStatusList.add('0');
 
-    	Test.startTest();
-		
- 		for (String iATAReadableStatus : iATAReadableStatusList)
- 		{
- 			String iATANumericStatus = AMS_Utils.getIATAReadableStatus(iATAReadableStatus);
- 			String iATAReadableStatusConfirm = AMS_Utils.getIATANumericStatus(iATANumericStatus);
- 			String iATANReadableStatus = AMS_Utils.getIATANReadableStatus(iATAReadableStatus); 			
- 		}
-    	
-    	Test.stopTest();
+        Test.startTest();
+        
+        for (String iATAReadableStatus : iATAReadableStatusList)
+        {
+            String iATANumericStatus = AMS_Utils.getIATAReadableStatus(iATAReadableStatus);
+            String iATAReadableStatusConfirm = AMS_Utils.getIATANumericStatus(iATANumericStatus);
+            String iATANReadableStatus = AMS_Utils.getIATANReadableStatus(iATAReadableStatus);          
+        }
+        
+        Test.stopTest();
     }
     
     //REVIEW already tested on: AMS_AgencyChangesTest
     static testmethod void testcreateAAChangeCode() {
-    	/*
-    	String SECTORPAX = 'Travel Agent';
-		String CATEGORYPAX = 'IATA Passenger Sales Agent';
-		String LOCCLASSPAX = 'P';
+        /*
+        String SECTORPAX = 'Travel Agent';
+        String CATEGORYPAX = 'IATA Passenger Sales Agent';
+        String LOCCLASSPAX = 'P';
 
-		String SECTORCASS = 'Cargo Agent';
-		String CATEGORYCASS = 'IATA Cargo Sales Agent';
-		String LOCCLASSCASS = 'C';
+        String SECTORCASS = 'Cargo Agent';
+        String CATEGORYCASS = 'IATA Cargo Sales Agent';
+        String LOCCLASSCASS = 'C';
 
-		String CHANGELOCATIONTYPE = 'Location type';
-		String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
-		String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
+        String CHANGELOCATIONTYPE = 'Location type';
+        String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
+        String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
 
-    	Boolean isPax = true;
+        Boolean isPax = true;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
@@ -198,7 +212,7 @@ private class AMS_UtilsTest {
         insert C1;
 
         createCaseAndOSCAR(HO1,C1);
-    	Test.startTest();
+        Test.startTest();
 
         List<AMS_Pax_Accreditation_Form__c> accreditationLst = [SELECT ID, Name, Short_Name__c, Trade_Name__c, Branch_Office_City__c, Branch_Office_Email__c from AMS_Pax_Accreditation_Form__c];
 
@@ -312,27 +326,27 @@ private class AMS_UtilsTest {
     }
     
     static testmethod void testsyncOSCARwithIFAP() {
-    	
-    
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-        insert ctry ;
-		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
-		insert a1;
         
-		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
-		insert OSCAR;
-		
-		AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
-		insert OSCAR2;
-		
-		//Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-		//insert co1;
-		
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
-		
+    
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+        
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+        insert a1;
+        
+        AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
+        insert OSCAR;
+        
+        AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
+        insert OSCAR2;
+        
+        //Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+        //insert co1;
+        
+        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        
         
         //oscarCase.AccountId = a1.Id;
         //oscarCase.ContactId = co1.Id;
@@ -344,10 +358,10 @@ private class AMS_UtilsTest {
         oscarCase.Financial_Security_Currency__c = 'EUR';
         oscarCase.FS_Deadline_Date__c = date.today();
         insert oscarCase;
-    	
-    	Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
-		
-    	oscarCaseToCompare.Financial_Assessment_requested__c = date.today().addDays(-1);
+        
+        Case oscarCaseToCompare = new Case(Oscar__c = oscar2.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        
+        oscarCaseToCompare.Financial_Assessment_requested__c = date.today().addDays(-1);
         oscarCaseToCompare.Deadline_Date__c= date.today().addDays(-1);
         oscarCaseToCompare.Assessment_Performed_Date__c= date.today().addDays(-1);
         oscarCaseToCompare.Financial_Review_Result__c = 'Not entirely satisfactory';
@@ -356,33 +370,33 @@ private class AMS_UtilsTest {
         oscarCaseToCompare.FS_Deadline_Date__c = date.today().addDays(-1);
         
         insert oscarCaseToCompare;
-    	
-    	
-    	
-    	Test.startTest();
-		
-		AMS_Utils.syncOSCARwithIFAP(oscarCase, oscarCaseToCompare);
-		    	
-    	Test.stopTest();
-    	
-    	
+        
+        
+        
+        Test.startTest();
+        
+        AMS_Utils.syncOSCARwithIFAP(oscarCase, oscarCaseToCompare);
+                
+        Test.stopTest();
+        
+        
     }
     //Review Part of the code not covered
     static testmethod void testcopyDataToAccount() {
         
         String SECTORPAX = 'Travel Agent';
-		String CATEGORYPAX = 'IATA Passenger Sales Agent';
-		String LOCCLASSPAX = 'P';
+        String CATEGORYPAX = 'IATA Passenger Sales Agent';
+        String LOCCLASSPAX = 'P';
 
-		String SECTORCASS = 'Cargo Agent';
-		String CATEGORYCASS = 'IATA Cargo Sales Agent';
-		String LOCCLASSCASS = 'C';
+        String SECTORCASS = 'Cargo Agent';
+        String CATEGORYCASS = 'IATA Cargo Sales Agent';
+        String LOCCLASSCASS = 'C';
 
-		String CHANGELOCATIONTYPE = 'Location type';
-		String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
-		String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
+        String CHANGELOCATIONTYPE = 'Location type';
+        String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
+        String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
 
-    	Boolean isPax = true;
+        Boolean isPax = true;
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
@@ -398,131 +412,131 @@ private class AMS_UtilsTest {
         Contact C1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = A1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
 
         insert C1;
-		
-		createCaseAndOSCAR(A1,C1);
+        
+        createCaseAndOSCAR(A1,C1);
 
         List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c,AMS_Online_Accreditation__c from AMS_OSCAR__c];
 
-		Test.startTest();
-		
-		AMS_Utils.copyDataToAccount(oscarLst);
-		    	
-    	Test.stopTest();	
+        Test.startTest();
+        
+        AMS_Utils.copyDataToAccount(oscarLst);
+                
+        Test.stopTest();    
     
     }
     
     //Review Part of the code not covered
     static testmethod void testownershipIsToBeMigrated() {
 
-	    Test.startTest();
-		
-		AMS_Utils.ownershipIsToBeMigrated('Name');
-		    	
-    	Test.stopTest();	
-    		
+        Test.startTest();
+        
+        AMS_Utils.ownershipIsToBeMigrated('Name');
+                
+        Test.stopTest();    
+            
     }
     static testmethod void testtransformCompanyType() {
 
-	    Test.startTest();
-		
-		AMS_Utils.transformCompanyType(null);
-		AMS_Utils.transformCompanyType('asdf');
-		AMS_Utils.transformCompanyType('Association');
-		AMS_Utils.transformCompanyType('Corporation');
-		AMS_Utils.transformCompanyType('State Owned Enterprise');
-		AMS_Utils.transformCompanyType('Joint Venture');
-		AMS_Utils.transformCompanyType('Limited Company');
-		AMS_Utils.transformCompanyType('Other');
-		AMS_Utils.transformCompanyType('Partnership');
-		AMS_Utils.transformCompanyType('Limited Partnership');
-		AMS_Utils.transformCompanyType('Sole Proprietorship');
-		AMS_Utils.transformCompanyType('Trust Company');
-		AMS_Utils.transformCompanyType('Co-operative');
-		    	
-    	Test.stopTest();	
-    		
+        Test.startTest();
+        
+        AMS_Utils.transformCompanyType(null);
+        AMS_Utils.transformCompanyType('asdf');
+        AMS_Utils.transformCompanyType('Association');
+        AMS_Utils.transformCompanyType('Corporation');
+        AMS_Utils.transformCompanyType('State Owned Enterprise');
+        AMS_Utils.transformCompanyType('Joint Venture');
+        AMS_Utils.transformCompanyType('Limited Company');
+        AMS_Utils.transformCompanyType('Other');
+        AMS_Utils.transformCompanyType('Partnership');
+        AMS_Utils.transformCompanyType('Limited Partnership');
+        AMS_Utils.transformCompanyType('Sole Proprietorship');
+        AMS_Utils.transformCompanyType('Trust Company');
+        AMS_Utils.transformCompanyType('Co-operative');
+                
+        Test.stopTest();    
+            
     }
      static testmethod void testtransformGDS() {
 
-	    Test.startTest();
-		
-		AMS_Utils.transformGDS(null);
-		AMS_Utils.transformGDS('asdf');
-		AMS_Utils.transformGDS('Abacus');
-		AMS_Utils.transformGDS('Amadeus');
-		AMS_Utils.transformGDS('Axess');
-		AMS_Utils.transformGDS('Kiu System');
-		AMS_Utils.transformGDS('Deutsche Reiseburo');
-		AMS_Utils.transformGDS('Farelogix');
-		AMS_Utils.transformGDS('Travelport (Galileo)');
-		AMS_Utils.transformGDS('Infini');
-		AMS_Utils.transformGDS('Kotis Travel Info SE');
-		AMS_Utils.transformGDS('Travelsky');
-		AMS_Utils.transformGDS('Resiber');
-		AMS_Utils.transformGDS('Sabre');
-		AMS_Utils.transformGDS('SITA');
-		AMS_Utils.transformGDS('Sirena');
-		AMS_Utils.transformGDS('Topas');
-		AMS_Utils.transformGDS('Travelport (Apollo)');
-		AMS_Utils.transformGDS('Travelport (Worldspan)');
-    	
-    	Test.stopTest();	
-    		
+        Test.startTest();
+        
+        AMS_Utils.transformGDS(null);
+        AMS_Utils.transformGDS('asdf');
+        AMS_Utils.transformGDS('Abacus');
+        AMS_Utils.transformGDS('Amadeus');
+        AMS_Utils.transformGDS('Axess');
+        AMS_Utils.transformGDS('Kiu System');
+        AMS_Utils.transformGDS('Deutsche Reiseburo');
+        AMS_Utils.transformGDS('Farelogix');
+        AMS_Utils.transformGDS('Travelport (Galileo)');
+        AMS_Utils.transformGDS('Infini');
+        AMS_Utils.transformGDS('Kotis Travel Info SE');
+        AMS_Utils.transformGDS('Travelsky');
+        AMS_Utils.transformGDS('Resiber');
+        AMS_Utils.transformGDS('Sabre');
+        AMS_Utils.transformGDS('SITA');
+        AMS_Utils.transformGDS('Sirena');
+        AMS_Utils.transformGDS('Topas');
+        AMS_Utils.transformGDS('Travelport (Apollo)');
+        AMS_Utils.transformGDS('Travelport (Worldspan)');
+        
+        Test.stopTest();    
+            
     }
      static testmethod void testerrorMessageBeautifyer() {
-		
-	    Test.startTest();
-		
-		try{
-			
+        
+        Test.startTest();
+        
+        try{
+            
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
-		
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',
-								 Name='Test1 Agency Ltd',Short_Name__c='Test1 Agency' , CASS_Number__c  = '1234567');
-		insert a1;
         
-		}
-		catch(Exception e)	
-		{
-			String beautyMessage = AMS_Utils.errorMessageBeautifyer(e);
-		}
+        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',
+                                 Name='Test1 Agency Ltd',Short_Name__c='Test1 Agency' , CASS_Number__c  = '1234567');
+        insert a1;
+        
+        }
+        catch(Exception e)  
+        {
+            String beautyMessage = AMS_Utils.errorMessageBeautifyer(e);
+        }
 
-    	Test.stopTest();	
-    		
+        Test.stopTest();    
+            
     }
     static testmethod void testgetRecordType() {
-		
-		
-	    Test.startTest();
-		
-		AMS_Utils.getRecordType('Account', 'Standard_Account');
-		
-		try{
-			
-      	  AMS_Utils.getRecordType('Account', 'Non_Existent_Record_Type');
         
-		}
-		catch(Exception e)	
-		{
-			String beautyMessage = AMS_Utils.errorMessageBeautifyer(e);
-		}
-		
-		Test.stopTest();	
-    		
+        
+        Test.startTest();
+        
+        AMS_Utils.getRecordType('Account', 'Standard_Account');
+        
+        try{
+            
+          AMS_Utils.getRecordType('Account', 'Non_Existent_Record_Type');
+        
+        }
+        catch(Exception e)  
+        {
+            String beautyMessage = AMS_Utils.errorMessageBeautifyer(e);
+        }
+        
+        Test.stopTest();    
+            
     }
     static testmethod void testfindObjectNameFromRecordIdPrefix() {
-		
-		
-	    Test.startTest();
-		
-		AMS_Utils.findObjectNameFromRecordIdPrefix('001');
-		AMS_Utils.findObjectNameFromRecordIdPrefix('123');
-		
-		Test.stopTest();	
-    		
+        
+        
+        Test.startTest();
+        
+        AMS_Utils.findObjectNameFromRecordIdPrefix('001');
+        AMS_Utils.findObjectNameFromRecordIdPrefix('123');
+        
+        Test.stopTest();    
+            
     }
     
     
