@@ -44,7 +44,6 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
-    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Capture PAX &amp; Cargo accreditation application details from the CS Portal.</description>
@@ -53,7 +52,6 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
@@ -164,11 +162,6 @@
     <fieldSets>
         <fullName>AMS_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>LocationType</label>
     </fieldSets>
     <fieldSets>
