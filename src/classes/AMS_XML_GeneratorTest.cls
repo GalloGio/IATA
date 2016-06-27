@@ -39,9 +39,9 @@ private class AMS_XML_GeneratorTest {
         Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
 
         List<Account> accountList = new List<Account>();
-        Account ag1 = new Account(Name='Test1 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678');
-        Account ag2 = new Account(Name='Test2 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678');
-        Account ag3 = new Account(Name='Test3 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678');
+        Account ag1 = new Account(Name='Test1 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000');
+        Account ag2 = new Account(Name='Test2 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000 000');
+        Account ag3 = new Account(Name='Test3 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351 000 000 000 000 000 000 000');
         Account ag4 = new Account(Name='Test4 Account', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent', IATACode__c = '12345678');
         accountList.add(ag1);
         accountList.add(ag2);
@@ -308,6 +308,9 @@ private class AMS_XML_GeneratorTest {
         r[3]='1';
         r[4]='true';
 
+        
+        r[5] = ag1.Id;
+
         Test.startTest();
 
         //AMS_Agency__c agTest1 = (AMS_Agency__c)[SELECT Account__c,Administrator__c,Airline_Code__c,
@@ -333,12 +336,13 @@ private class AMS_XML_GeneratorTest {
                     License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
                     N_Code__c,Organization_Last_Change_Date__c,
                     Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
-                    Phone_Number__c,Primary_address__c,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
                     RecordTypeId,RecordType.name,
                     STD_Code__c,VAT_Number__c,
-                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name, 
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-                    Email__c,TTY__c,Website
+                    Email__c,TTY__c,Website,
+                    Abbreviated_name__c, Abbreviated_address__c, status__c
                     FROM Account where id =  :ag1.Id];
 
         AMS_XML_Generator xmlGen = new AMS_XML_Generator();
@@ -347,6 +351,9 @@ private class AMS_XML_GeneratorTest {
         //TODO: Parse XML and test the ID's of the Elements against the ID's of the generated records
 
         system.assertNotEquals(s1,'');
+
+        r[5] = ag1.Id + ',' + ag2.Id + ',' + ag3.Id + ',' + ag4.Id;
+ 
 
         //List<AMS_Agency__c> agTestN = [SELECT Account__c,Administrator__c,Airline_Code__c,
         //            A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,
@@ -371,12 +378,13 @@ private class AMS_XML_GeneratorTest {
                     License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
                     N_Code__c,Organization_Last_Change_Date__c,
                     Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
-                    Phone_Number__c,Primary_address__c,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
                     RecordTypeId,RecordType.name,
                     STD_Code__c,VAT_Number__c,
-                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-                    Email__c,TTY__c,Website
+                    Email__c,TTY__c,Website,
+                    Abbreviated_name__c, Abbreviated_address__c, status__c
                     FROM Account where id in :sAgIDs];
         
         
@@ -490,4 +498,46 @@ private class AMS_XML_GeneratorTest {
 
     //    Test.stopTest();
     //}
+
+    static testMethod void test_splitPhone() {
+        ITU_Country_Code__c itu = new ITU_Country_Code__c(Name = 'Test', Code__c = '351');
+        insert itu;
+
+        AMS_XML_Generator gen = new AMS_XML_Generator();
+
+        String[] phones;
+        String phone;
+        String country = 'Test';
+
+        Test.startTest();
+
+        phones = gen.splitPhone(null, country);
+        System.assertEquals(null, phones);
+
+        phone = '+351 764 345 567';
+        phones = gen.splitPhone(phone, country);
+        System.assertEquals('00351', phones[0]);
+        System.assertEquals(null, phones[1]);
+        System.assertEquals('764345567', phones[2]);
+
+        phone = '+55 1 764 345 567';
+        phones = gen.splitPhone(phone, country);
+        System.assertEquals('00351', phones[0]);
+        System.assertEquals(null, phones[1]);
+        System.assertEquals('551764345567', phones[2]);
+
+        phone = '+55 351 764 345 567';
+        phones = gen.splitPhone(phone, country);
+        System.assertEquals('00351', phones[0]);
+        System.assertEquals('55', phones[1]);
+        System.assertEquals('351764345567', phones[2]);
+
+        phone = '55 978 123 351 764 345 567';
+        phones = gen.splitPhone(phone, country);
+        System.assertEquals('00351', phones[0]);
+        System.assertEquals('978123', phones[1]);
+        System.assertEquals('351764345567', phones[2]);
+
+        Test.stopTest();
+    }
 }
