@@ -13,7 +13,7 @@ trigger trgBeforeInsertUpdate on Case (before insert, before update) {
             if (code != null) {
                 cse.Groups__c = code.Group__c;
             } else {
-                cse.Groups__c = null;
+                cse.Groups__c = 'Default';
             }
         }
     }

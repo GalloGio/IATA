@@ -2313,7 +2313,12 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <fullName>Financial_Security_Validation_is_mandato</fullName>
         <active>true</active>
         <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>
-        <errorConditionFormula>ISNULL(Financial_Security_Validation__c)==TRUE&amp;&amp;ISPICKVAL(Security_Type__c,&quot;Bank Guarantee&quot;)&amp;&amp;(Account__r.IATA_ISO_Country__r.Name=&quot;Nigeria&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;South Africa&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Benin&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Senegal&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mali&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cote D&apos;ivoire&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Togo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Niger&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Gabon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Congo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Chad&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mauritania&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cameroon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Burkina Faso&quot;)</errorConditionFormula>
+        <errorConditionFormula>ISNULL(Financial_Security_Validation__c)==TRUE
+&amp;&amp;
+ISPICKVAL(Security_Type__c,&quot;Bank Guarantee&quot;)
+&amp;&amp;
+(Account__r.IATA_ISO_Country__r.Name=&quot;Nigeria&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;South Africa&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Benin&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Senegal&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mali&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cote D&apos;ivoire&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Togo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Niger&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Gabon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Congo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Chad&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mauritania&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cameroon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Burkina Faso&quot;)
+&amp;&amp;ISNEW()</errorConditionFormula>
         <errorDisplayField>Financial_Security_Validation__c</errorDisplayField>
         <errorMessage>Please validate the FS and update this field</errorMessage>
     </validationRules>

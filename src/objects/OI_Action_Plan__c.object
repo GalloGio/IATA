@@ -106,6 +106,17 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Initial_Due_Date__c</fullName>
+        <description>holds the information of the first due date entered for the action plan line</description>
+        <externalId>false</externalId>
+        <inlineHelpText>holds the information of the first due date entered for the action plan line</inlineHelpText>
+        <label>Initial Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Met_Due_Date__c</fullName>
         <externalId>false</externalId>
         <formula>IF ((Due_Date__c &gt;= Closure_Date__c), 1, 0)</formula>

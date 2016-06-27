@@ -52,8 +52,9 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
 
     public static final String PASSED = 'Passed';
+    public static final String FAILED = 'Failed';
     public static final String AUTH_APPROVAL = 'Authorize Approval';
-
+    public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
     public static final String LOCATION = 'Location';
     public static final String LOCATION_INSPECTION = 'Location with inspection';
@@ -66,6 +67,21 @@ public without sharing class AMS_Utils {
     public static final String HO = 'HO';
     public static final String SA = 'SA';
 
+    public static final String new_HO           = 'NEW.HO.1.0'      ;
+    public static final String new_BR           = 'NEW.BR'          ;
+    public static final String new_BR_ABROAD    = 'NEW.BR.ABROAD'   ;
+    public static final String new_TIDS         = 'NEW.TIDS.1.0'    ;
+    public static final String new_MSO          = 'NEW.MSO.1.0'     ;
+    public static final String new_GSA          = 'NEW.GSA.1.0'     ;
+    public static final String new_GSA_BSP      = 'NEW.GSA.1.0.BSP' ;
+    public static final String new_GSSA         = 'NEW.GSSA.1.0'    ;
+    public static final String new_AHA          = 'NEW.AHA.1.0'     ;
+    public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
+    public static final String new_SA           = 'NEW.SA.1.0'      ;
+
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
+
+    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -80,7 +96,13 @@ public without sharing class AMS_Utils {
     
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
+	public static final String SECTOR_CARGO = 'Cargo Agent';
+    public static final String SECTOR_PASSENGER = 'Travel Agent';
 
+    public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
+    public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
+    public static final String TYPECHANGE_LOCATION = 'Location';
+    public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
 
@@ -1129,6 +1151,26 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+public static String getChangeCodeMemoText(String process) {
+
+    String memoText = 'New application finalized';
+
+    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
+        memoText = 'New application - Head Office finalized';
+    else if (process == AMS_Utils.new_BR)
+        memoText = 'New application - Branch finalized';
+    else if (process == AMS_Utils.new_TIDS)
+        memoText = 'New application - TIDS finalized';
+    else if (process == AMS_Utils.new_SA)
+        memoText = 'New application - SA finalized';
+    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+        memoText = 'New application - GSA finalized';
+    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+        memoText = 'New application - AHA finalized';
+ 
+    return memoText;
+}
 
 
 // Converts a base64 string into a list of integers representing the encoded bytes
