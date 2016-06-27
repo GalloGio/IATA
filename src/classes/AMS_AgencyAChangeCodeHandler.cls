@@ -120,12 +120,11 @@ public class AMS_AgencyAChangeCodeHandler {
         // when creating a change code of type FIN or DIS, it should copy the information from staging Area (AMS_Pax_Accreditation_Form__c) into Master Data (Account)
 
         Id rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-        Id rtCorr = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
 
         Set<Id> oscarIds = new Set<Id>();
 
         for(Agency_Applied_Change_code__c code: aacc){
-            if(code.OSCAR__c != null && ( code.change_code__c == 'FIN' || code.change_code__c == 'DIS' || code.change_code__c == 'COR')){
+            if(code.OSCAR__c != null && ( code.change_code__c == 'FIN' || code.change_code__c == 'DIS' )){
                 oscarIds.add(code.OSCAR__c);
             }
         }
@@ -137,8 +136,8 @@ public class AMS_AgencyAChangeCodeHandler {
 
         oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId 
                             FROM AMS_OSCAR__C 
-                            WHERE Id in :oscarIds and (RecordTypeId = :rtNew OR RecordTypeId =:rtCorr) 
-                                    and Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD', 'CORRECTION.1.0')  ];
+                            WHERE Id in :oscarIds and RecordTypeId = :rtNew  
+                                    and Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD')  ];
 
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);

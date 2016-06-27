@@ -133,7 +133,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
 
 
-
             processFieldsTracking(oldOSCAR, updatedOscar);
 
             //check for each OSCAR which steps were changed
@@ -250,18 +249,34 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
             }
+        // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
-            if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed' && updatedOscar.AMS_Generate_COR_change_code__c==true) {
-                AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
+                // If the checkbox is set create a COR change code.
+                if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
+                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-                changeCode.name = 'COR';
-                changeCode.reasonCode = '91';
-                changeCode.memoText = 'Correction';
-                changeCode.reasonDesc  = 'ACCREDITED';
-                changeCode.status  = '9';
+                    changeCode.name = 'COR';
+                    changeCode.reasonCode = '91';
+                    changeCode.memoText = 'Correction';
+                    changeCode.reasonDesc  = 'ACCREDITED';
+                    changeCode.status  = '9';
 
-                Account acct = new Account(Id = updatedOscar.Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    Account acct = new Account(Id = updatedOscar.Account__c);
+                    AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                }
+
+                // Regardless the changecode is generated or not, move data to Master Data
+                // First move the account
+                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
+                AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar});
+
+                // THen move the owners
+                Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, new Set<Id>{updatedOscar.Account__c});
+                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts);
             }
 
         }
