@@ -4,7 +4,7 @@ public without sharing class AMS_Utils {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS â€“ Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -52,9 +52,12 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
 
     public static final String PASSED = 'Passed';
+    public static final String FAILED = 'Failed';
     public static final String AUTH_APPROVAL = 'Authorize Approval';
-
+    public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
+    public static final String LOCATION = 'Location';
+    public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
 
@@ -64,6 +67,21 @@ public without sharing class AMS_Utils {
     public static final String HO = 'HO';
     public static final String SA = 'SA';
 
+    public static final String new_HO           = 'NEW.HO.1.0'      ;
+    public static final String new_BR           = 'NEW.BR'          ;
+    public static final String new_BR_ABROAD    = 'NEW.BR.ABROAD'   ;
+    public static final String new_TIDS         = 'NEW.TIDS.1.0'    ;
+    public static final String new_MSO          = 'NEW.MSO.1.0'     ;
+    public static final String new_GSA          = 'NEW.GSA.1.0'     ;
+    public static final String new_GSA_BSP      = 'NEW.GSA.1.0.BSP' ;
+    public static final String new_GSSA         = 'NEW.GSSA.1.0'    ;
+    public static final String new_AHA          = 'NEW.AHA.1.0'     ;
+    public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
+    public static final String new_SA           = 'NEW.SA.1.0'      ;
+
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
+
+    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -76,7 +94,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
     
-    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Donâ€™t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
@@ -267,7 +285,7 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        // «A» Section
+        // Â«AÂ» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
@@ -283,7 +301,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('REC')) {
             sRes = 'A';
         } 
-        // «D» Section
+        // Â«DÂ» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('NWD')) {
@@ -293,7 +311,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
         } 
-        // «C» Section
+        // Â«CÂ» Section
         else {
             sRes = 'C';
         }
@@ -303,6 +321,15 @@ public without sharing class AMS_Utils {
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
 
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingStreet - ' + acc.BillingStreet);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingCity - ' + acc.BillingCity);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingPostalCode - ' + acc.BillingPostalCode);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.IATA_ISO_Country__c - ' + acc.IATA_ISO_Country__c);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.Iso_State__c - ' + acc.Iso_State__c);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingStreet - ' + acc.ShippingStreet);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingCity - ' + acc.ShippingCity);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingPostalCode - ' + acc.ShippingPostalCode);
+        
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
@@ -338,13 +365,6 @@ public without sharing class AMS_Utils {
         }        
         return true;
     }
-
-    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
-    //                    accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
-    //                }
-    //                if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
-    //                    accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
-    //                }
 
 
     public static List<String> splitAccName(String sText) {
@@ -1155,6 +1175,26 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+public static String getChangeCodeMemoText(String process) {
+
+    String memoText = 'New application finalized';
+
+    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
+        memoText = 'New application - Head Office finalized';
+    else if (process == AMS_Utils.new_BR)
+        memoText = 'New application - Branch finalized';
+    else if (process == AMS_Utils.new_TIDS)
+        memoText = 'New application - TIDS finalized';
+    else if (process == AMS_Utils.new_SA)
+        memoText = 'New application - SA finalized';
+    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+        memoText = 'New application - GSA finalized';
+    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+        memoText = 'New application - AHA finalized';
+ 
+    return memoText;
+}
 
 
 // Converts a base64 string into a list of integers representing the encoded bytes
