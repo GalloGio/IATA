@@ -482,7 +482,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
-            Boolean expectedExceptionThrown =  e.getMessage().contains('This field can only be filled for changes of Location Type.') ? true : false;
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The field Change of location type behavior can only be filled for changes of Location Type.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 
