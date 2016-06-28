@@ -155,9 +155,9 @@
                     <apex:outputText value="{0,date,yyyy/MM/dd HH:mm:ss}" label="OSCAR received">
                         <apex:param value="{!theOSCAR.CreatedDate}"/>
                     </apex:outputText>
-
+<!--
                     <apex:outputText label="Received from"> <a href="#" onClick="openSubtab('{!submitter.Id}','{!submitter.Name}', 'true')">{!submitter.Name}</a></apex:outputText>
-                    
+    -->                
                 </apex:pageBlockSection>
                 <!--<apex:panelGrid columns="4" style="width:100%">
                     <apex:outputText >{!oscarCase.CaseNumber}</apex:outputText>

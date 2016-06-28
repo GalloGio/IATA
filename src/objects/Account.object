@@ -8434,6 +8434,36 @@ J-Joint Vent</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Location_Type_Ordered__c</fullName>
+        <externalId>false</externalId>
+        <formula>case (TEXT(Location_Type__c)
+       , &apos;AO&apos;, 1
+       , &apos;EP&apos;, 1
+       , &apos;HO&apos;, 1
+
+       , &apos;BR&apos;, 2
+       , &apos;CS&apos;, 2
+       , &apos;EB&apos;, 2
+       , &apos;ES&apos;, 2
+       , &apos;SE&apos;, 2
+       , &apos;TD&apos;, 2
+       , &apos;WH&apos;, 2
+
+       , &apos;ST&apos;, 3
+       , &apos;AW&apos;, 3
+       , &apos;SA&apos;, 3
+       , 99
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type Ordered</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Type__c</fullName>
         <description>Field used to determine the Location Type of travel agents (used in Americas)</description>
         <externalId>false</externalId>
@@ -9143,7 +9173,7 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
-        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
+        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D7E0000008gLy&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
 IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;IATA_GSA&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
@@ -9312,6 +9342,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <picklistValues>
                 <fullName>10 days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -22778,6 +22812,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -25123,6 +25164,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -27256,6 +27304,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -29091,6 +29146,49 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Company_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -29363,6 +29461,81 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -29560,6 +29733,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35273,6 +35453,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -38954,6 +39141,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -41158,6 +41352,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45190,6 +45391,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49258,6 +49466,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -51427,6 +51642,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -53521,6 +53743,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55670,6 +55899,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58233,6 +58469,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62044,6 +62287,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -63578,7 +63828,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <searchFilterFields>Location_Type__c</searchFilterFields>
         <searchFilterFields>Category__c</searchFilterFields>
         <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
-        <searchFilterFields>ACCOUNT.RECORDTYPE</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.INDUSTRY</searchResultsAdditionalFields>

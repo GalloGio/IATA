@@ -73,7 +73,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         String s = xmlGen.getAgencySalesOrder(scope);
 
         //Decomment if XML is necessary on the Log entry
-        //sLog += 'XML Sent: '+s+'\n';
+        sLog += 'XML Sent: '+s+'\n';
         
         //Call WebService
         // instantiate the web service proxy

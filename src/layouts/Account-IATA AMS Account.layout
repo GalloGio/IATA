@@ -149,7 +149,7 @@
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
@@ -469,10 +469,10 @@
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
-        <fields>CREATED_DATE</fields>
+        <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
+        <sortField>Created_Date_To_Show__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
