@@ -3,45 +3,53 @@
 		<head>
 			<style>
 				@page{page-size:A4}
-				body{text-align:center;}
-				
+				body{text-align:left;}
+				.centered{ text-align:center; }
 				table.headerTable td{ vertical-align: text-top; text-align: left;}
-				
-				table.airlinesTable{ }
-				table.airlinesTable th{padding:0.5em; }
-				table.airlinesTable td{padding:0.5em; }
+				table.airlinesTable{ width: 100%; }
+				table.airlinesTable th{padding:0.5em; text-align: center;}
+				table.airlinesTable td{padding:0.5em 0.5em 0.5em 1.5em; text-align: left; vertical-align: text-top;}
+				.fullsize {
+					display: block;
+				  width: 100% !important;
+				  height: auto !important;
+				}
 			</style>
 		</head>
-		
+
 		<body>
-			<img src="{!URLFOR($Resource.AP_PDF_Header)}" />
-		
-			<h3>MEMORANDUM</h3>
-			<h3>ADMIN/INTERLINE/{!memorandumNumber}</h3>
-			
+			<img class="fullsize" src="{!URLFOR($Resource.AP_PDF_Header)}" />
+
+			<h3 class="centered">MEMORANDUM</h3>
+			<h3 class="centered">ADMIN/INTERLINE/{!memorandumNumber}</h3>
+
 			<table class="headerTable">
 				<tr>
 					<td>TO:</td>
 					<td>
 						All Members<br/>
-						Non-IATA Parties to the IATA Multilateral Interline Traffic Agreements - Passenger and Cargo,<br/>
-						Interline Traffic Participation Agreement – Passenger (MITA One-Way) and Intermodal Interline<br/>
-						Traffic Agreement - Passenger (Intermodal MITA).<br/>
+						Non-IATA Parties to the IATA Multilateral Interline Traffic Agreements - Passenger and Cargo,
+						Interline Traffic Participation Agreement – Passenger (MITA One-Way) and Intermodal Interline
+						Traffic Agreement - Passenger (Intermodal MITA).<br/><br/>
 					</td>
 				</tr>
 				<tr>
 					<td>FROM: </td>
-					<td>IATA MITA<br/></td>
+					<td>IATA MITA<br/><br/></td>
 				</tr>
 				<tr>
 					<td>DATE: </td>
-					<td>FROM <apex:outputField value="{!fromDate.Effective_date__c}" /> TO <apex:outputField value="{!toDate.Effective_date__c}" /><br/></td>
+					<td>FROM&nbsp;<apex:outputField value="{!fromDate.Cancellation_processed_date__c}" />&nbsp;TO&nbsp;<apex:outputField value="{!toDate.Cancellation_processed_date__c}" /><br/><br/></td>
 				</tr>
 				<tr>
 					<td>SUBJECT: </td>
-					<td style="font-weight:bold; text-decoration:underline">NOTICE OF INDIVIDUAL WITHDRAWALS ACTIONED<br/></td>
+					<td style="font-weight:bold; text-decoration:underline">
+						<apex:OutputText value="NOTICE OF INDIVIDUAL WITHDRAWALS ACTIONED" rendered="{!selectedAgreement=='MITA'}"/>
+						<apex:OutputText value="NOTICE OF BIETA (IET) WITHDRAWALS ACTIONED" rendered="{!selectedAgreement=='BIETA'}"/>
+						<br/>
+					</td>
 				</tr>
-			
+
 			</table>
 			<br/><br/>
 
@@ -53,16 +61,21 @@
 						<th>Agreement(s)</th>
 						<th>Effective Date</th>
 					</tr>
-					<apex:repeat value="{!WithdrawalsAgreements}" var="agr">
+					<apex:repeat value="{!WithdrawalsAgreements}" var="wrapper">
 					<tr>
-						<td><apex:outputField value="{!agr.Airline_1__r.Name}" /></td>
-						<td><apex:outputField value="{!agr.Airline_2__r.Name}" /></td>
-						<td><apex:outputField value="{!agr.Agreement_type__c}" /></td>
-						<td><apex:outputField value="{!agr.Cancellation_date__c}" /></td>
+						<td><apex:outputField value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}" /></td>
+						<td><apex:outputField value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}" /></td>
+						<td><apex:outputText value="{!wrapper.TypeCode}" /></td>
+						<td><apex:outputField value="{!wrapper.agreement.Cancellation_date__c}" /></td>
 					</tr>
 					</apex:repeat>
 				</table>
-				
+
+				<div style="margin: 30px;" >
+					Best regards,<br/><br/>
+					IATA MITA<br/>
+					FDS Operations
+				</div>
 			</apex:pageBlock>
 		</body>
 	</html>

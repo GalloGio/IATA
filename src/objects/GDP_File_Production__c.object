@@ -330,6 +330,13 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP File Productions</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Duration_in_minutes__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Size__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>File_Specification__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Production_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
