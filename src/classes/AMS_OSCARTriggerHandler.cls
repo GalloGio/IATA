@@ -674,7 +674,7 @@ public class AMS_OSCARTriggerHandler {
 		}else{
 			//Only allowed to be filled in for change of Location Type
 			if(oscar.Change_of_location_type_behavior__c != null)
-				oscar.Change_of_location_type_behavior__c.addError('The field "Change of location type behavior" can only be filled for changes of Location Type.');
+				oscar.Change_of_location_type_behavior__c.addError('The field Change of location type behavior can only be filled for changes of Location Type.');
 		}
 
 

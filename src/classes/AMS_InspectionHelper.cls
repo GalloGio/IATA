@@ -80,45 +80,81 @@ public class AMS_InspectionHelper {
 
 
             
-	public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
-	{
-		Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
-		
+    public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
+    {
+        Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
+        
         List<Account> accountsToProcess = [select id, Expiry_Date__c from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
             return;
 
-		for(Account acc : accountsToProcess){
-			acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
-		}
+        for(Account acc : accountsToProcess){
+            acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
+        }
 
-		update accountsToProcess;
+        update accountsToProcess;
 
-	}
-	
-	private static Map<Id, AMS_Inspection__c> findAMSInspectionsWhereStatusCodeChangedToZero(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
-	{
-		Map<Id, AMS_Inspection__c> changedRecords = new Map<Id, AMS_Inspection__c>();
-		for(AMS_Inspection__c current : newValues.values())
-		{
-			if(oldValues != null && oldValues.get(current.Id) != null)
-			{
-				AMS_Inspection__c currentOldRecord = oldValues.get(current.Id);
-				if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c != currentOldRecord.Accreditation_Endorsement_Status_code__c && current.Accreditation_Endorsement_Status_code__c.equals('0'))
-				{
-					changedRecords.put(current.Account__c, current);
-				}
-			} else if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c.equals('0'))
-			{
-				// inserting with status code 0, so let's consider this an updatable record
-				changedRecords.put(current.Account__c, current);
-			} else
-			{
-				// This is just an insert of StatusCode != 0, so no need to do any updates
-			}
-		}
-		return changedRecords;
-	}
+    }
+    
+    private static Map<Id, AMS_Inspection__c> findAMSInspectionsWhereStatusCodeChangedToZero(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
+    {
+        Map<Id, AMS_Inspection__c> changedRecords = new Map<Id, AMS_Inspection__c>();
+        for(AMS_Inspection__c current : newValues.values())
+        {
+            if(oldValues != null && oldValues.get(current.Id) != null)
+            {
+                AMS_Inspection__c currentOldRecord = oldValues.get(current.Id);
+                if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c != currentOldRecord.Accreditation_Endorsement_Status_code__c && current.Accreditation_Endorsement_Status_code__c.equals('0'))
+                {
+                    changedRecords.put(current.Account__c, current);
+                }
+            } else if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c.equals('0'))
+            {
+                // inserting with status code 0, so let's consider this an updatable record
+                changedRecords.put(current.Account__c, current);
+            } else
+            {
+                // This is just an insert of StatusCode != 0, so no need to do any updates
+            }
+        }
+        return changedRecords;
+    }
+    
+        /**  Comparison of two AMS_Inspection__c records. Used to prevent a last synchronization datetime issue caused by DST.
+     *   If any of the fields apart from last sync is not equal to the old value, 
+     *   it means something else than the Last Sync value got updated as well.
+    */
+    public static boolean compareAmsInspectionRecords_IgnoringLastSyncDate(AMS_Inspection__c newRecord, AMS_Inspection__c oldRecord)
+    {
+        Set<String> ignoredFields = new Set<String>{'LastModifiedById', 'LastModifiedDate', 'SystemModstamp', 'Last_synchronization__c'};
+        Map <String, Schema.SObjectField> inspectionFieldsMap = schema.SObjectType.AMS_Inspection__c.fields.getMap();
+        List <Schema.SObjectField> inspectionFields = inspectionFieldsMap.values();
+        List <String> inspectionAPIFieldNames = new List<String>();
+        for (Schema.SObjectField field : inspectionFields)
+        {
+            inspectionAPIFieldNames.add(field.getDescribe().getName());
+        }
+        
+        boolean valueChanged = false;
+
+        for(String field : inspectionAPIFieldNames)
+        {
+            System.debug('*************** inspection field: '+field);
+            if(!ignoredFields.contains(field))
+            {
+                if(newRecord.get(field) != oldRecord.get(field))
+                {
+                    System.debug('*************** field that CHANGED: '+field);
+                    valueChanged = true;
+                }
+            }
+        }
+        if(valueChanged)
+        {
+            return true;
+        }
+        return false;
+    }
     
 }
