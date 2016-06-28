@@ -1,5 +1,19 @@
-global class SchdlCACWSUsageUpdate implements Schedulable {
+/**
+  * Description: This class schedule the sync (update) on CACWeb usage counter
+  *   the actual update is performed by the batch class BtchCACWSUsageUpdate
+  * 
+  * Original Author: Abdellah Bellahssan/Bhargavi Rayavarapu
+  *
+  * History: 
+  *   20160223: initial version
+  *   20160609-sl: bug fix: this should schedule another run on this class (SchdlCACWSUsageUpdate) instead of SchdlIECCompileUsage
+  *
+  */
 
+global class SchdlCACWSUsageUpdate implements Schedulable {
+    
+    private static integer HOUR_DELAY_BETWEEN_JOBS = 6; // number of hours for the next scheduled run
+    
     global void execute(SchedulableContext sc) {
         
         // check if there are pending batch jobs (limit is 5)
@@ -33,7 +47,7 @@ global class SchdlCACWSUsageUpdate implements Schedulable {
         
         // This section of code will schedule the next execution X minutes from now depending on the configured setting
         
-        datetime nextScheduleTime = system.now().addHours(6);
+        datetime nextScheduleTime = system.now().addHours(HOUR_DELAY_BETWEEN_JOBS);
         
         string month = string.valueof(nextScheduleTime.month());
         string day = string.valueof(nextScheduleTime.day()); 
@@ -43,10 +57,11 @@ global class SchdlCACWSUsageUpdate implements Schedulable {
           
         string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';        
         string jobName = 'SchdlCACWSUsageUpdate ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
-        system.schedule(jobName, cronvalue , new SchdlIECCompileUsage());
+        system.schedule(jobName, cronvalue , new SchdlCACWSUsageUpdate());
         
         // this section of code will abort the current schedule job
         system.abortJob(sc.getTriggerId());
         
-    }
-}
+    } // end of execute
+    
+} // end of class SchdlCACWSUsageUpdate
