@@ -304,7 +304,7 @@ private static String mergedFileName(case Cse, list<AmazonFile> listFile) {
 
     string name = '';
 
-    string firstPart =  Cse.account.Country_ISO_Code__c + '-' + (Cse.account.Type == 'IATA Cargo Agent' || Cse.account.type == 'CASS Associate' ? 'C' : 'P');
+    string firstPart =  Cse.account.Country_ISO_Code__c + '-' + (Cse.account.Type == 'IATA Cargo Agent' || Cse.account.type == 'CASS Associates' ? 'C' : 'P');
 
     firstPart += cse.Financial_Review_Type__c <> 'New applications'
                  ?
