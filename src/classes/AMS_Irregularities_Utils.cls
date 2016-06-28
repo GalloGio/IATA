@@ -14,26 +14,26 @@
 public class AMS_Irregularities_Utils{
     
     public static void CalculateAccumulatedIrregularitiesFromAccount(list<Account> lsAccnt){
-       /* set<id> setAccntIDs = new set<id>();
+        set<id> setAccntIDs = new set<id>();
         
         for(Account accnt:lsAccnt)
             setAccntIDs.add(accnt.id);
             
-        CalculateAccumulatedIrregularities(setAccntIDs);*/
+        CalculateAccumulatedIrregularities(setAccntIDs);
     }
     
     
     public static void CalculateAccumulatedIrregularitiesFromChangeCode(list<Agency_Applied_Change_code__c> lsCCs){
-        /*set<id> setAccntIDs = new set<id>();
+        set<id> setAccntIDs = new set<id>();
         
         for(Agency_Applied_Change_code__c cc:lsCCs)
             setAccntIDs.add(cc.account__c);
             
-        CalculateAccumulatedIrregularities(setAccntIDs);*/
+        CalculateAccumulatedIrregularities(setAccntIDs);
     }
     
     private static void CalculateAccumulatedIrregularities(set<id> setAccntIds){
-        /*if(!setAccntIds.isEmpty()){
+        if(!setAccntIds.isEmpty()){
             list<Account> lsAccntToUpdate = new list<Account>();
             map<id, decimal> mapAccIRRperAgency = new map<id, decimal>();
             
@@ -66,7 +66,9 @@ public class AMS_Irregularities_Utils{
                 if(!lsAccntToUpdate.isEmpty())
                     update lsAccntToUpdate;
             }
-        }*/
+        }
     } 
+    
+}   } 
     
 }
