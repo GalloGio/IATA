@@ -1144,7 +1144,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <filters>
             <field>Country_ISO_Code__c</field>
             <operation>equals</operation>
-            <value>US</value>
+            <value>CA</value>
         </filters>
         <filters>
             <field>Agency_Status_Code__c</field>

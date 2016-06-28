@@ -17,6 +17,8 @@ public class AMS_OSCAR_ProcessViewerController {
     
     public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
     
+    public Boolean existOscarInsp {get;set;}
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
@@ -35,6 +37,8 @@ public class AMS_OSCAR_ProcessViewerController {
              
                 this.oscar = fetchOscarFields(this.oscarCase.OSCAR__c);
                 this.oscarId = this.oscar.Id;
+                this.existOscarInsp = existOscarInspections(this.oscar);
+             
                 loadJsonFile();
             }
 
@@ -43,6 +47,8 @@ public class AMS_OSCAR_ProcessViewerController {
 
             this.oscar = fetchOscarFields(objectId);
             this.oscarId = this.oscar.Id;
+            this.existOscarInsp = existOscarInspections(this.oscar);
+             
             loadJsonFile();
             
             this.oscarCase = fetchCaseFields(objectId,true);
@@ -213,13 +219,25 @@ public class AMS_OSCAR_ProcessViewerController {
                     STEP6__c, STEP7__c, STEP8__c, STEP9__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c,
                     STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
                     Late_notified_change__c, Confirm_DGR_DGA__c,Update_IRIS_processing__c, Send_approval_letter__c, Issue_rejection_notification_pack__c,
-                    AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c 
+                    AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c, AMS_Generate_COR_change_code__c
                     from AMS_OSCAR__c where Id =: oscarId LIMIT 1];
 
         if(!oscars.isEmpty())
             return oscars.get(0);
 
        return toReturn;
+
+    }
+    
+    private Boolean existOscarInspections(AMS_OSCAR__c oscar){
+        ID oscarId = oscar.Id;
+        if (database.countQuery('select count() from AMS_Inspection__c where oscar__c = : oscarId') == 0 
+                && 
+            AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c) 
+            )
+            return false;
+
+       return true;
 
     }
 

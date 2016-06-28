@@ -220,11 +220,7 @@ global class AMS_OSCAR_Webservice {
 
             changeCode.name = 'NEW';
             changeCode.reasonCode = '21';
-
-            if(theOSCAR.Process__c == 'NEW.HO.1.0' || theOSCAR.Process__c == 'NEW.BR.ABROAD')
-                changeCode.memoText = 'New application in progress';
-            else if(theOSCAR.Process__c =='NEW.BR')
-                changeCode.memoText = 'New application - Branch in progress';
+            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c);
             changeCode.reasonDesc  = 'NEW APPLICATION';
             changeCode.status  = '2';
 
