@@ -57,9 +57,24 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Duration__c</fullName>
-        <description>Duration to produce the file in minutes</description>
+        <description>Duration to produce the file in seconds, as send by the GSS Program through REST API /GSS/v0/ConfirmFileProduction</description>
         <externalId>false</externalId>
-        <inlineHelpText>Duration to produce the file in minutes</inlineHelpText>
+        <inlineHelpText>Duration to produce the file in seconds</inlineHelpText>
+        <label>Duration (second)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration_in_minutes__c</fullName>
+        <description>Duration in minutes  for producing this file in AWS</description>
+        <externalId>false</externalId>
+        <formula>CEILING(Duration__c / 60)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Duration in minutes  for producing this file in AWS</inlineHelpText>
         <label>Duration (minute)</label>
         <precision>18</precision>
         <required>false</required>
@@ -140,7 +155,7 @@
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
         <columns>Size__c</columns>
-        <columns>Duration__c</columns>
+        <columns>Duration_in_minutes__c</columns>
         <columns>Production_Date__c</columns>
         <columns>Message__c</columns>
         <filterScope>Everything</filterScope>
