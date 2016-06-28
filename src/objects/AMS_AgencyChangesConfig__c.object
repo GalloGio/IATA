@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <customSettingsType>List</customSettingsType>
-    <customSettingsVisibility>Protected</customSettingsVisibility>
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>TCA_Application_withdrawal__c</fullName>
@@ -138,4 +137,5 @@
         <type>Checkbox</type>
     </fields>
     <label>AMS Agency Changes Configuration</label>
+    <visibility>Protected</visibility>
 </CustomObject>

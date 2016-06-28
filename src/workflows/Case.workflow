@@ -1260,6 +1260,7 @@
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_DP01_KAM_case_created_assign</fullName>
+        <ccEmails>madsceacc@iata.org</ccEmails>
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
@@ -1271,15 +1272,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gilj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>iriartej@iata.org</recipient>
+            <recipient>girondoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1287,35 +1280,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>martinyuks@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ogandoi@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sanchezc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sanchoj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>schuchardm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -2115,12 +2084,9 @@
     </alerts>
     <alerts>
         <fullName>Inform_Deskom_of_new_case_assignment_escalation</fullName>
+        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Inform Deskom of new case assignment/escalation</description>
         <protected>false</protected>
-        <recipients>
-            <recipient>kupferm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/IW_Caseassignmentqueue</template>
     </alerts>
@@ -4755,7 +4721,7 @@
         <fullName>DPC_Update_case_reason</fullName>
         <description>Update the case reason when the case origin is &quot;Global Data Update&quot;</description>
         <field>Reason1__c</field>
-        <literalValue>Tax Miscellaneous Fee Management</literalValue>
+        <literalValue>Airline Master List and Details</literalValue>
         <name>DPC - Update case reason</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -7401,10 +7367,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Workflow to inform ACCA Owner that the Escalated Status DPC has been changed, no matter who changes it.</description>
-        <formula>AND(
-ISCHANGED( Escalated_Status__c), 
-ISPICKVAL( DPC_Software__c, &quot;IBSP1&quot;)
-)</formula>
+        <formula>AND( ISCHANGED( Escalated_Status__c),  ISPICKVAL( DPC_Software__c, &quot;IBSP1&quot;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -7821,9 +7784,7 @@ ISPICKVAL( DPC_Software__c, &quot;IBSP1&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND(
-ISCHANGED(Status ),
-ISPICKVAL(Status, &quot;Escalated&quot;))</formula>
+        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Escalated&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -7833,9 +7794,7 @@ ISPICKVAL(Status, &quot;Escalated&quot;))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND(
-ISCHANGED(Status ),
-ISPICKVAL(Status, &quot;In progress&quot;))</formula>
+        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;In progress&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -7845,9 +7804,7 @@ ISPICKVAL(Status, &quot;In progress&quot;))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND(
-ISCHANGED(Status ),
-ISPICKVAL(Status, &quot;Pending customer&quot;))</formula>
+        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Pending customer&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -7867,9 +7824,7 @@ ISPICKVAL(Status, &quot;Pending customer&quot;))</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND(
-ISCHANGED(Status ),
-ISPICKVAL(Status, &quot;Reopen&quot;))</formula>
+        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Reopen&quot;))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -10581,41 +10536,7 @@ ISPICKVAL(Status, &quot;Reopen&quot;))</formula>
     <rules>
         <fullName>Clicktools Workflow_CHINESE</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND(
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))
-),
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service&quot;),ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;People&apos;s Republic of China&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND( NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) ), OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service&quot;),ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;People&apos;s Republic of China&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -10638,39 +10559,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_ENGLISH</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),ISPICKVAL(Status,&quot;Closed&quot;), 
-AND(NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))), 
-OR(Instant_Survey_Last_survey_sent__c=null,NOT(Instant_Survey_Feedback_requested__c)),
-ParentId=null,
-OR(
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c),Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30),
-Contact.Instant_Survey_opt_out__c = null,
-AND(
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))), 
-OR(
-AND(
-CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,
-OR(
-ISPICKVAL(BSPCountry__c,&quot;Philippines&quot;),ISPICKVAL(BSPCountry__c,&quot;India&quot;),ISPICKVAL(BSPCountry__c,&quot;Nepal&quot;),ISPICKVAL(BSPCountry__c,&quot;Bangladesh&quot;),ISPICKVAL(BSPCountry__c,&quot;Pakistan&quot;),ISPICKVAL(BSPCountry__c,&quot;Singapore&quot;),ISPICKVAL(BSPCountry__c,&quot;Sri Lanka&quot;),ISPICKVAL(BSPCountry__c,&quot;Cambodia&quot;),ISPICKVAL(BSPCountry__c,&quot;New Zealand&quot;),ISPICKVAL(BSPCountry__c,&quot;Malaysia&quot;))
-),
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,
-NOT(ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Israel&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;France&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Germany&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Greece&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Italy&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Portugal&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Romania &amp; Moldova&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Spain &amp; Andorra&quot;)),
-NOT(ISPICKVAL(BSPCountry__c,&quot;Turkey&quot;)))
- ),
-AND(
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
-)
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),ISPICKVAL(Status,&quot;Closed&quot;),  AND(NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))),  OR(Instant_Survey_Last_survey_sent__c=null,NOT(Instant_Survey_Feedback_requested__c)), ParentId=null, OR( ISNULL(Contact.Instant_Survey_Last_feedback_received__c),Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30), Contact.Instant_Survey_opt_out__c = null, AND( NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))),  OR( AND( CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;, OR( ISPICKVAL(BSPCountry__c,&quot;Philippines&quot;),ISPICKVAL(BSPCountry__c,&quot;India&quot;),ISPICKVAL(BSPCountry__c,&quot;Nepal&quot;),ISPICKVAL(BSPCountry__c,&quot;Bangladesh&quot;),ISPICKVAL(BSPCountry__c,&quot;Pakistan&quot;),ISPICKVAL(BSPCountry__c,&quot;Singapore&quot;),ISPICKVAL(BSPCountry__c,&quot;Sri Lanka&quot;),ISPICKVAL(BSPCountry__c,&quot;Cambodia&quot;),ISPICKVAL(BSPCountry__c,&quot;New Zealand&quot;),ISPICKVAL(BSPCountry__c,&quot;Malaysia&quot;)) ), AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;, NOT(ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Israel&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;France&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Germany&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Greece&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Italy&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Portugal&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Romania &amp; Moldova&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Spain &amp; Andorra&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Turkey&quot;)))  ), AND( NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c) ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -10693,80 +10582,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_ENGLISH_2</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), 
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-OR( 
-AND( 
-CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service Staff&quot;), 
-ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;), 
-Case_Group__c = &quot;Query&quot;, 
-ISPICKVAL(BSPCountry__c,&quot;Mongolia&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Chinese Taipei&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Hong Kong (SAR), China&quot;)
-), 
-AND( 
-OR( 
-CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;), 
-CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;) 
-), 
-ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;), 
-Case_Group__c = &quot;Query&quot;, 
-AND( 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Benin&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Mali&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Niger&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Togo&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;)), 
-NOT(ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;)) 
-) 
-) 
-), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c) 
-) 
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),  ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(  AND(  CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),  Case_Group__c = &quot;Query&quot;,  ISPICKVAL(BSPCountry__c,&quot;Mongolia&quot;), ISPICKVAL(BSPCountry__c,&quot;Chinese Taipei&quot;), ISPICKVAL(BSPCountry__c,&quot;Hong Kong (SAR), China&quot;) ),  AND(  OR(  CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;),  CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;)  ),  ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;),  Case_Group__c = &quot;Query&quot;,  AND(  NOT(ISPICKVAL(BSPCountry__c,&quot;Benin&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mali&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Niger&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Togo&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;))  )  )  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  )  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -10801,74 +10617,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), 
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-OR( 
-AND( 
-CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;), 
-ISPICKVAL(Region__c,&quot;Americas&quot;), 
-Case_Group__c = &quot;Query&quot;, 
-OR( 
-ISPICKVAL(BSPCountry__c,&quot;HAITI&quot;), 
-ISPICKVAL(BSPCountry__c,&quot;JAMAICA&quot;), 
-ISPICKVAL(BSPCountry__c,&quot;CAYMAN ISLANDS&quot;), 
-ISPICKVAL(BSPCountry__c,&quot;TURKS AND CAICOS ISLANDS&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Trinidad and Tobago&quot;),
-ISPICKVAL(BSPCountry__c,&quot;BERMUDA&quot;)
-)),
-AND(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;, 
-OR( 
-ISPICKVAL(BSPCountry__c,&quot;Australia&quot;)))
-), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),
-NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Email&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),
-NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),
-NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),
-NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Other&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),
-NOT(Phone_Redirected_to_Web__c) 
-) 
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),  ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(  AND(  CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;Americas&quot;),  Case_Group__c = &quot;Query&quot;,  OR(  ISPICKVAL(BSPCountry__c,&quot;HAITI&quot;),  ISPICKVAL(BSPCountry__c,&quot;JAMAICA&quot;),  ISPICKVAL(BSPCountry__c,&quot;CAYMAN ISLANDS&quot;),  ISPICKVAL(BSPCountry__c,&quot;TURKS AND CAICOS ISLANDS&quot;), ISPICKVAL(BSPCountry__c,&quot;Trinidad and Tobago&quot;), ISPICKVAL(BSPCountry__c,&quot;BERMUDA&quot;) )), AND(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,  OR(  ISPICKVAL(BSPCountry__c,&quot;Australia&quot;))) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)), NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)), NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)), NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)), NOT(ISPICKVAL(Origin,&quot;Email&quot;)), NOT(ISPICKVAL(Origin,&quot;Fax&quot;)), NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)), NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)), NOT(ISPICKVAL(Origin,&quot;Letter&quot;)), NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)), NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)), NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)), NOT(ISPICKVAL(Origin,&quot;OLS&quot;)), NOT(ISPICKVAL(Origin,&quot;Other&quot;)), NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)), NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)), NOT(Phone_Redirected_to_Web__c)  )  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -10886,133 +10635,13 @@ NOT(Phone_Redirected_to_Web__c)
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-),
-CONTAINS($UserRole.Name,&quot;Americas Customer Service&quot;),
-ISPICKVAL(Region__c,&quot;Americas&quot;),
-Case_Group__c = &quot;Query&quot;,
-ISPICKVAL(BSPCountry__c,&quot;Canada&quot;),
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),
-NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Email&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),
-NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),
-NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),
-NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Other&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),
-NOT(Phone_Redirected_to_Web__c)
-)
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ), CONTAINS($UserRole.Name,&quot;Americas Customer Service&quot;), ISPICKVAL(Region__c,&quot;Americas&quot;), Case_Group__c = &quot;Query&quot;, ISPICKVAL(BSPCountry__c,&quot;Canada&quot;), AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)), NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)), NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)), NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)), NOT(ISPICKVAL(Origin,&quot;Email&quot;)), NOT(ISPICKVAL(Origin,&quot;Fax&quot;)), NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)), NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)), NOT(ISPICKVAL(Origin,&quot;Letter&quot;)), NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)), NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)), NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)), NOT(ISPICKVAL(Origin,&quot;OLS&quot;)), NOT(ISPICKVAL(Origin,&quot;Other&quot;)), NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)), NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)), NOT(Phone_Redirected_to_Web__c) ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Clicktools Workflow_FRENCH</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-),
-OR( 
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;France&quot;)
- ),
-AND(
-OR(
-CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;),
-CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;)
-),
-ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;),
-Case_Group__c = &quot;Query&quot;,
-OR(
-ISPICKVAL(BSPCountry__c,&quot;Benin&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Mali&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Niger&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Togo&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;))
-)
-), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ), OR(  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;France&quot;)  ), AND( OR( CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;), CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;) ), ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;), Case_Group__c = &quot;Query&quot;, OR( ISPICKVAL(BSPCountry__c,&quot;Benin&quot;), ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;), ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;), ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;), ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;), ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;), ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;), ISPICKVAL(BSPCountry__c,&quot;Mali&quot;), ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;), ISPICKVAL(BSPCountry__c,&quot;Niger&quot;), ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;), ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;), ISPICKVAL(BSPCountry__c,&quot;Togo&quot;), ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;), ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;), ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;)) ) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11035,41 +10664,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_GERMAN</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,OR(ISPICKVAL(BSPCountry__c,&quot;Austria&quot;),ISPICKVAL(BSPCountry__c,&quot;Germany&quot;))
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,OR(ISPICKVAL(BSPCountry__c,&quot;Austria&quot;),ISPICKVAL(BSPCountry__c,&quot;Germany&quot;))  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11092,41 +10687,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_GREEK</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,OR(ISPICKVAL(BSPCountry__c,&quot;Greece&quot;),ISPICKVAL(BSPCountry__c,&quot;Cyprus&quot;))
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,OR(ISPICKVAL(BSPCountry__c,&quot;Greece&quot;),ISPICKVAL(BSPCountry__c,&quot;Cyprus&quot;))  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11149,41 +10710,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_INDONESIAN</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Indonesia&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Indonesia&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Indonesia&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Indonesia&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11206,41 +10733,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_ITALIAN</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  
-), 
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Italy&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))   ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Italy&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11275,41 +10768,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Japan&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Japan&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Japan&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Japan&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <offsetFromField>Case.ClosedDate</offsetFromField>
@@ -11320,41 +10779,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_KOREAN</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Thailand&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Korea, Republic of&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Thailand&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Korea, Republic of&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11377,49 +10802,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_PORTUGUESE</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-),  
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-OR(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Portugal&quot;)
- ),
-AND( 
-CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;), 
-ISPICKVAL(Region__c,&quot;Americas&quot;), 
-Case_Group__c = &quot;Query&quot;, 
-OR( 
-ISPICKVAL(BSPCountry__c,&quot;Brazil&quot;)
-) 
-),  
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),   OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Portugal&quot;)  ), AND(  CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;Americas&quot;),  Case_Group__c = &quot;Query&quot;,  OR(  ISPICKVAL(BSPCountry__c,&quot;Brazil&quot;) )  ),   AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11442,41 +10825,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_ROMANIAN</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Romania &amp; Moldova&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Romania &amp; Moldova&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11499,87 +10848,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_SPANISH</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  
-), 
-OR(
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),
-ISPICKVAL(Region__c,&quot;Europe&quot;),
-Case_Group__c = &quot;Query&quot;,
-ISPICKVAL(BSPCountry__c,&quot;Spain &amp; Andorra&quot;)),
-AND(
-CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;),
-ISPICKVAL(Region__c,&quot;Americas&quot;),
-Case_Group__c = &quot;Query&quot;, 
-OR(
-ISPICKVAL(BSPCountry__c,&quot;Ecuador&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Costa Rica&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Colombia&quot;),
-ISPICKVAL(BSPCountry__c,&quot;El Salvador&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Belize&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Panama&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Guatemala&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Nicaragua&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Honduras&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Chile&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Dominican Republic&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Mexico&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Bolivia&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Peru&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Venezuela&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Argentina&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Paraguay&quot;),
-ISPICKVAL(BSPCountry__c,&quot;Uruguay&quot;)
-))
-), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),
-NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Email&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),
-NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),
-NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),
-NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Other&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),
-NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),
-NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))   ),  OR( AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;), ISPICKVAL(Region__c,&quot;Europe&quot;), Case_Group__c = &quot;Query&quot;, ISPICKVAL(BSPCountry__c,&quot;Spain &amp; Andorra&quot;)), AND( CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;), ISPICKVAL(Region__c,&quot;Americas&quot;), Case_Group__c = &quot;Query&quot;,  OR( ISPICKVAL(BSPCountry__c,&quot;Ecuador&quot;), ISPICKVAL(BSPCountry__c,&quot;Costa Rica&quot;), ISPICKVAL(BSPCountry__c,&quot;Colombia&quot;), ISPICKVAL(BSPCountry__c,&quot;El Salvador&quot;), ISPICKVAL(BSPCountry__c,&quot;Belize&quot;), ISPICKVAL(BSPCountry__c,&quot;Panama&quot;), ISPICKVAL(BSPCountry__c,&quot;Guatemala&quot;), ISPICKVAL(BSPCountry__c,&quot;Nicaragua&quot;), ISPICKVAL(BSPCountry__c,&quot;Honduras&quot;), ISPICKVAL(BSPCountry__c,&quot;Chile&quot;), ISPICKVAL(BSPCountry__c,&quot;Dominican Republic&quot;), ISPICKVAL(BSPCountry__c,&quot;Mexico&quot;), ISPICKVAL(BSPCountry__c,&quot;Bolivia&quot;), ISPICKVAL(BSPCountry__c,&quot;Peru&quot;), ISPICKVAL(BSPCountry__c,&quot;Venezuela&quot;), ISPICKVAL(BSPCountry__c,&quot;Argentina&quot;), ISPICKVAL(BSPCountry__c,&quot;Paraguay&quot;), ISPICKVAL(BSPCountry__c,&quot;Uruguay&quot;) )) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)), NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)), NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)), NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)), NOT(ISPICKVAL(Origin,&quot;Email&quot;)), NOT(ISPICKVAL(Origin,&quot;Fax&quot;)), NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)), NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)), NOT(ISPICKVAL(Origin,&quot;Letter&quot;)), NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)), NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)), NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)), NOT(ISPICKVAL(Origin,&quot;OLS&quot;)), NOT(ISPICKVAL(Origin,&quot;Other&quot;)), NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)), NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)), NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11602,41 +10871,7 @@ NOT(Phone_Redirected_to_Web__c)
     <rules>
         <fullName>Clicktools Workflow_THAI</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Thailand&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Thailand&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Thailand&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Thailand&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11659,41 +10894,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_TURKISH</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Turkey&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Turkey&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -11716,41 +10917,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
     <rules>
         <fullName>Clicktools Workflow_VIETNAMESE</fullName>
         <active>false</active>
-        <formula>AND 
-( 
-NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)), 
-NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),
-ISPICKVAL(Status,&quot;Closed&quot;), 
-AND( 
-NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), 
-NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),
-NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) 
-), 
-OR(Instant_Survey_Last_survey_sent__c=null, 
-NOT(Instant_Survey_Feedback_requested__c)), 
-ParentId=null, 
-OR( 
-ISNULL(Contact.Instant_Survey_Last_feedback_received__c), 
-Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30 
-), 
-Contact.Instant_Survey_opt_out__c = null, 
-AND( 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),
-NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), 
-NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;)) 
-), 
-AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Vietnam&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Vietnam&quot;)
- ), 
-AND( 
-NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)
- )
-)</formula>
+        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Vietnam&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Vietnam&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -12199,7 +11366,7 @@ NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPIC
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(OR (RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,RecordType.DeveloperName = &quot;CasesMENA&quot; ,RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,  RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,  RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,  RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,  RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,  RecordType.DeveloperName =&quot;ID_Card_Application&quot;) , OwnerId = LastModifiedById, ispickval(Status, &quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
+        <formula>AND(OR ( RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,  RecordType.DeveloperName = &quot;CasesAmericas&quot;, RecordType.DeveloperName = &quot;CasesEurope&quot;, RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,RecordType.DeveloperName = &quot;CasesMENA&quot; ,RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,  RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,  RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,  RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;, RecordType.DeveloperName = &quot;ComplaintIDFS&quot;, RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,  RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,  RecordType.DeveloperName =&quot;ID_Card_Application&quot;) , OwnerId = LastModifiedById, ispickval(Status, &quot;Closed&quot;), not(ispickval(New_interaction__c, &quot;&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -15719,9 +14886,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </actions>
         <active>true</active>
         <description>If automatic assignment rule fail, the case is assigned to a specific queue.</description>
-        <formula>AND( 
-LEFT($Profile.Name, 3) = &apos;ISS&apos;, 
-$User.Id = OwnerId )</formula>
+        <formula>AND(  LEFT($Profile.Name, 3) = &apos;ISS&apos;,  $User.Id = OwnerId )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

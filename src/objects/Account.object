@@ -4396,264 +4396,265 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <controllingField>Sector__c</controllingField>
             <picklistValues>
                 <fullName>Academic/Research Body</fullName>
-                <controllingFieldValues>Education</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Education</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Aircraft Manufacturer</fullName>
-                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airline Global Card Acquirer</fullName>
-                <controllingFieldValues>Financial Institution</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Financial Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airline Point of Sale</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airport Authority</fullName>
-                <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airport Concessionaire</fullName>
-                <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>ANSP</fullName>
-                <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Apartment &amp; Villa Rental</fullName>
-                <controllingFieldValues>Accommodation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Accommodation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Banking Service</fullName>
-                <controllingFieldValues>Financial Institution</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Financial Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Bus Line</fullName>
-                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Card Brand</fullName>
-                <controllingFieldValues>Financial Institution</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Financial Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo Agency Association</fullName>
-                <controllingFieldValues>Association</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Association</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo only</fullName>
-                <controllingFieldValues>Airline</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Car Rental</fullName>
-                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Casino</fullName>
-                <controllingFieldValues>Recreational</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Recreational</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASS Associate</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Caterer</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Consultancy Firm</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Courier</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Cruise Line</fullName>
-                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Domestic Agent</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Engine Manufacturer</fullName>
-                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>ERSP Agent</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Fuel Supplier</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Global Distribution System</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Ground Handler</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA Cargo</fullName>
+                <default>false</default>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Handling Agent</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Hotel</fullName>
-                <controllingFieldValues>Accommodation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Accommodation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>IATA</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IATA Head Office</fullName>
+                <default>false</default>
                 <controllingFieldValues>IATA</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IATA Local office</fullName>
+                <default>false</default>
                 <controllingFieldValues>IATA</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>IATA Passenger Sales Agent</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IATA Regional Office</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS consolidator</fullName>
+                <default>false</default>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Import Agent</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Individual Government</fullName>
-                <controllingFieldValues>Governmental Institution</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Governmental Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Inter-Governmental Body</fullName>
-                <controllingFieldValues>Governmental Institution</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Governmental Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Landmark</fullName>
-                <controllingFieldValues>Recreational</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Recreational</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Large Component OEM</fullName>
-                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Lessor</fullName>
-                <controllingFieldValues>Financial Institution</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Financial Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Maintenance, Repair, Overhaul</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>MSO Member Sales Office</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Museum</fullName>
-                <controllingFieldValues>Recreational</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Recreational</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Non Governmental Organization</fullName>
-                <controllingFieldValues>Association</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Association</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Non-IATA Passenger Agent</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
                 <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Other</fullName>
+                <default>false</default>
                 <controllingFieldValues>Accommodation</controllingFieldValues>
                 <controllingFieldValues>Airline</controllingFieldValues>
                 <controllingFieldValues>Airline Supplier</controllingFieldValues>
@@ -4670,82 +4671,81 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <controllingFieldValues>Recreational</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Equipment Manufacturer</fullName>
-                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
-                <controllingFieldValues>Association</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Association</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Park</fullName>
-                <controllingFieldValues>Recreational</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Recreational</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger &amp; Cargo</fullName>
-                <controllingFieldValues>Airline</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger only</fullName>
-                <controllingFieldValues>Airline</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Processor</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Publishing</fullName>
-                <controllingFieldValues>Media</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Media</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Railway Line</fullName>
-                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Resort</fullName>
-                <controllingFieldValues>Accommodation</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Accommodation</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Security</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>System Solutions Provider</fullName>
-                <controllingFieldValues>Airline Supplier</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>TIDS Agent</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Tour Operator</fullName>
-                <controllingFieldValues>Travel Agent</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Training Centre</fullName>
-                <controllingFieldValues>Education</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Education</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Travel Agency Association</fullName>
-                <controllingFieldValues>Association</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Association</controllingFieldValues>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
@@ -7534,38 +7534,38 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
             <controllingField>IDCard_Key_Account__c</controllingField>
             <picklistValues>
                 <fullName>CSV File Upload</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Email Application Before Renewal</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>ID Card Paid by Applicant</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Payment by Credit Card</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Payment by Wire / Cheque</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Process application without waiting for</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Prohibit Applicant to Apply</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
@@ -8434,6 +8434,36 @@ J-Joint Vent</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Location_Type_Ordered__c</fullName>
+        <externalId>false</externalId>
+        <formula>case (TEXT(Location_Type__c)
+       , &apos;AO&apos;, 1
+       , &apos;EP&apos;, 1
+       , &apos;HO&apos;, 1
+
+       , &apos;BR&apos;, 2
+       , &apos;CS&apos;, 2
+       , &apos;EB&apos;, 2
+       , &apos;ES&apos;, 2
+       , &apos;SE&apos;, 2
+       , &apos;TD&apos;, 2
+       , &apos;WH&apos;, 2
+
+       , &apos;ST&apos;, 3
+       , &apos;AW&apos;, 3
+       , &apos;SA&apos;, 3
+       , 99
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type Ordered</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Type__c</fullName>
         <description>Field used to determine the Location Type of travel agents (used in Americas)</description>
         <externalId>false</externalId>
@@ -9143,7 +9173,7 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
-        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
+        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D7E0000008gLy&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
 IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;IATA_GSA&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
@@ -9312,6 +9342,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <picklistValues>
                 <fullName>10 days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -11301,188 +11335,188 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <controllingField>Strategic_Partners__c</controllingField>
             <picklistValues>
                 <fullName>2D Bar Code</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Aircraft Recovery</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airport Advisors</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airport Development</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Alternative Fuel</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Baggage/Automatic Identification Stds</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Base Fee Partner</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo Services</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo Standards</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CUSS</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>e-freight</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Engineering &amp; Maintenance</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Environment</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Environmental Verifiers</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Facilitation</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Fast Travel</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Financial Services</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Flight Operations</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Fuel Services</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Industry Taxation</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Inflight Services</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Interline Tariffs</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Maintenance, Repair and Overhaul</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Meteorological</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger Experience</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger Facilitation</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger Standards</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Ramp Services &amp; Airside Safety</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Regional Infrastructure</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Revenue Accounting</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Risk Management and Insurance</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Safety</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Security</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Technical Fuel Group</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Travel Partners</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Unit Load Devices</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>World Air Transport Summit / AGM</fullName>
-                <controllingFieldValues>checked</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
@@ -22778,6 +22812,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -25123,6 +25164,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -27256,6 +27304,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -29091,6 +29146,49 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Company_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -29363,6 +29461,81 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -29560,6 +29733,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35273,6 +35453,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -38954,6 +39141,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -41158,6 +41352,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45190,6 +45391,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49258,6 +49466,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -51427,6 +51642,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -53521,6 +53743,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55670,6 +55899,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58233,6 +58469,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62044,6 +62287,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -63852,7 +64102,7 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <protected>false</protected>
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
-        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account_Name}
+        <url>http://www.atwonline.com/resources/search.html?qs=%22{!Account.Name}
 %22</url>
     </webLinks>
     <webLinks>
@@ -64259,12 +64509,12 @@ myuser={!User.Id}</url>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>https://www.dreamfactory.com/orgview/orgview.html?
-sessionid={!API_Session_ID}&amp;
-serverurl={!API_Partner_Server_URL_60}&amp;
-username={!User_Username}&amp;
-fullname={!User_FullName}&amp;
-linkid={!Account_ID}&amp;
-userid={!User_ID}</url>
+sessionid={!API.Session_ID}&amp;
+serverurl={!API.Partner_Server_URL_60}&amp;
+username={!User.Username}&amp;
+fullname={!User.Name}&amp;
+linkid={!Account.Id}&amp;
+userid={!User.Id}</url>
         <width>800</width>
     </webLinks>
     <webLinks>

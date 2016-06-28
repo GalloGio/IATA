@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Capture PAX &amp; Cargo accreditation application details from the CS Portal.</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
@@ -314,6 +316,411 @@
         </displayedFields>
         <label>VMFR</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>ChangeOfLegal</fullName>
+        <description>fields to be migrated when we have a change of legal status process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Legal_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ChangeOfLegal</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ChangeOfLocation</fullName>
+        <description>fields to be migrated when we have a change of location process</description>
+        <displayedFields>
+            <field>Branch_Office_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Street_name_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATA_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Street__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Postal_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CASS_Number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ChangeOfLocation</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ChangeOfLocationType</fullName>
+        <description>fields to be migrated when we have a change of location type process</description>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ChangeOfLocationType</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ChangeOfName</fullName>
+        <description>fields to be migrated when we have a change of name process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ChangeOfName</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ChangeOfOwnership</fullName>
+        <description>fields to be migrated when we have a change of ownership process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Legal_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location_Class__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Location_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Street_name_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISO_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IATA_ISO_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Street__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_Postal_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_State__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Shipping_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_Phone__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Branch_Office_FAX__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Premises_located_at_airport__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Mobile__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_Address__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_frequency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Solicitation_Flag__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CASS_Number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_Total_Ownership__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ChangeOfOwnership</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ChangeOfShareholding</fullName>
+        <description>fields to be migrated when we have a change of shareholding</description>
+        <displayedFields>
+            <field>ISSP_AMS_Total_Ownership__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ChangeOfShareholding</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>VMFR</fullName>
+        <description>fields to be migrated when we have a vmfr process</description>
+        <displayedFields>
+            <field>Remittance_frequency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>VMFR</label>
+    </fieldSets>
     <fields>
         <fullName>AMS_Agency_Id__c</fullName>
         <externalId>false</externalId>
@@ -371,12 +778,23 @@
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
         <label>Account Name</label>
-        <length>255</length>
+        <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Codes_Concerned__c</fullName>
+        <description>List of Agency IATA Codes for all Accounts involved in a Notice of Change</description>
+        <externalId>false</externalId>
+        <label>Agency Codes Concerned</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Agent_Type__c</fullName>
@@ -817,6 +1235,33 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Confirm Agent Details</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_Legal_Details_are_correct__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Confirm Legal details are correct</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_Location_Details_are_correct__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Confirm Location details are correct</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_Ownership_details_are_correct__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Confirm Ownership details are correct</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1700,7 +2145,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Min_Paidup_capital__c</fullName>
         <externalId>false</externalId>
-        <label>Minimum Paid-up Capital</label>
+        <label>* Minimum Paid-up Capital</label>
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
@@ -1770,7 +2215,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Paidup_capital__c</fullName>
         <externalId>false</externalId>
-        <label>Paid-up Capital</label>
+        <label>* Paid-up Capital</label>
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
@@ -1781,7 +2226,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Pax_Office_Open_Date__c</fullName>
         <externalId>false</externalId>
-        <label>Date Office opened as a Travel Agency</label>
+        <label>* Date Office opened as a Travel Agency</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1802,7 +2247,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Premises_located_at_airport__c</fullName>
         <externalId>false</externalId>
-        <label>Are the premises located at an airport?</label>
+        <label>*Are the premises located at an airport?</label>
         <picklist>
             <picklistValues>
                 <fullName>Yes</fullName>
@@ -1859,7 +2304,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Registered_Capital__c</fullName>
         <externalId>false</externalId>
-        <label>Registered Capital</label>
+        <label>* Registered Capital</label>
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
@@ -2763,6 +3208,33 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Notify_Change_Legal_Details__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify IATA of Change</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Change_Location__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify IATA of Change</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notify_Change_Ownership__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify IATA of Change</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Operation_Type__c</fullName>
         <description>This is the AMS Form type of operation, either Travel_Agent or Cargo_Agent</description>
         <externalId>false</externalId>
@@ -3121,6 +3593,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
                 <fullName>10 days</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -3157,6 +3633,37 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Scope_of_Change__c</fullName>
+        <externalId>false</externalId>
+        <label>Scope of Change</label>
+        <picklist>
+            <picklistValues>
+                <fullName>HO Only</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HO - All Branches</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HO - Selected Branches</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Selected Branches Only</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Branch Abroad</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Separate_user_access__c</fullName>
@@ -4442,6 +4949,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5119,6 +5633,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5804,6 +6325,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -6481,6 +7009,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7167,6 +7702,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -7845,6 +8387,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8531,6 +9080,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9213,6 +9769,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9807,10 +10370,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>C</fullName>
                 <default>false</default>
             </values>
@@ -9824,10 +10383,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>G</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9848,14 +10403,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9956,6 +10503,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10740,6 +11291,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -11421,6 +11979,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -12015,10 +12580,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>C</fullName>
                 <default>false</default>
             </values>
@@ -12032,10 +12593,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>G</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12056,14 +12613,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12164,6 +12713,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13288,6 +13841,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -13882,10 +14442,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>C</fullName>
                 <default>false</default>
             </values>
@@ -13899,10 +14455,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>G</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>I</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13923,14 +14475,6 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14031,6 +14575,10 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14811,6 +15359,13 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Represents the Product Information in Salesforce, this Product level is configurable and linked to a parent (Product Category) and can have multiple Rate Plan information as Children</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>

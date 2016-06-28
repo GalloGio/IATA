@@ -590,7 +590,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -5060,6 +5060,41 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>* Describe the means by which the premises are identified as a travel agent.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NOC_Current_Legal_details</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Current Legal details</shortDescription>
+        <value>Current Legal details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NOC_Current_Location</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Current Location</shortDescription>
+        <value>Current Agency Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NOC_Instructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Instructions</shortDescription>
+        <value>For each section below either:&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;Confirm that the Agency Details are correct&lt;/li&gt;
+&lt;li&gt;OR Notify IATA of the Change and update your Agency Details&lt;/li&gt;
+&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NOC_StepD_ProgressBar</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC StepD ProgressBar</shortDescription>
+        <value>D. Submit to IATA</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Name_of_employer</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5169,7 +5204,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Change_Ownership_Shareholding</shortDescription>
-        <value>Change of Ownership or Shareholding or Legal Status</value>
+        <value>3. Agency Ownership / Shareholding and Legal Status</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Change_Type_and_Location</fullName>
@@ -5193,7 +5228,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Change_of_Legal_Name</shortDescription>
-        <value>Change of Legal Name</value>
+        <value>1. Agency Legal Details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Change_of_Location</fullName>
@@ -5201,7 +5236,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Change_of_Location</shortDescription>
-        <value>Change of Location</value>
+        <value>2. Agency Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Change_submitted_for</fullName>
@@ -5297,7 +5332,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Legal_Name_After_Change</shortDescription>
-        <value>Legal Name after Change</value>
+        <value>Updated Legal details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Legal_Name_Before_Change</fullName>
@@ -5337,7 +5372,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Location_After_Change</shortDescription>
-        <value>Location after Change</value>
+        <value>Updated Agency Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Location_Before_Change</fullName>
@@ -6465,7 +6500,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Indicate GDSs</shortDescription>
-        <value>Please indicate the GDS(s) with which you have signed a contract</value>
+        <value>* Please indicate the GDS(s) with which you have signed a contract</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Office_FullAddress</fullName>

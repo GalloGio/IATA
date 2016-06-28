@@ -2831,6 +2831,22 @@ and
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC Current Legal details --></label>
+        <name>ISSP_AMS_NOC_Current_Legal_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Current Location --></label>
+        <name>ISSP_AMS_NOC_Current_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Instructions --></label>
+        <name>ISSP_AMS_NOC_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
+        <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
+    </customLabels>
+    <customLabels>
         <label>Nom de l&apos;employeur :</label>
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
@@ -3541,7 +3557,7 @@ and
         <name>ISSP_AMS_Step3_IATA_Reg_Cargo_Agent</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez indiquer le(s) GDS (système de réservation électronique) avec le(s)quel(s) vous avez signé un contrat</label>
+        <label>* Veuillez indiquer le(s) GDS (système de réservation électronique) avec le(s)quel(s) vous avez signé un contrat</label>
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>

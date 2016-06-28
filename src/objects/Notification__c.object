@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -51,6 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -123,13 +125,13 @@
             <controllingField>Type__c</controllingField>
             <picklistValues>
                 <fullName>#007FFF</fullName>
-                <controllingFieldValues>Information</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Information</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>#FF5E4D</fullName>
-                <controllingFieldValues>Action</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Action</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

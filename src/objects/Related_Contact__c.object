@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Junction object between the Contact and Account objects that allows for a Contact to be linked to multiple accounts.</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>

@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Object representing an access given to a customer for a Product</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>

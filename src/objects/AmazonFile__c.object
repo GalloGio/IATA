@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
@@ -51,6 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -321,7 +323,7 @@
     </fields>
     <fields>
         <fullName>Full_Name_Unique__c</fullName>
-        <caseSensitive>false</caseSensitive>
+        <caseSensitive>true</caseSensitive>
         <externalId>false</externalId>
         <label>Full Name (Unique)</label>
         <length>255</length>

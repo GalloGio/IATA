@@ -80,6 +80,10 @@ public with sharing class MITA_AgreementsCtrl {
         editMITAAgreementMode = false;
         editBIETAAgreementMode = false;
 
+        this.MITAagreementid = null;
+        this.BIETAagreementid = null;
+        this.wrapper = null;
+
         // fill the agreements map
         agreements = new map<Id,WrapperAgreement>();
         for ( MITA_Agreement__c agreement: [
@@ -90,19 +94,12 @@ public with sharing class MITA_AgreementsCtrl {
         ]) {
             addToAgreementsMap( agreement, agreements);
         }
-
-        //if (agr != null ) {
+        /*
         if (this.wrapper != null ) {
             selectAgreement(this.wrapper.isMITA);
         }
-
-        /*
-        contacts = [
-            SELECT Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c
-            FROM Contact
-            WHERE MITA_Contact__c = true
-            AND (AccountId = :acc.Id OR Account.Top_Parent__c = :acc.Id)];
         */
+
         contacts = [
             SELECT Id, Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c
             FROM Contact
@@ -516,6 +513,9 @@ public with sharing class MITA_AgreementsCtrl {
         public MITA_Agreement__c agreementCargo {get; set;}
         private Account sourceAccount;
 
+        public WrapperAgreement(MITA_Agreement__c agreement) {
+            this(agreement,null);
+        }
         public WrapperAgreement(MITA_Agreement__c agreement, Account sourceAccount) {
             this.agreement = agreement;
             this.sourceAccount = sourceAccount;

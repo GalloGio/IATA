@@ -6,6 +6,7 @@
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
                 <region>Left</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -19,6 +20,7 @@
             </containers>
             <containers>
                 <height>240</height>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
                 <region>Top</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -32,6 +34,7 @@
         </primaryTabComponents>
         <subtabComponents>
             <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
                 <region>Left</region>
                 <sidebarComponents>
                     <componentType>VisualForcePage</componentType>
@@ -216,6 +219,14 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Attachments</label>
+        <layoutColumns/>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>

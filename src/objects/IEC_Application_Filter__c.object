@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Used to save advanced search filters by customers so they can reuse them (for now only for GAD)</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -359,6 +361,8 @@
         <columns>Filter_Name__c</columns>
         <columns>Filter_Type__c</columns>
         <columns>System_Generated__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

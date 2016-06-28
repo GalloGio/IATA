@@ -16,8 +16,12 @@
                 <field>Product_Segment__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Product_Manager__c</field>
+                <behavior>Edit</behavior>
+                <field>Product_Manager_lookup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alternate_Product_Manager__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -68,6 +72,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CanUseQuantitySchedule</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RCRM_Product__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

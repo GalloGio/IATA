@@ -48,6 +48,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Used to manage the APJC forums, the participants, and the meetings. All by IDFS ISS.</description>
@@ -57,6 +58,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -177,63 +179,63 @@
             <controllingField>Cargo_Passenger__c</controllingField>
             <picklistValues>
                 <fullName>ALWG</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>APJC</fullName>
-                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>APJC / FAG</fullName>
-                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CAPJC</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CGA</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CEC</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>EACP JC</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>ICAP</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>JALWG</fullName>
-                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>LCAG-C</fullName>
-                <controllingFieldValues>Cargo</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>LCAG-P</fullName>
-                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>LCAG-P / Credit Card WG</fullName>
-                <controllingFieldValues>Passenger</controllingFieldValues>
                 <default>false</default>
+                <controllingFieldValues>Passenger</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

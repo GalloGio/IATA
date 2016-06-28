@@ -2936,6 +2936,10 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
                 <fullName>CFO</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>COO</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>true</trackHistory>
@@ -6938,7 +6942,7 @@ TotalRows-Successes-Errors</description>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Membership Main Contact</label>
+        <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7412,6 +7416,15 @@ TotalRows-Successes-Errors</description>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This box serves as a flag to show whether this is the primary contact for the account. Introduced by the Account Management project.</description>
+        <externalId>false</externalId>
+        <label>Primary Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Region_10__c</fullName>
@@ -26353,19 +26366,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airline_Contact_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Financial_Assessment_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.SALUTATION</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
+        <lookupFilterFields>00Nw0000008j6ci</lookupFilterFields>
+        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
         <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
         <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
-        <lookupFilterFields>00N20000003Jdqe</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to request Airline coding application approval</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Airline Coding Application - Rejected</name>
+    <style>freeForm</style>
+    <subject>Rejected Airline Coding Application - {!Case.Reason1__c}</subject>
+    <type>html</type>
+</EmailTemplate>
