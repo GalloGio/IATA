@@ -4,7 +4,7 @@ public without sharing class AMS_Utils {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS â€“ Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -18,7 +18,7 @@ public without sharing class AMS_Utils {
             if(iataIsoStates == null){
                 iataIsoStates = new Map<String, IATA_ISO_State__c>();
                 for(IATA_ISO_State__c state : [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_State__c]){
-                    iataIsoStates.put(state.Name, state);
+                    iataIsoStates.put(state.Name.toLowerCase(), state);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoStates] iataIsoStates - ' + iataIsoStates);
             }
@@ -33,7 +33,7 @@ public without sharing class AMS_Utils {
             if(iataIsoCountries == null){
                 iataIsoCountries = new Map<String, IATA_ISO_Country__c>();
                 for(IATA_ISO_Country__c country : [SELECT Id, Name FROM IATA_ISO_Country__c]){
-                    iataIsoCountries.put(country.Name, country);
+                    iataIsoCountries.put(country.Name.toLowerCase(), country);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoCountries] iataIsoCountries - ' + iataIsoCountries);
             }
@@ -79,10 +79,9 @@ public without sharing class AMS_Utils {
     public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
     public static final String new_SA           = 'NEW.SA.1.0'      ;
 
-
-    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
 
+    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -95,9 +94,9 @@ public without sharing class AMS_Utils {
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
     
-    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Donâ€™t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
-	public static final String SECTOR_CARGO = 'Cargo Agent';
+    public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
@@ -110,6 +109,7 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P'};
+
 
     static {
         refreshCache();
@@ -288,7 +288,7 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        // «A» Section
+        // Â«AÂ» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
@@ -304,7 +304,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('REC')) {
             sRes = 'A';
         } 
-        // «D» Section
+        // Â«DÂ» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('NWD')) {
@@ -314,7 +314,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
         } 
-        // «C» Section
+        // Â«CÂ» Section
         else {
             sRes = 'C';
         }
@@ -343,6 +343,30 @@ public without sharing class AMS_Utils {
         }
         
         return false;   
+    }
+
+    //VALID = TRUE; INVALID = FALSE
+    public static Boolean isValidState(String state) {
+        if(String.isEmpty(state)){
+            return false;
+        }
+        state = state.toLowerCase().trim();
+        if(AMS_Utils.iataIsoStates.get(state) == null){
+            return false;
+        }        
+        return true;
+    }
+
+    //VALID = TRUE; INVALID = FALSE
+    public static Boolean isValidCountry(String country) {
+        if(String.isEmpty(country)){
+            return false;
+        }
+        country = country.toLowerCase().trim();
+        if(AMS_Utils.iataIsoCountries.get(country) == null){
+            return false;
+        }        
+        return true;
     }
 
 
@@ -1154,6 +1178,26 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+public static String getChangeCodeMemoText(String process) {
+
+    String memoText = 'New application finalized';
+
+    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
+        memoText = 'New application - Head Office finalized';
+    else if (process == AMS_Utils.new_BR)
+        memoText = 'New application - Branch finalized';
+    else if (process == AMS_Utils.new_TIDS)
+        memoText = 'New application - TIDS finalized';
+    else if (process == AMS_Utils.new_SA)
+        memoText = 'New application - SA finalized';
+    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+        memoText = 'New application - GSA finalized';
+    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+        memoText = 'New application - AHA finalized';
+ 
+    return memoText;
+}
 
 
 // Converts a base64 string into a list of integers representing the encoded bytes
