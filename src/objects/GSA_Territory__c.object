@@ -170,6 +170,26 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IATA_Custom_ISO_Country_Code__c</fullName>
+        <description>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table. 
+For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it is equals to IATA_ISO_Country</description>
+        <externalId>false</externalId>
+        <formula>IF( IATA_ISO_Country__c = &apos;UP&apos; 
+   , IF (LEN(Territory_State_Abbreviation__c)&gt;2
+        ,  RIGHT(Territory_State_Abbreviation__c, 2)
+        , Territory_State_Abbreviation__c
+        )
+   , IATA_ISO_Country__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table, based on IATA_ISO_Country or Territory_State_Abbreviation</inlineHelpText>
+        <label>IATA Custom ISO Country Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
