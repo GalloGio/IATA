@@ -69,6 +69,4 @@ public class AMS_Irregularities_Utils{
         }
     } 
     
-}   } 
-    
 }
