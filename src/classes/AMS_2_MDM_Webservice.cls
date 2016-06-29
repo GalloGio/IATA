@@ -135,11 +135,11 @@ global class AMS_2_MDM_Webservice {
 
                 for(Account a : ag){
                     //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
-                    if( !AMS_Utils.isValidState(a.ShippingState) ){
+                    if( String.isNotEmpty(a.ShippingState) && !AMS_Utils.isValidState(a.ShippingState) ){
                         accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
                     }
                     //if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
-                    if( !AMS_Utils.isValidCountry(a.ShippingCountry) ){
+                    if( String.isNotEmpty(a.ShippingCountry) && !AMS_Utils.isValidCountry(a.ShippingCountry) ){
                         accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
                     }
                 }
