@@ -131,8 +131,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
 This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
         <externalId>false</externalId>
         <formula>SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;)</formula>
-        <inlineHelpText>Remove bar from Address line 1. 
-This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</inlineHelpText>
+        <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
