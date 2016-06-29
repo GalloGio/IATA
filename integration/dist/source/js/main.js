@@ -89,23 +89,24 @@ jQuery(document).ready(function($) {
 
     var stickyElementContainerWidth,
         stickyElementPositionTop;
-    $('.js-tabs').on('click', '.tabs a', function(event) {
-        event.preventDefault();
-        var self = $(this),
-        parent = self.parents('.js-tabs'),
-        targetPane = self.parent('li').data('target');
-        self.parents('li').addClass(className.active).siblings().removeClass(className.active);
-        parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
-        activateEllipsisTooltip();
-        stickyFooter();
-        if ($('.sub-container.payment-confirmation').length) {
-            var targetStickyElement = parent.find(targetPane + ' .sub-container.payment-confirmation');
-            stickyElementContainerWidth = targetStickyElement.width();
-            stickyElementPositionTop = targetStickyElement.offset().top;
+    
+    // $('.js-tabs').on('click', '.tabs a', function(event) {
+    //     event.preventDefault();
+    //     var self = $(this),
+    //     parent = self.parents('.js-tabs'),
+    //     targetPane = self.parent('li').data('target');
+    //     self.parents('li').addClass(className.active).siblings().removeClass(className.active);
+    //     parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
+    //     activateEllipsisTooltip();
+    //     stickyFooter();
+    //     if ($('.sub-container.payment-confirmation').length) {
+    //         var targetStickyElement = parent.find(targetPane + ' .sub-container.payment-confirmation');
+    //         stickyElementContainerWidth = targetStickyElement.width();
+    //         stickyElementPositionTop = targetStickyElement.offset().top;
 
-        }
+    //     }
 
-    });
+    // });
 
     var isClicked = false;
     $('.js-page-anchors').on('click', 'li',  function(event) {
