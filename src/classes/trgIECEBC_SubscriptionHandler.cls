@@ -1,0 +1,147 @@
+/*
+* Trigger Helper class for zuora__Subscription__c 
+*  
+*  Context: eBroadcast, new subscription. 
+*  
+*  This class updates related Zuora__CustomerAccount__c and insert related EBC_Activity__c
+*  
+*  Design note: 
+*  - This class requires information from related Product_Rate_Plan_Information to check Product Category 
+*  - Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name
+*  - During the insert process (as initiated from IECSubscriptionManager.subscribe()), the Product_Rate_Plan_Information is still null
+*  - Zuora__Subscription__c.Product_Rate_Plan_Information will be populated later by trgHndlrIECSubscriptionProductCharge.BuildProductLink
+*  - Therefore, the update of Zuora__CustomerAccount__c EBC related flag is done on Subscription update.
+* 
+*  Assumption: 
+*   - Only one currently active EBC Zuora__Subscription for today
+*  
+*   - Early version: We are not reinserting the same Zuora__Subscription
+*   - if we need to do it, we will need to store the recent unique id of the current 
+*  
+*  
+*  Author: Sonny Leman
+*  Change Log: 
+*   - 20160628-sl: initial version
+*
+*/
+
+
+public with sharing class trgIECEBC_SubscriptionHandler {
+	
+	public static boolean firstRun = true; // this is used to prevent processEbcSubscription executed twice on one execution
+	
+	// ========================================================================
+	// processEbcSubscription will update related Zuora__CustomerAccount and insert an EBC_Activity
+	// to be run after Zuora__Subscription are updated
+	// zuoraSubscriptionIdToObjectMap is trigger.New ; oldSubscriptionMap trigger.Old
+	// current behaviour of the subscription process set oldSub.Product_Information_Rate_Plan on update, not insert.
+	// see IECSubscriptionManager.subscribe()
+	public static void processEbcSubscription( Map<Id,Zuora__Subscription__c> newSubscriptionMap, Map<Id,Zuora__Subscription__c> oldSubscriptionMap)
+	{
+		System.debug( '\n\n trgIECEBC_SubscriptionHandler firstRun:' + firstRun);
+		// first, ensure this method only works once in an execution
+		if (firstRun) 
+		{
+			firstRun = false;
+		} else {
+			System.debug('trgIECEBC_SubscriptionHandler.processEbcSubscription has been executed previously, skip for now.');
+			return;
+		}
+		
+		// get relevant subscription whose billing account will be updated
+		Set<Id> zuoraSubscriptionIdSet = new Set<Id>(); 
+		Zuora__Subscription__c oldSub; 
+		for (Zuora__Subscription__c sub : newSubscriptionMap.values())
+		{
+			oldSub = oldSubscriptionMap.get(sub.Id);
+			if ((sub.Product_Rate_Plan_Information__c != null) 
+				&&( (oldSub == null)
+					|| (oldSub.Product_Rate_Plan_Information__c == null) 
+					)
+				)
+			{
+				zuoraSubscriptionIdSet.add(sub.Id);
+			} // end if
+		} // end for
+		
+		System.debug( '\n\n trgIECEBC_SubscriptionHandler.zuoraSubscriptionIdSet:' + zuoraSubscriptionIdSet);
+		// collect relevant subscription & relevant billing account for ebroadcast
+		// 
+		Map<Id,Zuora__Subscription__c> relevantSubscriptionIdToObjMap = new Map<Id,Zuora__Subscription__c> ([
+			select Id, Name
+				, Zuora__Status__c
+				, Zuora__SubscriptionStartDate__c
+				, Zuora__SubscriptionEndDate__c
+				, Zuora__CustomerAccount__c, Zuora__CustomerAccount__r.Id
+				, Zuora__CustomerAccount__r.Contact__c
+				//, Zuora__CustomerAccount__r.eBroadcast_Current_Subscription_Name__c // this is still in rough planning
+				, Zuora__CustomerAccount__r.eBroadcast_Product_Access__c
+				, Zuora__CustomerAccount__r.eBroadcast_Email_Balance__c
+				, Product_Rate_Plan_Information__c
+				, Product_Rate_Plan_Information__r.Name
+				, Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+				, Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
+				, Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c
+				, Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_Cost_Per_Email__c
+				, Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c
+				, Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name
+				
+			from Zuora__Subscription__c
+			where  Id in : zuoraSubscriptionIdSet 
+				and Product_Rate_Plan_Information__c != null
+				and (Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name = : IECConstants.ProductCategory_SF_EBROADCAST)
+			]); 
+		
+		//System.debug( '\n\ntrgIECEBC_SubscriptionHandler.relevantSubscriptionIdToObjMap:' + relevantSubscriptionIdToObjMap);
+		
+		List<Zuora__CustomerAccount__c> updatedCustomerAccountList = new List<Zuora__CustomerAccount__c>();
+		for (Zuora__Subscription__c subs : relevantSubscriptionIdToObjMap.values())
+		{
+			
+			if ( (subs.Zuora__CustomerAccount__c != null)
+				&& (subs.Zuora__Status__c == 'Active')
+				&& (subs.Zuora__SubscriptionStartDate__c <= Date.today())
+				&& (subs.Zuora__SubscriptionEndDate__c >= Date.today())
+				//&& (subs.Zuora__External_Id__c != subs.Zuora__CustomerAccount__r.Current_EBC_Subscription_External_Id__c)
+				//&& (subs.Name != subs.Zuora__CustomerAccount__r.eBroadcast_Current_Subscription_Name__c)
+				)
+			{ 
+				Integer emailCredits = (subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c == null ) ? 0 : Integer.valueOf(subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c);
+				String actName =  subs.Name + ' - ' + subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name;
+				actName = actName.substring(0, Math.min(actName.length(),80));
+				addEbcActivity( subs.Zuora__CustomerAccount__r, emailCredits, actName);
+				
+				Zuora__CustomerAccount__c billingAcct = new Zuora__CustomerAccount__c (Id = subs.Zuora__CustomerAccount__c
+					, eBroadcast_Product_Access__c = true
+					//, eBroadcast_Current_Subscription_Name__c = subs.Name
+					);
+				updatedCustomerAccountList.add(billingAcct);
+			}
+		}
+		
+		//System.debug( '\n\ntrgIECEBC_SubscriptionHandler.updatedCustomerAccountList:' + updatedCustomerAccountList);
+		if ( updatedCustomerAccountList.size() > 0) {
+			update updatedCustomerAccountList;
+		}
+	} // processEbcSubscription
+	
+	
+	// ========================================================================
+	// insert a new EBC_Activity for this transaction as much as emailCredits
+	// Note that this record should only be added once per subscription
+	private static void addEbcActivity(Zuora__CustomerAccount__c billAcct, Integer emailCredits, String actName )
+	{
+		EBC_Activity__c ebcAct = new EBC_Activity__c(
+			Related_Billing_Account__c = billAcct.Id
+			, Name = actName
+			//a.EBC_Campaign__c = c.I;
+			, Total_Count__c = emailCredits
+			, New_Balance__c = billAcct.eBroadcast_Email_Balance__c + emailCredits
+			, Activity_Type__c = 'Credit'
+			, Activity_Date__c  = Date.today()
+			);
+		
+		insert ebcAct;
+	} // addEbcActivity
+	
+} // trgIECEBC_SubscriptionHandler

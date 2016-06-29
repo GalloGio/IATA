@@ -55,7 +55,7 @@
                                         <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.From_Name__c}" styleClass="disabled-user-input text" />
                                     </label>
                                     <apex:outputPanel rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
-                                        <span class="js-remaining-count" data-id="email-subject">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
+                                        <span class="js-remaining-count" data-id="from-name">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
                                     </apex:outputPanel>
                                     <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
                                 </div>

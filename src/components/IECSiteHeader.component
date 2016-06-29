@@ -131,9 +131,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                else
                  { document.write('<a href="https://{!$Site.Domain}{!$Page.IECBrowseProducts}" class="header__navigation-link">Products  <i class="fa fa-caret-down"></i></a>');}           
             </script>   
-            
-            
-           
+              
           <apex:form >
               <div class="navigation-dropdown">             <!--  style="background-image:url({!$Resource.IEC_dropdownnavy})"  -->
                 <apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>
@@ -141,10 +139,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>
                 <apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>
                 <!-- apex:outputpanel layout="none" rendered="{!bAvailCACWeb}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACWeb}" class="navigation-dropdown__link">Check-a-code Webservice</a></apex:outputpanel-->
-                <!-- apex:outputpanel layout="none" rendered="{!bAvailEBro}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdEBro}" class="navigation-dropdown__link">E-Broadcast</a></apex:outputpanel-->
+                <apex:outputpanel layout="none" rendered="{!bAvailEBro}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdEBro}" class="navigation-dropdown__link">E-Broadcast</a></apex:outputpanel>
               </div>
           </apex:form>
-        </li>
+        </li> 
 
         <li class="header__navigation-li">
             <script>           

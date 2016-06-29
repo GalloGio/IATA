@@ -1,12 +1,12 @@
 public class vfIECEBC_Campaign {
     class Controller_Exception extends Exception{}
     
-    private User u = [Select ContactId, Contact.AccountId from User where id =: Userinfo.getUserid()];
-    private Zuora__CustomerAccount__c ba = [Select Id from Zuora__CustomerAccount__c where Zuora__Account__c = :u.Contact.AccountId LIMIT 1];
-    
     public ApexPages.StandardController con {
         public get;
         private set;
+    }
+    public PageReference doNothing() {
+        return null;
     }
     
     public PageReference submitForApproval() {
@@ -86,11 +86,11 @@ public class vfIECEBC_Campaign {
         
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
         
-        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != u.Contact.AccountId) {
-            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Account__c + ':' + u.Contact.AccountId + ').');
+        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != vfIECEBC.usr.Contact.AccountId) {
+            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Account__c + ':' + vfIECEBC.usr.Contact.AccountId + ').');
         }
-        this.campaign.Account__c = u.Contact.AccountId;
-        this.campaign.Billing_Account__c = ba.Id;
+        this.campaign.Account__c = vfIECEBC.usr.Contact.AccountId;
+        this.campaign.Billing_Account__c = vfIECEBC.billingAccount.Id;
     }
     
     public PageReference saveAndExit() {

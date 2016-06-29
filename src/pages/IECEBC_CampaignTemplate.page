@@ -17,130 +17,39 @@
                     <h1 class="page-title">Select Template</h1>
                     
                     <apex:form >
-                    	<div class="row">
-                            <div class="main-container columns small-12 medium-8">
-                                <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-template">
-                                    <li>
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="campain-list" id="campain-list-1" />
-                                                <label class="custom-radio" for="campain-list-1"><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="campain-list-1">
-                                                List name Lorem ipsum 
-                                                <span class="number-of-recipients">
-                                                    <a class="icon-refresh" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh count</a>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="campain-list" id="campain-list-2" />
-                                                <label class="custom-radio" for="campain-list-2"><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="campain-list-2">
-                                                a Lorem ipsum 
-                                                <span class="number-of-recipients">
-                                                    <a class="icon-refresh" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh count</a>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="campain-list" id="campain-list-3" />
-                                                <label class="custom-radio" for="campain-list-3"><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="campain-list-3">
-                                                Lsafad af asdforem ipsum 
-                                                <span class="number-of-recipients">
-                                                    <a class="icon-refresh" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh count</a>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="campain-list" id="campain-list-4" />
-                                                <label class="custom-radio" for="campain-list-4"><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="campain-list-4">
-                                                b name Lorem ipsum 
-                                                <span class="number-of-recipients">
-                                                    <a class="icon-refresh" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh count</a>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="campain-list" id="campain-list-5" />
-                                                <label class="custom-radio" for="campain-list-5"><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="campain-list-5">
-                                                ba Lorem ipsum 
-                                                <span class="number-of-recipients">
-                                                    <a class="icon-refresh" href="#"><i class="fa fa-refresh" aria-hidden="true"></i>Refresh count</a>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                    
-                                <div class="list-actions">
-                                    <a class="icon-link js-open-modal" href="#" data-target-modal="#js-modal-new-list-audience"><i class="icon fa fa-list-ul" aria-hidden="true"></i>Create a new list</a>
+                        <apex:inputHidden value="{!campaign.EBC_Selected_Template__c}" id="selectedTemplate" />
+                        
+                        <script type="text/javascript">
+                        function resetTemplate(recordId) {
+                            document.getElementById('{!$Component.selectedTemplate}').value = recordId;
+                        }
+                        </script>
+                        
+                		<div class="tab-container js-tabs">
+                            <ul class="nav tabs">
+                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
+                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Saved Templates</a></li>
+                                <li data-target="#pane-3"><a href="#" onclick="resetTemplate('');">Use your HTML code</a></li>
+                            </ul>
+                
+                            <div class="tab-content">
+                                <div class="tab-pane is-open" id="pane-1">
+                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="true" />
                                 </div>
-                            </div>
-                    
-                            <div class="sub-container columns small-12 medium-4">
-                                <div class="summary-box">
-                                    <div class="box-body fit">
-                                        <table class="data-table zibra cost">
-                                            <caption>Campaign Cost</caption>
-                                            <tr>
-                                                <th>
-                                                    <div class="item-name">Recipients selected</div>
-                                                </th>
-                                                <td>
-                                                    <div class="item-value">
-                                                        <strong>15,000</strong>
-                                                        <span class="unit"> emails</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr> 
-                                                <th>
-                                                    <div class="item-name">Available balance</div>
-                                                </th>
-                                                <td>
-                                                    <div class="item-value text-green">
-                                                        <strong>10,000</strong>
-                                                        <span class="unit"> emails</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <div class="item-name">Provisional cost</div>
-                                                </th>
-                                                <td>
-                                                    <div class="item-value">
-                                                        <strong class="text-orange">USD $500.00</strong>
-                                                        <p>for 5,000 emails at $0.10 cost/email</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                <div class="tab-pane" id="pane-2">
+                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="false" />
+                                </div>
+                                <div class="tab-pane" id="pane-3">
+                                    <div class="group-container use-html-code">
+                                        <p>Select this option if you want to provide a ready-made email template using HTML code.</p>
+                                        <ul class="list caret-right">
+                                            <li>Note that all your links to external sites and photos need to already be in place.</li>
+                                            <li>Make sure you have already saved your photos under the section <strong>Manage Resources</strong> before you continue.</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="footer-actions text-right">
                             <ul class="list actions">
                                 <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
