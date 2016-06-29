@@ -107,8 +107,8 @@ public without sharing class AMS_Utils {
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
-    public static final Set<String> LocationClassCARGO = new Set<String>{'C'};
-    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P'};
+    public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
 
 
     static {
