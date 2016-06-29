@@ -376,6 +376,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Phone_Type__c</fields>
+        <fields>Full_Phone_Number__c</fields>
         <fields>ISD_Code__c</fields>
         <fields>STD_Code__c</fields>
         <fields>Number__c</fields>
