@@ -92,7 +92,7 @@ public class AMS_AccountTriggerHandler {
 
 
        System.debug('Start Check for irregularity thresold');
-       checkIrregularityThresold(accs, oldMap);
+       //checkIrregularityThresold(accs, oldMap);
        System.debug('End Check for irregularity thresold');
 
 
