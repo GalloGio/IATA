@@ -9875,7 +9875,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>IATA CODE</value>
+        <value>IATA Code</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_LASTNAME</fullName>
