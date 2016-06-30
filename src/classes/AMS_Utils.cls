@@ -4,7 +4,7 @@ public without sharing class AMS_Utils {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS â€“ Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
