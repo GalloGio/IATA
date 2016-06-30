@@ -133,18 +133,19 @@ global class AMS_2_MDM_Webservice {
                 if(String.isNotEmpty(accErrors)) throw new AMSException('The following accounts have no Billing/Primary Address:'+accErrors);
 
 
-                for(Account a : ag){
-                    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
-                    if( String.isNotEmpty(a.ShippingState) && !AMS_Utils.isValidState(a.ShippingState) ){
-                        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
-                    }
-                    //if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
-                    if( String.isNotEmpty(a.ShippingCountry) && !AMS_Utils.isValidCountry(a.ShippingCountry) ){
-                        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
-                    }
-                }
-                System.debug(loggingLevel.Debug, '____ [cls AMS_2_MDM_Webservice - sendAgenciesContent] accErrors (after Shipping) - ' + accErrors);
-                if(String.isNotEmpty(accErrors)) throw new AMSException('Error on the following accounts:'+accErrors);
+                //for(Account a : ag){
+                //    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
+                //    if(String.isNotEmpty(a.ShippingState) && !AMS_Utils.isValidState(a.ShippingState) ){
+                //        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
+                //    }
+                //    //if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
+                //    if(String.isNotEmpty(a.ShippingCountry) && !AMS_Utils.isValidCountry(a.ShippingCountry) ){
+                //        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
+                //    }
+                //}
+                //System.debug(loggingLevel.Debug, '____ [cls AMS_2_MDM_Webservice - sendAgenciesContent] accErrors (after Shipping) - ' + accErrors);
+                //if(String.isNotEmpty(accErrors)) throw new AMSException('Error on the following accounts:'+accErrors);
+
 
                 //s = xmlGen.getAgencyDetail(ag, r); - #AMSFTS
                 s = xmlGen.getAgencyDetail(ag, r, 'Master','');

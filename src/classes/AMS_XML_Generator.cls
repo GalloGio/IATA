@@ -1148,8 +1148,25 @@ public with sharing class AMS_XML_Generator {
                         shippingAdd.Address_3__c = shippingStreet[2];
 
                         shippingAdd.City__c = ag.ShippingCity;
-                        shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()).Id;
-                        shippingAdd.Country__c = ag.ShippingCountry == null ? null : AMS_Utils.iataIsoCountries.get(ag.ShippingCountry.trim().toLowerCase()).Id;
+                         
+                        //shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()).Id;
+                        if(ag.ShippingState != null ){
+                            if(AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()) != null){
+                                shippingAdd.State__c = AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()).Id;
+                            }else{
+                                shippingAdd.State__c = null;
+                            }                            
+                        }
+                            
+                        //shippingAdd.Country__c = ag.ShippingCountry == null ? null : AMS_Utils.iataIsoCountries.get(ag.ShippingCountry.trim().toLowerCase()).Id;
+                        if(ag.ShippingCountry != null ){
+                            if(AMS_Utils.iataIsoCountries.get(ag.ShippingCountry.trim().toLowerCase()) != null){
+                                shippingAdd.Country__c = AMS_Utils.iataIsoCountries.get(ag.ShippingCountry.trim().toLowerCase()).Id;
+                            }else{
+                                shippingAdd.Country__c = null;
+                            }                            
+                        }
+                        
                         shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
                         
                         System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
