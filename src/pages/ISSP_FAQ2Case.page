@@ -1,6 +1,6 @@
 <apex:page controller="vfISSP_FAQ2Case" action="{!pageLoad}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header ></c:ISSP_Header>
  <body>
 
  <!--<script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}" ></script>
