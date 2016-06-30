@@ -1,6 +1,6 @@
 <apex:page controller="vfISSP_FAQ2Case" action="{!pageLoad}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header ></c:ISSP_Header>
  <body>
 
  <!--<script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}" ></script>
@@ -22,6 +22,11 @@
      
     textarea.form-control {
     	height: 300px;
+	}
+    
+    textarea.form-control.descriptiontextarea {
+        height: 300px;
+        width: 425px;
 	}
 
     .artical-holder-li 
@@ -356,11 +361,12 @@
                                                                 <apex:outputpanel rendered="{!!field.required}">
                                                                     <apex:inputfield styleclass="form-control " value="{!newCase[field.fieldValue]}"/>
                                                                 </apex:outputpanel>
-                                                                <apex:outputpanel rendered="{!field.required}">
+                                                                <apex:outputpanel rendered="{!AND(field.required,field.fieldValue != 'Description')}">
                                                                     <apex:inputfield styleclass="form-control rec mandatory" value="{!newCase[field.fieldValue]}" />
                                                                 </apex:outputpanel>
                                                             </apex:outputpanel>
                                                         </apex:outputpanel>
+                                                        
                                                         <apex:outputpanel rendered="{!field.fieldType == 'Checkbox' && isCompliment == false}">
                                                             <apex:inputcheckbox value="{!newCase[field.fieldValue]}" label="{!field.fieldName}" rendered="{! currentButtonsToShow == 'CancelAndSubmit'}" />
                                                         </apex:outputpanel>
@@ -375,8 +381,11 @@
                                                         <div class="hiddenerror" style="display: none;">
                                                             <p class="errormsg" style="line-height: 26px;">ERROR</p>
                                                         </div>
-                                                    </div>
+                                                    </div>        
                                                 </div>
+                                                <apex:outputpanel rendered="{!AND(field.required,field.fieldValue == 'Description')}"> <!--Description text area-->
+                                                	<apex:inputfield styleclass="form-control descriptiontextarea rec mandatory" value="{!newCase[field.fieldValue]}" />
+                                                </apex:outputpanel>
                                             </li>
                                         </apex:outputpanel>
                                     </apex:repeat>

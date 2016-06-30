@@ -18,7 +18,7 @@ public without sharing class AMS_Utils {
             if(iataIsoStates == null){
                 iataIsoStates = new Map<String, IATA_ISO_State__c>();
                 for(IATA_ISO_State__c state : [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_State__c]){
-                    iataIsoStates.put(state.Name, state);
+                    iataIsoStates.put(state.Name.toLowerCase(), state);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoStates] iataIsoStates - ' + iataIsoStates);
             }
@@ -33,7 +33,7 @@ public without sharing class AMS_Utils {
             if(iataIsoCountries == null){
                 iataIsoCountries = new Map<String, IATA_ISO_Country__c>();
                 for(IATA_ISO_Country__c country : [SELECT Id, Name FROM IATA_ISO_Country__c]){
-                    iataIsoCountries.put(country.Name, country);
+                    iataIsoCountries.put(country.Name.toLowerCase(), country);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoCountries] iataIsoCountries - ' + iataIsoCountries);
             }
@@ -96,7 +96,7 @@ public without sharing class AMS_Utils {
     
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
-	public static final String SECTOR_CARGO = 'Cargo Agent';
+    public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
@@ -107,6 +107,9 @@ public without sharing class AMS_Utils {
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
+    public static final Set<String> LocationClassCARGO = new Set<String>{'C'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P'};
+
 
     static {
         refreshCache();
@@ -340,6 +343,30 @@ public without sharing class AMS_Utils {
         }
         
         return false;   
+    }
+
+    //VALID = TRUE; INVALID = FALSE
+    public static Boolean isValidState(String state) {
+        if(String.isEmpty(state)){
+            return false;
+        }
+        state = state.toLowerCase().trim();
+        if(AMS_Utils.iataIsoStates.get(state) == null){
+            return false;
+        }        
+        return true;
+    }
+
+    //VALID = TRUE; INVALID = FALSE
+    public static Boolean isValidCountry(String country) {
+        if(String.isEmpty(country)){
+            return false;
+        }
+        country = country.toLowerCase().trim();
+        if(AMS_Utils.iataIsoCountries.get(country) == null){
+            return false;
+        }        
+        return true;
     }
 
 

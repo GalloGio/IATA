@@ -211,7 +211,11 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Agencies relationships</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Hierarchy__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Child_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Parent_Account__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

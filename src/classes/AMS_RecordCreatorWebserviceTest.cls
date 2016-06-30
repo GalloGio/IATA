@@ -29,10 +29,6 @@ private class AMS_RecordCreatorWebserviceTest {
 		acct.IN_A_AIRPORT__C = false;
 		acct.REASON_FOR_CREATION__C = 'Created by customer';
 
-		insert acct;
-
-		System.debug('First Account created is ' + acct.Id);
-
 		Account acct2 = new Account();
 
 		acct2.NAME = 'Lions Travel 9';
@@ -55,11 +51,8 @@ private class AMS_RecordCreatorWebserviceTest {
 		acct2.REASON_FOR_CREATION__C = 'Created by customer';
 		acct2.ParentId = acct.Id;
 
-		insert acct2;
-
-
-		//List<Account> accts = new List<Account>{acct,acct2};
-		//insert accts;
+		List<Account> accts = new List<Account>{acct,acct2};
+		insert accts;
 
 		System.debug('Accounts created');
 
@@ -76,9 +69,9 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
-		Case oscarCase = new Case(RecordTypeId = rtCommCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
+		Case oscarCase = new Case(RecordTypeId = rtCommCase, AccountId = acct.Id, ContactId = co1.Id);
 
-		Case oscarCase2 = new Case(RecordTypeId = rtCommCase, AccountId = acct2.Id, Account_Concerned__c = acct2.Id, ContactId = co2.Id);
+		Case oscarCase2 = new Case(RecordTypeId = rtCommCase, AccountId = acct2.Id, Account_Concerned__c = acct.Id, ContactId = co2.Id);
 
 		List<Case> cases = new List<Case>{oscarCase,oscarCase2};
 		insert cases;
@@ -90,7 +83,6 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase2.id);
         
         List<AMS_Pax_Accreditation_Form__c> acredts = new List<AMS_Pax_Accreditation_Form__c>{accre,accre2};
-
 		insert acredts;
 
 		System.debug('Accreditations created');
@@ -177,7 +169,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.debug('Got second account with id:' + acct2.Id + ' and with name:' + acct2.Name + ' and parent Id:' + acct2.ParentId);
 
-		Case caseCom2 = [SELECT Id, Account_Concerned__c from Case where AccountId = :acct2.Id];
+		Case caseCom2 = [SELECT Id from Case where AccountId = :acct2.Id];
 
 		AMS_Pax_Accreditation_Form__c accr2 = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom2.Id];
 
@@ -205,304 +197,5 @@ private class AMS_RecordCreatorWebserviceTest {
 
 	}
 
-	@isTest static void createAccreditationChangeOfName() {
-		
-		Test.startTest();
-		
-		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
-
-		Account acct = acctLst.get(0);
-
-		System.debug('Got first account with id:' + acct.Id + ' and with name:' + acct.Name + ' and parent Id:' + acct.ParentId);
-
-		Case caseCom = [SELECT Id from Case where AccountId = : acct.Id];
-
-		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
-
-		accr.Notify_Change_Legal_Details__c = true;
-		accr.Scope_of_Change__c = 'HO Only';
-
-		update accr;
-
-		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'MAJOR.CHANGES',caseCom.Id);
-
-		List<AMS_OSCAR__c> oscarLst = [SELECT Id, Type_of_change__c from AMS_OSCAR__c];
-
-		System.assertEquals(oscarLst.size(),1);
-
-		AMS_OSCAR__c oscar = oscarLst.get(0);
-
-		System.assertEquals(oscar.Type_of_change__c,'Name');
-
-		Test.stopTest();
-	}
-
-	@isTest static void createAccreditationChangeOfOwnerShipAllBranches() {
-
-		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
-
-		Account acct = acctLst.get(0);
-
-		Account acct2 = acctLst.get(1);
-
-		AMS_Agencies_Hierarchy__c h = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy test');
-
-		insert h;
-
-
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		
-		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
-
-		Account acct3 = new Account();
-
-		acct3.NAME = 'Lions Travel 3';
-		acct3.TYPE = 'Non-IATA Passenger Agent';
-		acct3.RECORDTYPEID = accountRT;
-		acct3.BILLINGCOUNTRY = 'Greece';
-		acct3.INDUSTRY = 'Travel Agent';
-		acct3.CURRENCYISOCODE = 'USD';
-		acct3.TRADENAME__C = 'Lions Travel 3';
-		acct3.IATA_MEMBER__C = false;
-		acct3.LOCATION_TYPE__C = 'BR';
-		acct3.LEGAL_NAME__C = 'Lions Travel 3';
-		acct3.SHORT_NAME__C = 'Lions Travel 3';
-		acct3.IATA_ISO_COUNTRY__C = ctry.Id;
-		acct3.CATEGORY__C = 'IATA Passenger Sales Agent';
-		acct3.SECTOR__C = 'Travel Agent';
-		acct3.LOCATION_CLASS__C = 'P';
-		acct3.COMPANY_TYPE__C = 'A';
-		acct3.IN_A_AIRPORT__C = false;
-		acct3.REASON_FOR_CREATION__C = 'Created by customer';
-		acct3.IATACode__c = '1234567';
-		acct3.ParentId = acct.Id;
-
-		Account acct4 = new Account();
-
-		acct4.NAME = 'Lions Travel 4';
-		acct4.TYPE = 'Non-IATA Passenger Agent';
-		acct4.RECORDTYPEID = accountRT;
-		acct4.BILLINGCOUNTRY = 'Greece';
-		acct4.INDUSTRY = 'Travel Agent';
-		acct4.CURRENCYISOCODE = 'USD';
-		acct4.TRADENAME__C = 'Lions Travel 4';
-		acct4.IATA_MEMBER__C = false;
-		acct4.LOCATION_TYPE__C = 'BR';
-		acct4.LEGAL_NAME__C = 'Lions Travel 4';
-		acct4.SHORT_NAME__C = 'Lions Travel 4';
-		acct4.IATA_ISO_COUNTRY__C = ctry.Id;
-		acct4.CATEGORY__C = 'IATA Passenger Sales Agent';
-		acct4.SECTOR__C = 'Travel Agent';
-		acct4.LOCATION_CLASS__C = 'P';
-		acct4.COMPANY_TYPE__C = 'A';
-		acct4.IN_A_AIRPORT__C = false;
-		acct4.REASON_FOR_CREATION__C = 'Created by customer';
-		acct4.IATACode__c = '7654321';
-		acct4.ParentId = acct.Id;
-
-		insert new List<Account>{acct3,acct4};
-
-		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Child_Account__c = acct3.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		AMS_Agencies_relationhip__c rel3 = new AMS_Agencies_relationhip__c(Child_Account__c = acct4.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Child_Account__c = acct2.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		insert new List<AMS_Agencies_relationhip__c>{rel2,rel3,rel};
-
-		Test.startTest();
-
-		System.debug('Got first account with id:' + acct.Id + ' and with name:' + acct.Name + ' and parent Id:' + acct.ParentId);
-
-		Case caseCom = [SELECT Id from Case where AccountId = : acct.Id];
-
-		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
-
-		accr.Notify_Change_Ownership__c  = true;
-
-		accr.Scope_of_Change__c = 'HO - All Branches';
-
-		accr.Agency_Codes_Concerned__c = '7654321;1234567';
-
-		update accr;
-
-		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'MAJOR.CHANGES',caseCom.Id);
-
-		List<AMS_OSCAR__c> oscarLst = [SELECT Id, Type_of_change__c from AMS_OSCAR__c];
-
-		System.assertEquals(oscarLst.size(),1);
-
-		AMS_OSCAR__c oscar = oscarLst.get(0);
-
-		System.assertEquals(oscar.Type_of_change__c,'Ownership to non-IATA Agent');
-
-		Test.stopTest();
-	}
-
-	@isTest static void createAccreditationChangeOfOwnerShipSelectedBranches() {
-
-		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
-
-		Account acct = acctLst.get(0);
-
-		Account acct2 = acctLst.get(1);
-
-		AMS_Agencies_Hierarchy__c h = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy test');
-
-		insert h;
-
-		//insert rel;
-
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-		
-		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
-
-		Account acct3 = new Account();
-
-		acct3.NAME = 'Lions Travel 3';
-		acct3.TYPE = 'Non-IATA Passenger Agent';
-		acct3.RECORDTYPEID = accountRT;
-		acct3.BILLINGCOUNTRY = 'Greece';
-		acct3.INDUSTRY = 'Travel Agent';
-		acct3.CURRENCYISOCODE = 'USD';
-		acct3.TRADENAME__C = 'Lions Travel 3';
-		acct3.IATA_MEMBER__C = false;
-		acct3.LOCATION_TYPE__C = 'BR';
-		acct3.LEGAL_NAME__C = 'Lions Travel 3';
-		acct3.SHORT_NAME__C = 'Lions Travel 3';
-		acct3.IATA_ISO_COUNTRY__C = ctry.Id;
-		acct3.CATEGORY__C = 'IATA Passenger Sales Agent';
-		acct3.SECTOR__C = 'Travel Agent';
-		acct3.LOCATION_CLASS__C = 'P';
-		acct3.COMPANY_TYPE__C = 'A';
-		acct3.IN_A_AIRPORT__C = false;
-		acct3.REASON_FOR_CREATION__C = 'Created by customer';
-		acct3.IATACode__c = '1234567';
-		acct3.ParentId = acct.Id;
-
-		Account acct4 = new Account();
-
-		acct4.NAME = 'Lions Travel 4';
-		acct4.TYPE = 'Non-IATA Passenger Agent';
-		acct4.RECORDTYPEID = accountRT;
-		acct4.BILLINGCOUNTRY = 'Greece';
-		acct4.INDUSTRY = 'Travel Agent';
-		acct4.CURRENCYISOCODE = 'USD';
-		acct4.TRADENAME__C = 'Lions Travel 4';
-		acct4.IATA_MEMBER__C = false;
-		acct4.LOCATION_TYPE__C = 'BR';
-		acct4.LEGAL_NAME__C = 'Lions Travel 4';
-		acct4.SHORT_NAME__C = 'Lions Travel 4';
-		acct4.IATA_ISO_COUNTRY__C = ctry.Id;
-		acct4.CATEGORY__C = 'IATA Passenger Sales Agent';
-		acct4.SECTOR__C = 'Travel Agent';
-		acct4.LOCATION_CLASS__C = 'P';
-		acct4.COMPANY_TYPE__C = 'A';
-		acct4.IN_A_AIRPORT__C = false;
-		acct4.REASON_FOR_CREATION__C = 'Created by customer';
-		acct4.IATACode__c = '7654321';
-		acct4.ParentId = acct.Id;
-
-		insert new List<Account>{acct3,acct4};
-
-		AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Child_Account__c = acct2.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		AMS_Agencies_relationhip__c rel2 = new AMS_Agencies_relationhip__c(Child_Account__c = acct3.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		AMS_Agencies_relationhip__c rel3 = new AMS_Agencies_relationhip__c(Child_Account__c = acct4.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		insert new List<AMS_Agencies_relationhip__c>{rel2,rel3,rel};
-
-		Test.startTest();
-
-		System.debug('Got first account with id:' + acct.Id + ' and with name:' + acct.Name + ' and parent Id:' + acct.ParentId);
-
-		Case caseCom = [SELECT Id from Case where AccountId = : acct.Id];
-
-		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
-
-		accr.Notify_Change_Ownership__c  = true;
-
-		accr.Scope_of_Change__c = 'HO - Selected Branches';
-
-		accr.Agency_Codes_Concerned__c = '7654321;1234567';
-
-		update accr;
-
-		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'MAJOR.CHANGES',caseCom.Id);
-
-		List<AMS_OSCAR__c> oscarLst = [SELECT Id, Type_of_change__c from AMS_OSCAR__c];
-
-		System.assertEquals(oscarLst.size(),1);
-
-		AMS_OSCAR__c oscar = oscarLst.get(0);
-
-		System.assertEquals(oscar.Type_of_change__c,'Ownership to non-IATA Agent');
-
-		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId];
-
-		System.assertEquals(details.size(),2);
-
-		Test.stopTest();
-	}
-
-
-
-
-
-	@isTest static void createAccreditationOwners() {
-
-		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
-
-		Account acct = acctLst.get(0);
-
-		Account acct2 = acctLst.get(1);
-
-		AMS_Agencies_Hierarchy__c h = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy test');
-
-		insert h;
-
-		//insert rel;
-
-		
-		
-		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
-
-		AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Child_Account__c = acct2.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
-
-		insert new List<AMS_Agencies_relationhip__c>{rel};
-
-		Test.startTest();
-
-		System.debug('Got first account with id:' + acct.Id + ' and with name:' + acct.Name + ' and parent Id:' + acct.ParentId);
-
-		Case caseCom = [SELECT Id from Case where AccountId = : acct.Id];
-
-		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
-
-		accr.Notify_Change_Ownership__c  = true;
-
-		accr.Scope_of_Change__c = 'HO - Selected Branches';
-
-		accr.Agency_Codes_Concerned__c = '7654321;1234567';
-
-		update accr;
-
-		Id previousOwner = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
-		Id previousCompanyOwner = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
-
-		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC', Mobile__c='+1112345678', Phone__c='3424322343', Email__c='uni123que@email2.com', RecordTypeId=previousOwner);
-
-		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique2@email2.com', RecordTypeId=previousCompanyOwner);
-
-		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2};
-
-		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'MAJOR.CHANGES',caseCom.Id);
-
-		List<AMS_Accreditation_Contact__c> contactsCreated = [SELECT Id from AMS_Accreditation_Contact__c where RecordType.DeveloperName IN ('Company','Current_Company_Owner','Current_Owner','Person','Trained_Staff') and AMS_Pax_Accreditation_Form__c = :accr.Id];
-
-		System.assertEquals(contactsCreated.size(),2);
-
-		Test.stopTest();
-	}
+	
 }

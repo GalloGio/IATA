@@ -15,10 +15,10 @@ trigger AMS_OSCARCaseTrigger on Case (before update, after update, before insert
     if(trigger.isAfter){
     	if(trigger.isInsert){
         	AMS_OscarCaseTriggerHelper.renameOSCAR(trigger.New);
-            AMS_OscarCaseTriggerHelper.createSidraIrregularities();
+            //AMS_OscarCaseTriggerHelper.createSidraIrregularities();
         }
         if(trigger.isUpdate){
-            AMS_OscarCaseTriggerHelper.createSidraIrregularities();
+            //AMS_OscarCaseTriggerHelper.createSidraIrregularities();
         }
     }
 

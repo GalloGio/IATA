@@ -9,9 +9,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         AMS_OSCARTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
     }//TD: After Insert && after update. 
     else if(trigger.isAfter && trigger.isInsert){
-    	AMS_OSCARTriggerHandler.handleAfterInsert(Trigger.new);
+        AMS_OSCARTriggerHandler.handleAfterInsert(Trigger.new);
     }else if(trigger.isAfter && trigger.isUpdate){
-    	AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+        AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
     }
 
     List<CASE> casesToUpdate = new List<CASE>();
@@ -61,8 +61,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
     }
 
     System.debug('STEPs on OSCAR Object: ' + stepsOSCAR);
-	
-	//TD: Because I added "AFTER INSERT", I added here the isBefore, which was missing
+    
+    //TD: Because I added "AFTER INSERT", I added here the isBefore, which was missing
     if (Trigger.isBefore && Trigger.isInsert) {
 
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
@@ -131,7 +131,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
             if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
                 applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
-
 
 
             processFieldsTracking(oldOSCAR, updatedOscar);
@@ -217,9 +216,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-        if (updatedOscar.recordTypeID == newRT)
+        ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        if (updatedOscar.recordTypeID == newRT){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-                //if (updatedOscar.RPM_Approval__c == 'Authorize Approval') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 changeCode.name = 'FIN';
@@ -231,9 +230,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
-                //}
-            } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed') {
-                //if (updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
+            } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
@@ -250,9 +247,38 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-
-                //}
             }
+        // Management of CORRECTION OSCARs
+        }else if (updatedOscar.recordTypeID == corrRT){
+            if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
+                // If the checkbox is set create a COR change code.
+                if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
+                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                    changeCode.name = 'COR';
+                    changeCode.reasonCode = '91';
+                    changeCode.memoText = 'Correction';
+                    changeCode.reasonDesc  = 'ACCREDITED';
+                    changeCode.status  = '9';
+
+                    Account acct = new Account(Id = updatedOscar.Account__c);
+                    AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                }
+
+                // Regardless the changecode is generated or not, move data to Master Data
+                // First move the account
+                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
+                AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar});
+
+                // THen move the owners
+                Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, new Set<Id>{updatedOscar.Account__c});
+                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts);
+            }
+
+        }
     }
 
 
