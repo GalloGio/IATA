@@ -182,17 +182,17 @@
         <fullName>CodeFormatValidation</fullName>
         <active>true</active>
         <description>Ensures the format is: Two-letter Airline Code + 0-4 alphanumeric characters</description>
-        <errorConditionFormula>NOT(
-  AND(
-	  OR(
-		LEFT( Name , 2) =  Account__r.Airline_designator__c ,
-		LEN(Name) &gt;= 2,
-		LEN(Name) &lt;= 6
-		),
-		LEFT( Name , 3) =  Account__r.Airline_designator__c ,
-		LEN(Name) &gt;= 2,
-		LEN(Name) &lt;= 6
-	)
+        <errorConditionFormula>NOT( 
+OR( 
+AND( 
+LEFT( Name , 2) = Account__r.Airline_designator__c , 
+LEN(Name) &gt;= 2, 
+LEN(Name) &lt;= 6 
+), 
+LEFT( Name , 3) = Account__r.Airline_designator__c , 
+LEN(Name) &gt;= 2, 
+LEN(Name) &lt;= 6 
+) 
 )</errorConditionFormula>
         <errorDisplayField>Name</errorDisplayField>
         <errorMessage>Invalid Bank Account Code format. Expected format is 2 to 6 alphanumerical characters, with the first 2 being the Airline code.</errorMessage>
