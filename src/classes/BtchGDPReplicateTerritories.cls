@@ -6,7 +6,7 @@
   * History: 
   *   2016-02-05-sl: change Related_Accreditation__r.AIMS_ID__c value suffix to 'ACC1GDP', add callBatchReplicateTerritories, change query filter.
   *   2016-02-12-sl: use GSA_Territory.AIMS_Territory_Unique_Reference__c as the external id and map live GSA_Territory.Related_Accreditation directly
-  
+  *   2016-05-09-sl: bug fix on setting AIMS_Territory_Unique_Reference.
   *
   * Important note (Sonny Leman):
   *   - GSA_Territory.AIMS_ID is not unique, therefore GSA_Territory.AIMS_Territory_Unique_Reference__c is used as external id. 
@@ -45,47 +45,52 @@ global class BtchGDPReplicateTerritories implements Database.Batchable<sObject>,
 		List<Id> lstAIMSSFID = new List<Id>();
 		List<Id> lstWebStarSFID = new List<Id>();
 		
+		String liveRecAimsTerritoryUniqueRef;
 		for(sObject s : scope) {
 			GSA_Territory__c liveRecord = (GSA_Territory__c) s;
 			try {
-				GSA_Territory__c gdpRecord = new GSA_Territory__c();
-				//gdpRecord.RecordTypeId = idRecordTypeGDP;
-				
-				/**
-				 * Direct Mapping
-				 **/
-				gdpRecord.Accreditation_ID__c =liveRecord.Accreditation_ID__c;
-				gdpRecord.IATA_Code__c =liveRecord.IATA_Code__c;
-				gdpRecord.AIMS_Territory_Unique_Reference__c = gdpRecord.AIMS_Territory_Unique_Reference__c + 'GDP'; // external id, review later if we should add 'GDP' here.
-				gdpRecord.Check_Digit__c =liveRecord.Check_Digit__c;
-				gdpRecord.IATA_ISO_Country__c =liveRecord.IATA_ISO_Country__c;
-				gdpRecord.IATA_ISO_NCode__c =liveRecord.IATA_ISO_NCode__c;
-				gdpRecord.Location_Country_Name__c =liveRecord.Location_Country_Name__c;
-				gdpRecord.Airline_Code__c =liveRecord.Airline_Code__c;
-				gdpRecord.Airline_Name__c =liveRecord.Airline_Name__c;
-				gdpRecord.Appointment_Type__c =liveRecord.Appointment_Type__c;
-				gdpRecord.Appointment_Date__c =liveRecord.Appointment_Date__c;
-				gdpRecord.Territory_ISO_Country__c =liveRecord.Territory_ISO_Country__c;
-				gdpRecord.Territory_IATA_Numeric_Country_Code__c =liveRecord.Territory_IATA_Numeric_Country_Code__c;
-				gdpRecord.Territory_Country_Name__c =liveRecord.Territory_Country_Name__c;
-				gdpRecord.Territory_State_Abbreviation__c =liveRecord.Territory_State_Abbreviation__c;
-				gdpRecord.Territory_Description__c =liveRecord.Territory_Description__c;
-				gdpRecord.Related_Accreditation__c =liveRecord.Related_Accreditation__c;// this already points to the GDP version
-				  
-				if (!String.isBlank(liveRecord.AIMS_ID__c)) {
-					//Check How the structure is built
-					//Under a given Accreditation
-					// Note that Accreditation.AIMS_ID = GSA_Territory.Accreditation_ID = live GSA_Territory.AIMS_ID + 'ACC' + accreditation row_number + 'GDP'
+				liveRecAimsTerritoryUniqueRef = liveRecord.AIMS_Territory_Unique_Reference__c;
+				if (( liveRecAimsTerritoryUniqueRef != null) 
+					&& ( !liveRecAimsTerritoryUniqueRef.endsWith( 'GDP')))
+				{ 
+					GSA_Territory__c gdpRecord = new GSA_Territory__c();
+					//gdpRecord.RecordTypeId = idRecordTypeGDP;
 					
-					//For a given Product and Account View
-					gdpRecord.Related_GDP_Products_Account_View__r = new GDP_Products_Account_View__c (IATA_Code__c = liveRecord.IATA_Code__c);
-					
-					gdpRecord.AIMS_ID__c = liveRecord.AIMS_ID__c; // not sure if adding 'GDP' is still relevant
-					lstAIMS.add(gdpRecord);
-					lstAIMSSFID.add(liveRecord.Id);
-					lstAIMSIATACode.add(liveRecord.IATA_Code__c);
-				} 
-				
+					/**
+					 * Direct Mapping
+					 **/
+					gdpRecord.Accreditation_ID__c =liveRecord.Accreditation_ID__c;
+					gdpRecord.IATA_Code__c =liveRecord.IATA_Code__c;
+					gdpRecord.AIMS_Territory_Unique_Reference__c = liveRecord.AIMS_Territory_Unique_Reference__c + 'GDP'; // external id, review later if we should add 'GDP' here.
+					gdpRecord.Check_Digit__c =liveRecord.Check_Digit__c;
+					gdpRecord.IATA_ISO_Country__c =liveRecord.IATA_ISO_Country__c;
+					gdpRecord.IATA_ISO_NCode__c =liveRecord.IATA_ISO_NCode__c;
+					gdpRecord.Location_Country_Name__c =liveRecord.Location_Country_Name__c;
+					gdpRecord.Airline_Code__c =liveRecord.Airline_Code__c;
+					gdpRecord.Airline_Name__c =liveRecord.Airline_Name__c;
+					gdpRecord.Appointment_Type__c =liveRecord.Appointment_Type__c;
+					gdpRecord.Appointment_Date__c =liveRecord.Appointment_Date__c;
+					gdpRecord.Territory_ISO_Country__c =liveRecord.Territory_ISO_Country__c;
+					gdpRecord.Territory_IATA_Numeric_Country_Code__c =liveRecord.Territory_IATA_Numeric_Country_Code__c;
+					gdpRecord.Territory_Country_Name__c =liveRecord.Territory_Country_Name__c;
+					gdpRecord.Territory_State_Abbreviation__c =liveRecord.Territory_State_Abbreviation__c;
+					gdpRecord.Territory_Description__c =liveRecord.Territory_Description__c;
+					gdpRecord.Related_Accreditation__c =liveRecord.Related_Accreditation__c;// this already points to the GDP version
+					  
+					if (!String.isBlank(liveRecord.AIMS_ID__c)) {
+						//Check How the structure is built
+						//Under a given Accreditation
+						// Note that Accreditation.AIMS_ID = GSA_Territory.Accreditation_ID = live GSA_Territory.AIMS_ID + 'ACC' + accreditation row_number + 'GDP'
+						
+						//For a given Product and Account View
+						gdpRecord.Related_GDP_Products_Account_View__r = new GDP_Products_Account_View__c (IATA_Code__c = liveRecord.IATA_Code__c);
+						
+						gdpRecord.AIMS_ID__c = liveRecord.AIMS_ID__c; // not sure if adding 'GDP' is still relevant
+						lstAIMS.add(gdpRecord);
+						lstAIMSSFID.add(liveRecord.Id);
+						lstAIMSIATACode.add(liveRecord.IATA_Code__c);
+					} 
+				} // only replicate those not ending with GDP
 			
 				// (Test.isRunningTest()) throw new IECApplicationException('Test');
 			}
@@ -203,31 +208,6 @@ global class BtchGDPReplicateTerritories implements Database.Batchable<sObject>,
 		System.debug( 'catlling batch job BtchBDPReplicateTerritories.');
 		BtchGDPReplicateTerritories btchProc = new BtchGDPReplicateTerritories();
 		btchProc.dtSystemNow = batchStartTime;
-/* original, will return no records
-		btchProc.query =
-			'SELECT Id, AIMS_ID__c, IATA_Code__c'
-			+ ', Related_Account__r.IATACode__c'
-			+ ', Check_Digit__c'
-			+ ', IATA_ISO_Country__c'
-			+ ', IATA_ISO_NCode__c'
-			+ ', Location_Country_Name__c'
-			+ ', Airline_Code__c'
-			+ ', Airline_Name__c'
-			+ ', Appointment_Type__c'
-			+ ', Appointment_Date__c'
-			+ ', Territory_ISO_Country__c'
-			// + ', Territory_IATA_Numeric_Country Code__c'
-			+ ', Territory_Country_Name__c'
-			+ ', Territory_State_Abbreviation__c'
-			+ ', Territory_Description__c'
-			+ ', AIMS_Related_Account__c'
-			+ '	FROM GSA_Territory__c'
-			+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-			+ '		AND LastModifiedDate < ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
-			+ '		AND (AIMS_ID__c != null)'
-			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
-			+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null)';
-*/
 		
 		btchProc.query =
 			'SELECT Id, AIMS_ID__c, IATA_Code__c'

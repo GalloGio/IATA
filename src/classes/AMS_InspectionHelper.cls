@@ -1,5 +1,10 @@
 public class AMS_InspectionHelper {
-
+	/**********TD
+	
+	CLASS HAS BEEN ROLLBACKED BECAUSE OF RELEASE 3.1.
+	ASK DTULLO FOR BACKUP OF CLASS BEFORE IT WAS MODIFIED!
+	
+	*************/
     public static void setStatusCodeOnAgency(list<AMS_Inspection__c> inspections){
         
         List<AMS_Inspection__c> iataInspections = new List<AMS_Inspection__c>();
@@ -189,6 +194,42 @@ public class AMS_InspectionHelper {
 			}
 		}
 		return changedRecords;
+	}	
+	
+	/**  Comparison of two AMS_Inspection__c records. Used to prevent a last synchronization datetime issue caused by DST.
+	 *   If any of the fields apart from last sync is not equal to the old value, 
+	 *   it means something else than the Last Sync value got updated as well.
+	*/
+    public static boolean compareAmsInspectionRecords_IgnoringLastSyncDate(AMS_Inspection__c newRecord, AMS_Inspection__c oldRecord)
+	{
+		Set<String> ignoredFields = new Set<String>{'LastModifiedById', 'LastModifiedDate', 'SystemModstamp', 'Last_synchronization__c'};
+		Map <String, Schema.SObjectField> inspectionFieldsMap = schema.SObjectType.AMS_Inspection__c.fields.getMap();
+	    List <Schema.SObjectField> inspectionFields = inspectionFieldsMap.values();
+	    List <String> inspectionAPIFieldNames = new List<String>();
+	    for (Schema.SObjectField field : inspectionFields)
+	    {
+	        inspectionAPIFieldNames.add(field.getDescribe().getName());
+	    }
+	    
+	    boolean valueChanged = false;
+
+		for(String field : inspectionAPIFieldNames)
+        {
+			System.debug('*************** inspection field: '+field);
+        	if(!ignoredFields.contains(field))
+        	{
+	        	if(newRecord.get(field) != oldRecord.get(field))
+	            {
+					System.debug('*************** field that CHANGED: '+field);
+	            	valueChanged = true;
+	            }
+        	}
+        }
+        if(valueChanged)
+		{
+			return true;
+		}
+        return false;
 	}
     
 }
