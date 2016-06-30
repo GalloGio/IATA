@@ -26358,53 +26358,11 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     </recordTypes>
     <searchLayouts>
         <customTabListAdditionalFields>FULL_NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ACCOUNT.SITE</customTabListAdditionalFields>
-        <customTabListAdditionalFields>CONTACT.EMAIL</customTabListAdditionalFields>
-        <customTabListAdditionalFields>CONTACT.PHONE1</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Airline_Contact_Type__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
-        <lookupFilterFields>CONTACT.SALUTATION</lookupFilterFields>
-        <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE1</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE3</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE4</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE5</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE6</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>CONTACT.FIRST_NAME</searchFilterFields>
-        <searchFilterFields>CONTACT.LAST_NAME</searchFilterFields>
-        <searchFilterFields>ACCOUNT.NAME</searchFilterFields>
-        <searchFilterFields>ACCOUNT.SITE</searchFilterFields>
-        <searchFilterFields>CONTACT.ADDRESS2_CITY</searchFilterFields>
-        <searchFilterFields>CONTACT.EMAIL</searchFilterFields>
-        <searchFilterFields>Area__c</searchFilterFields>
-        <searchFilterFields>CONTACT.ADDRESS2_COUNTRY</searchFilterFields>
-        <searchFilterFields>InvoiceWorks_Customer__c</searchFilterFields>
-        <searchFilterFields>Central_Billing_Contact__c</searchFilterFields>
+
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CONTACT.TITLE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Airline_Contact_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Services__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CONTACT.PHONE1</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CONTACT.EMAIL</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
+
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
