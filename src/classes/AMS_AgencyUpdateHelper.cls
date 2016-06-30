@@ -57,10 +57,49 @@ public without sharing class AMS_AgencyUpdateHelper {
         for(AMS_Agency_Updates__c au: aulist){
             agenciesAlreadyUpdated.add(au.Account__c);
         }
-
+ 
         //remove agencies that already have an agency update record
         agencyIds.removeAll(agenciesAlreadyUpdated);
 
+                ////Validate ShippingState and ShippingCountry
+        //List<Account> aulist_shippingAddress = [select id,  Name, IATACode__c,ShippingState, ShippingCountry from Account where id in :agencyIds ];
+        //Set<Id> agenciesShippingError = new Set<Id>();
+        //for(Account au: aulist_shippingAddress){
+
+        //    Boolean bError = false;
+        //    String accErrors = '';
+        //    if(String.isNotEmpty(au.ShippingState) && !AMS_Utils.isValidState(au.ShippingState) ){
+        //        accErrors += au.Name+' ('+au.IATACode__c+'-'+au.id+'): Shipping State is invalid - ' + au.ShippingState + '\n';
+        //        bError = true;
+        //    }
+        //    if(String.isNotEmpty(au.ShippingCountry) && !AMS_Utils.isValidCountry(au.ShippingCountry) ){
+        //        accErrors += au.Name+' ('+au.IATACode__c+'-'+au.id+'): Shipping Country is invalid - ' + au.ShippingCountry + '\n';
+        //        bError = true;
+        //    }
+        //    if(bError){
+        //        agenciesShippingError.add(au.id);
+
+        //        //create Log entry
+        //        Technical_Logs__c tlog = new Technical_Logs__c();
+        //        tlog.Status__c = 'Error';
+        //        tlog.Operation__c = 'Agency Update Shipping Validation';
+        //        DateTime dtStart = system.now();
+        //        tlog.start_date__c = dtStart;
+        //        DateTime dtEnd = system.now();
+        //        tlog.End_Date__c = dtEnd;
+        //        tlog.Log__c = accErrors;
+        //        tlog.Record__c = au.IATACode__c+' - '+au.id;
+        //        try {
+        //            insert tlog;
+        //        }catch (Exception ex) {
+        //                system.debug('Log writing error: ' + ex.getMessage());
+        //        }    
+        //    }
+        //}
+
+        ////remove agencies that had Shipping validation errors 
+        //agencyIds.removeAll(agenciesShippingError);.removeAll(agenciesShippingError);
+        
         system.debug('accSentToExternalSystemFlag: ' + accSentToExternalSystemFlag);
         //remove agencies that have been updated on integration with SAP 
         agencyIds.removeAll(accSentToExternalSystemFlag);
