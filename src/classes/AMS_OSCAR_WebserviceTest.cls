@@ -10,7 +10,7 @@ public class AMS_OSCAR_WebserviceTest {
     private static Account a3;
 
     private static void setup(){
-    	
+        
         oscar = new AMS_OSCAR__c(Status__c = 'Reopen', Billing_Document_Number__c = '54321');
         insert oscar;
 
@@ -20,20 +20,26 @@ System.debug('******* oscar: ' + oscar);
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
-        insert a1;
-        oscar2 = new AMS_OSCAR__c(Account__c = a1.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
-        insert oscar2;
+        List<Account> accList = new List<Account>();
+            a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+            a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test1 Agency',Short_Name__c='Test1 Agency',BillingCountry='Brazil');
+            a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
+        
+        accList.add(a1);
+        accList.add(a2);
+        accList.add(a3);
+        insert accList;
 
-        a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test1 Agency',Short_Name__c='Test1 Agency',BillingCountry='Brazil');
-        insert a2;
-        oscar3 = new AMS_OSCAR__c(Account__c = a2.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
-        insert oscar3;
+        List<AMS_OSCAR__c> oscarList = new List<AMS_OSCAR__c>();
 
-        a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
-        insert a3;
-        oscar4 = new AMS_OSCAR__c(Account__c = a3.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
-        insert oscar4;      
+            oscar2 = new AMS_OSCAR__c(Account__c = accList[0].Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
+            oscar3 = new AMS_OSCAR__c(Account__c = accList[1].Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
+            oscar4 = new AMS_OSCAR__c(Account__c = accList[2].Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
+        
+        oscarList.add(oscar2);
+        oscarList.add(oscar3);
+        oscarList.add(oscar4);
+        insert oscarList;
 
         Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(Active__c = true, /*Change_Code__c = acc.id,MACREVIEW*/ Account__c = a1.id);
         insert aacc;
@@ -48,7 +54,7 @@ System.debug('******* oscar: ' + oscar);
     
     @isTest static void test_updateOSCARFields(){
         setup();
-        Test.startTest();
+        
         
 System.debug('******* 2 oscar: ' + oscar);        
         AMS_OSCAR__c oscar1 = [SELECT Id, Status__c, Billing_Document_Number__c FROM AMS_OSCAR__c where id = :oscar.Id limit 1];
@@ -62,6 +68,7 @@ System.debug('******* 2 oscar: ' + oscar);
         
         
         oscar = [SELECT Id, Status__c, Billing_Document_Number__c FROM AMS_OSCAR__c limit 1];
+        Test.startTest();
         
         // System.assertEquals(oscar.Billing_Document_Number__c, '12345');
         System.assertEquals(oscar.Billing_Document_Number__c, '54321');
