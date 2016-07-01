@@ -30,10 +30,12 @@ public class AMS_OSCARTriggerHandler {
 			
 			if(!mapOscars.isEmpty()){
 				list<Case> lsCaseToUpdate = new list<case>();
-				for(case ca:[select id, Reason1__c, OSCAR__c from Case where OSCAR__c in:mapOscars.keySet()]){
+				for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c from Case where OSCAR__c in:mapOscars.keySet()]){
 					lsCaseToUpdate.add(new case(id = ca.id
 												, Reason1__c = mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c
 												, Process_Start_Date__c = mapOscars.get(ca.OSCAR__C).Process_Start_Date__c
+												, BSPCountry__c = ca.Account.IATA_ISO_Country__r.Name
+												, Region__c = ca.Account.Region_formula__c
 												, Dossier_reception_date__c = mapOscars.get(ca.OSCAR__C).Dossier_Reception_Date__c));
 				}
 				
