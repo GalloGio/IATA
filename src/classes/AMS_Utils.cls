@@ -303,6 +303,10 @@ public without sharing class AMS_Utils {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('REC')) {
             sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NEP')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NAC')) {
+            sRes = 'A';
         } 
         // «D» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
