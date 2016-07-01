@@ -15,10 +15,20 @@ trigger AMS_AgencyUpdatesTrigger on AMS_Agency_Updates__c (
             {
                 if(updatedAgency.Update_Type__c == 'Update_Sent' && trigger.OldMap.get(updatedAgency.Id).Update_Type__c != 'Update_Sent')
 				{
-                    sentUpdates.add(updatedAgency);
-                    AMS_AgencyUpdateHelper.accSentToExternalSystemFlag.add(updatedAgency.Account__c);
+                    Set<Id> setSentUpdates = new Set<Id>();
+                    for(AMS_Agency_Updates__c su: sentUpdates){
+                        setSentUpdates.add(su.Account__c);
+                    }
+                    
+                    if(setSentUpdates.contains(updatedAgency.Account__c)==false){
+                    	sentUpdates.add(updatedAgency);
+                        if(AMS_AgencyUpdateHelper.accSentToExternalSystemFlag.contains(updatedAgency.Account__c)==false){
+                            AMS_AgencyUpdateHelper.accSentToExternalSystemFlag.add(updatedAgency.Account__c);
+                        }                    	
+                    }
                 }
             }
+            System.debug(sentUpdates);
             AMS_AgencyUpdateHelper.accountUpdate(sentUpdates);
         }
 }

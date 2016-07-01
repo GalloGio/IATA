@@ -26390,9 +26390,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <searchFilterFields>ACCOUNT.SITE</searchFilterFields>
         <searchFilterFields>CONTACT.ADDRESS2_CITY</searchFilterFields>
         <searchFilterFields>CONTACT.EMAIL</searchFilterFields>
-        <searchFilterFields>Area__c</searchFilterFields>
-        <searchFilterFields>CONTACT.ADDRESS2_COUNTRY</searchFilterFields>
-        <searchFilterFields>InvoiceWorks_Customer__c</searchFilterFields>
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.TITLE</searchResultsAdditionalFields>
