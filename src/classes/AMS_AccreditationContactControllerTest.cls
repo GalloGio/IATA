@@ -19,7 +19,7 @@ private class AMS_AccreditationContactControllerTest
         Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
 		
 		Id accRtId = AMS_Utils.getId('Account', 'IATA_Agency');
-        Account acc1 = new Account(Name='LegalName', Location_Type__c = 'HO', Email__c = 'test@test.com', Type='CASS Associates', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2', Legal_Name__c = 'LegalName', RecordTypeId = accRtId);
+        Account acc1 = new Account(Name='LegalName', Location_Type__c = 'HO', Email__c = 'test@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2', Legal_Name__c = 'LegalName', RecordTypeId = accRtId);
         insert acc1;
         
         Case testCase = ISSP_ObjectFactory.createNewCase();

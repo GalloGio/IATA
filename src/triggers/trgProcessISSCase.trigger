@@ -56,7 +56,7 @@ trigger trgProcessISSCase on Case (before insert, before update) {
 
                             // flags
                             Boolean isPassengerDomestic = (parentCase[0].Account.Type == 'IATA Passenger Sales Agent' || parentCase[0].Account.Type == 'Domestic Agent');
-                            Boolean isCargoCASS = (parentCase[0].Account.Type == 'IATA Cargo Agent' || parentCase[0].Account.Type == 'CASS Associates');
+                            Boolean isCargoCASS = (parentCase[0].Account.Type == 'IATA Cargo Agent' || parentCase[0].Account.Type == 'CASS Associate');
 
                             // the deadline date must not be set for Passenger/Domestic Agents
                             if (isPassengerDomestic && newCase.New_IFAP_Deadline_date__c != null) {

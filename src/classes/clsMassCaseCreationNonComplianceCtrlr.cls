@@ -239,7 +239,7 @@ public with sharing class clsMassCaseCreationNonComplianceCtrlr {
                  
                  // check the agent type of the first case in the list
              	 Case c = [Select c.Account.Type from Case c where c.Id =:AllCases.get(0) limit 1];
-              	isAgentCargoOrCASS = (c != null && (c.Account.Type == 'IATA Cargo Agent' || c.Account.Type == 'CASS Associates'));      
+              	isAgentCargoOrCASS = (c != null && (c.Account.Type == 'IATA Cargo Agent' || c.Account.Type == 'CASS Associate'));      
            } 
               
             q = soql + extraQuery +' order by ' + sortField + ' ' + sortDir;
