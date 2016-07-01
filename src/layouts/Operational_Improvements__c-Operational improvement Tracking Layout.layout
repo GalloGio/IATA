@@ -69,6 +69,14 @@
                 <field>Initiator__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Impact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Operation__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Affected_Process__c</field>
             </layoutItems>
@@ -79,14 +87,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Overall_Deadline__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Frequency_of_occurence__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -116,6 +116,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>If_Yes_please_indicate_the_number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Africa_MENA_Countries_Concerned__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Americas_Countries_Concerned__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Asia_Pacific_Countries_Concerned__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>China_North_Asia_Countries_Concerned__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
