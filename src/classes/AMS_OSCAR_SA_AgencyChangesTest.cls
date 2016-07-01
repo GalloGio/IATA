@@ -1485,4 +1485,116 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
     }
 
+
+    //Change of ownership non IATA buys IATA: Just SAs
+    @isTest static void ChangeOwnershipIATAToNonIATA7() {
+
+        getUpdatedAccountData();
+        
+        AMS_OSCAR__c oscar = createOSCAR(SA1, 'Ownership to non-IATA Agent', null, null);
+
+
+        //Adding agencies to migration list
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+
+        insert pds;
+
+        Test.startTest();
+
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+
+        Test.stopTest();
+
+        getUpdatedAccountData();
+
+        AMS_Agencies_Hierarchy__c H1 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy 1' limit 1];
+
+        //validate the origin hierarchy structure (after migrating agencies)
+        List<AMS_Agencies_relationhip__c> relsH1 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H1.Id];
+        System.assertEquals(3, relsH1.size());
+
+        Integer countConditions = 0;
+
+        for (AMS_Agencies_relationhip__c rel : relsH1) {
+            if (rel.Child_Account__r.Name == 'Fire Travels BR1') {
+                System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }else if (rel.Child_Account__r.Name == 'Water Travels BR2') {
+                System.assertEquals('BR', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            } else if (rel.Child_Account__r.Name == 'Beach Travels SA4') {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals('Winter Travels HO1', rel.Parent_Account__r.Name);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }
+        }
+
+        //get the new hierarchy created by the system
+        AMS_Agencies_Hierarchy__c H2 = [SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Hierarchy_Name__c = 'Hierarchy' limit 1];
+
+        //validate the destination hierarchy structure (after migrating agencies)
+        List<AMS_Agencies_relationhip__c> relsH2 = [SELECT ID, Child_Account__r.Name, Child_Account__r.Location_Type__c, Parent_Account__r.Name, Parent_Account__r.Location_Type__c, Child_Account__r.ParentId FROM AMS_Agencies_relationhip__c WHERE Hierarchy__c = : H2.Id];
+        System.assertEquals(2, relsH2.size());
+
+        for (AMS_Agencies_relationhip__c rel : relsH2) {
+           if (rel.Child_Account__r.Name == 'Headhunter Travels SA3') {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }  else if (rel.Child_Account__r.Name == 'Earth Travels SA2') {
+                System.assertEquals('SA', rel.Child_Account__r.Location_Type__c);
+                System.assertEquals('Water Travels SA1', rel.Parent_Account__r.Name);
+                System.assertEquals('HO', rel.Parent_Account__r.Location_Type__c);
+                System.assertEquals(SA1.Id, rel.Child_Account__r.ParentId);
+                countConditions++;
+            }
+
+        }
+
+        System.assertEquals(HO1.ParentId, null);
+        System.assertEquals(SA1.ParentId, null);
+        System.assertEquals(SA1.Location_Type__c, 'HO');
+
+        //all the conditions inside the loop must happen
+        System.assertEquals(countConditions, 5);
+
+    }
+
+    //Change of location type behavior - oscar is opened with change of location type on SA which is directly under HO.
+    @isTest static void verifyOptionBlock3() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(SA1, 'Location Type', null, null);
+
+        Test.startTest();
+
+        try {
+            //block is only done when trying to pass sanity check
+            oscar.STEP6__c = AMS_Utils.PASSED;
+            oscar.Change_of_location_type_behavior__c = AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP;
+            update oscar;
+            System.assert(false, 'exception expected');
+        } catch (Exception e) {
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The field Change of location type behavior cannot have value Dont change the parent when the oscar is opened for an account directly under an HO.') ? true : false;
+            System.assertEquals(expectedExceptionThrown, true);
+        }
+
+        Test.stopTest();
+
+    }
+
 }

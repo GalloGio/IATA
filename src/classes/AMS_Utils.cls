@@ -4,7 +4,7 @@ public without sharing class AMS_Utils {
         get {
             Set<Id> toReturn = new Set<Id>();
 
-            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS â€“ Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
+            List<Profile> profiles = [select ID from profile where Name IN ('FDS Hub Analyst ARM', 'FDS – Agency Management - Supervisor (Approver)', 'IDFS Americas - Hub CS Management', 'IDFS Americas - Hub Staff')];
 
             for (Profile p : profiles)
                 toReturn.add(p.Id);
@@ -94,7 +94,7 @@ public without sharing class AMS_Utils {
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
     
-    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Donâ€™t change the parent';        
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
@@ -288,7 +288,7 @@ public without sharing class AMS_Utils {
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
 
-        // Â«AÂ» Section
+        // «A» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
@@ -304,7 +304,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('REC')) {
             sRes = 'A';
         } 
-        // Â«DÂ» Section
+        // «D» Section
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('NWD')) {
@@ -314,7 +314,7 @@ public without sharing class AMS_Utils {
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
         } 
-        // Â«CÂ» Section
+        // «C» Section
         else {
             sRes = 'C';
         }
