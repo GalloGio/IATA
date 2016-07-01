@@ -204,6 +204,52 @@ public class AMS_OscarCaseTriggerHelper {
 
         set;
     }
+
+    public static void checkIrregularityThreshold() {
+        List<Case> triggerNew = (List<Case>)Trigger.new;
+
+        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+
+        List<Case> newSidraCases = new List<Case>();
+        Map<Id, Account> accounts = new Map<Id, Account>();
+        for(Case c : triggerNew){
+            if(c.RecordTypeId == sidraRecTypeId){
+                newSidraCases.add(c);
+                accounts.put(c.AccountId, null);
+            }
+        }
+
+        if(newSidraCases.isEmpty()) return;
+
+        Set<Id> isoCountries = new Set<Id>();
+        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c FROM Account WHERE Id IN :accounts.keySet()]){
+            accounts.put(a.Id, a);
+            isoCountries.add(a.IATA_ISO_Country__c);
+        }
+
+        Map<String, Decimal> thresholds = new Map<String, Decimal>();
+        for(IATA_ISO_Country__c country : [SELECT
+                                                        Id
+                                                        , (SELECT
+                                                                Id
+                                                                , Threshold__c
+                                                                , Location_Class__c
+                                                            FROM AMS_Country_Specific_Attributes__r
+                                                            WHERE RecordType.Name = 'Irregularity Threshold')
+                                                    FROM IATA_ISO_Country__c
+                                                    WHERE Id IN :isoCountries])
+        {
+            for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+                thresholds.put(country.Id+att.Location_Class__c, att.Threshold__c);
+            }
+        }
+        System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);
+
+        for(Case c : newSidraCases){
+            Account a = accounts.get(c.AccountId);
+            c.Acc_IRR_leading_to_DEF__c = thresholds.get(a.IATA_ISO_Country__c+a.Location_Class__c);
+        }
+    }
     
 
     //creates new change codes when a sidra case is closed

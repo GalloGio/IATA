@@ -4,6 +4,7 @@ trigger AMS_OSCARCaseTrigger on Case (before update, after update, before insert
     	if(trigger.isInsert){
         	AMS_OscarCaseTriggerHelper.OSCARCaseCreationRules(trigger.New);
             AMS_OscarCaseTriggerHelper.fillOSCARLookup(trigger.New);
+            AMS_OscarCaseTriggerHelper.checkIrregularityThreshold();
         }
         if(Trigger.isUpdate){
             AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(trigger.New, trigger.oldMap);
