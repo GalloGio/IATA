@@ -12689,23 +12689,24 @@ jQuery(document).ready(function($) {
 
     var stickyElementContainerWidth,
         stickyElementPositionTop;
-    $('.js-tabs').on('click', '.tabs a', function(event) {
-        event.preventDefault();
-        var self = $(this),
-        parent = self.parents('.js-tabs'),
-        targetPane = self.parent('li').data('target');
-        self.parents('li').addClass(className.active).siblings().removeClass(className.active);
-        parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
-        activateEllipsisTooltip();
-        stickyFooter();
-        if ($('.sub-container.payment-confirmation').length) {
-            var targetStickyElement = parent.find(targetPane + ' .sub-container.payment-confirmation');
-            stickyElementContainerWidth = targetStickyElement.width();
-            stickyElementPositionTop = targetStickyElement.offset().top;
 
-        }
-
-    });
+    if (!$('.main-content.manage-account').length) {
+        $('.js-tabs').on('click', '.tabs a', function(event) {
+            event.preventDefault();
+            var self = $(this),
+            parent = self.parents('.js-tabs'),
+            targetPane = self.parent('li').data('target');
+            self.parents('li').addClass(className.active).siblings().removeClass(className.active);
+            parent.find(targetPane).addClass(className.open).siblings().removeClass(className.open);
+            activateEllipsisTooltip();
+            stickyFooter();
+            if ($('.sub-container.payment-confirmation').length) {
+                var targetStickyElement = parent.find(targetPane + ' .sub-container.payment-confirmation');
+                stickyElementContainerWidth = targetStickyElement.width();
+                stickyElementPositionTop = targetStickyElement.offset().top;
+            }
+        });
+    }
 
     var isClicked = false;
     $('.js-page-anchors').on('click', 'li',  function(event) {
@@ -12790,7 +12791,7 @@ jQuery(document).ready(function($) {
         $(this).parents('li').addClass(className.selected).siblings().removeClass(className.selected);
     }).on('change', '.user-input:checked', function() {
         var value = $(this).val();
-        if (value === 'Custom') {
+        if (value === 'audience-option-3') {
             $('.process-2-steps').removeClass(className.hidden);
             $('.process-4-steps').addClass(className.hidden);
         } else {
@@ -12941,7 +12942,7 @@ jQuery(document).ready(function($) {
         closeModal();
     });
 
-    $(document).on('click', '#js-modal .js-close-modal', function(event) {
+    $('#js-modal').on('click', '.js-close-modal', function(event) {
         event.preventDefault();
         closeModal();
     });
