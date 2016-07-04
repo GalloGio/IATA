@@ -1,8 +1,0 @@
-The following customer portal case has been escalated to you by the case owner {!Case.OwnerFullName}.
-
-Company: {!Account.Name}
-Area: {!Case_Area}
-Case number: {!Case.CaseNumber}
-Case subject: {!Case.Subject}
-
-{!Case.Link}

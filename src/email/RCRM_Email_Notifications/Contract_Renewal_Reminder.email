@@ -1,9 +1,0 @@
-Dear {!Opportunity.OwnerFirstName},
-
-This is a reminder to inform you that you need to initiate the renewal process for an expiring RCRM contract: {!Opportunity.Expiring_contract_name__c}.
-
-You can access this Contract in order to start the renewal process by clicking on this link:
-https://iata.my.salesforce.com/{!Opportunity.Expiring_contractId__c}
-
----------------------------
-Note: This is an automatic message, please do not reply to it.
