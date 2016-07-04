@@ -446,7 +446,7 @@
                                         <!--SURVEY BUTTON -->
                                         <apex:outputpanel styleclass="btn pull-right" rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false && isToShowSurveyBtn == true && caseType == '' && mySurveyCompletedVariable != true, true , false )}">
                                             <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}&q1={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink>
-                                        </apex:outputpanel>
+                                        </apex:outputpanel> 
                                         <!-- END SURVEY BUTTON -->
                                         
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
