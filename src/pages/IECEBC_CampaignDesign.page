@@ -50,10 +50,10 @@
 	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step4_Writable__c}">
-                                    <li><apex:commandLink onclick="document.getElementById('IECEBC_TemplateEditor').contentWindow.saveTemplate(''); location.href='/iec/iecebc_dashboard';" styleClass="button secondary" value="Save and Exit" /></li>
+                                    <li><apex:commandLink onclick="document.getElementById('IECEBC_TemplateEditor').contentWindow.saveTemplate(''); location.href='/iec/iecebc_dashboard';" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step4_Writable__c}">
-	                                <li><apex:commandLink action="{!next}" onclick="document.getElementById('IECEBC_TemplateEditor').contentWindow.saveTemplate(''); return false;" styleClass="button" value="Save and Continue" /></li>
+	                                <li><apex:commandLink action="{!next}" onclick="document.getElementById('IECEBC_TemplateEditor').contentWindow.saveTemplate(''); return false;" styleClass="button" value="Continue" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!NOT(campaign.Is_Step4_Writable__c)}">
 	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>

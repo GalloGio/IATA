@@ -1,16 +1,17 @@
-public class vfIECEBC_CampaignRecipient {
-    // Controller
-    class Controller_Exception extends Exception{}
-    
-    public EBC_Campaign__c campaign { get; set; }
+public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
+    public EBC_Campaign__c campaign { get; set; } 
     public ApexPages.StandardController con { public get; private set; }
     
     public vfIECEBC_CampaignRecipient(ApexPages.StandardController stdController) {
         this.con = stdController;
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
-    }
+    } 
     
-    public PageReference doNothing() {
+    public Integer resetFilterIndex { get; set; }
+    public PageReference resetFilter() {
+        refinementFilters[resetFilterIndex].Field_Operator__c = null;
+        refinementFilters[resetFilterIndex].Field_Value__c = null;
+        
         return null;
     }
     
@@ -22,7 +23,7 @@ public class vfIECEBC_CampaignRecipient {
             Boolean isDisabled = (this.campaign.EBC_Master_Filter__c != null && this.campaign.EBC_Master_Filter__r.Audience__c != filter.Audience__c);            
             
             
-            options.add(new SelectOption(filter.Id, filter.Name + (filter.Number_of_Recipients__c != null ? ' (' + filter.Number_of_Recipients__c + ')' : ''), isDisabled));
+            options.add(new SelectOption(filter.Id, filter.Name, isDisabled)); 
         }
         
         return options;
@@ -130,6 +131,7 @@ public class vfIECEBC_CampaignRecipient {
                 newFilter.Billing_Account__c = vfIECEBC.billingAccount.Id;
                 newFilter.Refinement_Condition__c  = 'AND';
                 newFilter.Geo_Condition__c  = 'OR';
+                if (campaign.Audience__c != null) newFilter.Audience__c = campaign.Audience__c;
             } 
             
             return newFilter;
@@ -140,7 +142,7 @@ public class vfIECEBC_CampaignRecipient {
     // New List - Customer Filters
     public Map<Id, EBC_Application_Filter__c> allAvailableApplicationFilters {
         get {
-        	if (allAvailableApplicationFilters == null) allAvailableApplicationFilters = new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Audience__c = :newFilter.Audience__c]);
+        	if (allAvailableApplicationFilters == null) allAvailableApplicationFilters = new Map<Id, EBC_Application_Filter__c>([Select Id, Data_Type__c, Filter_Description__c, Data_Source_Value_Field__c, Data_Source_Label_Field__c, Data_Source_Object__c, Data_Source_Where_Clause__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c, Filter_Field__c From EBC_Application_Filter__c Where Audience__c = :newFilter.Audience__c]);
 
             return allAvailableApplicationFilters;
         }
@@ -155,14 +157,15 @@ public class vfIECEBC_CampaignRecipient {
                     if (af.Data_Type__c != 'Picklist') continue;
                     if (af.Data_Source_Object__c == null || af.Data_Source_Value_Field__c == null) continue;
                     
-                    String soql = 'SELECT ' + (af.Data_Source_Value_Field__c.toLowerCase() != 'id' ? 'Id, ' : '') + af.Data_Source_Value_Field__c + ' FROM ' + af.Data_Source_Object__c + (af.Data_Source_Where_Clause__c != null ? ' WHERE ' + af.Data_Source_Where_Clause__c : '');
+                    String soql = 'SELECT ' + (af.Data_Source_Value_Field__c.toLowerCase() != 'id' ? 'Id, ' : '') + af.Data_Source_Value_Field__c + (af.Data_Source_Value_Field__c != af.Data_Source_Label_Field__c ? ', '+ af.Data_Source_Label_Field__c : '') + ' FROM ' + af.Data_Source_Object__c + (af.Data_Source_Where_Clause__c != null ? ' WHERE ' + af.Data_Source_Where_Clause__c : '');
                     List<sObject> results = Database.query(soql);
                     
                     List<SelectOption> options = new List<SelectOption>();
                     
                     for(sObject result : results) {
-                        String opt = (String)result.get(af.Data_Source_Value_Field__c);
-						options.add(new SelectOption(opt, opt));
+                        String optValue = (String)result.get(af.Data_Source_Value_Field__c);
+                        String optLabel = (String)result.get(af.Data_Source_Label_Field__c);
+						options.add(new SelectOption(optValue, optLabel));
                     }
                     
                     allAvailableApplicationFilterValues.put(af.Id, options);
@@ -181,36 +184,11 @@ public class vfIECEBC_CampaignRecipient {
                     Select
                     	Id,
                     	Name,
-                    	(Select Id, EBC_Application_Filter__c, EBC_Application_Filter__r.Filter_RelatedList__c, Field_Operator__c, Field_Value__c From EBC_Customer_Filters__r)
+                    	Refinement_Condition__c,
+                    	(Select Id, Field_Name__c, EBC_Application_Filter__r.Search_Level__c, EBC_Application_Filter__c, EBC_Application_Filter__r.Filter_RelatedList__c, EBC_Application_Filter__r.Filter_Field__c, Field_Operator__c, Field_Value__c From EBC_Customer_Filters__r)
                     From EBC_Master_Filter__c
                     Where Is_Global_Filter__c = true
                 ]);
-                /*
-                geoFilterPresets = new Map<String, List<EBC_Customer_Filter__c>>{
-                    'The Americas' => new List<EBC_Customer_Filter__c>{
-                        new EBC_Customer_Filter__c(
-                            EBC_Application_Filter__r = new EBC_Application_Filter__c(Developer_Name__c = 'Sub-Continent'),
-                            Field_Operator__c = 'in',
-                            Field_Value__c = '(\'Northern America\',\'Central America\',\'South America\')'
-                        ) 
-                    },
-                    'Europe' => new List<EBC_Customer_Filter__c>{
-                        new EBC_Customer_Filter__c(
-                            EBC_Application_Filter__r = new EBC_Application_Filter__c(Developer_Name__c = 'Sub-Continent'),
-                            Field_Operator__c = 'in',
-                            Field_Value__c = '(\'...\')' // @todo
-                        ) 
-                    },
-                    'Asia Pacific' => new List<EBC_Customer_Filter__c>{
-                        new EBC_Customer_Filter__c(
-                            EBC_Application_Filter__r = new EBC_Application_Filter__c(Developer_Name__c = 'Sub-Continent'),
-                            Field_Operator__c = 'in',
-                            Field_Value__c = '(\'...\')' // @todo
-                        ) 
-                    },
-                    'Worldwide' => new List<EBC_Customer_Filter__c>()
-                };
-*/
             }
             
             return geoFilterPresets;
@@ -224,6 +202,7 @@ public class vfIECEBC_CampaignRecipient {
               
             if (value != 'custom-filter') {
                 geoFilters = geoFilterPresets.get(value).EBC_Customer_Filters__r.deepClone(false, false, false);
+                newFilter.Refinement_Condition__c  = geoFilterPresets.get(value).Refinement_Condition__c;
             }
             
             System.debug(JSON.serialize(geoFilters));
@@ -274,7 +253,18 @@ public class vfIECEBC_CampaignRecipient {
         }
         set;
     }
-    public String refinementFilterIndex { get; set; } 
+    public String refinementFilterIndex { get; set; }
+    public String getUniqueRefinementFiltersName() {
+        Set<String> s = new Set<String>();
+        for(EBC_Customer_Filter__c f : refinementFilters) {
+            if (f.EBC_Application_Filter__c != null) {
+            	s.add(allAvailableApplicationFilters.get(f.EBC_Application_Filter__c).Filter_Description__c);
+            }
+        }
+        
+        return String.join(new List<String>(s), ' | ');
+    }
+    
     public PageReference removeRefinementFilter() {
         refinementFilters.remove(Integer.valueOf(refinementFilterIndex));
         

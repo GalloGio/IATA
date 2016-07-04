@@ -139,19 +139,6 @@ Dedicated to the eBroadcast application.</description>
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Developer_Name__c</fullName>
-        <caseSensitive>false</caseSensitive>
-        <description>Name used in the code to refer to specific filters</description>
-        <externalId>true</externalId>
-        <inlineHelpText>Name used in the code to refer to specific filters</inlineHelpText>
-        <label>Developer Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>true</unique>
-    </fields>
-    <fields>
         <fullName>Filter_Description__c</fullName>
         <description>This field will store the actual filter name that allows the end-user to search the data.</description>
         <externalId>false</externalId>

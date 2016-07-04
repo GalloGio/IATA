@@ -294,7 +294,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step5_Valid__c</fullName>
         <description>Verify if the Step 5 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step4_Valid__c &amp;&amp; (TEXT(Status__c) == &apos;APPROVED&apos; || Scheduled_Date_Valid_Until__c &gt;= NOW())</formula>
+        <formula>Is_Step4_Valid__c &amp;&amp; ( Billing_Account__r.eBroadcast_Trusted_Sender__c || TEXT(Status__c) == &apos;APPROVED&apos; || Scheduled_Date_Valid_Until__c &gt;= NOW())</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 5 is valid and meet the validation.</inlineHelpText>
         <label>Is Step5 Valid</label>
@@ -306,7 +306,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step5_Writable__c</fullName>
         <description>Is Step5 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>TEXT(Status__c) == &apos;DRAFT&apos; || TEXT(Status__c) == &apos;APPROVED&apos;</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos; || TEXT(Status__c) == &apos;APPROVED&apos; ||  Billing_Account__r.eBroadcast_Trusted_Sender__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Is Step5 is writable based on other fields values</inlineHelpText>
         <label>Is Step5 Writable</label>
@@ -363,16 +363,24 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Number_of_Recipients__c</fullName>
-        <description>Number of recipients targeted by the Master Filter</description>
+        <fullName>Notification_Email__c</fullName>
+        <description>The EBC_Preference__c email address is copied here when submit for approval in order to use the Workflow Email &amp; Approval Email functionnality</description>
         <externalId>false</externalId>
-        <formula>EBC_Master_Filter__r.Number_of_Recipients__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <inlineHelpText>Number of recipients targeted by the Master Filter</inlineHelpText>
+        <inlineHelpText>The EBC_Preference__c email address is copied here when submit for approval in order to use the Workflow Email &amp; Approval Email functionnality</inlineHelpText>
+        <label>Notification Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Recipients__c</fullName>
+        <externalId>false</externalId>
         <label>Number of Recipients</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>0</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -502,7 +510,13 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Campaign_ID__c</columns>
         <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -577,7 +591,7 @@ TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
         <errorConditionFormula>TEXT(PRIORVALUE(Status__c)) != TEXT(Status__c) &amp;&amp;
 TEXT(PRIORVALUE(Status__c)) == &apos;PENDING_APPROVAL&apos; &amp;&amp;
 
-(TEXT(Status__c) != &apos;APPROVED&apos; || TEXT(Status__c) != &apos;REJECTED&apos; || TEXT(Status__c) != &apos;DRAFT&apos;)</errorConditionFormula>
+(TEXT(Status__c) != &apos;APPROVED&apos; &amp;&amp; TEXT(Status__c) != &apos;REJECTED&apos; &amp;&amp; TEXT(Status__c) != &apos;DRAFT&apos;)</errorConditionFormula>
         <errorDisplayField>Status__c</errorDisplayField>
         <errorMessage>Pending Approval status can only result in Approval or Rejection</errorMessage>
     </validationRules>
@@ -601,6 +615,8 @@ TEXT(PRIORVALUE(Status__c)) == &apos;PENDING_APPROVAL&apos; &amp;&amp;
         <active>true</active>
         <description>Make sure that the Scheduled Date Valid Until is in the future</description>
         <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
+
+!Billing_Account__r.eBroadcast_Trusted_Sender__c &amp;&amp;
 
 TEXT( Status__c) != &quot;APPROVED&quot; &amp;&amp;
 

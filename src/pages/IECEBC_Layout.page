@@ -60,19 +60,19 @@
                                                     <div class="title">Manage services</div>
                                                     <ul class="list">
                                                         <li>
-                                                            <a href="#">Create campaign</a>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Campaign}">Create campaign</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">View all campaigns</a>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_CampaignList}">View all campaigns</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">Manage templates</a>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_TemplateList}">Manage templates</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">Manage lists</a>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_RecipientList}">Manage lists</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#">View reports</a>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Reports}">View reports</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -121,10 +121,11 @@
                         </div>
                     </div>
                 </footer>
+                <!--
                 <div class="modal-container is-hidden" id="js-modal">
                     <div class="overlay"></div>
                     <div class="modal-dialog" id="js-modal-dialog"></div>
-                </div>
+                </div>-->
             </div>
             
             <apex:insert name="pageScriptAdditions" />

@@ -1,4 +1,18 @@
 public class IECEBC_Utility {
+    public static void creditCampaign(Id campaignId) {
+        EBC_Campaign__c c = [Select Id, Number_of_Recipients__c, Billing_Account__c, Billing_Account__r.eBroadcast_Email_Balance__c From EBC_Campaign__c Where Id = :campaignId AND Status__c in ('APPROVED', 'PENDING_APPROVAL') LIMIT 1];
+        
+        EBC_Activity__c a = new EBC_Activity__c();
+        a.EBC_Campaign__c = c.Id;
+        a.Related_Billing_Account__c = c.Billing_Account__c;
+        a.Total_Count__c = c.Number_of_Recipients__c;
+        a.New_Balance__c = c.Billing_Account__r.eBroadcast_Email_Balance__c + c.Number_of_Recipients__c;
+        a.Activity_Type__c = 'Credit';
+        a.Activity_Date__c  = Date.today();
+        insert a;
+    }
+    
+    
     public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId) {
         EBC_Master_Filter__c masterFilter = [
             SELECT Id,
@@ -10,6 +24,7 @@ public class IECEBC_Utility {
                 Field_Name__c,
                 Field_Operator__c,
                 Field_Value__c,
+                EBC_Application_Filter__r.Filter_Field__c,
                 EBC_Application_Filter__r.Search_Level__c,
                 EBC_Application_Filter__r.Filter_RelatedList__c,
                 EBC_Application_Filter__r.Filter_RelatedList_Field__c
@@ -38,12 +53,8 @@ public class IECEBC_Utility {
             String fieldName = cf.Field_Name__c;
             String searchLevel = cf.EBC_Application_Filter__r.Search_Level__c;
             EBC_Application_Filter__c af = cf.EBC_Application_Filter__r;
-            if (af == null) {
+            if (af == null && cf.EBC_Application_Filter__c != null) {
                 af = [Select Id, Filter_Field__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Id = :cf.EBC_Application_Filter__c];
-                fieldName = af.Filter_Field__c;
-                searchLevel = af.Search_Level__c;
-            } else if (cf.EBC_Application_Filter__c == null) {
-                af = [Select Id, Filter_Field__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Developer_Name__c = :cf.EBC_Application_Filter__r.Developer_Name__c];
                 fieldName = af.Filter_Field__c;
                 searchLevel = af.Search_Level__c;
             }

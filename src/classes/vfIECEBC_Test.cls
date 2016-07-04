@@ -27,4 +27,7 @@ public class vfIECEBC_Test {
 	public static testMethod void testCampaignApprovalRejected() {
         vfIECEBC_TestSuite.testCampaignApprovalRejected();
     }
+	public static testMethod void testPageLoadAccountSettings() {
+        vfIECEBC_TestSuite.testPageLoadAccountSettings();
+    }
 }

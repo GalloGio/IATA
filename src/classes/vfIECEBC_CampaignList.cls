@@ -6,7 +6,7 @@ public class vfIECEBC_CampaignList {
         }
         set {
             isLimitedComponent = value;
-            if (value == true) CAMPAIGNS_PER_PAGE = 3;
+            if (value == true) CAMPAIGNS_PER_PAGE = 2;
         }
     }
     public static Integer CAMPAIGNS_PER_PAGE = 25;
@@ -38,6 +38,9 @@ public class vfIECEBC_CampaignList {
         return null;
     }
     public PageReference cancel() {
+        
+        IECEBC_Utility.creditCampaign(selectedCampaign.Id);
+        
         if (selectedCampaign.Status__c == 'PENDING_APPROVAL') {
             // RECALL
             List<ProcessInstanceWorkitem> piwis = [SELECT Id,Actor.Name,ElapsedTimeInHours,OriginalActor.Name,ProcessInstanceId FROM ProcessInstanceWorkitem Where ProcessInstance.Status = 'Pending' AND ProcessInstance.TargetObjectId = :selectedCampaign.Id LIMIT 1];
@@ -143,11 +146,14 @@ public class vfIECEBC_CampaignList {
             fields.add('Id');
             fields.add('Name');
             fields.add('Status__c');
-            fields.add('Scheduled_Date__c');
+            fields.add('Scheduled_Date__c'); 
+            fields.add('Number_of_Recipients__c');
             fields.add('EBC_Design__c');
             fields.add('Is_Step5_Writable__c');
-            fields.add('Is_Step4_Valid__c'); 
-            fields.add('Owner.Name');
+            fields.add('Is_Step4_Valid__c');  
+            fields.add('Owner.Name'); 
+            fields.add('EBC_Master_Filter__r.Name');
+            fields.add('LastModifiedDate');
         }
         
         return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Account__c = \'' + u.AccountId + '\'';
@@ -165,6 +171,7 @@ public class vfIECEBC_CampaignList {
     public List<EBC_Campaign__c> campaigns {
         get {
             if (campaigns == null) {
+                if (offset < 0) offset = 0;
                 String query = getQuery(false) + ' ORDER BY ' + sortBy + ' LIMIT ' + CAMPAIGNS_PER_PAGE + ' OFFSET ' + offset;
                 campaigns = Database.query(query);
             }

@@ -56,10 +56,10 @@
 	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Exit" /></li>
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" /></li>
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Continue" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!NOT(campaign.Is_Step3_Writable__c)}">
 	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>

@@ -1,15 +1,14 @@
-public class vfIECEBC_Campaign {
-    class Controller_Exception extends Exception{}
+public class vfIECEBC_Campaign extends vfIECEBC_Controller {
     
     public ApexPages.StandardController con {
         public get;
         private set;
     }
-    public PageReference doNothing() {
-        return null;
-    }
     
     public PageReference submitForApproval() {
+        campaign.Notification_Email__c = vfIECEBC.pref.PrimaryContact_Email__c;
+        update campaign;
+        
         // Create an approval request for the account
         Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
         //req1.setComments('Submitting request for approval.');
@@ -91,6 +90,14 @@ public class vfIECEBC_Campaign {
         }
         this.campaign.Account__c = vfIECEBC.usr.Contact.AccountId;
         this.campaign.Billing_Account__c = vfIECEBC.billingAccount.Id;
+        
+        if (this.campaign.Id == null) {
+            this.campaign.From_Name__c = vfIECEBC.pref.Default_From_Name__c;
+            this.campaign.Google_Analytics_Tracking_Code__c = vfIECEBC.pref.Default_Google_Analytics_Tracker__c;
+            if (!String.isBlank(this.campaign.Google_Analytics_Tracking_Code__c)) {
+                this.campaign.Is_Google_Analytics_Tracker_Active__c = true;
+            }
+        }
     }
     
     public PageReference saveAndExit() {

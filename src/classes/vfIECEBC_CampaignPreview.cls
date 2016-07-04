@@ -1,4 +1,4 @@
-public class vfIECEBC_CampaignPreview {
+public class vfIECEBC_CampaignPreview extends vfIECEBC_Controller {
     public final EBC_Template__c tpl;
     
     public vfIECEBC_CampaignPreview(ApexPages.StandardController stdController) {
