@@ -3,21 +3,21 @@
 #src/objectPackage.xml
 .project
 src/layouts/Case-Case Layout.layout
-src/layouts/Case-Cases - SIS Help Desk %28Agent%29.layout
-src/layouts/Case-Cases - SIS Help Desk %28Customer Portal - Other L2 Support%29.layout
-src/layouts/Case-Cases - SIS Help Desk %28Customer Portal - SIS Participant%29.layout
-src/layouts/Case-Cases - SIS Help Desk %28L2 Customer Support - Business%29.layout
-src/layouts/Case-Cases - SIS Help Desk %28SIS Operations%29.layout
+src/layouts/Case-Cases\ - \SIS \Help \Desk \%28Agent%29.layout
+src/layouts/Case-Cases\ - \SIS \Help \Desk \%28Customer \Portal \- \Other \L2 \Support%29.layout
+src/layouts/Case-Cases\ - \SIS \Help \Desk \%28Customer \Portal \- \SIS \Participant%29.layout
+src/layouts/Case-Cases\ - \SIS \Help \Desk \%28L2 \Customer \Support \- \Business%29.layout
+src/layouts/Case-Cases\ - \SIS \Help \Desk \%28SIS Operations%29.layout
 src/layouts/Case-Central Billing Case.layout
 src/layouts/Case-Demo only for dev.layout
-src/layouts/Case-IDFS ACCA Service Request %28External%29.layout
-src/layouts/Case-IDFS External Cases %28Customer Service%29.layout
-src/layouts/Case-IDFS InvoiceWorks %28B-Process%29.layout
-src/layouts/Case-IDFS InvoiceWorks.layout
-src/layouts/Case-IDFS Order of AWBs %28Europe%2FItaly%29.layout
-src/layouts/Case-IDFS Training %28Europe%2FItaly%29.layout
-src/layouts/Case-IDFS myIATA %28Europe%2FSCE%29.layout
-src/layouts/Case-MACS Customer Care Layout.layout
+src/layouts/Case-IDFS\ ACCA\ Service\ Request\ %28External%29.layout
+src/layouts/Case-IDFS\ External\ Cases\ %28Customer\ Service%29.layout
+src/layouts/Case-IDFS\ InvoiceWorks\ %28B-Process%29.layout
+src/layouts/Case-IDFS\ InvoiceWorks.layout
+src/layouts/Case-IDFS\ Order of\ AWBs\ %28Europe%2FItaly%29.layout
+src/layouts/Case-IDFS\ Training\ %28Europe%2FItaly%29.layout
+src/layouts/Case-IDFS\ myIATA\ %28Europe%2FSCE%29.layout
+src/layouts/Case-MACS\ Customer\ Care\ Layout.layout
 src/profiles/Admin.profile
 Referenced Packages/
 .settings/com.salesforce.ide.core.prefs

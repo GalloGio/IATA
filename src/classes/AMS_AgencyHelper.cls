@@ -331,7 +331,7 @@ public class AMS_AgencyHelper {
         if(locationClass.equalsIgnoreCase('Q'))
           return 'Courier';
         if(locationClass.equalsIgnoreCase('R'))
-          return 'CASS Associates';
+          return 'CASS Associate';
         if(locationClass.equalsIgnoreCase('T'))
           return 'TIDS Agent';
         if(locationClass.equalsIgnoreCase('X'))
@@ -353,7 +353,7 @@ public class AMS_AgencyHelper {
 
         if( type.equalsIgnoreCase('IATA Cargo Agent') || 
             type.equalsIgnoreCase('Courier') ||
-            type.equalsIgnoreCase('CASS Associates') ||
+            type.equalsIgnoreCase('CASS Associate') ||
             type.equalsIgnoreCase('Import Agent')
           )
           return 'Cargo Agent';
