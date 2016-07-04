@@ -89,7 +89,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //ON INSERT
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
-            oscar.Sanity_check_deadline__c = Date.today() + 15;
+            //oscar.Sanity_check_deadline__c = Date.today() + 15;
 
 
             oscars.add(oscar);
