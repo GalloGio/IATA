@@ -27,6 +27,7 @@ public without sharing class ISSP_Case {
     public boolean isEditMode {get;set;}
     public String sisCaseArea {get;set;}
     public boolean isAccreditationUploadCase {get;set;}  //Accreditation upload to case e.g. for TIDS, VR etc.
+    public boolean isToShowSurveyBtn {get;set;} //INC260167
    
     public Id runningUserId{get;set;}
     public Contact con {get;set;}
