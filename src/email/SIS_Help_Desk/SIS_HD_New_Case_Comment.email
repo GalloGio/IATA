@@ -1,5 +1,0 @@
-A new Case Comment has been added to the above {!Case.CaseArea__c} Case:
-
-{!Case.Last_Case_Comment}
-
-For direct access to the case, please click on this link {!Case.Link}.

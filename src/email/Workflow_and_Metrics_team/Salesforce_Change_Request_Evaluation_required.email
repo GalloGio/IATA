@@ -1,9 +1,0 @@
-Dear WF Team,
-
-The proposal #{!Case.CaseNumber} - "{!Case.Subject}" has been raised by {!Case.FDS_Department__c} team.
-
-Details;
-{!Case.Description}
-
-Please click the below link and evaluate it.
-{!Case.Link}

@@ -114,8 +114,8 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 String accountType = oscar[0].Account__r.Type;
-                if(accountType == null || !Pattern.matches('IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associates', accountType)){
-                    result = 'The type of account related to this oscar must be one of the following: IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associates';
+                if(accountType == null || !Pattern.matches('IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate', accountType)){
+                    result = 'The type of account related to this oscar must be one of the following: IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate';
                     return 'ERROR: ' + result;
                 }
 
