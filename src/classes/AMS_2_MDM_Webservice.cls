@@ -124,8 +124,14 @@ global class AMS_2_MDM_Webservice {
 
                     sLogRecord += a.IATACode__c + ',';
 
+                    ////Check if IATACODE exists! if not end with error
+                    //if(a.IATACode__c == Null){
+                    //    accErrors += 'IATACode error - Agency needs to have an IATACode! Agency: '+a.Name+' ('+a.Id+')';
+                    //}
+
+                    //Check billing address
                     if(AMS_Utils.isAddressEmpty(a, 'Billing')){
-                        accErrors += '\n- '+a.Name+' ('+a.Id+')';
+                        accErrors += '\nBilling address empty - Agency: '+a.Name+' ('+a.Id+')';
                     }
                 }
                 sLogRecord = sLogRecord.removeEnd(',');
@@ -333,15 +339,15 @@ global class AMS_2_MDM_Webservice {
                 sError = (sError == 'OK' ? '' : sError+'\n')+'Agency needs to have a Billing Address';
             }
 
-            //if(String.isNotEmpty(ag.ShippingState) && AMS_Utils.iataIsoStates.get(ag.ShippingState) == null){
-            if( !AMS_Utils.isValidState(ag.ShippingState) ){
-                sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping State is invalid';
-            }
+            ////if(String.isNotEmpty(ag.ShippingState) && AMS_Utils.iataIsoStates.get(ag.ShippingState) == null){
+            //if( !AMS_Utils.isValidState(ag.ShippingState) ){
+            //    sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping State is invalid';
+            //}
 
-            //if(String.isNotEmpty(ag.ShippingCountry) && AMS_Utils.iataIsoCountries.get(ag.ShippingCountry) == null){
-            if( !AMS_Utils.isValidCountry(ag.ShippingCountry) ){
-                sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping Country is invalid';
-            }
+            ////if(String.isNotEmpty(ag.ShippingCountry) && AMS_Utils.iataIsoCountries.get(ag.ShippingCountry) == null){
+            //if( !AMS_Utils.isValidCountry(ag.ShippingCountry) ){
+            //    sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping Country is invalid';
+            //}
 
             if(sError != 'OK') return sError;
 
