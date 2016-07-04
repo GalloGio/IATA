@@ -50,6 +50,7 @@ public without sharing class ENV {
 	public class EmailTemplateClass {
 		public final string NotifyAdminOfAppRequestVF = 'Notify_Admin_of_app_requestVF';
 		public final string ChangeEmailAddress 		  = 'ISSP_Change_Email_Verification';
+		public final string NotifyAdminNewContact  	  = 'Notify_Admin_of_user_creationVF';
 	}
 	
 	public class TeamMemberRoleClass {
