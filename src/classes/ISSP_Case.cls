@@ -419,11 +419,30 @@ if(newCase.RecordType.name=='ISS Portal PwC Edit'){ isPWCCase = true; }*/
             //Verify if the case is a OSCAR Communication or SAAM Case
             if(newCase.RecordType.name=='SAAM' || newCase.RecordType.name=='OSCAR Communication' || newCase.RecordType.name=='SIDRA'){isOSCARCase = true;}
             
-        	} else {
+
+            //Verify the Role of the user that close the case -- INC260167 - Start
+            if(newCase.Status == 'Closed'){
+                List<Case> caseInfo = [SELECT id, WhoClosedCase__r.UserRole.Name, RecordType__c FROM Case where id = :caseID];
+                String userRole;
+
+                for(Case c : caseInfo){
+                    userRole =  c.WhoClosedCase__r.UserRole.Name;
+                    recordTypeName = c.RecordType__c;  
+                }
+
+                ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(recordTypeName);
+                if(csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All')){
+                    isToShowSurveyBtn = true;
+                }
+            }
+           // INC260167 - End
+
+            } else {
             if (isDPCUser) {
                 newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
             }
+            
         }
         
         List_CaseComment = new List<CaseComment>([SELECT Id, ParentId, Parent.CaseNumber, CommentBody, IsPublished, CreatedDate, CreatedById , CreatedBy.Name , IsDeleted
