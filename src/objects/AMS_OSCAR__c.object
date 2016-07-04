@@ -2177,6 +2177,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
 		,&quot;NEW.TIDS.1.0&quot;, &quot;New TIDS&quot;
 		,&quot;NEW.GSA.1.0&quot;, &quot;New GSA&quot;		
 		,&quot;NEW.MSO.1.0&quot;, &quot;New MSO&quot;
+		,&quot;NEW.SA.1.0&quot;, &quot;New SA&quot;
 		,&quot;CORRECTION.1.0&quot;, &quot;Corrections&quot;
 		,&quot;&quot;
 	  )
