@@ -1170,7 +1170,7 @@
                     <apex:actionFunction name="fetchCargoAgent1" status="actCargoAgent1" action="{!fetchAgentDetails}" reRender="cargoagentdetails1,cargoaccountname1">
                             <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                             <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
-                            <apex:param name="AccountType" assignTo="{!accountType}" value="CASS Associates"/>
+                            <apex:param name="AccountType" assignTo="{!accountType}" value="CASS Associate"/>
                     </apex:actionFunction>
                     <apex:actionFunction name="fetchCargoAgent2" status="actCargoAgent2" action="{!fetchAgentDetails}" reRender="cargoagentdetails2">
                             <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
