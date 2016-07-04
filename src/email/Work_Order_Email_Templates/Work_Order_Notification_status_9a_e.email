@@ -1,9 +1,0 @@
-Workflow notification for {!Work_Order__c.Name} , New status: {!Work_Order__c.Status__c}
-
-Rule: Send e-mail notification to abplanalpg@iata.org  for WorkOrder object with the following parameters:
--“-	“Status” field value  equal to 
--	        “9a - Pending IATA Acceptance” or
--	“9b - Pending Customer Acceptance test” or 
--	“9c - Pending Development team” or
--	“9d - Test Failed, pending fix” or
--	“9e - Pending release into Prod”

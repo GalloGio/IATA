@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
-    <available>true</available>
-    <encodingKey>UTF-8</encodingKey>
-    <name>Airline Suspension GDS Message</name>
-    <style>none</style>
-    <subject>From IATA Request to Suspend {!Airline_Suspension__c.Airline_Name__c} ({!Airline_Suspension__c.Airline_Code__c}) in your systems</subject>
-    <type>text</type>
-</EmailTemplate>
