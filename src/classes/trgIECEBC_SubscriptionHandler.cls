@@ -21,7 +21,7 @@
 *  
 *  Author: Sonny Leman
 *  Change Log: 
-*   - 20160629-sl: initial version
+*   - 20160704-sl: initial version, with EBC_Activity Activity_Type = Initial E-mail Balance
 *
 */
 
@@ -158,7 +158,7 @@ public with sharing class trgIECEBC_SubscriptionHandler {
 			//EBC_Campaign__c = c.I;
 			, Total_Count__c = emailCredits
 			, New_Balance__c = newBalance
-			, Activity_Type__c = 'Credit'
+			, Activity_Type__c = 'Initial E-mail Balance'
 			, Activity_Date__c  = Date.today()
 			);
 		
