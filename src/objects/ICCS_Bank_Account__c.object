@@ -35,7 +35,7 @@
     <actionOverrides>
         <actionName>SaveEdit</actionName>
         <type>Default</type>
-    </actionOverrides>
+    </actionOverrides> 
     <actionOverrides>
         <actionName>Tab</actionName>
         <type>Default</type>
@@ -68,7 +68,7 @@
             <filterItems>
                 <field>Account.RecordType.DeveloperName</field>
                 <operation>equals</operation>
-                <value>IATA_Airline</value>
+                <value>IATA_Airline</value> 
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>

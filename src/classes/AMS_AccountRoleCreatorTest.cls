@@ -8,7 +8,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
 
-        Account acc1 = new Account(Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associates', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account acc1 = new Account(Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);
@@ -76,7 +76,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
                 
-        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associates', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
+        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
         insert ownerAccount;
         
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, AMS_Employee_Role__c, AMS_Ownership_Role__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c];
@@ -136,8 +136,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
         delete roleList;
 
-        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associates', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
-        Account ownerAccount2 = new Account(Name='OwnerAccount2', Location_Type__c = 'HO', Type='CASS Associates', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '0001', Source_System__c = 'AIMS2');
+        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
+        Account ownerAccount2 = new Account(Name='OwnerAccount2', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '0001', Source_System__c = 'AIMS2');
         List<Account> ownerAccounts = new List<Account>{ownerAccount, ownerAccount2};
         insert ownerAccounts;
         
