@@ -26,20 +26,31 @@
                                     <apex:outputLink rendered="{!c.Status__c != 'REJECTED'}" value="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink>
                                     <apex:outputText rendered="{!c.Status__c == 'REJECTED'}" styleClass="js-campaign-name">{!c.Name}</apex:outputText>
                                 </li>
-                                <li>TODO: what is this?: Regular - IP, AS &amp; LD</li>
-                                <li><strong class="js-campaign-status"><apex:outputField value="{!c.Status__c}" /></strong>
-                                </li>
+                                <li>{!c.EBC_Master_Filter__r.Name}</li>
+                                <li><strong class="js-campaign-status"><apex:outputField value="{!c.Status__c}" /></strong></li>
                                 <li>
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">{!c.LastModifiedDate}</apex:outputText>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">{!c.Scheduled_Date__c}</apex:outputText>
                                 </li>
                             </ul>
                         </td>
                         <td class="recipients">
-                            
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                <strong class="value">{!c.Number_of_Recipients__c}</strong> 
+                                <span class="label">Recipients</span>
+                            </apex:outputText>
                         </td>
                         <td class="opens">
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                <strong class="value">100%</strong> 
+                                <span class="label">Opens</span>
+                            </apex:outputText>
                         </td>
                         <td class="clicks">
+                            <apex:outputText rendered="{!c.Status__c == 'SENT'}">
+                                <strong class="value">66%</strong> 
+                                <span class="label">Clicks</span>
+                            </apex:outputText>
                         </td>
                         <td class="action">
                             <div class="custom-user-input select">
@@ -112,7 +123,7 @@
     </apex:outputPanel>
     
     
-    <apex:outputText rendered="{!IF(CampaignsCount > 0, false, true)}">
+    <apex:outputText rendered="{!IF(CampaignsCount == 0 && !isLimitedComponent, true, false)}">
         <div class="action-box">
             <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
         </div>

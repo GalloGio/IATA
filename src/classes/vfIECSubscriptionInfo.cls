@@ -67,7 +67,7 @@ public without sharing class vfIECSubscriptionInfo {
 	
     
     public Boolean validateAccess(Set<String> allowedApplicationName) {
-        if (!allowedApplicationName.contains(sApplicationName)) {
+        if (!allowedApplicationName.contains(sApplicationName)) { 
             sDenyReason = Label.IEC_Error_No_Application_Access;
             hasPageAccess = false;
             

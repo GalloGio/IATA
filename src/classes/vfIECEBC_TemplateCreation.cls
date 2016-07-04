@@ -1,4 +1,4 @@
-public class vfIECEBC_TemplateCreation 
+public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller 
 {
     public List<EBC_Template__c> globalTemplates {get;set;}
     public Map<Id,String> globalTemplatesThumbnails {get;set;}

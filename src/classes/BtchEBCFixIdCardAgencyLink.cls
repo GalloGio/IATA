@@ -7,6 +7,8 @@ global class BtchEBCFixIdCardAgencyLink implements Database.Batchable<sObject> {
     
     global void execute(Database.BatchableContext BC, List<ID_Card__c> scope){
         for(ID_Card__c ic : scope) {
+            if (String.isBlank(ic.Agency_IATA_Code__c)) continue;
+            
         	ic.GDP_Products_Account_View__r = new GDP_Products_Account_View__c(IATA_Code__c = ic.Agency_IATA_Code__c);
         }
         

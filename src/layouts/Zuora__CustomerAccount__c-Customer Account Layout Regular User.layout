@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Tax2ID__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>eBroadcast_Email_Balance__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -309,6 +313,15 @@
         <fields>Status__c</fields>
         <fields>Status_Date__c</fields>
         <relatedList>IEC_SAP_Invoice__c.Billing_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Activity_Type__c</fields>
+        <fields>Activity_Date__c</fields>
+        <fields>EBC_Campaign__c</fields>
+        <fields>Total_Count__c</fields>
+        <fields>New_Balance__c</fields>
+        <relatedList>EBC_Activity__c.Related_Billing_Account__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

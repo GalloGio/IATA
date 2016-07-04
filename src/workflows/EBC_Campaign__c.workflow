@@ -5,10 +5,24 @@
         <description>Email client to notice of approval</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
+            <field>Notification_Email__c</field>
+            <type>email</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Campaign_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_cancellation_email</fullName>
+        <description>Send cancellation email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Notification_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>EBC/EBC_Campaign_Cancellation</template>
     </alerts>
     <fieldUpdates>
         <fullName>Campaign_set_back_to_Draft</fullName>
@@ -46,4 +60,14 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <rules>
+        <fullName>Campaign is cancelled</fullName>
+        <actions>
+            <name>Send_cancellation_email</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>((NOW() - CreatedDate) * 24 * 60 * 60) &gt; 10 &amp;&amp; TEXT(Status__c) == &apos;DRAFT&apos;</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
 </Workflow>

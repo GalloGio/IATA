@@ -1,23 +1,68 @@
 public class vfIECEBC extends IECPageController {
-    
     public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
-    public static Zuora__CustomerAccount__c billingAccount = [Select Id from Zuora__CustomerAccount__c where Zuora__Account__c = :usr.Contact.AccountId LIMIT 1];
+    public static Zuora__CustomerAccount__c billingAccount {
+        get {
+            if (billingAccount == null) {
+                System.debug(usr);
+                System.debug(usr.Contact);
+                System.debug(usr.Contact.AccountId);
+                billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c from Zuora__CustomerAccount__c where Zuora__Account__c = :usr.Contact.AccountId LIMIT 1];
+            }
+            
+            return billingAccount;
+        }
+        private set;
+    }
+    public static EBC_Preference__c pref {
+        get {
+            if (pref == null) {
+                System.debug(billingAccount);
+                
+                pref = [
+                    Select Id, Default_From_Name__c, Default_Google_Analytics_Tracker__c,
+                        Monthly_Account_Status__c, Notify_On_Send__c, PrimaryContact_Address__c,
+                        PrimaryContact_Company__c, PrimaryContact_Email__c,
+                        PrimaryContact_Job_Title__c, PrimaryContact_Name__c, PrimaryContact_Phone__c
+                    From EBC_Preference__c
+                    Where Billing_Account__c = :billingAccount.Id
+                    LIMIT 1
+                ];
+            }
+            return pref;
+        }
+        private set;
+    }
     
-    
-    public vfIECSubscriptionInfo ctrSubsInfo  {
+    public static vfIECSubscriptionInfo subscriptionInfo {
     	get {
-    		if (ctrSubsInfo == null) {
-		        ctrSubsInfo = new vfIECSubscriptionInfo(); 
-		        ctrSubsInfo.loggedCustomer = loggedCustomer;
-		        ctrSubsInfo.sApplicationName = sProductCode;
+    		if (subscriptionInfo == null) {
+		        subscriptionInfo = new vfIECSubscriptionInfo(); 
+		        subscriptionInfo.loggedCustomer = IECCustomer.getCurrentIECCustomer();
+		        subscriptionInfo.sApplicationName = sProductCode;
     		}
 
-    		return ctrSubsInfo;
+    		return subscriptionInfo;
     	}
     	set;
     }
+    public static zqu__ProductRatePlan__c  productRatePlan {
+        get {
+            if (productRatePlan == null) {
+	        	productRatePlan = [Select Id, Name, EBC_SubscriptionType__c, EBC_Currency_Cost_Per_Email__c, EBC_PrePaid_Emails__c From zqu__ProductRatePlan__c  Where Id = :subscriptionInfo.oSubscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__c];
+            }
+            
+            return productRatePlan;
+        }
+        set;
+    }
+    
+    public vfIECSubscriptionInfo ctrSubsInfo  {
+    	get {
+    		return subscriptionInfo;
+    	}
+    }
 
-	public String sProductCode {
+	public static String sProductCode {
 		get {
 			return IECConstants.ProductCategory_SF_EBROADCAST;
 		}

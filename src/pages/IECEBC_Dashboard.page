@@ -20,7 +20,7 @@
                                     <c:IECEBC_CampaignList limited="true" />
                                 </div>
             
-                            <apex:outputText rendered="{!IF(CampaignsCount == 0, true, false)}">
+                            <apex:outputText rendered="{!IF(campaignsCount == 0, true, false)}">
                                 <div class="action-box">
                                     <apex:outputLink value="{!URLFOR($Page.IECEBC_Campaign)}" styleClass="button">Create campaign</apex:outputLink>
                                 </div>
@@ -33,44 +33,47 @@
                                 <div class="box-body fit">
                                     <table class="data-table zibra">
                                         <caption>Account Summary</caption>
-                                        <tbody><tr>
-                                            <th>
-                                                <div class="item-name">Current Billing Plan</div>
-                                                <p class="item-description">{!billingPlanName}</p>
-                                            </th>
-                                            <td>
-                                                <div class="item-value">
-                                                    <strong>{!billingPlanRate}</strong>
-                                                    <span class="per-unit">/email</span>
-                                                </div>
-                                                <a href="#">Upgrade to Pre-Paid plan</a>
-                                            </td>
-                                        </tr>
-                                        <tr> 
-                                            <th>
-                                                <div class="item-name">Email Balance on Account</div>
-                                            </th>
-                                            <td>
-                                                <div class="item-value">
-                                                    <strong>{!emailBalanceOnAccount} emails</strong>
-                                                </div>
-                                                <a href="#">Purchase credits</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                <div class="item-name">Available Add Ons</div>
-                                            </th>
-                                            <td>
-                                                <div class="item-value">
-                                                    <strong>Enhanced Reporting</strong>
-                                                </div>
-                                                <a href="#">View Add Ons Options</a>
-                                            </td>
-                                        </tr>
-                                    </tbody></table>
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    <div class="item-name">Current Billing Plan</div>
+                                                    <p class="item-description">{!productRatePlan.Name}</p>
+                                                </th>
+                                                <td>
+                                                    <div class="item-value">
+                                                        <strong><apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText></strong>
+                                                        <span class="per-unit">/email</span>
+                                                    </div>
+                                                    <apex:outputLink value="#" rendered="{!productRatePlan.Name != 'Pay-As-You-Go' && productRatePlan.Name != 'Premium Edition'}">Upgrade to Pre-Paid plan</apex:outputLink>
+                                                    <apex:outputLink value="#" rendered="{!productRatePlan.Name == 'Pay-As-You-Go' || productRatePlan.Name == 'Premium Edition'}">Lower you cost per email</apex:outputLink>
+                                                </td>
+                                            </tr>
+                                            <tr> 
+                                                <th>
+                                                    <div class="item-name">Email Balance on Account</div>
+                                                </th>
+                                                <td>
+                                                    <div class="item-value">
+                                                        <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> emails</strong>
+                                                    </div>
+                                                    <apex:outputLink value="" rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">Purchase credits</apex:outputLink>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <div class="item-name">Available Add Ons</div>
+                                                </th>
+                                                <td>
+                                                    <div class="item-value">
+                                                        <strong>Enhanced Reporting</strong>
+                                                    </div>
+                                                    <a href="#">View Add Ons Options</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     <div class="action-box text-right">
-                                        <a href="#">Manage account</a>
+                                        <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountManage)}">Manage account</apex:outputLink>
                                     </div>
                                 </div>
                             </div>
@@ -82,21 +85,21 @@
                             <h2 class="group-title">Manage templates and other resources</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum euismod neque ac dolor vestibulum, vitae tempor erat.</p>
                             <div class="action">
-                                <a href="#">Manage templates</a>
+                                <a href="{!URLFOR($Page.IECEBC_TemplateList)}">Manage templates</a>
                             </div>
                         </div>
                         <div class="columns medium-4 group-container manage-list">
                             <h2 class="group-title">Manage your lists and create segments</h2>
                             <p>Praesent pellentesque ligula eu metus euismod, eu commodo lorem eleifend. Phasellus nec fringilla dui, eu fermentum.</p>
                             <div class="action">
-                                <a href="#">Manage lists</a>
+                                <apex:outputLink value="{!URLFOR($Page.IECEBC_RecipientList)}">Manage lists</apex:outputLink>
                             </div>
                         </div>
                         <div class="columns medium-4 group-container view-reports">
                             <h2 class="group-title">View how your campaigns perform</h2>
                             <p>Nullam vitae dui vel diam accumsan aliquet id nec odio. Mauris at purus a arcu placerat lacinia. Aenean vulputate sem nisl, vitae.</p>
                             <div class="action">
-                                <a href="#">View reports</a>
+                                <a href="{!URLFOR($Page.IECEBC_Reports)}">View reports</a>
                             </div>
                         </div>
                     </div>

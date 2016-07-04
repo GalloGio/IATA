@@ -21,12 +21,6 @@
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
-        <approvalActions>
-            <action>
-                <name>Campaign_set_to_Approved</name>
-                <type>FieldUpdate</type>
-            </action>
-        </approvalActions>
         <assignedApprover>
             <approver>
                 <name>EBC_Approvers</name>
@@ -35,27 +29,31 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
-            <formula>Account__r.Name != &apos;Cxxubic Media&apos;</formula>
+            <formula>!Billing_Account__r.eBroadcast_Trusted_Sender__c</formula>
         </entryCriteria>
         <ifCriteriaNotMet>ApproveRecord</ifCriteriaNotMet>
-        <label>Default Approval</label>
-        <name>Default_Approval</name>
-        <rejectionActions>
-            <action>
-                <name>Campaign_set_to_Rejected</name>
-                <type>FieldUpdate</type>
-            </action>
-        </rejectionActions>
+        <label>Auto approve trusted senders</label>
+        <name>Auto_approve_trusted_senders</name>
     </approvalStep>
     <emailTemplate>EBC/EBC_Campaign_Pending_Approval</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <finalApprovalActions>
+        <action>
+            <name>Campaign_set_to_Approved</name>
+            <type>FieldUpdate</type>
+        </action>
         <action>
             <name>EBC_Approval_Email</name>
             <type>Alert</type>
         </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Campaign_set_to_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
     <finalRejectionRecordLock>true</finalRejectionRecordLock>
     <initialSubmissionActions>
         <action>

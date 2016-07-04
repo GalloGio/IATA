@@ -16,6 +16,10 @@
                     }
                 });
             </script>
+            <style type="text/css"> 
+            	#existingLists .number-of-recipients { display: none; }
+            	.no-provisional-cost #existingLists .number-of-recipients { display: inline; }
+            </style>
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
@@ -38,9 +42,25 @@
                     displayConfirmationStep3(results);
                 });
             }
-            function refreshExistingListCount(filterId) {
+            
+            function refreshExistingListCount(filterId) { 
+                jQuery('.existingListRecipientCount,.existingListProvisionalCost,.existingListNewBalance').html('<img src="/img/loading.gif" />');
+                
+                jQuery('input', document.getElementById('{!$Component.existingListForm}')).attr('disabled', 'disabled');
+                jQuery('.button').addClass('disabled');
+                
                 vfIECEBC_CampaignRecipient.getExistingFilterCnt(filterId,  function(results, event){
-                    jQuery('#cnt' + filterId).text('(' + results + ' recipients)');
+                    if (event.statusCode != 200) results = 0; 
+                    
+                    jQuery('.existingListRecipientCount').text((results).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    jQuery('.existingListProvisionalCost').text((results * {!productRatePlan.EBC_Currency_Cost_Per_Email__c}).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    newBalance = {!billingAccount.eBroadcast_Email_Balance__c} - results;
+                    jQuery('.existingListNewBalance').text((newBalance.toString()).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    
+                    jQuery('.no-provisional-cost').removeClass('no-provisional-cost');
+                    
+                	jQuery('input', document.getElementById('{!$Component.existingListForm}')).removeAttr('disabled');
+                	jQuery('.button').removeClass('disabled');
                 });
             }
             </script>
@@ -50,27 +70,26 @@
                 </script>
             </apex:outputPanel>
             
-            <main class="main-content">
+            <main class="main-content no-provisional-cost">
                 <div class="inner-wrapper">
                     <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
-            
-
                     <h1 class="page-title">Select the list you want to use</h1>
                     
-                                        
-                    
-                    <apex:form >
+                    <apex:pageMessages />
+
+                    <apex:form id="existingListForm" >
                         <apex:inputHidden value="{!campaign.EBC_Master_Filter__c}" id="selectedFilter" />
                         
                         <script type="text/javascript">
                         function updateSelectedTemplate(filterId) {
                             document.getElementById('{!$Component.selectedFilter}').value = filterId;
+                            refreshExistingListCount(filterId);
                         }
                         </script>
                         
                         <div class="row">
                             <div class="main-container columns small-12 medium-8">
-                                <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-template">
+                                <ul id="existingLists" class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-template">
                                     <apex:repeat value="{!masterFilters}" var="f">
                                         <li class="{!IF(f.Disabled, ' disabled', '')}{!IF(campaign.EBC_Master_Filter__c == f.Value, ' is-selected', '')}">
                                             <div class="radio-box">
@@ -96,38 +115,36 @@
                                                 </div>
                                                 <label class="input-label" for="item{!f.Value}">
                                                     {!f.Label}
-                                                    <span class="number-of-recipients" id="cnt{!f.Value}">
-                                                        <a class="icon-refresh" href="#" onclick="refreshExistingListCount('{!f.Value}'); return false;"><i class="fa fa-refresh" aria-hidden="true"></i>Calculate recipients count</a>
-                                                    </span>
                                                 </label>
                                             </div>
                                         </li>
                                     </apex:repeat>
                                 </ul>
                                 
-                                <div class="list-actions">
+								<apex:outputPanel layout="block" styleClass="list-actions" rendered="{!campaign.Status__c == 'DRAFT'}">
                                     <apex:commandLink styleClass="icon-link" rerender="modal">
                                         <i class="icon fa fa-list-ul" aria-hidden="true"></i>Create a new list
                                         <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="1" />
                                     </apex:commandLink>
-                                </div>
+                                </apex:outputPanel>
                             </div>
-                        
+                            
                             <div class="sub-container columns small-12 medium-4">
                                 <div class="summary-box">
                                     <div class="box-body fit">
                                         <table class="data-table zibra cost">
                                             <caption>Campaign Cost</caption>
-                                            <tbody><tr>
-                                                <th>
-                                                    <div class="item-name">Recipients selected</div>
-                                                </th>
-                                                <td>
-                                                    <div class="item-value">
-                                                        <strong>15,000</strong>
-                                                        <span class="unit"> emails</span>
-                                                    </div>
-                                                </td>
+                                            <tbody>
+                                                <tr class="hide-no-count">
+                                                    <th>
+                                                        <div class="item-name">Recipients selected</div>
+                                                    </th>
+                                                    <td>
+                                                        <div class="item-value">
+                                                            <strong class="existingListRecipientCount">n/a</strong>
+                                                            <span class="unit"> emails</span>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr> 
                                                     <th>
@@ -135,19 +152,30 @@
                                                     </th>
                                                     <td>
                                                         <div class="item-value text-green">
-                                                            <strong>10,000</strong>
+                                                            <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
                                                             <span class="unit"> emails</span>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr class="hide-no-count">
                                                     <th>
                                                         <div class="item-name">Provisional cost</div>
                                                     </th>
                                                     <td>
                                                         <div class="item-value">
-                                                            <strong class="text-orange">USD $500.00</strong>
-                                                            <p>for 5,000 emails at $0.10 cost/email</p>
+                                                            <strong class="text-orange">USD $<span class="existingListProvisionalCost">n/a</span></strong>
+                                                            <p>for <span class="existingListRecipientCount">n/a</span> emails at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> cost/email</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="hide-no-count">
+                                                    <th>
+                                                        <div class="item-name">Your new account balance will be</div> 
+                                                    </th>
+                                                    <td>
+                                                        <div class="item-value">
+                                                            <strong class="existingListNewBalance">n/a</strong>
+                                                            <span class="unit"> email(s)</span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -163,10 +191,10 @@
 	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Exit" /></li>
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Save and Continue" /></li>
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Continue" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!NOT(campaign.Is_Step2_Writable__c)}">
 	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
@@ -177,21 +205,6 @@
                             </ul>
                         </div>
                     </apex:form>
-                    
-                    
-                    
-                    
-                    <apex:outputText id="recipientsCount" />
-                    
-                    <a href="#" onclick="updateRecipientsCount('{!$Component.recipientsCount}'); return false;">Refresh count</a>
-                    <script type="text/javascript">
-                    	function updateRecipientsCount(elementId) {
-                            var script = document.createElement('script');
-                            script.src = "{!$Page.IECEBC_CampaignRecipientsCnt}?elementId=" + elementId
-                            
-                            document.getElementsByTagName('head')[0].appendChild(script);
-                        }
-                    </script>
                 </div>
             </main>
             
@@ -260,7 +273,7 @@
                                             </apex:actionFunction>
                                             
                                             <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
-                                                <apex:variable var="isOptionDisabled" value="{!campaign.EBC_Master_Filter__c != null && campaign.EBC_Master_Filter__r.Audience__c != 'Agency'}" />
+                                                <apex:variable var="isOptionDisabled" value="{!campaign.EBC_Master_Filter__c != null && campaign.EBC_Master_Filter__r != '' && campaign.EBC_Master_Filter__r.Audience__c != 'Agency'}" />
                                                 <li class="{!IF(isOptionDisabled, ' disabled', '')}">
                                                     <div class="radio-box">
                                                         <div class="custom-user-input radio">
@@ -280,7 +293,7 @@
                                                         <label class="input-label" for="new-list-1">IATA Travel Agencies</label>
                                                     </div>
                                                 </li>
-                                                <apex:variable var="isOptionDisabled" value="{!campaign.EBC_Master_Filter__c != null && campaign.EBC_Master_Filter__r.Audience__c != 'Agent'}" />
+                                                <apex:variable var="isOptionDisabled" value="{!campaign.EBC_Master_Filter__c != null && campaign.EBC_Master_Filter__r != '' && campaign.EBC_Master_Filter__r.Audience__c != 'Agent'}" />
                                                 <li class="{!IF(isOptionDisabled, ' disabled', '')}">
                                                     <div class="radio-box">
                                                         <div class="custom-user-input radio">
@@ -301,7 +314,7 @@
                                                         <label class="input-label" for="Agent">IATA/IATAN ID Cardholders</label>
                                                     </div>
                                                 </li>
-                                                <apex:variable var="isOptionDisabled" value="{!campaign.EBC_Master_Filter__c != null && campaign.EBC_Master_Filter__r.Audience__c != 'Custom'}" />
+                                                <apex:variable var="isOptionDisabled" value="{!campaign.EBC_Master_Filter__c != null && campaign.EBC_Master_Filter__r != '' && campaign.EBC_Master_Filter__r.Audience__c != 'Custom'}" />
                                                 <li class="{!IF(isOptionDisabled, ' disabled', '')}">
                                                     <div class="radio-box">
                                                         <div class="custom-user-input radio">
@@ -475,7 +488,7 @@
                                                                         <div class="custom-user-input select">
                                                                             <i class="icon angle-down"></i>
                                                                             <apex:selectList onchange="refreshGeoFilter();" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
-                                                                                <apex:selectOption itemLabel="" itemValue="" />
+                                                                                <apex:selectOption itemLabel="Please Select" itemValue="" />
                                                                                 <apex:selectOptions value="{!availableGeoApplicationFilterOptions}" />
                                                                             </apex:selectList> 
                                                                         </div>
@@ -619,14 +632,17 @@
                                                     newFilterJSON = '{!newFilterEscapedJSON}';
                                                     </script>
                                                     <apex:actionFunction name="refreshFilter" action="{!doNothing}" rerender="refinementFilters" />
+                                                    <apex:actionFunction name="refreshFilterReset" action="{!resetFilter}" rerender="refinementFilters">
+                                                        <apex:param assignTo="{!resetFilterIndex}" name="firstParam" value="" />
+                                                    </apex:actionFunction>
                                                     <apex:variable value="-1" var="ind" />
                                                     <apex:repeat value="{!refinementFilters}" var="f">
                                                         <apex:variable var="ind" value="{!TEXT(VALUE(ind) + 1)}" />
                                                         <apex:outputPanel layout="block" styleClass="field-group select default">
                                                             <div class="custom-user-input select">
                                                                 <i class="icon angle-down"></i>
-                                                                <apex:selectList onchange="refreshFilter();" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
-                                                                    <apex:selectOption itemLabel="" itemValue="" />
+                                                                <apex:selectList onchange="refreshFilterReset({!ind});" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
+                                                                    <apex:selectOption itemLabel="Please Select" itemValue="" />
                                                                     <apex:selectOptions value="{!availableRefinementApplicationFilterOptions}" />
                                                                 </apex:selectList> 
                                                             </div>
@@ -634,15 +650,15 @@
                                                                 <apex:variable var="dataType" value="{!allAvailableApplicationFilters[f.EBC_Application_Filter__c].Data_Type__c}" />
                                                                 <div class="custom-user-input select">
                                                                     <i class="icon angle-down"></i>
-                                                                    <apex:selectList rendered="{!dataType == 'Text'}" value="{!f.Field_Operator__c}" styleClass="user-input select" size="1">
+                                                                    <apex:selectList rendered="{!dataType == 'Text'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
                                                                         <apex:selectOption itemValue="=" itemLabel="Is" />
                                                                         <apex:selectOption itemValue="!=" itemLabel="Is Not" />
                                                                     </apex:selectList>
-                                                                    <apex:selectList rendered="{!dataType == 'Picklist'}" value="{!f.Field_Operator__c}" styleClass="user-input select" size="1">
+                                                                    <apex:selectList rendered="{!dataType == 'Picklist'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
                                                                         <apex:selectOption itemValue="=" itemLabel="Is" />
                                                                         <apex:selectOption itemValue="!=" itemLabel="Is Not" />
                                                                     </apex:selectList>
-                                                                    <apex:selectList rendered="{!dataType == 'Date'}" value="{!f.Field_Operator__c}" styleClass="user-input select" size="1">
+                                                                    <apex:selectList rendered="{!dataType == 'Date'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
                                                                         <apex:selectOption itemValue="=" itemLabel="Is" />
                                                                         <apex:selectOption itemValue="!=" itemLabel="Is Not" />
                                                                         <apex:selectOption itemValue="<" itemLabel="Before" />
@@ -650,17 +666,17 @@
                                                                         <apex:selectOption itemValue=">" itemLabel="After" />
                                                                         <apex:selectOption itemValue=">=" itemLabel="Equals or After" />
                                                                     </apex:selectList>
-                                                                    <apex:selectList rendered="{!dataType == 'Checkbox'}" value="{!f.Field_Operator__c}" styleClass="user-input select" size="1">
+                                                                    <apex:selectList rendered="{!dataType == 'Checkbox'}" value="{!f.Field_Operator__c}" styleClass="filter{!ind}dependant user-input select" size="1">
                                                                         <apex:selectOption itemValue="= true" itemLabel="Is True" />
                                                                         <apex:selectOption itemValue="= false" itemLabel="Is False" />
                                                                     </apex:selectList>
                                                                 </div>
-                                                                <apex:inputText rendered="{!dataType == 'Text'}" value="{!f.Field_Value__c}" styleClass="user-input text" />
-                                                                <apex:inputField rendered="{!dataType == 'Date'}" value="{!f.Field_Value__c}" styleClass="user-input text" />
+                                                                <apex:inputText rendered="{!dataType == 'Text'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
+                                                                <apex:inputField rendered="{!dataType == 'Date'}" value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input text" />
                                                                 
                                                                 <apex:outputPanel layout="block" styleClass="custom-user-input select" rendered="{!dataType == 'Picklist' && f.EBC_Application_Filter__c != null}">
                                                                     <i class="icon angle-down"></i>	
-                                                                    <apex:selectList value="{!f.Field_Value__c}" styleClass="user-input select" size="1">
+                                                                    <apex:selectList value="{!f.Field_Value__c}" styleClass="filter{!ind}dependant user-input select" size="1">
                                                                         <apex:selectOptions value="{!allAvailableApplicationFilterValues[f.EBC_Application_Filter__c]}" />
                                                                     </apex:selectList>
                                                                 </apex:outputPanel>
@@ -772,30 +788,25 @@
                                                             <tr>
                                                                 <th>Geo Selection:</th>
                                                                 <td>
-                                                                    <span class="label">Country</span>
-                                                                    <span class="value">Canada</span>
+                                                                    <apex:outputText rendered="{!geoFilterPreset == 'custom-filter'}">
+                                                                    	<span class="label">Custom</span>
+                                                                    </apex:outputText>
+                                                                    <apex:outputText rendered="{!geoFilterPreset != 'custom-filter'}">
+                                                                    	<span class="label">{!geoFilterPresets[geoFilterPreset].Name}</span>
+                                                                    </apex:outputText>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Refinement:</th>
                                                                 <td>
-                                                                    <ul class="list">
-                                                                        <li>
-                                                                            <span class="label">Email address</span>
-                                                                            <span class="value">john.doe@email.com</span>
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="label">Lorem ipsum dolor</span>
-                                                                            <span class="value">Dolor sit amet quon mullis</span>
-                                                                        </li>
-                                                                    </ul>
+                                                                    {!uniqueRefinementFiltersName}
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                         <apex:outputPanel id="newFilterNameField" layout="block" styleClass="field-group text list-name">
                                                             <label>
                                                                 <span class="input-label">Please provide a list name</span>
-                                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
+                                                                <apex:inputField type="text" required="true" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
                                                             </label>
                                                             <div class="input-remaining">
                                                                 <span class="js-remaining-count" data-id="list-name">{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}</span>
@@ -811,7 +822,7 @@
                                                     <div class="sub-container columns small-12 medium-4">
                                                         <div class="summary-box">
                                                             <div class="box-body fit">
-                                                                <table class="data-table zibra cost">
+                                                                <table class="data-table zibra cost"> 
                                                                     <caption>Campaign Cost</caption>
                                                                     <tr>
                                                                         <th>
@@ -819,7 +830,7 @@
                                                                         </th>
                                                                         <td>
                                                                             <div class="item-value">
-                                                                                <strong><span class="newFilterCount">{!newFilter.Number_of_Recipients__c}</span></strong>
+                                                                                <strong><span class="newFilterCount"><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!newFilter.Number_of_Recipients__c}"/></apex:outputText></span></strong>
                                                                                 <span class="unit"> emails</span>
                                                                             </div>
                                                                         </td>
@@ -830,7 +841,7 @@
                                                                         </th>
                                                                         <td>
                                                                             <div class="item-value text-green">
-                                                                                <strong>10,000</strong>
+                                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
                                                                                 <span class="unit"> emails</span>
                                                                             </div>
                                                                         </td>
@@ -841,18 +852,18 @@
                                                                         </th>
                                                                         <td>
                                                                             <div class="item-value">
-                                                                                <strong class="text-orange">USD $500.00</strong>
-                                                                                <p>for 5,000 emails at $0.10 cost/email</p>
+                                                                                <strong class="text-orange">USD $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * newFilter.Number_of_Recipients__c}"/></apex:outputText></strong>
+                                                                                <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!newFilter.Number_of_Recipients__c}"/></apex:outputText> emails at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> cost/email</p>
                                                                             </div>
-                                                                        </td>
+                                                                        </td> 
                                                                     </tr>
                                                                     <tr>
                                                                         <th>
-                                                                            <div class="item-name">Your new account balance will be</div>
+                                                                            <div class="item-name">Your new account balance will be</div> 
                                                                         </th>
                                                                         <td>
                                                                             <div class="item-value">
-                                                                                <strong>0</strong>
+                                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c}"/></apex:outputText></strong>
                                                                                 <span class="unit"> email(s)</span>
                                                                             </div>
                                                                         </td>
@@ -906,6 +917,14 @@
                     </div>   
                 </apex:outputText>
             </apex:outputPanel> 
+            
+            <apex:outputText rendered="{!campaign.EBC_Master_Filter__c != null}">
+                <script>
+                jQuery(document).ready(function(){
+                	refreshExistingListCount('{!campaign.EBC_Master_Filter__c}');
+                });
+                </script>
+            </apex:outputText>
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>
