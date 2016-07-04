@@ -1875,6 +1875,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>hazbounc@iata.org</recipient>
             <type>user</type>
         </recipients>
