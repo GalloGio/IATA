@@ -1,5 +1,0 @@
-A new Case Comment has been added to the Case {!Case.CaseNumber} - "{!Case.Subject}":
-
-{!Case.Last_Case_Comment}
-
-For direct access to the Case, please click on this link {!Case.Link}.
