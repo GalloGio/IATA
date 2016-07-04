@@ -60,9 +60,9 @@ public with sharing class IFAP_BusinessRules {
         try {
             // the Agent Type is valid if it equals one of the two below values
             /*isValid = (contactMap.get(theCase.id).Agent_Type__c != null
-                        && (contactMap.get(theCase.id).Agent_Type__c == 'IATA Cargo Agent' ||  contactMap.get(theCase.id).Agent_Type__c == 'IATA Passenger Sales Agent' || contactMap.get(theCase.id).Agent_Type__c == 'CASS Associates' ||  contactMap.get(theCase.id).Agent_Type__c == 'Domestic Agent'));*/
+                        && (contactMap.get(theCase.id).Agent_Type__c == 'IATA Cargo Agent' ||  contactMap.get(theCase.id).Agent_Type__c == 'IATA Passenger Sales Agent' || contactMap.get(theCase.id).Agent_Type__c == 'CASS Associate' ||  contactMap.get(theCase.id).Agent_Type__c == 'Domestic Agent'));*/
             isValid = (theCase.IFAP_Agent_Type__c != null
-                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associates'));
+                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate'));
 
 
 
@@ -246,7 +246,7 @@ public with sharing class IFAP_BusinessRules {
         //        //(theContact.RecordTypeId == ContactRecordType.Id || theContact.RecordTypeId == ContactRecordTypeStandard.Id ) &&
         if (
             theContact.Financial_Assessment_Contact__c == true &&
-            (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' || theContact.Agent_Type__c == 'IATA Cargo Agent' || theContact.Agent_Type__c == 'CASS Associates')) {
+            (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' || theContact.Agent_Type__c == 'IATA Cargo Agent' || theContact.Agent_Type__c == 'CASS Associate')) {
 
             List<Contact> AccountContacts = [Select Id, Financial_Assessment_Contact__c, AccountId From Contact Where AccountId = : theContact.AccountId And Id <>: theContact.Id];
             system.debug('AccountContacts: ' + AccountContacts);

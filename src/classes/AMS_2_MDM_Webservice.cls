@@ -124,8 +124,14 @@ global class AMS_2_MDM_Webservice {
 
                     sLogRecord += a.IATACode__c + ',';
 
+                    ////Check if IATACODE exists! if not end with error
+                    //if(a.IATACode__c == Null){
+                    //    accErrors += 'IATACode error - Agency needs to have an IATACode! Agency: '+a.Name+' ('+a.Id+')';
+                    //}
+
+                    //Check billing address
                     if(AMS_Utils.isAddressEmpty(a, 'Billing')){
-                        accErrors += '\n- '+a.Name+' ('+a.Id+')';
+                        accErrors += '\nBilling address empty - Agency: '+a.Name+' ('+a.Id+')';
                     }
                 }
                 sLogRecord = sLogRecord.removeEnd(',');
@@ -133,18 +139,19 @@ global class AMS_2_MDM_Webservice {
                 if(String.isNotEmpty(accErrors)) throw new AMSException('The following accounts have no Billing/Primary Address:'+accErrors);
 
 
-                for(Account a : ag){
-                    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
-                    if( String.isNotEmpty(a.ShippingState) && !AMS_Utils.isValidState(a.ShippingState) ){
-                        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
-                    }
-                    //if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
-                    if( String.isNotEmpty(a.ShippingCountry) && !AMS_Utils.isValidCountry(a.ShippingCountry) ){
-                        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
-                    }
-                }
-                System.debug(loggingLevel.Debug, '____ [cls AMS_2_MDM_Webservice - sendAgenciesContent] accErrors (after Shipping) - ' + accErrors);
-                if(String.isNotEmpty(accErrors)) throw new AMSException('Error on the following accounts:'+accErrors);
+                //for(Account a : ag){
+                //    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
+                //    if(String.isNotEmpty(a.ShippingState) && !AMS_Utils.isValidState(a.ShippingState) ){
+                //        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
+                //    }
+                //    //if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
+                //    if(String.isNotEmpty(a.ShippingCountry) && !AMS_Utils.isValidCountry(a.ShippingCountry) ){
+                //        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
+                //    }
+                //}
+                //System.debug(loggingLevel.Debug, '____ [cls AMS_2_MDM_Webservice - sendAgenciesContent] accErrors (after Shipping) - ' + accErrors);
+                //if(String.isNotEmpty(accErrors)) throw new AMSException('Error on the following accounts:'+accErrors);
+
 
                 //s = xmlGen.getAgencyDetail(ag, r); - #AMSFTS
                 s = xmlGen.getAgencyDetail(ag, r, 'Master','');
@@ -332,15 +339,15 @@ global class AMS_2_MDM_Webservice {
                 sError = (sError == 'OK' ? '' : sError+'\n')+'Agency needs to have a Billing Address';
             }
 
-            //if(String.isNotEmpty(ag.ShippingState) && AMS_Utils.iataIsoStates.get(ag.ShippingState) == null){
-            if( !AMS_Utils.isValidState(ag.ShippingState) ){
-                sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping State is invalid';
-            }
+            ////if(String.isNotEmpty(ag.ShippingState) && AMS_Utils.iataIsoStates.get(ag.ShippingState) == null){
+            //if( !AMS_Utils.isValidState(ag.ShippingState) ){
+            //    sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping State is invalid';
+            //}
 
-            //if(String.isNotEmpty(ag.ShippingCountry) && AMS_Utils.iataIsoCountries.get(ag.ShippingCountry) == null){
-            if( !AMS_Utils.isValidCountry(ag.ShippingCountry) ){
-                sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping Country is invalid';
-            }
+            ////if(String.isNotEmpty(ag.ShippingCountry) && AMS_Utils.iataIsoCountries.get(ag.ShippingCountry) == null){
+            //if( !AMS_Utils.isValidCountry(ag.ShippingCountry) ){
+            //    sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping Country is invalid';
+            //}
 
             if(sError != 'OK') return sError;
 

@@ -88,7 +88,7 @@ global class clsMassCaseCreationNonComplianceBatch implements Database.Batchable
              Fix for INC054114: 03-July-2013*/
              
              // set the deadline date that was specified for the Cargo/CASS agent
-             if (c.Account.Type == 'IATA Cargo Agent' || c.Account.Type == 'CASS Associates') {
+             if (c.Account.Type == 'IATA Cargo Agent' || c.Account.Type == 'CASS Associate') {
                complianceCase.New_IFAP_Deadline_date__c = Deadline;
              }
              else {

@@ -229,7 +229,7 @@ private class vfIECUserRegistrationTest {
         Test.setCurrentPage(pgRef);
 
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        
+        Test.startTest();
         System.runAs(usr) {
         
             //Instantiate Controller
@@ -277,6 +277,7 @@ private class vfIECUserRegistrationTest {
             
             system.assertNotEquals(pgCont.con.Id,null);
         }
+        Test.stopTest();
     }
     
     
