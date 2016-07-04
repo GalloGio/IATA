@@ -193,6 +193,74 @@ public with sharing class ISSP_CreateNotification {
     public static void debug(string str,map<Id,Id> mes){
         system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
     }
+
+
+
+    //INC253595 - Start
+    public static void conAfterInsert(list<Contact> newportalContactList 
+                                   , map<ID, Contact> newPortalContactMap) {
+        
+        SendEmailToPortalAdminNewContact(newportalContactList);
+        
+    }
+
+    public static void SendEmailToPortalAdminNewContact(list<Contact> newPortalContactList) {
+
+        system.debug('SendEmailToPortalAdminNewContact starting...');
+        ID templateId = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminNewContact);
+        System.debug('templateId==>'+templateId);
+        if(String.isBlank(templateId)) {
+            system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminNewContact + ' not found');   
+            return;
+        }
+        Set<ID> accountIDs = new Set<ID>();
+        for(Contact con : newPortalContactList) {
+                accountIDs.add(con.AccountId);
+        }
+    System.debug('zZzZ accountIDs==>'+accountIDs);
+        map<ID, Set<ID>> accIdToUserIdMap = new map<ID, Set<ID>>();
+        for(AccountTeamMember member : PortalServiceAccessTriggerHandler.getPortalAdmins(accountIDs)) {
+            Set<ID> userIDs = accIdToUserIdMap.get(member.AccountId);
+            if(null == userIDs)
+                userIDs = new Set<ID>();
+            system.debug('aqui member ' + member);
+            userIDs.add(member.UserId);
+            accIdToUserIdMap.put(member.AccountId, userIDs);
+        }
+    System.debug('zZzZ ENV.Reply_Email==>'+ENV.Reply_Email);
+        ID standartReplyUserID = PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email);
+    System.debug('zZzZ standartReplyUserID==>'+standartReplyUserID);    
+        list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
+        for(Contact con : newPortalContactList) {
+    System.debug('con==>'+con + 'accountMap ' + accIdToUserIdMap);
+                 
+                Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(con.AccountId);
+                if(null == portalAdminUserIDs) continue;
+                for(ID userId : portalAdminUserIDs) {
+                    Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
+                    emailMsg.setTemplateId(templateId);
+                    emailMsg.setTargetObjectId(userId);
+                    emailMsg.saveAsActivity = false;
+                    
+                    if(null != standartReplyUserID)
+                        emailMsg.setOrgWideEmailAddressId(standartReplyUserID);
+                    else {
+                        emailMsg.setReplyTo(ENV.Reply_Email);
+                        emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+                    }
+                    emailMsg.setWhatId(con.id); 
+                    msgList.add(emailMsg);
+                }
+            
+        }
+        System.debug('zZzZ msgList==>'+msgList);
+        if(!msgList.isEmpty()){
+            Messaging.sendEmail(msgList);
+        }
+        else 
+            system.debug(LoggingLevel.ERROR, 'emials not sent !');
+    }
    
+    //INC253595 - End
    
 }
