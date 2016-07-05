@@ -19,6 +19,7 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
+                    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                     oscar.Sanity_check_results__c = 'Passed';
                     res = True;
                 }
@@ -42,6 +43,7 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     oscar.Sanity_check_received__c = Date.today();
+                    oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                     oscar.Sanity_check_results__c = 'Failed';
                     res = True;
                 }
