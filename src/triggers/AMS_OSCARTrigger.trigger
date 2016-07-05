@@ -246,7 +246,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c);
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
                 changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
                 changeCode.status  = '9';
 
@@ -259,12 +259,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'DIS';
                 changeCode.reasonCode = '00';
-                if (updatedOscar.Process__c == AMS_Utils.new_HO || updatedOscar.Process__c == AMS_Utils.new_BR_ABROAD)
-                    changeCode.memoText = 'New application disapproved';
-                else if (updatedOscar.Process__c == AMS_Utils.new_SA)
-                    changeCode.memoText = 'New application - SA disapproved';
-                else
-                    changeCode.memoText = 'New application - Branch disapproved';
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
                 changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';
                 changeCode.status  = '0';
 
