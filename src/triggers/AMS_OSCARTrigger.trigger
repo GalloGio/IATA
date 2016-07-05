@@ -223,7 +223,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
-                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c);
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
                 changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
                 changeCode.status  = '9';
 
@@ -236,12 +236,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 changeCode.name = 'DIS';
                 changeCode.reasonCode = '00';
-                if (updatedOscar.Process__c == AMS_Utils.new_HO || updatedOscar.Process__c == AMS_Utils.new_BR_ABROAD)
-                    changeCode.memoText = 'New application disapproved';
-                else if (updatedOscar.Process__c == AMS_Utils.new_SA)
-                    changeCode.memoText = 'New application - SA disapproved';
-                else
-                    changeCode.memoText = 'New application - Branch disapproved';
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
                 changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';
                 changeCode.status  = '0';
 
@@ -388,18 +383,19 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Rejection_notification_sent__c = Date.today();
 
         if (oldOSCAR.Validation_Status__c != updatedOscar.Validation_Status__c) {
+            List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (updatedOscar.Validation_Status__c == 'Passed') {
                 /*
                     1) Approve current approval process (assistant manager's)
                     2) Continue with the step no. 2 (for the manager)
                 */
-                List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
                 if (currentApprovals.size() > 0) {
                     AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c);
                 }
             } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicaple') {
                 // Reject the approval process
-                AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
+                if (currentApprovals.size() > 0)
+                    AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
             }
             updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }

@@ -1875,11 +1875,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pommiers@iata.org</recipient>
+            <recipient>hazbounc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hazbounc@iata.org</recipient>
+            <recipient>pommiers@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

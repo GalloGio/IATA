@@ -2323,7 +2323,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.isHOAccredited  = true;
             ctrl.getOfficeTypes();
 
-            ctrl.con.Account.Category__c = 'CASS Associates';
+            ctrl.con.Account.Category__c = 'CASS Associate';
             ctrl.getOfficeTypes();
 
             ctrl.con.Account.Category__c = 'Courier';

@@ -277,7 +277,21 @@ public without sharing class AMS_Utils {
         return result;
     }
 
+    public static String getStatusDescFromChangeCode(String sChangeCode) {
 
+        String sRes = '';
+
+        if (sChangeCode.equalsIgnoreCase('NEW')) {
+            sRes = 'in progress';
+        } else if (sChangeCode.equalsIgnoreCase('FIN')) {
+            sRes = 'finalized';
+        }
+        else if (sChangeCode.equalsIgnoreCase('DIS')) {
+            sRes = 'disapproved';
+        }
+        
+        return sRes;
+    }
     /**
     //Based on the Change code passed we get the Rec ID
     Indicates if record is A=Added, C=Changed or D=Deleted.
@@ -1183,24 +1197,25 @@ public static boolean isAMSProfile(Id profileId) {
 }
 
 //Get Change Code memo Text (All this configs should be passed for a Custom Setting)
-public static String getChangeCodeMemoText(String process) {
+public static String getChangeCodeMemoText(String process,String changeCodeId) {
 
-    String memoText = 'New application finalized';
+    String memoText = 'New application';
 
     if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
-        memoText = 'New application - Head Office finalized';
+
+        memoText = 'New application - Head Office';
     else if (process == AMS_Utils.new_BR)
-        memoText = 'New application - Branch finalized';
+        memoText = 'New application - Branch';
     else if (process == AMS_Utils.new_TIDS)
-        memoText = 'New application - TIDS finalized';
+        memoText = 'New application - TIDS';
     else if (process == AMS_Utils.new_SA)
-        memoText = 'New application - SA finalized';
+        memoText = 'New application - SA';
     else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
-        memoText = 'New application - GSA finalized';
+        memoText = 'New application - GSA';
     else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
-        memoText = 'New application - AHA finalized';
+        memoText = 'New application - AHA';
  
-    return memoText;
+    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
 }
 
 
