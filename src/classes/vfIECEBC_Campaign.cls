@@ -85,10 +85,10 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
         
         this.campaign = (EBC_Campaign__c)stdController.getRecord();
         
-        if (!String.isBlank(this.campaign.Id) && this.campaign.Account__c != vfIECEBC.usr.Contact.AccountId) {
-            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Account__c + ':' + vfIECEBC.usr.Contact.AccountId + ').');
+        if (!String.isBlank(this.campaign.Id) && this.campaign.Billing_Account__c != billingAccount.Id) {
+            throw new Controller_Exception('You don\'t have access to this record (' + this.campaign.Billing_Account__c + ':' + billingAccount.Id + ').');
         }
-        this.campaign.Account__c = vfIECEBC.usr.Contact.AccountId;
+        this.campaign.Account__c = usr.Contact.AccountId;
         this.campaign.Billing_Account__c = vfIECEBC.billingAccount.Id;
         
         if (this.campaign.Id == null) {

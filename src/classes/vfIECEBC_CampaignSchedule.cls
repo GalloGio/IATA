@@ -1,5 +1,4 @@
-public class vfIECEBC_CampaignSchedule {
-    class Controller_Exception extends Exception{}
+public class vfIECEBC_CampaignSchedule extends vfIECEBC_Controller {
     
     public EBC_Campaign__c campaign { get; set; }
     public ApexPages.StandardController con { public get; private set; }
@@ -91,6 +90,10 @@ public class vfIECEBC_CampaignSchedule {
     }
     
     public static Datetime getMinDatetime() {
+        if (vfIECEBC.billingAccount.eBroadcast_Trusted_Sender__c) {
+            return Datetime.now();
+        }
+        
         List<BusinessHours> bh = [select Id from BusinessHours where Name = 'EBC Campaign Approval'];
         return BusinessHours.add(bh[0].Id, Datetime.now(), Integer.valueOf(3600 * 2 * 9 * 1000)); // 2 business day in Montreal office
     }
@@ -105,7 +108,7 @@ public class vfIECEBC_CampaignSchedule {
                 Datetime dt = getMinDatetime();
                 Datetime dtMax = getMaxDatetime();
                 
-                if (this.campaign.Status__c != 'APPROVED' && this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c <= dt) {
+                if (!vfIECEBC.billingAccount.eBroadcast_Trusted_Sender__c && this.campaign.Status__c != 'APPROVED' && this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c <= dt) {
                     validationMessage = 'A delay of minimum 2 business days is required. Date must be greater to ' + dt.format('EEEE, MMM d, h:mm a', UserInfo.getTimeZone().getID());
                 }/* else if (this.campaign.Scheduled_Date__c != null && this.campaign.Scheduled_Date__c > dtMax) {
                     validationMessage = 'Scheduled Date must be within 31 days. Date must NOT be greater to ' + dtMax.format('EEEE, MMM d', UserInfo.getTimeZone().getID());

@@ -156,7 +156,7 @@ public class vfIECEBC_CampaignList {
             fields.add('LastModifiedDate');
         }
         
-        return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Account__c = \'' + u.AccountId + '\'';
+        return 'Select ' + String.join(fields, ',') + ' FROM EBC_Campaign__c WHERE Billing_Account__c = \'' + vfIECEBC.billingAccount.Id + '\'';
     }
     
     public Integer campaignsCount {

@@ -6,7 +6,7 @@ public class vfIECEBC extends IECPageController {
                 System.debug(usr);
                 System.debug(usr.Contact);
                 System.debug(usr.Contact.AccountId);
-                billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c from Zuora__CustomerAccount__c where Zuora__Account__c = :usr.Contact.AccountId LIMIT 1];
+                billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c from Zuora__CustomerAccount__c where Contact__c = :usr.ContactId LIMIT 1];
             }
             
             return billingAccount;
