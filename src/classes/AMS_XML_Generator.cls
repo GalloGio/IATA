@@ -835,6 +835,7 @@ public with sharing class AMS_XML_Generator {
         //Begin - #AMSFTS
         //Map<String, Map<String, List<AMS_Agency__c>>> bsp_dpc_ag = new Map<String, Map<String, List<AMS_Agency__c>>>();
         Map<String, Map<String, List<Account>>> bsp_dpc_ag = new Map<String, Map<String, List<Account>>>();
+        Map<String, Map<String, List<Account>>> bsp_dpc_ag_Ordered = new Map<String, Map<String, List<Account>>>();
         //END - #AMSFTS
 
         //String sPasCargo = agency[0].Sector__c == Null?'':agency[0].Sector__c;
@@ -1010,7 +1011,34 @@ public with sharing class AMS_XML_Generator {
             }
         }
 
-        for(String sBSP : bsp_dpc_ag.keySet()){
+
+        //Order the agencies in order to return on the same order they were asked!
+        for(Integer i=0;i<orderedAgencyIds.size();i++){
+
+            for(String sBSP : bsp_dpc_ag.keySet()){
+                Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(sBSP);
+
+                for(String sDPC : mAuxAgDPC.keySet()){
+                    List<Account> l = mAuxAgDPC.get(sDPC);
+
+                    for(Account auxL: l){
+                        if(String.valueOf(auxL.Id).equalsIgnoreCase(orderedAgencyIds[i])){
+                            //lAgOrdered.add(mapAgToOrder.get(orderedAgencyIds[i]) );
+
+                            List<Account> aux1 = new List<Account>();
+                            aux1.add(auxL);
+                            Map<String, List<Account>> aux2 = new Map<String, List<Account>>();
+                            aux2.put(sDPC, aux1);
+                            bsp_dpc_ag_Ordered.put(sBSP, aux2);
+                        }
+                    }
+                }
+            }
+        } 
+
+        
+        //for(String sBSP : bsp_dpc_ag.keySet()){
+        for(String sBSP : bsp_dpc_ag_Ordered.keySet()){            
             //Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(sBSP); - #AMSFTS
             Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(sBSP);
 
@@ -1148,7 +1176,7 @@ public with sharing class AMS_XML_Generator {
                         shippingAdd.Address_3__c = shippingStreet[2];
 
                         shippingAdd.City__c = ag.ShippingCity;
-                         
+                        
                         //shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()).Id;
                         if(ag.ShippingState != null ){
                             if(AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()) != null){
@@ -1166,7 +1194,7 @@ public with sharing class AMS_XML_Generator {
                                 shippingAdd.Country__c = null;
                             }                            
                         }
-                        
+
                         shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
                         
                         System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
