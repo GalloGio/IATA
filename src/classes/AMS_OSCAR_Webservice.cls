@@ -220,7 +220,7 @@ global class AMS_OSCAR_Webservice {
 
             changeCode.name = 'NEW';
             changeCode.reasonCode = '21';
-            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c);
+            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c,changeCode.name);
             changeCode.reasonDesc  = 'NEW APPLICATION';
             changeCode.status  = '2';
 
