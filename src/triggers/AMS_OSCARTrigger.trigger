@@ -14,7 +14,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
     }
 
-    List<CASE> casesToUpdate = new List<CASE>();
+    List<Case> casesToUpdate = new List<Case>();
+    Set<Id> caseCheck = new Set<Id>(); //prevent same case from being added to the list again
 
     public Map<String, String> oscarExternalLabels {
         get {
@@ -89,15 +90,28 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //ON INSERT
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
-            oscar.Sanity_check_deadline__c = Date.today() + 15;
+
+            //removed in issue AMS-1584
+            //oscar.Sanity_check_deadline__c = Date.today() + 15;
 
 
             oscars.add(oscar);
 
         }
 
-        if (!oscars.isEmpty())
+        if (!oscars.isEmpty()){
             AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+        }
+
+        for(Case c : [SELECT Id, Oscar__c, OwnerId FROM Case WHERE RecordType.Name = 'OSCAR Communication' AND Oscar__c in :Trigger.newMap.keySet()]){
+            AMS_OSCAR__c o = trigger.newMap.get(c.OSCAR__c);
+            if(c.OwnerId != o.OwnerId){
+                c.OwnerId = o.OwnerId;
+                casesToUpdate.add(c);
+            }
+        }
+
+        if(!casesToUpdate.isEmpty()) update casesToUpdate;
 
     } //TD: Because I added "AFTER UPDATE", I added here the isBefore, which was missing
     else if (Trigger.isBefore && Trigger.isUpdate) {
@@ -193,7 +207,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     if (caseToUpdate != null) {
                         caseToUpdate.Status = updatedOSCAR.Status__c;
                     }
-                    casesToUpdate.add(caseToUpdate);
+                    if(caseCheck.add(caseToUpdate.Id)) casesToUpdate.add(caseToUpdate);
 
                 } else {
                     //for other OSCAR "Status__c" values, updates the CASE status to be equal to the one in the OSCAR!
@@ -205,7 +219,16 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     if (caseToUpdate != null) {
                         caseToUpdate.Status = updatedOSCAR.Status__c;
                     }
-                    casesToUpdate.add(caseToUpdate);
+                    if(caseCheck.add(caseToUpdate.Id)) casesToUpdate.add(caseToUpdate);
+                }
+            }
+
+            if(updatedOSCAR.OwnerId != oldOscar.OwnerId){
+                Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
+
+                if (caseToUpdate != null) {
+                    caseToUpdate.OwnerId = updatedOSCAR.OwnerId;
+                    if(caseCheck.add(caseToUpdate.Id)) casesToUpdate.add(caseToUpdate);
                 }
             }
         }
