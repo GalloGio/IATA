@@ -54,7 +54,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 }
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, OSCAR__c from CASE where Id = :caseId LIMIT 1];
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c from CASE where Id = :caseId LIMIT 1];
 
             if(!cases.isEmpty()){
 
@@ -62,6 +62,16 @@ global without sharing class AMS_RecordCreatorWebservice {
            
                 oscarCase.OSCAR__c = oscarId;
                 oscarCase.AccountId = oscarCase.Account_Concerned__c;
+
+                if(oscarCase.Account.Location_Type__c == 'SA')                          oscarCase.Type_of_Customer__c = 'Sales Agent – Generic';
+                else if (oscarCase.Account.Category__c == 'IATA Passenger Sales Agent') oscarCase.Type_of_Customer__c = 'IATA Travel Agent';
+                else if (oscarCase.Account.Category__c == 'IATA Cargo Agent')           oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
+                else if (oscarCase.Account.Category__c == 'Import Agent')               oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
+                else if (oscarCase.Account.Category__c == 'CASS Associate')             oscarCase.Type_of_Customer__c = 'CASS Associates';
+                else if (oscarCase.Account.Category__c == 'Courier')                    oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
+                else if (oscarCase.Account.Category__c == 'TIDS Agent')                 oscarCase.Type_of_Customer__c = 'TIDS';
+                else if (oscarCase.Account.Category__c == 'GSA General Sales Agent')    oscarCase.Type_of_Customer__c = 'General Sales Agent (GSA)';
+                else if (oscarCase.Account.Category__c == 'GSSA Cargo')                 oscarCase.Type_of_Customer__c = 'GSSA Cargo';
 
                 update oscarCase;
              }
