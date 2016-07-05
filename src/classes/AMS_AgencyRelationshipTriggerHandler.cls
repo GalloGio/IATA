@@ -6,7 +6,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         List<String> relationChildrenIds = getRelationshipChildAccountIds(rels);
 
-        setStandardHierarchyRelationship(rels, mainHierarchies);
+        setStandardHierarchyRelationship(rels, mainHierarchies, null);
 
         //look for relation with same children than trigger content and in same main H but not concerned by this trigger
         List<AMS_Agencies_relationhip__c > oldrelation2delete = [select id from AMS_Agencies_relationhip__c  where Child_Account__c in :relationChildrenIds and (not Id in :Trigger.newMap.keyset()) and Hierarchy__c in :mainHierarchies.keySet() ];
@@ -18,7 +18,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
     }
 
-    public static void handleAfterUpdate(List<AMS_Agencies_relationhip__c> rels) {
+    public static void handleAfterUpdate(List<AMS_Agencies_relationhip__c> rels, Map<Id, AMS_Agencies_relationhip__c> oldMap) {
 
         Map<Id, AMS_Agencies_Hierarchy__c> mainHierarchies = getRelationshipHierarchies(rels);
 
@@ -26,19 +26,19 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         AMS_AgencyUpdateHelper.agencyRelathionshipUpdate(rels);
 
-        setStandardHierarchyRelationship(rels, mainHierarchies);
+        setStandardHierarchyRelationship(rels, mainHierarchies, oldMap);
 
     }
 
     public static void handleAfterDelete(List<AMS_Agencies_relationhip__c> rels) {
 
         Set<Id> accountsInTheOldHierarchy = new Set<Id>();
-        for(AMS_Agencies_relationhip__c rel : rels){
+        for (AMS_Agencies_relationhip__c rel : rels) {
             accountsInTheOldHierarchy.add(rel.Parent_Account__c);
             accountsInTheOldHierarchy.add(rel.Child_Account__c);
         }
 
-        setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
+        //setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
 
     }
 
@@ -61,116 +61,116 @@ public class AMS_AgencyRelationshipTriggerHandler {
         return relationChildrenIds;
     }
 
-    
-    
+
     // when a main hierarchy is set, this method will update the standard hierarchy and the location type
-    public static void setStandardHierarchyRelationship(List<AMS_Agencies_relationhip__c> rels, Map<Id, AMS_Agencies_Hierarchy__c> mainHierarchies) {
-        system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> start!');
-		// retrieve all the account involved in the updated relationships (received from the trigger)
+    public static void setStandardHierarchyRelationship(List<AMS_Agencies_relationhip__c> rels, Map<Id, AMS_Agencies_Hierarchy__c> mainHierarchies, Map<Id, AMS_Agencies_relationhip__c> oldMap) {
+        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> start!');
+
+        // retrieve all the account involved in the updated relationships (received from the trigger)
         Set<Id> accountIds = new Set<Id>();
-        for(AMS_Agencies_relationhip__c rel : rels){
-            system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> look at rel '+rel.Parent_Account__c+' to '+rel.Child_Account__c);
-        	//if (mainHierarchies.get(rel.Hierarchy__c) != null ){
-                accountIds.add(rel.Parent_Account__c);
-	        	accountIds.add(rel.Child_Account__c);
-        	//}
+        for (AMS_Agencies_relationhip__c rel : rels) {
+            system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look at rel ' + rel.Parent_Account__c + ' to ' + rel.Child_Account__c);
+            //if (mainHierarchies.get(rel.Hierarchy__c) != null ){
+            accountIds.add(rel.Parent_Account__c);
+            accountIds.add(rel.Child_Account__c);
+            //}
         }
-        
-        
+
         Set<Id> parentAccountIds = new Set<Id>();
         // retrieve all the hierarchies for the relationships received from the trigger
         // for each hierarchy I extract the parent (I may process twice the same hierarchy but I add the parent to a set so that I am sure I get parents only once)
-        for(List<AMS_Agencies_relationhip__c> hier : AMS_HierarchyHelper.getAccountsHierarchies(accountIds).values()){
+        for (List<AMS_Agencies_relationhip__c> hier : AMS_HierarchyHelper.getAccountsHierarchies(accountIds).values()) {
             parentAccountIds.add(AMS_HierarchyHelper.getHierarchyHO(hier));
         }
 
-        // retrieve all the accounts: the ones directly involved in the relationshipi changes + the HO of those hierarchies
-        Map<Id, Account> accounts = new Map<Id,Account>([SELECT ParentId, Location_Type__c, IATAcode__c, Name 
-                                                         FROM Account 
-                                                         WHERE Id IN :accountIds  OR Id IN :parentAccountIds
-                                                         ORDER BY IATAcode__c]);
-        
-        system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> look for accountIds '+accountIds);
-        system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> look for parentAccountIds '+parentAccountIds);
-        for(Account a : accounts.values()){
-            if(parentAccountIds.contains(a.Id)){
-                a.ParentId = null;
-                a.Location_Type__c = 'HO';
-                system.debug('setStandardHierarchyRelationship() --> update parent account '+a.Name+' with Parentid = '+a.ParentId+ ', Location type = '+a.Location_Type__c);
-            }
-            system.debug('setStandardHierarchyRelationship() --> found account '+a.Name+' with id '+a.id+ ' and location type = '+a.Location_Type__c);
+        // retrieve all the accounts: the ones directly involved in the relationship changes + the HO of those hierarchies
+        Map<Id, Account> accounts = new Map<Id, Account>([SELECT ParentId, Location_Type__c, IATAcode__c, Name
+                FROM Account
+                WHERE Id IN :accountIds  OR Id IN :parentAccountIds
+                ORDER BY IATAcode__c]);
 
-        }
+        Map<Id, String> accountsInitialLocType = new Map<Id, String>();
+
+        //need to keep a backup of the data to know the original Location Type of the accounts
+        for (Account a : accounts.values())
+            accountsInitialLocType.put(a.Id, a.Location_Type__c);
 
         // for each relationship, I update parentid and location type on the accounts
-        for(AMS_Agencies_relationhip__c rel : rels){
-            system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> retrieve parent '+rel.Parent_Account__c+' and child '+rel.Child_Account__c);        	
-        	// whatever is the level of the relationship I update parentid and location type of the child
-    		accounts.get(rel.Child_Account__c).ParentId = rel.Parent_Account__c;
-    		// location type is not changed for SA
-    		if(accounts.get(rel.Child_Account__c).Location_Type__c == 'HO')
-    			accounts.get(rel.Child_Account__c).Location_Type__c = 'BR';
-        }
-        
+        for (AMS_Agencies_relationhip__c rel : rels) {
+            system.debug('setStandardHierarchyRelationship() --> retrieve parent ' + rel.Parent_Account__c + ' and child ' + rel.Child_Account__c);
+    
+            // whatever is the level of the relationship I update parentid and location type of the child
+            accounts.get(rel.Child_Account__c).ParentId = rel.Parent_Account__c;
 
+            //the following logic is not to be applied when a change of location is being performed on an SA
+            if(AMS_OSCARTriggerHandler.keepSALocationTypeFlag == false){
+                //when an SA is switched with a BR or an HO we must update the location type
+                //also when an SA parent changes from BR to HO its Location type must change to BR
+                if (oldMap != null){
+                    //verify if there was an update on the relation. only in this situation the location type needs to be updated
+                    //SA is parent meaning that it was switched with a BR or HO
+                    if (accountsInitialLocType.get(rel.Parent_Account__c) == AMS_Utils.SA ) {
 
-
-
-        List<Account> accsToUpdate = new List<Account>();
-        
-        for(Account acc : accounts.values()){
-        	if(acc.ParentId == null){
-        		accsToUpdate.add(acc);
-                system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> account '+acc.Name+' with id '+acc.id+ ', parent id = '+acc.ParentId+' and location type = '+acc.Location_Type__c);
-        	}
-        }
-        system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> FIRST UPDATE');
-        update accsToUpdate;
-        accsToUpdate = new List<Account>();
-        
-        for(Account acc : accounts.values()){
-        	if(acc.ParentId != null){
-        		accsToUpdate.add(acc);
-                system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> account '+acc.Name+' with id '+acc.id+ ', parent id = '+acc.ParentId+' and location type = '+acc.Location_Type__c);
-        	}
-        }
-
-        system.debug(LoggingLevel.ERROR,'setStandardHierarchyRelationship() --> SECOND UPDATE');
-        update accsToUpdate;
-        
-        
-        
-        /*checks all the relationships (in the trigger context) parent accounts and sets them as the parent Account
-	    * of the repsective child Account on the relationship
-	    */
-        /*
-        //jfo 16/10/15 hotfix to set ChildAgency;Account.Parent to ParentAgency;Account
-        Map<String, String> parentChildrenMap = new map<String, String>();
-        for (AMS_Agencies_relationhip__c r : rels) {
-            if (mainHierarchies.get(r.Hierarchy__c) != null)
-                parentChildrenMap.put(r.Parent_Account__c, r.Child_Account__c);
-        }
-        if (parentChildrenMap.size() > 0) {
-            Map<Id, Account> parentAgencies = new Map<Id, Account>([select Id, ParentId from Account where Id in :parentChildrenMap.keySet()]);
-            Map<Id, Account> childAgencies = new Map<Id, Account>([select Id, ParentId from Account where Id in :parentChildrenMap.values()]);
-            List<Account> accounts2update = new List<Account>();
-            for (String parentAgencyId : parentChildrenMap.keySet()) {
-                Account parentAccount =  parentAgencies.get(parentAgencyId);
-                Account childAccount =  childAgencies.get(parentChildrenMap.get(parentAgencyId));
-                //jfo 2016-02-01 bug fix when no account
-                //dng 2016-04-12 added another verification. If it's already set the parentId, do not update child Account again.
-                if (childAccount != null && parentAccount != null && childAccount.parentId != parentAccount.Id) {
-                    childAccount.parentId = parentAccount.Id;
-                    accounts2update.add(childAccount);
+                        String newParentOldLocType = accountsInitialLocType.get(rel.Parent_Account__c);
+                        if (rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c && rel.Child_Account__c != oldMap.get(rel.Id).Child_Account__c) {
+                            System.debug('Parent SA Location type Change to : ' + accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c));
+                            accounts.get(rel.Parent_Account__c).Location_Type__c = accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c);
+                            System.debug('Child Location type Change to : ' + newParentOldLocType);
+                            accounts.get(rel.Child_Account__c).Location_Type__c = newParentOldLocType;
+                        }
+                    }
+                    //parent of relation changed, the child remains the same and its location type is SA.
+                    //This means the SA was reparented from a BR to an HO, so we need to change the location type from SA to BR
+                    else if (accountsInitialLocType.get(rel.Child_Account__c) == AMS_Utils.SA) {
+                        if (rel.Child_Account__c == oldMap.get(rel.Id).Child_Account__c && rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c)
+                            accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
+                    }
                 }
             }
-            if (accounts2update.size() > 0)
-                update accounts2update ;
-        }*/
+
+
+            if (accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO && (accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.BR || accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.HO))
+                accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
+            
+        }
+
+        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look for accountIds ' + accountIds);
+        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> look for parentAccountIds ' + parentAccountIds);
+
+        //set HO accounts parentID and Location type
+        for (Account a : accounts.values()) {
+            if (parentAccountIds.contains(a.Id)) {
+                a.ParentId = null;
+                a.Location_Type__c = 'HO';
+                system.debug('setStandardHierarchyRelationship() --> update parent account ' + a.Name + ' with Parentid = ' + a.ParentId + ', Location type = ' + a.Location_Type__c);
+            }
+            system.debug('setStandardHierarchyRelationship() --> found account ' + a.Name + ' with id ' + a.id + ' and location type = ' + a.Location_Type__c);
+
+        }
+
+        List<Account> accsToUpdate = new List<Account>();
+
+        for (Account acc : accounts.values()) {
+            if (acc.ParentId == null) {
+                accsToUpdate.add(acc);
+                system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and location type = ' + acc.Location_Type__c);
+            }
+        }
+        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
+        update accsToUpdate;
+        accsToUpdate = new List<Account>();
+
+        for (Account acc : accounts.values()) {
+            if (acc.ParentId != null) {
+                accsToUpdate.add(acc);
+                system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and location type = ' + acc.Location_Type__c);
+            }
+        }
+
+        system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> SECOND UPDATE');
+        update accsToUpdate;
+
     }
-
-
-
 
     /*updates the CASS Number on branch based on the number of BR in the hierarchy
     * if no BR exists in the hierarchy CASS Num of the BR will be 002 otherwise CASS Num will be
@@ -185,30 +185,30 @@ public class AMS_AgencyRelationshipTriggerHandler {
         Set<Id> hierarchyIds = new Set<Id>();
 
         //Get all hierarchies that will contain the relationships being inserted
-        for(AMS_Agencies_relationhip__c r: rels)
-            if(!hierarchyIds.contains(r.Hierarchy__c))
+        for (AMS_Agencies_relationhip__c r : rels)
+            if (!hierarchyIds.contains(r.Hierarchy__c))
                 hierarchyIds.add(r.Hierarchy__c);
-        
+
         //Get all the relations in the hierarchies
         List<AMS_Agencies_relationhip__c> relationsInHierarchy = [select Id, Child_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c where Hierarchy__c in :hierarchyIds];
 
         //list to save all child accounts from all the hierarchies in the context
         List<Id> allChildAccountsInHierarchies = new List<Id>();
-            
-        for(AMS_Agencies_relationhip__c r: relationsInHierarchy)
+
+        for (AMS_Agencies_relationhip__c r : relationsInHierarchy)
             allChildAccountsInHierarchies.add(r.Child_Account__c);
 
         Map<Id, Account> accounts = new Map<Id, Account>([select Id, CASS_Number__c, Sector__c from Account where Id in :allChildAccountsInHierarchies]);
 
         //Build mapping between hierarchy and the available CASS Numbers for it
-        for(Id hId: hierarchyIds){
+        for (Id hId : hierarchyIds) {
 
             List<Account> childAccountsInHierarchy = new List<Account>();
 
-            if(hierarchyAvailableCass.get(hId)==null){
+            if (hierarchyAvailableCass.get(hId) == null) {
                 //get all the child accounts for this hierarchy
-                for(AMS_Agencies_relationhip__c r: relationsInHierarchy)
-                    if(r.Hierarchy__c == hId){
+                for (AMS_Agencies_relationhip__c r : relationsInHierarchy)
+                    if (r.Hierarchy__c == hId) {
                         Account acc = accounts.get(r.Child_Account__c);
                         childAccountsInHierarchy.add(acc);
                     }
@@ -218,36 +218,36 @@ public class AMS_AgencyRelationshipTriggerHandler {
                 availableCassOrdered.sort();
 
                 hierarchyAvailableCass.put(hId, availableCassOrdered);
-                
+
             }
         }
 
         List<Account> accToUpdate = new List<Account>();
         //add Cass Number to the child accounts of the relationships being inserted
-        for(AMS_Agencies_relationhip__c r: rels){
-            
+        for (AMS_Agencies_relationhip__c r : rels) {
+
             Account acc = accounts.get(r.Child_Account__c);
             if (acc.Sector__c == 'Cargo Agent' && acc.CASS_Number__c == null) {
                 List<Integer> cassNumbersAvailable = hierarchyAvailableCass.get(r.Hierarchy__c);
 
                 //if no CASS Numbers are available the CASS will be left empty!!
-                if(cassNumbersAvailable.size()>0 && aux.get(r.Hierarchy__c)!=-1){
+                if (cassNumbersAvailable.size() > 0 && aux.get(r.Hierarchy__c) != -1) {
 
                     //find the position in the List of available CASS that should be used
-                    if(aux.get(r.Hierarchy__c) == null)
+                    if (aux.get(r.Hierarchy__c) == null)
                         aux.put(r.Hierarchy__c, 0);
 
                     Integer cassNumberPos = aux.get(r.Hierarchy__c);
 
                     acc.CASS_Number__c = AMS_AgencyHelper.resizeNumericString('' + cassNumbersAvailable.get(cassNumberPos), 3);
-                    
-                    if(cassNumberPos+1 < cassNumbersAvailable.size())
+
+                    if (cassNumberPos + 1 < cassNumbersAvailable.size())
                         cassNumberPos++;
                     else
-                        cassNumberPos=-1;
+                        cassNumberPos = -1;
 
                     aux.put(r.Hierarchy__c, cassNumberPos);
-                    
+
                     accToUpdate.add(acc);
                 }
             }
@@ -261,7 +261,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
     public static Set<Integer> getAvailableCassNumbers(List<Account> accounts) {
         Set<Integer> availableCASS = new Set<Integer>();
 
-        for(Integer i = 1; i<1000; i++)
+        for (Integer i = 1; i < 1000; i++)
             availableCASS.add(i);
 
         for (Account acc : accounts)
@@ -272,26 +272,26 @@ public class AMS_AgencyRelationshipTriggerHandler {
     }
 
 
-    public static void setAccountsWithoutHierarchyToHO(Set<Id> accountIds){
-        system.debug('setAccountsWithoutHierarchyToHO() --> accountIds = '+accountIds);
+    public static void setAccountsWithoutHierarchyToHO(Set<Id> accountIds) {
+        system.debug('setAccountsWithoutHierarchyToHO() --> accountIds = ' + accountIds);
         Map<Id, List<AMS_Agencies_relationhip__c>>  hierarchies = AMS_HierarchyHelper.getAccountsHierarchies(accountIds);
         Set<Id> accountToSetAsHO = new Set<Id>();
-        for(Id accountId : hierarchies.keySet()){
-            if(hierarchies.get(accountId)==null || hierarchies.get(accountId).size()==0)
+        for (Id accountId : hierarchies.keySet()) {
+            if (hierarchies.get(accountId) == null || hierarchies.get(accountId).size() == 0)
                 accountToSetAsHO.add(accountId);
         }
 
-        system.debug('setAccountsWithoutHierarchyToHO() --> accountToSetAsHO = '+accountToSetAsHO);
+        system.debug('setAccountsWithoutHierarchyToHO() --> accountToSetAsHO = ' + accountToSetAsHO);
 
-        if(accountToSetAsHO.size() > 0){
+        if (accountToSetAsHO.size() > 0) {
             List<Account> newHOs = [SELECT ParentId, Location_Type__c FROM Account WHERE Id IN :accountToSetAsHO];
-            for(Account a : newHOs){
+            for (Account a : newHOs) {
                 a.ParentId = null;
                 a.Location_Type__c = AMS_Utils.HO;
             }
 
-            system.debug('setAccountsWithoutHierarchyToHO() --> newHOs = '+newHOs);
-            if(newHOs.size()>0)
+            system.debug('setAccountsWithoutHierarchyToHO() --> newHOs = ' + newHOs);
+            if (newHOs.size() > 0)
                 update newHOs;
         }
     }

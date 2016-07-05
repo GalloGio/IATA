@@ -24,25 +24,25 @@ public class AMS_AccountTriggerHandler {
     public static Integer runningVCU = 0;
 
     public static void handleBeforeInsert(List<Account> accs){
-		Set<String> disallowedSources = new Set<String>();
-    	disallowedSources.add('AIMS1');
-    	disallowedSources.add('AIMS2');
-    	disallowedSources.add('AIMS3');
-    	disallowedSources.add('WebStar');
-    	disallowedSources.add('DataLoader');
+        Set<String> disallowedSources = new Set<String>();
+        disallowedSources.add('AIMS1');
+        disallowedSources.add('AIMS2');
+        disallowedSources.add('AIMS3');
+        disallowedSources.add('WebStar');
+        disallowedSources.add('DataLoader');
         for(Account ag : accs){
-			if(!disallowedSources.contains(ag.Source_System__c))
-        	{
-				if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_PASSENGER){
+            if(!disallowedSources.contains(ag.Source_System__c))
+            {
+                if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
+                
+                    setCassNumberOnHO(ag);
 
-					setCassNumberOnHO(ag);
-
-					if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
-						ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
-					}
-				}
-				prepopulateAbbreviatedFields(ag, null);
-			}
+                    if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
+                        ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+                    }
+                }
+                prepopulateAbbreviatedFields(ag, null);
+            }
         }
     }
 
@@ -70,12 +70,12 @@ public class AMS_AccountTriggerHandler {
         //resizeNumericString
         for(Account  ag: accs){
             if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
-
+                
                 if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
                     ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
                 }
             }
-            prepopulateAbbreviatedFields(ag, oldMap.get(ag.id));
+            prepopulateAbbreviatedFields(ag, oldMap.get(ag.id));            
         }
 
        System.debug('Start CASS verification');
@@ -90,11 +90,11 @@ public class AMS_AccountTriggerHandler {
             System.debug('Not Handling minor changes');
        }
 
-		/**** DTULLO TO BE DECOMMENTED AFTER RELEASE 3.1
+
        System.debug('Start Check for irregularity thresold');
-       checkIrregularityThresold(accs, oldMap);
+       //checkIrregularityThresold(accs, oldMap);
        System.debug('End Check for irregularity thresold');
-		**********/
+
 
     }
 
@@ -116,11 +116,11 @@ public class AMS_AccountTriggerHandler {
 
         for(Account ag:accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent')
-			{
-				if(verifyFieldChanges(ag, oldMap.get(ag.Id)))    
-            	{
-                	agencies.add(ag);
-            	}
+            {
+                if(verifyFieldChanges(ag, oldMap.get(ag.Id)))    
+                {
+                    agencies.add(ag);
+                }
                 //consider agency with iata code with NEW primary Address  OR agencies with Address with new iata code
                 if((ag.IATA_ISO_Country__c!= oldMap.get(ag.Id).IATA_ISO_Country__c && ag.IATACode__c!=null) || (ag.IATA_ISO_Country__c!=null && ag.IATACode__c!=null && oldMap.get(ag.Id).IATACode__c != ag.IATACode__c)){
                     system.debug('[AMS_AgencyTrigger] updated Primary Address for Agency '+ag.Id);
@@ -381,7 +381,7 @@ public class AMS_AccountTriggerHandler {
 
     }
 
-	/********* DTULLO TO BE DECOMMENTED AFTER RELEASE 3.1
+
     private static void checkIrregularityThresold(List<Account> accs, Map<Id,Account> oldMap) {
         List<Account> updatedAcc = new List<Account>();
         Set<ID> isoCountries = new Set<ID>();
@@ -427,10 +427,10 @@ public class AMS_AccountTriggerHandler {
 
             if(threshold != null && a.Count_Accumulated_Irregularities__c >= threshold) a.Send_Irregularity_Email__c = true;
         }
-    }***********/
-	
-	
-	public static void prepopulateAbbreviatedFields(Account a, Account olda){
+    }
+    
+    
+    public static void prepopulateAbbreviatedFields(Account a, Account olda){
         Integer length = 0;
         if(a.Sector__c == AMS_Utils.SECTOR_CARGO)    length = 60;
         else if(a.Sector__c == AMS_Utils.SECTOR_PASSENGER)   length = 30;
@@ -449,44 +449,44 @@ public class AMS_AccountTriggerHandler {
         }
         
     }
-	
-	/** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
-     *	1) Status__c changes => Create a new record
+    
+    /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
+     *  1) Status__c changes => Create a new record
      *  2) Status__c DOES NOT change && another field value changes => Create a new record
      *  3) All fields remain the same => No records are created
      *     Scenario no. 3 sounds stupid, but it can happen, because Dataloader pushes data into Accounts, causing the triggers to run, and this class
-     *	   previously was always firing AMS_AgencyUpdateHelper.agencyUpdate(agencies). The result was unintentional records to getting created.
+     *     previously was always firing AMS_AgencyUpdateHelper.agencyUpdate(agencies). The result was unintentional records to getting created.
      */
     public static boolean verifyFieldChanges(Account newRecord, Account oldRecord)
-	{
-		Set<String> ignoredFields = new Set<String>{'LastModifiedById', 'LastModifiedDate', 'SystemModstamp'};
-		Map <String, Schema.SObjectField> AccountFieldsMap = schema.SObjectType.Account.fields.getMap();
-	    List <Schema.SObjectField> accountFields = accountFieldsMap.values();
-	    List <String> accountAPIFieldNames = new List<String>();
-	    for (Schema.SObjectField field : accountFields)
-	    {
-	        accountAPIFieldNames.add(field.getDescribe().getName());
-	    }
-	    
-	    boolean valueChanged = false;
-
-		for(String field : accountAPIFieldNames)
+    {
+        Set<String> ignoredFields = new Set<String>{'LastModifiedById', 'LastModifiedDate', 'SystemModstamp'};
+        Map <String, Schema.SObjectField> AccountFieldsMap = schema.SObjectType.Account.fields.getMap();
+        List <Schema.SObjectField> accountFields = accountFieldsMap.values();
+        List <String> accountAPIFieldNames = new List<String>();
+        for (Schema.SObjectField field : accountFields)
         {
-			System.debug('*************** field: '+field);
-			
-        	if(!ignoredFields.contains(field))
-        	{
-	        	if(newRecord.get(field) != oldRecord.get(field))
-	            {
-					System.debug('*************** field that CHANGED: '+field);
-	            	valueChanged = true;
-	            }
-        	}
+            accountAPIFieldNames.add(field.getDescribe().getName());
+        }
+        
+        boolean valueChanged = false;
+
+        for(String field : accountAPIFieldNames)
+        {
+            System.debug('*************** field: '+field);
+            
+            if(!ignoredFields.contains(field))
+            {
+                if(newRecord.get(field) != oldRecord.get(field))
+                {
+                    System.debug('*************** field that CHANGED: '+field);
+                    valueChanged = true;
+                }
+            }
         }
         if(valueChanged)
-		{
-			return true;
-		}
+        {
+            return true;
+        }
         return false;
-	}
+    }
 }

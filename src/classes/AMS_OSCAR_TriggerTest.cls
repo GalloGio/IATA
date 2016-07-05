@@ -2,7 +2,7 @@
 private class AMS_OSCAR_TriggerTest {
     
     @testSetup static void setup(){
-		AMS_OSCAR_TestDataFactory.createOSCARtestData();
+		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
     }
 
     @isTest static void insertOSCARTest() {
@@ -12,7 +12,7 @@ private class AMS_OSCAR_TriggerTest {
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         System.assertEquals(oscar.STEP1__c,'Not Started');
         System.assertEquals(oscar.STEP10__c,'Passed');
@@ -55,7 +55,7 @@ private class AMS_OSCAR_TriggerTest {
         insert accs;MACREVIEW *//**/
                 
         AMS_Oscar__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
 
         oscar.STEP6__c = 'Passed';
@@ -74,7 +74,7 @@ private class AMS_OSCAR_TriggerTest {
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Documentation_Compliant__c,Proof_of_payment_received__c,
                  Assessment_Performed_Date__c,Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_deadline__c,
                  Local_Inspection_received__c,Local_Inspection_compliant__c, Issue_credit_note_if_applicable__c
-                 from AMS_OSCAR__c ];
+                 from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         
         // JH: Where is this Documentation_Compliant__c field supposed to get filled in? Code search doesn't produce any results.
@@ -100,7 +100,7 @@ private class AMS_OSCAR_TriggerTest {
         
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Fees_refund_requested__c,
-                 Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_deadline__c from AMS_OSCAR__c ];
+                 Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_deadline__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         System.assertEquals(Date.today(), oscar.Financial_Assessment_requested__c);
         System.assertEquals(Date.today()+5, oscar.Financial_Assessment_deadline__c);
@@ -112,7 +112,7 @@ private class AMS_OSCAR_TriggerTest {
         update oscar;
         
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         oscar.STEP13__c = 'Failed';
         oscar.STEP11__c = 'Failed';
@@ -129,7 +129,7 @@ private class AMS_OSCAR_TriggerTest {
         Test.startTest();
         
         AMS_Oscar__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId, Issue_credit_note_if_applicable__c from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId, Issue_credit_note_if_applicable__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP1__c = 'Passed';
         oscar.STEP2__c = 'Passed';
@@ -145,7 +145,7 @@ private class AMS_OSCAR_TriggerTest {
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Documentation_Compliant__c,Proof_of_payment_received__c,
                  Assessment_Performed_Date__c,Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_deadline__c,
                  Local_Inspection_received__c,Local_Inspection_compliant__c
-                 from AMS_OSCAR__c ];
+                 from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         System.assertEquals('Passed',oscar.STEP1__c);
                 
@@ -159,7 +159,7 @@ private class AMS_OSCAR_TriggerTest {
         
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Fees_refund_requested__c,
-                 Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_deadline__c from AMS_OSCAR__c ];
+                 Financial_Assessment_requested__c,Financial_Assessment_deadline__c,Bank_Guarantee_deadline__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         System.assertEquals(Date.today(), oscar.Financial_Assessment_requested__c);
         System.assertEquals(Date.today()+5, oscar.Financial_Assessment_deadline__c);
@@ -172,7 +172,7 @@ private class AMS_OSCAR_TriggerTest {
         Test.stopTest();
         
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         oscar.STEP13__c = 'Failed';
         oscar.STEP11__c = 'Failed';
@@ -187,7 +187,7 @@ private class AMS_OSCAR_TriggerTest {
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP1__c = 'Passed';
         oscar.STEP2__c = 'Passed';
@@ -197,7 +197,7 @@ private class AMS_OSCAR_TriggerTest {
         update oscar;
 
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         System.assertEquals(oscar.STEP1__c,'Passed');
         
@@ -218,7 +218,7 @@ private class AMS_OSCAR_TriggerTest {
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP5__c = 'Passed';
         oscar.STEP6__c = 'Passed';
@@ -234,7 +234,7 @@ private class AMS_OSCAR_TriggerTest {
         update oscar;
 
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         System.assertEquals(oscar.STEP5__c,'Passed');
         
@@ -245,14 +245,14 @@ private class AMS_OSCAR_TriggerTest {
         update oscar;
         
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         oscar.STEP13__c = 'Not Applicable';
         
         update oscar;
         
         oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         oscar.STEP13__c = 'Failed';
         oscar.STEP11__c = 'Failed';
@@ -281,7 +281,7 @@ private class AMS_OSCAR_TriggerTest {
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Anti_Money_Laundering_Complete__c from AMS_OSCAR__c ];
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,Anti_Money_Laundering_Complete__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
         
         //AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded AMS_Step7 = new AMS_OSCAR_Automation.AMS_OSCAR_Step7_succeeded();
         //AMS_Step7.processWork(null,oscar);
@@ -302,7 +302,7 @@ private class AMS_OSCAR_TriggerTest {
 		update a;
 		Contact c = [select id from Contact where AccountId = :a.Id];
 		
-        AMS_OSCAR__c oscar = [SELECT id, Status__c, OwnerId, (SELECT Id FROM Cases__r) from AMS_OSCAR__c ];
+        AMS_OSCAR__c oscar = [SELECT id, Status__c, OwnerId, (SELECT Id FROM Cases__r) from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
 
         try{
@@ -557,34 +557,34 @@ private class AMS_OSCAR_TriggerTest {
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
-        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
-
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
-        oscar.recordTypeID = newRT;
-        oscar.STEP2__c = 'Not Started';
 
-        update oscar;
+        for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 2])
+        {
 
-        oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
-            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c ];
+            oscarT.recordTypeID = newRT;
+            oscarT.STEP2__c = 'Not Started';
 
-        oscar.RPM_Approval__c = 'Authorize Approval';
-        update oscar;
+            update oscarT;
 
-        oscar = [SELECT id, STEP2__c from AMS_OSCAR__c ];
+            oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+            update oscarT;
 
-        System.assertEquals('Passed',oscar.STEP2__c);
-        //TODO ASSERT: assert change code fin created
+            oscarT = [SELECT id, STEP2__c from AMS_OSCAR__c where id = :oscarT.id];
 
-        oscar.RPM_Approval__c = 'Authorize Disapproval';
-        update oscar;
+            System.assertEquals(AMS_Utils.PASSED,oscarT.STEP2__c);
+            //TODO ASSERT: assert change code fin created
 
-        oscar = [SELECT id, STEP2__c from AMS_OSCAR__c ];
+            oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
+            update oscarT;
 
-        System.assertEquals('Failed',oscar.STEP2__c);
-        //TODO ASSERT: assert change code dis created
+            oscarT = [SELECT id, STEP2__c from AMS_OSCAR__c where id = :oscarT.id];
+
+            System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
+            //TODO ASSERT: assert change code dis created
+        }
 
         Test.stopTest();
 
@@ -601,7 +601,7 @@ private class AMS_OSCAR_TriggerTest {
             Issue_disapproval_pack__c,Issue_credit_note_if_applicable__c,Release_FS_if_applicable__c,Issue_Withdrawal_notification__c,
             Issue_credit_note_withdrawal__c,Release_FS_withdrawal__c,Send_FS_request__c,Bank_Guarantee_amount__c,Update_IRIS_processing__c,
             Confirm_DD_setup_with_R_S__c,Confirm_DD_setup_with_agent__c,Confirm_DGR_DGA__c,Issue_rejection_notification_pack__c,
-            Issue_billing_document__c,RPM_Approval__c from AMS_OSCAR__c ];
+            Issue_billing_document__c,RPM_Approval__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
@@ -642,7 +642,7 @@ private class AMS_OSCAR_TriggerTest {
             Issue_disapproval_pack__c,Issue_credit_note_if_applicable__c,Release_FS_if_applicable__c,Issue_Withdrawal_notification__c,
             Issue_credit_note_withdrawal__c,Release_FS_withdrawal__c,Send_FS_request__c,Bank_Guarantee_amount__c,Update_IRIS_processing__c,
             Confirm_DD_setup_with_R_S__c,Confirm_DD_setup_with_agent__c,Confirm_DGR_DGA__c,Issue_rejection_notification_pack__c,
-            Issue_billing_document__c,RPM_Approval__c, Validation_Status__c from AMS_OSCAR__c ];
+            Issue_billing_document__c,RPM_Approval__c, Validation_Status__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         //TODO ASSERT: do some asserts
 
@@ -671,7 +671,7 @@ private class AMS_OSCAR_TriggerTest {
 
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
-        AMS_OSCAR__c oscar = [SELECT id, Status__c,OwnerId from AMS_OSCAR__c ];
+        AMS_OSCAR__c oscar = [SELECT id, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 

@@ -4535,6 +4535,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>GSSA Cargo</fullName>
                 <default>false</default>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
@@ -4895,7 +4896,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>Count_Accumulated_Irregularities__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(SUM_W_Irregularities__c - SUM_A_Irregularities__c &lt; 0, 0, SUM_W_Irregularities__c - SUM_A_Irregularities__c)</formula>
+        <formula>IF(SUM_A_Irregularities__c - SUM_W_Irregularities__c &lt; 0, 0, SUM_A_Irregularities__c - SUM_W_Irregularities__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Accumulated Irregularities</label>
         <precision>18</precision>
@@ -9170,6 +9171,14 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
+	<fields>
+        <fullName>Purge_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Purge Flag</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
@@ -9523,6 +9532,14 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Send_Irregularity_Email__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send Irregularity Email</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Sent_to_External_System__c</fullName>
@@ -61517,6 +61534,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Hotel</fullName>
                 <default>false</default>
             </values>
@@ -63848,6 +63869,13 @@ CONTAINS(Name,&quot;Ltd&quot;),
 CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorDisplayField>Name</errorDisplayField>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
+        <active>true</active>
+        <description>BR and SA Standard Account Parent Id must be filled.</description>
+        <errorConditionFormula>AND($RecordType.Name=&quot;Standard Account&quot;, OR(ISPICKVAL(Sector__c,&apos;Cargo Agent&apos;),ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)), ISBLANK(ParentId), OR(ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISPICKVAL(Location_Type__c,&apos;SA&apos;)))</errorConditionFormula>
+        <errorMessage>Standard Accounts of type BR and SA must have Parent Id filled for Travel and Cargo Agents.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Billing_Address</fullName>

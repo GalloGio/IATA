@@ -29,6 +29,10 @@ private class AMS_RecordCreatorWebserviceTest {
 		acct.IN_A_AIRPORT__C = false;
 		acct.REASON_FOR_CREATION__C = 'Created by customer';
 
+		insert acct;
+
+		System.debug('First Account created is ' + acct.Id);
+
 		Account acct2 = new Account();
 
 		acct2.NAME = 'Lions Travel 9';
@@ -51,8 +55,11 @@ private class AMS_RecordCreatorWebserviceTest {
 		acct2.REASON_FOR_CREATION__C = 'Created by customer';
 		acct2.ParentId = acct.Id;
 
-		List<Account> accts = new List<Account>{acct,acct2};
-		insert accts;
+		insert acct2;
+
+
+		//List<Account> accts = new List<Account>{acct,acct2};
+		//insert accts;
 
 		System.debug('Accounts created');
 
@@ -69,9 +76,9 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
-		Case oscarCase = new Case(RecordTypeId = rtCommCase, AccountId = acct.Id, ContactId = co1.Id);
+		Case oscarCase = new Case(RecordTypeId = rtCommCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
 
-		Case oscarCase2 = new Case(RecordTypeId = rtCommCase, AccountId = acct2.Id, Account_Concerned__c = acct.Id, ContactId = co2.Id);
+		Case oscarCase2 = new Case(RecordTypeId = rtCommCase, AccountId = acct2.Id, Account_Concerned__c = acct2.Id, ContactId = co2.Id);
 
 		List<Case> cases = new List<Case>{oscarCase,oscarCase2};
 		insert cases;
@@ -83,6 +90,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase2.id);
         
         List<AMS_Pax_Accreditation_Form__c> acredts = new List<AMS_Pax_Accreditation_Form__c>{accre,accre2};
+
 		insert acredts;
 
 		System.debug('Accreditations created');
@@ -169,7 +177,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.debug('Got second account with id:' + acct2.Id + ' and with name:' + acct2.Name + ' and parent Id:' + acct2.ParentId);
 
-		Case caseCom2 = [SELECT Id from Case where AccountId = :acct2.Id];
+		Case caseCom2 = [SELECT Id, Account_Concerned__c from Case where AccountId = :acct2.Id];
 
 		AMS_Pax_Accreditation_Form__c accr2 = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom2.Id];
 
