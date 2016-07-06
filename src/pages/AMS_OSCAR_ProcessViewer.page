@@ -46,104 +46,104 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
             var fieldsApiName = [];
             var fieldValues = [];
             
-			var addedApiName;
-			var addedApiValue;
-			
+            var addedApiName;
+            var addedApiValue;
+            
             var elem;
             for (i = 0; i < inputDivs.length; i++) {
             
                 elem = inputDivs[i];
                 
                 if (elem.id) {
-					
+                    
                     var inputElem = elem.querySelectorAll(".inputElem");
-					
-					if (inputElem != null && inputElem.length > 0) {
-						
-						fieldsApiName.push(elem.id);
-						
-						addedApiName = true;
-						addedApiValue = false;
-						
-						if (inputElem[0] != null) {
-										
-		                    // support for multiselect picklist
-		                    if (inputElem[0].getAttribute("multiple") != null) {
-		                    
-		                        var ielem;
-		                        
-		                        for (j = 0; j < inputElem.length; j++) {
-		                        
-		                            ielem = inputElem[j];
-		                            
-		                            if (ielem.firstElementChild != null) {
-		                            
-		                                if (ielem.firstElementChild.getAttribute("label") == "Chosen") {
-		                                   
-		                                    var options = ielem.getElementsByTagName("OPTION");
-		                                    var parsedOptions = ' ';
-		                                    
-		                                    for (k = 0; k < options.length; k++) {
-		                                        
-		                                        parsedOptions = parsedOptions.concat(options[k].innerHTML+";");
-		                                    }
-		                                    
-											if (parsedOptions != null) {
-		                                    
-												fieldValues.push(parsedOptions);
-												addedApiValue = true;
-											} else {
-												
-												fieldsApiName.pop();
-											}
-		                                }
-		                            }
-		                        }
-	                        // checkbox
-		                    } else if (inputElem[0].getAttribute("type") == "checkbox") {
-								
-		                        fieldValues.push((inputElem[0].checked).toString());
-								addedApiValue = true;
-	                        // other
-		                    } else {
-		                    	
-		                    	if (inputElem[0].value != null) {
-		                    		
-		                    		fieldValues.push(inputElem[0].value);
-									addedApiValue = true;
-		                    	} else {
-		                    		
-		                    		fieldsApiName.pop();
-		                    	}
-		                    }
-                    	} else {
+                    
+                    if (inputElem != null && inputElem.length > 0) {
+                        
+                        fieldsApiName.push(elem.id);
+                        
+                        addedApiName = true;
+                        addedApiValue = false;
+                        
+                        if (inputElem[0] != null) {
+                                        
+                            // support for multiselect picklist
+                            if (inputElem[0].getAttribute("multiple") != null) {
+                            
+                                var ielem;
+                                
+                                for (j = 0; j < inputElem.length; j++) {
+                                
+                                    ielem = inputElem[j];
+                                    
+                                    if (ielem.firstElementChild != null) {
+                                    
+                                        if (ielem.firstElementChild.getAttribute("label") == "Chosen") {
+                                           
+                                            var options = ielem.getElementsByTagName("OPTION");
+                                            var parsedOptions = ' ';
+                                            
+                                            for (k = 0; k < options.length; k++) {
+                                                
+                                                parsedOptions = parsedOptions.concat(options[k].innerHTML+";");
+                                            }
+                                            
+                                            if (parsedOptions != null) {
+                                            
+                                                fieldValues.push(parsedOptions);
+                                                addedApiValue = true;
+                                            } else {
+                                                
+                                                fieldsApiName.pop();
+                                            }
+                                        }
+                                    }
+                                }
+                            // checkbox
+                            } else if (inputElem[0].getAttribute("type") == "checkbox") {
+                                
+                                fieldValues.push((inputElem[0].checked).toString());
+                                addedApiValue = true;
+                            // other
+                            } else {
+                                
+                                if (inputElem[0].value != null) {
+                                    
+                                    fieldValues.push(inputElem[0].value);
+                                    addedApiValue = true;
+                                } else {
+                                    
+                                    fieldsApiName.pop();
+                                }
+                            }
+                        } else {
 
-                    		fieldsApiName.pop();
-                    	}
-						
-						if (addedApiName != addedApiValue) {
-							
-							fieldsApiName.pop();
-						}
+                            fieldsApiName.pop();
+                        }
+                        
+                        if (addedApiName != addedApiValue) {
+                            
+                            fieldsApiName.pop();
+                        }
                     }
                 }
             }
 
             if (fieldsApiName.length > 0) {
-				
-				var fieldValueToServer = []; 
-				
-				// Prevent list with empty value (exception in connection.js)
-				for (i = 0; i < fieldValues.length; i++) {
-				
-					if (fieldValues[i] == "") {
-		                    		
-						fieldValueToServer.push(" ");
-					} else {
-						
-						fieldValueToServer.push(fieldValues[i]);
-					}
-				}
+                
+                var fieldValueToServer = []; 
+                
+                // Prevent list with empty value (exception in connection.js)
+                for (i = 0; i < fieldValues.length; i++) {
+                
+                    if (fieldValues[i] == "") {
+                                    
+                        fieldValueToServer.push(" ");
+                    } else {
+                        
+                        fieldValueToServer.push(fieldValues[i]);
+                    }
+                }
 
                 sforce.connection.header = null;
                 var result = "" + sforce.apex.execute("AMS_OSCAR_Webservice","updateFormFields", 
@@ -276,11 +276,6 @@ body.loading .modal {
     display: block;
 }
 
-.warning{
-   color: #ff3300;
-
-}
-
 </style>
 <script>
 function buildFunctionCall(func, argList){
@@ -409,16 +404,9 @@ function buildFunctionCall(func, argList){
                     </apex:repeat>
                 </apex:pageBlockSection>
             </apex:repeat>
-    	</apex:pageBlock>
+        </apex:pageBlock>
     </apex:outputPanel>
     
-    <apex:outputPanel rendered="{!IF( existOscarInsp ,false, true)}">
-         <apex:pageBlock >
-            <div class="warning">
-                <p><b>{!$Label.AMS_OSCAR_Warning_1}</b></p> 
-            </div>
-         </apex:pageBlock>
-    </apex:outputPanel>
     
     <apex:variable var="p" value="{!process[oscar.Process__c]}" />
     <apex:repeat value="{!p.flows}" var="flow">
@@ -439,15 +427,15 @@ function buildFunctionCall(func, argList){
                         <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, false, true)}"/>
                         
                         <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
-	                        <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
-	                            <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
-	                        </apex:selectList>
+                            <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                                <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
+                            </apex:selectList>
                         </apex:outputPanel>
                         
                         <apex:outputPanel rendered="{!NOT($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable)}">
-	                        <apex:selectList disabled="true" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
-	                            <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
-	                        </apex:selectList>
+                            <apex:selectList disabled="true" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                                <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
+                            </apex:selectList>
                         </apex:outputPanel>
                     </div>
                 </apex:repeat>
