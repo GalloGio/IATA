@@ -12741,6 +12741,29 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Scope_of_Change__c</picklist>
+            <values>
+                <fullName>Branch Abroad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - All Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - Selected Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Selected Branches Only</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Separate_user_access__c</picklist>
             <values>
                 <fullName>No</fullName>

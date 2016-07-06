@@ -6,8 +6,10 @@
 
     <script type="text/javascript">
         var eventHandler = function (result) {
-            if('{!oscarObj}' != null)
+            if('{!oscarObj}' != null){
                 rerenderDetailInfo();
+                rerenderwarningInspPanel();
+                }
         };
         sforce.console.onFocusedSubtab(eventHandler);
     </script>
@@ -153,12 +155,17 @@
 
     <br />
     <br />
-     
+ 
     <apex:form >
-
+    
+    <apex:outputPanel id="warningInspPanelContainer" >
+        <apex:outputPanel id="warningInspPanel" rendered="{!IF( ExistOscarInspections ,false, true)}">
+            <apex:pageMessages ></apex:pageMessages>
+       </apex:outputPanel>
+    </apex:outputPanel>
+     
         <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
 
-        <apex:pageMessages ></apex:pageMessages>
         
             <apex:pageBlockButtons location="both">
                 <apex:commandButton value="Save" action="{!save}" id="saveButton" style="display: none;"/>
@@ -296,7 +303,7 @@
                  
 
         </apex:pageBlock>
-
+        
         <script>
             (function ($) {
                     $("[id$='Branch_Office_Country']").dblclick(function() {
@@ -321,12 +328,13 @@
         </script>
     
     <apex:actionFunction name="rerenderDetailInfo" rerender="detailInfo" />
+    <apex:actionFunction name="rerenderwarningInspPanel" rerender="warningInspPanelContainer" />
 
     </apex:form>
     
     <hr/>
 
-    <apex:detail id = "detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
+    <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 
     <apex:pageBlock rendered="{!oscarObj == null}">
         <div class="overlay">

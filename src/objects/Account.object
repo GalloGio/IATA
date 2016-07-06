@@ -9171,7 +9171,7 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>Purge_Flag__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -9532,14 +9532,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Send_Irregularity_Email__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Send Irregularity Email</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Sent_to_External_System__c</fullName>

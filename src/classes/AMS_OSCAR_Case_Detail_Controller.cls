@@ -82,7 +82,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Out_of_deadline_SAAM__c,OSCAR_Deadline__c,Dossier_Reception_Date__c,OwnerId,
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c,
-                        Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
+                        Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.size() > 0){
             return OSCARs.get(0);
@@ -91,7 +91,20 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         return null;
 
     }
+     public Boolean getExistOscarInspections(){
+        Id oscarId=  this.oscarObj.Id;
+        if (AMS_Utils.oscarProcessesWithAppointments.contains(this.oscarObj.Process__c) 
+               && 
+            database.countQuery('select count() from AMS_Inspection__c where oscar__c = : oscarId') == 0 
+            ) 
+        {   
+            ApexPages.Message errMsg = new ApexPages.Message(ApexPages.Severity.WARNING, Label.AMS_OSCAR_Warning_1);
+            ApexPages.addMessage(errMsg);
+            return false;
+        }
+       return true;
 
+    }
 
     public void save(){
 
