@@ -59,7 +59,7 @@
 			<script>$('#canChangeTab').val('true')</script>
 
 			<apex:outputPanel id="accountInfoPanel">
-				<apex:form >
+				<apex:form id="mainform" >
 
 				<apex:pageBlock rendered="{!chosenAccount}" >
 					<h1><a href="/{!acc.Id}" target="_blank" style="font-size:1.5em;">{!acc.Name_on_AOC__c} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</a></h1><br/><br/>
@@ -105,9 +105,10 @@
 
 								<apex:outputField value="{!acc.MITA_One_way_Pass_Issuing_Airline__c}" />
 								<apex:outputField value="{!acc.MITA_One_way_Pass_Participating__c}" />
-
+<!--
 								<apex:commandButton value="Deactivate MITA member" onclick="return confirm('Are you sure? This will inactivate all MITA agreements for this Airline.');" action="{!deactivateMitaMember}" style="float:right;" />
-
+-->
+								<apex:commandButton value="Deactivate MITA member" action="{!showDeactivateMITAPanel}"  style="float:right;" rerender="mainform" status="Loading"/>
 							</apex:pageBlockSection>
 							<apex:pageBlockSection id="editAccountMITAInfo" rendered="{!editAccountMode}" title="Participant dates of MITA agreement">
 								<apex:inputField value="{!acc.MITA_Member__c}" styleclass="outMITAMember"/>
@@ -140,7 +141,8 @@
 								<apex:outputField value="{!acc.BIETA_One_way_Intermodal_Issuing_Airline__c}" />
 								<apex:outputField value="{!acc.BIETA_One_way_Intermodal_Participating__c}" />
 
-								<apex:commandButton value="Deactivate BIETA member" onclick="return confirm('Are you sure? This will inactivate all BIETA agreements for this Airline.');" action="{!deactivateBietaMember}" style="float:right;" />
+								<!--<apex:commandButton value="Deactivate BIETA member" onclick="return confirm('Are you sure? This will inactivate all BIETA agreements for this Airline.');" action="{!deactivateBietaMember}" style="float:right;" />-->
+								<apex:commandButton value="Deactivate BIETA member" action="{!showDeactivateBIETAPanel}"  style="float:right;" rerender="mainform" status="Loading"/>
 
 							</apex:pageBlockSection>
 							<apex:pageBlockSection id="editAccountBIETAInfo" rendered="{!editAccountMode}" title="Participant dates of BIETA agreement">
@@ -655,9 +657,33 @@
 
 					<br/><br/>
 
-
-
 				</apex:pageBlock>
+
+				<!-- 	Panel to deactivate agreements -->
+					<apex:outputPanel id="deactivateAgreementsPanel" layout="block" styleclass="editPopup" rendered="{!showDeactivateAgreementsPanel}" >
+						<div style="height:100%;width:100%;z-index:99; position:fixed;background:black;opacity:0.5; top:0; left:0;">
+						</div>
+						<div style="display: inline-block; z-index: 100; position: absolute; top: 15px; left: 40%; width: 400px;" >
+							<apex:pageBlock title="Are you sure?" mode="edit" tabStyle="Account" >
+
+								<apex:pageBlockButtons location="bottom" >
+									<apex:commandButton action="{!deactivateAgreements}" value="Deactivate" rerender="accountInfoPanel, MITAagreementInfoPanel, BIETAagreementInfoPanel, messages" status="Loading"/>
+									<apex:commandButton action="{!cancelDeactivation}" value="Close" rerender="accountInfoPanel, messages" status="Loading"/>
+								</apex:pageBlockButtons>
+
+								<apex:pageBlockSection columns="1" >
+									<apex:outputText value="This will inactivate all {!deactivateType} agreements for this Airline."/><br/>
+									<apex:outputText value="Select a cancellation effective date:"/>
+									<apex:pageBlockSectionItem >
+										<apex:outputLabel value=""/>
+										<apex:inputField value="{!dummyAgreement.Cancellation_date__c}" required="true"/>
+									</apex:pageBlockSectionItem>
+								</apex:pageBlockSection>
+
+							</apex:pageBlock>
+						</div>
+					</apex:outputPanel>
+
 				</apex:form>
 			</apex:outputPanel>
 		</apex:outputPanel>
