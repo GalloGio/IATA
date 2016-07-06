@@ -12,6 +12,7 @@ public with sharing class AMS_AccreditationContactController {
     public String linkedRecordId {get; set;}
     public List<AccountWrapper> accountWrapper {get; set;}
     public decimal ownership {get; set;}
+    public boolean blockOwnershipEdit {get; set;}
     private Id AcPersonRt;
     private Id AcCompanyRt;
     
@@ -29,10 +30,10 @@ public with sharing class AMS_AccreditationContactController {
         	String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
         	
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
-            				Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
+            				Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
-            String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
+            String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
             acList = Database.query(query);
             if(acList.size() > 0)
             {
@@ -84,17 +85,31 @@ public with sharing class AMS_AccreditationContactController {
         AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
         forDeletion = new List<AMS_Accreditation_Contact__c>();
+
+        blockOwnershipEdit = aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
+                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR;
     }
     
     public void addEmptyRow()
     {
-        this.acWrapper.add(new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcPersonRt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c)));
+        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcPersonRt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
+        acWrapper.isNewRecord = true;
+        this.acWrapper.add(acWrapper);
     }
     
     public void cloneLastRow()
     {
+
 		if(this.acWrapper.size() > 0)
         {
+
+            AMS_Accreditation_Contact__c lastRowACContact = this.acWrapper.get(this.acWrapper.size()-1).ac;
+
+            if(lastRowACContact != null && lastRowACContact.Agency_Owner__c && blockOwnershipEdit){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'The last person is an Owner and cannot be copied because ownership editing is blocked.'));
+                return;
+            }
+
             if(this.acWrapper.get(this.acWrapper.size()-1).ac != null)
             {
                 AccreditationContactWrapper newAc = new AccreditationContactWrapper(this.acWrapper.get(this.acWrapper.size() - 1).ac.clone());
@@ -604,9 +619,23 @@ public with sharing class AMS_AccreditationContactController {
 		public String prev1To {get; set;}
 		public String prev2From {get; set;}
 		public String prev2To {get; set;}
+        public boolean blockEdit
+        {
+            //edit on owner contacts is to be blocked when the account concerned is not an HO.
+            //although when the associated process is a CORRECTION edit should be allowed
+            get{
+                return ac.Agency_Owner__c &&
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR;
+
+                }
+            set;
+        }
+        public Boolean isNewRecord {get; set;}
 		
 		public AccreditationContactWrapper(AMS_Accreditation_Contact__c acParam)
 		{
+            this.isNewRecord = false;
 			this.dateJoined = String.valueOf(acParam.Date_Joined_agency__c);
 			this.prev1From = String.valueOf(acParam.Prev_Job1_From__c);
 			this.prev1To = String.valueOf(acParam.Prev_Job1_To__c);
@@ -630,6 +659,7 @@ public with sharing class AMS_AccreditationContactController {
 		
 		public AccreditationContactWrapper(AMS_Accreditation_Contact__c acParam, String rId)
 		{
+            this.isNewRecord = false;
 			this.ac = acParam;
 			if(this.ac.Company__c == null)
 			{
