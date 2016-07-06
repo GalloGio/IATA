@@ -113,7 +113,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         List<AMS_OSCAR__c> closedOscars = new List<AMS_OSCAR__c>();
 
         //List<CASE> caseList = [select id, Status, Oscar__r.Id from CASE c where c.Oscar__r.id in :Trigger.newMap.keySet() and recordType.name = 'OSCAR Communication'];
-        List<CASE> caseList = [select id, Status, Oscar__r.Id from CASE c where c.Oscar__c != null and recordType.name = 'OSCAR Communication' and c.Oscar__r.id in :Trigger.newMap.keySet()];
+        List<CASE> caseList = [select id, Status, Oscar__r.Id, OwnerId from CASE c where c.Oscar__c != null and recordType.name = 'OSCAR Communication' and c.Oscar__r.id in :Trigger.newMap.keySet()];
 
         Map<Id, Case> caseOscars = new Map<Id, Case>();
 
@@ -157,6 +157,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 }
             }
 
+            Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
+            Boolean caseChanged = false;
+
             // logic: When the user changes the OSCAR status to any of the 4 Closed values (either on the left or directly in the centre),
             // the Date Closed field should be populated with the current date and the case should be closed.
 
@@ -169,23 +172,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                     updatedOSCAR.Date_Time_Closed__c = System.now();
 
-                    // now get the associated case and close it
-                    Case caseToClose = caseOscars.get(updatedOSCAR.Id);
+                    if (caseToUpdate != null) {
 
-                    if (caseToClose != null) {
-
-                        //CASE caseToClose = caseList.get(0);
+                        //CASE caseToUpdate = caseList.get(0);
 
                         if (updatedOSCAR.Status__c == 'Closed (Closed)')
-                            caseToClose.Status = 'Closed';
+                            caseToUpdate.Status = 'Closed';
                         else if (updatedOSCAR.Status__c == 'Closed_Not Accepted')
-                            caseToClose.Status = 'Closed_ Not Accepted';
+                            caseToUpdate.Status = 'Closed_ Not Accepted';
                         else if (updatedOSCAR.Status__c == 'Closed_Rejected')
-                            caseToClose.Status = 'Closed_Rejected';
+                            caseToUpdate.Status = 'Closed_Rejected';
                         else if (updatedOSCAR.Status__c == 'Closed_Withrawn')
-                            caseToClose.Status = 'Closed_Withdrawn';
+                            caseToUpdate.Status = 'Closed_Withdrawn';
 
-                        casesToUpdate.add(caseToClose);
+                        caseChanged = true;
                     }
                 } else if ( updatedOSCAR.Status__c.equalsIgnoreCase('Pending Approval') || updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
                     // Start an approval process
@@ -193,35 +193,31 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         AMS_OSCAR_ApprovalHelper.submit('', updatedOSCAR.Id, UserInfo.getUserId(), 'Automated approval submission based on OSCAR Status "Pending Validation".');
                     }
 
-                    Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
-
                     if (caseToUpdate != null) {
                         caseToUpdate.Status = updatedOSCAR.Status__c;
+                        caseChanged = true;
                     }
-                    if(caseCheck.add(caseToUpdate.Id)) casesToUpdate.add(caseToUpdate);
+                    
 
-                } else {
+                } else if (caseToUpdate != null){
                     //for other OSCAR "Status__c" values, updates the CASE status to be equal to the one in the OSCAR!
                     //Status to be caught on this area: 'Accepted_Pending Agreement', 'Accepted_Pending BG', 'Accepted_Pending Docs',
                     //                                  'On Hold_External', 'On Hold_Internal', 'Open', 'Reopen'
 
-                    Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
+                    caseToUpdate.Status = updatedOSCAR.Status__c;
+                    caseChanged = true;
 
-                    if (caseToUpdate != null) {
-                        caseToUpdate.Status = updatedOSCAR.Status__c;
-                    }
-                    if(caseCheck.add(caseToUpdate.Id)) casesToUpdate.add(caseToUpdate);
                 }
+
             }
 
-            if(updatedOSCAR.OwnerId != oldOscar.OwnerId){
-                Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
+            //ensures the case owner is always the same as the oscar
+            /*if (caseToUpdate != null && caseToUpdate.OwnerId != updatedOSCAR.OwnerId) {
+                caseToUpdate.OwnerId = updatedOSCAR.OwnerId;
+                caseChanged = true;
+            }*/
 
-                if (caseToUpdate != null) {
-                    caseToUpdate.OwnerId = updatedOSCAR.OwnerId;
-                    if(caseCheck.add(caseToUpdate.Id)) casesToUpdate.add(caseToUpdate);
-                }
-            }
+            if(caseChanged) casesToUpdate.add(caseToUpdate);
         }
 
         if (!casesToUpdate.isEmpty())
