@@ -68,6 +68,15 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Data__c</fullName>
+        <externalId>false</externalId>
+        <label>Input Data</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
         <fullName>Displayed_Message__c</fullName>
         <externalId>false</externalId>
         <label>Displayed Message</label>
