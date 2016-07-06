@@ -54,7 +54,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 }
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, OSCAR__c from CASE where Id = :caseId LIMIT 1];
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c from CASE where Id = :caseId LIMIT 1];
 
             if(!cases.isEmpty()){
 
@@ -62,6 +62,16 @@ global without sharing class AMS_RecordCreatorWebservice {
            
                 oscarCase.OSCAR__c = oscarId;
                 oscarCase.AccountId = oscarCase.Account_Concerned__c;
+
+                if(oscarCase.Account.Location_Type__c == 'SA')                          oscarCase.Type_of_Customer__c = 'Sales Agent – Generic';
+                else if (oscarCase.Account.Category__c == 'IATA Passenger Sales Agent') oscarCase.Type_of_Customer__c = 'IATA Travel Agent';
+                else if (oscarCase.Account.Category__c == 'IATA Cargo Agent')           oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
+                else if (oscarCase.Account.Category__c == 'Import Agent')               oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
+                else if (oscarCase.Account.Category__c == 'CASS Associate')             oscarCase.Type_of_Customer__c = 'CASS Associates';
+                else if (oscarCase.Account.Category__c == 'Courier')                    oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
+                else if (oscarCase.Account.Category__c == 'TIDS Agent')                 oscarCase.Type_of_Customer__c = 'TIDS';
+                else if (oscarCase.Account.Category__c == 'GSA General Sales Agent')    oscarCase.Type_of_Customer__c = 'General Sales Agent (GSA)';
+                else if (oscarCase.Account.Category__c == 'GSSA Cargo')                 oscarCase.Type_of_Customer__c = 'GSSA Cargo';
 
                 update oscarCase;
              }
@@ -98,12 +108,16 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         Account account = new Account(Id = accountId);
 
+        System.debug('Account to create hierarchy is ' + account.Id);
+
         List<Account> parentIdLst = [SELECT Id, ParentId from Account where Id = :account.Id LIMIT 1];
 
         if(parentIdLst.isEmpty()){
             System.debug('There is no Parent Id to create an Hierarchy.');
             return false;
         }
+
+        System.debug('Parent account to create hierarchy is ' + parentIdLst.get(0).ParentId);
 
         Id parentId = parentIdLst.get(0).ParentId;
 
@@ -168,12 +182,145 @@ global without sharing class AMS_RecordCreatorWebservice {
     private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId){
 
         AMS_OSCAR__c oscar;
+        AMS_Pax_Accreditation_Form__c accreditationObj;
  
         oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId );
 
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+
+            accreditationObj = fetchAccreditationObject(accreditationId);
+
+            handleOwners(accreditationObj);
+
+            String typeOfChange = getFormatedTypeOfChange(processType,accreditationObj);
+
+            oscar.Type_of_change__c = typeOfChange;
+
+        }
+        
         insert oscar;
 
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+            processOscarProcessDetail(oscar,accreditationObj);
+        }
+
         return oscar.id;
+    }
+
+    private static void handleOwners(AMS_Pax_Accreditation_Form__c accreditationObj){
+
+        // The accreditation Contacts have two types : previous and current.
+        // The business rule is the following:
+        // if the accreditation form doesn't have current contact, just clone the previous contacts into current contacts.
+        // if the accreditation form has current contacts, don't clone nothing.
+
+        Map<String,String> previousContactTypes = new Map<String,String>();
+
+
+        previousContactTypes.put('Previous_Company_Owner','Current Company Owner');
+        previousContactTypes.put('Previous_Owner','Current Owner');
+      
+        List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
+
+        List<AMS_Accreditation_Contact__c> accContacts = [SELECT Id, RecordType.DeveloperName, Last_name__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id];
+
+        for(AMS_Accreditation_Contact__c con: accContacts){
+            if(previousContactTypes.get(con.RecordType.DeveloperName) != null){
+                idsToClone.add(con);
+            }
+        }
+
+        if(!accContacts.isEmpty() && accContacts.size() == idsToClone.size()){
+            cloneContacts(idsToClone,previousContactTypes);
+        }
+
+
+    }
+
+    private static void cloneContacts(List<AMS_Accreditation_Contact__c> contacts, Map<String,String> previousContactTypes){
+
+       // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
+        List<AMS_Accreditation_Contact__c> toInsert = new List<AMS_Accreditation_Contact__c>();
+
+        Map<String,Schema.RecordTypeInfo> rtMapByName = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName();
+
+       for(AMS_Accreditation_Contact__c contact: contacts){
+
+            AMS_Accreditation_Contact__c contactCloned = contact.clone(false,false,false,false);
+
+            String newRecordTypeDevName = previousContactTypes.get(contact.RecordType.DeveloperName);
+
+            ID newRecordType = rtMapByName.get(newRecordTypeDevName).getRecordTypeId();
+
+            contactCloned.recordTypeId = newRecordType;
+
+            toInsert.add(contactCloned);
+
+       }
+       
+       if(!toInsert.isEmpty())
+        insert toInsert;
+    
+    }
+
+    private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
+
+        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+
+    }
+
+    private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj){
+
+        if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
+            return;
+
+        if(accreditationObj.Scope_of_Change__c == 'HO - All Branches'){
+            AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+            return ;
+        }
+
+        if(accreditationObj.Scope_of_Change__c == 'HO - Selected Branches' || accreditationObj.Scope_of_Change__c == 'Selected Branches Only'){
+            
+            List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(';');
+
+            List<Account> accountsToCreate = [SELECT Id from Account where IATACode__c in :iataCodes];
+
+            List<AMS_Process_Detail__c> detailsToInsert = new List<AMS_Process_Detail__c>();
+
+            ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+            for(Account acct: accountsToCreate){
+
+                AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
+
+                detailsToInsert.add(detail);
+            }
+
+            if(!detailsToInsert.isEmpty())
+                insert detailsToInsert;
+        }
+
+
+        return;
+
+    }
+
+    private static String getFormatedTypeOfChange(String processType, AMS_Pax_Accreditation_Form__c accreditationObj){
+
+        String typeOfChange = null;
+
+        if(accreditationObj.Notify_Change_Legal_Details__c)
+            typeOfChange = 'Name;';
+        if(accreditationObj.Notify_Change_Location__c)
+            typeOfChange = 'Location;';
+        if(accreditationObj.Notify_Change_Ownership__c)
+            typeOfChange = 'Ownership to non-IATA Agent;';
+
+        if(typeOfChange != null)
+            typeOfChange = typeOfChange.removeEnd(';');
+
+        return typeOfChange;
+
     }
 
     public static boolean containsTradeName(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){

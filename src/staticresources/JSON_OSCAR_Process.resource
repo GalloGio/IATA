@@ -2161,7 +2161,8 @@
         "args": ["agencyid", "accreditationid", "oscarid"]
         }],
         "Automations": [{
-        "Status": "Passed"
+        "Status": "Passed",
+        "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step10_succeeded"
         }],
         "DisplayFields": [
         "STEP10__c"],
