@@ -334,7 +334,7 @@
     
     <hr/>
 
-    <apex:detail id = "detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
+    <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 
     <apex:pageBlock rendered="{!oscarObj == null}">
         <div class="overlay">

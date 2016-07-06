@@ -16,9 +16,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>ISNEW()
-|| ISCHANGED(Location_Class__c)
-|| ISCHANGED(IATA_ISO_Country__c)</formula>
+        <formula>ISNEW() || ISCHANGED(Location_Class__c) || ISCHANGED(IATA_ISO_Country__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
