@@ -222,7 +222,7 @@ public class AMS_OscarCaseTriggerHelper {
         if(newSidraCases.isEmpty()) return;
 
         Set<Id> isoCountries = new Set<Id>();
-        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c FROM Account WHERE Id IN :accounts.keySet()]){
+        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c FROM Account WHERE IATA_ISO_Country__c != null AND Location_Class__c != null AND Id IN :accounts.keySet()]){
             accounts.put(a.Id, a);
             isoCountries.add(a.IATA_ISO_Country__c);
         }
@@ -235,19 +235,21 @@ public class AMS_OscarCaseTriggerHelper {
                                                                 , Threshold__c
                                                                 , Location_Class__c
                                                             FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.Name = 'Irregularity Threshold')
+                                                            WHERE RecordType.Name = 'Irregularity Threshold'
+                                                            AND Threshold__c != null
+                                                            AND Location_Class__c != null)
                                                     FROM IATA_ISO_Country__c
                                                     WHERE Id IN :isoCountries])
         {
             for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                thresholds.put(country.Id+att.Location_Class__c, att.Threshold__c);
+                thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
             }
         }
         System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            c.Acc_IRR_leading_to_DEF__c = thresholds.get(a.IATA_ISO_Country__c+a.Location_Class__c);
+            if(a != null) c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
         }
     }
     
