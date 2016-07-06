@@ -101,66 +101,66 @@ public without sharing class AMS_AgencyUpdateHelper {
         //agencyIds.removeAll(agenciesShippingError);
         
         //Validate IATACode
-        Set<Id> setAccountsToValidate = new Set<Id>();
-        List<Account> aulist_validate = [select id,  Name, IATACode__c,ShippingState, ShippingCountry from Account where id in :agencyIds ];
+        //Set<Id> setAccountsToValidate = new Set<Id>();
+        //List<Account> aulist_validate = [select id,  Name, IATACode__c,ShippingState, ShippingCountry from Account where id in :agencyIds ];
 
-        List<Agency_Applied_Change_code__c> lAgencyAppliedChangeCode = [SELECT Account__c,Account__r.IATACode__c,Active__c,Change_Code__c 
-                                FROM Agency_Applied_Change_code__c 
-                                WHERE Change_Code__c != null 
-                                AND Active__c = true 
-                                AND Account__c in :agencyIds];
+        //List<Agency_Applied_Change_code__c> lAgencyAppliedChangeCode = [SELECT Account__c,Account__r.IATACode__c,Active__c,Change_Code__c 
+        //                        FROM Agency_Applied_Change_code__c 
+        //                        WHERE Change_Code__c != null 
+        //                        AND Active__c = true 
+        //                        AND Account__c in :agencyIds];
 
-        for(Agency_Applied_Change_code__c aacc: lAgencyAppliedChangeCode){
-            setAccountsToValidate.add(aacc.Account__c);
-        }
+        //for(Agency_Applied_Change_code__c aacc: lAgencyAppliedChangeCode){
+        //    setAccountsToValidate.add(aacc.Account__c);
+        //}
 
-        Set<Id> agenciesValidateError = new Set<Id>();
-        for(Account au: aulist_validate){
+        //Set<Id> agenciesValidateError = new Set<Id>();
+        //for(Account au: aulist_validate){
 
-            Boolean bError = false;
-            Boolean bErrorLog = false;
-            String accErrors = '';
+        //    Boolean bError = false;
+        //    Boolean bErrorLog = false;
+        //    String accErrors = '';
             
-            //Validates if IATACODE is empty
-            //result: will not create the Agency Update Record and will not create a Log entry
-            if( String.isEmpty(au.IATACode__c) ){
-                bError = true;
-                bErrorLog = false;
-            }
+        //    //Validates if IATACODE is empty
+        //    //result: will not create the Agency Update Record and will not create a Log entry
+        //    if( String.isEmpty(au.IATACode__c) ){
+        //        bError = true;
+        //        bErrorLog = false;
+        //    }
 
-            //Validates if IATACODE is empty and if a Active Change code exists
-            //result: will not create the Agency Update Record and will create a Log entry
-            if(String.isEmpty(au.IATACode__c) && setAccountsToValidate.contains(au.Id) ){
-                accErrors += au.Name+' ('+au.IATACode__c+'-'+au.id+'): IATACode - ' + au.ShippingCountry + '\n';
-                bError = true;
-                bErrorLog = true;
-            }
+        //    //Validates if IATACODE is empty and if a Active Change code exists
+        //    //result: will not create the Agency Update Record and will create a Log entry
+        //    if(String.isEmpty(au.IATACode__c) && setAccountsToValidate.contains(au.Id) ){
+        //        accErrors += au.Name+' ('+au.IATACode__c+'-'+au.id+'): IATACode - ' + au.ShippingCountry + '\n';
+        //        bError = true;
+        //        bErrorLog = true;
+        //    }
 
-            if(bError){
-                agenciesValidateError.add(au.id);
-            }
+        //    if(bError){
+        //        agenciesValidateError.add(au.id);
+        //    }
             
-            if(bErrorLog){
-                //create Log entry
-                Technical_Logs__c tlog = new Technical_Logs__c();
-                tlog.Status__c = 'Error';
-                tlog.Operation__c = 'Agency Update IATACode Validation';
-                DateTime dtStart = system.now();
-                tlog.start_date__c = dtStart;
-                DateTime dtEnd = system.now();
-                tlog.End_Date__c = dtEnd;
-                tlog.Log__c = accErrors;
-                tlog.Record__c = au.id;
-                try {
-                    insert tlog;
-                }catch (Exception ex) {
-                        system.debug('Log writing error: ' + ex.getMessage());
-                }    
-            }
-        }
+        //    if(bErrorLog){
+        //        //create Log entry
+        //        Technical_Logs__c tlog = new Technical_Logs__c();
+        //        tlog.Status__c = 'Error';
+        //        tlog.Operation__c = 'Agency Update IATACode Validation';
+        //        DateTime dtStart = system.now();
+        //        tlog.start_date__c = dtStart;
+        //        DateTime dtEnd = system.now();
+        //        tlog.End_Date__c = dtEnd;
+        //        tlog.Log__c = accErrors;
+        //        tlog.Record__c = au.id;
+        //        try {
+        //            insert tlog;
+        //        }catch (Exception ex) {
+        //                system.debug('Log writing error: ' + ex.getMessage());
+        //        }    
+        //    }
+        //}
 
-        //remove agencies that had Shipping validation errors 
-        agencyIds.removeAll(agenciesValidateError);
+        ////remove agencies that had Shipping validation errors 
+        //agencyIds.removeAll(agenciesValidateError);
         
         system.debug('accSentToExternalSystemFlag: ' + accSentToExternalSystemFlag);
         //remove agencies that have been updated on integration with SAP 
