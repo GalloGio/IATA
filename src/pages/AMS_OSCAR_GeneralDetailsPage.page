@@ -187,6 +187,9 @@
                 <apex:outputField value="{!accreditationObj.ISSP_AMS_Legal_Status__c}" >
                     <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
                 </apex:outputField>
+                <apex:outputField value="{!accreditationObj.CASS_Number__c}" >
+                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
+                </apex:outputField>
                 <apex:outputField value="{!accreditationObj.Short_Name__c}">
                     <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
                 </apex:outputField>
@@ -293,9 +296,6 @@
                     <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
                 </apex:outputField>
                 <apex:outputField value="{!accreditationObj.VAT_Number_2__c}" >
-                    <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
-                </apex:outputField>
-                <apex:outputField value="{!accreditationObj.CASS_Number__c}" >
                     <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
                 </apex:outputField>
 
