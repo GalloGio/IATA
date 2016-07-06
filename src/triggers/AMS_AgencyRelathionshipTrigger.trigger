@@ -5,7 +5,7 @@ trigger AMS_AgencyRelathionshipTrigger on AMS_Agencies_relationhip__c (after ins
     if (Trigger.isAfter && Trigger.isInsert) {
         AMS_AgencyRelationshipTriggerHandler.handleAfterInsert(Trigger.new);
     } else if (Trigger.isAfter && Trigger.isUpdate) {
-        AMS_AgencyRelationshipTriggerHandler.handleAfterUpdate(Trigger.new);
+        AMS_AgencyRelationshipTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
     }else if (Trigger.isAfter && Trigger.isDelete) {
         AMS_AgencyRelationshipTriggerHandler.handleAfterDelete(Trigger.old);
     }
