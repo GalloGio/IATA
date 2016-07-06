@@ -336,6 +336,7 @@ public without sharing class ISSP_UserTriggerHandler {
 		}
 		
   	}
+    
   /*
   @future
   public static void addBaggageSharing(Set<Id> contactIds){
