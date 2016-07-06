@@ -103,10 +103,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
         }
 
-        for(Case c : [SELECT Id, Oscar__c, OwnerId FROM Case WHERE RecordType.Name = 'OSCAR Communication' AND Oscar__c in :Trigger.new]){
-            AMS_OSCAR__c o = trigger.newMap.get(c.OSCAR__c);
-            if(c.OwnerId != o.OwnerId){
-                c.OwnerId = o.OwnerId;
+        for(Case c : [SELECT Id, Oscar__c, Oscar__r.OwnerId, OwnerId FROM Case WHERE RecordType.Name = 'OSCAR Communication' AND Oscar__c in :Trigger.new]){
+            if(c.OwnerId != c.Oscar__r.OwnerId){
+                c.OwnerId = c.Oscar__r.OwnerId;
                 casesToUpdate.add(c);
             }
         }
