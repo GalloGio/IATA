@@ -304,7 +304,7 @@ public class AMS_OscarCaseTriggerHelper {
             if(
                 c.RecordTypeID == OSCARCaseRecordTypeID
                 && c.OSCAR__c != null
-                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c == null))
+                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
             ){
             
                 oscarCases.add(c);

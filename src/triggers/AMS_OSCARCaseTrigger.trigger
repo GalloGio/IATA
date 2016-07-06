@@ -5,14 +5,14 @@ trigger AMS_OSCARCaseTrigger on Case (before update, after update, before insert
         	AMS_OscarCaseTriggerHelper.OSCARCaseCreationRules(trigger.New);
             AMS_OscarCaseTriggerHelper.fillOSCARLookup(trigger.New);
             AMS_OscarCaseTriggerHelper.checkIrregularityThreshold();
-            AMS_OscarCaseTriggerHelper.copyOwner();
+            //AMS_OscarCaseTriggerHelper.copyOwner();
         }
         if(Trigger.isUpdate){
             AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(trigger.New, trigger.oldMap);
             AMS_OscarCaseTriggerHelper.blockForbbidenActions(trigger.New, trigger.oldMap);
         	AMS_OscarCaseTriggerHelper.renameOSCAR(trigger.New);
             AMS_OscarCaseTriggerHelper.fillOSCARLookup(trigger.New);
-            AMS_OscarCaseTriggerHelper.copyOwner();
+            //AMS_OscarCaseTriggerHelper.copyOwner();
         }
     }
     if(trigger.isAfter){
