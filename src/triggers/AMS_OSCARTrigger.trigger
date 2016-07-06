@@ -103,16 +103,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
         }
 
-        for(Case c : [SELECT Id, Oscar__c, OwnerId FROM Case WHERE RecordType.Name = 'OSCAR Communication' AND Oscar__c in :Trigger.new]){
-            AMS_OSCAR__c o = trigger.newMap.get(c.OSCAR__c);
-            if(c.OwnerId != o.OwnerId){
-                c.OwnerId = o.OwnerId;
-                casesToUpdate.add(c);
-            }
-        }
-
-        if(!casesToUpdate.isEmpty()) update casesToUpdate;
-
     } //TD: Because I added "AFTER UPDATE", I added here the isBefore, which was missing
     else if (Trigger.isBefore && Trigger.isUpdate) {
 
@@ -221,10 +211,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
 
             //ensures the case owner is always the same as the oscar
-            if (caseToUpdate != null && caseToUpdate.OwnerId != updatedOSCAR.OwnerId) {
+            /*if (caseToUpdate != null && caseToUpdate.OwnerId != updatedOSCAR.OwnerId) {
                 caseToUpdate.OwnerId = updatedOSCAR.OwnerId;
                 caseChanged = true;
-            }
+            }*/
 
             if(caseChanged) casesToUpdate.add(caseToUpdate);
         }

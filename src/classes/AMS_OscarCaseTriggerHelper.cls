@@ -290,4 +290,35 @@ public class AMS_OscarCaseTriggerHelper {
         return irr;
     }
 
+
+    /*AMS-1580*/
+    public static void copyOwner() {
+
+        Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
+
+        Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        List<Case> oscarCases = new List<Case>();
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
+
+        for(Case c : (List<Case>) Trigger.New){
+            if(
+                c.RecordTypeID == OSCARCaseRecordTypeID
+                && c.OSCAR__c != null
+                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
+            ){
+            
+                oscarCases.add(c);
+                oscars.put(c.Oscar__c, null);
+            }
+        }
+
+        if(oscarCases.isEmpty()) return;
+
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+
+        for(Case c : oscarCases){
+            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+        }
+    }
+
 }
