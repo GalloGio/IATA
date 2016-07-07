@@ -100,6 +100,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Adjustments</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Advertising</fullName>
                 <default>false</default>
             </picklistValues>
@@ -112,7 +116,23 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Application Charges</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approach</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Assessment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>ATC/ATS Licence Fee</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aviation Fuel</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -128,6 +148,18 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CDA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Communication Charges</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Consulting</fullName>
                 <default>false</default>
             </picklistValues>
@@ -136,7 +168,15 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>E&amp;F Services</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>En-Route</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -144,7 +184,23 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Fees</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FF Miles</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Charges</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>GDP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -156,7 +212,39 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Interest</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lighting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Market IS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meetings and Conferen</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meteorology</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Misc</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No SIS compliant</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oceanic</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -164,7 +252,27 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Over-flight</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parking</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Pax IS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Penalty</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Publication</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -176,6 +284,14 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Runway Charges</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Strategic Partnerships</fullName>
                 <default>false</default>
             </picklistValues>
@@ -184,11 +300,19 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Taxes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>TIESS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Timatic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>

@@ -4,12 +4,12 @@
     <customButtons>Change_Owner</customButtons>
     <customButtons>Community</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -154,37 +154,6 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>IATA Profile</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>StB_Profile__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>MGR_Profile__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ISS_Profile__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>MACS_Profile__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SO_I_Profile__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Customer Portal</label>
         <layoutColumns>
             <layoutItems>
@@ -206,15 +175,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Tax_1_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>VAT_Country_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VAT_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tax_1_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -247,17 +216,13 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Instant_Survey_opt_out__c</field>
+                <field>SIS_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BSP_CASS_Payment_contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>InvoiceWorks_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -269,7 +234,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SIS_ID__c</field>
+                <field>Instant_Survey_opt_out__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -317,14 +282,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Global_Governance_Member__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IRSM_Member__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>PAPGCJ_Participant__c</field>
             </layoutItems>
             <layoutItems>
@@ -350,48 +307,12 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
+        <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Links to New Case</label>
-        <layoutColumns>
-            <layoutItems>
-                <customLink>Phone_Call_Redirected_to_Web</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>BSPlinkPassword</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>Accreditationchanges</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>SendExactTargetEmail</customLink>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <customLink>PassengerOperations</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>BSPlinkissues</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>IFAP_portal_query</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>Re_subscribe_in_ExactTarget</customLink>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <customLink>ProductEnquiry</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>Questionsonreporteddocument</customLink>
-            </layoutItems>
-            <layoutItems>
-                <customLink>IFAP_user_management_phone</customLink>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
     <layoutSections>
@@ -603,7 +524,9 @@
     </relatedLists>
     <relatedLists>
         <fields>LocalGovernance__c.NAME</fields>
+        <fields>Local_Group_Type__c</fields>
         <fields>LocalGovernance__c.IATA_Office__c</fields>
+        <fields>LocalGovernance__c.Cluster__c</fields>
         <fields>NAME</fields>
         <relatedList>Participant__c.Contact__c</relatedList>
     </relatedLists>

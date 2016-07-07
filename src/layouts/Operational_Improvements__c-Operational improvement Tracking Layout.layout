@@ -133,6 +133,10 @@
                 <behavior>Edit</behavior>
                 <field>China_North_Asia_Countries_Concerned__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Europe_Countries_Concerned__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

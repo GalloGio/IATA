@@ -416,7 +416,7 @@ function buildFunctionCall(func, argList){
             <div class="warning">
                 <p><b>{!$Label.AMS_OSCAR_Warning_1}</b></p> 
             </div>
-         </apex:pageBlock >
+         </apex:pageBlock>
     </apex:outputPanel>
     
     <apex:variable var="p" value="{!process[oscar.Process__c]}" />

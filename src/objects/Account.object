@@ -9171,7 +9171,7 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>Purge_Flag__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

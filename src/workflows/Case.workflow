@@ -11208,6 +11208,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>DateTime Stamp Reopened</fullName>
+        <actions>
+            <name>update_Date_Time_Reopened</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Reopen&quot;))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>DueDiligenceAlertForSanctionsOnNewJoiningCase</fullName>
         <active>true</active>
         <booleanFilter>1 AND 2 AND 3 AND (4 OR 5)</booleanFilter>
