@@ -195,8 +195,8 @@ public without sharing class ISSP_UserTriggerHandler {
 
     @future
     public static void updateUserPermissionSet(String permisionSetName, Set<Id> contactIdSet, Set<Id> contactRemoveIdSet){
-        //system.debug('FUTURE METHOD, ADD: ' + contactIdSet);
-        //system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
+        system.debug('FUTURE METHOD, ADD: ' + contactIdSet);
+        system.debug('FUTURE METHOD, REMOVE: ' + contactRemoveIdSet);
         String permissionSetId = '';
         List <PermissionSet> setList = [SELECT Id FROM PermissionSet WHERE Name = :permisionSetName];
         if (!setList.isEmpty()){
