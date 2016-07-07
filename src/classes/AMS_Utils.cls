@@ -127,6 +127,19 @@ public without sharing class AMS_Utils {
         }
     }
 
+    public static Map<String, String> categoryCustomerMap = new Map<String, String> {
+        'IATA Passenger Sales Agent' => 'IATA Travel Agent',
+        'IATA Cargo Agent' =>   'IATA Cargo Agent',
+        'Import Agent' =>   'IATA Cargo Agent',
+        'CASS Associate' => 'CASS Associates',
+        'Courier' =>    'IATA Cargo Agent',
+        'Handling Agent' => 'IATA Travel Agent',
+        'MSO Member Sales Office' => 'IATA Travel Agent'
+        'TIDS Agent' => 'TIDS',
+        'GSA General Sales Agent' =>    'General Sales Agent (GSA)',
+        'GSSA Cargo' => 'GSSA Cargo'
+    };   
+
     public AMS_Utils() {}
     //private static final String ENCRYPTION_ALGORYTHM = 'AES128';
 
@@ -1324,6 +1337,22 @@ public static Map<String,List<String>> GetDependentOptions(String pObjName, Stri
     objDS_Entries = null;
 
     return mapResults;
+}
+
+//used to fill the Type_of_Customer__c field on the Oscar Comunication Case
+public static String fetchTypeOfCustomer (String locationType , String category) {
+
+    if(locationType == null)
+        return null;
+
+    if(locationType == 'SA')
+        return 'Sales Agent – Generic';
+
+    if(category == null)
+        return null;
+
+    return categoryCustomerMap.get(category);
+
 }
 
 }
