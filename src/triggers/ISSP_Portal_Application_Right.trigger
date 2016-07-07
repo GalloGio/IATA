@@ -174,7 +174,8 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     }
     
     if (!contactIdIATAAccreditationSet.isEmpty() || !contactIdRemoveIATAAccreditationSet.isEmpty()){
-        
+        system.debug('WILL START FUTURE METHOD');
+
         // Validate: Give permission set only to Accounts with record type == 'Standard Account' 
         List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name ='Standard Account' and id in :contactIdIATAAccreditationSet];
         contactIdIATAAccreditationSet = (new Map<Id,SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
@@ -183,7 +184,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
             ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
         ISSP_UserTriggerHandler.preventTrigger = true;
     }
-
+    
     if(!trigger.isDelete){
         if(Trigger.new.size()>1)
             return;
