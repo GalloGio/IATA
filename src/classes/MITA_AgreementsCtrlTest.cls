@@ -26,7 +26,9 @@ private class MITA_AgreementsCtrlTest {
 				Sector__c = 'Airline',
 				Category__c = 'Passenger and cargo',
 				MITA_Member__c = true,
-				BIETA_Member__c = true
+				BIETA_Member__c = true,
+				MITA_IATA_Interline_Passenger__c = Date.today(),
+				MITA_IATA_Interline_Cargo__c = Date.today()
 			),
 			new Account(
 				Name = 'Swissair',
@@ -40,7 +42,9 @@ private class MITA_AgreementsCtrlTest {
 				Sector__c = 'Airline',
 				Category__c = 'Passenger and cargo',
 				MITA_Member__c = true,
-				BIETA_Member__c = true
+				BIETA_Member__c = true,
+				MITA_IATA_Interline_Passenger__c = Date.today(),
+				MITA_IATA_Interline_Cargo__c = Date.today()
 			)
 		};
 		insert listAccount;
@@ -434,7 +438,7 @@ private class MITA_AgreementsCtrlTest {
 	}
 
 	@isTest
-	static void Test_WrapperAgreement() {
+	static void Test_deactivateMember() {
 		loadData();
 		Account account1 = [Select Id,Name from Account where Name = 'Air France'];
 		Account account2 = [Select Id,Name from Account where Name = 'Swissair'];
@@ -442,20 +446,121 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agr = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA'
+			MITAorBIETA__c = 'MITA',
+			Effective_date__c = Date.today()
+		);
+		insert agr;
+
+		MITA_AgreementsCtrl controller = new MITA_AgreementsCtrl();
+		controller.accountid = account1.Id;
+		controller.selectAccount();
+
+		MITA_Agreement__c resultAgr;
+		resultAgr = [Select id, Cancellation_date__c, Cancellation_processed_date__c, Cancellation_Reason__c from MITA_Agreement__c where id = :agr.Id];
+		System.assert(resultAgr.Cancellation_date__c == null);
+		System.assert(resultAgr.Cancellation_processed_date__c == null);
+		System.assert(resultAgr.Cancellation_Reason__c == null);
+
+		Test.startTest();
+		controller.showDeactivateMITAPanel();
+		controller.deactivateAgreements();
+		controller.showDeactivateBIETAPanel();
+		controller.deactivateAgreements();
+		controller.cancelDeactivation();
+		Test.stopTest();
+
+		resultAgr = [Select id, Cancellation_date__c, Cancellation_processed_date__c, Cancellation_Reason__c from MITA_Agreement__c where id = :agr.Id];
+		System.assertEquals(Date.today(),resultAgr.Cancellation_date__c);
+		System.assertEquals(Date.today(),resultAgr.Cancellation_processed_date__c);
+		System.assertEquals('Airline 1 leaves agreement',resultAgr.Cancellation_Reason__c);
+	}
+
+	@isTest
+	static void Test_WrapperAgreement_NotMixed() {
+		loadData();
+		Account account1 = [Select Id,Name from Account where Name = 'Air France'];
+		Account account2 = [Select Id,Name from Account where Name = 'Swissair'];
+
+		MITA_Agreement__c agr = new MITA_Agreement__c(
+		Airline_1__c = account1.Id,
+		Airline_2__c = account2.Id,
+		MITAorBIETA__c = 'MITA',
+		Agreement_type__c = 'The Passenger Interline Agreement',
+		Effective_date__c = Date.today()
 		);
 
 		Test.startTest();
 		MITA_AgreementsCtrl.WrapperAgreement wrapper = new MITA_AgreementsCtrl.WrapperAgreement(agr, account1);
+		wrapper.checkMixAgreement(null);
 		//System.assertEquals(wrapper.checkMixAgreement(), false);
+		wrapper.viewSeparated = false;
 		wrapper.save(true);
 		Id resultId = wrapper.getId();
+		wrapper.getOtherDesignatorCode();
+		wrapper.getOtherAirlineName();
+		wrapper.getAgreementType();
+		wrapper.getEffectiveDate();
+		wrapper.getStatus();
+		wrapper.getActive();
 		Test.stopTest();
 
 		MITA_Agreement__c resultAgr = [Select id from MITA_Agreement__c where id = :resultId];
 		System.assert(resultAgr!= null);
-
 	}
 
+	@isTest
+	static void Test_WrapperAgreement_MixedAgreement() {
+		loadData();
+		Account account1 = [Select Id,Name from Account where Name = 'Air France'];
+		Account account2 = [Select Id,Name from Account where Name = 'Swissair'];
+
+		MITA_Agreement__c agrPAX = new MITA_Agreement__c(
+			Airline_1__c = account1.Id,
+			Airline_2__c = account2.Id,
+			MITAorBIETA__c = 'MITA',
+			Agreement_type__c = 'The Passenger Interline Agreement',
+			Effective_date__c = Date.today()
+		);
+		insert agrPAX;
+		agrPAX = [SELECT Airline_1__c, Airline_2__c, Active__c, Status__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c ,
+			Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c
+			from MITA_Agreement__c where id =:agrPAX.Id];
+
+		MITA_Agreement__c agrCARGO = new MITA_Agreement__c(
+			Airline_1__c = account1.Id,
+			Airline_2__c = account2.Id,
+			MITAorBIETA__c = 'MITA',
+			Agreement_type__c = 'The Cargo Interline Agreement',
+			Effective_date__c = Date.today()
+		);
+		insert agrCARGO;
+		agrCARGO = [SELECT Airline_1__c, Airline_2__c, Active__c, Status__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c ,
+			Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c
+			from MITA_Agreement__c where id =:agrCARGO.Id];
+
+		System.assertEquals(true, agrPAX.Active__c);
+		System.assertEquals(true, agrCARGO.Active__c);
+		System.assertEquals('MITA', agrPAX.MITAorBIETA__c);
+		System.assertEquals('MITA', agrCARGO.MITAorBIETA__c);
+
+		Test.startTest();
+		MITA_AgreementsCtrl.WrapperAgreement wrapper = new MITA_AgreementsCtrl.WrapperAgreement(agrPAX, account1);
+		Boolean result = wrapper.checkMixAgreement(agrCARGO);
+		System.assertEquals(true, result);
+
+		wrapper.save(true);
+
+		MITA_Agreement__c resultAgr = wrapper.getAgreement();
+		wrapper.getId();
+		wrapper.getOtherDesignatorCode();
+		wrapper.getOtherAirlineName();
+		wrapper.getAgreementType();
+		wrapper.getEffectiveDate();
+		wrapper.getStatus();
+		wrapper.getActive();
+
+		Test.stopTest();
+
+	}
 
 }
