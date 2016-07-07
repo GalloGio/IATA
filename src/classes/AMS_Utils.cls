@@ -134,7 +134,7 @@ public without sharing class AMS_Utils {
         'CASS Associate' => 'CASS Associates',
         'Courier' =>    'IATA Cargo Agent',
         'Handling Agent' => 'IATA Travel Agent',
-        'MSO Member Sales Office' => 'IATA Travel Agent'
+        'MSO Member Sales Office' => 'IATA Travel Agent',
         'TIDS Agent' => 'TIDS',
         'GSA General Sales Agent' =>    'General Sales Agent (GSA)',
         'GSSA Cargo' => 'GSSA Cargo'
