@@ -4,7 +4,7 @@
     <apex:attribute name="uploaderWizard" description="uploader" type="String" required="false" assignTo="{!uploader}" />
     <apex:attribute name="sourceSystem" description="source" type="String" required="false" assignTo="{!source}" />
     <apex:attribute name="scrollable" description="scrollable" type="Boolean" required="false" assignTo="{!scroll}" />
-    
+
     <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
 
     <c:Loading />
@@ -16,12 +16,12 @@
         .tableWrapper{
             max-height: 150px;
             overflow-y: auto;
-        }    
+        }
     </style>
     <script>
     // Get the Root URL dynamically
             var pageMainUrl = window.location.protocol + "//" + window.location.hostname;
-        
+
         //jQuery.noConflict();
         $( document ).ready(function() {
         });
@@ -37,7 +37,7 @@
                 stopLoading();
             }, {buffer: true, escape: false, timeout: 120000} );
         }
-        
+
         function deleteAttachment(id, fullName) {
             if(!confirm("{!$Label.Ask_Delete_Attachment}")) {
                 return false;
@@ -49,7 +49,7 @@
             }, {timeout: 120000} );
             return false;
         }
-        
+
         function redirect(page) {
             window.top.location=page;
             return false;
@@ -73,7 +73,7 @@
 
 <!--                ACTIONS -->
                 <apex:column headerValue="{!$Label.Action}">
-                
+
                     <!-- EDIT ACTION -->
                     <apex:outputPanel rendered="{!NOT(isPortal)}" >
                         <apex:commandLink style="color:#015ba7; cursor: pointer;" action="{!callEditAttachment}" value="{!$Label.Edit}" oncomplete="refreshList();">
@@ -81,19 +81,19 @@
                         </apex:commandLink>
                         &nbsp;|&nbsp;
                     </apex:outputPanel>
-                    
+
                     <!-- VIEW ACTION -->
                     <apex:commandLink style="color:#015ba7; cursor: pointer;" action="{!attach.viewFile}" value="{!$Label.View}" target="_blank" rendered="{!!attach.isAmazon}" />
                     <apex:outputPanel rendered="{!attach.isAmazon}" >
-                        <a title="view" escape="false" target="_blank" onclick="getS3LInk('{!attach.fullName}');" style="color:#015ba7; cursor: pointer; text-decoration: underline;" >{!$Label.View}</a> 
+                        <a title="view" escape="false" target="_blank" onclick="getS3LInk('{!attach.fullName}');" style="color:#015ba7; cursor: pointer; text-decoration: underline;" >{!$Label.View}</a>
                     </apex:outputPanel>
-                    
+
                     <!-- DEL ACTION -->
                     <apex:outputPanel rendered="{!NOT(isPortal)}" >
                         &nbsp;|&nbsp;
                         <apex:outputLink style="color:#015ba7; cursor: pointer;" onclick="return deleteAttachment('{!attach.Id}','{!attach.fullName}');" >{!$Label.Del}</apex:outputLink>
                     </apex:outputPanel>
-                    
+
                     <!-- MAKE PUBLIC ACTION -->
                     <apex:outputPanel rendered="{!NOT(isPortal)}" >
                         &nbsp;|&nbsp;
@@ -104,52 +104,52 @@
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}" rendered="{!uploader == 'AMS_File'}">
                     <apex:outputText value="{!attach.reviewStatus}"/>
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.File_Identifier_picklist__c.Label}" rendered="{!uploader == 'AMS_File'}">
                     <apex:outputText value="{!attach.fileIdentifierPick}"/>
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Source__c.Label}" rendered="{!uploader == 'AMS_File'}">
                     <apex:outputText value="{!attach.source}"/>
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$Label.Public}" rendered="{!NOT(isPortal)}" >
                     <apex:inputcheckbox value="{!attach.isPublic}" disabled="true" />
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$Label.File_Name}">
                     <apex:outputText value="{!attach.name}"/>
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$Label.File_Size}">
                     <apex:outputText value="{0,number,0.##} MB">
                         <apex:param value="{!attach.size}" />
                     </apex:outputText>
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$Label.Created_Date}" >
                     <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
                         <apex:param value="{!attach.createdDate}" />
                     </apex:outputText>
                 </apex:column>
-                
+
                 <apex:column headerValue="{!$Label.Created_By}" rendered="{!NOT(isPortal)}" >
                     <apex:outputText value="{!attach.createdByName}"/>
                 </apex:column>
-<!--                
+
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.File_Identifier__c.Label}" rendered="{!showFileIdentifier}" >
                     <apex:outputText value="{!attach.fileIdentifier}"/>
                 </apex:column>
--->     
+
                 <apex:column headerValue="{!$Label.Location}" rendered="{!isAdminUser}" >
                     <apex:outputText value="{!attach.filetype}"/>
                 </apex:column>
-                
+
             </apex:pageBlockTable>
             </div>
         </apex:pageblock>
-        
-        
+
+
 <!--    Panel to edit an attachment -->
     <apex:outputPanel id="editAttachmentPanel" layout="block" styleclass="editPopup" rendered="{!editAttachment!=null}" >
         <div style="height:100%;width:100%;z-index:100; position:fixed;background:black;opacity:0.5; top:0; left:0;">
@@ -172,39 +172,39 @@
                     <apex:commandButton action="{!cancelPopupAttach}" value="{!$Label.Cancel}" oncomplete="refreshList();" />
                 </apex:pageBlockButtons>
                 <apex:pageBlockSection columns="1" >
-                
+
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!$Label.File_Name}"/>
                         <apex:outputText value="{!editAttachment.name}"/>
                     </apex:pageBlockSectionItem>
-                    
+
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!$Label.File_Description}"/>
                         <apex:inputTextarea value="{!editAttachment.Description}" cols="42" rows="2" style="resize: none;" />
                     </apex:pageBlockSectionItem>
-                    
+
                     <apex:pageBlockSectionItem rendered="{!editAttachment.RecordTypeDeveloperName == 'AMS_File'}">
                         <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.File_Identifier_picklist__c.Label}"/>
                         <apex:inputField value="{!editAttachment.fileAmazon.amazonFile.File_Identifier_picklist__c}" required="true" style="resize: none;" />
                     </apex:pageBlockSectionItem>
-                    
+
                     <apex:pageBlockSectionItem rendered="{!editAttachment.RecordTypeDeveloperName == 'AMS_File'}">
                         <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}"/>
                         <apex:inputField value="{!editAttachment.fileAmazon.amazonFile.Review_Status__c}" required="true" style="resize: none;" />
                     </apex:pageBlockSectionItem>
-                    
+
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!$Label.File_Size}"/>
                         <apex:outputText value="{0,number,0.##} MB">
                             <apex:param value="{!editAttachment.size}" />
                         </apex:outputText>
                     </apex:pageBlockSectionItem>
-                    
+
                 </apex:pageBlockSection>
             </apex:pageBlock>
         </div>
     </apex:outputPanel>
-        
+
     </apex:form>
 
 </apex:component>
