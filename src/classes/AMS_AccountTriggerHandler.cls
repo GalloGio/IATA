@@ -136,6 +136,8 @@ public class AMS_AccountTriggerHandler {
 
     public static void handleManualMinorChanges(List<Account> accs, Map<Id,Account> oldMap){
 
+        accs = filterByAgencyRecordType(accs);
+
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
         List<AccountChangesStruct> accountChangesList = new List<AccountChangesStruct>();
@@ -193,6 +195,23 @@ public class AMS_AccountTriggerHandler {
                 createMinorChangesChangeCode(accountChangesList);
          }
 
+    }
+
+    private static List<Account> filterByAgencyRecordType(List<Account> accts){
+
+        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+
+        List<Account> toReturn = new List<Account>();
+
+        for(Account acct: accts){
+
+            if(acct.recordTypeId == standardRT)
+                toReturn.add(acct);
+
+        }
+
+
+        return toReturn;
     }
 
 

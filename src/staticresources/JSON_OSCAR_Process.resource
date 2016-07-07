@@ -2401,7 +2401,7 @@
         "ChangeCode": {
                       "Name": "FIN",
                       "ReasonCode": "91",
-                      "MemoText": "New application - TIDS finalized",
+                      "MemoText": "New application - AHA finalized",
                       "ReasonDesc": "ACCREDITED–MEETS–STANDARDS",
                       "Status": "9"
                     }

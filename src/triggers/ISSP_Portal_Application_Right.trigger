@@ -184,7 +184,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
             ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
         ISSP_UserTriggerHandler.preventTrigger = true;
     }
-    
+
     if(!trigger.isDelete){
         if(Trigger.new.size()>1)
             return;
