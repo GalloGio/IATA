@@ -78,7 +78,7 @@
     <label>ISSPAttachmentPermission</label>
     <nameField>
         <label>ISSPAttachmentPermission Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>ISSPAttachmentPermissions</pluralLabel>
