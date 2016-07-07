@@ -932,6 +932,35 @@ public without sharing class AMS_Utils {
 
 }
 
+//get Inspections from oscar
+    public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
+
+        //query the the AMS Inspections to update the Account
+        List<AMS_Inspection__c> lsInsToUpdate = new List<AMS_Inspection__c>();
+
+        //Update Account Id on Inspections
+        for(AMS_Inspection__c amsIns : [SELECT Id, Account__c,OSCAR__c,OSCAR__r.Account__c, Date_Organisation_Status_attained__c,Last_synchronization__c,Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c WHERE OSCAR__c IN :oscars])
+        {
+
+            amsIns.Account__c = amsIns.OSCAR__r.Account__c;
+            
+            amsIns.Date_Organisation_Status_attained__c = (amsIns.Date_Organisation_Status_attained__c == null) ? system.today() : amsIns.Date_Organisation_Status_attained__c;
+            amsIns.Accreditation_Endorsement_Status_code__c = '9';
+            amsIns.Last_synchronization__c = system.today();
+            
+            lsInsToUpdate.add(amsIns);
+        }
+        
+        try {
+            update lsInsToUpdate;
+        } catch (DmlException e) {
+            system.debug('Exception updating Inspection: ' + e.getMessage());
+        }
+
+    }
+
+
+
 
 /**
     Method to help the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount)
@@ -1223,6 +1252,8 @@ public static String getChangeCodeMemoText(String process,String changeCodeId) {
         memoText = 'New application - TIDS';
     else if (process == AMS_Utils.new_SA)
         memoText = 'New application - SA';
+    else if (process == AMS_Utils.new_GSSA)
+        memoText = 'New application - GSSA';
     else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
         memoText = 'New application - GSA';
     else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
