@@ -365,6 +365,11 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Pricebook2Id</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Product_Family__c</fullName>
         <description>Used by the RCRM project to store info on the product family that is being sold through the contract.</description>
         <externalId>false</externalId>
