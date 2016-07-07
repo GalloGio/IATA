@@ -179,6 +179,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
         List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name ='Standard Account' and id in :contactIdIATAAccreditationSet];
         contactIdIATAAccreditationSet = (new Map<Id,SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
             
+        //Call generic method to set up a permission set
         if (!ISSP_UserTriggerHandler.preventTrigger)
             ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
         ISSP_UserTriggerHandler.preventTrigger = true;
