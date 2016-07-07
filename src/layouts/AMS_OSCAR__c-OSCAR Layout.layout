@@ -500,7 +500,6 @@
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>Account__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
