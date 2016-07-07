@@ -172,6 +172,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = true, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+                           TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
+                           TC_Major_Shareholding__c = true, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
 
         insert customsettings;
 
@@ -1590,6 +1595,55 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             System.assert(false, 'exception expected');
         } catch (Exception e) {
             Boolean expectedExceptionThrown =  e.getMessage().contains('The field Change of location type behavior cannot have value Dont change the parent when the oscar is opened for an account directly under an HO.') ? true : false;
+            System.assertEquals(expectedExceptionThrown, true);
+        }
+
+        Test.stopTest();
+
+    }
+
+    //Change of minor shareholding and major shareholding affect ownership master data
+    //since ownership must be equal on all the agencies in a hierarchy we must enforce the selection
+    //of all the agencies involved in these type of changes
+    @isTest static void enforceAllHierarchySelection() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(SA1, 'Major Shareholding', null, null);
+
+        Test.startTest();
+
+        try {
+
+            //deactivate an agency
+            BR2.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+            update BR2;
+
+            //Adding all agencies to migration list
+            List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = HO1.Id));
+            //pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+
+            oscar.STEP6__c = AMS_Utils.PASSED;
+            update oscar;
+            //should update the oscar without any error
+            System.assert(true, true);
+
+            oscar.STEP6__c = AMS_Utils.FAILED;
+            update oscar;
+
+            pds.clear();
+
+            //block is only done when trying to pass sanity check
+            oscar.STEP6__c = AMS_Utils.PASSED;
+            update oscar;
+            System.assert(false, 'exception expected');
+        } catch (Exception e) {
+            Boolean expectedExceptionThrown =  e.getMessage().contains('When performing a change of shareholding all the active agencies in the hierarchy must be selected.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 

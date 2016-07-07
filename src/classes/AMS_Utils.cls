@@ -60,6 +60,9 @@ public without sharing class AMS_Utils {
     public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
+    public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
+    public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
+
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
 
@@ -79,6 +82,7 @@ public without sharing class AMS_Utils {
     public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
     public static final String new_SA           = 'NEW.SA.1.0'      ;
     public static final String COR              = 'CORRECTION.1.0'  ;
+    public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 

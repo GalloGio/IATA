@@ -279,7 +279,7 @@
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Email__c.Label}</th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Phone__c.Label}</th>
                                                         <apex:outputPanel rendered="{!NOT(s.blockEdit)}">
-                                                            <th class="slds-text-heading--label slds-size--1-of-5" scope="col">Choose an existing Contact</th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">Choose an existing Contact</th>
                                                         </apex:outputPanel>
                                                     </tr>
                                                 </thead>
@@ -328,14 +328,14 @@
                                             
                                             <div onclick="toggleVisibility({!acIndex});return false;" id="hiddenArea">
                                                 <h5 class="slds-section-title section-group--is-open slds-box--small slds-theme--info pointer">
-                                                    &gt;&gt; Click here and use the section below to fill in additional details. If you linked a contact through the lookup window, the details are copied automatically from the source record. 
+                                                    {!IF(NOT(s.blockEdit), 'Click here and use the section below to fill in additional details. If you linked a contact through the lookup window, the details are copied automatically from the source record.', 'Click here to view additional details. This contact is an owner and cannot be edited under the current circumstances')} 
                                                 </h5>
                                             </div>
                                             <br/>
                                             <span id="previousExperienceTable{!acIndex}" class="slds-hide" >
                                             
                                             <div class="slds-box-x--small slds-theme--info slds-theme--alert-texture">
-                                            <p class="slds-h3">Please select relevant roles and fill in the data.</p>
+                                            <p class="slds-h3">{!IF(NOT(s.blockEdit), 'Please select relevant roles and fill in the data.', '')}</p>
                                             <!-- ROLE SELECTION -->
                                             <table class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>
@@ -395,7 +395,7 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Financial_interest__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input {!IF(s.ownershipEditable == false, 'inputLocked', 'inputPointer')}" value="{!s.ac.Financial_interest__c}" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input {!IF(s.ownershipEditable == false, 'inputLocked', 'inputPointer')}" value="{!s.ac.Financial_interest__c}" id="financialInterest" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Time_devoted_to_Agency_business__c.Label}">
@@ -455,7 +455,7 @@
                                                 </tbody>
                                             </table>
                                             
-                                            <p class="slds-h3">Please fill in up to two of your latest Airline Agency experiences</p>
+                                            <p class="slds-h3">{!IF(NOT(s.blockEdit), 'Please fill in up to two of your latest Airline Agency experiences', '')}</p>
                                             <!-- PAST AGENCIES INFORMATION ROW -->
                                             <table class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>

@@ -87,7 +87,7 @@ public with sharing class AMS_AccreditationContactController {
         forDeletion = new List<AMS_Accreditation_Contact__c>();
 
         blockOwnershipEdit = aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR;
+                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES;
     }
     
     public void addEmptyRow()
@@ -602,6 +602,7 @@ public with sharing class AMS_AccreditationContactController {
     
     public void removeOwnership()
     {
+        System.debug('CHECKING CALL!!');
     	acWrapper.get(toNullify).ac.Financial_Interest__c = 0;
     }
     
@@ -626,7 +627,7 @@ public with sharing class AMS_AccreditationContactController {
             get{
                 return ac.Agency_Owner__c &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR;
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES;
 
                 }
             set;

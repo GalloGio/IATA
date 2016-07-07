@@ -635,7 +635,7 @@ public class AMS_OSCARTriggerHandler {
 
 
 		//Target Agency field validations
-		if (oscar.AMS_Target_Agency__c != null)
+		if (oscar.AMS_Target_Agency__c != null){
 			//Target Agency field only allowed on change of ownership iata to iata and change of Location or Location with Inspection
 			if (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
 
@@ -656,6 +656,13 @@ public class AMS_OSCARTriggerHandler {
 			}
 			else
 				oscar.AMS_Target_Agency__c.addError('Target Agency field can only be filled for the following types of changes: Ownership to IATA Agent, Location and Location with inspection.');
+		}
+
+		//When performing change of shareholding all active hierarchy agencies must be selected
+		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) {
+			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffected, accountHierarchyRelationships.get(oscar.Account__c), accounts))
+				oscar.addError('When performing a change of shareholding all the active agencies in the hierarchy must be selected.');
+		}
 
 	}
 
