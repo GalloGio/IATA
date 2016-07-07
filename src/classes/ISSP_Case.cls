@@ -432,8 +432,10 @@ if(newCase.RecordType.name=='ISS Portal PwC Edit'){ isPWCCase = true; }*/
                 }
 
                 ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(recordTypeName);
-                if(csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All')){
-                    isToShowSurveyBtn = true;
+                if(csValues != null){
+                    if(csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All')){
+                        isToShowSurveyBtn = true;
+                    }
                 }
             }
            // INC260167 - End

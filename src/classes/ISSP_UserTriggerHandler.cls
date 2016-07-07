@@ -254,7 +254,7 @@ public without sharing class ISSP_UserTriggerHandler {
         }
     }
     
-	  @future
+	@future
   	public static void deleteTwoFactor(Set<Id> contactRemove2FAIdSet){
     	List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactRemove2FAIdSet];
     	if (!userList.isEmpty()){

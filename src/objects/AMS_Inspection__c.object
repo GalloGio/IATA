@@ -231,14 +231,14 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <label>Appoitment (AMS)</label>
+    <label>Appointment (AMS)</label>
     <nameField>
         <displayFormat>INS-{0000000}</displayFormat>
-        <label>Appoitment Name</label>
+        <label>Appointment Name</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Appoitments (AMS)</pluralLabel>
+    <pluralLabel>Appointments (AMS)</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
