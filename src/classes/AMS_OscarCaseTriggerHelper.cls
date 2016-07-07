@@ -36,7 +36,7 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c: triggerNew){
             if(c.RecordTypeID == OSCARCaseRecordTypeID && triggerOldMap.get(c.id).Oscar__c == null && c.OSCAR__c != null){
                 if(caseOSCARMap==null)
-                    caseOSCARMap = [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c != null];
+                    caseOSCARMap = [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c != null AND Id != :c.Id];
                 for(Case oscarCase: caseOSCARMap){
                     if(oscarCase.Oscar__c == c.Oscar__c)
                         c.addError('The OSCAR assigned to this Case already has a Case Assigned.');
@@ -92,7 +92,7 @@ public class AMS_OscarCaseTriggerHelper {
             }
         }
 
-        update oscarsToUpdate;
+        if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
 
     }
 
@@ -222,7 +222,7 @@ public class AMS_OscarCaseTriggerHelper {
         if(newSidraCases.isEmpty()) return;
 
         Set<Id> isoCountries = new Set<Id>();
-        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c FROM Account WHERE Id IN :accounts.keySet()]){
+        for(Account a : [SELECT Id, IATA_ISO_Country__c, Location_Class__c FROM Account WHERE IATA_ISO_Country__c != null AND Location_Class__c != null AND Id IN :accounts.keySet()]){
             accounts.put(a.Id, a);
             isoCountries.add(a.IATA_ISO_Country__c);
         }
@@ -235,19 +235,21 @@ public class AMS_OscarCaseTriggerHelper {
                                                                 , Threshold__c
                                                                 , Location_Class__c
                                                             FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.Name = 'Irregularity Threshold')
+                                                            WHERE RecordType.Name = 'Irregularity Threshold'
+                                                            AND Threshold__c != null
+                                                            AND Location_Class__c != null)
                                                     FROM IATA_ISO_Country__c
                                                     WHERE Id IN :isoCountries])
         {
             for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                thresholds.put(country.Id+att.Location_Class__c, att.Threshold__c);
+                thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
             }
         }
         System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            c.Acc_IRR_leading_to_DEF__c = thresholds.get(a.IATA_ISO_Country__c+a.Location_Class__c);
+            if(a != null) c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
         }
     }
     
@@ -288,6 +290,37 @@ public class AMS_OscarCaseTriggerHelper {
         if(c.IRR_Type__c == 'Double Irregularity') irr.Irregularities_Points__c = 2;
 
         return irr;
+    }
+
+
+    /*AMS-1580*/
+    public static void copyOwner() {
+
+        Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
+
+        Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        List<Case> oscarCases = new List<Case>();
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
+
+        for(Case c : (List<Case>) Trigger.New){
+            if(
+                c.RecordTypeID == OSCARCaseRecordTypeID
+                && c.OSCAR__c != null
+                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
+            ){
+            
+                oscarCases.add(c);
+                oscars.put(c.Oscar__c, null);
+            }
+        }
+
+        if(oscarCases.isEmpty()) return;
+
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+
+        for(Case c : oscarCases){
+            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+        }
     }
 
 }

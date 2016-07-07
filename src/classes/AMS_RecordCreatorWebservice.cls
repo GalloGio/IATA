@@ -37,8 +37,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             String realAccountId = fetchRealAccountId(typeOfProcess,accountId,caseId);
 
-            if(realAccountId == null)
-                throw new CalloutException('For new BR Accounts, the communication case must have a concern account filled.');
+            if(realAccountId == null){
+                //throw new CalloutException('For new BR Accounts, the communication case must have a concern account filled.');
+                realAccountId = accountId;
+            }
 
             oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId);
 
@@ -61,17 +63,15 @@ global without sharing class AMS_RecordCreatorWebservice {
                 Case oscarCase = cases.get(0);
            
                 oscarCase.OSCAR__c = oscarId;
-                oscarCase.AccountId = oscarCase.Account_Concerned__c;
 
-                if(oscarCase.Account.Location_Type__c == 'SA')                          oscarCase.Type_of_Customer__c = 'Sales Agent – Generic';
-                else if (oscarCase.Account.Category__c == 'IATA Passenger Sales Agent') oscarCase.Type_of_Customer__c = 'IATA Travel Agent';
-                else if (oscarCase.Account.Category__c == 'IATA Cargo Agent')           oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
-                else if (oscarCase.Account.Category__c == 'Import Agent')               oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
-                else if (oscarCase.Account.Category__c == 'CASS Associate')             oscarCase.Type_of_Customer__c = 'CASS Associates';
-                else if (oscarCase.Account.Category__c == 'Courier')                    oscarCase.Type_of_Customer__c = 'IATA Cargo Agent';
-                else if (oscarCase.Account.Category__c == 'TIDS Agent')                 oscarCase.Type_of_Customer__c = 'TIDS';
-                else if (oscarCase.Account.Category__c == 'GSA General Sales Agent')    oscarCase.Type_of_Customer__c = 'General Sales Agent (GSA)';
-                else if (oscarCase.Account.Category__c == 'GSSA Cargo')                 oscarCase.Type_of_Customer__c = 'GSSA Cargo';
+                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV))
+                    if(oscarCase.AccountId != realAccountId)
+                        oscarCase.AccountId = realAccountId;
+
+                String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscarCase.Account.Location_Type__c,oscarCase.Account.Category__c);
+
+                if(typeOfCustomer != null)
+                    oscarCase.Type_of_Customer__c = typeOfCustomer;
 
                 update oscarCase;
              }
@@ -93,7 +93,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
 
-        if(!(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV)))
+        if(!(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV)))
             return accountId;
 
         List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];

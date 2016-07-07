@@ -57,6 +57,9 @@ public with sharing class MITA_AgreementsCtrl {
         chosenBIETAAgreement=false;
         searchContactMode=false;
         confirmMoveContactMode=false;
+
+        this.showDeactivateAgreementsPanel = false;
+        this.dummyAgreement = new MITA_Agreement__c();
     }
 
     public Integer getIsThereAnError(){
@@ -85,20 +88,7 @@ public with sharing class MITA_AgreementsCtrl {
         this.wrapper = null;
 
         // fill the agreements map
-        agreements = new map<Id,WrapperAgreement>();
-        for ( MITA_Agreement__c agreement: [
-            SELECT Airline_1__c, Airline_2__c, Active__c, Status__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c ,
-                Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c
-            FROM MITA_Agreement__c
-            WHERE Airline_1__c = :acc.Id OR Airline_2__c = :acc.Id
-        ]) {
-            addToAgreementsMap( agreement, agreements);
-        }
-        /*
-        if (this.wrapper != null ) {
-            selectAgreement(this.wrapper.isMITA);
-        }
-        */
+        refreshAgreementList();
 
         contacts = [
             SELECT Id, Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c
@@ -109,6 +99,18 @@ public with sharing class MITA_AgreementsCtrl {
                 where Account__c = :acc.Id
                 and Contact__r.MITA_Contact__c = true)
         ];
+    }
+
+    private void refreshAgreementList() {
+        agreements = new map<Id,WrapperAgreement>();
+        for ( MITA_Agreement__c agreement: [
+            SELECT Airline_1__c, Airline_2__c, Active__c, Status__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c ,
+                Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c
+            FROM MITA_Agreement__c
+            WHERE Airline_1__c = :acc.Id OR Airline_2__c = :acc.Id
+        ]) {
+            addToAgreementsMap( agreement, agreements);
+        }
     }
 
     private void addToAgreementsMap( MITA_Agreement__c newAgreement, map<Id,WrapperAgreement> mapAgreements) {
@@ -455,16 +457,6 @@ public with sharing class MITA_AgreementsCtrl {
             system.debug(LoggingLevel.ERROR,'####### ERROR saving a contact: '+cleanmessage);
             return;
         }
-        /*
-        Database.SaveResult sr = database.update(foundContact,false);
-        if(!sr.isSuccess()){
-            String cleanmessage = sr.getErrors()[0].getMessage();
-            if(cleanmessage.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION')!=-1)   cleanmessage = cleanmessage.substring(cleanmessage.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION')+35);
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+foundContact.Id+'" target="_blank">'+foundContact.Name+'</a> raised the following error: '+cleanmessage));
-            system.debug(LoggingLevel.ERROR,'####### ERROR saving a contact: '+sr.getErrors()[0].getMessage());
-            return;
-        }
-        */
     }
 
     public void chooseContact(){
@@ -478,29 +470,6 @@ public with sharing class MITA_AgreementsCtrl {
         }
 
         confirmMoveContactMode = true;
-    }
-
-    public void deactivateMitaMember() {
-        deactivateMember('MITA');
-    }
-
-    public void deactivateBietaMember() {
-        deactivateMember('BIETA');
-    }
-
-    public void deactivateMember(String agreementType) {
-        Date cancellationDate = Date.today();
-        list<MITA_Agreement__c> listUpdates = new list<MITA_Agreement__c>();
-        for ( WrapperAgreement wrapper: agreements.values() ) {
-            MITA_Agreement__c agreement = wrapper.getAgreement();
-            if (agreement.MITAorBIETA__c.equals(agreementType) && agreement.Active__c ) {
-                agreement.Cancellation_date__c = cancellationDate;
-                listUpdates.add(agreement);
-            }
-        }
-        if (!listUpdates.isEmpty()) {
-            update listUpdates;
-        }
     }
 
     public class WrapperAgreement {
@@ -696,6 +665,66 @@ public with sharing class MITA_AgreementsCtrl {
                 }
             }
         }
+    }
+
+    /**
+        DEACTIVATE AGREEMENTS SECTION
+    **/
+    public Boolean showDeactivateAgreementsPanel {get;set;}
+    public MITA_Agreement__c dummyAgreement {get;set;}
+    public String deactivateType {get;set;}
+
+    public void showDeactivateMITAPanel(){
+        this.deactivateType = 'MITA';
+        showDeactivatePanel();
+    }
+    public void showDeactivateBIETAPanel(){
+        this.deactivateType = 'BIETA';
+        showDeactivatePanel();
+    }
+    private void showDeactivatePanel() {
+        this.dummyAgreement = new MITA_Agreement__c(
+            Cancellation_date__c = Date.today()
+        );
+        this.showDeactivateAgreementsPanel = true;
+    }
+
+    public void deactivateAgreements() {
+        Date cancellationDate = this.dummyAgreement.Cancellation_date__c;
+        list<MITA_Agreement__c> listUpdates = new list<MITA_Agreement__c>();
+
+        list<MITA_Agreement__c> listAgreements = new list<MITA_Agreement__c>();
+        for ( WrapperAgreement wrapper: agreements.values() ) {
+            if (wrapper.isMixed) {
+                listAgreements.add(wrapper.agreementPax);
+                listAgreements.add(wrapper.agreementCargo);
+            } else{
+                listAgreements.add(wrapper.getAgreement());
+            }
+        }
+        System.debug('*** listAgreements ' + listAgreements);
+        for ( MITA_Agreement__c agreement: listAgreements ) {
+            if (agreement.MITAorBIETA__c.equals(this.deactivateType) && agreement.Active__c ) {
+                System.debug('*** agreement ' + agreement);
+                agreement.Cancellation_date__c = cancellationDate;
+                agreement.Cancellation_processed_date__c = Date.today();
+                if (this.acc.Id == agreement.Airline_1__c) {
+                    agreement.Cancellation_Reason__c = 'Airline 1 leaves agreement';
+                } else {
+                    agreement.Cancellation_Reason__c = 'Airline 2 leaves agreement';
+                }
+                listUpdates.add(agreement);
+            }
+        }
+        if (!listUpdates.isEmpty()) {
+            update listUpdates;
+            refreshAgreementList();
+        }
+        this.showDeactivateAgreementsPanel = false;
+    }
+
+    public void cancelDeactivation() {
+        this.showDeactivateAgreementsPanel = false;
     }
 
 }
