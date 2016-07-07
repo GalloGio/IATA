@@ -36,7 +36,7 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c: triggerNew){
             if(c.RecordTypeID == OSCARCaseRecordTypeID && triggerOldMap.get(c.id).Oscar__c == null && c.OSCAR__c != null){
                 if(caseOSCARMap==null)
-                    caseOSCARMap = [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c != null];
+                    caseOSCARMap = [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c != null AND Id != :c.Id];
                 for(Case oscarCase: caseOSCARMap){
                     if(oscarCase.Oscar__c == c.Oscar__c)
                         c.addError('The OSCAR assigned to this Case already has a Case Assigned.');
@@ -92,7 +92,7 @@ public class AMS_OscarCaseTriggerHelper {
             }
         }
 
-        update oscarsToUpdate;
+        if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
 
     }
 
