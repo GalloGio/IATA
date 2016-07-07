@@ -211,10 +211,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
 
             //ensures the case owner is always the same as the oscar
-            /*if (caseToUpdate != null && caseToUpdate.OwnerId != updatedOSCAR.OwnerId) {
+            if (caseToUpdate != null && caseToUpdate.OwnerId != updatedOSCAR.OwnerId) {
                 caseToUpdate.OwnerId = updatedOSCAR.OwnerId;
                 caseChanged = true;
-            }*/
+            }
 
             if(caseChanged) casesToUpdate.add(caseToUpdate);
         }
