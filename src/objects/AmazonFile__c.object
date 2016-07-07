@@ -64,7 +64,7 @@
         <relationshipLabel>AmazonFiles</relationshipLabel>
         <relationshipName>AmazonFiles</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -387,7 +387,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -397,7 +397,7 @@
         <description>If this record is visible or not in the Portal</description>
         <externalId>false</externalId>
         <label>Public</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
