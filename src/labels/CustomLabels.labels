@@ -337,6 +337,13 @@
         <value>Release FS (if any)</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP25</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP25</shortDescription>
+        <value>Validate Qualification Criteria (KC03)</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP3</fullName>
         <language>en_US</language>
         <protected>false</protected>
