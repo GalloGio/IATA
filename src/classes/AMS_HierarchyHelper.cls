@@ -49,44 +49,6 @@ global class AMS_HierarchyHelper {
 		return result;
 	}
 
-
-
-
-	// return hierarchy relationships that need to be updated
-	// the first parameter is the account which will become the new HO
-	/*public static HierarchyStruct switchBRwithHO(Id newHO, List<AMS_Agencies_relationhip__c> hierarchyRelationships){
-		
-		//Id newHO = newHeadOffice.Id;
-		Id oldHO = getHierarchyHO(hierarchyRelationships);
-		
-		// loop over all the relationships and switch old ho and new ho
-		List<AMS_Agencies_relationhip__c> relToUpdate = new List<AMS_Agencies_relationhip__c>();
-		for(AMS_Agencies_relationhip__c rel : hierarchyRelationships){
-
-			System.debug('AGENCY CHANGES:BEFORE RELID' + rel.Id + ' RELCHILD' + rel.Child_Account__c + ' RELPARENT' + rel.Parent_Account__c);
-
-			System.debug('NEW HO: ' + newHO + ' OLD HO ' + oldHO );
-
-			if(rel.Parent_Account__c == newHO)
-				rel.Parent_Account__c = oldHO;
-			else if(rel.Parent_Account__c == oldHO)
-				rel.Parent_Account__c = newHO;
-				
-			if(rel.Child_Account__c == newHO)
-				rel.Child_Account__c = oldHO;
-			else if(rel.Child_Account__c == oldHO)
-				rel.Child_Account__c = newHO;
-				
-			if(rel.Parent_Account__c == newHO || rel.Parent_Account__c == oldHO || 
-			   rel.Child_Account__c == newHO || rel.Child_Account__c == oldHO)
-				relToUpdate.add(rel);
-
-			System.debug('AGENCY CHANGES:AFTER RELID' + rel.Id + ' RELCHILD' + rel.Child_Account__c + ' RELPARENT' + rel.Parent_Account__c);
-		}
-		
-		return new HierarchyStruct(relToUpdate, null, null);
-	}*/
-
 	// return hierarchy relationships that need to be updated
 	// the first parameter is the account which will become the new HO
 	public static HierarchyStruct switchParentWithChild(Id newParent, Id oldParent, String changeLocationTypeBehavior, Map<Id, Account> accounts, List<AMS_Agencies_relationhip__c> hierarchyRelationships){
@@ -444,6 +406,25 @@ global class AMS_HierarchyHelper {
 
 
 		return errorMessage == '' ? null : errorMessage;
+	}
+
+	// return null if the incomplete migration is valid, a string with the error message otherwise
+	public static Boolean isAllHierarchySelected(Set<Id> agenciesSelected, List<AMS_Agencies_relationhip__c> hierarchyRelationships, Map<Id, Account> accounts){
+
+		for(AMS_Agencies_relationhip__c rel: hierarchyRelationships){
+			Id parentId = rel.Parent_Account__c;
+			Id childId = rel.Child_Account__c;
+
+			//only active hierarchy agencies are to be considered
+			Account parent = accounts.get(parentId);
+			Account child = accounts.get(childId);
+			if(parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId))
+				return false;
+			if(child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(childId))
+				return false;
+		}
+
+		return true;
 	}
 
 	public class HierarchyStruct {

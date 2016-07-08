@@ -290,7 +290,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Finalization_result__c</field>
+                <field>Country_Specifics_Approval_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Change_effective_as_of__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -312,7 +316,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Change_effective_as_of__c</field>
+                <field>Update_AIMS_Approval_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Finalization_result__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -331,11 +339,27 @@
                 <behavior>Edit</behavior>
                 <field>Financial_Security_released__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Country_Specifics_Disapproval_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Cancel_Inspection_Req_Disapproval_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Fees_refund_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Update_AIMS_Disapproval_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Close_IFAP_Disapproval_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -354,8 +378,24 @@
                 <behavior>Edit</behavior>
                 <field>Rejection_notification_sent__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Country_Specifics_Rejection_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Cancel_Inspection_Req_Rejection_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Update_AIMS_Rejection_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Close_IFAP_Rejection_Date__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Rejection_result__c</field>
@@ -496,11 +536,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Account__c</fields>
         <fields>Accreditation_Endorsement_organisation__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>Account__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
