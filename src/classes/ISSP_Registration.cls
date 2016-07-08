@@ -122,6 +122,8 @@ public without sharing class ISSP_Registration {
     public Boolean show90Days {get; set;}
     
     public String country {get; set;}
+
+    public Boolean newAirline = false;
     
     public ISSP_Registration(){
         
@@ -636,7 +638,7 @@ public without sharing class ISSP_Registration {
         if (!ISSP_Constant.languageMap.containsKey(lang))
             lang = 'en_US';
             
-        Boolean newAirline = false;
+        //Boolean newAirline = false;
         if (isAirline && !createBranch && showCreateAccount){
         	newAirline = true;
         }
@@ -743,6 +745,7 @@ public without sharing class ISSP_Registration {
             }
             else{
                 acc.Reason_for_creation__c = 'Created by customer';
+
             }
             
             log('RecordTypeId ' + acc.RecordTypeId);
@@ -783,6 +786,18 @@ public without sharing class ISSP_Registration {
                     languageString = ISSP_Constant.languageMap.get(lang);
                 }
             }
+
+            //INC253595 - Start
+            system.debug('createAgency creating contact: ' + createAgency);
+            if (!con.ID_Cards__r.isEmpty() || selectedCustomerType == GeneralPublic || isNotIATA || newAirline){
+                system.debug('setting status to: ' + ISSP_Constant.APPROVED_CONTACT_STATUS);
+                con.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
+            }
+            else{
+                con.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS ;
+            }
+            //INC253595 - End
+
             con.Preferred_Language__c = languageString;
             upsert con;
             
