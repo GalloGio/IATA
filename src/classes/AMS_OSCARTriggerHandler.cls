@@ -1,6 +1,21 @@
 public class AMS_OSCARTriggerHandler {
 
 	class AMSException extends Exception {}
+	
+	public static Map<String, String> closedStatusMapping{
+		get{
+			if(closedStatusMapping == null){
+				closedStatusMapping = new Map<String, String>{
+					'Closed (Closed)' => 'Closed',
+					'Closed_Not Accepted' => 'Closed_ Not Accepted',
+					'Closed_Rejected' => 'Closed_Rejected',
+					'Closed_Withrawn' => 'Closed_Withdrawn'
+				};
+			}
+			return closedStatusMapping;
+		}
+		set;
+	}
 
 	//used to identify situations where the LocationType of an SA Agency should not be changed
 	public static boolean keepSALocationTypeFlag = false;

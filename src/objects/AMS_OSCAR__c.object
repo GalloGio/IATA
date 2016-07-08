@@ -3245,6 +3245,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <label>Oscar Status</label>
         <picklist>
             <picklistValues>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Accepted_Pending Agreement</fullName>
                 <default>false</default>
             </picklistValues>
@@ -5192,6 +5196,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Accepted_Pending Agreement</fullName>
                 <default>false</default>
             </values>
@@ -6800,6 +6808,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
         <picklistValues>
             <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Accepted_Pending Agreement</fullName>
                 <default>false</default>
@@ -8417,6 +8429,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Accepted_Pending Agreement</fullName>
                 <default>false</default>
             </values>
@@ -9996,6 +10012,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
         <picklistValues>
             <picklist>Status__c</picklist>
+            <values>
+                <fullName>Accepted_Future Date</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Accepted_Pending Agreement</fullName>
                 <default>false</default>
