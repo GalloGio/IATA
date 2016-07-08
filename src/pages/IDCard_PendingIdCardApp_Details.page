@@ -155,14 +155,10 @@
                     <div style="text-align: left">
                        <h1>{!$Label.IDCard_PendingIdCardAppH1}</h1>
                     </div>
-                    <div style="text-align: left">
-                        <h2>{!$Label.IDCard_PendingIdCardAppH2}</h2>
-                    </div>
                      <apex:pageMessages id="ErrMsg" escape="false" />
                     
                     <apex:pageBlockTable value="{!myIdApp}" var="app" id="IDapp" style="margin-top:1em; width:850px" >
                     	<apex:column style="vertical-align: top">
-                            <apex:facet name="header">{!$Label.IDCard_IDCardAppDetails}</apex:facet>
                         
                             <table style="margin-top:1em; width:400px">
                                 <tr>
@@ -203,6 +199,8 @@
                                 </tr>
                                 
                             </table>
+                            <br/>
+                         <a href="http://www.iata.org/customer-portal/Pages/index.aspx" target="_self">{!$Label.IDCard_GotQueries}</a>
 						</apex:column>
                     </apex:pageBlockTable>
                     <apex:pageBlockButtons location="bottom">                        
