@@ -213,7 +213,7 @@ public class AMS_OSCAR_ProcessViewerController {
                     Send_agreement__c,Update_DPC__c,Update_IRIS__c,Update_BSPLink_CASSLink__c,Update_Portal_Setup__c,Welcome_pack__c,Off_site_storage__c,
                     Welcome_call__c,Change_effective_as_of__c,Bank_Guarantee_amount__c,CurrencyIsoCode,STEP1__c, STEP2__c, STEP3__c, STEP4__c, STEP5__c,
                     STEP6__c, STEP7__c, STEP8__c, STEP9__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c,
-                    STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
+                    STEP19__c, STEP20__c, STEP21__c, STEP22__c, STEP23__c, STEP24__c, STEP25__c,Confirm_DD_setup_with_agent__c, Confirm_DD_setup_with_R_S__c, Type_of_change__c,
                     Late_notified_change__c, Confirm_DGR_DGA__c,Update_IRIS_processing__c, Send_approval_letter__c, Issue_rejection_notification_pack__c,
                     AMS_Online_Accreditation__r.Ready_for_Accreditation__c, Validation_Status__c, Issue_billing_document__c, AMS_Generate_COR_change_code__c
                     from AMS_OSCAR__c where Id =: oscarId LIMIT 1];

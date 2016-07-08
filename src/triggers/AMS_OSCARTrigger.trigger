@@ -37,6 +37,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 'STEP22__c' => System.Label.AMS_OSCAR_STEP22,
                 'STEP23__c' => System.Label.AMS_OSCAR_STEP23,
                 'STEP24__c' => System.Label.AMS_OSCAR_STEP24,
+                'STEP25__c' => System.Label.AMS_OSCAR_STEP25,
                 'STEP3__c' => System.Label.AMS_OSCAR_STEP3,
                 'STEP4__c' => System.Label.AMS_OSCAR_STEP4,
                 'STEP5__c' => System.Label.AMS_OSCAR_STEP5,

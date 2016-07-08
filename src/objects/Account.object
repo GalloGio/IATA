@@ -2295,6 +2295,40 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AFRD_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>AFRD Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AFRD_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>AFRD Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending ICCS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>AIMS_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
