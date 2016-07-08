@@ -524,7 +524,9 @@
     </relatedLists>
     <relatedLists>
         <fields>LocalGovernance__c.NAME</fields>
+        <fields>Local_Group_Type__c</fields>
         <fields>LocalGovernance__c.IATA_Office__c</fields>
+        <fields>LocalGovernance__c.Cluster__c</fields>
         <fields>NAME</fields>
         <relatedList>Participant__c.Contact__c</relatedList>
     </relatedLists>

@@ -267,6 +267,8 @@
           "Welcome_pack__c",
           "Off_site_storage__c",
           "Welcome_call__c",
+          "Country_Specifics_Approval__c",
+          "Update_AIMS_Approval__c",
           "Change_effective_as_of__c",
           "STEP1__c"],
           "IsDependent": false
@@ -294,6 +296,10 @@
           "Issue_disapproval_pack__c",
           "Issue_credit_note_if_applicable__c",
           "Release_FS_if_applicable__c",
+          "Country_Specifics_Disapproval__c",
+          "Update_AIMS_Disapproval__c",
+          "Close_IFAP_Disapproval__c",
+          "Cancel_Inspection_Requests_Disapproval__c",
           "STEP3__c"],
           "IsDependent": false
         }]
@@ -318,6 +324,10 @@
           }],
           "DisplayFields": [
           "Issue_rejection_notification_pack__c",
+          "Country_Specifics_Rejection__c",
+          "Update_AIMS_Rejection__c",
+          "Close_IFAP_Rejection__c",
+          "Cancel_Inspection_Requests_Rejection__c",
           "STEP18__c"],
           "IsDependent": false
         }]
@@ -635,6 +645,8 @@
           "Welcome_pack__c",
           "Off_site_storage__c",
           "Welcome_call__c",
+          "Country_Specifics_Approval__c",
+          "Update_AIMS_Approval__c",
           "Change_effective_as_of__c",
           "STEP1__c"],
           "IsDependent": false
@@ -662,6 +674,10 @@
           "Issue_disapproval_pack__c",
           "Issue_credit_note_if_applicable__c",
           "Release_FS_if_applicable__c",
+          "Country_Specifics_Disapproval__c",
+          "Update_AIMS_Disapproval__c",
+          "Close_IFAP_Disapproval__c",
+          "Cancel_Inspection_Requests_Disapproval__c",
           "STEP3__c"],
           "IsDependent": false
         }]
@@ -686,6 +702,10 @@
           }],
           "DisplayFields": [
           "Issue_rejection_notification_pack__c",
+          "Country_Specifics_Rejection__c",
+          "Update_AIMS_Rejection__c",
+          "Close_IFAP_Rejection__c",
+          "Cancel_Inspection_Requests_Rejection__c",
           "STEP18__c"],
           "IsDependent": false
         }]
@@ -972,7 +992,7 @@
       {
         "Name": "AMS_OSCAR_VALIDATION",
         "Steps": [{
-          "Name": "STEP15",
+          "Name": "STEP25",
           "Required": [],
           "Actions": [],
           "Automations": [{
@@ -1413,6 +1433,8 @@
           "Welcome_pack__c",
           "Off_site_storage__c",
           "Welcome_call__c",
+          "Country_Specifics_Approval__c",
+          "Update_AIMS_Approval__c",
           "Change_effective_as_of__c",
           "STEP1__c"],
           "IsDependent": false
@@ -1440,6 +1462,10 @@
           "Issue_disapproval_pack__c",
           "Issue_credit_note_if_applicable__c",
           "Release_FS_if_applicable__c",
+          "Country_Specifics_Disapproval__c",
+          "Update_AIMS_Disapproval__c",
+          "Close_IFAP_Disapproval__c",
+          "Cancel_Inspection_Requests_Disapproval__c",
           "STEP3__c"],
           "IsDependent": false
         }]
@@ -1464,6 +1490,10 @@
           }],
           "DisplayFields": [
           "Issue_rejection_notification_pack__c",
+          "Country_Specifics_Rejection__c",
+          "Update_AIMS_Rejection__c",
+          "Close_IFAP_Rejection__c",
+          "Cancel_Inspection_Requests_Rejection__c",
           "STEP18__c"],
           "IsDependent": false
         }]
