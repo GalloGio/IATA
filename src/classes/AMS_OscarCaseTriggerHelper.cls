@@ -293,8 +293,8 @@ public class AMS_OscarCaseTriggerHelper {
     }
 
 
-    /*AMS-1580*/
-    public static void copyOwner() {
+    /*AMS-1580 and AMS-1585*/
+    public static void copyDataFromOscar() {
 
         Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 
@@ -316,11 +316,11 @@ public class AMS_OscarCaseTriggerHelper {
 
         if(oscarCases.isEmpty()) return;
 
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
             c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            c.Status = oscars.get(c.Oscar__c).Status__c;
         }
     }
-
 }

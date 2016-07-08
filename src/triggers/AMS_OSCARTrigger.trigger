@@ -165,10 +165,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
             if (updatedOSCAR.Status__c <> oldOSCAR.Status__c) {
 
-                if ( updatedOSCAR.Status__c == 'Closed (Closed)' ||
-                        updatedOSCAR.Status__c == 'Closed_Not Accepted' ||
-                        updatedOSCAR.Status__c == 'Closed_Rejected' ||
-                        updatedOSCAR.Status__c == 'Closed_Withrawn' ) {
+                if ( updatedOSCAR.Status__c != null && AMS_OSCARTriggerHandler.closedStatusMapping.containsKey(updatedOSCAR.Status__c) ) {
 
                     updatedOSCAR.Date_Time_Closed__c = System.now();
 
@@ -176,15 +173,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                         //CASE caseToUpdate = caseList.get(0);
 
-                        if (updatedOSCAR.Status__c == 'Closed (Closed)')
-                            caseToUpdate.Status = 'Closed';
-                        else if (updatedOSCAR.Status__c == 'Closed_Not Accepted')
-                            caseToUpdate.Status = 'Closed_ Not Accepted';
-                        else if (updatedOSCAR.Status__c == 'Closed_Rejected')
-                            caseToUpdate.Status = 'Closed_Rejected';
-                        else if (updatedOSCAR.Status__c == 'Closed_Withrawn')
-                            caseToUpdate.Status = 'Closed_Withdrawn';
-
+                        caseToUpdate.Status = AMS_OSCARTriggerHandler.closedStatusMapping.get(updatedOSCAR.Status__c);
                         caseChanged = true;
                     }
                 } else if ( updatedOSCAR.Status__c.equalsIgnoreCase('Pending Approval') || updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
