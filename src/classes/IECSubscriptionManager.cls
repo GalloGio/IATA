@@ -9,8 +9,9 @@
             Added method to re-enable purchasing trials for a given contact/product
         - Sayed Ramadan
             Added method to get swapping rate plans
-        - 20160705-Sonny Leman: 
+        - 20160707-Sonny Leman: 
             added special handling for subscription creation for Ebroadcast Pay-As-You-Go product
+            bugfix: add Zuora__TermSettingType__c in getSubscriptionBy...
          
   */
 public with sharing class IECSubscriptionManager {
@@ -18,10 +19,10 @@ public with sharing class IECSubscriptionManager {
     public static final String TERM_TYPE = 'TERMED';
     public static final Integer INVOICE_PREVIEW_TERM = 12;
     public static final Integer SUBSCRIPTION_TERM = 12;
-    public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
     public static final Integer EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM = 1; 
     public static final String EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD = 'Day';
     public static final String EBC_PAY_AS_YOU_GO_SUBSCRIPTION_NOTES = 'eBroadcast Pay-As-You-Go activation';
+    public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 
     /**
      * Checks whether the Customer Portal Contact is eligible for a Trial or not
@@ -1630,6 +1631,7 @@ public with sharing class IECSubscriptionManager {
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
                         , Zuora__ContractAcceptanceDate__c
+                        , Zuora__TermSettingType__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                             From Zuora__Subscription_Product_Charges__r)
@@ -1663,6 +1665,7 @@ public with sharing class IECSubscriptionManager {
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
                         , Zuora__ContractAcceptanceDate__c
+                        , Zuora__TermSettingType__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                             From Zuora__Subscription_Product_Charges__r)
@@ -1698,6 +1701,7 @@ public with sharing class IECSubscriptionManager {
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
                         , Zuora__ContractAcceptanceDate__c
+                        , Zuora__TermSettingType__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                             From Zuora__Subscription_Product_Charges__r)
@@ -1946,11 +1950,13 @@ public with sharing class IECSubscriptionManager {
                 subscription.setValue('TermType', TERM_TYPE);
                 subscription.setValue('InitialTerm', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM);
                 subscription.setValue('RenewalTerm', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM);
-                subscription.setValue('InitialTermPeriodType', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD);
-                subscription.setValue('RenewalTermPeriodType', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD);
+                //subscription.setValue('InitialTermPeriodType', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD);
+                //subscription.setValue('RenewalTermPeriodType', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_TERM_PERIOD);
                 subscription.setValue('Notes', EBC_PAY_AS_YOU_GO_SUBSCRIPTION_NOTES);
                 subscription.setValue('AutoRenew', false);
+                subscription.setValue('ServiceActivationDate', IECZuoraHelper.getCurrentDate()); 
                 // subscription.setValue('SubscriptionStartDate', IECZuoraHelper.getCurrentDate()); // this is not insertable
+                //subscription.setValue('Status', EBC_PAY_AS_YOU_GO_DEFAULT_STATUS); // set to Active
         }
         return subscription;
     } // end of ebcSubscriptionInitialization
