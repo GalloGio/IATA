@@ -2920,6 +2920,18 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>BillTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BillTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Birthdate</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -8647,6 +8659,18 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ShipTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Contacts (ShipTo Location)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Skype_Call_Contact__c</fullName>
