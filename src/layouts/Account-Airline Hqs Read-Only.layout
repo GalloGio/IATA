@@ -12,7 +12,12 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Account type</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Customer_Type__c</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
