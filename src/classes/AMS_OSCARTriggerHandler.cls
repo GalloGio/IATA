@@ -1,5 +1,9 @@
 public class AMS_OSCARTriggerHandler {
 
+	//*************************************
+	//************ variables **************
+	//*************************************
+
 	class AMSException extends Exception {}
 	
 	public static Map<String, String> closedStatusMapping{
@@ -20,62 +24,33 @@ public class AMS_OSCARTriggerHandler {
 	//used to identify situations where the LocationType of an SA Agency should not be changed
 	public static boolean keepSALocationTypeFlag = false;
 
-	public static void handleBeforeInsert(List<AMS_OSCAR__c> oscars) {
+	//*************************************
+	//********* context methods ***********
+	//*************************************
+
+	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
+		handleChangesProcess(oscars);
+	}
+
+	public static void handleBeforeInsert() {
 
 	}
 
-	public static void handleAfterInsert(List<AMS_OSCAR__c> oscars) {
-		UpdateCaseKPIFields(oscars);
+	public static void handleAfterInsert() {
+		updateCaseKPIFields();
 	}
 
-	public static void handleAfterUpdate(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
-		list<AMS_OSCAR__c> lsOscarToUpdate = new list<AMS_OSCAR__c>();
-		list<AMS_OSCAR__c> lsOscarInsToUpdate = new list<AMS_OSCAR__c>();
+	public static void handleAfterUpdate() {
 		
-		for (AMS_OSCAR__c oscar : oscars) {
-			if ( (oscar.Reason_For_KPI__c != oldMap.get(oscar.id).Reason_For_KPI__c) ||
-			        (oscar.Process_Start_Date__c != oldMap.get(oscar.id).Process_Start_Date__c) ||
-			        (oscar.Dossier_Reception_Date__c != oldMap.get(oscar.id).Dossier_Reception_Date__c))
-				lsOscarToUpdate.add(oscar);
-		}
-
-		
-		if (!lsOscarToUpdate.isEmpty())
-			UpdateCaseKPIFields(lsOscarToUpdate);
-
-	}
-	
-	//TD: udpate case reason. Used for calculating KPIs
-	public static void UpdateCaseKPIFields(List<AMS_OSCAR__c> oscars) {
-		try {
-			map<id, AMS_OSCAR__c> mapOscars = new map<id, AMS_OSCAR__c>();
-			for (AMS_OSCAR__C oscar : oscars)
-				mapOscars.put(oscar.id, oscar);
-
-			if (!mapOscars.isEmpty()) {
-				list<Case> lsCaseToUpdate = new list<case>();
-				for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c from Case where OSCAR__c in:mapOscars.keySet()]){
-					lsCaseToUpdate.add(new case(id = ca.id
-												, Reason1__c = mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c
-												, Process_Start_Date__c = mapOscars.get(ca.OSCAR__C).Process_Start_Date__c
-												, BSPCountry__c = ca.Account.IATA_ISO_Country__r.Name
-												, Region__c = ca.Account.Region_formula__c
-												, Dossier_reception_date__c = mapOscars.get(ca.OSCAR__C).Dossier_Reception_Date__c));
-				}
-				
-				if(!lsCaseToUpdate.isEmpty())
-					update lsCaseToUpdate;
-			}
-		} catch (exception e) {
-			system.debug('DTULLO 39 --> exception --> ' + e.getMessage());
-		}
+		updateCaseKPIFields();
+		updateCaseStatusOwner();
 	}
 
-	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
-		handleChangesProcess(oscars, oldMap);
-	}
+	//*************************************
+	//********** helper methods ***********
+	//*************************************
 
-	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
 		//do Not run minor changes on agency changes trigger????
 		AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
@@ -86,16 +61,18 @@ public class AMS_OSCARTriggerHandler {
 
 			List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
-			validateTypeOfChange(oscarsToValidate, oldMap, configs);
+			validateTypeOfChange(oscarsToValidate, configs);
 
-			List<AMS_OSCAR__c> oscarsToProcess = getAgencyChangeOSCARSToProcess(oscarsToValidate, oldMap);
+			List<AMS_OSCAR__c> oscarsToProcess = getAgencyChangeOSCARSToProcess(oscarsToValidate);
 
 			if (oscarsToProcess.size() > 0)
-				processAgencyChanges(oscarsToProcess, oldMap, configs);
+				processAgencyChanges(oscarsToProcess, configs);
 		}
 	}
 
-	public static void validateTypeOfChange(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, List<Map<String, String>> configs) {
+	public static void validateTypeOfChange(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
+
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		List<String> oscarStepsApiName = getOSCARStepsApiName();
 
@@ -149,7 +126,9 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	//get only the Agency Change OSCARs that need to be processed
-	private static List<AMS_OSCAR__c> getAgencyChangeOSCARSToProcess(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+	private static List<AMS_OSCAR__c> getAgencyChangeOSCARSToProcess(List<AMS_OSCAR__c> oscars) {
+
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 
@@ -166,7 +145,9 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
-	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap, List<Map<String, String>> configs) {
+	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
+
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		//this Container will store all change codes that need to be created
 		List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
@@ -627,6 +608,90 @@ public class AMS_OSCARTriggerHandler {
 				oscar.addError('When performing a change of shareholding all the active agencies in the hierarchy must be selected.');
 		}
 
+	}
+
+
+	private static void updateCaseStatusOwner() {
+
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
+		Map<Id, AMS_OSCAR__c> newMap = (Map<Id,AMS_OSCAR__c>) Trigger.newMap;
+
+		List<AMS_OSCAR__c> updatedOscars = new List<AMS_OSCAR__c>();
+		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
+			if(
+				(oscar.Status__c != null && oscar.Status__c != oldMap.get(oscar.Id).Status__c)
+				|| oscar.OwnerId != oldMap.get(oscar.Id).OwnerId
+			){
+				updatedOscars.add(oscar);
+			}
+		}
+
+		if(updatedOscars.isEmpty()) return;
+
+		List<Case> casesToUpdate = new List<Case>();
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c from CASE WHERE Oscar__c != null and RecordType.Name = 'OSCAR Communication' and Oscar__c IN :updatedOscars]){
+
+			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
+			Boolean caseChanged = false;
+
+	        if ( AMS_OSCARTriggerHandler.closedStatusMapping.containsKey(updatedOSCAR.Status__c) ) {
+	        	String closedStatus = AMS_OSCARTriggerHandler.closedStatusMapping.get(updatedOSCAR.Status__c);
+	        	if(c.Status != closedStatus){
+	        		c.Status = closedStatus;
+	        		caseChanged = true;
+	        	}
+	        }else if(c.Status != updatedOSCAR.Status__c){
+        		c.Status = updatedOSCAR.Status__c;
+        		caseChanged = true;
+        	}
+
+        	if(c.OwnerId != updatedOSCAR.OwnerId){
+        		c.OwnerId = updatedOSCAR.OwnerId;
+        		caseChanged = true;
+        	}
+
+		    casesToUpdate.add(c);
+		}
+
+		if(!casesToUpdate.isEmpty()) update casesToUpdate;
+	}
+	
+	//TD: udpate case reason. Used for calculating KPIs
+	public static void updateCaseKPIFields() {
+
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
+
+		Map<Id, AMS_OSCAR__c> mapOscars = new Map<Id, AMS_OSCAR__c>();
+		for (AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New ) {
+			if (
+					Trigger.isInsert ||
+			    	(
+			    		(oscar.Reason_For_KPI__c != oldMap.get(oscar.id).Reason_For_KPI__c) ||
+			        	(oscar.Process_Start_Date__c != oldMap.get(oscar.id).Process_Start_Date__c) ||
+			        	(oscar.Dossier_Reception_Date__c != oldMap.get(oscar.id).Dossier_Reception_Date__c)
+			        )
+			    )
+				mapOscars.put(oscar.id, oscar);
+		}
+
+		if(mapOscars.isEmpty()) return;
+
+		try {
+			List<Case> lsCaseToUpdate = new List<Case>();
+			for(case ca:[select id, Reason1__c, OSCAR__c, Account.IATA_ISO_Country__r.Name, Account.Region_Formula__c from Case where OSCAR__c in:mapOscars.keySet()]){
+				lsCaseToUpdate.add(new case(id = ca.id
+											, Reason1__c = mapOscars.get(ca.OSCAR__C).Reason_For_KPI__c
+											, Process_Start_Date__c = mapOscars.get(ca.OSCAR__C).Process_Start_Date__c
+											, BSPCountry__c = ca.Account.IATA_ISO_Country__r.Name
+											, Region__c = ca.Account.Region_formula__c
+											, Dossier_reception_date__c = mapOscars.get(ca.OSCAR__C).Dossier_Reception_Date__c));
+			}
+			
+			if(!lsCaseToUpdate.isEmpty())
+				update lsCaseToUpdate;
+		} catch (exception e) {
+			system.debug('DTULLO 39 --> exception --> ' + e.getMessage());
+		}
 	}
 
 }
