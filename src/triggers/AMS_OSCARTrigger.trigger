@@ -279,8 +279,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
     private static void applyAccreditationProcessLogic(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
         //To update with current date 'Checkbox Field' => 'Date Field'
         Map<String,String> oscarDateFieldsMap = new Map <String,String> {
-            'Cancel_Inspection_Requests_Disapproval__c' => 'Cancel_Inspection_Requests_Disapproval_Date__c',
-            'Cancel_Inspection_Requests_Rejection__c'   => 'Cancel_Inspection_Requests_Rejection_Date__c',
+            'Cancel_Inspection_Requests_Disapproval__c' => 'Cancel_Inspection_Req_Disapproval_Date__c',
+            'Cancel_Inspection_Requests_Rejection__c'   => 'Cancel_Inspection_Req_Rejection_Date__c',
             'Close_IFAP_Disapproval__c'                 => 'Close_IFAP_Disapproval_Date__c',
             'Close_IFAP_Rejection__c'                   => 'Close_IFAP_Rejection_Date__c',
             'Country_Specifics_Approval__c'             => 'Country_Specifics_Approval_Date__c',
