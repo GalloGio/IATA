@@ -1,0 +1,209 @@
+@isTest
+private class Product_Sel_Test
+{
+    @isTest (seeAllData=true)
+    static void test_getProductPriceInfo()
+    {
+        TestDataGenerator.generateApexSetting(); 
+
+        
+
+        //-- generate Products 
+        zqu__ZProduct__c zProduct = TestDataGenerator.generateZProducts(1, false)[0];
+        zProduct.SAPProductMaterialNo__c = '99999-99';
+        insert zProduct;
+
+        Product2 product  = TestDataGenerator.generateProducts(1, false)[0];
+            product.ZProduct__c = zProduct.Id; 
+            product.SAP_Material_Number__c = '99999-99';
+        insert product; 
+
+        //-- generate 6 Rate plans: standard, CustomerType, Coupon, Region, Country, presale
+        List<zqu__ProductRatePlan__c> zRatePlans = TestDataGenerator.generateZRatePlans(zProduct.Id,6,false);
+            zRatePlans[1].CustomerType__c = 'Member';
+            zRatePlans[2].Couponcode__c = 'COUP-0007';
+            zRatePlans[3].Region__c = 'Africa & Middle East';
+            zRatePlans[4].Country__c = 'Canada'; 
+            zRatePlans[5].IsPreSale__c = 'Yes'; 
+        insert zRatePlans;     
+
+        //-- generate Charges for each plan 
+        //Standard Charges: UnitPrice + Volume Price 
+        List<zqu__ProductRatePlanCharge__c> stdZCharges = TestDataGenerator.generateZCharges(zRatePlans[0].Id, 2, false);
+            stdZCharges[0].zqu__Model__c = 'Per Unit';
+            stdZCharges[1].zqu__Model__c = 'Volume';
+
+        //Customer Type Charge : percentage Discount 
+        zqu__ProductRatePlanCharge__c ctZCharge = TestDataGenerator.generateZCharges(zRatePlans[1].Id, 1, false)[0];
+            ctZCharge.zqu__Model__c = 'Discount-Percentage';
+
+        //Coupon Code Charge : Amount discount 
+        zqu__ProductRatePlanCharge__c ccZCharge = TestDataGenerator.generateZCharges(zRatePlans[2].Id, 1, false)[0];
+            ccZCharge.zqu__Model__c = 'Discount-Fixed Amount';
+
+        //Region Charge: percentage discount 
+        zqu__ProductRatePlanCharge__c rZCharge = TestDataGenerator.generateZCharges(zRatePlans[3].Id, 1, false)[0];
+            rZCharge.zqu__Model__c = 'Discount-Percentage';
+
+        //Country Charge: Ammount discount 
+        zqu__ProductRatePlanCharge__c cZCharge = TestDataGenerator.generateZCharges(zRatePlans[4].Id, 1, false)[0];
+            cZCharge.zqu__Model__c = 'Discount-Fixed Amount';
+
+        //PreSale Charge:percentage discount 
+        zqu__ProductRatePlanCharge__c psZCharge = TestDataGenerator.generateZCharges(zRatePlans[5].Id, 1, false)[0];
+            psZCharge.zqu__Model__c = 'Discount-Percentage';
+
+        List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>{
+            stdZCharges[0],stdZCharges[1],ctZCharge,ccZCharge,rZCharge,cZCharge,psZCharge
+        };
+        insert zCharges;
+
+        //-- Generate Tiers 
+
+        zqu__ProductRatePlanChargeTier__c stdUnitPriceTier = TestDataGenerator.generateZTiers(stdZCharges[0].Id, 1, false)[0];
+        List<zqu__ProductRatePlanChargeTier__c> stdVolumeTiers = TestDataGenerator.generateZTiers(stdZCharges[1].Id, 2, false);
+        zqu__ProductRatePlanChargeTier__c ctZTier = TestDataGenerator.generateZTiers(ctZCharge.Id, 1, false)[0];
+        zqu__ProductRatePlanChargeTier__c ccZTier = TestDataGenerator.generateZTiers(ccZCharge.Id, 1, false)[0];
+        zqu__ProductRatePlanChargeTier__c rZTier = TestDataGenerator.generateZTiers(rZCharge.Id, 1, false)[0];
+        zqu__ProductRatePlanChargeTier__c cZTier = TestDataGenerator.generateZTiers(cZCharge.Id, 1, false)[0];
+        zqu__ProductRatePlanChargeTier__c psZTier = TestDataGenerator.generateZTiers(psZCharge.Id, 1, false)[0];
+
+
+        List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>{
+            stdUnitPriceTier, stdVolumeTiers[0], stdVolumeTiers[1], ctZTier, ccZTier, rZTier, cZTier, psZTier
+        };
+        insert zTiers;
+
+
+        Test.startTest();
+            Product_Sel pSelector = new Product_Sel(); 
+            
+            Map<String, PriceInfo_DTO> result = pSelector.getProductPriceInfo(new Set<String>{'99999-99'}, null,null,null,true); 
+        Test.stopTest();
+
+        //-- Call method
+        
+        
+        
+
+        //-- Assertions 
+
+    }
+
+    @isTest static void test_selectById() 
+    {
+        TestDataGenerator.generateUtilitySetting();
+        
+        //-- Generate Test Data
+        Product2 ProdA = new Product2(
+            Name = 'Product A'
+        ); 
+        Product2 ProdB = new Product2(
+            Name = 'Product B'
+        ); 
+        insert new List<Product2>{ProdA, ProdB};
+
+        //-- Call Method 
+        Product_Sel prodSelector = new Product_Sel(); 
+        List<Product2> result = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}); 
+        List<Product2> result2 = prodSelector.selectById(new Set<Id>{ProdA.Id, ProdB.Id}, new List<String>{'Id'});
+
+        //-- Assert
+        System.assertEquals(2, result.size());
+
+        try{
+            String name = result2[0].Name;
+        }
+        catch(Exception e)
+        {
+            System.assert(e.getMessage().contains('Name'));
+        }
+    }
+
+
+    @isTest (seeAllData=true)
+    static void test_format2zObject()
+    {
+        //-- Generate Test Data
+        Product2 ProdA = new Product2(
+            Name = 'Product A',
+            Description = 'Description for Product A',
+            SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
+            Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
+            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE
+        ); 
+        Product2 ProdB = new Product2(
+            Name = 'Product B',
+            Description = 'Description for Product B',
+            SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
+            Zuora_Id__c = TestDataGenerator.generateZuoraFakeId(),
+            Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
+            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE
+        ); 
+
+        List<Product2> lst = new List<Product2>{ProdA, ProdB};
+
+        insert lst;
+
+        
+        //new Product_Sel().updateProducts(lst);
+
+        //-- Call Method
+        Product_Sel prodSelector = new Product_Sel(); 
+        List<Zuora.zObject> zObjects = prodSelector.format2zObject(lst);
+
+        //-- ASsert
+    }
+    
+    /****************************************************************************************************
+    Created by CGI, Kevin 2015-08-26
+        Cover code of method "getProductsByCode" and ""
+    ****************************************************************************************************/
+    
+    @isTest (seeAllData=true)
+    static void test_products(){
+        TestDataGenerator.generateUtilitySetting();
+
+        List<Product2> listProd = new List<Product2>();
+        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1', Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78'));
+        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12'));
+        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98'));
+        insert listProd;
+
+        new Product_Sel().updateProducts(listProd);
+        Product_Sel.getViewAllProducts(' name = \'Test 1\' ');
+
+        new Product_Sel().getProductCategoryMap2(null, null);
+        
+        listProd = [Select id,SAP_Material_Number__c from Product2 where Name LIKE 'Test%' order by Name ];
+        //system.assert(listProd.size() == 3, 'Wrong number of products: ' + listProd.size());
+        
+        //list<Product_Status__c> productsStatus = new list<Product_Status__c>();
+        //for(Product2 product : listProd){
+        //    Product_Status__c prdStatus = new Product_Status__c();
+        //    prdStatus.SAP_Material_Number__c = product.SAP_Material_Number__c;
+        //    prdStatus.Status__c = 'In stock';
+        //    prdStatus.Status_Date__c = Date.today();
+        //    productsStatus.add(prdStatus);
+        //}
+        //insert productsStatus;
+        
+        set<String> prodCode = new set<String>();
+        //map<String,Boolean> outofStock = new map<String,Boolean>();
+        for(Product2 prd : listProd){
+            prodCode.add(prd.SAP_Material_Number__c);
+            //outofStock.put(prd.SAP_Material_Number__c,false);
+        }
+        
+        Product_Sel.getProductsByCode(prodCode);
+        
+        /*Product_Sel.getProductsBySeachCriteria('Name',null, 'test');*/
+        
+        //cover the update the product status
+        map<String,String> materialNumbers_status = new map<String,String>();
+        materialNumbers_status.put('1245-78','In stock');
+        materialNumbers_status.put('7845-12','Out of stock');
+        materialNumbers_status.put('3265-98','In stock');
+        /*Product_Sel.updateProductsByMaterialNumb(materialNumbers_status);*/
+    }
+}
