@@ -182,6 +182,16 @@
         <visibleLines>9</visibleLines>
     </fields>
     <fields>
+        <fullName>Campaign_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300)) + Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Campaign Link</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Campaign_Live_Days__c</fullName>
         <description>Number of days planned for the activity to take place</description>
         <externalId>false</externalId>
@@ -257,6 +267,13 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <fullName>ExpectedRevenue</fullName>
     </fields>
     <fields>
+        <fullName>Generate_Members_Completed_On__c</fullName>
+        <externalId>false</externalId>
+        <label>Generate Members Completed On</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>HierarchyActualCost</fullName>
     </fields>
     <fields>
@@ -326,6 +343,13 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
     <fields>
         <fullName>ParentId</fullName>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_notice_generated__c</fullName>
+        <externalId>false</externalId>
+        <label>Renewal notice generated</label>
+        <required>false</required>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>StartDate</fullName>

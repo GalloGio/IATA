@@ -1753,6 +1753,15 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>IEC_Zip_Postal_Code_required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>IEC - true means zip/postal code is required for an address</description>
+        <externalId>false</externalId>
+        <label>Zip/Postal Code required</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ISO_Code_Numeric__c</fullName>
         <externalId>false</externalId>
         <label>ISO Code (Numeric)</label>
@@ -1795,6 +1804,15 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Non_Compliant__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to determine a specific country is non-compliant with the IEC products displayed on the portal</inlineHelpText>
+        <label>Is Non Compliant</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Local_language_Agency_details_required__c</fullName>
@@ -2110,6 +2128,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <label>All Countries</label>
         <language>en_US</language>
         <sharedTo>
+            <group>Account_management_team</group>
             <group>IDFSAllusersexcludingIWandACCA</group>
         </sharedTo>
     </listViews>

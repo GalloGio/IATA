@@ -131,6 +131,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IEC_User_Portal_URL__c</fullName>
+        <defaultValue>&quot;https://iec-customer-portal-iata.cs17.force.com/iec&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>IEC User Portal URL</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>IEC_Web_Service_Endpoint__c</fullName>
         <defaultValue>&quot;https://test.salesforce.com/services/Soap/u/30.0&quot;</defaultValue>
         <description>End point of the IEC Web Service</description>
@@ -225,6 +234,17 @@
         <label>PaymentMethod Check Zuora ID</label>
         <length>32</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PaymentMethod_ICH_Zuora_ID__c</fullName>
+        <defaultValue>&quot;4028e6992e836e4a012e914e1dd85e22&quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>PaymentMethod ICH Zuora ID</label>
+        <length>32</length>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

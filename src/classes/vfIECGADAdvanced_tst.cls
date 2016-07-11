@@ -114,6 +114,8 @@ private class vfIECGADAdvanced_tst {
     	User usr = IECTestUtil.createSampleGuestUserAndLogin();
     	System.runAs(usr) {
 	    	Init();
+            
+            Test.startTest();
 	    	
 	    	//Instantiate Base Controller
 	    	IECPageController baseCont = new IECPageController();
