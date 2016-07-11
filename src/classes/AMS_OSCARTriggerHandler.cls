@@ -1,6 +1,21 @@
 public class AMS_OSCARTriggerHandler {
 
 	class AMSException extends Exception {}
+	
+	public static Map<String, String> closedStatusMapping{
+		get{
+			if(closedStatusMapping == null){
+				closedStatusMapping = new Map<String, String>{
+					'Closed (Closed)' => 'Closed',
+					'Closed_Not Accepted' => 'Closed_ Not Accepted',
+					'Closed_Rejected' => 'Closed_Rejected',
+					'Closed_Withrawn' => 'Closed_Withdrawn'
+				};
+			}
+			return closedStatusMapping;
+		}
+		set;
+	}
 
 	//used to identify situations where the LocationType of an SA Agency should not be changed
 	public static boolean keepSALocationTypeFlag = false;
@@ -211,6 +226,8 @@ public class AMS_OSCARTriggerHandler {
 				if (changeCode.Account__c == accId)
 					accountsChangeCode.put(accId, changeCode);
 		}
+
+		//Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Status__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
 
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
