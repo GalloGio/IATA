@@ -327,7 +327,8 @@ public with sharing class AMS_OSCAR_Automation
             try{
 
                 if(oscar != null){
-                    oscar.Bank_Guarantee_received__c = Date.today();
+                    // JH: Removed to fix INC255865 
+						// oscar.Bank_Guarantee_received__c = Date.today();
                     oscar.Financial_security_result__c = 'N/A';
                     res = True;
                 }
