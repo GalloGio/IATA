@@ -513,7 +513,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value>ncedmstkt@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, michael.preiser@sita.aero, HelpDesk@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, emyoon@topas.net, byyeom@topas.net, ncedmstkt@amadeus.com, e-tkt@topas.net, cscall@topas.net, res@topas.net, accreditation@ttinteractive.com, mouanaim@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, ZPYU@TRAVELSKY.COM, jiajia@travelsky.com, SowFung_Leong@abacus.com.sg, Poovaneswari_Selvaraj@abacus.com.sg, alice_lee@abacus.com.sg, support@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es, pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp†††</value>
+        <value>ncedmstkt@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, michael.preiser@sita.aero, HelpDesk@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, emyoon@topas.net, byyeom@topas.net, ncedmstkt@amadeus.com, e-tkt@topas.net, cscall@topas.net, res@topas.net, accreditation@ttinteractive.com, mouanaim@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, ZPYU@TRAVELSKY.COM, jiajia@travelsky.com, SowFung_Leong@abacus.com.sg, Poovaneswari_Selvaraj@abacus.com.sg, alice_lee@abacus.com.sg, support@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es, pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp¬†¬†¬†</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -947,7 +947,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeReason1List1</shortDescription>
-        <value>AIMS Data Entry,CHG ñ Data Maintenance,
+        <value>AIMS Data Entry,CHG ‚Äì Data Maintenance,
 Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irregularity withdrawal,Reinstatement</value>
     </labels>
     <labels>
@@ -955,7 +955,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeReason1List2</shortDescription>
-        <value>CHC ñ Change of Shareholding ,New HO,CHN - Change of Name,New BR Abroad,CHO / CHS ñ Change of Ownership / Legal Status,Financial RVW intermediaries</value>
+        <value>CHC ‚Äì Change of Shareholding ,New HO,CHN - Change of Name,New BR Abroad,CHO / CHS ‚Äì Change of Ownership / Legal Status,Financial RVW intermediaries</value>
     </labels>
     <labels>
         <fullName>CaseTypeRecordTypeList</fullName>
@@ -1798,7 +1798,7 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_reasonCode200</shortDescription>
-        <value>The credit card holderís address information provided is incorrect. Please try again. If the problem persists, please contact your issuing bank.</value>
+        <value>The credit card holder‚Äôs address information provided is incorrect. Please try again. If the problem persists, please contact your issuing bank.</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode201</fullName>
@@ -1945,7 +1945,7 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CaptchaError</shortDescription>
-        <value>Captcha Error. Please note for all the accented characters such as Ò, ·, ‡, etc. displayed in Captcha, kindly replace them with plain English alphabet or simply refresh for a new set of code.</value>
+        <value>Captcha Error. Please note for all the accented characters such as √±, √°, √†, etc. displayed in Captcha, kindly replace them with plain English alphabet or simply refresh for a new set of code.</value>
     </labels>
     <labels>
         <fullName>IDCard_CardDuration</fullName>
@@ -2082,14 +2082,14 @@ IATA will take no responsibility should a supplier fail to recognize the ID Card
         <shortDescription>IDCard_CheckList_ProofEmployment</shortDescription>
         <value>** SCANNED IN PDF FORMAT **&lt;br/&gt; 
 Accepted documents for agency employees include:&lt;br/&gt; 
-- Official letter of attestation produced by your Agency stating your current employment status and signed by Agencyís owner/reporting manager, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
+- Official letter of attestation produced by your Agency stating your current employment status and signed by Agency‚Äôs owner/reporting manager, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
 - Pay stub/Pay slip to prove direct deposit of salary from your Agency, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
 - Agency disbursement records&lt;br/&gt;&lt;br/&gt; 
 
 Accepted documents for independent travel consultant/contractor/broker are:&lt;br/&gt; 
 - Pay stub/Pay slip to prove direct deposit of commission from your Agency&lt;br/&gt; 
 &lt;b&gt;AND&lt;/b&gt;&lt;br/&gt; 
-- A written contract or agreement in compliance with applicable laws and regulations or Official letter of attestation produced by your Agency stating your current employment status and signed by Agencyís owner/reporting manager.</value>
+- A written contract or agreement in compliance with applicable laws and regulations or Official letter of attestation produced by your Agency stating your current employment status and signed by Agency‚Äôs owner/reporting manager.</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckList_ProofEmploymentOptionTitle</fullName>
@@ -2676,14 +2676,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlBSPlink_Description</shortDescription>
-        <value>Explore los procesos de facturaciÛn y el Plan de LiquidaciÛn (BSP) de informes y envÌo de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendr· las habilidades para: Entender cÛmo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicaciÛn de BSPlink. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8274%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Explore los procesos de facturaci√≥n y el Plan de Liquidaci√≥n (BSP) de informes y env√≠o de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendr√° las habilidades para: Entender c√≥mo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicaci√≥n de BSPlink. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8274%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</shortDescription>
-        <value>Los informes y los procedimientos de facturaciÛn Agente BSP. Al completar este curso usted tendr· las habilidades para: Entender los conceptos b·sicos del sistema BSP; Referencia tÈrminos y definiciones BSP; Explicar el proceso de presentaciÛn de informes BSP; Ventas de informe a travÈs del BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8273%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Los informes y los procedimientos de facturaci√≥n Agente BSP. Al completar este curso usted tendr√° las habilidades para: Entender los conceptos b√°sicos del sistema BSP; Referencia t√©rminos y definiciones BSP; Explicar el proceso de presentaci√≥n de informes BSP; Ventas de informe a trav√©s del BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8273%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroductiontoBSPLink_Description</fullName>
@@ -2862,7 +2862,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
-        <value>Le niveau de satisfaction de la clientËle influence les dÈcisions d&apos;achat et la fidÈlisation. L&apos;objectif de ce cours sur le service ‡ la clientËle est de prÈsenter les stratÈgies essentielles pour faire en sorte que le contact de premiËre ligne avec le client constitue une expÈrience positive et mÈmorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/tttg66fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Le niveau de satisfaction de la client√®le influence les d√©cisions d&apos;achat et la fid√©lisation. L&apos;objectif de ce cours sur le service √† la client√®le est de pr√©senter les strat√©gies essentielles pour faire en sorte que le contact de premi√®re ligne avec le client constitue une exp√©rience positive et m√©morable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/tttg66fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -2913,7 +2913,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description</shortDescription>
-        <value>Aprenda sobre el proceso de presentaciÛn de informes del agente en el Plan de FacturaciÛn y LiquidaciÛn (BSP) y cÛmo interpretar los informes de facturaciÛn. Este mÛdulo de aprendizaje es parte de un nuevo curso de seis mÛdulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendr· las habilidades para: Seguir con el proceso de presentaciÛn de informes BSP; Identificar los documentos de presentaciÛn de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturaciÛn; Interpretar los informes de facturaciÛn BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8276%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Aprenda sobre el proceso de presentaci√≥n de informes del agente en el Plan de Facturaci√≥n y Liquidaci√≥n (BSP) y c√≥mo interpretar los informes de facturaci√≥n. Este m√≥dulo de aprendizaje es parte de un nuevo curso de seis m√≥dulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendr√° las habilidades para: Seguir con el proceso de presentaci√≥n de informes BSP; Identificar los documentos de presentaci√≥n de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturaci√≥n; Interpretar los informes de facturaci√≥n BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8276%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Match_IsNotTheAgent</fullName>
@@ -5027,11 +5027,11 @@ msgDeleted: is deleted.</value>
         <value>We are sorry, but you login attempt failed. Please make sure that your user (email) and password are correct.&lt;br/&gt; 
 If you are coming from one of the following countries:&lt;br/&gt; 
 &lt;ol&gt; 
-&lt;li type=&quot;square&quot;&gt;Africa &amp; Middle East ñ AE, ET, IR, JO, KE, KW, LB, MD, MZ, NA, ZA, TZ&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Americas ñ AG, AR, AW, BS, BB, BQ, CL, CR, CW, DM, DO, GD, GY, HT, JM, KN, KY, LC, MS, PY, SR, SX, TC, TT, UY, VC, VG&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Asia &amp; Pacific ñ BD, BT, IN, NP, PH, PK&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;China &amp; North Asia ñ HK, MN, TW&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Europe ñ CZ, DK, EE, GB, HR, HU, GR, IS, LU, LV, LT, MT, NL, NO, PT, RO, SE, SK, UA&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Africa &amp; Middle East ‚Äì AE, ET, IR, JO, KE, KW, LB, MD, MZ, NA, ZA, TZ&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Americas ‚Äì AG, AR, AW, BS, BB, BQ, CL, CR, CW, DM, DO, GD, GY, HT, JM, KN, KY, LC, MS, PY, SR, SX, TC, TT, UY, VC, VG&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Asia &amp; Pacific ‚Äì BD, BT, IN, NP, PH, PK&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;China &amp; North Asia ‚Äì HK, MN, TW&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Europe ‚Äì CZ, DK, EE, GB, HR, HU, GR, IS, LU, LV, LT, MT, NL, NO, PT, RO, SE, SK, UA&lt;/li&gt; 
 &lt;/ol&gt; 
 In order to upload your financial documents, please, login to Customer Portal on &lt;b&gt;&lt;a href=&apos;http://portal.iata.org&apos;&gt;http://portal.iata.org&lt;/a&gt;&lt;/b&gt;</value>
     </labels>
@@ -5649,7 +5649,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS LABEL Listed Shares</shortDescription>
-        <value>* Is your organization a legal entity whose shares are listed on a security exchange or are regularly traded in an ëover-the-counterí market?</value>
+        <value>* Is your organization a legal entity whose shares are listed on a security exchange or are regularly traded in an ‚Äòover-the-counter‚Äô market?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Last_Name_Chinese</fullName>
@@ -6290,7 +6290,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Q1</shortDescription>
-        <value>* Will such change affect the premises that were investigated in the course of approving the Agentís application for registration?</value>
+        <value>* Will such change affect the premises that were investigated in the course of approving the Agent‚Äôs application for registration?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Q2</fullName>
@@ -6410,7 +6410,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_TC</shortDescription>
-        <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ëCompany informationí above to make these statements and file this document.</value>
+        <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‚ÄòCompany information‚Äô above to make these statements and file this document.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Transferee</fullName>
@@ -7164,7 +7164,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Branch People</shortDescription>
-        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ëover-the-counterí market).&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency. &lt;br/&gt;Select at least one authorised signatory.</value>
+        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‚Äòover-the-counter‚Äô market).&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency. &lt;br/&gt;Select at least one authorised signatory.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Companies</fullName>
@@ -7172,7 +7172,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Companies</shortDescription>
-        <value>If your agency is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ëover-the-counterí market).</value>
+        <value>If your agency is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‚Äòover-the-counter‚Äô market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Companies_SubTitle</fullName>
@@ -7195,7 +7195,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Ownership</shortDescription>
-        <value>Except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ëover-the-counterí market, the ownership shown here should total 100%.</value>
+        <value>Except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‚Äòover-the-counter‚Äô market, the ownership shown here should total 100%.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Ownership_SubTitle</fullName>
@@ -7211,7 +7211,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People</shortDescription>
-        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ëover-the-counterí market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‚Äòover-the-counter‚Äô market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_People_SubTitle</fullName>
@@ -8284,7 +8284,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CertificateEmail3</shortDescription>
-        <value>To check the status of your request or to communicate with us, log to your Customer Portal and look for the above record under ìMy recent casesî or using the ìSearchî option.</value>
+        <value>To check the status of your request or to communicate with us, log to your Customer Portal and look for the above record under ‚ÄúMy recent cases‚Äù or using the ‚ÄúSearch‚Äù option.</value>
     </labels>
     <labels>
         <fullName>ISSP_Certificate_All</fullName>
@@ -8299,7 +8299,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Certificate_Confirm</shortDescription>
-        <value>You have selected to purchase an IATA Certificate. Please note that if you are currently subscribed to receive your certificate annually, this request will be considered as an additional copy and charged according to the pricelist. Click ìConfirmî to accept the charges related to the product and proceed.</value>
+        <value>You have selected to purchase an IATA Certificate. Please note that if you are currently subscribed to receive your certificate annually, this request will be considered as an additional copy and charged according to the pricelist. Click ‚ÄúConfirm‚Äù to accept the charges related to the product and proceed.</value>
     </labels>
     <labels>
         <fullName>ISSP_Certificate_Delivered</fullName>
@@ -9139,7 +9139,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CaseComment_Subject</shortDescription>
-        <value>New comment on case n∞</value>
+        <value>New comment on case n¬∞</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Comment</fullName>
@@ -9457,7 +9457,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_aNewComment</shortDescription>
-        <value>The new comment below has been posted on your case n∞</value>
+        <value>The new comment below has been posted on your case n¬∞</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_do_not_reply</fullName>
@@ -9465,7 +9465,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_do_not_reply</shortDescription>
-        <value>Note that this is a system generated message.†Please do not respond to this email.</value>
+        <value>Note that this is a system generated message.¬†Please do not respond to this email.</value>
     </labels>
     <labels>
         <fullName>ISSP_EmailsFailure</fullName>
@@ -9774,7 +9774,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_GeneralPublicNotFound</shortDescription>
-        <value>No General Public Account was found matching your search criteria. Please click on ìNextî to return to login page.</value>
+        <value>No General Public Account was found matching your search criteria. Please click on ‚ÄúNext‚Äù to return to login page.</value>
     </labels>
     <labels>
         <fullName>ISSP_General_Public</fullName>
@@ -10208,7 +10208,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Non-existing IATA code. Please, fill the correct IATA Code. If you do not have IATA code, please, select ëOtherí as ëType of Customerí.</value>
+        <value>Non-existing IATA code. Please, fill the correct IATA Code. If you do not have IATA code, please, select ‚ÄòOther‚Äô as ‚ÄòType of Customer‚Äô.</value>
     </labels>
     <labels>
         <fullName>ISSP_IATA_NOT_Found_for_Country</fullName>
@@ -10910,7 +10910,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGP</shortDescription>
-        <value>No records were found matching your search criteria. Please click on ìBackî to proceed with the registration process as General Public or modify your search criteria and try again.
+        <value>No records were found matching your search criteria. Please click on ‚ÄúBack‚Äù to proceed with the registration process as General Public or modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
@@ -11146,7 +11146,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PageDescription_ISSP_AccessToService</shortDescription>
-        <value>Manage portal service requests for you and your companyís portal users</value>
+        <value>Manage portal service requests for you and your company‚Äôs portal users</value>
     </labels>
     <labels>
         <fullName>ISSP_PageDescription_ISSP_AvailableServices</fullName>
@@ -11183,7 +11183,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PageDescription_ISSP_ContactList</shortDescription>
-        <value>Manage your companyís portal users by granting/denying their access to the Customer Portal, or creating a new user</value>
+        <value>Manage your company‚Äôs portal users by granting/denying their access to the Customer Portal, or creating a new user</value>
     </labels>
     <labels>
         <fullName>ISSP_PageDescription_ISSP_FAQ2Case</fullName>
@@ -11632,7 +11632,7 @@ Passenger Agencies - 8 digits;&lt;br/&gt;
 Cargo Agencies - 11 digits;&lt;br/&gt;
 GSA - 3 letters.
 &lt;br/&gt;&lt;br/&gt;
-If you do not have an IATA Code please go back and select ëOther Companyí as ëType of Customerí.</value>
+If you do not have an IATA Code please go back and select ‚ÄòOther Company‚Äô as ‚ÄòType of Customer‚Äô.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_JobTitle</fullName>
@@ -12341,7 +12341,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
 &lt;/BR&gt;
 &lt;/BR&gt;
 &lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
-The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATAís main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
+The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA‚Äôs main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
 &lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
 &lt;/font&gt;</value>
     </labels>
@@ -12402,7 +12402,7 @@ The Dashboard allows each airline Treasury Team to gain full visibility of their
 &lt;/BR&gt;
 &lt;/BR&gt;
 &lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard Premium will give you access to the credit card dashboard to view sales via different credit card types.
-This Dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report ñ in addition to viewing cash flows being processed by each of IATAís main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit:
+This Dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report ‚Äì in addition to viewing cash flows being processed by each of IATA‚Äôs main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit:
 &lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
 &lt;/font&gt;</value>
     </labels>
@@ -13222,7 +13222,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LAQ_NoRecordsFound</shortDescription>
-        <value>No records were found matching your search criteria. Please click on ìNextî to proceed with the registration process or modify your search criteria and try again.</value>
+        <value>No records were found matching your search criteria. Please click on ‚ÄúNext‚Äù to proceed with the registration process or modify your search criteria and try again.</value>
     </labels>
     <labels>
         <fullName>LAQ_NoTiess</fullName>
@@ -13285,7 +13285,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TIESS bubble</shortDescription>
-        <value>Please enter your 7 digits TIESS Code, collated to the mention ìTIESS_î. Example: TIESS_1234567</value>
+        <value>Please enter your 7 digits TIESS Code, collated to the mention ‚ÄúTIESS_‚Äù. Example: TIESS_1234567</value>
     </labels>
     <labels>
         <fullName>LAQ_Thankyou</fullName>
@@ -16297,7 +16297,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Bosnian</shortDescription>
-        <value>????????</value>
+        <value>–±–æ—Å–∞–Ω—Å–∫–∏</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_cy</fullName>
@@ -16331,8 +16331,8 @@ title,Title,Name</value>
         <fullName>pkb2_lang_es</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>EspaÒol</shortDescription>
-        <value>EspaÒol</value>
+        <shortDescription>Espa√±ol</shortDescription>
+        <value>Espa√±ol</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_et</fullName>
@@ -16374,7 +16374,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Hindi</shortDescription>
-        <value>??????</value>
+        <value>‡§π‡§ø‡§®‡•ç‡§¶‡•Ä</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_hr</fullName>
@@ -16388,7 +16388,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Armenian</shortDescription>
-        <value>???????</value>
+        <value>’Ä’°’µ’•÷Ä’ß’∂</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_in</fullName>
@@ -16402,7 +16402,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Icelandic</shortDescription>
-        <value>Õslenska</value>
+        <value>√çslenska</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_it</fullName>
@@ -16416,49 +16416,49 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Japanese</shortDescription>
-        <value>???</value>
+        <value>Êó•Êú¨„ÅÆ</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ka</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Georgian</shortDescription>
-        <value>???????</value>
+        <value>·É•·Éê·É†·Éó·É£·Éö·Éò</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ko</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Korean</shortDescription>
-        <value>???</value>
+        <value>ÌïúÍµ≠Ïñ¥</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lb</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Luxembourgish</shortDescription>
-        <value>LÎtzebuergesch</value>
+        <value>L√´tzebuergesch</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lt</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Lithuanian</shortDescription>
-        <value>Lietuviu Kalba</value>
+        <value>Lietuvi≈≥ Kalba</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lv</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Latvian</shortDescription>
-        <value>Latvieöu Valoda</value>
+        <value>Latvie≈°u Valoda</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_mk</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Macedonian</shortDescription>
-        <value>??????????</value>
+        <value>–º–∞–∫–µ–¥–æ–Ω—Å–∫–∏</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_mt</fullName>
@@ -16479,28 +16479,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Portuguese (Brazilian)</shortDescription>
-        <value>PortuguÍs</value>
+        <value>Portugu√™s</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_pt_PT</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Portuguese</shortDescription>
-        <value>PortuguÍs</value>
+        <value>Portugu√™s</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ro_MD</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Moldovan</shortDescription>
-        <value>????? ????????????</value>
+        <value>–ª–∏–º–±–∞ –º–æ–ª–¥–æ–≤–µ–Ω—è—Å–∫—ç</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ru</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Russian</shortDescription>
-        <value>???????</value>
+        <value>—Ä—É—Å—Å–∫–∏–π</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sh</fullName>
@@ -16514,14 +16514,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Slovak</shortDescription>
-        <value>Slovencina</value>
+        <value>Slovenƒçina</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sl</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Slovenian</shortDescription>
-        <value>Slovenöcina</value>
+        <value>Sloven≈°ƒçina</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sq</fullName>
@@ -16535,7 +16535,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Serbian Cyrillic</shortDescription>
-        <value>??????</value>
+        <value>—Å—Ä–ø—Å–∫–∏</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sv</fullName>
@@ -16549,7 +16549,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Thai</shortDescription>
-        <value>???????</value>
+        <value>‡∏†‡∏≤‡∏©‡∏≤‡πÑ‡∏ó‡∏¢</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_tl</fullName>
@@ -16563,28 +16563,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Urdu</shortDescription>
-        <value>????</value>
+        <value>ÿßÿ±ÿØŸà</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_vi</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Vietnamese</shortDescription>
-        <value>Ti?ng Vi?t</value>
+        <value>Ti·∫øng Vi·ªát</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_CN</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>???</value>
+        <value>‰∏≠ÂõΩÁöÑ</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_TW</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>???</value>
+        <value>‰∏≠ÂúãÁöÑ</value>
     </labels>
     <labels>
         <fullName>regular_price</fullName>

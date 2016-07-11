@@ -68,6 +68,15 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Data__c</fullName>
+        <externalId>false</externalId>
+        <label>Input Data</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
         <fullName>Displayed_Message__c</fullName>
         <externalId>false</externalId>
         <label>Displayed Message</label>
@@ -151,19 +160,6 @@
         <type>Picklist</type>
     </fields>
     <label>IEC Error Log</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
     <listViews>
         <fullName>AllErrors</fullName>
         <columns>NAME</columns>

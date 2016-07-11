@@ -1,0 +1,155 @@
+<apex:page standardController="Product2" showHeader="false" sidebar="false" extensions="iecWebUpload_Ctrl">
+	
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.0.5.min.js"></script>
+    <script type="text/javascript">
+         AWS.config.update({accessKeyId: '{!accessKeyId}', secretAccessKey: '{!secretAccessKey}'});
+         AWS.config.region = '{!awsRegion}';
+    </script>
+
+	<div style="width: 100%; text-align: center; padding: 10px 0;">   
+	    <br /><br />
+	    
+	    <br /><br /> 
+	     
+		
+		<table width="100%">
+			<tr align="left">
+				<td>
+					<input type="file" id="file-chooser" label="Choose file" />
+				</td>
+				<td>
+					File name: <input type="text" id="fileName" />
+				</td>
+				<td>
+					<button id="upload-button" >Upload document</button>
+					<span id="progressDialog" style="margin-top: 10px;"></span>
+	    			<span id="results"  style="margin-top: 10px;"></span>
+				</td>
+				<td width="50%">
+					<apex:outputPanel rendered="{!fileName != null}">
+						<div>
+							<span style="margin-right: 40px;">Existing File on Amazon S3</span>
+							<span style="margin-right: 40px;">{!fileName}</span>
+							<span><a><button id="delete-button" >Delete document</button></a></span>
+							<span id="progressDeleteDialog" style="margin-top: 10px;"></span>
+						</div>
+					</apex:outputPanel>
+					<span id="existingFile"></span>
+				</td>
+			</tr>
+		</table>
+
+	</div>
+	
+
+
+	<script type="text/javascript">
+	  
+	    var fileChooser = document.getElementById('file-chooser');
+	    var fileNameInput = document.getElementById('fileName');
+	    var button = document.getElementById('upload-button');
+	    var deleteButton = document.getElementById('delete-button');
+	    var results = document.getElementById('results');
+	    progressDialog = document.getElementById('progressDialog');
+	    var myResult = '';
+
+
+	    var existingFileName = '{!fileName}';
+
+	    fileChooser.addEventListener('change', function() {
+
+	      var file = fileChooser.files[0];
+
+	      if(file) {
+	          fileNameInput.value = file.name;
+	      } 
+
+	    }, false);
+
+	    button.addEventListener('click', function() {
+
+	      var file = fileChooser.files[0];
+	      
+	      if (file) {
+	        results.innerHTML = '';
+
+	        var exist = '';
+	        var bucket = new AWS.S3({params: {Bucket: '{!folderHierachy}'}});
+	    	var params = {Key: fileNameInput.value, ContentType: file.type, Body: file};
+
+	        bucket.putObject(params, function (err, data) {
+		      results.innerHTML = err ? 'ERROR!' : 'UPLOADED.';
+		      myResult = err ? 'ERROR!' : 'UPLOADED.';
+
+		      if(err){
+		      }else{
+		        var s3Url = '';
+		        var s3 = new AWS.S3();
+		        var params2 = {Bucket: '{!folderHierachy}', Key: fileNameInput.value};
+		        s3Url = bucket.getSignedUrl('getObject', params2);
+		        
+		        var stringSplit = s3Url.split('?');
+
+		        Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.iecWebUpload_Ctrl.getS3Values}', 
+		            '{!productId}',myResult,stringSplit[0], 
+		            function(result, event){
+		              if(event.status) {
+		                 window.top.location.href = '/' + result;
+		              }
+		            }, 
+		            {escape: true}
+		        );
+		        progressDialog.innerHTML = '';
+
+		      }
+
+		    });
+
+		    progressDialog.innerHTML = 'UPLOADING...';
+
+	      } else {
+	        results.innerHTML = 'Nothing to upload.';
+	      }
+	    }, false);
+
+
+	    if(existingFileName){
+	    
+	    	// get the Amazon file
+		    var readS3 = new AWS.S3();
+		    var forReadParams = {
+				  Bucket: '{!folderHierachy}', 
+				  Key: '{!fileName}', 
+			}
+
+		    deleteButton.addEventListener('click', function(){
+		    	
+		    	document.getElementById('progressDeleteDialog').innerHTML = 'DELETING...';
+
+		    	// Delete the file in AWS
+				readS3.deleteObject(forReadParams, function(err, data) {
+				});
+
+				//reset back the product
+				Visualforce.remoting.Manager.invokeAction(
+		            '{!$RemoteAction.iecWebUpload_Ctrl.backToRegularProduct}', 
+		            '{!productId}', 
+		            function(result, event){
+		              if(event.status) {
+		                 window.top.location.href = '/' + result;
+		              }
+		            }, 
+		            {escape: true}
+		        );
+
+		    },false);
+
+	    }
+
+	    
+
+
+	</script>
+
+</apex:page>
