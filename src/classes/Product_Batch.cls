@@ -8,7 +8,10 @@ global class Product_Batch implements Database.Batchable<sObject> , Database.All
         action = a;
         productsToProcess = p;
 
-        if(p <> null && p.size() > 0 && test.isRunningTest())productsToProcess = new list<Product2>{p.[0]};
+        if(p <> null && p.size() > 0 && test.isRunningTest()){
+        productsToProcess = new List<Product2>();
+        productsToProcess.add(p[0]);
+        } 
     }
     
     global List<Product2> start(Database.BatchableContext BC) 
