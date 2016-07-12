@@ -1,9 +1,9 @@
 public class AMS_SAAMCaseMigrationController {
 
 	private String SPECIFIC_CASES = 'Specific Cases';
-	private String ALL_CASES = 'All SAAM Cases (from Portal)';
-	private String PORTAL_CASES = 'All SAAM Cases (not from Portal)';
-	private String NOTPORTAL_CASES = 'All SAAM Cases';
+	private String ALL_CASES = 'All SAAM Cases';
+	private String PORTAL_CASES = 'All SAAM Cases (from Portal)';
+	private String NOTPORTAL_CASES = 'All SAAM Cases (not from Portal)';
 	private Integer PAGE_SIZE = 100; //max size: 1000
 	private Id SAAMCaseRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 	
