@@ -321,6 +321,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Account_data_rolled_back__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Disapproval_result__c</field>
             </layoutItems>
         </layoutColumns>
