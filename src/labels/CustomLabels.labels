@@ -414,11 +414,32 @@
         <value>https://iata.my.salesforce.com/services/Soap/c/9.0</value>
     </labels>
     <labels>
+        <fullName>Acceptance_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Acceptance date</shortDescription>
+        <value>Acceptance date</value>
+    </labels>
+    <labels>
         <fullName>Account_Invoicing_Collection_Cases_Report_ID</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Account Invoicing Collection Cases Report ID</shortDescription>
         <value>00Ow0000006pBuJ</value>
+    </labels>
+    <labels>
+        <fullName>Account_activity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account activity</shortDescription>
+        <value>Change password</value>
+    </labels>
+    <labels>
+        <fullName>Account_information_updated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account information updated</shortDescription>
+        <value>Your Account information is now updated</value>
     </labels>
     <labels>
         <fullName>Action</fullName>
@@ -434,6 +455,43 @@
         <protected>false</protected>
         <shortDescription>Action Needed</shortDescription>
         <value>Action Needed</value>
+    </labels>
+    <labels>
+        <fullName>AddToCart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddToCart</shortDescription>
+        <value>Add To Cart</value>
+    </labels>
+    <labels>
+        <fullName>Add_campaign_member_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Add campaign member error</shortDescription>
+        <value>You cannot add a member a this status of the campaign.</value>
+    </labels>
+    <labels>
+        <fullName>Address_Line_1</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address Line 1</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Address_creation_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address creation error</shortDescription>
+        <value>An error occurred when creating your new address. Please try it again.</value>
+    </labels>
+    <labels>
+        <fullName>Address_edition_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address edition error</shortDescription>
+        <value>An error occurred when editing your new address. Please try it again. Or you already have that address</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionContactId</fullName>
@@ -517,6 +575,43 @@
         <value>Attachments</value>
     </labels>
     <labels>
+        <fullName>Attention</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attention</shortDescription>
+        <value>Attention</value>
+    </labels>
+    <labels>
+        <fullName>Auto_renew_payment_method_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Auto renew payment method error</shortDescription>
+        <value>You cannot use this payment method, because you have an auto renew product.</value>
+    </labels>
+    <labels>
+        <fullName>Availability</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Availability</shortDescription>
+        <value>Availability</value>
+    </labels>
+    <labels>
+        <fullName>Available</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Available</shortDescription>
+        <value>Available</value>
+    </labels>
+    <labels>
+        <fullName>BCC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BCC</shortDescription>
+        <value>BCC</value>
+    </labels>
+    <labels>
         <fullName>BSPLink_Description</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -525,11 +620,62 @@
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
     </labels>
     <labels>
+        <fullName>Bank_transfer_validation_for_auto_renew</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bank transfer validation for auto renew</shortDescription>
+        <value>Cannot pay with Bank Transfer when a product is on Auto Renew</value>
+    </labels>
+    <labels>
+        <fullName>Billing_address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing address</shortDescription>
+        <value>Billing address</value>
+    </labels>
+    <labels>
+        <fullName>Body</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Body</shortDescription>
+        <value>Body</value>
+    </labels>
+    <labels>
+        <fullName>Browse_by_category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Browse by category</shortDescription>
+        <value>Browse by category</value>
+    </labels>
+    <labels>
+        <fullName>Browser</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Browser</shortDescription>
+        <value>Browser</value>
+    </labels>
+    <labels>
         <fullName>Browser_type</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Browser type</shortDescription>
         <value>Browser type</value>
+    </labels>
+    <labels>
+        <fullName>Button_Add</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>Button_Add_To_Order</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Add To Order</shortDescription>
+        <value>Add To Order</value>
     </labels>
     <labels>
         <fullName>Button_Cancel</fullName>
@@ -540,12 +686,223 @@
         <value>Cancel</value>
     </labels>
     <labels>
+        <fullName>Button_Cart</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button_Cart</shortDescription>
+        <value>Cart</value>
+    </labels>
+    <labels>
+        <fullName>Button_Contact</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button_Contact</shortDescription>
+        <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>Button_Continue_Shopping</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Continue Shopping</shortDescription>
+        <value>Continue Shopping</value>
+    </labels>
+    <labels>
+        <fullName>Button_Data_Statistics</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Data &amp; Statistics</shortDescription>
+        <value>Data &amp; Statistics</value>
+    </labels>
+    <labels>
+        <fullName>Button_First_Page</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button First Page</shortDescription>
+        <value>&lt;&lt;</value>
+    </labels>
+    <labels>
+        <fullName>Button_Go</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Go</shortDescription>
+        <value>Go</value>
+    </labels>
+    <labels>
+        <fullName>Button_Last_Page</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Last Page</shortDescription>
+        <value>&gt;&gt;</value>
+    </labels>
+    <labels>
+        <fullName>Button_New_Releases</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button New Releases</shortDescription>
+        <value>New Releases</value>
+    </labels>
+    <labels>
+        <fullName>Button_Next</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>Button_Open_search_field</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Open search field</shortDescription>
+        <value>Open search field</value>
+    </labels>
+    <labels>
+        <fullName>Button_Pre_Order</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Pre Order</shortDescription>
+        <value>Pre Order</value>
+    </labels>
+    <labels>
+        <fullName>Button_Previous</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>Button_Proceed_Checkout</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Proceed Checkout</shortDescription>
+        <value>Proceed to Checkout</value>
+    </labels>
+    <labels>
+        <fullName>Button_Publications</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Publications</shortDescription>
+        <value>Publications</value>
+    </labels>
+    <labels>
+        <fullName>Button_Remove</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Remove</shortDescription>
+        <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>Button_Search</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Button_Select</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>Button_Sign_in</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Sign in</shortDescription>
+        <value>Sign in</value>
+    </labels>
+    <labels>
+        <fullName>Button_Sign_out</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Sign out</shortDescription>
+        <value>Logout</value>
+    </labels>
+    <labels>
+        <fullName>Button_Toggle_Main_Navigation</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Toggle Main Navigation</shortDescription>
+        <value>Toggle Main Navigation</value>
+    </labels>
+    <labels>
+        <fullName>Button_Update_Cart</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button Update Cart</shortDescription>
+        <value>Update Cart</value>
+    </labels>
+    <labels>
+        <fullName>Button_View_More</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button View More</shortDescription>
+        <value>View More</value>
+    </labels>
+    <labels>
+        <fullName>Button_View_all</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Button View all</shortDescription>
+        <value>View all</value>
+    </labels>
+    <labels>
         <fullName>CASSLink_Description</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CASSLink_Description</shortDescription>
         <value>This service facilitates interaction and exchange of information between cargo intermediaries/ agents and airlines participating in IATA Cargo Accounts Settlement System (CASS).</value>
+    </labels>
+    <labels>
+        <fullName>CC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CC</shortDescription>
+        <value>CC</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_already_created</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Campaign already created</shortDescription>
+        <value>The renewal notice was already created you this campaign.</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_creation_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Campaign creation error</shortDescription>
+        <value>An error occurred when creating the renewal notice. Please contact the Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Campaign_submitted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Campaign submitted</shortDescription>
+        <value>Your campaign was successfully submitted. You will receive an email when the renewal notice will done.</value>
     </labels>
     <labels>
         <fullName>Cancel</fullName>
@@ -569,6 +926,14 @@
         <protected>false</protected>
         <shortDescription>IDCard Card can&apos;t be updated once sent to aims</shortDescription>
         <value>The IdCard cannot be updated once the card information have been sent to AIMS</value>
+    </labels>
+    <labels>
+        <fullName>Cart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cart</shortDescription>
+        <value>Cart</value>
     </labels>
     <labels>
         <fullName>CaseKPI2_RecordType</fullName>
@@ -670,12 +1035,48 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Cases - SIS Help Desk</value>
     </labels>
     <labels>
+        <fullName>Change_password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Change password</shortDescription>
+        <value>Change password</value>
+    </labels>
+    <labels>
+        <fullName>Check_payment_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Check payment msg</shortDescription>
+        <value>Your check payment has been received.</value>
+    </labels>
+    <labels>
         <fullName>Check_popup_settings</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Check popup settings</shortDescription>
         <value>Please check the pop-up settings of your browser!</value>
+    </labels>
+    <labels>
+        <fullName>City</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>City_cannot_be_empty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>City cannot be empty</shortDescription>
+        <value>City cannot be empty</value>
+    </labels>
+    <labels>
+        <fullName>Click_here</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Click here</shortDescription>
+        <value>Click here</value>
     </labels>
     <labels>
         <fullName>Company</fullName>
@@ -685,11 +1086,71 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Company</value>
     </labels>
     <labels>
+        <fullName>Company_name</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Company name</shortDescription>
+        <value>Company name</value>
+    </labels>
+    <labels>
+        <fullName>Confirm_password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirm password</shortDescription>
+        <value>Confirm password</value>
+    </labels>
+    <labels>
+        <fullName>Confirm_purchase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirm purchase</shortDescription>
+        <value>Confirm purchase</value>
+    </labels>
+    <labels>
+        <fullName>ContactDirectSalesMessage</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContactDirectSalesMessage</shortDescription>
+        <value>Contact Direct Sales to order</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Information</shortDescription>
+        <value>Contact Information</value>
+    </labels>
+    <labels>
         <fullName>Contact_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Contact Name</shortDescription>
         <value>Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>Copyright</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Copyright</shortDescription>
+        <value>&amp;copy; International Air Transport Association (IATA) {Y}. All rights reserved.</value>
+    </labels>
+    <labels>
+        <fullName>Country</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Country_cannot_be_empty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Country cannot be empty</shortDescription>
+        <value>Country cannot be empty</value>
     </labels>
     <labels>
         <fullName>Country_concerned_by_the_query</fullName>
@@ -713,6 +1174,34 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Created Date</shortDescription>
         <value>Created Date</value>
+    </labels>
+    <labels>
+        <fullName>Creation_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Creation date</shortDescription>
+        <value>Creation date</value>
+    </labels>
+    <labels>
+        <fullName>Credit_card_payment_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit card payment msg</shortDescription>
+        <value>Your credit card payment has been processed.</value>
+    </labels>
+    <labels>
+        <fullName>Credit_card_validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit card validation</shortDescription>
+        <value>Please select a credit card.</value>
+    </labels>
+    <labels>
+        <fullName>Current_password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Current password</shortDescription>
+        <value>Current password</value>
     </labels>
     <labels>
         <fullName>Custom_Queue_Notifications_Email_Subject</fullName>
@@ -815,6 +1304,21 @@ Case description: {!Case.Description}
         <value>DPCservice request</value>
     </labels>
     <labels>
+        <fullName>DataAndStatistics</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DataAndStatistics</shortDescription>
+        <value>Data &amp; statistics</value>
+    </labels>
+    <labels>
+        <fullName>Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
         <fullName>Del</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -831,12 +1335,35 @@ Case description: {!Case.Description}
         <value>Couldn&apos;t delete the attachment. Try again later.</value>
     </labels>
     <labels>
+        <fullName>Description</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Description</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
         <fullName>Description_Edit</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Description Edit</shortDescription>
         <value>Description Edit</value>
+    </labels>
+    <labels>
+        <fullName>Direct_Sales</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Direct_Sales</shortDescription>
+        <value>Direct Sales</value>
+    </labels>
+    <labels>
+        <fullName>Download_Invoice</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Download Invoice</shortDescription>
+        <value>Download Invoice</value>
     </labels>
     <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
@@ -861,6 +1388,22 @@ Case description: {!Case.Description}
         <value>Edit</value>
     </labels>
     <labels>
+        <fullName>Edition</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Edition</shortDescription>
+        <value>Edition</value>
+    </labels>
+    <labels>
+        <fullName>Effective_Date</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Effective_Date</shortDescription>
+        <value>Effective Date</value>
+    </labels>
+    <labels>
         <fullName>Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -882,11 +1425,96 @@ Case description: {!Case.Description}
         <value>ERROR: Cannot extract SalesForce new status from Kale\&apos;s email description.</value>
     </labels>
     <labels>
+        <fullName>Email_To</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email To</shortDescription>
+        <value>Email To</value>
+    </labels>
+    <labels>
+        <fullName>Email_address</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email address</shortDescription>
+        <value>Email address</value>
+    </labels>
+    <labels>
+        <fullName>Email_cannot_be_empty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email cannot be empty</shortDescription>
+        <value>Email cannot be empty</value>
+    </labels>
+    <labels>
+        <fullName>EmptyCart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmptyCart</shortDescription>
+        <value>Your cart is empty</value>
+    </labels>
+    <labels>
         <fullName>Encryption_Key</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Encryption_Key</shortDescription>
         <value>uwixnviBc/5U55Ts59uTwA==</value>
+    </labels>
+    <labels>
+        <fullName>End_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>End date</shortDescription>
+        <value>End date</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsg_Shipping_Tax_General_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsg Shipping &amp; Tax - general error</shortDescription>
+        <value>System Error: {0}</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsg_Shipping_Tax_No_Conversion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsg Shipping &amp; Tax - No conversion</shortDescription>
+        <value>Error: no conversion data</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsg_Shipping_Tax_SAP_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsg Shipping &amp; Tax - SAP Error</shortDescription>
+        <value>Error: calculation error
+Type: {0}
+Code: {1}
+Message: {2}</value>
+    </labels>
+    <labels>
+        <fullName>Error_Invalid_Product_Number</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Invalid Product Number</shortDescription>
+        <value>The Product Number is Invalid</value>
+    </labels>
+    <labels>
+        <fullName>Error_SendEmail_EmailTo_Required</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error_SendEmail_EmailTo_Required</shortDescription>
+        <value>The Email To field is required</value>
+    </labels>
+    <labels>
+        <fullName>Error_SendEmail_Subject_Required</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error_SendEmail_Subject_Required</shortDescription>
+        <value>Email Subject field is required</value>
     </labels>
     <labels>
         <fullName>Escalated</fullName>
@@ -978,11 +1606,94 @@ Case description: {!Case.Description}
         <value>Financial Documents</value>
     </labels>
     <labels>
+        <fullName>First_name</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First name</shortDescription>
+        <value>First name</value>
+    </labels>
+    <labels>
+        <fullName>First_name_required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First name required</shortDescription>
+        <value>Please fill in your first name.</value>
+    </labels>
+    <labels>
+        <fullName>FooterLeadMessage</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FooterLeadMessage</shortDescription>
+        <value>Our mission is to represent, lead and serve the airline industry</value>
+    </labels>
+    <labels>
+        <fullName>Generate_Quote</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generate_Quote</shortDescription>
+        <value>Generate a quote</value>
+    </labels>
+    <labels>
+        <fullName>GetQuoteConfirmationMsg</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GetQuoteConfirmationMsg</shortDescription>
+        <value>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores molestiae ipsam inventore quisquam minus maxime, explicabo voluptatum alias ipsum commodi sequi aliquid porro necessitatibus quis enim dicta rem nisi doloremque?</value>
+    </labels>
+    <labels>
+        <fullName>Go</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Go</shortDescription>
+        <value>Go</value>
+    </labels>
+    <labels>
+        <fullName>Go_to_IATA_corporate_site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Go to IATA corporate site</shortDescription>
+        <value>Go to IATA corporate site</value>
+    </labels>
+    <labels>
+        <fullName>Handling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Handling</shortDescription>
+        <value>Handling</value>
+    </labels>
+    <labels>
+        <fullName>Handling_charges_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Handling charges message</shortDescription>
+        <value>Your order has some special handling charge.</value>
+    </labels>
+    <labels>
         <fullName>HelpDesk_SIS_ICH_Type_Area_Mismatch</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>HelpDesk_SIS_ICH_Type_Area_Mismatch</shortDescription>
         <value>The Case Type you have selected is not associated with the Case Area, Please fix your selection.</value>
+    </labels>
+    <labels>
+        <fullName>Hide_details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Hide details</shortDescription>
+        <value>Hide details</value>
+    </labels>
+    <labels>
+        <fullName>Home</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Home</shortDescription>
+        <value>Home</value>
     </labels>
     <labels>
         <fullName>IATA_Alpha</fullName>
@@ -1025,6 +1736,20 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>ICH Help Desk Agent</shortDescription>
         <value>ICH Help Desk Agent</value>
+    </labels>
+    <labels>
+        <fullName>ICH_customer_invoice_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICH customer invoice message</shortDescription>
+        <value>The payment method for this invoice is IATA Clearing House (ICH), therefore the invoice will be available on the SIS e-invoicing platform to which your organization already participates. The invoice will be received from IATA Montreal (XB-A89). To view the invoice please contact your Accounts Payable Department.</value>
+    </labels>
+    <labels>
+        <fullName>ICH_payment_processed_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICH payment processed msg</shortDescription>
+        <value>Your IATA Clearing House payment is being processed.</value>
     </labels>
     <labels>
         <fullName>IDCARD_CheckList_VerificationPurpose</fullName>
@@ -3600,6 +4325,13 @@ and
         <value>The Default payment method has been successfully updated.</value>
     </labels>
     <labels>
+        <fullName>IEC_Confirm_EmailSent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_Confirm_EmailSent</shortDescription>
+        <value>Email has been sent successfully.</value>
+    </labels>
+    <labels>
         <fullName>IEC_Confirm_SaveSuccessful</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3772,7 +4504,7 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_Error_InvalidFileNameFormat</shortDescription>
-        <value>nvalid file name format for field {0}. Can only use Alpha-numeric characters and &apos;&apos;.</value>
+        <value>Invalid file name format for field {0}. Can only use Alpha-numeric characters and &apos;.&apos;</value>
     </labels>
     <labels>
         <fullName>IEC_Error_InvalidPageParameter</fullName>
@@ -3857,6 +4589,27 @@ and
         <protected>false</protected>
         <shortDescription>IEC Error OnlyOneAddressPerType</shortDescription>
         <value>You are only allowed to have one address of this type per contact.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_Error_OnlyOneLocationPerBillTo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_Error_OnlyOneLocationPerBillTo</shortDescription>
+        <value>You are only allowed to have one Bill-To location per contact.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_Error_OnlyOneLocationPerShipToCombination</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_Error_OnlyOneLocationPerShipToCombination</shortDescription>
+        <value>You are only allowed to have one Ship-To location per Account / Contact / Address combination.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_Error_OnlyOneLocationPerSoldTo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_Error_OnlyOneLocationPerSoldTo</shortDescription>
+        <value>You are only allowed to have one Sold-To location per account.</value>
     </labels>
     <labels>
         <fullName>IEC_Error_OnlyOneSwapConfiguration</fullName>
@@ -3971,6 +4724,13 @@ and
         <value>250</value>
     </labels>
     <labels>
+        <fullName>IEC_Invalid_VAT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Invalid VAT number</shortDescription>
+        <value>VAT number &quot;{0}&quot; is invalid.</value>
+    </labels>
+    <labels>
         <fullName>IEC_Recaptcha_PrivateKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3997,6 +4757,62 @@ and
         <protected>false</protected>
         <shortDescription>IEC_Trial_RequestSucceed</shortDescription>
         <value>Your request has been successfully submitted. Please browse to your subscriptions page to access the requested application. The request might take up to 2 hours to reflect in your profile.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_UpdateAddress_Labels1</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels &amp; Messages for VF page IEC_UpdateAddress</shortDescription>
+        <value>lblSectionBillTo:Billing address
+lblSectionShipTo:Shipping address
+lblStreet:Address
+lblCity:City
+lblState:State / Province
+lblCountry:Country
+lblZip:Postal code
+lblVAT:VAT #
+lblZip:Postal code
+lblEmail:Email
+lblPhone:Phone
+lblAttention:Attention
+lblOptional:optional
+lblAddrNameOptional:(i.e work, home)
+lblAddrName:Address nickname
+lblAddrNameDef:Work
+lblMakeDef:Make default shipping address
+btnCancel:Cancel
+btnSave:Save
+btnAdd:Add a new address
+btnDelete:Delete address</value>
+    </labels>
+    <labels>
+        <fullName>IEC_UpdateAddress_Labels2</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels &amp; Messages for VF page IEC_UpdateAddress</shortDescription>
+        <value>msgNoAddrName:Please fill in your address nickname.
+msgNoStreet:Please fill in your address.
+msgNoCity:Please fill in your city.
+msgNoState:Please select state/province.
+msgNoCountry:Please select country.
+msgNoZip:Please fill in your postal code.
+msgNoEmail:Please fill in your email address.
+msgNoPhone:Please fill in your phone.
+msgWarnVAT:Provide us with your VAT # for faster processing of your order.
+msgInvalidEmail:Email address is invalid.
+msgSaved: is saved.
+msgAddrExist:Shipping address is already in system.
+msgConfirmDelete:Are you sure to delete address?
+msgDeleted: is deleted.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_UpdateAddress_PageTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Update Address PageTitle</shortDescription>
+        <value>Billing and Shipping addresses</value>
     </labels>
     <labels>
         <fullName>IEC_Warning_Must_Login</fullName>
@@ -12005,12 +12821,85 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Submission of the documents successfully completed!</value>
     </labels>
     <labels>
+        <fullName>InputRequiredMessage</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InputRequiredMessage</shortDescription>
+        <value>Please fill in your</value>
+    </labels>
+    <labels>
+        <fullName>Internal_and_external_emails_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Internal and external emails error</shortDescription>
+        <value>You can not add Internal user and external email at the same time</value>
+    </labels>
+    <labels>
         <fullName>Invalid_Source_Case</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invalid Source Case</shortDescription>
         <value>Invalid source case</value>
+    </labels>
+    <labels>
+        <fullName>Invoice_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice number</shortDescription>
+        <value>Invoice number</value>
+    </labels>
+    <labels>
+        <fullName>Invoice_text</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice_text</shortDescription>
+        <value>Invoice text</value>
+    </labels>
+    <labels>
+        <fullName>Item_Price</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Item Price</shortDescription>
+        <value>Item Price</value>
+    </labels>
+    <labels>
+        <fullName>Item_already_in_your_cart</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Item already in your cart</shortDescription>
+        <value>{0} was already in your Cart. If you don&apos;t want all of them, edit the quantity.</value>
+    </labels>
+    <labels>
+        <fullName>Itemalready_in_cart</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Itemalready in cart</shortDescription>
+        <value>Item is already in your cart</value>
+    </labels>
+    <labels>
+        <fullName>JS_Confirm_Cart_Item_Deletion</fullName>
+        <categories>JS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>JS_Confirm_Cart_Item_Deletion</shortDescription>
+        <value>Are you sure you want to delete this product from your cart ?</value>
+    </labels>
+    <labels>
+        <fullName>Job_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Job title</shortDescription>
+        <value>Job title</value>
+    </labels>
+    <labels>
+        <fullName>Job_title_required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Job title required</shortDescription>
+        <value>Please fill in your job title.</value>
     </labels>
     <labels>
         <fullName>KALE_SUPPORT_EMAIL</fullName>
@@ -12476,6 +13365,242 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>30</value>
     </labels>
     <labels>
+        <fullName>Label_For_Missing_Product_Category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label to display for missing Product Category</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>LabelsVF_IECInvoice</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECInvoice</shortDescription>
+        <value>errMissingInvoice:Missing of Invoice Number.
+errCallout:System Error&lt;br/&gt;Type: {0}&lt;br/&gt;Code: {1}&lt;br/&gt;Message: {2}</value>
+    </labels>
+    <labels>
+        <fullName>LabelsVF_IECQuoteDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECQuoteDetail</shortDescription>
+        <value>lblTitle:Quote
+lblNoQuote:Quote not found.
+lblDetail:Quote Detail
+lblFrDate:Request Date
+lblToDate:Valid Until
+lblExpired:Expired
+lblBillTo:Bill To
+lblShipTo:Ship To
+lblContactName:Contact Name
+lblPhone:Phone
+lblEmail:Email
+lblStreet:Street
+lblCity:City
+lblCountry:Country
+lblState:State/Province
+lblZip:Zip/Postal Code
+lblPO:PO Number
+lblInstruction:Shipping Instruction
+lblProdName:Product Name
+lblProdNo:Product Number
+lblQty:Quantity
+lblPrice:Unit Price
+lblShipping:Freight
+lblTax:Taxes
+lblTotal:Total
+btnConvert:Convert to order
+emailSubjectPrefix:Quote  
+emailBody:Your Quote is attached to the message.</value>
+    </labels>
+    <labels>
+        <fullName>LabelsVF_IECQuoteList</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECQuoteList</shortDescription>
+        <value>lblTitle:My Quotes
+lblNoQuote:There are no quotes.
+lblQuoteNo:Quote Number
+lblFrDate:Request Date
+lblToDate:Valid Until
+lblExpired:Expired</value>
+    </labels>
+    <labels>
+        <fullName>LabelsVF_Order</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page Order</shortDescription>
+        <value>lblOrder:Order Detail
+lblCancelReason:Reason of Cancellation
+lblCreatedBy:Created By
+lblUpdatedBy:Last Modified By
+lblSoldTo:Sold To
+lblAccount:Account
+lblBillTo:Bill To
+lblShipTo:Ship To
+lblAccount:Account
+lblAccountName:Account Name
+lblContact:Contact
+lblContactName:Contact Name
+lblSalutation:Salutation
+lblFirstName:First Name
+lblLastName:Last Name
+lblJob:Job Title
+lblPhone:Phone
+lblEmail:Email
+lblStreet:Street
+lblCity:City
+lblCountry:Country
+lblState:State/Province
+lblZip:Zip/Postal Code
+lblOrderProduct:Order Products
+lblAddProduct:Add Products
+lblTxnNo:Credit Card Transaction #
+lblSubNo:Subscription
+lblContractNo:Contract #
+lblChooseBillTo:Choose a billing address
+lblChooseShipTo:Choose a shipping address
+btnEdit:Edit Order
+btnDelete:Delete Order
+btnPay:Pay Order
+btnCancelOrder:Cancel Order
+btnGetTax:Calculate Freight &amp; Tax
+btnCreateOrder:Create SAP Sales Order
+btnCreateContract:Create SAP Contracts
+btnSave:Save
+btnCancelChange:Cancel</value>
+    </labels>
+    <labels>
+        <fullName>LabelsVF_Order2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page Order 2</shortDescription>
+        <value>msgWarnShipping:Order has shipping instructions.&lt;br/&gt;
+msgWarnHandling:Order has some special handling charges.&lt;br/&gt;
+msgWarnDefaultPayment:Payment method changed.&lt;br/&gt;
+errContactNotUser:Selected contact is not a valid user
+errNoProduct:No product was placed in order
+errMissShipTax:Missing Freight &amp; Tax information
+errMissSoldTo:&lt;br/&gt;Missing &quot;Sold To&quot; information
+errMissBillTo:&lt;br/&gt;Missing &quot;Bill To&quot; information
+errMissShipTo:&lt;br/&gt;Missing &quot;Ship To&quot; information
+errInvalidCoupon:Coupon &quot;{0}&quot; is already used
+errQuantity:Quantity &quot;{0}&quot; is invalid
+errTax:Error found in Freight &amp; Taxes calculation: 
+msgWarnProductNotCompliant:- Billing/Shipping country is non-compliant with the product &quot;{0}&quot; ({1}).
+msgPayTypeThreshold: (threshold exceeded)
+msgPayTypeNotAllowed: (not allowed)
+msgPayTypeBlock: (blocked by product)
+lblCompany:Company name
+lblAttention:Attention</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECConfirmOrder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECConfirmOrder</shortDescription>
+        <value>msgErrorProductNotCompliant:- Your country is non-compliant with the product &quot;{0}&quot; ({1}). Please remove from cart to be able to proceed or contact Customer Services to order this product.
+msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product.
+errT_C:You must accept all the terms &amp; conditions before
+errAddrExist:Address is already in system
+errTax:SAP Taxes and Shipping interface: 
+errMissing:Missing required information</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECConfirmOrder2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECConfirmOrder</shortDescription>
+        <value>lblShipSection:Shipping Information
+lblShipOption1:Same as billing address   
+lblShipOption2:Ship to a different address
+lblStreet:Street
+lblCity:City
+lblState:State/Province
+lblCountry:Country
+lblZip:Zip/Postal Code
+lblVAT:VAT #
+lblAttn:Attention
+lblContact:Contact Name
+lblEmail:Email
+lblPhone:Phone
+lblShipInstr:Special instruction
+btnAddAddr:Add a new address
+btnAddAddrAct:Add
+btnUpdAddr:Update address
+btnUpdAddrAct:Update
+btnCancelAddr:Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECDiscountType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels IECDiscountType</shortDescription>
+        <value>CustomerType:Customer type
+Discount:Discount
+Region:Region
+Country:Country
+Coupon:Coupon
+PreSales:PreSales</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECProductDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECProductDetail</shortDescription>
+        <value>lblRegPrice:Regular price:
+lblProdNum:Product Number:
+lblMedia:Media:
+lblLanguage:Language:
+lblEdition:Edition:
+lblDate:Effective Date:
+lblDateEnd: until 
+lblDesc:Description
+lblQty:Qty to add 
+lblAdd:Add to Cart
+lblNoPrice:Contact Direct Sales for price
+lblDiscount:Member Discount:
+lblCombo:The following products are part of this Combo:
+lblProdTitle:Product Title:
+lblStock:Availability:
+lblStockDate:Expected Availability Date:
+lblQtyInvalid:Invalid quantity to add
+lblDiscount:Discount
+lblFreeShipping:FREE SHIPPING
+msgErrorProductNotCompliant:Your country is non-compliant with this product. Please contact Customer Services to order this product.</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECProductRelated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for component IECProductRelated</shortDescription>
+        <value>Related products and services:~Product~Regular Price (USD)~Add to Cart~Contact Direct Sales for price</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECRecProducts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECRecProducts</shortDescription>
+        <value>lblViewAll:View All Products</value>
+    </labels>
+    <labels>
+        <fullName>Labels_IECViewCart</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page IECViewCart</shortDescription>
+        <value>msgErrorProductNotCompliant:- Your country is non-compliant with the product &quot;{0}&quot; ({1}). Please remove from cart to be able to proceed or contact Customer Services to order this product.
+msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product.
+msgErrorRenewalOrderExpired:Your renewal notification order link is either  expired or invalid. Please check your link and try again.</value>
+    </labels>
+    <labels>
+        <fullName>Language</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Language</shortDescription>
+        <value>Language</value>
+    </labels>
+    <labels>
         <fullName>Laq_Fax_Validation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12490,12 +13615,55 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Phone number not valid</value>
     </labels>
     <labels>
+        <fullName>Last_Name_required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last Name required</shortDescription>
+        <value>Please fill in your last name.</value>
+    </labels>
+    <labels>
+        <fullName>Last_name</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last name</shortDescription>
+        <value>Last name</value>
+    </labels>
+    <labels>
         <fullName>Location</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Location</shortDescription>
         <value>Location</value>
+    </labels>
+    <labels>
+        <fullName>Login</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Login</shortDescription>
+        <value>Login</value>
+    </labels>
+    <labels>
+        <fullName>Login_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Login date</shortDescription>
+        <value>Login date</value>
+    </labels>
+    <labels>
+        <fullName>Login_history</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Login history</shortDescription>
+        <value>Login history</value>
+    </labels>
+    <labels>
+        <fullName>Login_information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Login information</shortDescription>
+        <value>Login information</value>
     </labels>
     <labels>
         <fullName>Logout</fullName>
@@ -12538,11 +13706,54 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Make Public</value>
     </labels>
     <labels>
+        <fullName>Media</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Media</shortDescription>
+        <value>Media</value>
+    </labels>
+    <labels>
+        <fullName>Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message</shortDescription>
+        <value>Message</value>
+    </labels>
+    <labels>
+        <fullName>My_Renewals</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>My_Renewals</shortDescription>
+        <value>My Renewals</value>
+    </labels>
+    <labels>
         <fullName>New</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>New</shortDescription>
         <value>New</value>
+    </labels>
+    <labels>
+        <fullName>New_password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New password</shortDescription>
+        <value>New password</value>
+    </labels>
+    <labels>
+        <fullName>New_product_email_body</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New product email body</shortDescription>
+        <value>A new product #{0} is created</value>
+    </labels>
+    <labels>
+        <fullName>New_product_email_subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New product email subject</shortDescription>
+        <value>New product id created</value>
     </labels>
     <labels>
         <fullName>NoSameName</fullName>
@@ -12560,12 +13771,26 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>No-Reply</value>
     </labels>
     <labels>
+        <fullName>No_account_yet_Sign_up</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No account yet? Sign up!</shortDescription>
+        <value>No account yet? Sign up!</value>
+    </labels>
+    <labels>
         <fullName>No_attachments_were_found_on_the_source_case</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>No attachments were found on the source case</shortDescription>
         <value>No attachments were found on the source case!</value>
+    </labels>
+    <labels>
+        <fullName>No_product_found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No product found</shortDescription>
+        <value>No product found</value>
     </labels>
     <labels>
         <fullName>No_related_cases_were_found</fullName>
@@ -12583,11 +13808,127 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
     </labels>
     <labels>
+        <fullName>Only_one_subscription_can_be_purchased</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Only one subscription can  be purchased</shortDescription>
+        <value>Only one subscription can  be purchased at one time</value>
+    </labels>
+    <labels>
         <fullName>Open</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Open</shortDescription>
         <value>Open</value>
+    </labels>
+    <labels>
+        <fullName>Option_name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Option name</shortDescription>
+        <value>Option name</value>
+    </labels>
+    <labels>
+        <fullName>Order</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order</shortDescription>
+        <value>Order</value>
+    </labels>
+    <labels>
+        <fullName>Order_Check_confirmation_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Check confirmation message</shortDescription>
+        <value>Your Order {0} was successfully completed and the next steps will be the verification of your Check .&lt;br /&gt;
+{1}</value>
+    </labels>
+    <labels>
+        <fullName>Order_Credit_Card_confirmation_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Credit Card confirmation message</shortDescription>
+        <value>Your Order {0} was successfully completed.&lt;br /&gt;
+{1}</value>
+    </labels>
+    <labels>
+        <fullName>Order_ICH_confirmation_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order ICH confirmation message</shortDescription>
+        <value>Your order {0} has been accepted and processing will occur in the next 24 hours&lt;br /&gt;
+{1}</value>
+    </labels>
+    <labels>
+        <fullName>Order_Total_Amount_validation_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Total Amount validation message</shortDescription>
+        <value>You are not allowed to paid this amount with {0}</value>
+    </labels>
+    <labels>
+        <fullName>Order_history</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order history</shortDescription>
+        <value>Order history</value>
+    </labels>
+    <labels>
+        <fullName>Order_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order number</shortDescription>
+        <value>Order number</value>
+    </labels>
+    <labels>
+        <fullName>Order_prevent_deletion_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order prevent deletion message</shortDescription>
+        <value>You can not delete an {0} with &quot;{1}&quot; status</value>
+    </labels>
+    <labels>
+        <fullName>Order_prevent_modification_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order prevent modification message</shortDescription>
+        <value>You can not modified a field value a this status of the order.</value>
+    </labels>
+    <labels>
+        <fullName>Order_select_credit_card_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order select credit card message</shortDescription>
+        <value>Please select a credit card</value>
+    </labels>
+    <labels>
+        <fullName>Order_transaction_failed_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order transaction failed message</shortDescription>
+        <value>Your transaction failed please try again</value>
+    </labels>
+    <labels>
+        <fullName>Order_type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order type</shortDescription>
+        <value>Order type</value>
+    </labels>
+    <labels>
+        <fullName>Order_wire_transfer_confirmation_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order wire transfer confirmation message</shortDescription>
+        <value>Your Order {0} was successfully completed and the next steps will be the verification of wire transfer &lt;br /&gt; 
+ {1}</value>
+    </labels>
+    <labels>
+        <fullName>Orders</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Orders</shortDescription>
+        <value>Orders</value>
     </labels>
     <labels>
         <fullName>Overall_maximum_size</fullName>
@@ -13623,11 +14964,183 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>yesterday</value>
     </labels>
     <labels>
+        <fullName>PO_number</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PO_number</shortDescription>
+        <value>PO #</value>
+    </labels>
+    <labels>
         <fullName>PWC_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PWC service request</shortDescription>
         <value>PWC service request</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleConfirmOrder</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleConfirmOrder</shortDescription>
+        <value>Confirm order</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleCustomerInformation</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleCustomerInformation</shortDescription>
+        <value>Customer information</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleMyInvoices</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleMyInvoices</shortDescription>
+        <value>View invoices</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleMyPaymentMethods</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleMyPaymentMethods</shortDescription>
+        <value>Maintain Payment Methods</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleProductDetails</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleProductDetails</shortDescription>
+        <value>Product Details</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleProductList</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleProductList</shortDescription>
+        <value>Product List</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleShippingPayment</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleShippingPayment</shortDescription>
+        <value>Shipping &amp; payment</value>
+    </labels>
+    <labels>
+        <fullName>PageTitleShoppingCart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PageTitleShoppingCart</shortDescription>
+        <value>Shopping Cart</value>
+    </labels>
+    <labels>
+        <fullName>Page_Product_Detail</fullName>
+        <categories>Page Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page Product Detail</shortDescription>
+        <value>Product Details</value>
+    </labels>
+    <labels>
+        <fullName>Page_Products</fullName>
+        <categories>Page Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page Products</shortDescription>
+        <value>List of Products</value>
+    </labels>
+    <labels>
+        <fullName>Page_Title_Confirm_Order</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page_Title_Confirm_Order</shortDescription>
+        <value>Confirm Order</value>
+    </labels>
+    <labels>
+        <fullName>Page_Title_Products</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page_Title_Products</shortDescription>
+        <value>Our products</value>
+    </labels>
+    <labels>
+        <fullName>Page_Title_Products_By_Category</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page_Title_Products_By_Category</shortDescription>
+        <value>Products By Category</value>
+    </labels>
+    <labels>
+        <fullName>Page_Title_Search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page_Title_Search</shortDescription>
+        <value>Search Products</value>
+    </labels>
+    <labels>
+        <fullName>Page_Title_View_Cart</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page_Title_View_Cart</shortDescription>
+        <value>Shopping Cart</value>
+    </labels>
+    <labels>
+        <fullName>Payment_ID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment ID</shortDescription>
+        <value>Payment ID</value>
+    </labels>
+    <labels>
+        <fullName>Payment_amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment amount</shortDescription>
+        <value>Payment amount</value>
+    </labels>
+    <labels>
+        <fullName>Payment_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment date</shortDescription>
+        <value>Payment date</value>
+    </labels>
+    <labels>
+        <fullName>Payment_history</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment history</shortDescription>
+        <value>Payment history</value>
+    </labels>
+    <labels>
+        <fullName>Payment_method</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment method</shortDescription>
+        <value>Payment method</value>
+    </labels>
+    <labels>
+        <fullName>Payment_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment number</shortDescription>
+        <value>Payment number</value>
+    </labels>
+    <labels>
+        <fullName>Personal_information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Personal information</shortDescription>
+        <value>Personal information</value>
     </labels>
     <labels>
         <fullName>Phone</fullName>
@@ -13637,12 +15150,113 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Phone</value>
     </labels>
     <labels>
+        <fullName>Phone_required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Phone required</shortDescription>
+        <value>Please fill in your phone.</value>
+    </labels>
+    <labels>
+        <fullName>Placeholder_Search</fullName>
+        <categories>Placeholder</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Placeholder_Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Platform</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Platform</shortDescription>
+        <value>Platform</value>
+    </labels>
+    <labels>
         <fullName>Please_select_the_target_Case</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Please select the target Case</shortDescription>
         <value>Please select the target Case:</value>
+    </labels>
+    <labels>
+        <fullName>Postal_code</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Postal_code</shortDescription>
+        <value>Postal code</value>
+    </labels>
+    <labels>
+        <fullName>PreOrderAddToCart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PreOrderAddToCart</shortDescription>
+        <value>Pre order</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Charges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Charges</shortDescription>
+        <value>Charges</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Coupon_code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Coupon code</shortDescription>
+        <value>Coupon code</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Customer_type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Customer type</shortDescription>
+        <value>Customer type</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Ending_unit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Ending unit</shortDescription>
+        <value>Ending unit</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Percentage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Percentage</shortDescription>
+        <value>Percentage</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Price</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Price</shortDescription>
+        <value>Price</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Region</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Region</shortDescription>
+        <value>Region</value>
+    </labels>
+    <labels>
+        <fullName>Pricing_model_Start_unit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricing model Start unit</shortDescription>
+        <value>Start unit</value>
     </labels>
     <labels>
         <fullName>Priority_1_Showstopper</fullName>
@@ -13673,12 +15287,125 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Priority 4 (Trivial Defects)</value>
     </labels>
     <labels>
+        <fullName>Product</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product</shortDescription>
+        <value>Product</value>
+    </labels>
+    <labels>
+        <fullName>Product_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Name</shortDescription>
+        <value>Product Name</value>
+    </labels>
+    <labels>
+        <fullName>Product_Not_Found</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Not Found</shortDescription>
+        <value>Product Not Found</value>
+    </labels>
+    <labels>
+        <fullName>Product_Number</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product_Number</shortDescription>
+        <value>Product Number</value>
+    </labels>
+    <labels>
+        <fullName>Products</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Products</shortDescription>
+        <value>Products</value>
+    </labels>
+    <labels>
+        <fullName>Promo_code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Promo code</shortDescription>
+        <value>Promo code</value>
+    </labels>
+    <labels>
+        <fullName>Promotion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Promotion</shortDescription>
+        <value>Promotion</value>
+    </labels>
+    <labels>
         <fullName>Public</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Public</shortDescription>
         <value>Public</value>
+    </labels>
+    <labels>
+        <fullName>Publications</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Publications</shortDescription>
+        <value>Publications</value>
+    </labels>
+    <labels>
+        <fullName>Publications_subscriptions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Publications subscriptions</shortDescription>
+        <value>Publications Subscriptions</value>
+    </labels>
+    <labels>
+        <fullName>PurchaseAsAutoRenew</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PurchaseAsAutoRenew</shortDescription>
+        <value>Purchase as auto renewal</value>
+    </labels>
+    <labels>
+        <fullName>PurchaseAsAutoRenewInfo</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PurchaseAsAutoRenewInfo</shortDescription>
+        <value>Purchase as auto renewal information</value>
+    </labels>
+    <labels>
+        <fullName>QTY</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QTY</shortDescription>
+        <value>QTY</value>
+    </labels>
+    <labels>
+        <fullName>Quantity</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>Quote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quote</shortDescription>
+        <value>Quote</value>
+    </labels>
+    <labels>
+        <fullName>Quote_ID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quote ID</shortDescription>
+        <value>Quote ID</value>
     </labels>
     <labels>
         <fullName>RE</fullName>
@@ -13688,12 +15415,101 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>RE</value>
     </labels>
     <labels>
+        <fullName>Reader_Main_Content</fullName>
+        <categories>Content</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reader Main Content</shortDescription>
+        <value>Main Content</value>
+    </labels>
+    <labels>
+        <fullName>Reference_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reference number</shortDescription>
+        <value>Reference number</value>
+    </labels>
+    <labels>
+        <fullName>Refine</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Refine</shortDescription>
+        <value>Refine</value>
+    </labels>
+    <labels>
+        <fullName>Refine_by</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Refine by</shortDescription>
+        <value>Refine by</value>
+    </labels>
+    <labels>
+        <fullName>Region</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Region</shortDescription>
+        <value>Region</value>
+    </labels>
+    <labels>
+        <fullName>Related_invoice</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Related invoice</shortDescription>
+        <value>Related invoice</value>
+    </labels>
+    <labels>
+        <fullName>Related_invoices</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Related invoices</shortDescription>
+        <value>Related invoices</value>
+    </labels>
+    <labels>
+        <fullName>Related_payment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Related payment</shortDescription>
+        <value>Related payment</value>
+    </labels>
+    <labels>
         <fullName>Relationship</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Relationship</shortDescription>
         <value>Relationship</value>
+    </labels>
+    <labels>
+        <fullName>ReleaseDateMessage</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReleaseDateMessage</shortDescription>
+        <value>This title will be released on</value>
+    </labels>
+    <labels>
+        <fullName>Renewal_Number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Renewal_Number</shortDescription>
+        <value>Renewal Number</value>
+    </labels>
+    <labels>
+        <fullName>Request_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request_Date</shortDescription>
+        <value>Request Date</value>
+    </labels>
+    <labels>
+        <fullName>Reset_your_password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reset your password?</shortDescription>
+        <value>Reset your password?</value>
     </labels>
     <labels>
         <fullName>Response_message</fullName>
@@ -13768,12 +15584,72 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>SIS Operations</value>
     </labels>
     <labels>
+        <fullName>Salutation</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Salutation</shortDescription>
+        <value>Salutation</value>
+    </labels>
+    <labels>
         <fullName>Save</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Save</shortDescription>
         <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>Search</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Search_Products_Picklist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search Products picklist</shortDescription>
+        <value>activity,Activity #,Activity_Code__c
+area,Area of activity,SP_Working_Groups__c
+for_subscription,Available for Subscription,Available_for_Subscription__c
+category,Category,Line_of_Business__c
+free_shipping,Free Shipping,Charge_Shipping__c
+group,Group,Category_Group__c
+keyword,Keyword,Keywords__c
+language,Language,Language__c
+media,Media,Media__c
+member,Members,Restricted_Customer_Type__c
+segment,Segment,Product_Segment__c
+short_title,Short Title,Short_Title__c
+status,Status,Status__c
+subject,Subjects,
+title,Title,Name</value>
+    </labels>
+    <labels>
+        <fullName>Section_Services</fullName>
+        <categories>Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Section Services</shortDescription>
+        <value>Services</value>
+    </labels>
+    <labels>
+        <fullName>Section_Title_Top_Sellers</fullName>
+        <categories>Section Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Section Title Top Sellers</shortDescription>
+        <value>Top Sellers</value>
+    </labels>
+    <labels>
+        <fullName>See_details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>See details</shortDescription>
+        <value>See details</value>
     </labels>
     <labels>
         <fullName>Select</fullName>
@@ -13784,11 +15660,35 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Select</value>
     </labels>
     <labels>
+        <fullName>SelectRequiredMessage</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectRequiredMessage</shortDescription>
+        <value>Please select</value>
+    </labels>
+    <labels>
         <fullName>Select_File</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Select File</shortDescription>
         <value>Select File</value>
+    </labels>
+    <labels>
+        <fullName>Select_a_Country</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>-Select a Country-</shortDescription>
+        <value>-Select a Country-</value>
+    </labels>
+    <labels>
+        <fullName>Select_a_State_Province</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>-Select a State/Province-</shortDescription>
+        <value>-Select a State/Province-</value>
     </labels>
     <labels>
         <fullName>Select_one_Attachment</fullName>
@@ -13839,6 +15739,73 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Email sent</value>
     </labels>
     <labels>
+        <fullName>Services_dates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Services dates</shortDescription>
+        <value>Services dates</value>
+    </labels>
+    <labels>
+        <fullName>Shipping</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping</shortDescription>
+        <value>Shipping</value>
+    </labels>
+    <labels>
+        <fullName>Shipping_address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping address</shortDescription>
+        <value>Shipping address</value>
+    </labels>
+    <labels>
+        <fullName>Shipping_and_handling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping and handling</shortDescription>
+        <value>Shipping and handling</value>
+    </labels>
+    <labels>
+        <fullName>Shipping_instructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shipping instructions</shortDescription>
+        <value>Shipping instructions</value>
+    </labels>
+    <labels>
+        <fullName>ShoppingCartCurrencyMsg</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ShoppingCartCurrencyMsg</shortDescription>
+        <value>All prices in US Dollars (USD)</value>
+    </labels>
+    <labels>
+        <fullName>ShoppingCartFooterMsg</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ShoppingCartFooterMsg</shortDescription>
+        <value>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt velit, aliquam dolorem voluptatum cumque quaerat error, quia quasi architecto quos maxime, deserunt eos illo illum dolor odit perferendis quidem magnam.</value>
+    </labels>
+    <labels>
+        <fullName>ShoppingCartQtyMsg</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ShoppingCartQtyMsg</shortDescription>
+        <value>Please enter the quantity you wish to order for each product listed below</value>
+    </labels>
+    <labels>
+        <fullName>SignIn</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SignIn</shortDescription>
+        <value>Sign in</value>
+    </labels>
+    <labels>
         <fullName>Signaturit_Allowed_Users</fullName>
         <categories>Signaturit</categories>
         <language>en_US</language>
@@ -13855,11 +15822,107 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>https://api.signaturit.com/v2/</value>
     </labels>
     <labels>
+        <fullName>SiteTitle</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SiteTitle</shortDescription>
+        <value>IATA: International Air Transport Association</value>
+    </labels>
+    <labels>
+        <fullName>SortBy</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SortBy</shortDescription>
+        <value>Sort by</value>
+    </labels>
+    <labels>
+        <fullName>Source_IP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Source IP</shortDescription>
+        <value>Source IP</value>
+    </labels>
+    <labels>
+        <fullName>Start_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Start date</shortDescription>
+        <value>Start date</value>
+    </labels>
+    <labels>
+        <fullName>State_Province</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>State / Province</shortDescription>
+        <value>State / Province</value>
+    </labels>
+    <labels>
+        <fullName>State_cannot_be_empty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>State cannot be empty</shortDescription>
+        <value>State cannot be empty</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>StayInformedMessage</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>StayInformedMessage</shortDescription>
+        <value>Stay Up-to-date on the latest industry trends and developments.</value>
+    </labels>
+    <labels>
+        <fullName>Stay_Informed</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stay Informed!</shortDescription>
+        <value>Stay Informed!</value>
+    </labels>
+    <labels>
+        <fullName>Street_cannot_be_empty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Street cannot be empty</shortDescription>
+        <value>Street cannot be empty</value>
+    </labels>
+    <labels>
         <fullName>Subject</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Subject</shortDescription>
         <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>Submit_Order</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Submit Order</shortDescription>
+        <value>Submit order</value>
+    </labels>
+    <labels>
+        <fullName>Subtotal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Subtotal</shortDescription>
+        <value>Subtotal</value>
+    </labels>
+    <labels>
+        <fullName>Summary</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Summary</shortDescription>
+        <value>Summary</value>
     </labels>
     <labels>
         <fullName>SurveyCustomerRecoveriesAnnFARRELL</fullName>
@@ -13869,12 +15932,41 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>005w0000003XCG8</value>
     </labels>
     <labels>
+        <fullName>Taxes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Taxes</shortDescription>
+        <value>Taxes</value>
+    </labels>
+    <labels>
         <fullName>The_attachments_you_select_will_be_copied_to_the_target_case</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>The attachments you select will be copied to the target case</shortDescription>
         <value>The attachments you select will be copied to the target case(s), while also remaining available on the source case.</value>
+    </labels>
+    <labels>
+        <fullName>Title_Home_Page</fullName>
+        <categories>Page Title</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title_Home_Page</shortDescription>
+        <value>IATA: International Air Transport Association</value>
+    </labels>
+    <labels>
+        <fullName>Total_Price</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Price</shortDescription>
+        <value>Total Price</value>
+    </labels>
+    <labels>
+        <fullName>Tracking_Number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tracking Number</shortDescription>
+        <value>Tracking Number</value>
     </labels>
     <labels>
         <fullName>Transfer_Attachments</fullName>
@@ -13892,6 +15984,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Trust Weaver</value>
     </labels>
     <labels>
+        <fullName>Until</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Until</shortDescription>
+        <value>until</value>
+    </labels>
+    <labels>
         <fullName>Upload_File</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -13907,6 +16007,35 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Upload Financial Documents</value>
     </labels>
     <labels>
+        <fullName>User_name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>User name</shortDescription>
+        <value>User name</value>
+    </labels>
+    <labels>
+        <fullName>VAT_number</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VAT_number</shortDescription>
+        <value>VAT #</value>
+    </labels>
+    <labels>
+        <fullName>VAT_required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VAT required</shortDescription>
+        <value>The VAT number is required</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Until</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Valid_Until</shortDescription>
+        <value>Valid Until</value>
+    </labels>
+    <labels>
         <fullName>View</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -13915,11 +16044,135 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>View</value>
     </labels>
     <labels>
+        <fullName>ViewCart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ViewCart</shortDescription>
+        <value>View cart</value>
+    </labels>
+    <labels>
+        <fullName>View_6_more</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>View_6_more</shortDescription>
+        <value>View 6 more</value>
+    </labels>
+    <labels>
+        <fullName>View_all</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>View all</shortDescription>
+        <value>View all</value>
+    </labels>
+    <labels>
+        <fullName>View_quotes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>View quotes</shortDescription>
+        <value>View quotes</value>
+    </labels>
+    <labels>
+        <fullName>Warning_Empty_Cart</fullName>
+        <categories>Warning</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning Empty Cart</shortDescription>
+        <value>Your Shopping cart is empty</value>
+    </labels>
+    <labels>
+        <fullName>Warning_Expired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning_Expired</shortDescription>
+        <value>Expired</value>
+    </labels>
+    <labels>
+        <fullName>Warning_Invalid_Coupon</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning Invalid Coupon</shortDescription>
+        <value>The coupon &quot;{0}&quot; for product &quot;{1}&quot; ({2}) is already used</value>
+    </labels>
+    <labels>
+        <fullName>Warning_Invalid_CouponCode</fullName>
+        <categories>Warning</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning_Invalid_CouponCode</shortDescription>
+        <value>The coupon Code interred is already used</value>
+    </labels>
+    <labels>
+        <fullName>Warning_Invalid_Quantity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning Invalid Quantity</shortDescription>
+        <value>The quantity &quot;{0}&quot; for product &quot;{1}&quot; ({2}) is invalid</value>
+    </labels>
+    <labels>
+        <fullName>Warning_No_Renewal_Notice</fullName>
+        <categories>Warning</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning_No_Renewal_Notice</shortDescription>
+        <value>You do not have any renewal notice</value>
+    </labels>
+    <labels>
+        <fullName>Warning_No_Shippable_Product</fullName>
+        <categories>Warning</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning No Shippable Product</shortDescription>
+        <value>There is no shippable product in this order to create a Sales Order in SAP</value>
+    </labels>
+    <labels>
+        <fullName>Warning_OrderItem_Exist</fullName>
+        <categories>Warning</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning_OrderItem_Exist</shortDescription>
+        <value>The product &quot;{0}&quot; ({1}) already exist</value>
+    </labels>
+    <labels>
+        <fullName>Warning_SalesOrder_Already_Created</fullName>
+        <categories>Warning</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Warning SalesOrder Already Created</shortDescription>
+        <value>A Sales Order is already created for this Order {0}</value>
+    </labels>
+    <labels>
         <fullName>Web</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Web</shortDescription>
         <value>Web</value>
+    </labels>
+    <labels>
+        <fullName>Welcome_Message</fullName>
+        <categories>Content</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Welcome Message</shortDescription>
+        <value>&lt;span class=&quot;text&quot;&gt;Welcome to &lt;/span&gt; &lt;span class=&quot;text&quot;&gt;Lorem ipsum dolor&lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>Welcome_Message1</fullName>
+        <categories>Content</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Welcome_Message1</shortDescription>
+        <value>Welcome to</value>
+    </labels>
+    <labels>
+        <fullName>Welcome_Message2</fullName>
+        <categories>Content</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Welcome_Message2</shortDescription>
+        <value>Text Line2</value>
     </labels>
     <labels>
         <fullName>X1_High</fullName>
@@ -13936,6 +16189,58 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>your</value>
     </labels>
     <labels>
+        <fullName>Your_cart</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Your cart</shortDescription>
+        <value>Your cart</value>
+    </labels>
+    <labels>
+        <fullName>ZQuotes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ZQuotes</shortDescription>
+        <value>ZQuotes</value>
+    </labels>
+    <labels>
+        <fullName>Zip_code_cannot_be_empty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Zip code cannot be empty</shortDescription>
+        <value>Zip code cannot be empty</value>
+    </labels>
+    <labels>
+        <fullName>Zuora_Hosted_Payment_Method_error_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Zuora Hosted Payment Method error message</shortDescription>
+        <value>An error has occurred was trying to create your new card</value>
+    </labels>
+    <labels>
+        <fullName>days_left</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>days left</shortDescription>
+        <value>days left</value>
+    </labels>
+    <labels>
+        <fullName>deselect_all</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>deselect all</shortDescription>
+        <value>deselect all</value>
+    </labels>
+    <labels>
+        <fullName>discounted_price</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>discounted price</shortDescription>
+        <value>Discounted Price</value>
+    </labels>
+    <labels>
         <fullName>doubleHash</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13948,6 +16253,30 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>IDCard_replacementHeadText</shortDescription>
         <value>Request a change of agency</value>
+    </labels>
+    <labels>
+        <fullName>label_custom_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label custom price</shortDescription>
+        <value>{0} price</value>
+    </labels>
+    <labels>
+        <fullName>label_direct_sales_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label direct sales price</shortDescription>
+        <value>direct sales</value>
+    </labels>
+    <labels>
+        <fullName>label_regular_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label regular price</shortDescription>
+        <value>regular price</value>
     </labels>
     <labels>
         <fullName>noreplyEmail</fullName>
@@ -14256,5 +16585,28 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>true</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
         <value>中國的</value>
+    </labels>
+    <labels>
+        <fullName>regular_price</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>regular price</shortDescription>
+        <value>Regular Price</value>
+    </labels>
+    <labels>
+        <fullName>select_all</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>select all</shortDescription>
+        <value>select all</value>
+    </labels>
+    <labels>
+        <fullName>wire_transfer_payment_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>wire transfer payment msg</shortDescription>
+        <value>Your wire transfer payment has been received.</value>
     </labels>
 </CustomLabels>
