@@ -16609,4 +16609,11 @@ title,Title,Name</value>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>IDCard_PendingIdCardAppH1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_PendingIdCardAppH1</shortDescription>
+        <value>Pending ID Card Application</value>
+    </labels>
 </CustomLabels>

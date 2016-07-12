@@ -1,13 +1,13 @@
 <apex:page cache="true" expires="600" docType="html" title="IATA/IATAN ID Card Online Platform" sidebar="false" showHeader="false" language="{!Language}"  controller="IDCardPendingCaseController" >  
 
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />  
 <apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
 <style>
    body {
             background-color: #D3D3D3;
         }
-        
+         
         body .apexp .bPageBlock.apexDefaultPageBlock .pbBottomButtons>table {
             border-top: none;
         }
@@ -23,9 +23,9 @@
         }
         
         body .apexp .bPageBlock.apexDefaultPageBlock .pbBottomButtons {
-            border-top: 0px;
+            border-top: 0px; 
             margin-top: 0px;
-        }
+        } 
         
         
         .bPageBlock .pbTitle {
@@ -153,58 +153,56 @@
            <div style="margin-top:1em; width:850px"> 
              <apex:pageBlock id="pb3" >
                     <div style="text-align: left">
-                        <h1>{!$Label.IDCard_PendingCaseH1}</h1>
+                       <h1>{!$Label.IDCard_PendingIdCardAppH1}</h1>
                     </div>
                      <apex:pageMessages id="ErrMsg" escape="false" />
                     
-                    <apex:pageBlockTable value="{!myCase}" var="c" id="agents" style="margin-top:1em; width:850px">
-                    <apex:column style="vertical-align: top">
-                                                       
+                    <apex:pageBlockTable value="{!myIdApp}" var="app" id="IDapp" style="margin-top:1em; width:850px" >
+                    	<apex:column style="vertical-align: top">
+                        
                             <table style="margin-top:1em; width:400px">
-                            
-                            
                                 <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_AgentName}:</b></td>
-                                    <td class="outputText2">{!c.Related_ID_Card_Application__r.Displayed_Name__c}</td>
+                                    <td style="width:200px"><b class="LabelsGray">ID Card Application:</b></td>
+                                    <td class="outputText2">{!app.Name}</td>
+                                </tr> 
+                                <tr> 
+                                    <td style="width:200px"><b class="LabelsGray">Displayed Name on IDCard:</b></td>
+                                    <td class="outputText2">{!app.Displayed_Name__c}</td>
                                 </tr>
-                                                                
                                 <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_CaseNumber}:</b></td>
-                                    <td class="outputText2">{!c.CaseNumber}</td>
+                                    <td style="width:200px"><b class="LabelsGray">Application Status:</b></td>
+                                    <td class="outputText2">{!app.Application_Status__c}</td>
                                 </tr>
-                                
+                                <tr>   
+                                    <td style="width:200px"><b class="LabelsGray">IATA Code:</b></td>
+                                    <td class="outputText2">{!app.IATA_Code__c}</td>
+                                 </tr>    
+                                 <tr>   
+                                    <td style="width:200px"><b class="LabelsGray">Opened Data:</b></td>
+                                    <td class="outputText2">{!app.Terms_and_Conditions_Time_Stamp__c}</td>
+                                 </tr>   
                                 <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_CaseStatus}:</b></td>
-                                    <td class="outputText2">{!c.Status}</td>
-                                </tr>
-                                
+                                    <td style="width:200px"><b class="LabelsGray">VER Number:</b></td>
+                                    <td class="outputText2">{!app.VER_Number__c}</td>
+                                </tr>    
                                 <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_IATA_Code_Of_Location}:</b></td>
-                                    <td class="outputText2">{!c.IATA_Code__c}</td>
-                                </tr>
-                                
+                                    <td style="width:200px"><b class="LabelsGray">Start Date Agency Month:</b></td>
+                                    <td class="outputText2">{!app.Start_Date_Agency_Month__c}</td>
+                                </tr>    
                                 <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_OpenedDate}:</b></td>
-                                    <td class="outputText2">{!c.CreatedDate}</td>
+                                    <td style="width:200px"><b class="LabelsGray">Start Date Agency Year:</b></td>
+                                    <td class="outputText2">{!app.Start_Date_Agency_Year__c}</td>
                                 </tr>
-                                
                                 <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_RelatedIDCA}:</b></td>
-                                    <td class="outputText2">{!c.Related_ID_Card_Application__r.Name}</td>
+                                    <td style="width:200px"><b class="LabelsGray">ID Card Application Type:</b></td>
+                                    <td class="outputText2">{!app.Type_of_application__c}</td>
                                 </tr>
-                                
-                                <tr>
-                                    <td style="width:200px"><b class="LabelsGray">{!$Label.IDCard_IDCAType}:</b></td>
-                                    <td class="outputText2">{!c.Related_ID_Card_Application__r.Type_of_application__c}</td>
-                                </tr>
-                                                                                                                                                                                                
                                 
                             </table>
                             <br/>
                          <a href="http://www.iata.org/customer-portal/Pages/index.aspx" target="_self">{!$Label.IDCard_GotQueries}</a>
-                        </apex:column>                   
-                       
-                    </apex:pageBlockTable>              
+						</apex:column>
+                    </apex:pageBlockTable>
                     <apex:pageBlockButtons location="bottom">                        
                             <table style="cellspacing: 15px;width: auto">
                                 <tr>
@@ -223,9 +221,6 @@
        </div>   
       </apex:form>
     </div>
-        
   <c:IDCard_footerComponent />
-    
-    
-</body>
+</body>	
 </apex:page>
