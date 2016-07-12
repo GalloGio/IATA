@@ -70,6 +70,7 @@ public without sharing class AMS_Utils {
     public static final String HO = 'HO';
     public static final String SA = 'SA';
 
+    //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
     public static final String new_BR           = 'NEW.BR'          ;
     public static final String new_BR_ABROAD    = 'NEW.BR.ABROAD'   ;
@@ -81,10 +82,13 @@ public without sharing class AMS_Utils {
     public static final String new_AHA          = 'NEW.AHA.1.0'     ;
     public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
     public static final String new_SA           = 'NEW.SA.1.0'      ;
+
+    //Processes of type CHANGES
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
+
 
     public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
@@ -892,7 +896,7 @@ public without sharing class AMS_Utils {
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
 
-        if (fieldsToMigrate != null) {
+        if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
 
                 for (String key : fieldsMapping.keySet()) {
