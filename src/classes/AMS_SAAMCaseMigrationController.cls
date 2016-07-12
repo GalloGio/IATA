@@ -1,7 +1,9 @@
 public class AMS_SAAMCaseMigrationController {
 
 	private String SPECIFIC_CASES = 'Specific Cases';
-	private String ALL_CASES = 'All SAAM Cases';
+	private String ALL_CASES = 'All SAAM Cases (from Portal)';
+	private String PORTAL_CASES = 'All SAAM Cases (not from Portal)';
+	private String NOTPORTAL_CASES = 'All SAAM Cases';
 	private Integer PAGE_SIZE = 100; //max size: 1000
 	private Id SAAMCaseRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 	
@@ -88,6 +90,8 @@ public class AMS_SAAMCaseMigrationController {
 			if(searchOptions == null){
 				searchOptions = new List<SelectOption>{
 					new SelectOption(ALL_CASES, ALL_CASES),
+					new SelectOption(PORTAL_CASES, PORTAL_CASES),
+					new SelectOption(NOTPORTAL_CASES, NOTPORTAL_CASES),
 					new SelectOption(SPECIFIC_CASES, SPECIFIC_CASES)
 				};
 			}
@@ -132,9 +136,12 @@ public class AMS_SAAMCaseMigrationController {
 
 				query += 'CaseNumber In :caseNumberList';
 			}
-		}else if (searchOption == ALL_CASES) {
+		}else if (searchOption == ALL_CASES || searchOption == PORTAL_CASES || searchOption == NOTPORTAL_CASES) {
 			query += 'RecordTypeId = :SAAMCaseRecType ';
 			//query += 'Id != \'\' '; used for testing
+
+			//if(searchOption == PORTAL_CASES) query += '<add_portal_filter> = true';
+			//if(searchOption == NOTPORTAL_CASES) query += '<add_portal_filter> = false';
 		}
 		else{
 
