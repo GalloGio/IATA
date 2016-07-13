@@ -179,7 +179,7 @@ private class Product_Svc_Test
 
             Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
             List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
-            //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
+           //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
 			
         }
         

@@ -8,7 +8,8 @@ global class ProductStockStatus_Scheduler implements Schedulable
 	//runs every day at 1 AM. '0 0 1 * * ?'
 	global static String doSchedule(String CRON_EXP) 
 	{
-        return System.schedule('Product In Stock/Out of Stock', CRON_EXP, new ProductStockStatus_Scheduler());
+		String name = (Test.isRunningTest()) ? 'Product Stock Status '+ Datetime.now().getTime() : 'Product In Stock/Out of Stock';
+        return System.schedule(name, CRON_EXP, new ProductStockStatus_Scheduler());
     }
 
 	global void execute(SchedulableContext sc) 
