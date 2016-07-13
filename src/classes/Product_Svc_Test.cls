@@ -109,7 +109,7 @@ private class Product_Svc_Test
     Created by CGI, Kevin 2015-08-26
         Cover code of method "test_getProductStatusFromSAP"
     ****************************************************************************************************/
-    @isTest(seeAllData=false)
+    @isTest(seeAllData=true)
     static void test_getProductStatusFromSAP(){
         Test.startTest();
         TestDataGenerator.generateUtilitySetting();
@@ -177,9 +177,9 @@ private class Product_Svc_Test
 
             update listProd[0];
 
-            //Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
-            //List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
-            //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
+            Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
+            List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
+           //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
 			
         }
         
