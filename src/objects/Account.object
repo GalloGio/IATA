@@ -10624,6 +10624,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Holding Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA</fullName>
                 <default>false</default>
             </picklistValues>
@@ -10645,10 +10649,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <picklistValues>
                 <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Holding Company</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -59056,11 +59056,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Aircraft Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59305,14 +59313,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Holding Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agency Holding Company</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59889,6 +59889,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA</fullName>
                 <default>false</default>
             </values>
@@ -59910,10 +59914,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Holding Company</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62784,11 +62784,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Aircraft Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63021,14 +63029,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Holding Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agency Holding Company</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63766,6 +63766,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA</fullName>
                 <default>false</default>
             </values>
@@ -63787,10 +63791,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Holding Company</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
