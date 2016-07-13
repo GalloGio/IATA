@@ -1770,6 +1770,10 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
         <name>IDCard_PendingCaseH2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
         <label>Vous devez sélectionner au mois une carte à commander et/ou rejeter pour poursuivre.</label>
         <name>IDCard_Pending_Apps_Missing_Args</name>
     </customLabels>
