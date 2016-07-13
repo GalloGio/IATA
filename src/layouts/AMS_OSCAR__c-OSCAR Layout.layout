@@ -58,6 +58,10 @@
                 <behavior>Edit</behavior>
                 <field>Sanity_check_results__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Documentation_remarks__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -175,8 +179,16 @@
                 <behavior>Edit</behavior>
                 <field>PSAA_EACP_Agreement_received__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Criteria_remarks__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFAP_Financial_Year__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Assessment_deadline__c</field>
