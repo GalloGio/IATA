@@ -14,12 +14,12 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom">
-				<apex:commandButton action="{!search}" value="Search" reRender="pageMessages, caseTable" />
+				<apex:commandButton action="{!search}" value="Search" reRender="pageMessages, caseTable" disabled="{!processing}" />
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 	</apex:form>
 	
-	<apex:form id="caseTable" >
+	<apex:form id="caseTable" styleClass="pos-relative" >
 		<apex:pageBlock title="Cases" rendered="{!searched}">
 			<apex:pageBlockTable value="{!emptyList}" var="message" rendered="{!saamCases.size == 0}">
 				<apex:column >
@@ -38,7 +38,10 @@
 						Action
 					</apex:outputPanel>
 					</apex:facet>
-					<apex:inputCheckbox value="{!container.selected}"/>
+					<apex:inputCheckbox value="{!container.selected}" rendered="{!AND(NOT(processing), NOT(container.migrated))}"/>
+					<apex:image value="/../img/icon/pending12.gif" rendered="{!AND(processing, container.selected, NOT(container.migrated))}"/>
+					<apex:image value="/../img/icon/approve12.gif" rendered="{!AND(container.migrated, NOT(container.hasError))}"/>
+					<apex:image value="/../img/icon/reject12.gif" rendered="{!AND(container.migrated, container.hasError)}"/>
 				</apex:column>
 
 				<apex:column headerValue="{!$ObjectType.Case.Label}">
@@ -48,6 +51,11 @@
 				<apex:repeat value="{!caseFieldNames}" var="field">
 					<apex:column value="{!container.c[field]}"/>
 				</apex:repeat>
+
+				<apex:column headerValue="Results">
+					<apex:outputText value="{!container.errorMessage}" rendered="{!container.hasError}"/>
+					<!-- <apex:outputPanel rendered="{!AND(container.migrated, NOT(container.hasError)}"> -->
+				</apex:column>
 			</apex:pageBlockTable>
 			
 			<apex:outputPanel layout="block" style="text-align: right; margin-top: 5px;" rendered="{!saamCases.size > 0}">
@@ -57,11 +65,37 @@
 				<apex:commandLink action="{!next}"		value="Next >"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 				<apex:commandLink action="{!last}"		value="Last >>"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 			</apex:outputPanel>
+			
+			<apex:outputPanel layout="block" styleClass="loading-backdrop" rendered="{!processing}"/>				
+			<!-- <apex:image value="/../img/loading32.gif" styleClass="loading-img" rendered="{!processing}"/> -->
+			<apex:image value="{!URLFOR($Resource.loadinggif)}" styleClass="loading-img" rendered="{!processing}"/>
+
+			<style>
+				.pos-relative{ position: relative; }
+				.loading-backdrop{ 
+					position: absolute; 
+					top: 0; 
+					bottom: 0; 
+					right: 0; 
+					left: 0; 
+					background: #FFF; 
+					opacity: 0.5; 
+				}
+				.loading-img{
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					margin-top: -16px;
+					margin-left: -16px;
+ 				}
+			</style>
 
 			<apex:pageBlockButtons>
-				<apex:commandButton action="{!convert}" value="Convert" />
+				<apex:commandButton action="{!convert}" value="Convert" disabled="{!processing}" status="Loading" reRender="caseTable, pageMessages" />
 			</apex:pageBlockButtons>
-
 		</apex:pageBlock>
+
+		<apex:actionPoller rendered="{!processing}" reRender="caseTable, pageMessages" action="{!migrateCases}" interval="5" status="Loading" />
+		<c:Loading />
 	</apex:form>
 </apex:page>

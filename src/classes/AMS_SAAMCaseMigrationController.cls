@@ -2,14 +2,45 @@ public class AMS_SAAMCaseMigrationController {
 
 	private String SPECIFIC_CASES = 'Specific Cases';
 	private String ALL_CASES = 'All SAAM Cases';
-	private String PORTAL_CASES = 'All SAAM Cases (from Portal)';
-	private String NOTPORTAL_CASES = 'All SAAM Cases (not from Portal)';
-	private Integer PAGE_SIZE = 100; //max size: 1000
-	private Id SAAMCaseRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-	
+	private String ALL_FROM_PORTAL = 'All SAAM Cases from Portal';
+	private String ALL_NOT_FROM_PORTAL = 'All SAAM Cases not from Portal';
+
+	private final Integer PAGE_SIZE = 100; //max size: 1000
+	private final Id SAAMCaseRecType = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+
 	public String caseNumbers	{ get; set; }
 	public String searchOption	{ get; set; }
 	public Boolean selectAll	{ get; set; }
+
+	private Map<String, String> pageQueriesOption {
+		get {
+			return new Map<String, String> {
+				'Specific Cases' => 'SPECIFIC_CASES',
+				'All SAAM Cases' => 'ALL_CASES',
+				'All SAAM Cases from Portal' => 'ALL_FROM_PORTAL',
+				'All SAAM Cases not from Portal' => 'ALL_NOT_FROM_PORTAL'
+			};
+		}
+		set;
+	}
+
+	private Map<String, String> pageQueries {
+		get {
+			if(pageQueries == null){
+				pageQueries = new Map<String, String> {
+					'SPECIFIC_CASES_QUERY' => 'SELECT Id, CaseNumber ' + caseFieldsStr + ' FROM CASE WHERE OSCAR__c = \'\' and CaseNumber In :caseNumberList and RecordTypeId = :SAAMCaseRecType and isCLosed = false',
+
+					'ALL_FROM_PORTAL_QUERY' => 'SELECT Id, CaseNumber ' + caseFieldsStr + ' FROM CASE WHERE Id IN ( SELECT SAAM_Case__c from AMS_Pax_Accreditation_Form__c where SAAM_Case__r.RecordTypeId = :SAAMCaseRecType AND SAAM_Case__r.isCLosed = false and SAAM_Case__r.OSCAR__c = \'\' )',
+				
+					'ALL_NOT_FROM_PORTAL_QUERY' => 'SELECT Id, CaseNumber' +  caseFieldsStr + ' FROM CASE WHERE OSCAR__c = \'\' and RecordTypeId = :SAAMCaseRecType and isCLosed = false and Id not in ( SELECT SAAM_Case__c from AMS_Pax_Accreditation_Form__c where SAAM_Case__r.RecordTypeId = :SAAMCaseRecType AND SAAM_Case__r.isCLosed = false and SAAM_Case__r.OSCAR__c = \'\' )'
+				};
+
+				System.debug(loggingLevel.INFO, '____ [cls AMS_SAAMCaseMigrationController - pageQueries] pageQueries - ' + pageQueries);
+			}
+			return pageQueries;
+		}
+		set;
+	}
 
 	private List<String> caseNumberList{
 		get{
@@ -21,9 +52,21 @@ public class AMS_SAAMCaseMigrationController {
 		get{
 			return new List<Schema.SObjectField>{
 				Case.OwnerId,
-				Case.Status
+				Case.Status,
+				Case.RecordType__c,
+				Case.Reason1__c,
+				Case.AccountId
 			};
 		}
+	}
+
+	private String caseFieldsStr{
+		get{
+			caseFieldsStr = '';			
+			for(String field : caseFieldNames) caseFieldsStr += ', '+field;
+			return caseFieldsStr;
+		}
+		set;
 	}
 
 
@@ -35,13 +78,13 @@ public class AMS_SAAMCaseMigrationController {
 
 
 	//************************************
-	//*********** getters ****************
+	//******** public getters ************
 	//************************************
 
 
-	public List<List<CaseContainer>> saamCases{
+	public List<List<AMS_MigrationToolHelper.CaseContainer>> saamCases{
 		get{
-			if(saamCases == null) saamCases = new List<List<CaseContainer>>();
+			if(saamCases == null) saamCases = new List<List<AMS_MigrationToolHelper.CaseContainer>>();
 			return saamCases;
 		}
 		set;
@@ -49,6 +92,21 @@ public class AMS_SAAMCaseMigrationController {
 
 	public List<String> getEmptyList(){
 		return new List<String>{ 'No records found'};
+	}
+
+	public List<SelectOption> searchOptions {
+		get{
+			if(searchOptions == null){
+				searchOptions = new List<SelectOption>{
+					new SelectOption(ALL_CASES, ALL_CASES),
+					new SelectOption(ALL_FROM_PORTAL, ALL_FROM_PORTAL),
+					new SelectOption(ALL_NOT_FROM_PORTAL, ALL_NOT_FROM_PORTAL),
+					new SelectOption(SPECIFIC_CASES, SPECIFIC_CASES)
+				};
+			}
+			return searchOptions;
+		}
+		set;
 	}
 
 	public List<String> caseFieldNames {
@@ -78,6 +136,14 @@ public class AMS_SAAMCaseMigrationController {
 		set;
 	}
 
+	public Boolean processing{
+		get{
+			if(processing == null) processing = false;
+			return processing;
+		}
+		set;
+	}
+
 	public Boolean showTextArea{
 		get{
 			return searchOption == SPECIFIC_CASES;
@@ -85,22 +151,7 @@ public class AMS_SAAMCaseMigrationController {
 		set;
 	}
 
-	public List<SelectOption> searchOptions {
-		get{
-			if(searchOptions == null){
-				searchOptions = new List<SelectOption>{
-					new SelectOption(ALL_CASES, ALL_CASES),
-					new SelectOption(PORTAL_CASES, PORTAL_CASES),
-					new SelectOption(NOTPORTAL_CASES, NOTPORTAL_CASES),
-					new SelectOption(SPECIFIC_CASES, SPECIFIC_CASES)
-				};
-			}
-			return searchOptions;
-		}
-		set;
-	}
-
-	public List<CaseContainer> casesOnPage {
+	public List<AMS_MigrationToolHelper.CaseContainer> casesOnPage {
 		get{
 			return saamCases[pageNumber-1];
 		}
@@ -117,49 +168,54 @@ public class AMS_SAAMCaseMigrationController {
 	}
 
 	public void doSelectAll() {
-		for(CaseContainer cc : casesOnPage) cc.selected = selectAll;
+		for(AMS_MigrationToolHelper.CaseContainer cc : casesOnPage) if(!cc.migrated) cc.selected = selectAll;
 	}
 
 	public void search() {
-		saamCases = new List<List<CaseContainer>>();
 
-		String fields = '';
-		for(String field : caseFieldNames) fields += ', '+field;
-
-		String query = 'SELECT Id, CaseNumber' + fields + ' FROM CASE WHERE ';
-		if(searchOption == SPECIFIC_CASES){
-			if(String.isEmpty(caseNumbers)){
-
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please, inform case number'));
-				return;
-			}else{
-
-				query += 'CaseNumber In :caseNumberList';
-			}
-		}else if (searchOption == ALL_CASES || searchOption == PORTAL_CASES || searchOption == NOTPORTAL_CASES) {
-			query += 'RecordTypeId = :SAAMCaseRecType ';
-			//query += 'Id != \'\' '; used for testing
-
-			//if(searchOption == PORTAL_CASES) query += '<add_portal_filter> = true';
-			//if(searchOption == NOTPORTAL_CASES) query += '<add_portal_filter> = false';
-		}
-		else{
-
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please, select type of search'));
+		if(!(searchOption == SPECIFIC_CASES || searchOption == ALL_FROM_PORTAL || searchOption == ALL_NOT_FROM_PORTAL || searchOption == ALL_CASES)){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Not a valid option, please choose a valid option.'));
 			return;
 		}
 
-		List<CaseContainer> page = new List<CaseContainer>(); 
-		for(Case c : Database.query(query)){
-			page.add(new CaseContainer(c));
+		saamCases = new List<List<AMS_MigrationToolHelper.CaseContainer>>();
+		List<AMS_MigrationToolHelper.CaseContainer> cases = new List<AMS_MigrationToolHelper.CaseContainer>();
 
-			if(page.size() == PAGE_SIZE){
-				saamCases.add(new List<CaseContainer>(page));
-				page.clear();
+		if(searchOption == SPECIFIC_CASES || searchOption == ALL_FROM_PORTAL || searchOption == ALL_NOT_FROM_PORTAL){
+
+			System.debug('Search option is:' + pageQueriesOption.get(searchOption) + '_QUERY');
+
+			for(Case c : Database.query(pageQueries.get(pageQueriesOption.get(searchOption) + '_QUERY'))){
+
+				cases.add(new AMS_MigrationToolHelper.CaseContainer(c,searchOption == ALL_FROM_PORTAL));
 			}
 		}
 
+		if(searchOption == ALL_CASES){
+
+			for(Case c : Database.query(pageQueries.get('ALL_FROM_PORTAL' + '_QUERY'))){
+
+				cases.add(new AMS_MigrationToolHelper.CaseContainer(c,true));
+			}
+
+			for(Case c : Database.query(pageQueries.get('ALL_NOT_FROM_PORTAL' + '_QUERY'))){
+
+				cases.add(new AMS_MigrationToolHelper.CaseContainer(c,false));
+			}
+		}
+
+		List<AMS_MigrationToolHelper.CaseContainer> page = new List<AMS_MigrationToolHelper.CaseContainer>();
+		for(AMS_MigrationToolHelper.CaseContainer container : cases){
+
+			page.add(container);
+
+			if(page.size() == PAGE_SIZE){
+				saamCases.add(new List<AMS_MigrationToolHelper.CaseContainer>(page));
+				page.clear();
+			}
+		}
 		if(!page.isEmpty()) saamCases.add(page);
+
 		searched = true;
 	}
 
@@ -180,37 +236,39 @@ public class AMS_SAAMCaseMigrationController {
 	}
 
 	public void convert() {
-		List<Case> cases = new List<Case>();
+		List<AMS_MigrationToolHelper.CaseContainer> caseContainers = new List<AMS_MigrationToolHelper.CaseContainer>();
 
-		for(List<CaseContainer> page : saamCases){
-			for(CaseContainer container : page){
+		for(List<AMS_MigrationToolHelper.CaseContainer> page : saamCases){
+			for(AMS_MigrationToolHelper.CaseContainer container : page){
 				if(container.selected){
-					cases.add(container.c);
+					processing = true;
+					if(AMS_MigrationToolHelper.alternate) container.fromPortal = true;
 				}
 			}
 		}
 
-		if(cases.isEmpty()){
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'No case selected '));
-			return;
-		}
-
-		System.debug(loggingLevel.Debug, '____ [cls AMS_SAAMCaseMigrationController - convert] cases - ' + cases);
-		//TODO: call method
+		if(!processing) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'No case selected '));	
 	}
 
+	public void migrateCases() {
+		for(List<AMS_MigrationToolHelper.CaseContainer> page : saamCases){
+			for(AMS_MigrationToolHelper.CaseContainer container : page){
+				if(container.selected && container.processing){
+					return;
+				}else if(container.selected && !container.migrated){
 
-	//************************************
-	//*********** wrapper ****************
-	//************************************
+					try{
+						container.processing = true;
+						container = AMS_MigrationToolHelper.migratecases(container);
+						
+					}catch(Exception e){
+						ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getMessage()));		
+					}
 
-	public class CaseContainer{
-		public Case c { get; set; }
-		public Boolean selected { get; set; }
-
-		public CaseContainer(Case c){
-			this.c = c;
-			this.selected = false;
+					return;	
+				}
+			}
 		}
+		processing = false;
 	}
 }
