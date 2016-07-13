@@ -449,7 +449,8 @@ else
 	var retVal = confirm(&quot;Warning!! Are you sure you want to regenerate? &quot;); 
 	if(retVal == true){ 
 		var result = sforce.apex.execute(&quot;IEC_Evt_Renew_SOAP&quot;,&quot;eventRegenerateRelease&quot;,{ eventReleaseId:&quot;{!IEC_Event_Release__c.Id}&quot; }); 
-		document.location.reload(true);
+		
+document.location.reload(true);
 		alert(&apos;The release process has started.&apos;); 
 	} 
 }</url>

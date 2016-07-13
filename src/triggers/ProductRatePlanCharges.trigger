@@ -4,5 +4,7 @@
 ****************************************************************************************************/
 trigger ProductRatePlanCharges on zqu__ProductRatePlanCharge__c (after delete, after insert, after update, before delete, before insert, before update)
 {
-	ProductRatePlanCharge_Dom.triggerHandler();
+    if (!Test.isRunningTest()) {
+		ProductRatePlanCharge_Dom.triggerHandler();
+    }
 }

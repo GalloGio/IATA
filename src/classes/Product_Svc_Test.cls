@@ -1,0 +1,336 @@
+@isTest
+private class Product_Svc_Test 
+{
+    
+    public static final Date DEFAULT_EFFECTIVE_START_DATE = Date.today(); 
+    public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
+
+    @isTest(seeAllData=true)
+    static void test_saveZProducts() 
+    {
+        Test.startTest();
+        //-- Generate Test Data
+        TestDataGenerator.generateUtilitySetting();
+        List<Product2> products = TestDataGenerator.generateProducts(2, false); 
+        
+        //-- 1st Product has ho Zuora Id : zcreate must be called 
+        products[0].Zuora_Id__c = null; //-- 
+
+        //-- 2nd Product has invalid date : api wil not be called for this product 
+        products[1].Effective_To__c = null;
+
+        insert products;
+
+        Database.executeBatch(new Product_Batch('saveZProducts', products));
+
+        Map<Id, Product2> productMap = new Map<Id, Product2>(products);
+
+        Set<Id> productIds = productMap.keySet();
+        
+        // Call Method 
+        String result = Product_Svc.saveZProducts(productIds);
+
+        test.stopTest();
+
+        // Assert
+    }
+
+    @isTest(seeAllData=true)
+    static void test_ProductStockStatus()
+    {
+        Test.startTest();
+         //-- Generate Test Data
+        TestDataGenerator.generateUtilitySetting();
+        List<Product2> products = TestDataGenerator.generateProducts(1, false); 
+
+        Database.executeBatch(new Product_Batch('ProductStockStatus', products));
+        Test.stopTest();
+    }
+
+     static void test_processZProductSaveResult()
+     {
+         Test.startTest();
+        //processZProductSaveResult(List<Product2> products, List<Zuora.zApi.SaveResult> results)
+        List<Product2> products = TestDataGenerator.generateProducts(2, false); 
+        List<Zuora.zObject> zobjects = TestDataGenerator.generateZProducts(2);
+        zobjects[0].setValue('SAPProductMaterialNo__c',products[0].SAP_Material_Number__c);
+        zobjects[1].setValue('SAPProductMaterialNo__c',products[1].SAP_Material_Number__c);
+
+        //Inject error
+        zobjects[1].setValue('EffectiveStartDate','');
+
+        List<Zuora.zApi.SaveResult> results = TestDataGenerator.generateSaveResults(zobjects, 'create');
+        results[0].Success = false;
+        results[0].Errors = new List<Zuora.zObject>();
+        Zuora.zObject err = new Zuora.zObject('Error');
+            err.setValue('Message', 'Invalid zObject');
+            err.setValue('Code', 'INVALID_FIELD');
+        results[0].Errors.add(err);
+
+
+        String result = Product_Svc.processZProductSaveResult(products, results);
+
+        System.debug('result::'+result);
+         
+        Test.stopTest();
+     }
+
+
+    
+    @isTest(seeAllData=true)
+    static void test_setIsNewVersion()
+    {
+        Test.startTest();
+        TestDataGenerator.generateUtilitySetting();
+
+        //-- Generate Test Data 
+        List<Product2> products = TestDataGenerator.generateProducts(2, false);
+
+        // Insert first product 
+        insert products[0];
+
+        //Set the 2nd product activity code to the first one 
+        products[1].Activity_Code__c = products[0].Activity_Code__c; 
+        Integer versionNumber = Integer.valueOf(products[0].SAP_Material_Number__c.split('-')[1]);
+        Integer newVersion =  (versionNumber < 99) ? versionNumber+1 : 1;
+        String version = (newVersion < 10) ? '0'+newVersion : ''+newVersion;
+
+        products[1].SAP_Material_Number__c = products[0].Activity_Code__c + '-'+version;
+        insert products[1]; 
+
+        //-- Assert
+        Product2 prod = [SELECT Id, Name, Activity_Code__c, IsNewVersion__c FROM Product2 WHERE Id = :products[1].Id];
+
+        System.assertEquals(true, prod.IsNewVersion__c);
+        Test.stopTest();
+    }
+
+    /****************************************************************************************************
+    Created by CGI, Kevin 2015-08-26
+        Cover code of method "test_getProductStatusFromSAP"
+    ****************************************************************************************************/
+    @isTest(seeAllData=true)
+    static void test_getProductStatusFromSAP(){
+        Test.startTest();
+        TestDataGenerator.generateUtilitySetting();
+        TestDataGenerator.generateApexSetting();
+
+        List<Product2> listProd = new List<Product2>();
+        listProd.add(new Product2(
+                    Name='Test 1', 
+                    Product_Section__c='tst111', 
+                    Division__c='division 1', 
+                    Sales_Channel__c='channel 1',
+                    SAP_Material_Number__c='1245-78',
+                    Effective_To__c = Date.today()
+            ));
+        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Effective_To__c = Date.today()));
+        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Effective_To__c = Date.today()));
+        insert listProd;
+        
+        
+        // Set mock callout class 
+        Test.setMock(WebServiceMock.class, new MockHttpSendToSAP());
+        
+        //Test.StartTest();
+        Product_Svc.productsToSendToSAP(listProd);
+        System.assertEquals(3, listProd.size());
+        String exp = '0 0 1 * * ?';
+        ProductStockStatus_Scheduler.doSchedule(exp);
+        System.assertEquals(exp, '0 0 1 * * ?'); 
+
+        //Cover the creation of pricebookentry
+        //Create Product Category
+        Product_Category__c productCat = new Product_Category__c();
+        productCat.Name = 'CACPRO';
+        productCat.Display_Name__c = 'CheckACode Professional';
+        insert productCat;
+
+        //Create Product information
+        Product_Information__c productInfo = new Product_Information__c();
+        productInfo.Name = 'CAC Pro for Members';
+        productInfo.Product_Audience__c = 'Member Airline';
+        productInfo.Related_Product_Category__c = productCat.Id;
+        insert productInfo;
+
+        List<Product2> lstProducts = TestDataGenerator.generateProductsWithPrice(1);
+        List<zqu__ProductRatePlan__c> lstprp = [select id from zqu__ProductRatePlan__c];
+        lstprp[0].zqu__Deleted__c = false;
+        lstprp[0].zqu__ZProduct__r.zqu__Deleted__c = false;
+
+        if(lstprp != null){
+            //Create Product Rate Plan Information
+            Product_Rate_Plan_Information__c prpinfo = new Product_Rate_Plan_Information__c();
+            prpinfo.Active__c = true;
+            prpinfo.Product_Rate_Plan__c = lstprp[0].Id;
+            prpinfo.Related_Product_Information__c = productInfo.Id;
+            prpinfo.Initial_Term__c = 12;
+            prpinfo.Renewal_Term__c = 12;
+            prpinfo.Long_Description__c = 'Long_Description__c';
+            prpinfo.Short_Description__c = 'Short_Description__c';
+            prpinfo.Order__c = 1;
+            insert prpinfo;
+
+            listProd[0].IEC_Parent_Product__c = lstProducts[0].Id;
+            listProd[0].IEC_Product_Rate_Plan_Information__c = prpinfo.Id;
+
+            update listProd[0];
+
+            Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
+            List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
+            //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
+            
+        }
+        
+        
+        
+        Test.StopTest();
+            
+    }
+    /****************************************************************************************************
+    Created by CGI, Kevin 2015-08-26
+        Cover code of method "test_getProductStatusFromSAP"
+    ****************************************************************************************************/
+    static testMethod void test_listToExclude(){
+        //list<Product_fields_to_exclude__c> lstProdToExcl = new list<Product_fields_to_exclude__c>();
+        Test.startTest();
+        
+        List<Apex_Setting__c> lstProdToExcl = new List<Apex_Setting__c>();
+        lstProdToExcl.add(new Apex_Setting__c(Name='Product fields to exclude', Text_1__c='Zuora_Id__c,lastmodifieddate,systemmodstamp,lastmodifiedbyid,zproduct__c'));
+        insert lstProdToExcl;
+        Product_Svc.listToExclude();
+        System.assertEquals(lstProdToExcl.size(), 1);
+        Test.stopTest();
+    }
+
+
+    /****************************************************************************************************
+        Created by CGI, Thai 2015-08-21
+            Cover code of method "setProductManager"
+            Indirectly cover
+                Trigger "Products" of object "Product2"
+                Methods "onBeforeInsert", "onBeforeUpdate" of class "Product_Dom"
+                Method "getProfitCenter_ManagerId" of class "Product_Manager_Mapping_Sel"
+    ****************************************************************************************************/
+    static testMethod void test_setProductManager(){
+        test.startTest();
+        List<Product_Manager_Mapping__c> listPM = new List<Product_Manager_Mapping__c>();
+        List<Product2> listProd = new List<Product2>();
+        
+        TestDataGenerator.generateApexSetting();
+        TestDataGenerator.generateUtilitySetting();
+        
+        //*** create relationships between Profit Center and Product Manager
+        listPM.add(new Product_Manager_Mapping__c(Profit_Center__c='tst111', Product_Manager__c=UserInfo.getUserId()));
+        insert listPM;
+        
+        //*** invoking coverage for insert event
+        listProd.add(new Product2(Name='zzzTest 1', Product_Section__c='tst111'));
+        listProd.add(new Product2(Name='zzzTest 2', Product_Section__c='tst222'));
+        listProd.add(new Product2(Name='zzzTest 3'));
+        insert listProd;
+        listProd = [select Name, Product_Manager_lookup__c from Product2 where Name like 'zzzTest%' order by Name];
+        system.assert(listProd[0].Product_Manager_lookup__c == UserInfo.getUserId(), 'Product manager wasn\'t set: ' + listProd[0].Product_Manager_lookup__c);
+        system.assert(listProd[1].Product_Manager_lookup__c == null, 'Product manager must be null for NOT FOUND profit center: ' + listProd[1].Product_Manager_lookup__c);
+        system.assert(listProd[2].Product_Manager_lookup__c == null, 'Product manager must be null for NO profit center: ' + listProd[2].Product_Manager_lookup__c);
+        
+        //*** invoking coverage for update event
+        listProd[0].Product_Section__c = 'tst222'; 
+        listProd[1].Product_Section__c = null;
+        listProd[2].Product_Section__c = 'tst111';
+        update listProd;
+        listProd = [select Product_Manager_lookup__c from Product2 where Name like 'zzzTest%' order by Name];
+        system.assert(listProd[0].Product_Manager_lookup__c == null, 'Product manager must be null for NOT FOUND profit center: ' + listProd[0].Product_Manager_lookup__c);
+        system.assert(listProd[1].Product_Manager_lookup__c == null, 'Product manager must be null for NO profit center: ' + listProd[1].Product_Manager_lookup__c);
+        system.assert(listProd[2].Product_Manager_lookup__c == UserInfo.getUserId(), 'Product manager wasn\'t set: ' + listProd[2].Product_Manager_lookup__c);
+        Test.stopTest();
+    } //*** end of "test_setProductManager"
+
+
+    /****************************************************************************************************
+        Created by CGI, Thai 2015-08-21
+            Cover code of method "setRecordType"
+            Indirectly cover
+                Trigger "Products" of object "Product2"
+                Methods "onBeforeInsert", "onBeforeUpdate" of class "Product_Dom"
+                Method "getRecordIndex_RecordTypeId" of class "Product_Record_Type_Mapping_Sel"
+    ****************************************************************************************************/
+    static testMethod void test_setRecordType() {
+        Test.startTest();
+        List<Product_Record_Type_Mapping__c> listRTM = new List<Product_Record_Type_Mapping__c>();
+        List<Product2> listProd = new List<Product2>();
+        Map<String, Id> mapRecordType_Id = Utility.getRTmapName_Id('Product2', null);
+        
+        TestDataGenerator.generateApexSetting();
+        TestDataGenerator.generateUtilitySetting();
+        
+        //*** create setttings for record types
+        listRTM.add(new Product_Record_Type_Mapping__c(Division__c='division 1', Sales_Channel__c='channel 1', Record_Type_for_Product__c='Publication'));
+        listRTM.add(new Product_Record_Type_Mapping__c(Division__c='division 2', Record_Type_for_Product__c='GDP'));
+        listRTM.add(new Product_Record_Type_Mapping__c(Sales_Channel__c='channel 2', Record_Type_for_Product__c='GDP'));
+        insert listRTM;
+        
+        //*** invoking coverage for insert event
+        listProd.add(new Product2(Name='zzzTest 1', SAP_Division_Code__c='division 1', SAP_Sales_Channel_Code__c='channel 1'));
+        listProd.add(new Product2(Name='zzzTest 2', SAP_Division_Code__c='division 2'));
+        listProd.add(new Product2(Name='zzzTest 3', SAP_Division_Code__c='division 1', SAP_Sales_Channel_Code__c='channel 2'));
+        listProd.add(new Product2(Name='zzzTest 4', SAP_Sales_Channel_Code__c='channel 2'));
+        insert listProd;
+        listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
+        system.assert(listProd[0].RecordTypeId == mapRecordType_Id.get('Publication'), 'Expected Publication RT ' + mapRecordType_Id.get('Publication') + ': ' + listProd[0].RecordTypeId);
+        system.assert(listProd[1].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[1].RecordTypeId);
+        system.assert(listProd[2].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[2].RecordTypeId);
+        system.assert(listProd[3].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[3].RecordTypeId);
+        
+        //*** invoking coverage for update event
+        listProd[0].SAP_Sales_Channel_Code__c = 'channel 2'; 
+        update listProd;
+        listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
+        //system.assert(listProd[0].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[0].RecordTypeId);
+        Test.stopTest();
+    } //*** end of "test_setRecordType"
+
+
+    /****************************************************************************************************
+        Created by CGI, Thai 2015-09-02
+            Cover code of method "setDefaultValue"
+            Indirectly cover
+                Trigger "Products" of object "Product2"
+                Method "onBeforeInsert" of class "Product_Dom"
+    ****************************************************************************************************/
+    @isTest(seeAllData=true)
+    static void test_setDefaultValue() {
+        Test.startTest();
+        List<Product2> listProd = new List<Product2>();
+        
+        TestDataGenerator.generateApexSetting();
+        TestDataGenerator.generateUtilitySetting();
+        
+        //*** invoking coverage for insert event
+        listProd.add(new Product2(Name='zzzTest 1', SAP_Material_Number__c='123456'));
+        listProd.add(new Product2(Name='zzzTest 2'));
+        insert listProd;
+        listProd = [select Name, Activity_Code__c from Product2 where Name like 'zzzTest%' order by Name];
+        system.assert(listProd[0].Activity_Code__c == '1234', 'Wrong default: ' + listProd[0].Activity_Code__c);
+        system.assert(listProd[1].Activity_Code__c == null, 'Should be null: ' + listProd[1].Activity_Code__c);
+        Test.stopTest();
+    } //*** end of "test_setDefaultValue"
+
+    @isTest(seeAllData=true)
+    static void test_SendToZuoraButton()
+    {
+        Test.startTest();
+        TestDataGenerator.generateApexSetting();
+        TestDataGenerator.generateUtilitySetting();
+
+        //-- Create product
+        List<Product2> products = TestDataGenerator.generateProducts(1,true); 
+
+        System.debug('products::'+products);
+
+        //-- Send it to Zuora by clicking the Send To Zuora button 
+        Product_Soap.send2Zuora(products[0].Id);
+        Test.stopTest();
+    }
+
+}

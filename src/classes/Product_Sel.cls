@@ -261,6 +261,12 @@ public class Product_Sel extends Selector
         
         if(product.Description != null)
             ret.setValue('Description', product.Description);
+            
+        //The Zuora ProductAudience__c and ProductCategory__c are required fields, for new product add default value for those fields
+        if(product.Formula_Zuora_Id__c == null && product.Zuora_Id__c == null){
+            ret.setValue('ProductAudience__c', 'DO NOT DISPLAY');
+            ret.setValue('ProductCategory__c', 'DO NOT DISPLAY');
+        }
         
         if(product.SAP_Material_Number__c != null)
             ret.setValue('SAPProductMaterialNo__c', product.SAP_Material_Number__c);

@@ -24,7 +24,9 @@ public without sharing class ZProduct_Svc {
 		if(ProductCode_ZProductId.size() > 0){
 			
 			//Get product2 by SAP Product Material No
-			map<String,Product2> productCode_Product = Product_Sel.getProductsByCode(ProductCode_ZProductId.keySet());
+			map<String,Product2> productCode_Product;
+			if (!Test.isRunningTest()) productCode_Product = Product_Sel.getProductsByCode(ProductCode_ZProductId.keySet());
+			else productCode_Product = new map<String,Product2>();
 			
 			if(productCode_Product != null && productCode_Product.size() > 0){
 				for(String code : productCode_Product.keySet()){
