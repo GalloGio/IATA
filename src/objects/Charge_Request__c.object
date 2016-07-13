@@ -53,7 +53,6 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -660,6 +659,7 @@
                 <controllingFieldValues>CASS</controllingFieldValues>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
                 <controllingFieldValues>ICCS</controllingFieldValues>
+                <controllingFieldValues>NDC</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>EUR</fullName>
@@ -1113,6 +1113,16 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>NDCFEE_NSUCR</fullName>
+                <default>false</default>
+                <controllingFieldValues>NDC</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NDCFEE_RENEW</fullName>
+                <default>false</default>
+                <controllingFieldValues>NDC</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>NOIATA_ANUAL</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
@@ -1217,6 +1227,18 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SAP_ID_8digit__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please provide 8 digit SAP ID, if customer is not an airline.</inlineHelpText>
+        <label>SAP ID</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Totals_1__c</fullName>
         <externalId>false</externalId>
         <formula>Quantity__c  *  VALUE(TEXT(Unit_Price_List__c))</formula>
@@ -1249,6 +1271,14 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>ICCS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NDC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -1299,6 +1329,8 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>BSPFEE_TRAIN</controllingFieldValues>
                 <controllingFieldValues>BSPLNK_MSG</controllingFieldValues>
                 <controllingFieldValues>CASFEE_SEMNR</controllingFieldValues>
+                <controllingFieldValues>NDCFEE_NSUCR</controllingFieldValues>
+                <controllingFieldValues>NDCFEE_RENEW</controllingFieldValues>
                 <controllingFieldValues>VATTAX_CHARG</controllingFieldValues>
                 <controllingFieldValues>WEBLK_SCU</controllingFieldValues>
             </picklistValues>

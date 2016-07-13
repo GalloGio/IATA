@@ -1750,6 +1750,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_PendingCaseH2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
         <name>IDCard_Pending_Apps_Missing_Args</name>
     </customLabels>
