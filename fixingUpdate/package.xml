@@ -313,5 +313,11 @@
         <members>StrategicAccountPlanning/Logo.gif</members>
         <name>Document</name>
     </types>
+       <types> 
+        <members>*</members>
+          <name>EmailTemplate</name>
+    </types>  
+    
+    
     <version>34.0</version>
 </Package>
