@@ -13,12 +13,16 @@
             font-size: 12px;
         }
 
+        .highlighted  {
+            background-color: #01AAE8;
+             border: 5px;
+        }
         .tree {
             min-height: 20px;
-            padding: 19px;
+            padding: 19px;  
             margin-bottom: 20px;
             background-color: #fbfbfb;
-            border: 1px solid #999;
+            border: 0px solid #999;
             -webkit-border-radius: 4px;
             -moz-border-radius: 4px;
             border-radius: 4px;
@@ -108,67 +112,27 @@
         }
     </script>
 
-    <!--<div class="tree well">
-        <apex:repeat value="{!AccConCases}" var="a">
-            <ul>
-                <li>
-                    <span><i class="icon-folder-open icon-minus-sign"></i>Agency</span> <a href="/{a.Id}"  target="_blank">{!a.Name}</a><!--Account-->
-               <!--     <ul>
-                        <apex:repeat value="{!a.Agency_Employees__r}" var="c">
-                            <li>
-                                <span><i class="glyphicon glyphicon-user"></i> Employee</span><a href="/{!c.Id}"  target="_blank"></a> {!c.Person__r.First_Name__c}<!--Contact-->
-                                <!--<ul>
-                                    <apex:repeat value="{!a.Cases}" var="ca">
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-briefcase"></i> Case</span><a href="/{!ca.Id}" target="_blank"></a> {!ca.CaseNumber}
-                                        </li>
-                                    </apex:repeat>
-                                </ul>-->
-            <!--                </li>
-                        </apex:repeat>
-                    </ul>
-                </li>
-            </ul>
-        </apex:repeat>
-    </div>-->
-<apex:outputPanel rendered="{!AND(IF(Parent != NULL, true, false), ag != null)}">
-<apex:form >
-    <div class="tree well">
-            <ul>
-                <li>
-                    <span><i class="icon-folder-open icon-minus-sign"></i>{!Parent.Parent_Account__r.Location_Type__c} ({!Parent.Parent_Account__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!Parent.Parent_Account__c}','');return false;">{!Parent.Parent_Account__r.Name}</apex:commandLink><br></br>{!Parent.Parent_Account__r.IATACode__c}<br></br>{!Parent.Parent_Account__r.Primary_Address__r.Country__r.Name} - {!Parent.Parent_Account__r.Primary_Address__r.City__c}<br></br>{!Parent.Parent_Account__r.Status__c}
-                    <ul>
-                            <li>
-                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Status__c}
-                                <ul>
-                                <apex:repeat value="{!Childs}" var="c">
-                                    <apex:repeat value="{!Childs[c]}" var="ca">
-                                        <li>
-                                            <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Account__r.Location_Type__c} ({!ca.Child_Account__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Account__c}','');return false;">{!ca.Child_Account__r.Name}</apex:commandLink><br></br>{!ca.Child_Account__r.IATACode__c}<br></br>{!ca.Child_Account__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Account__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Account__r.Status__c}
-                                        </li>
-                                    </apex:repeat>
-                                </apex:repeat>
-                                </ul>
-                            </li>
-                    </ul>
-                </li>
-            </ul>
-    </div>
-    </apex:form>
-</apex:outputPanel>
-<apex:outputPanel rendered="{!AND(IF(Parent == NULL, true, false), ag != null)}">
+<apex:outputPanel rendered="{!AND(parentAccount != null, currentAccount != null)}">
 <apex:form >
     <div class="tree well">
         <ul>
                 <li>
-                    <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Status__c}
+                    <apex:outputPanel styleClass = "{!IF(currentAccount.id != parentAccount.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!parentAccount.Location_Type__c} ({!parentAccount.Location_Class__c})</apex:outputPanel>
+                    <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!parentAccount.Id}','');return false;" rendered = "{!currentAccount.id != parentAccount.id}">{!parentAccount.Name}</apex:commandLink><br></br>{!parentAccount.IATACode__c}<br></br>{!parentAccount.Primary_Address__r.Country__r.Name} - {!parentAccount.Primary_Address__r.City__c}<br></br>{!parentAccount.Status__c}
                     <ul>
-                    <apex:repeat value="{!Childs}" var="c">
-                        <apex:repeat value="{!Childs[c]}" var="ca">
-                            <li>
-                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Account__r.Location_Type__c} ({!ca.Child_Account__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Account__c}','');return false;">{!ca.Child_Account__r.Name}</apex:commandLink><br></br>{!ca.Child_Account__r.IATACode__c}<br></br>{!ca.Child_Account__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Account__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Account__r.Status__c}
-                            </li>
-                        </apex:repeat>
+                    <apex:repeat value="{!HierchyChilds}" var="c">
+                        <li>
+                         <apex:outputPanel styleClass = "{!IF(currentAccount.id != c.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!c.Location_Type__c} ({!c.Location_Class__c})</apex:outputPanel>
+                         <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!c.Id}','');return false;" rendered = "{!currentAccount.id != c.id}">{!c.Name}</apex:commandLink><br></br>{!c.IATACode__c}<br></br>{!c.Primary_Address__r.Country__r.Name} - {!c.Primary_Address__r.City__c}<br></br>{!c.Status__c}
+                        <ul>
+                            <apex:repeat value="{!HierchyChilds[c]}" var="ca">
+                                <li>
+                                    <apex:outputPanel styleClass = "{!IF(currentAccount.id != ca.id,'','highlighted')}"><i class="icon-folder-open icon-minus-sign"></i>{!ca.Location_Type__c} ({!ca.Location_Class__c})</apex:outputPanel>
+                                    <br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Id}','');return false;" rendered = "{!currentAccount.id != ca.id}">{!ca.Name}</apex:commandLink><br></br>{!ca.IATACode__c}<br></br>{!ca.Primary_Address__r.Country__r.Name} - {!ca.Primary_Address__r.City__c}<br></br>{!ca.Status__c}
+                                </li>
+                            </apex:repeat>
+                         </ul>
+                        </li>
                     </apex:repeat>
                     </ul>
                 </li>
