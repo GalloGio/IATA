@@ -315,6 +315,14 @@
                 <fullName>NOC_SIGNED_CONTRACT</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>APP_FORM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS_FORM</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -437,6 +445,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>APP_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ARTICLES_ASSOC</fullName>
                 <default>false</default>
             </values>
@@ -454,6 +466,10 @@
             </values>
             <values>
                 <fullName>BR_REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -695,6 +711,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>APP_FORM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ARTICLES_ASSOC</fullName>
                 <default>false</default>
             </values>
@@ -712,6 +732,10 @@
             </values>
             <values>
                 <fullName>BR_REG_CERT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </values>
             <values>
