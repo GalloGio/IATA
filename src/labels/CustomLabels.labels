@@ -3198,6 +3198,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <value>Pending ID Card Case Details</value>
     </labels>
     <labels>
+        <fullName>IDCard_PendingIdCardAppH1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_PendingIdCardAppH1</shortDescription>
+        <value>Pending ID Card Application</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Pending_Apps_Missing_Args</fullName>
         <language>en_US</language>
         <protected>false</protected>

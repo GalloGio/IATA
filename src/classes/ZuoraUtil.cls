@@ -12,36 +12,36 @@ public class ZuoraUtil
 
     public static Zuora.zApi zconnection{get {if (zconnection == null){zconnection = new Zuora.zApi(); zconnection.zlogin();}return zconnection;}set {zconnection = value;}}
 
-	public static List<Zuora.zObject> zquery(String zoql, String ztype, Integer nb) {return null;}
-	/*{
+	public static List<Zuora.zObject> zquery(String zoql, String ztype, Integer nb) 
+	{
         List<Zuora.zObject> zobjects = (Test.isRunningTest()) ? TestDataGenerator.generateZObjects(nb, ztype) : zconnection.zquery(zoql);
         return zobjects;
-	}*/
+	}
 
-	public static List<Zuora.zApi.SaveResult> zcreate(List<Zuora.zObject> zobjects,  Boolean calloptions) {return null;}
-	/*{
+	public static List<Zuora.zApi.SaveResult> zcreate(List<Zuora.zObject> zobjects,  Boolean calloptions) 
+	{
     	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'create') : zconnection.zcreate(zobjects, calloptions);
     	return results;
-	}*/
+	}
 
-	public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects) {return null;}
-	/*{
+	public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects)
+	{
     	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects);
 
     	return results;
-	}*/
+	}
 
-    public static List<Zuora.zApi.SubscribeResult> zsubscribe(List<Zuora.zApi.SubscribeRequest> requests){return null;}
-    /*{
+    public static List<Zuora.zApi.SubscribeResult> zsubscribe(List<Zuora.zApi.SubscribeRequest> requests)
+    {
         List<Zuora.zApi.SubscribeResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSubscribeResults(requests) :  zconnection.zsubscribe(requests);
         return results;
-    }*/
+    }
 
-    public static List<Zuora.zApi.DeleteResult> zdelete(String ztype, String[] ids){return null;}
-    /*{
+    public static List<Zuora.zApi.DeleteResult> zdelete(String ztype, String[] ids)
+    {
         List<Zuora.zApi.DeleteResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateDeleteResults(ids) :  zconnection.zdelete(ztype,ids);
         return results;
-    }*/
+    }
 
     public static List<Zuora.zObject> getPaymentMethodsFromZuora(String zuoraAccountId) {
         String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and AccountId = \'' + zuoraAccountId + '\'';
