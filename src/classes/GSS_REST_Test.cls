@@ -875,7 +875,7 @@ global class GSS_REST_Test {
                                          Order By Id Desc];
         system.debug('DeltaList 5: '+DeltaList);
         system.debug('DeltaList 5 size: ' + DeltaList.size());
-        System.assertEquals('B', DeltaList[0].Change_Code__c, 'Expect a B code'); 
+        System.assertEquals('B', DeltaList[0].Change_Code__c, 'Expect a B code');     
     }
 
     static testMethod void TestGss_DeltaTriggerHelper6() {

@@ -2128,6 +2128,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <label>All Countries</label>
         <language>en_US</language>
         <sharedTo>
+            <group>Account_management_team</group>
             <group>IDFSAllusersexcludingIWandACCA</group>
         </sharedTo>
     </listViews>

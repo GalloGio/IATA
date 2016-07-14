@@ -381,8 +381,8 @@
         <customTabListAdditionalFields>Sales_Amout__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Sales_Quantity__c</customTabListAdditionalFields>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <validationRules>

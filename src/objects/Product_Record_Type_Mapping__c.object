@@ -118,8 +118,8 @@
     <pluralLabel>Product Record Type Mapping</pluralLabel>
     <searchLayouts>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <validationRules>

@@ -12,24 +12,24 @@ public class ZuoraUtil
 
     public static Zuora.zApi zconnection{get {if (zconnection == null){zconnection = new Zuora.zApi(); zconnection.zlogin();}return zconnection;}set {zconnection = value;}}
 
-    public static List<Zuora.zObject> zquery(String zoql, String ztype, Integer nb) 
-    {
+	public static List<Zuora.zObject> zquery(String zoql, String ztype, Integer nb) 
+	{
         List<Zuora.zObject> zobjects = (Test.isRunningTest()) ? TestDataGenerator.generateZObjects(nb, ztype) : zconnection.zquery(zoql);
         return zobjects;
-    }
+	}
 
-    public static List<Zuora.zApi.SaveResult> zcreate(List<Zuora.zObject> zobjects,  Boolean calloptions) 
-    {
-        List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'create') : zconnection.zcreate(zobjects, calloptions);
-        return results;
-    }
+	public static List<Zuora.zApi.SaveResult> zcreate(List<Zuora.zObject> zobjects,  Boolean calloptions) 
+	{
+    	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'create') : zconnection.zcreate(zobjects, calloptions);
+    	return results;
+	}
 
-    public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects)
-    {
-        List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects);
+	public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects)
+	{
+    	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects);
 
-        return results;
-    }
+    	return results;
+	}
 
     public static List<Zuora.zApi.SubscribeResult> zsubscribe(List<Zuora.zApi.SubscribeRequest> requests)
     {

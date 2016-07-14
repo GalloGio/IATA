@@ -9,9 +9,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         AMS_OSCARTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
     }//TD: After Insert && after update. 
     else if(trigger.isAfter && trigger.isInsert){
-    	AMS_OSCARTriggerHandler.handleAfterInsert(Trigger.new);
+        AMS_OSCARTriggerHandler.handleAfterInsert(Trigger.new);
     }else if(trigger.isAfter && trigger.isUpdate){
-    	AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+        AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
     }
 
     List<CASE> casesToUpdate = new List<CASE>();
@@ -61,8 +61,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
     }
 
     System.debug('STEPs on OSCAR Object: ' + stepsOSCAR);
-	
-	//TD: Because I added "AFTER INSERT", I added here the isBefore, which was missing
+    
+    //TD: Because I added "AFTER INSERT", I added here the isBefore, which was missing
     if (Trigger.isBefore && Trigger.isInsert) {
 
         List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
@@ -86,7 +86,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 }
             }
 
-            //NEW HO LOGIC ON INSERT
+            //ON INSERT
+            //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
             oscar.Sanity_check_deadline__c = Date.today() + 15;
 
@@ -115,12 +116,22 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             caseOscars.put(caseOscar.OSCAR__r.Id, caseOscar);
         }
 
+        //processes to ignore in the creation of the DIS change code
+        Set<String> ProcessesToIgnoreChangeCode = new Set <String> {AMS_Utils.new_TIDS,
+                                                                    AMS_Utils.new_MSO,
+                                                                    AMS_Utils.new_GSA,
+                                                                    AMS_Utils.new_GSSA,
+                                                                    AMS_Utils.new_AHA
+                                                                    };
+
         for (AMS_OSCAR__c updatedOSCAR : Trigger.new) {
             AMS_OSCAR__c oldOSCAR = Trigger.oldMap.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
-            applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
+            if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
+                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
+
 
             processFieldsTracking(oldOSCAR, updatedOscar);
 
@@ -196,20 +207,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     }
                     casesToUpdate.add(caseToUpdate);
                 }
-
-                if (updatedOSCAR.Status__c.startsWithIgnoreCase('closed'))
-                    closedOscars.add(updatedOSCAR);
-
             }
         }
-
-        // only with Change codes FIN / DIS and NEw this should happen.
-
-        /*
-        if (!closedOscars.isEmpty()){
-            AMS_Utils.copyDataToAccount(closedOscars);
-        }
-        */
 
         if (!casesToUpdate.isEmpty())
             update casesToUpdate;
@@ -217,43 +216,64 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-        if (updatedOscar.recordTypeID == newRT)
+        ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        if (updatedOscar.recordTypeID == newRT){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-                //if (updatedOscar.RPM_Approval__c == 'Authorize Approval') {
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 changeCode.name = 'FIN';
                 changeCode.reasonCode = '91';
-                if (updatedOscar.Process__c == 'NEW.HO.1.0' || updatedOscar.Process__c == 'NEW.BR.ABROAD')
-                    changeCode.memoText = 'New application - Head Office finalized';
-                else
-                    changeCode.memoText = 'New application - Branch finalized';
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
                 changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
                 changeCode.status  = '9';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
 
-                //}
-            } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed') {
-                //if (updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
+            } else if (oldOSCAR.STEP2__c != 'Failed' && updatedOscar.STEP2__c == 'Failed' && updatedOscar.RPM_Approval__c=='Authorize Disapproval') {
 
                 AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                 changeCode.name = 'DIS';
                 changeCode.reasonCode = '00';
-                if (updatedOscar.Process__c == 'NEW.HO.1.0' || updatedOscar.Process__c == 'NEW.BR.ABROAD')
-                    changeCode.memoText = 'New application disapproved';
-                else
-                    changeCode.memoText = 'New application - Branch disapproved';
+                changeCode.memoText = AMS_Utils.getChangeCodeMemoText(updatedOscar.Process__c,changeCode.name);
                 changeCode.reasonDesc  = 'NON COMPLIANCE TO CRITERIA';
                 changeCode.status  = '0';
 
                 Account acct = new Account(Id = updatedOscar.Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
-
-                //}
             }
+        // Management of CORRECTION OSCARs
+        }else if (updatedOscar.recordTypeID == corrRT){
+            if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
+                // If the checkbox is set create a COR change code.
+                if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
+                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                    changeCode.name = 'COR';
+                    changeCode.reasonCode = '91';
+                    changeCode.memoText = 'Correction';
+                    changeCode.reasonDesc  = 'ACCREDITED';
+                    changeCode.status  = '9';
+
+                    Account acct = new Account(Id = updatedOscar.Account__c);
+                    AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                }
+
+                // Regardless the changecode is generated or not, move data to Master Data
+                // First move the account
+                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
+                AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar});
+
+                // THen move the owners
+                Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, new Set<Id>{updatedOscar.Account__c});
+                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts);
+            }
+
+        }
     }
 
 
@@ -363,18 +383,19 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Rejection_notification_sent__c = Date.today();
 
         if (oldOSCAR.Validation_Status__c != updatedOscar.Validation_Status__c) {
+            List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (updatedOscar.Validation_Status__c == 'Passed') {
                 /*
                     1) Approve current approval process (assistant manager's)
                     2) Continue with the step no. 2 (for the manager)
                 */
-                List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
                 if (currentApprovals.size() > 0) {
                     AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c);
                 }
             } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicaple') {
                 // Reject the approval process
-                AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
+                if (currentApprovals.size() > 0)
+                    AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
             }
             updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }

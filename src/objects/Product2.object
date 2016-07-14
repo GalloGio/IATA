@@ -42,6 +42,31 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
+    <fieldSets>
+        <fullName>Send_To_Zuora_Listener</fullName>
+        <description>The Product is sent to Zuora when this fields change</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Effective_From__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Effective_To__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>SAP_Material_Number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Send To Zuora Listener</label>
+    </fieldSets>
     <fields>
         <fullName>Activity_Code__c</fullName>
         <description>This is the 4 digit code used for accounting purposes by IATA</description>
@@ -872,6 +897,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Aviation Fuel Supply Model</fullName>
                 <default>false</default>
             </picklistValues>
@@ -940,6 +969,22 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DGR Compliance Kits &amp; Combos</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Data eList Products</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Enhanced Monthly Statistics</fullName>
                 <default>false</default>
             </picklistValues>
@@ -968,7 +1013,19 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Guidance Material and Best Practices for the Implementation of Competency-Based Training in Maintenance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Handling labels</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hazard labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1008,6 +1065,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IATA Operational Safety Audit (IOSA)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Rates of Exchange</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1025,6 +1086,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Limited/Expected Quantities</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1069,6 +1134,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Online Library</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other DGR Products</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1124,6 +1193,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Standard Computerized Airplane Performance (SCAP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Standard Schedules Information</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1137,6 +1210,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Ticketed Point Mileage Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Time temperature labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2236,6 +2313,22 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <fullName>Video</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>eBook</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PDF &amp; Excel files</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Download</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -2906,6 +2999,10 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <picklistValues>
                 <fullName>German</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Multilingual</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -5930,6 +6027,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Aviation Fuel Supply Model</fullName>
                 <default>false</default>
             </values>
@@ -5982,6 +6083,22 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR Compliance Kits %26 Combos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Data eList Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Dangerous Goods Labels</fullName>
                 <default>false</default>
             </values>
@@ -6022,7 +6139,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Guidance Material and Best Practices for the Implementation of Competency-Based Training in Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hazard labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6062,6 +6191,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Rates of Exchange</fullName>
                 <default>false</default>
             </values>
@@ -6079,6 +6212,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited%2FExpected Quantities</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6123,6 +6260,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Online Library</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other DGR Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6178,6 +6319,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Standard Schedules Information</fullName>
                 <default>false</default>
             </values>
@@ -6195,6 +6340,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketed Point Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Time temperature labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6942,6 +7091,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Download</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Email Service</fullName>
                 <default>false</default>
             </values>
@@ -6982,7 +7135,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PDF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PDF %26 Excel files</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7007,6 +7168,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>eBook</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7463,6 +7628,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>German</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multilingual</fullName>
                 <default>false</default>
             </values>
             <values>

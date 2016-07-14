@@ -52,9 +52,12 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
 
     public static final String PASSED = 'Passed';
+    public static final String FAILED = 'Failed';
     public static final String AUTH_APPROVAL = 'Authorize Approval';
-
+    public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
+    public static final String LOCATION = 'Location';
+    public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
 
@@ -64,6 +67,21 @@ public without sharing class AMS_Utils {
     public static final String HO = 'HO';
     public static final String SA = 'SA';
 
+    public static final String new_HO           = 'NEW.HO.1.0'      ;
+    public static final String new_BR           = 'NEW.BR'          ;
+    public static final String new_BR_ABROAD    = 'NEW.BR.ABROAD'   ;
+    public static final String new_TIDS         = 'NEW.TIDS.1.0'    ;
+    public static final String new_MSO          = 'NEW.MSO.1.0'     ;
+    public static final String new_GSA          = 'NEW.GSA.1.0'     ;
+    public static final String new_GSA_BSP      = 'NEW.GSA.1.0.BSP' ;
+    public static final String new_GSSA         = 'NEW.GSSA.1.0'    ;
+    public static final String new_AHA          = 'NEW.AHA.1.0'     ;
+    public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
+    public static final String new_SA           = 'NEW.SA.1.0'      ;
+
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
+
+    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -89,6 +107,9 @@ public without sharing class AMS_Utils {
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
+    public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+
 
     static {
         refreshCache();
@@ -256,7 +277,21 @@ public without sharing class AMS_Utils {
         return result;
     }
 
+    public static String getStatusDescFromChangeCode(String sChangeCode) {
 
+        String sRes = '';
+
+        if (sChangeCode.equalsIgnoreCase('NEW')) {
+            sRes = 'in progress';
+        } else if (sChangeCode.equalsIgnoreCase('FIN')) {
+            sRes = 'finalized';
+        }
+        else if (sChangeCode.equalsIgnoreCase('DIS')) {
+            sRes = 'disapproved';
+        }
+        
+        return sRes;
+    }
     /**
     //Based on the Change code passed we get the Rec ID
     Indicates if record is A=Added, C=Changed or D=Deleted.
@@ -307,6 +342,15 @@ public without sharing class AMS_Utils {
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
 
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingStreet - ' + acc.BillingStreet);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingCity - ' + acc.BillingCity);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingPostalCode - ' + acc.BillingPostalCode);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.IATA_ISO_Country__c - ' + acc.IATA_ISO_Country__c);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.Iso_State__c - ' + acc.Iso_State__c);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingStreet - ' + acc.ShippingStreet);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingCity - ' + acc.ShippingCity);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingPostalCode - ' + acc.ShippingPostalCode);
+        
         if(addressType.equalsIgnoreCase('Billing')){
             //R3.1 - removed the state validation
             //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
@@ -342,13 +386,6 @@ public without sharing class AMS_Utils {
         }        
         return true;
     }
-
-    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
-    //                    accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
-    //                }
-    //                if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
-    //                    accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
-    //                }
 
 
     public static List<String> splitAccName(String sText) {
@@ -731,7 +768,7 @@ public without sharing class AMS_Utils {
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1159,6 +1196,27 @@ public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
 }
 
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+public static String getChangeCodeMemoText(String process,String changeCodeId) {
+
+    String memoText = 'New application';
+
+    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
+
+        memoText = 'New application - Head Office';
+    else if (process == AMS_Utils.new_BR)
+        memoText = 'New application - Branch';
+    else if (process == AMS_Utils.new_TIDS)
+        memoText = 'New application - TIDS';
+    else if (process == AMS_Utils.new_SA)
+        memoText = 'New application - SA';
+    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+        memoText = 'New application - GSA';
+    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+        memoText = 'New application - AHA';
+ 
+    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+}
 
 
 // Converts a base64 string into a list of integers representing the encoded bytes

@@ -85,6 +85,10 @@
         <name>AMS_OSCAR_CHANGE_WITHDRAWAL</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_CODEASSIGNMENT --></label>
+        <name>AMS_OSCAR_CODEASSIGNMENT</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR DISAPPROVAL --></label>
         <name>AMS_OSCAR_DISAPPROVAL</name>
     </customLabels>
@@ -219,6 +223,10 @@
     <customLabels>
         <label><!-- AMS OSCAR VALIDATION --></label>
         <name>AMS_OSCAR_VALIDATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_Warning_1 --></label>
+        <name>AMS_OSCAR_Warning_1</name>
     </customLabels>
     <customLabels>
         <label><!-- ANY --></label>
@@ -1735,6 +1743,10 @@
     <customLabels>
         <label><!-- IDCard_PendingCaseH2 --></label>
         <name>IDCard_PendingCaseH2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <name>IDCard_PendingIdCardAppH1</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>

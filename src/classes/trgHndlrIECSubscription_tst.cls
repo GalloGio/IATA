@@ -107,7 +107,7 @@ private class trgHndlrIECSubscription_tst {
 		setup();
 
         System.runAs(usr) {
-//        	Test.startTest();
+        	
 	        // create dummy subscription
 	        subscription = IECTestUtil.createSampleSubscription(oAccount.Id, 'Subs 01', Date.today().addMonths(6));
 	        subscription.Zuora__CustomerAccount__c = oBillingAccount.Id;
@@ -147,8 +147,6 @@ private class trgHndlrIECSubscription_tst {
 	        system.assertEquals(1, lstProductAccess.size(), 'One Product Access should be found');
 	        system.assertEquals(oProductRatePlanInfo3.Id, lstProductAccess.get(0).Related_Rate_Plan_Info__c, 'Product Access must update the rateplan');
 	        system.assertEquals(true, lstProductAccess.get(0).Usage_Unlimited__c, 'Product Access must update the rateplan');
-            
-//        	Test.stopTest();
         }
     }
 }

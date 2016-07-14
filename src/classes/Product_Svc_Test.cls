@@ -30,7 +30,7 @@ private class Product_Svc_Test
         // Call Method 
         String result = Product_Svc.saveZProducts(productIds);
 
-        test.stopTest();
+		test.stopTest();
 
         // Assert
     }
@@ -154,9 +154,10 @@ private class Product_Svc_Test
         insert productInfo;
 
         List<Product2> lstProducts = TestDataGenerator.generateProductsWithPrice(1);
-        List<zqu__ProductRatePlan__c> lstprp = [select id from zqu__ProductRatePlan__c];
-        lstprp[0].zqu__Deleted__c = false;
-        lstprp[0].zqu__ZProduct__r.zqu__Deleted__c = false;
+        List<zqu__ProductRatePlan__c> lstprp = [select id from zqu__ProductRatePlan__c
+                                                 where 
+                                                 zqu__Deleted__c = false 
+                                                 and zqu__ZProduct__r.zqu__Deleted__c = false ];
 
         if(lstprp != null){
             //Create Product Rate Plan Information
@@ -178,14 +179,14 @@ private class Product_Svc_Test
 
             Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
             List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
-            //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
-            
+           //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
+			
         }
         
         
         
         Test.StopTest();
-            
+			
     }
     /****************************************************************************************************
     Created by CGI, Kevin 2015-08-26
@@ -330,7 +331,7 @@ private class Product_Svc_Test
 
         //-- Send it to Zuora by clicking the Send To Zuora button 
         Product_Soap.send2Zuora(products[0].Id);
-        Test.stopTest();
+		Test.stopTest();
     }
 
 }
