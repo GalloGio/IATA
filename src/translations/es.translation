@@ -1771,7 +1771,7 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_PendingCaseH2</name>
     </customLabels>
     <customLabels>
-        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <label>SOLICITUD PENDIENTE DE TARJETA DE IDENTIFICACIÓN</label>
         <name>IDCard_PendingIdCardAppH1</name>
     </customLabels>
     <customLabels>
