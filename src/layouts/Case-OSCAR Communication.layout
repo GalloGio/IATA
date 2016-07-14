@@ -243,6 +243,9 @@
         <label>Custom Links</label>
         <layoutColumns>
             <layoutItems>
+                <customLink>Run_Reports</customLink>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
         </layoutColumns>
