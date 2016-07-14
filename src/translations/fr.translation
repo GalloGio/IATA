@@ -1770,7 +1770,7 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
         <name>IDCard_PendingCaseH2</name>
     </customLabels>
     <customLabels>
-        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <label>REQUÊTE DE CARTE D&apos;IDENTITÉ EN ATTENTE</label>
         <name>IDCard_PendingIdCardAppH1</name>
     </customLabels>
     <customLabels>
