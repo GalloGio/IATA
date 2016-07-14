@@ -68,7 +68,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
                     for(Database.Error err : sr.getErrors()){
                         processSaveResults('UPDATE', listUpdates, listUpdateResult);
                         String errMsg = 'ERROR UPDATING - IFAP ID ' + sr.getID() + ' error message ' + err.getMessage();
-                        errorMap.put(sr.getId(), errMsg);
+                        errorMap.put(sr.getId(), errMsg); 
                     }
                 }
             }
