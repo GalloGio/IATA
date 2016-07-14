@@ -2447,6 +2447,19 @@
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>RQM_Europe_3</fullName>
+        <columns>NAME</columns>
+        <columns>Overall_Deadline__c</columns>
+        <columns>OI_Status_auto__c</columns>
+        <columns>Open_Date__c</columns>
+        <columns>Affected_Process__c</columns>
+        <columns>Subject__c</columns>
+        <filterScope>Queue</filterScope>
+        <label>RQM - Europe 3</label>
+        <language>en_US</language>
+        <queue>RQM_Europe</queue>
+    </listViews>
+    <listViews>
         <fullName>RQM_Europe_Operational_Improvements</fullName>
         <columns>NAME</columns>
         <columns>Affected_Process__c</columns>

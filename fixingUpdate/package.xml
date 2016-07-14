@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>Accreditation/IATALogo_d_3.zip</members>
-        <members>Accreditation/IATA_Logo1.zip</members>
-        <members>BLND_Logos_Identity/BLND_DreamFactory_Logo.gif</members>
-        <members>IATA_Corporate_Graphics/iata_blue_gif.gif</members>
-        <members>ISS_Portal/Application_icon.png</members>
-        <members>ISS_Portal/Application_list.png</members>
-        <members>ISS_Portal/IATA_Logo.png</members>
-        <members>ISS_Portal/My_Apps.png</members>
-        <members>Images/Clicktoolslogo.gif</members>
-        <members>Logos/awslogo.gif</members>
-        <members>PM_Icons_Basic/projects_logo_small_basic.jpeg</members>
-        <members>PublicFolder/ExactTargetforAppExchangeLogo.gif</members>
-        <members>Release_Planning_Icons/projectslogosmalljpg_d_2.jpg</members>
-        <members>SalesPublicFolder/IATAForce.gif</members>
-        <members>SalesforceMaterial/SARA_logo.png</members>
-        <members>StrategicAccountPlanning/Logo.gif</members>
-        <name>Document</name>
-    </types>
-        <types>
-        <members>*</members>
-
-        <name>EmailTemplate</name>
-    </types>
      <types>
         <members>Order.BillToAccount_Name__c</members>
         <members>Order.BillToAccount__c</members>
@@ -257,8 +233,91 @@
         <members>Product2.Use_Contract_when_ordered__c</members>
         <members>Product2.ZProduct__c</members>
         <members>Product2.Zuora_Id__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.Product_Number__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.Rate_Is_Active__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_DefaultQuantity__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_Deleted__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_Discount_Level__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_ListPrice__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_MaxQuantity__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_MinQuantity__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_Model__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_Name__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_Type__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_UOM__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZCharge_ZuoraId__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZProduct_Deleted__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZProduct_EffectiveEndDate__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZProduct_EffectiveStartDate__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZProduct_ZuoraId__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_Country__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_CouponCode__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_CustomerType__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_Deleted__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_EffectiveEndDate__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_EffectiveStartDate__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_IsFreeShipping__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_IsPreSale__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_Name__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_Region__c</members>
+        <members>zqu__ProductRatePlanChargeTier__c.ZRatePlan_ZuoraId__c</members>
+        <members>zqu__ProductRatePlanCharge__c.Product_Number__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZProduct_Deleted__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZProduct_EffectiveEndDate__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZProduct_EffectiveStartDate__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZProduct_ZuoraId__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_Country__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_CouponCode__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_CustomerType__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_Deleted__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_EffectiveEndDate__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_EffectiveStartDate__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_IsFreeShipping__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_IsPreSale__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_Name__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_Region__c</members>
+        <members>zqu__ProductRatePlanCharge__c.ZRatePlan_ZuoraId__c</members>
+        <members>zqu__ProductRatePlan__c.Country__c</members>
+        <members>zqu__ProductRatePlan__c.Couponcode__c</members>
+        <members>zqu__ProductRatePlan__c.CustomerType__c</members>
+        <members>zqu__ProductRatePlan__c.IsFreeShipping__c</members>
+        <members>zqu__ProductRatePlan__c.IsPreSale__c</members>
+        <members>zqu__ProductRatePlan__c.Product_Number__c</members>
+        <members>zqu__ProductRatePlan__c.Region__c</members>
+        <members>zqu__ProductRatePlan__c.UIDisplay__c</members>
+        <members>zqu__ProductRatePlan__c.ZProduct_Deleted__c</members>
+        <members>zqu__ProductRatePlan__c.ZProduct_EffectiveEndDate__c</members>
+        <members>zqu__ProductRatePlan__c.ZProduct_EffectiveStartDate__c</members>
+        <members>zqu__ProductRatePlan__c.ZProduct_ZuoraId__c</members>
+        <members>zqu__Quote__c.Source__c</members>
+        <members>zqu__ZProduct__c.SAPProductMaterialNo__c</members>
+
         <name>CustomField</name>
     </types>
-   
+    <types>
+        <members>Accreditation/IATALogo_d_3.zip</members>
+        <members>Accreditation/IATA_Logo1.zip</members>
+        <members>BLND_Logos_Identity/BLND_DreamFactory_Logo.gif</members>
+        <members>IATA_Corporate_Graphics/iata_blue_gif.gif</members>
+        <members>ISS_Portal/Application_icon.png</members>
+        <members>ISS_Portal/Application_list.png</members>
+        <members>ISS_Portal/IATA_Logo.png</members>
+        <members>ISS_Portal/My_Apps.png</members>
+        <members>Images/Clicktoolslogo.gif</members>
+        <members>Logos/awslogo.gif</members>
+        <members>PM_Icons_Basic/projects_logo_small_basic.jpeg</members>
+        <members>PublicFolder/ExactTargetforAppExchangeLogo.gif</members>
+        <members>Release_Planning_Icons/projectslogosmalljpg_d_2.jpg</members>
+        <members>SalesPublicFolder/IATAForce.gif</members>
+        <members>SalesforceMaterial/SARA_logo.png</members>
+        <members>StrategicAccountPlanning/Logo.gif</members>
+        <name>Document</name>
+    </types>
+       <types> 
+        <members>*</members>
+          <name>EmailTemplate</name>
+    </types>  
+    
+    
     <version>34.0</version>
 </Package>
