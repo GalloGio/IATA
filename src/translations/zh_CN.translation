@@ -3681,7 +3681,7 @@ and
         <name>ISSP_AMS_Reason_Branch_Abroad</name>
     </customLabels>
     <customLabels>
-        <label>多项变更</label>
+        <label>分公司新申请</label>
         <name>ISSP_AMS_Reason_New_Branch</name>
     </customLabels>
     <customLabels>
