@@ -51,6 +51,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
                     processSaveResults('INSERT', listInserts, listInsertResult);        
                 }else{
                     for(Database.Error err : sr.getErrors()){
+                        processSaveResults('INSERT', listInserts, listInsertResult);
                         String errMsg = 'ERROR INSERTING - IFAP ID ' + sr.getID() + ' error message ' + err.getMessage();
                         errorMap.put(sr.getId(), errMsg);
                     }
@@ -65,6 +66,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
                 }
                 else{
                     for(Database.Error err : sr.getErrors()){
+                        processSaveResults('UPDATE', listUpdates, listUpdateResult);
                         String errMsg = 'ERROR UPDATING - IFAP ID ' + sr.getID() + ' error message ' + err.getMessage();
                         errorMap.put(sr.getId(), errMsg);
                     }
@@ -81,7 +83,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 
             TransformationHelper.sendEmailSupport('FATAL: IfapProcessBatch', e.getMessage() + '   ' + e.getStackTraceString());
         }
-
+ 
     }
 
     private void processSaveResults( String label, List<sObject> listObject, Database.SaveResult[] listSaveResult ) {
@@ -165,12 +167,12 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
                               + 'There were ' + errorMap.size() + ' erros. Please find error list attached.';
 
                 //Creating CSV file with errors
-                String finalstr = 'Id,Error\n';
+                String finalstr = 'Id,Error,Errors-XML\n';
                 String subject = 'Ifap Process Results Batch Error List';
 
                 for(Id id : errorMap.keySet()){
                     String err = errorMap.get(id);
-                    String recordString = '"'+id+'","'+err+'"\n';
+                    String recordString = '"'+id+'","'+err+'","'+errors+'"\n';
                     finalstr = finalstr + recordString;
                 }
 
