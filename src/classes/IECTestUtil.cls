@@ -204,10 +204,10 @@ public with sharing class IECTestUtil {
         insert newContact;
         
         Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
-        insert oBillingAccount;
+        insert oBillingAccount;        
 
         User u = new User(
-            Username = 'testIECGuest@test.iata.org'
+            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
             , Email = 'testIECGuest@test.iata.org'
             , emailencodingkey = 'UTF-8'
             , Alias = IECUserManager.createAliasFromName(newContact.LastName)
@@ -223,6 +223,7 @@ public with sharing class IECTestUtil {
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
         );
+        insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
       //  trgPortalUserAfterInserUpdate = false;
