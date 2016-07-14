@@ -488,7 +488,7 @@
                 <height>200</height>
                 <page>AMS_OSCAR_Attachment_List</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
