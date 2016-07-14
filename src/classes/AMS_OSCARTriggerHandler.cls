@@ -276,6 +276,8 @@ public class AMS_OSCARTriggerHandler {
 					accountsChangeCode.put(accId, changeCode);
 		}
 
+		//Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Status__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
+
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
