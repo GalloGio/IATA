@@ -1,0 +1,15 @@
+<html> 
+<head> 
+</head> 
+<body> 
+<p>Dear Product Owner,</p>
+<p>Your product {!Product2.SAP_Material_Number__c} has just been made inactive from SAP.</p> 
+
+<p></p>
+<p></p>
+<p>Best regards,<br />
+eCommerce Support Team
+</p>
+
+</body> 
+</html>
