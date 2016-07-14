@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Product is Out of Stock</name>
+    <style>none</style>
+    <subject>Product is Out of Stock</subject>
+    <textOnly>Dear {!Product2.Product_Manager_lookup__c} ,
+
+Your product {!Product2.SAP_Material_Number__c}  is Out-of-Stock.
+
+Best regards,
+eCommerce Support Team</textOnly>
+    <type>custom</type>
+</EmailTemplate>
