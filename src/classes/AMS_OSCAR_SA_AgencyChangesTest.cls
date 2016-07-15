@@ -1631,6 +1631,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
             pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
 
+            insert pds;
+
             oscar.STEP6__c = AMS_Utils.PASSED;
             update oscar;
             //should update the oscar without any error
@@ -1640,6 +1642,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
 
             pds.clear();
+
+            delete pds;
 
             //block is only done when trying to pass sanity check
             oscar.STEP6__c = AMS_Utils.PASSED;
