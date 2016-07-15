@@ -1063,7 +1063,11 @@
         "Steps": [{
           "Name": "STEP3",
           "Required": [],
-          "Actions": [],
+          "Actions": [{
+            "FunctionName": "createCorrectionCase",
+            "ActionLabel": "AMS_OSCAR_Action5",
+            "args": ["agencyid"]
+          }],
           "Automations": [{
             "Status": "Passed",
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded"
@@ -1076,6 +1080,7 @@
           "Issue_disapproval_pack__c",
           "Issue_credit_note_if_applicable__c",
           "Release_FS_if_applicable__c",
+          "Roll_back_account_data__c",
           "STEP3__c"],
           "IsDependent": false
         }]
