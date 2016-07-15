@@ -12913,7 +12913,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KALE_SUPPORT_EMAIL</shortDescription>
-        <value>sis.servicedesk@accelyakale.com</value>
+        <value>sis.servicedesk@accelya.com</value>
     </labels>
     <labels>
         <fullName>L2_Support_Priority_escalation_check</fullName>
