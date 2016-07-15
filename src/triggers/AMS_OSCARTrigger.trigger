@@ -4,14 +4,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
     
     //In time all logic in this trigger should be moved inside these helper methods
     if (Trigger.isBefore && Trigger.isInsert) {
-        AMS_OSCARTriggerHandler.handleBeforeInsert(Trigger.new);
+        AMS_OSCARTriggerHandler.handleBeforeInsert();
     } else if (Trigger.isBefore && Trigger.isUpdate) {
-        AMS_OSCARTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
+        AMS_OSCARTriggerHandler.handleBeforeUpdate(Trigger.new);
     }//TD: After Insert && after update. 
     else if(trigger.isAfter && trigger.isInsert){
-        AMS_OSCARTriggerHandler.handleAfterInsert(Trigger.new);
+        AMS_OSCARTriggerHandler.handleAfterInsert();
     }else if(trigger.isAfter && trigger.isUpdate){
-        AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+        AMS_OSCARTriggerHandler.handleAfterUpdate();
     }
 
     List<Case> casesToUpdate = new List<Case>();
@@ -112,14 +112,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         List<AMS_OSCAR__c> closedOscars = new List<AMS_OSCAR__c>();
 
-        //List<CASE> caseList = [select id, Status, Oscar__r.Id from CASE c where c.Oscar__r.id in :Trigger.newMap.keySet() and recordType.name = 'OSCAR Communication'];
-        List<CASE> caseList = [select id, Status, Oscar__r.Id, OwnerId from CASE c where c.Oscar__c != null and recordType.name = 'OSCAR Communication' and c.Oscar__r.id in :Trigger.newMap.keySet()];
-
         Map<Id, Case> caseOscars = new Map<Id, Case>();
-
-        for (Case caseOscar : caseList) {
-            caseOscars.put(caseOscar.OSCAR__r.Id, caseOscar);
-        }
 
         //processes to ignore in the creation of the DIS change code
         Set<String> ProcessesToIgnoreChangeCode = new Set <String> {AMS_Utils.new_TIDS,
@@ -129,7 +122,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                                                                     AMS_Utils.new_AHA
                                                                     };
 
-        for (AMS_OSCAR__c updatedOSCAR : Trigger.new) {
+        for (AMS_OSCAR__c updatedOSCAR : Trigger.New) {
             AMS_OSCAR__c oldOSCAR = Trigger.oldMap.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
@@ -157,60 +150,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 }
             }
 
-            Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
-            Boolean caseChanged = false;
-
             // logic: When the user changes the OSCAR status to any of the 4 Closed values (either on the left or directly in the centre),
             // the Date Closed field should be populated with the current date and the case should be closed.
 
-            if (updatedOSCAR.Status__c <> oldOSCAR.Status__c) {
+            if ( updatedOSCAR.Status__c != null && updatedOSCAR.Status__c <> oldOSCAR.Status__c && AMS_OSCARTriggerHandler.closedStatusMapping.containsKey(updatedOSCAR.Status__c) ) {
 
-                if ( updatedOSCAR.Status__c != null && AMS_OSCARTriggerHandler.closedStatusMapping.containsKey(updatedOSCAR.Status__c) ) {
-
-                    updatedOSCAR.Date_Time_Closed__c = System.now();
-
-                    if (caseToUpdate != null) {
-
-                        //CASE caseToUpdate = caseList.get(0);
-
-                        caseToUpdate.Status = AMS_OSCARTriggerHandler.closedStatusMapping.get(updatedOSCAR.Status__c);
-                        caseChanged = true;
-                    }
-                } else if ( updatedOSCAR.Status__c.equalsIgnoreCase('Pending Approval') || updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
-                    // Start an approval process
-                    if (updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
-                        AMS_OSCAR_ApprovalHelper.submit('', updatedOSCAR.Id, UserInfo.getUserId(), 'Automated approval submission based on OSCAR Status "Pending Validation".');
-                    }
-
-                    if (caseToUpdate != null) {
-                        caseToUpdate.Status = updatedOSCAR.Status__c;
-                        caseChanged = true;
-                    }
-                    
-
-                } else if (caseToUpdate != null){
-                    //for other OSCAR "Status__c" values, updates the CASE status to be equal to the one in the OSCAR!
-                    //Status to be caught on this area: 'Accepted_Pending Agreement', 'Accepted_Pending BG', 'Accepted_Pending Docs',
-                    //                                  'On Hold_External', 'On Hold_Internal', 'Open', 'Reopen'
-
-                    caseToUpdate.Status = updatedOSCAR.Status__c;
-                    caseChanged = true;
-
-                }
-
+                updatedOSCAR.Date_Time_Closed__c = System.now();
             }
 
-            //ensures the case owner is always the same as the oscar
-            if (caseToUpdate != null && caseToUpdate.OwnerId != updatedOSCAR.OwnerId) {
-                caseToUpdate.OwnerId = updatedOSCAR.OwnerId;
-                caseChanged = true;
+            if (updatedOSCAR.Status__c != null && updatedOSCAR.Status__c <> oldOSCAR.Status__c && updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
+                AMS_OSCAR_ApprovalHelper.submit('', updatedOSCAR.Id, UserInfo.getUserId(), 'Automated approval submission based on OSCAR Status "Pending Validation".');
             }
 
-            if(caseChanged) casesToUpdate.add(caseToUpdate);
         }
 
-        if (!casesToUpdate.isEmpty())
-            update casesToUpdate;
     }
 
     private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
@@ -308,6 +261,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DD_setup_with_agent__c'            => 'DD_setup_with_agent_confirmed__c',
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
+            'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
             'Issue_billing_document__c'                 => 'Process_Start_Date__c'
             };
            //Map to update Date related checkbox values

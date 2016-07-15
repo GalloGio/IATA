@@ -240,6 +240,23 @@ var dyn_functions = {
 
               
 
+           },
+           createCorrectionCase:function (arg) {
+                
+                var changeTab = function(result){
+                    /*if(result.success == true){
+                        alert('Correction Case created successfully.');
+                    }*/
+                };
+
+                // Use the results primary tab id and open a new subtab
+               var openSubtab = function(result)
+               {            
+                    sforce.console.openSubtab(result.id, '/apex/AMS_AccountOSCARWizardPage?accountId='+arg+'&process='+AMS_Utils.COR, true, 'Correction Case', null, changeTab);    
+               };
+
+               sforce.console.getEnclosingPrimaryTabId(openSubtab);
+           
            }
 
 };
