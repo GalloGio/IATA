@@ -82,6 +82,10 @@
                 <behavior>Edit</behavior>
                 <field>New_docs_Received__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Documentation_remarks__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

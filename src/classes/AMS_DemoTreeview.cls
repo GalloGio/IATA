@@ -1,66 +1,97 @@
 public class AMS_DemoTreeview {
-    public Account ag {get;set;}
-    public AMS_Agencies_relationhip__c Parent {get;set;}
+     public Account currentAccount {get;set;}
+    public Account parentAccount {get;set;}
     public Boolean isHQ {get;set;}
-
-    public AMS_DemoTreeview(ApexPages.StandardController stdController) {
+    
+    public AMS_DemoTreeview(ApexPages.StandardController stdController) {   
 
         Id objectId = ApexPages.currentPage().getParameters().get('id');
         
         if(objectId == null)
             return;
 
-        this.ag = (Account)stdController.getRecord();
-        this.ag = [select id, Name, Location_Type__c, IATACode__c, Status__c, Primary_Address__r.Country__r.Name, Location_Class__c, Primary_Address__r.City__c from Account where id =: this.ag.id];
-        this.Parent = fetchParent();
-        if(this.Parent == null)
-            isHQ = true;
-        else
-            isHQ = false;
+        this.currentAccount = (Account)stdController.getRecord();
+
+        this.parentAccount = fetchHierchyParent();
+
     }
 
-    //public List<AMS_Agency__c> getAccConCases(){
-        //return [select id, Name, (select id, Name from Account.Contacts), (select id, ContactId, CaseNumber from Cases) from account LIMIT 10];
-      //  return [select id, Name, (Select id, Name, Person__r.First_Name__c from Agency_Employees__r) from AMS_Agency__c LIMIT 10];
-    //}
-
-    /*public List<AMS_Agencies_relationhip__c>  getChilds(){
-        return [select id, Child_Account__c, Child_Account__r.Name, Child_Account__r.IATACode__c, Child_Account__r.Agency_Status__c, Child_Account__r.Primary_Address__r.Country__r.Name, Child_Account__r.Primary_Address__r.City__c, Child_Account__r.Account__r.Location_Type__c,
-        Parent_Account__c, Parent_Account__r.Name, Parent_Account__r.IATACode__c, Parent_Account__r.Agency_Status__c, Parent_Account__r.Primary_Address__r.Country__r.Name, Parent_Account__r.Primary_Address__r.City__c,Parent_Account__r.Account__r.Location_Type__c, Child_Account__r.Location_Class__c
-        , Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Parent_Account__c =: this.ag.id];
-    }*/
-
-    public Map<Integer, List<AMS_Agencies_relationhip__c>>  getChilds(){
-        Map<Integer, List<AMS_Agencies_relationhip__c>> result = new Map<Integer, List<AMS_Agencies_relationhip__c>>();
-        List<AMS_Agencies_relationhip__c> auxlist = new List<AMS_Agencies_relationhip__c>();
-        Integer Key = 0;
-
-        for(AMS_Agencies_relationhip__c ar: [select id, Child_Account__c, Child_Account__r.Name, Child_Account__r.IATACode__c, Child_Account__r.Status__c, Child_Account__r.Primary_Address__r.Country__r.Name, Child_Account__r.Primary_Address__r.City__c, Child_Account__r.Location_Type__c,
-        Parent_Account__c, Parent_Account__r.Name, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Primary_Address__r.Country__r.Name, Parent_Account__r.Primary_Address__r.City__c,Parent_Account__r.Location_Type__c,
-        Child_Account__r.Location_Class__c
-         from AMS_Agencies_relationhip__c where Parent_Account__c =: this.ag.id]){
-            if(result.get(Key) != null){
-                result.get(Key).add(ar);
-            }else{
-                auxlist.add(ar);
-                result.put(Key, auxlist);
-            }
-
-            if(result.get(Key).size() == 600){
-                auxlist = new List<AMS_Agencies_relationhip__c>();
-                Key++;
-            }
+     //Get first Parent in the Hierarchy
+    public Account  fetchHierchyParent(){
+        Boolean top = false;
+        Id objId = this.currentAccount.id;
+        List<AMS_Agencies_relationhip__c> lastaux = null;
+        
+        while (!top) {
+            List<AMS_Agencies_relationhip__c> aux = [select id,Parent_Account__c,Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =: objId];
+        if(aux.size() > 0)
+        {
+            objId = aux.get(0).Parent_Account__c;
+            lastaux = aux;
+        }
+        else 
+            top = true;
         }
 
-        return result;
+        Id contextId;
+        if (lastaux != null)
+            contextId = lastaux.get(0).Parent_Account__c;
+        
+        else
+            contextId= this.currentAccount.id;
+            
+        return [select id,Name, IATACode__c, Status__c, Primary_Address__r.Country__r.Name, Primary_Address__r.City__c, Location_Type__c,Location_Class__c 
+                                from Account  where id =: contextId];
     }
 
-    public AMS_Agencies_relationhip__c  fetchParent(){
-        List<AMS_Agencies_relationhip__c> aux = [select id, Child_Account__c, Child_Account__r.Name, Child_Account__r.IATACode__c, Child_Account__r.Status__c, Child_Account__r.Primary_Address__r.Country__r.Name,Child_Account__r.Primary_Address__r.City__c, Child_Account__r.Location_Type__c, Parent_Account__c, Parent_Account__r.Name, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Primary_Address__r.Country__r.Name, Parent_Account__r.Primary_Address__r.City__c,Parent_Account__r.Location_Type__c,
-        Child_Account__r.Location_Class__c,Parent_Account__r.Location_Class__c
-         from AMS_Agencies_relationhip__c where Child_Account__c =: this.ag.id];
-        if(aux.size() > 0)
-            return aux.get(0);
-        return null;
+    public Map <Account,List<Account>> getHierchyChilds(){
+
+        //Only works for a 3 level hierarchy
+        
+        Map <Account,List<Account>> accountHierMap = new Map <Account,List<Account>>();
+
+        //AMS_Agencies_Hierarchy__c currentHierarchy = [select id, (select id,Child_Account__c,Parent_Account__c from AMS_Agencies_relationships__r) from AMS_Agencies_Hierarchy__c where id =: this.Parent.hierarchy__c];
+        
+        boolean existAcctInfo = false;
+        Map<Id,Account> acctsMap = new Map<Id,Account>();
+        for(AMS_Agencies_relationhip__c auxRelfirstChild : [select Id,Parent_Account__c,Child_Account__c,Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =: this.parentAccount.id])
+        {
+            // get Accts Info in the first loop
+            if(!existAcctInfo){
+                acctsMap = getAccountsInfo(auxRelfirstChild.Hierarchy__c);
+                existAcctInfo = true;
+            }
+
+
+            accountHierMap.put(acctsMap.get(auxRelfirstChild.Child_Account__c),new List<Account>());
+
+        }
+
+        for(AMS_Agencies_relationhip__c auxRelSecondChild : [select Id,Parent_Account__c,Child_Account__c,Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c in : accountHierMap.keyset()])
+        {
+            accountHierMap.get(acctsMap.get(auxRelSecondChild.Parent_Account__c)).add(acctsMap.get(auxRelSecondChild.Child_Account__c));
+
+        }
+        return accountHierMap;
+
     }
+
+    private Map<Id,Account> getAccountsInfo (Id hierarchyID){
+
+        Set<Id> acctIds = new Set<Id>();
+
+        for (AMS_Agencies_relationhip__c relHier : [select id,Child_Account__c,Parent_Account__c from AMS_Agencies_relationhip__c where Hierarchy__c = : hierarchyID])
+        {
+            if(!acctIds.contains(relHier.Child_Account__c)) acctIds.add(relHier.Child_Account__c);
+            if(!acctIds.contains(relHier.Parent_Account__c)) acctIds.add(relHier.Parent_Account__c);
+        }
+
+        Map<Id,Account> acctsInfo = 
+            new Map <Id,Account> ([select id,Name, IATACode__c, Status__c, Primary_Address__r.Country__r.Name, Primary_Address__r.City__c, Location_Type__c,Location_Class__c 
+                                from Account where id in :acctIds]);
+
+        return acctsInfo;
+
+    }
+
 }
