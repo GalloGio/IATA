@@ -106,7 +106,6 @@ public with sharing class AMS_AccreditationContactController {
     public void addEmptyRow()
     {
         AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcPersonRt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
-        acWrapper.isNewRecord = true;
         this.acWrapper.add(acWrapper);
     }
     
@@ -639,17 +638,16 @@ public with sharing class AMS_AccreditationContactController {
             //although when the associated process is a CORRECTION edit should be allowed
             get{
                 return ac.Agency_Owner__c &&
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES;
 
                 }
             set;
         }
-        public Boolean isNewRecord {get; set;}
         
         public AccreditationContactWrapper(AMS_Accreditation_Contact__c acParam)
         {
-            this.isNewRecord = false;
             this.dateJoined = String.valueOf(acParam.Date_Joined_agency__c);
             this.prev1From = String.valueOf(acParam.Prev_Job1_From__c);
             this.prev1To = String.valueOf(acParam.Prev_Job1_To__c);
@@ -673,7 +671,6 @@ public with sharing class AMS_AccreditationContactController {
         
         public AccreditationContactWrapper(AMS_Accreditation_Contact__c acParam, String rId)
         {
-            this.isNewRecord = false;
             this.ac = acParam;
             if(this.ac.Company__c == null)
             {

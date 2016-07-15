@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Set_Ownership</customButtons>
+    <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>Edit</excludeButtons>
+    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -12,50 +15,10 @@
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OSCAR_Deadline__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AMS_Online_Accreditation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Validation_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>AMS_Target_Agency__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Change_of_location_type_behavior__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Type_of_change__c</field>
-            </layoutItems>
-            <layoutItems>
                 <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Process__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -72,33 +35,48 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AML_requested__c</field>
+                <field>Sanity_check_received__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sanity_check_received__c</field>
+                <field>Sanity_check_results__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>New_docs_Received__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Documentation_remarks__c</field>
+                <field>Sanity_check_deadline__c</field>
             </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Anti Money Laundering</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sanity_check_deadline__c</field>
+                <field>AML_requested__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AML_performed_date__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AML_deadline__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sanity_check_results__c</field>
+                <field>AML_result__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -108,6 +86,20 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Agency Fees</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Process_Start_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_requested__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Proof_of_payment_received__c</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -122,23 +114,13 @@
                 <field>Invoice_status__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Send_invoice__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Proof_of_payment_received__c</field>
-            </layoutItems>
-        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Change Processing</label>
+        <label>Application Processing</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -175,14 +157,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PSAA_EACP_Agreement_received__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Dossier_Validation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Comments_validate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -222,9 +196,32 @@
                 <behavior>Edit</behavior>
                 <field>Agreement_result__c</field>
             </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Validation</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Dossier_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comments_validate__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Validation_result__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Validation_Status__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -256,7 +253,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Change Finalization</label>
+        <label>Application Finalization</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -265,10 +262,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Operational_Systems_Updated__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Approval_letter_sent__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -294,6 +287,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Approval_letter_sent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Storage_performed__c</field>
             </layoutItems>
             <layoutItems>
@@ -307,7 +304,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Change Disapproval</label>
+        <label>Application Disapproval</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -325,10 +322,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Account_data_rolled_back__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Disapproval_result__c</field>
             </layoutItems>
         </layoutColumns>
@@ -338,7 +331,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Rejection finalization</label>
+        <label>Application Rejection</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -357,7 +350,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Change Withdrawal</label>
+        <label>Application Withdrawal</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -378,6 +371,70 @@
                 <field>Withdrawal_result__c</field>
             </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Application Reconsideration</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reconsideration_date__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reconsideration_result__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Documentation</label>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Inspections</label>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Financial Assessment</label>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Bank Guarantee</label>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Other</label>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -438,7 +495,18 @@
         <style>OneColumn</style>
     </layoutSections>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
+        <fields>Change_Code__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <fields>Active__c</fields>
+        <fields>Bulletin_Information__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Agency_Applied_Change_code__c.OSCAR__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <fields>CREATED_DATE</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>Related_Step__c</fields>
@@ -447,14 +515,6 @@
         <relatedList>AMS_OSCAR_Event__c.OSCAR__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>Add_all_hierarchy</customButtons>
-        <fields>Account__c</fields>
-        <fields>AMS_IATAcode__c</fields>
-        <relatedList>AMS_Process_Detail__c.OSCAR__c</relatedList>
-        <sortField>AMS_IATAcode__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CreatedDate</fields>
@@ -480,7 +540,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hw000000i1Eno</masterLabel>
+        <masterLabel>00hw000000i1Enp</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
