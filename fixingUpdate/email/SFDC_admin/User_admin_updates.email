@@ -1,0 +1,13 @@
+{!Target_User.Id}
+{!Target_User.Email}
+{!Target_User.LastName} {!Target_User.FirstName}
+{!Target_User.Title}
+{!Target_User.CompanyName}
+
+Division: {!Target_User.PPD_Division__c}
+Dept: {!Target_User.PPD_Department__c}
+Title: {!Target_User.PPD_Tittle__c}
+
+
+Has been grated the profile
+{!Target_User.Profile_Name__c}
