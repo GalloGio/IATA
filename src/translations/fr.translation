@@ -6490,7 +6490,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Enquête</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
