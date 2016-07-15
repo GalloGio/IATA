@@ -5560,6 +5560,19 @@ IF(Account.IATACode__c != &apos;&apos;
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Account_Type__c</fullName>
+        <description>E&amp;F CRM Project. (EF-1042) Flag an account as an E&amp;F account
+Formula field that copies the E&amp;F Type.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Account.EF_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Account Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Email</fullName>
         <trackHistory>true</trackHistory>
     </fields>
