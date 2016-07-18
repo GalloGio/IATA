@@ -543,10 +543,13 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
 
+		Set<Id> agenciesToMigrate = new Set<Id>(agenciesAffected);
+		agenciesToMigrate.add(oscar.Account__c);
+
 		//Do not allow change of ownerships that leave an hierarchy without an HO
 		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) {
-			Set<Id> agenciesToMigrate = new Set<Id>(agenciesAffected);
-			agenciesToMigrate.add(oscar.Account__c);
+			//Set<Id> agenciesToMigrate = new Set<Id>(agenciesAffected);
+			//agenciesToMigrate.add(oscar.Account__c);
 			Set<Id> agenciesNotMigrated = AMS_HierarchyHelper.getAccountNotMigrated(accountHierarchyRelationships.get(oscar.Account__c), agenciesToMigrate);
 			String error = AMS_HierarchyHelper.validateIncompleteMigration(agenciesNotMigrated);
 			if (error != null)
@@ -606,7 +609,9 @@ public class AMS_OSCARTriggerHandler {
 
 		//When performing change of shareholding all active hierarchy agencies must be selected
 		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) {
-			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffected, accountHierarchyRelationships.get(oscar.Account__c), accounts))
+			System.debug('Agencies Affected: ' + agenciesToMigrate);
+			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
+			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts))
 				oscar.addError('When performing a change of shareholding all the active agencies in the hierarchy must be selected.');
 		}
 
