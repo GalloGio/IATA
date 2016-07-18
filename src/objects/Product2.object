@@ -861,10 +861,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>ACIC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Agency List Cargo Agents</fullName>
                 <default>false</default>
             </picklistValues>
@@ -890,6 +886,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Airport Handling Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aviation Charges Intelligence Center (ACIC)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5991,10 +5991,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>ACIC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Agency List Cargo Agents</fullName>
                 <default>false</default>
             </values>
@@ -6020,6 +6016,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Airport Handling Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aviation Charges Intelligence Center %28ACIC%29</fullName>
                 <default>false</default>
             </values>
             <values>
