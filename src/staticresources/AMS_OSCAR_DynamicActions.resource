@@ -252,7 +252,7 @@ var dyn_functions = {
                 // Use the results primary tab id and open a new subtab
                var openSubtab = function(result)
                {            
-                    sforce.console.openSubtab(result.id, '/apex/AMS_AccountOSCARWizardPage?accountId='+arg+'&process='+AMS_Utils.COR, true, 'Correction Case', null, changeTab);    
+                    sforce.console.openSubtab(result.id, '/apex/AMS_AccountOSCARWizardPage?accountId='+arg+'&process=CORRECTION.1.0', true, 'Correction Case', null, changeTab);    
                };
 
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
