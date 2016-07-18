@@ -175,7 +175,6 @@ public without sharing class vfISSP_FAQ2Case
     }
      
     private void resetCase() {
-        system.debug('aqui resetCase');
         this.newCase = new Case();
         this.newCase1 = new Case();
     } 
@@ -528,7 +527,6 @@ public without sharing class vfISSP_FAQ2Case
     }
 // Compliment additions ED sept 2015
      public PageReference ComplimentGeneralQueueMethod(){
-        system.debug('aqui topic 1');
         resetCase();
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
@@ -853,7 +851,6 @@ public without sharing class vfISSP_FAQ2Case
 
     private void initTopicsList()
     {
-        system.debug('aqui initTopicsList');
         this.DataCategoryContainer.lst_DataCategories.sort();
         if (myTopic != null && myTopic != ''){
             for(Integer index = 0; index < this.DataCategoryContainer.lst_DataCategories.size(); index++)
@@ -1015,7 +1012,6 @@ public without sharing class vfISSP_FAQ2Case
     
     //TF - SP11
     public void setRecordType(){
-        system.debug('aqui topic 1.setRecordType');
         //set the Topic__c "English Value"
         if (isCompliment1 == false)
         {
@@ -1033,7 +1029,6 @@ public without sharing class vfISSP_FAQ2Case
             }
         }else
         {
-            system.debug('aqui topic 2');
             newCase.Topic__c = 'COMPLIMENT';
             newCase.SubTopic__c = 'COMPLIMENT';
             this.topic = '0';
