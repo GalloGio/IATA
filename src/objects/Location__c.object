@@ -555,17 +555,17 @@
         <columns>NAME</columns>
         <columns>Active__c</columns>
         <columns>Account__c</columns>
+        <columns>Type__c</columns>
+        <columns>SAP_Id__c</columns>
         <columns>Contact__c</columns>
         <columns>Address__c</columns>
         <columns>Full_Address__c</columns>
         <columns>Address_Name__c</columns>
         <columns>Email__c</columns>
         <columns>Phone__c</columns>
-        <columns>Type__c</columns>
-        <columns>SAP_Id__c</columns>
         <columns>ISO_Country_Code__c</columns>
-        <columns>ISO_State_Code__c</columns>
-        <columns>UPDATEDBY_USER</columns>
+        <columns>ISO_State_Code_SAP__c</columns>
+        <columns>VAT_Number__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
@@ -619,7 +619,7 @@
     </validationRules>
     <validationRules>
         <fullName>No_Change_On_SAP_Id</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Forbid entry/update in SAP Id</description>
         <errorConditionFormula>OR(AND(NOT(OR(ISPICKVAL(Type__c, &quot;Sold To&quot;)
             , ISPICKVAL(Type__c, &quot;Bill To&quot;)

@@ -148,7 +148,7 @@ public class Product_Sel extends Selector
         {
             query = String.format(
                 'SELECT {0}, IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
-                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
+				'	, IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
                 'ORDER BY {3} ' +
@@ -166,7 +166,7 @@ public class Product_Sel extends Selector
         {
             query = String.format(
                 'SELECT {0}, IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
-                '   , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
+				'	, IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
                 'ORDER BY {3} ' , 
@@ -379,7 +379,7 @@ public class Product_Sel extends Selector
         
         //get the list of Product by SAP material number
         list<Product2> products = [SELECT id, SAP_Material_Number__c, IEC_Static_Cart_Quantity__c, ZProduct__c
-                                        , Charge_Shipping__c, Use_Contract_when_ordered__c
+										, Charge_Shipping__c, Use_Contract_when_ordered__c
                                     From Product2 
                                     where SAP_Material_Number__c in :productCode];
         
@@ -519,29 +519,29 @@ public class Product_Sel extends Selector
     {
         System.debug('productNumbers::'+productNumbers);
 
-        Map<String, String> gdpRatePlanZId_ProductNumber = new Map<String, String>();
-        Set<String> nongdpProductNumbers = new Set<String>();
-        
-        // First query the product object to split the productNumbers
-        for (Product2 prod :
-            [SELECT SAP_Material_Number__c, IEC_Parent_Product__c, IEC_Product_Information__c
-                , IEC_Product_Rate_Plan_Information__c, IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c
-            FROM Product2
-            WHERE SAP_Material_Number__c IN :productNumbers])
-        {
-            if (prod.IEC_Product_Rate_Plan_Information__c == null && prod.IEC_Product_Information__c == null)
-            {
-                nongdpProductNumbers.add(prod.SAP_Material_Number__c);
-            }
-            else if (prod.IEC_Product_Rate_Plan_Information__c != null)
-            {
-                gdpRatePlanZId_ProductNumber.put(prod.IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c, prod.SAP_Material_Number__c);
-            }
-        }
+    	Map<String, String> gdpRatePlanZId_ProductNumber = new Map<String, String>();
+    	Set<String> nongdpProductNumbers = new Set<String>();
+    	
+    	// First query the product object to split the productNumbers
+    	for (Product2 prod :
+    		[SELECT SAP_Material_Number__c, IEC_Parent_Product__c, IEC_Product_Information__c
+    			, IEC_Product_Rate_Plan_Information__c, IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c
+    		FROM Product2
+    		WHERE SAP_Material_Number__c IN :productNumbers])
+    	{
+    		if (prod.IEC_Product_Rate_Plan_Information__c == null && prod.IEC_Product_Information__c == null)
+    		{
+    			nongdpProductNumbers.add(prod.SAP_Material_Number__c);
+    		}
+    		else if (prod.IEC_Product_Rate_Plan_Information__c != null)
+    		{
+    			gdpRatePlanZId_ProductNumber.put(prod.IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c, prod.SAP_Material_Number__c);
+    		}
+    	}
 
         System.debug('nongdpProductNumbers::'+nongdpProductNumbers);
         System.debug('gdpRatePlanZId_ProductNumber::'+gdpRatePlanZId_ProductNumber);
-        
+    	
         Map<String, PriceInfo_DTO> result = new Map<String, PriceInfo_DTO>();
         ProductRatePlanChargeTier_Sel tSelector = new ProductRatePlanChargeTier_Sel(); 
 
@@ -550,15 +550,15 @@ public class Product_Sel extends Selector
         // Check if there are non-GDP products to get price info
         if (!nongdpProductNumbers.isEmpty())
         {
-            zTiers.addAll(showAll 
-                ? tSelector.getProductTiers(nongdpProductNumbers) 
-                : tSelector.getProductTiers(nongdpProductNumbers, customerType, customerRegion, customerCountry));
+        	zTiers.addAll(showAll 
+	            ? tSelector.getProductTiers(nongdpProductNumbers) 
+	            : tSelector.getProductTiers(nongdpProductNumbers, customerType, customerRegion, customerCountry));
         }
         
         // Check if there are GDP products to get price info
         if (!gdpRatePlanZId_ProductNumber.isEmpty())
         {
-            zTiers.addAll(tSelector.getProductTiersByRatePlan(gdpRatePlanZId_ProductNumber.keySet()));
+        	zTiers.addAll(tSelector.getProductTiersByRatePlan(gdpRatePlanZId_ProductNumber.keySet()));
         }
 
         System.debug('zTiers::'+zTiers);
@@ -636,11 +636,11 @@ public class Product_Sel extends Selector
 
             for(zqu__ProductRatePlanChargeTier__c zTier: zTiers)
             {
-                // Determine the actual product number based on previously split product numbers
-                String sProdNumber = (gdpRatePlanZId_ProductNumber.containsKey(zTier.ZRatePlan_ZuoraId__c)
-                    ? gdpRatePlanZId_ProductNumber.get(zTier.ZRatePlan_ZuoraId__c)
-                    : zTier.Product_Number__c);
-                
+            	// Determine the actual product number based on previously split product numbers
+            	String sProdNumber = (gdpRatePlanZId_ProductNumber.containsKey(zTier.ZRatePlan_ZuoraId__c)
+            		? gdpRatePlanZId_ProductNumber.get(zTier.ZRatePlan_ZuoraId__c)
+            		: zTier.Product_Number__c);
+    	    	
                 PriceInfo_DTO price = (result.containsKey(sProdNumber))
                     ? result.get(sProdNumber)
                     : new PriceInfo_DTO(); 
@@ -770,9 +770,9 @@ public class Product_Sel extends Selector
                                                     ', Related_Product__r.Effective_From__c, Related_Product__r.Effective_To__c, Related_Product__r.SAP_Material_Number__c, Related_Product__r.Short_Description__c' +
                                               ' from Product_BOM__r order by Related_Product__r.Name)')
                     + '      , (select IATA_ISO_Country__r.Name, Display_in_E_Com__c from Non_Compliance_Countries__r) '
-                    + '     , IEC_Product_Information__c, IEC_Product_Rate_Plan_Information__c '
-                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
-                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c '
+					+ '		, IEC_Product_Information__c, IEC_Product_Rate_Plan_Information__c '
+                    + '		, IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
+					+ '		, IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c '
                     + ' from Product2'
                     + ' where SAP_Material_Number__c != null and Display_to_ECommerce__c = true ' + Utility.getSeqTextSetting('ECommerce Products Filter', '')
                     + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')
@@ -833,14 +833,14 @@ system.debug('SOQL::'+SOQL);
             listFilteredProduct = listProduct;
         }
 
-        // Filter price info for products not related to Phase 1& 2 products only
+		// Filter price info for products not related to Phase 1& 2 products only
         for (Product2 p : listFilteredProduct)
         {
-            if (p.IEC_Product_Information__c == null)
-            {
-                mapProductNumber_Price.put(p.SAP_Material_Number__c, null);
-            }
-        }            
+        	if (p.IEC_Product_Information__c == null)
+        	{
+            	mapProductNumber_Price.put(p.SAP_Material_Number__c, null);
+        	}
+    	}            
 
         mapProductNumber_Price = exe.getProductPriceInfo(mapProductNumber_Price.keySet(), customerType, null, null, true);
 
@@ -865,15 +865,15 @@ system.debug('SOQL::'+SOQL);
     ****************************************************************************************************/
     public static Set<Id> getNonCompliantProductId(Set<Id> setProductId, Set<String> setCountryCode)
     {
-        Set<Id> setNonCompliantProductId = new Set<Id>();
-        
+    	Set<Id> setNonCompliantProductId = new Set<Id>();
+    	
         for (Non_Compliant_Country__c ncc :
             [SELECT Product__c
             FROM Non_Compliant_Country__c
             WHERE Product__c IN :setProductId
-                AND IATA_ISO_Country__r.ISO_Code__c IN :setCountryCode]) {
-                    
-            setNonCompliantProductId.add(ncc.Product__c);
+            	AND IATA_ISO_Country__r.ISO_Code__c IN :setCountryCode]) {
+            		
+        	setNonCompliantProductId.add(ncc.Product__c);
         }
 
         return setNonCompliantProductId;
@@ -957,8 +957,8 @@ system.debug('SOQL::'+SOQL);
         
         //get the list of Product by SAP material number
         list<Product2> lstProduct = [SELECT id, SAP_Material_Number__c, Charge_Shipping__c, Use_Contract_when_ordered__c
-                                        , IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c
-                                        , IEC_Parent_Product__r.SAP_Material_Number__c
+        								, IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c
+        								, IEC_Parent_Product__r.SAP_Material_Number__c
                                     FROM Product2 
                                     WHERE IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c IN :setProductRatePlanZId];
         
@@ -982,8 +982,8 @@ system.debug('SOQL::'+SOQL);
         
         //get the list of Product by SAP material number
         list<Product2> lstProduct = [SELECT id, SAP_Material_Number__c, Charge_Shipping__c, Use_Contract_when_ordered__c
-                                        , IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c
-                                        , IEC_Parent_Product__r.SAP_Material_Number__c
+        								, IEC_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c
+        								, IEC_Parent_Product__r.SAP_Material_Number__c
                                     FROM Product2 
                                     WHERE IEC_Product_Rate_Plan_Information__c IN :setProductInfoId];
         

@@ -43,6 +43,66 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <fieldSets>
+        <fullName>CAMPAIGN_CUSTOMER_SEARCH_FIELDS</fullName>
+        <description>Use for CAMPAIGN_CUSTOMER_SEARCH</description>
+        <label>CAMPAIGN_CUSTOMER_SEARCH_FIELDS</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ECOM_Refinement_FIelds</fullName>
+        <description>Fields used for refinement</description>
+        <displayedFields>
+            <field>Short_Title__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Refinement_Language__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Refinement_Format__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Inventory_Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Refinement_Segment__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Mega_Menu__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Available_for_Subscription__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ECOM Refinement FIelds</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>Ecoomerce_Sort_By</fullName>
+        <description>Contains list of sort-by fields in the Ecommerce Site</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CreatedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Ecoomerce Sort By</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>Send_To_Zuora_Listener</fullName>
         <description>The Product is sent to Zuora when this fields change</description>
         <displayedFields>
@@ -861,6 +921,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>ACIC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Agency List Cargo Agents</fullName>
                 <default>false</default>
             </picklistValues>
@@ -889,15 +953,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Aviation Charges Intelligence Center (ACIC)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Aviation Cyber Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aviation Cyber Security Toolkit</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -969,22 +1025,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DGR Compliance Kits &amp; Combos</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DGR Data eList Products</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DGR Print Manuals</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DGR Software</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Enhanced Monthly Statistics</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1013,19 +1053,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Guidance Material and Best Practices for the Implementation of Competency-Based Training in Maintenance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Guide to Facilitation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Handling labels</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hazard labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1065,10 +1093,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>IATA Operational Safety Audit (IOSA)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>IATA Rates of Exchange</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1086,10 +1110,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>International Aircraft Financing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Limited/Expected Quantities</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1134,10 +1154,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Online Library</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other DGR Products</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1193,10 +1209,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Standard Computerized Airplane Performance (SCAP)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Standard Schedules Information</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1210,10 +1222,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Ticketed Point Mileage Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Time temperature labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2081,6 +2089,10 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Multilingual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Norwegian</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2165,6 +2177,10 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <picklistValues>
                 <fullName>FSS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDP</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2311,22 +2327,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <picklistValues>
                 <fullName>Video</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>eBook</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PDF &amp; Excel files</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Download</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -4761,6 +4761,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications</fullName>
                 <default>false</default>
             </values>
@@ -5991,6 +5995,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>ACIC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Agency List Cargo Agents</fullName>
                 <default>false</default>
             </values>
@@ -6019,15 +6027,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aviation Charges Intelligence Center %28ACIC%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Aviation Cyber Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aviation Cyber Security Toolkit</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6083,22 +6083,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>DGR Compliance Kits %26 Combos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Data eList Products</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Print Manuals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Software</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Dangerous Goods Labels</fullName>
                 <default>false</default>
             </values>
@@ -6139,19 +6123,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Guidance Material and Best Practices for the Implementation of Competency-Based Training in Maintenance</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Guide to Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Handling labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hazard labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6191,10 +6163,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IATA Rates of Exchange</fullName>
                 <default>false</default>
             </values>
@@ -6212,10 +6180,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>International Aircraft Financing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Limited%2FExpected Quantities</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6260,10 +6224,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Online Library</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other DGR Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6319,10 +6279,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Standard Schedules Information</fullName>
                 <default>false</default>
             </values>
@@ -6340,10 +6296,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketed Point Mileage Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Time temperature labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6941,6 +6893,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Multilingual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Norwegian</fullName>
                 <default>false</default>
             </values>
@@ -7020,6 +6976,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Publications</fullName>
                 <default>false</default>
             </values>
@@ -7091,10 +7051,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Email Service</fullName>
                 <default>false</default>
             </values>
@@ -7135,15 +7091,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PDF %26 Excel files</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7168,10 +7116,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eBook</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9685,6 +9629,8 @@ The product will only appear on the Online Store when the date entered in this f
     </recordTypes>
     <searchLayouts>
         <customTabListAdditionalFields>PRODUCT2.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>SAP_Material_Number__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Media__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</customTabListAdditionalFields>
         <customTabListAdditionalFields>PRODUCT2.DESCRIPTION</customTabListAdditionalFields>
         <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
@@ -9706,6 +9652,7 @@ The product will only appear on the Online Store when the date entered in this f
         <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT2.ACTIVE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Line_of_Business__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SAP_Material_Number__c</searchResultsAdditionalFields>
     </searchLayouts>
     <validationRules>
         <fullName>Charge_Shipping_Applicable</fullName>

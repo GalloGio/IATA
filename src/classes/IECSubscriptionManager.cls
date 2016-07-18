@@ -1,4 +1,4 @@
-/**  
+/**
   * Description: This class handles all subscription related
   * Author: Samy Saied
   * Version: 1.0
@@ -84,7 +84,8 @@ public with sharing class IECSubscriptionManager {
             WHERE Is_Triable__c = true
                 AND Related_Product_Information__c=:idProduct
                 AND Related_Product_Information__r.Related_Product_Category__r.Active__c = true
-                AND Active__c = true                
+                AND Active__c = true
+                //AND User_Interface_Display__c = 'YES'
                 AND Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__ZProduct__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__EffectiveStartDate__c <= TODAY and Product_Rate_Plan__r.zqu__EffectiveEndDate__c >= TODAY
                 AND Product_Rate_Plan__r.zqu__Deleted__c = false
@@ -323,7 +324,7 @@ public with sharing class IECSubscriptionManager {
                 if(ePaymentType == IECConstants.PaymentType.BANK_TRANSFER) 
                     DefaultPaymentMethodId = IECConstants.PaymentMethod_BankTransfer_ZuoraID;
                 else if(ePaymentType == IECConstants.PaymentType.ICH) 
-                    DefaultPaymentMethodId = IECConstants.PaymentMethod_Other_ZuoraID;
+                    DefaultPaymentMethodId = IECConstants.PaymentMethod_ICH_ZuoraID;
                 else if (creditCard != null && creditCard.zId != '') 
                     DefaultPaymentMethodId = creditCard.zId;
     
@@ -337,6 +338,9 @@ public with sharing class IECSubscriptionManager {
                         oCustomer.RelatedZuoraAccount.setValue('DefaultPaymentMethodId', defaultPaymentMethodId);
                 }
             }
+            
+            // An array of all amendments required to upgrade the subscription
+            List<Zuora.zObject> lstAmendments = new List<Zuora.zObject>();
 
             // create amendment
             Zuora.zObject amend = new Zuora.zObject('Amendment');
@@ -348,6 +352,177 @@ public with sharing class IECSubscriptionManager {
             amend.setValue('CustomerAcceptanceDate', IECZuoraHelper.getCurrentDate());
             amend.setValue('ServiceActivationDate', IECZuoraHelper.getCurrentDate());
             amend.setValue('ContractEffectiveDate', IECZuoraHelper.getCurrentDate());
+            lstAmendments.add(amend);
+                        
+            /**************************************************
+            *   2016-04-26: Samy: Add Tax calculation
+            **************************************************/
+            
+            // TODO verify the Charge Type for the products with Thai
+            // Retrieve all Charges under the specified subscription
+            List<Zuora__SubscriptionProductCharge__c> lstSubChrg = new IEC_ZSubscriptionProductCharge_Sel().getZSubscriptionProductChargeByProdRatePlanChargeZId(
+                    new Set<String> {zIdSubscription}
+                    , new Set<String> {Utility.getTextSetting('Zuora tax Charge id'), Utility.getTextSetting('Zuora shipping Charge id')}
+                    , false
+                    , 'Product_Rate_Plan_Charge__r.zqu__Model__c NOT IN (\'\'Discount-Fixed Amount\'\', \'\'Discount-Percentage\'\')').get(zIdSubscription);
+            
+            // Proceed only if able to get Subscription Charges
+            if (lstSubChrg == null || lstSubChrg.isEmpty())
+                throw new IECApplicationException('Unable to find the main product charge for the specified subscription.');
+
+
+            // Determine the price and the quantity from the existing charge
+            // Assuming there is only one charge per product
+            Decimal dProductPrice = 0 , dQuantity = 0, dSubTotal = 0;
+            dProductPrice = lstSubChrg[0].Zuora__Price__c;
+            dQuantity = lstSubChrg[0].Zuora__Quantity__c;
+            dSubTotal = dProductPrice * dQuantity;
+            
+            // Retrieve the SoldTo Location for the current contact
+            Location__c oLocSoldTo = new Location_Sel().getSoldToLocationByContactId(new Set<Id> {oCustomer.RelatedContact.Id}).get(oCustomer.RelatedContact.Id);
+            
+            // Initialize a fake OrderItem DTO for tax and shipping calculation
+            OrderItem_DTO dtoOrderItem = new OrderItem_DTO();
+            Product2 oProduct;
+            
+            //Get Product Info
+            Map<Id, Product2> mapProductInfoId_Product = Product_Sel.getProductsByProductInfo(new Set<Id> {idRatePlanInfo});
+            
+            if (mapProductInfoId_Product == null || mapProductInfoId_Product.isEmpty())
+                throw new IECApplicationException('Unable to locate a Salesforce Product for the ProductInfo: ' + idRatePlanInfo);
+            else
+            {
+                oProduct = mapProductInfoId_Product.get(idRatePlanInfo);
+                String sProductNumber = oProduct.SAP_Material_Number__c;
+                // Get the Parent SAP Code as this is the one to be used with the TAX webservice
+                String sParentProductNumber = oProduct.IEC_Parent_Product__r.SAP_Material_Number__c;
+                
+                String sCustomerType = User_Sel.getCustomerType(UserInfo.getUserId());
+                
+                dtoOrderItem.sapProductCode = sParentProductNumber;
+                dtoOrderItem.quantity = dQuantity;
+                dtoOrderItem.subTotal = dSubTotal;
+                dtoOrderItem.chargeShipping = oProduct.Charge_Shipping__c;
+                dtoOrderItem.isContractProduct = oProduct.Use_Contract_when_ordered__c;
+                // Set any random ID since it is a fake item
+                dtoOrderItem.orderItemId = 'RANDOM';
+                
+                // Retrieve Tax & Shipping information for current Order Item/Subscription
+                if (!Test.isRunningTest())
+                {
+                    String result = Order_Svc.getSAP_Freight_Tax_for_DTO(Utility.getTextSetting('vfOrder-DefaultType')
+                        , Utility.getTextSetting('vfOrder-DefaultSource')
+                        , Utility.getTextSetting('vfOrder-DefaultChannel')
+                        , oLocSoldTo.SAP_Id__c
+                        , oCustomer.RelatedContact.BillTo_Location__r.SAP_Id__c
+                        , oCustomer.RelatedContact.ShipTo_Location__r.SAP_Id__c
+                        , new List<OrderItem_DTO> {dtoOrderItem});
+                    
+                    if (result != null)
+                        throw new IECApplicationException('Error returned from Tax & Shipping webservice. ' + result);
+                }
+                else
+                {
+                    dtoOrderItem.taxAmount = 10;
+                    dtoOrderItem.shippingAmount = 5;
+                }
+            }
+            
+            Decimal dTax = dtoOrderItem.taxAmount;
+
+            /////////////////////////////////////////////// 
+            // create amendment to add a tax product
+            if (dTax != null)
+            {
+                Zuora.zObject zAmend_AddProd_Tax = new Zuora.zObject('Amendment');
+                zAmend_AddProd_Tax.setValue('Name', 'Add Tax Product');
+                zAmend_AddProd_Tax.setValue('Description', 'Add Tax Product');
+                zAmend_AddProd_Tax.setValue('Type', 'NewProduct');
+                zAmend_AddProd_Tax.setValue('SubscriptionId', zIdSubscription);
+                zAmend_AddProd_Tax.setValue('AutoRenew', autoRenew);
+                zAmend_AddProd_Tax.setValue('CustomerAcceptanceDate', IECZuoraHelper.getCurrentDate());
+                zAmend_AddProd_Tax.setValue('ContractEffectiveDate', IECZuoraHelper.getFutureDate(dtRenewalTermStartDate));
+                
+                // if paying by credit card or ICH, upgrade is active now
+                if (ePaymentType == IECConstants.PaymentType.CREDIT_CARD || ePaymentType == IECConstants.PaymentType.ICH || isPreview) {
+                    zAmend_AddProd_Tax.setValue('Status', 'Completed');
+                    zAmend_AddProd_Tax.setValue('ServiceActivationDate', IECZuoraHelper.getFutureDate(dtRenewalTermStartDate));
+                }
+                else 
+                    zAmend_AddProd_Tax.setValue('Status', 'Draft');
+                
+                // set the RatePlanCharge of the product being added
+                Zuora.zObject zRatePlanCharge_AddProd_Tax = new Zuora.zObject('RatePlanCharge');
+                zRatePlanCharge_AddProd_Tax.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora tax Charge id'));
+                zRatePlanCharge_AddProd_Tax.setValue('Price', dTax);
+                zRatePlanCharge_AddProd_Tax.setValue('Description', 'For tax calculation\nDo not delete');
+                Zuora.zObject zRatePlanChargeData_AddProd_Tax = new Zuora.zObject('RatePlanChargeData');
+                zRatePlanChargeData_AddProd_Tax.setValue('RatePlanCharge', zRatePlanCharge_AddProd_Tax);
+            
+                // set the RatePlanData of the product being added
+                Zuora.zObject zRatePlan_AddProd_Tax = new Zuora.zObject('RatePlan');
+                zRatePlan_AddProd_Tax.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora tax Plan id'));
+                Zuora.zObject zRatePlanData_AddProd_Tax = new Zuora.zObject('RatePlanData');
+                zRatePlanData_AddProd_Tax.setValue('RatePlan', zRatePlan_AddProd_Tax);
+                zRatePlanData_AddProd_Tax.setValue('RatePlanChargeData', new List<Zuora.zObject> {zRatePlanChargeData_AddProd_Tax});
+                
+                // Now add the RatePlanData to the amendment record
+                zAmend_AddProd_Tax.setValue('RatePlanData', zRatePlanData_AddProd_Tax);
+                
+                // Add the amendment to the amendment request
+                lstAmendments.add(zAmend_AddProd_Tax);
+            }
+                
+            Decimal dShipping = (dtoOrderItem.shippingAmount == null && dtoOrderItem.handlingCharges == null) ? null
+                : ((dtoOrderItem.shippingAmount == null ? 0 : dtoOrderItem.shippingAmount)
+                    + (dtoOrderItem.handlingCharges == null ? 0 : dtoOrderItem.handlingCharges));
+                
+             /////////////////////////////////////////////// 
+            // create amendment to add a shipping product
+            if (dShipping != null && dShipping > 0)
+            {
+                Zuora.zObject zAmend_AddProd_Ship = new Zuora.zObject('Amendment');
+                zAmend_AddProd_Ship.setValue('Name', 'Add Shipping Product');
+                zAmend_AddProd_Ship.setValue('Description', 'Add Shipping Product');
+                zAmend_AddProd_Ship.setValue('Type', 'NewProduct');
+                zAmend_AddProd_Ship.setValue('SubscriptionId', zIdSubscription);
+                zAmend_AddProd_Ship.setValue('AutoRenew', autoRenew);
+                zAmend_AddProd_Ship.setValue('CustomerAcceptanceDate', IECZuoraHelper.getCurrentDate());
+                zAmend_AddProd_Ship.setValue('ContractEffectiveDate', IECZuoraHelper.getFutureDate(dtRenewalTermStartDate));
+                
+                // if paying by credit card or ICH, upgrade is active now
+                if (ePaymentType == IECConstants.PaymentType.CREDIT_CARD || ePaymentType == IECConstants.PaymentType.ICH || isPreview) {
+                    zAmend_AddProd_Ship.setValue('Status', 'Completed');
+                    zAmend_AddProd_Ship.setValue('ServiceActivationDate', IECZuoraHelper.getFutureDate(dtRenewalTermStartDate));
+                }
+                else 
+                    zAmend_AddProd_Ship.setValue('Status', 'Draft');
+        
+                // set the RatePlanCharge of the product being added
+                Zuora.zObject zRatePlanCharge_AddProd_Ship = new Zuora.zObject('RatePlanCharge');
+                zRatePlanCharge_AddProd_Ship.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora shipping Charge id'));
+                zRatePlanCharge_AddProd_Ship.setValue('Price', dShipping);
+                zRatePlanCharge_AddProd_Ship.setValue('Description', 'For Shipping calculation\nDo not delete');
+                Zuora.zObject zRatePlanChargeData_AddProd_Ship = new Zuora.zObject('RatePlanChargeData');
+                zRatePlanChargeData_AddProd_Ship.setValue('RatePlanCharge', zRatePlanCharge_AddProd_Ship);
+            
+                // set the RatePlanData of the product being added
+                Zuora.zObject zRatePlan_AddProd_Ship = new Zuora.zObject('RatePlan');
+                zRatePlan_AddProd_Ship.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora shipping Plan id'));
+                Zuora.zObject zRatePlanData_AddProd_Ship = new Zuora.zObject('RatePlanData');
+                zRatePlanData_AddProd_Ship.setValue('RatePlan', zRatePlan_AddProd_Ship);
+                zRatePlanData_AddProd_Ship.setValue('RatePlanChargeData', new List<Zuora.zObject> {zRatePlanChargeData_AddProd_Ship});
+                
+                // Now add the RatePlanData to the amendment record
+                zAmend_AddProd_Ship.setValue('RatePlanData', zRatePlanData_AddProd_Ship);
+                
+                // Add the amendment to the amendment request
+                lstAmendments.add(zAmend_AddProd_Ship);
+            }
+            
+            /**************************************************
+            *   End Of: 2016-04-26: Samy: Add Tax calculation
+            **************************************************/
 
             // create amendment request
             Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
@@ -378,7 +553,7 @@ public with sharing class IECSubscriptionManager {
                 bPOUpdated = true;
             }
             
-            amendRequest.Amendments = new List<Zuora.zObject> {amend};
+            amendRequest.Amendments = lstAmendments;
             Zuora.zApi.AmendResult result =
                 (!Test.isRunningTest())
                     ? IECZuoraHelper.amendApiCall(amendRequest)
@@ -386,9 +561,40 @@ public with sharing class IECSubscriptionManager {
             
             ///////////////////////////////////////////////
             // On-demand sync for the user Billing Account
-
+            
             if (!isPreview) {
                 if (result.Success) {
+                    /* Commented: 2016-05-05: Sales Order will be created from the generated ZInvoice Item trigger
+                    // Create an order once the subscription is confirmed through Zuora
+                    String sPaymentMethod = IECConstants.parsePaymentMethodEnumToPicklistValue(ePaymentType);
+                    Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
+                    Order oOrder = new Order_Sel().initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+    
+                    // Update order fields
+                    oOrder.Type = 'Order';
+                    oOrder.Payment_Type__c = sPaymentMethod;
+                    oOrder.Status = Order_Svc.getOrderStatusByPaymentType(sPaymentMethod);
+                    oOrder.Is_Paid__c = Order_Svc.isOrderPaidByPaymentType(sPaymentMethod);
+                    oOrder.IEC_Payment_Date__c = (Order_Svc.isOrderPaidByPaymentType(sPaymentMethod)) ? Date.today() : null;
+                    update oOrder;
+                    
+                    //Set the pricebookEntry
+                    Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
+                    PricebookEntry pbe  = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, new set<Id>{oProduct.Id}).get(oProduct.Id);
+    
+                    //get Item by order
+                    OrderItem oOrderItem = new OrderItem (
+                        OrderId = oOrder.Id
+                        , PriceBookEntryId = pbe.Id
+                        , Quantity = dtoOrderItem.quantity
+                        , UnitPrice = dProductPrice
+                        , Charge_Shipping__c = oProduct.Charge_Shipping__c
+                        , Tax__c = dTax
+                        , Freight_Charge__c = dShipping
+                    );
+                    insert oOrderItem;
+                    */
+                    
                     OnDemandSyncAccounts(new Set<String> {(String) oCustomer.RelatedZuoraAccount.getValue('Id')});
                 
                     if (autoRenew) {
@@ -445,8 +651,11 @@ public with sharing class IECSubscriptionManager {
      * @param creditCard The zuora payment method to use (mandatory if payment method is CREDIT_CARD)
      * @return AmendResult object holding the status and invoice for related amendment
      */
-    public static Zuora.zApi.AmendResult upgradeSubscription(IECCustomer oCustomer, String sSubscriptionNumber, String zIdSubscription, String currentRatePlanZId, String upgradeToProductRatePlanZId, String upgradeToProductRatePlanInfoId
-                    , Integer iQuantity, DateTime dtUpgradeDate, Boolean autoRenew, Boolean isPreview, IECConstants.PaymentType ePaymentType, IECZuoraHelper.PaymentMethod creditCard, Terms_and_Conditions__c oAcceptedTnCs, String sPurchaseOrder) {
+    public static Zuora.zApi.AmendResult upgradeSubscription(IECCustomer oCustomer, String sSubscriptionNumber, String zIdSubscription
+                    , String currentRatePlanZId, String upgradeToProductRatePlanZId, String upgradeToProductRatePlanInfoId
+                    , Integer iQuantity, DateTime dtUpgradeDate, Boolean autoRenew, Boolean isPreview, IECConstants.PaymentType ePaymentType
+                    , IECZuoraHelper.PaymentMethod creditCard, Terms_and_Conditions__c oAcceptedTnCs, String sPurchaseOrder
+                    , Decimal dUnitPrice, Decimal dQuantity, Decimal dTax, Decimal dShipping) {
         Boolean bPOUpdated = false;
         try {
             if (!isPreview) {
@@ -463,7 +672,7 @@ public with sharing class IECSubscriptionManager {
                 if(ePaymentType == IECConstants.PaymentType.BANK_TRANSFER) 
                     DefaultPaymentMethodId = IECConstants.PaymentMethod_BankTransfer_ZuoraID;
                 else if(ePaymentType == IECConstants.PaymentType.ICH) 
-                    DefaultPaymentMethodId = IECConstants.PaymentMethod_Other_ZuoraID;
+                    DefaultPaymentMethodId = IECConstants.PaymentMethod_ICH_ZuoraID;
                 else if (creditCard != null && creditCard.zId != '') 
                     DefaultPaymentMethodId = creditCard.zId;
 
@@ -477,6 +686,9 @@ public with sharing class IECSubscriptionManager {
                         oCustomer.RelatedZuoraAccount.setValue('DefaultPaymentMethodId', defaultPaymentMethodId);
                 }
             }
+            
+            // An array of all amendments required to upgrade the subscription
+            List<Zuora.zObject> lstAmendments = new List<Zuora.zObject>();
             
             // get the Term Start Date of the the Subscription
             Zuora__Subscription__c oSubscription = getSubscriptionByName(sSubscriptionNumber);
@@ -514,6 +726,8 @@ public with sharing class IECSubscriptionManager {
             Zuora.zObject removeRatePlanData = new Zuora.zObject('RatePlanData');
             removeRatePlanData.setValue('RatePlan', removeRatePlan);
             amendRemoveProduct.setValue('RatePlanData', removeRatePlanData);
+            
+            lstAmendments.add(amendRemoveProduct);
                         
             /////////////////////////////////////////////// 
             // create second amendment to add a new product
@@ -541,6 +755,8 @@ public with sharing class IECSubscriptionManager {
             Zuora.zObject addRatePlanData = new Zuora.zObject('RatePlanData');
             addRatePlanData.setValue('RatePlan', addRatePlan);
             amendNewProduct.setValue('RatePlanData', addRatePlanData);
+            
+            lstAmendments.add(amendNewProduct);
 
             //////////////////////////////////////////////////////////////
             // create third amendment only if auto-renew flag has changed
@@ -563,7 +779,110 @@ public with sharing class IECSubscriptionManager {
                 }
                 else 
                     amendAutoRenew.setValue('Status', 'Draft');
+                
+                lstAmendments.add(amendAutoRenew);
             }
+            
+            /**************************************************
+            *   2016-04-19: Samy: Add Tax calculation
+            **************************************************/
+            //Get Product Info
+            Map<String, Product2> mapProductRatePlanZId_Product = Product_Sel.getProductsByProductRatePlan(new Set<String> {upgradeToProductRatePlanZId});
+            
+            if (mapProductRatePlanZId_Product == null || mapProductRatePlanZId_Product.isEmpty())
+                throw new IECApplicationException('Unable to locate a Salesforce Product for the ProductRatePlan: ' + upgradeToProductRatePlanZId);
+            
+            Product2 oProduct = mapProductRatePlanZId_Product.get(upgradeToProductRatePlanZId);
+            
+            /////////////////////////////////////////////// 
+            // create amendment to add a tax product
+            if (!isPreview && dTax != null)
+            {
+                Zuora.zObject zAmend_AddProd_Tax = new Zuora.zObject('Amendment');
+                zAmend_AddProd_Tax.setValue('Name', 'Add Tax Product');
+                zAmend_AddProd_Tax.setValue('Description', 'Add Tax Product');
+                zAmend_AddProd_Tax.setValue('Type', 'NewProduct');
+                zAmend_AddProd_Tax.setValue('SubscriptionId', zIdSubscription);
+                zAmend_AddProd_Tax.setValue('AutoRenew', autoRenew);
+                zAmend_AddProd_Tax.setValue('CustomerAcceptanceDate', IECZuoraHelper.getCurrentDate());
+                zAmend_AddProd_Tax.setValue('ContractEffectiveDate', IECZuoraHelper.getFutureDate(dtContractAndServiceActivationDate));
+                
+                // if paying by credit card or ICH, upgrade is active now
+                if (ePaymentType == IECConstants.PaymentType.CREDIT_CARD || ePaymentType == IECConstants.PaymentType.ICH || isPreview) {
+                    zAmend_AddProd_Tax.setValue('Status', 'Completed');
+                    zAmend_AddProd_Tax.setValue('ServiceActivationDate', IECZuoraHelper.getFutureDate(dtContractAndServiceActivationDate));
+                }
+                else 
+                    zAmend_AddProd_Tax.setValue('Status', 'Draft');
+                
+                // set the RatePlanCharge of the product being added
+                Zuora.zObject zRatePlanCharge_AddProd_Tax = new Zuora.zObject('RatePlanCharge');
+                zRatePlanCharge_AddProd_Tax.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora tax Charge id'));
+                zRatePlanCharge_AddProd_Tax.setValue('Price', dTax);
+                zRatePlanCharge_AddProd_Tax.setValue('Description', 'For tax calculation\nDo not delete');
+                Zuora.zObject zRatePlanChargeData_AddProd_Tax = new Zuora.zObject('RatePlanChargeData');
+                zRatePlanChargeData_AddProd_Tax.setValue('RatePlanCharge', zRatePlanCharge_AddProd_Tax);
+            
+                // set the RatePlanData of the product being added
+                Zuora.zObject zRatePlan_AddProd_Tax = new Zuora.zObject('RatePlan');
+                zRatePlan_AddProd_Tax.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora tax Plan id'));
+                Zuora.zObject zRatePlanData_AddProd_Tax = new Zuora.zObject('RatePlanData');
+                zRatePlanData_AddProd_Tax.setValue('RatePlan', zRatePlan_AddProd_Tax);
+                zRatePlanData_AddProd_Tax.setValue('RatePlanChargeData', new List<Zuora.zObject> {zRatePlanChargeData_AddProd_Tax});
+                
+                // Now add the RatePlanData to the amendment record
+                zAmend_AddProd_Tax.setValue('RatePlanData', zRatePlanData_AddProd_Tax);
+                
+                // Add the amendment to the amendment request
+                lstAmendments.add(zAmend_AddProd_Tax);
+            }
+                
+             /////////////////////////////////////////////// 
+            // create amendment to add a shipping product
+            if (!isPreview && dShipping != null && dShipping > 0)
+            {
+                Zuora.zObject zAmend_AddProd_Ship = new Zuora.zObject('Amendment');
+                zAmend_AddProd_Ship.setValue('Name', 'Add Shipping Product');
+                zAmend_AddProd_Ship.setValue('Description', 'Add Shipping Product');
+                zAmend_AddProd_Ship.setValue('Type', 'NewProduct');
+                zAmend_AddProd_Ship.setValue('SubscriptionId', zIdSubscription);
+                zAmend_AddProd_Ship.setValue('AutoRenew', autoRenew);
+                zAmend_AddProd_Ship.setValue('CustomerAcceptanceDate', IECZuoraHelper.getCurrentDate());
+                zAmend_AddProd_Ship.setValue('ContractEffectiveDate', IECZuoraHelper.getFutureDate(dtContractAndServiceActivationDate));
+                
+                // if paying by credit card or ICH, upgrade is active now
+                if (ePaymentType == IECConstants.PaymentType.CREDIT_CARD || ePaymentType == IECConstants.PaymentType.ICH || isPreview) {
+                    zAmend_AddProd_Ship.setValue('Status', 'Completed');
+                    zAmend_AddProd_Ship.setValue('ServiceActivationDate', IECZuoraHelper.getFutureDate(dtContractAndServiceActivationDate));
+                }
+                else 
+                    zAmend_AddProd_Ship.setValue('Status', 'Draft');
+        
+                // set the RatePlanCharge of the product being added
+                Zuora.zObject zRatePlanCharge_AddProd_Ship = new Zuora.zObject('RatePlanCharge');
+                zRatePlanCharge_AddProd_Ship.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora shipping Charge id'));
+                zRatePlanCharge_AddProd_Ship.setValue('Price', dShipping);
+                zRatePlanCharge_AddProd_Ship.setValue('Description', 'For Shipping calculation\nDo not delete');
+                Zuora.zObject zRatePlanChargeData_AddProd_Ship = new Zuora.zObject('RatePlanChargeData');
+                zRatePlanChargeData_AddProd_Ship.setValue('RatePlanCharge', zRatePlanCharge_AddProd_Ship);
+            
+                // set the RatePlanData of the product being added
+                Zuora.zObject zRatePlan_AddProd_Ship = new Zuora.zObject('RatePlan');
+                zRatePlan_AddProd_Ship.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora shipping Plan id'));
+                Zuora.zObject zRatePlanData_AddProd_Ship = new Zuora.zObject('RatePlanData');
+                zRatePlanData_AddProd_Ship.setValue('RatePlan', zRatePlan_AddProd_Ship);
+                zRatePlanData_AddProd_Ship.setValue('RatePlanChargeData', new List<Zuora.zObject> {zRatePlanChargeData_AddProd_Ship});
+                
+                // Now add the RatePlanData to the amendment record
+                zAmend_AddProd_Ship.setValue('RatePlanData', zRatePlanData_AddProd_Ship);
+                
+                // Add the amendment to the amendment request
+                lstAmendments.add(zAmend_AddProd_Ship);
+            }
+            
+            /**************************************************
+            *   End Of: 2016-04-19: Samy: Add Tax calculation
+            **************************************************/
 
             // create amendment request
             Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
@@ -589,11 +908,7 @@ public with sharing class IECSubscriptionManager {
                 amendRequest.AmendOptions.InvoiceProcessingOptions = invoiceOpt;
             }
             
-            // if the Auto-Renew flag has changed, as the third amendment
-            if (bAutoRenewHasChanged)
-                amendRequest.Amendments = new List<Zuora.zObject>{ amendRemoveProduct, amendNewProduct, amendAutoRenew };
-            else
-                amendRequest.Amendments = new List<Zuora.zObject>{ amendRemoveProduct, amendNewProduct };
+            amendRequest.Amendments = lstAmendments;
                                             
             if (!isPreview && String.isNotBlank(sPurchaseOrder)) {
                 IECZuoraHelper.UpdateSubscriptionPO(zIdSubscription, sPurchaseOrder);
@@ -612,9 +927,39 @@ public with sharing class IECSubscriptionManager {
 
             ///////////////////////////////////////////////
             // On-demand sync for the user Billing Account
-
             if (!isPreview) {
                 if (result.Success) {
+                    /* Commented: 2016-05-05: Sales Order will be created from the generated ZInvoice Item trigger
+                    // Create an order once the subscription is confirmed through Zuora
+                    String sPaymentMethod = IECConstants.parsePaymentMethodEnumToPicklistValue(ePaymentType);
+                    Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
+                    Order oOrder = new Order_Sel().initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+    
+                    // Update order fields
+                    oOrder.Type = 'Order';
+                    oOrder.Payment_Type__c = sPaymentMethod;
+                    oOrder.Status = Order_Svc.getOrderStatusByPaymentType(sPaymentMethod);
+                    oOrder.Is_Paid__c = Order_Svc.isOrderPaidByPaymentType(sPaymentMethod);
+                    oOrder.IEC_Payment_Date__c = (Order_Svc.isOrderPaidByPaymentType(sPaymentMethod)) ? Date.today() : null;
+                    update oOrder;
+                    
+                    //Set the pricebookEntry
+                    Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
+                    PricebookEntry pbe  = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, new set<Id>{oProduct.Id}).get(oProduct.Id);
+    
+                    //get Item by order
+                    OrderItem oOrderItem = new OrderItem (
+                        OrderId = oOrder.Id
+                        , PriceBookEntryId = pbe.Id
+                        , Quantity = dQuantity
+                        , UnitPrice = dUnitPrice
+                        , Charge_Shipping__c = oProduct.Charge_Shipping__c
+                        , Tax__c = dTax
+                        , Freight_Charge__c = dShipping
+                    );
+                    insert oOrderItem;
+                    */
+                    
                     if (!Test.isRunningTest()) {
                         // sync of the account
                         List<Zuora.SyncResult> lstSyncResults = OnDemandSyncAccounts(new Set<String> {(String) oCustomer.RelatedZuoraAccount.getValue('Id')});
@@ -691,12 +1036,128 @@ public with sharing class IECSubscriptionManager {
             subscription.setValue('AutoRenew', bAutoRenew);
             subscription.setValue('IsInvoiceSeparate', false);
             if (String.isNotBlank(sPurchaseOrder))
-                    subscription.setValue('PurchaseOrder__c', sPurchaseOrder);
-            
+                subscription.setValue('PurchaseOrder__c', sPurchaseOrder);
+
+            // Set the source of the Subscription Creation
+            subscription.setValue('Source__c', 'Salesforce');
+        
             // Create the Subscription Data object
             oSubsRequest.SubscriptionData = new Zuora.zApi.SubscriptionData();
             oSubsRequest.SubscriptionData.Subscription = subscription;
             oSubsRequest.SubscriptionData.RatePlanData = IECShoppingCartHelper.createRatePlanDataListObject(sUpgradeRatePlanZuoraID, 1);
+            
+            /**************************************************
+            *   2016-04-27: Samy: Add Tax calculation
+            **************************************************/
+            // Retrieve the SoldTo Location for the current contact
+            Location__c oLocSoldTo = new Location_Sel().getSoldToLocationByContactId(new Set<Id> {oCustomer.RelatedContact.Id}).get(oCustomer.RelatedContact.Id);
+            
+            // Initialize a fake OrderItem DTO for tax and shipping calculation
+            OrderItem_DTO dtoOrderItem = new OrderItem_DTO();
+            Product2 oProduct;
+            
+            //Get Product Info
+            Map<String, Product2> mapProductRatePlanZId_Product = Product_Sel.getProductsByProductRatePlan(new Set<String> {sUpgradeRatePlanZuoraID});
+            
+            if (mapProductRatePlanZId_Product == null || mapProductRatePlanZId_Product.isEmpty())
+                throw new IECApplicationException('Unable to locate a Salesforce Product for the ProductRatePlan: ' + sUpgradeRatePlanZuoraID);
+            else
+            {
+                oProduct = mapProductRatePlanZId_Product.get(sUpgradeRatePlanZuoraID);
+                String sProductNumber = oProduct.SAP_Material_Number__c;
+                // Get the Parent SAP Code as this is the one to be used with the TAX webservice
+                String sParentProductNumber = oProduct.IEC_Parent_Product__r.SAP_Material_Number__c;
+                
+                String sCustomerType = User_Sel.getCustomerType(UserInfo.getUserId());
+                // Retrieve the price for the upgrade product
+                Map<String, PriceInfo_DTO> mapProductNumber_Price = new Product_Sel().getProductPriceInfo(new Set<String> {sProductNumber}, sCustomerType, null, null, true);
+                
+                dtoOrderItem.PriceInfo = mapProductNumber_Price.get(sProductNumber);
+                dtoOrderItem.sapProductCode = sParentProductNumber;
+                dtoOrderItem.quantity = 1;
+                dtoOrderItem.chargeShipping = oProduct.Charge_Shipping__c;
+                dtoOrderItem.isContractProduct = oProduct.Use_Contract_when_ordered__c;
+                // Set any random ID since it is a fake item
+                dtoOrderItem.orderItemId = 'RANDOM';
+                
+                Order_Svc.setPriceToOrderItemDTO(dtoOrderItem, sCustomerType);
+
+                // Retrieve Tax & Shipping information for current Order Item/Subscription
+                if (!Test.isRunningTest())
+                {
+                    String result = Order_Svc.getSAP_Freight_Tax_for_DTO(Utility.getTextSetting('vfOrder-DefaultType')
+                        , Utility.getTextSetting('vfOrder-DefaultSource')
+                        , Utility.getTextSetting('vfOrder-DefaultChannel')
+                        , oLocSoldTo.SAP_Id__c
+                        , oCustomer.RelatedContact.BillTo_Location__r.SAP_Id__c
+                        , oCustomer.RelatedContact.ShipTo_Location__r.SAP_Id__c
+                        , new List<OrderItem_DTO> {dtoOrderItem});
+                    
+                    if (result != null)
+                        throw new IECApplicationException('Error returned from Tax & Shipping webservice. ' + result);
+                }
+                else
+                {
+                    dtoOrderItem.taxAmount = 10;
+                    dtoOrderItem.shippingAmount = 5;
+                }
+            }
+            
+            Decimal dTax = dtoOrderItem.taxAmount;
+
+            /////////////////////////////////////////////// 
+            // create amendment to add a tax product
+            if (dTax != null)
+            {
+                // set the RatePlanCharge of the product being added
+                Zuora.zObject zRatePlanCharge_Tax = new Zuora.zObject('RatePlanCharge');
+                zRatePlanCharge_Tax.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora tax Charge id'));
+                zRatePlanCharge_Tax.setValue('Price', dTax);
+                zRatePlanCharge_Tax.setValue('Description', 'For tax calculation\nDo not delete');
+                Zuora.zObject zRatePlanChargeData_Tax = new Zuora.zObject('RatePlanChargeData');
+                zRatePlanChargeData_Tax.setValue('RatePlanCharge', zRatePlanCharge_Tax);
+            
+                // set the RatePlanData of the product being added
+                Zuora.zObject zRatePlan_Tax = new Zuora.zObject('RatePlan');
+                zRatePlan_Tax.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora tax Plan id'));
+                Zuora.zObject zRatePlanData_Tax = new Zuora.zObject('RatePlanData');
+                zRatePlanData_Tax.setValue('RatePlan', zRatePlan_Tax);
+                zRatePlanData_Tax.setValue('RatePlanChargeData', new List<Zuora.zObject> {zRatePlanChargeData_Tax});
+                
+                // Now add the RatePlanData to the SubscribeRequest record
+                oSubsRequest.SubscriptionData.RatePlanData.add(zRatePlanData_Tax);
+            }
+                
+            Decimal dShipping = (dtoOrderItem.shippingAmount == null && dtoOrderItem.handlingCharges == null) ? null
+                : ((dtoOrderItem.shippingAmount == null ? 0 : dtoOrderItem.shippingAmount)
+                    + (dtoOrderItem.handlingCharges == null ? 0 : dtoOrderItem.handlingCharges));
+                
+             /////////////////////////////////////////////// 
+            // create amendment to add a shipping product
+            if (dShipping != null && dShipping > 0)
+            {
+                // set the RatePlanCharge of the product being added
+                Zuora.zObject zRatePlanCharge_Ship = new Zuora.zObject('RatePlanCharge');
+                zRatePlanCharge_Ship.setValue('ProductRatePlanChargeId', Utility.getTextSetting('Zuora shipping Charge id'));
+                zRatePlanCharge_Ship.setValue('Price', dShipping);
+                zRatePlanCharge_Ship.setValue('Description', 'For Shipping calculation\nDo not delete');
+                Zuora.zObject zRatePlanChargeData_Ship = new Zuora.zObject('RatePlanChargeData');
+                zRatePlanChargeData_Ship.setValue('RatePlanCharge', zRatePlanCharge_Ship);
+            
+                // set the RatePlanData of the product being added
+                Zuora.zObject zRatePlan_Ship = new Zuora.zObject('RatePlan');
+                zRatePlan_Ship.setValue('ProductRatePlanId', Utility.getTextSetting('Zuora shipping Plan id'));
+                Zuora.zObject zRatePlanData_Ship = new Zuora.zObject('RatePlanData');
+                zRatePlanData_Ship.setValue('RatePlan', zRatePlan_Ship);
+                zRatePlanData_Ship.setValue('RatePlanChargeData', new List<Zuora.zObject> {zRatePlanChargeData_Ship});
+                
+                // Now add the RatePlanData to the SubscribeRequest record
+                oSubsRequest.SubscriptionData.RatePlanData.add(zRatePlanData_Ship);
+            }
+            
+            /**************************************************
+            *   End Of: 2016-04-27: Samy: Add Tax calculation
+            **************************************************/
 
             ////////////
             // Account
@@ -709,7 +1170,7 @@ public with sharing class IECSubscriptionManager {
                 if(ePaymentType == IECConstants.PaymentType.BANK_TRANSFER) 
                     oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_BankTransfer_ZuoraID);
                 else if(ePaymentType == IECConstants.PaymentType.ICH) 
-                    oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_Other_ZuoraID);
+                    oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_ICH_ZuoraID);
                 else if (creditCard != null && creditCard.zId != '') 
                     oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', creditCard.zId);
 
@@ -766,8 +1227,42 @@ public with sharing class IECSubscriptionManager {
             ///////////////////////////////////////////////
             // On-demand sync for the user Billing Account
 
-            if (listSubscribeResults[0].Success && !Test.isRunningTest())
-                OnDemandSyncAccounts(new Set<String> {listSubscribeResults[0].AccountId});
+            if (listSubscribeResults[0].Success)
+            {
+                /* Commented: 2016-05-05: Sales Order will be created from the generated ZInvoice Item trigger
+                // Create an order once the subscription is confirmed through Zuora
+                String sPaymentMethod = IECConstants.parsePaymentMethodEnumToPicklistValue(ePaymentType);
+                Customer_DTO oCurrentCustomer = Customer_DTO.getLoggedCustomer();
+                Order oOrder = new Order_Sel().initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+
+                // Update order fields
+                oOrder.Type = 'Order';
+                oOrder.Payment_Type__c = sPaymentMethod;
+                oOrder.Status = Order_Svc.getOrderStatusByPaymentType(sPaymentMethod);
+                oOrder.Is_Paid__c = Order_Svc.isOrderPaidByPaymentType(sPaymentMethod);
+                oOrder.IEC_Payment_Date__c = (Order_Svc.isOrderPaidByPaymentType(sPaymentMethod)) ? Date.today() : null;
+                update oOrder;
+                
+                //Set the pricebookEntry
+                Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
+                PricebookEntry pbe  = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, new set<Id>{oProduct.Id}).get(oProduct.Id);
+
+                //get Item by order
+                OrderItem oOrderItem = new OrderItem (
+                    OrderId = oOrder.Id
+                    , PriceBookEntryId = pbe.Id
+                    , Quantity = dtoOrderItem.quantity
+                    , UnitPrice = dtoOrderItem.subTotal
+                    , Charge_Shipping__c = oProduct.Charge_Shipping__c
+                    , Tax__c = dTax
+                    , Freight_Charge__c = dShipping
+                );
+                insert oOrderItem;
+                */
+                
+                if (!Test.isRunningTest())
+                    OnDemandSyncAccounts(new Set<String> {listSubscribeResults[0].AccountId});
+            }
 
             ///////////////////////////////////////////////////
             // Keep track of the purchase in our custom object
@@ -881,22 +1376,27 @@ public with sharing class IECSubscriptionManager {
      */
     public static List<Zuora__ZInvoice__c> getInvoicesByBillingAccount(Id idBillingAccount, Boolean bIncludeICHInvoices) {
         try {
+            Date dtInvoiceCutoffDate = Date.valueOf(Test.isRunningTest() ? '2999-12-30' : Utility.getTextSetting('Legacy Invoice Cutoff Date'));
              if (bIncludeICHInvoices) {
-                return [Select z.Zuora__TotalAmount__c, z.Zuora__Status__c, z.Name, z.Zuora__InvoiceDate__c, z.Zuora__DueDate__c, z.Zuora__Description__c, z.Zuora__Balance__c, z.Zuora__Balance2__c 
+                return [Select z.Zuora__TotalAmount__c, z.Zuora__Status__c, z.Name, z.Zuora__InvoiceDate__c, z.Zuora__DueDate__c, z.Zuora__Description__c, z.Zuora__Balance__c
+                        , Zuora__ZuoraId__c, z.Zuora__Balance2__c 
                             , (SELECT Name, Id, Zuora__Invoice__c, Zuora__PaymentMethod__c, Zuora__Amount__c
                                 FROM Zuora__Payments__r) 
                          From Zuora__ZInvoice__c z
                          Where z.Zuora__BillingAccount__c = :idBillingAccount
+                            AND CreatedDate < :dtInvoiceCutoffDate
                          Order by z.Zuora__InvoiceDate__c desc];
              }
              else {
                 // only return invoices that have a payment
-                return [Select z.Zuora__TotalAmount__c, z.Zuora__Status__c, z.Name, z.Zuora__InvoiceDate__c, z.Zuora__DueDate__c, z.Zuora__Description__c, z.Zuora__Balance__c, z.Zuora__Balance2__c 
+                return [Select z.Zuora__TotalAmount__c, z.Zuora__Status__c, z.Name, z.Zuora__InvoiceDate__c, z.Zuora__DueDate__c, z.Zuora__Description__c, z.Zuora__Balance__c
+                        , Zuora__ZuoraId__c, z.Zuora__Balance2__c 
                             , (SELECT Name, Id, Zuora__Invoice__c, Zuora__PaymentMethod__c, Zuora__Amount__c
                                 FROM Zuora__Payments__r) 
                          From Zuora__ZInvoice__c z
                          Where z.Zuora__BillingAccount__c = :idBillingAccount
                             and z.Id in (Select Zuora__Invoice__c From Zuora__PaymentInvoice__c)
+                            AND CreatedDate < :dtInvoiceCutoffDate
                          Order by z.Zuora__InvoiceDate__c desc];
              }
         }
@@ -946,13 +1446,28 @@ public with sharing class IECSubscriptionManager {
      * @return A list of Zuora__Payment__c
      */
     public static List<Zuora__Payment__c> getPaymentsByBillingAccount(Id idBillingAccount) {
+    
+        //set a Limit for the Zuora payment to retrive
+        /*Datetime maxDateTime;
+        try{
+            Date dt = date.valueOf(Utility.getTextSetting('IEC phase 1 & 2 payment limit date'));
+            maxDateTime = dateTime.newInstance(dt.year(),dt.month(),dt.day());
+        }catch(Exception ex){
+            maxDateTime = Datetime.now();
+        }*/
+        
         try {
              List<Zuora__Payment__c> lstPayments = 
                 [SELECT Zuora__Status__c, Zuora__ReferenceId__c, Zuora__PaymentMethod__c, Zuora__GatewayStatus__c, Zuora__GatewayResponse__c
                  , Zuora__GatewayResponseCode__c, Zuora__EffectiveDate__c, Zuora__CreatedDate__c, Zuora__CancelledOn__c, Zuora__AppliedInvoiceAmount__c
-                 , Zuora__AppliedCreditBalanceAmount__c, Zuora__Amount__c, Name, Id, SISInvoiceNumber__c 
+                 , Zuora__AppliedCreditBalanceAmount__c, Zuora__Amount__c, Name, Id, SISInvoiceNumber__c,
+                 (SELECT Zuora__Payment__r.Zuora__PaymentMethod__c, Zuora__Payment__r.Zuora__InvoiceNumber__c
+                    , Zuora__Payment__r.Zuora__CreatedDate__c, Zuora__Payment__r.Zuora__Amount__c, Zuora__Payment__c
+                    , Zuora__Payment__r.Id, Zuora__Payment__r.Name, Zuora__Invoice__c, Zuora__Invoice__r.Name, Name 
+                    FROM Zuora__PaymentInvoices__r
+                    ORDER BY Zuora__Payment__r.Zuora__CreatedDate__c) 
                  FROM Zuora__Payment__c 
-                 WHERE Zuora__BillingAccount__c = :idBillingAccount
+                 WHERE Zuora__BillingAccount__c = :idBillingAccount 
                  ORDER BY Zuora__CreatedDate__c desc];
              return lstPayments;
         }
@@ -1110,7 +1625,7 @@ public with sharing class IECSubscriptionManager {
                     if(ePaymentType == IECConstants.PaymentType.BANK_TRANSFER) 
                         oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_BankTransfer_ZuoraID);
                     else if(ePaymentType == IECConstants.PaymentType.ICH) 
-                        oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_Other_ZuoraID);
+                        oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_ICH_ZuoraID);
                     else if (creditCard != null && creditCard.zId != '') 
                         oSubsRequest.ZAccount.setValue('DefaultPaymentMethodId', creditCard.zId);
     
@@ -1386,7 +1901,23 @@ public with sharing class IECSubscriptionManager {
             List<Zuora__Subscription__c> subscriptions = null;
         
             if (idBillingAccount != null) {
-                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
+                                , Zuora__Account__c, Zuora__Status__c, Zuora__AutoRenew__c, Zuora__Zuora_Id__c,Zuora__ContractAcceptanceDate__c 
+                                , Zuora__TermSettingType__c,Product_Rate_Plan_Information__c,OrderItemId__c,Zuora__RenewalTerm__c,Zuora__InitialTerm__c
+                                , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
+                                , (Select Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
+                                    , Zuora__Type__c, Zuora__BillingPeriod__c,Zuora__Subscription__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
+                                    From Zuora__Subscription_Product_Charges__r)
+                                , Product_Rate_Plan_Information__r.Is_Triable__c
+                                , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Product_Audience__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Renewal_Window__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Application_URL__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Auto_Renewal_Window__c
                                 FROM Zuora__Subscription__c
                                 WHERE Zuora__CustomerAccount__c = :idBillingAccount
                                     AND Zuora__Status__c = 'Active'
@@ -1413,6 +1944,7 @@ public with sharing class IECSubscriptionManager {
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
                                     , Zuora__Account__c, Zuora__Status__c
+                                    , Zuora__TermSettingType__c
                                     , (Select Zuora__ProductName__c, Zuora__RatePlanName__c
                                         From Zuora__Subscription_Product_Charges__r
                                         LIMIT 1)
@@ -1451,7 +1983,9 @@ public with sharing class IECSubscriptionManager {
             if (idBillingAccount != null) {
                 
                 String qString =    'SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, ' +
-                                        'Zuora__Status__c, (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1) ' +
+                                        'Zuora__Status__c, ' +
+                                        'Zuora__TermSettingType__c, ' +
+                                        '(Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1) ' +
                                     'FROM Zuora__Subscription__c ' + 
                                     'WHERE Zuora__CustomerAccount__c = \'' + idBillingAccount + '\'' +
                                     'AND Zuora__Status__c = \'Active\' ' +
@@ -1483,12 +2017,22 @@ public with sharing class IECSubscriptionManager {
             List<Zuora__Subscription__c> subscriptions = null;
         
             if (idBillingAccount != null) {
-                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, 
+                                Zuora__ContractAcceptanceDate__c,Product_Rate_Plan_Information__r.Related_Product_Information__c,Product_Rate_Plan_Information__r.Related_Product_Information__r.Product_Audience__c,
+                                Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c, Product_Rate_Plan_Information__c,OrderItemId__c,  
+                                (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                                , Product_Rate_Plan_Information__r.Is_Triable__c
+                                , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Renewal_Window__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Application_URL__c
+                                , Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Auto_Renewal_Window__c
                                 FROM Zuora__Subscription__c
                                 WHERE (Zuora__CustomerAccount__c = :idBillingAccount)
-                                    AND ((Zuora__Status__c != 'Active')
+                                    AND ((Zuora__Status__c != 'Active' AND Zuora__Status__c != 'Pending Activation')
                                         OR (Zuora__SubscriptionEndDate__c < TODAY))
-                                ORDER by CreatedDate desc];
+                                ORDER by CreatedDate desc]; 
             }
 
             if (subscriptions != null && subscriptions.size() > 0) 
@@ -1520,6 +2064,32 @@ public with sharing class IECSubscriptionManager {
 
         return null;
     }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Query to get the link between Subscription and Invoice 
+    public static Map<String,Invoice_Item__c> getInvoiceItemBySFSubscriptionName(set<String> subscriptionNumbers) {
+        try {
+            Map<String,Invoice_Item__c> invoiceItemBySFSubscriptionName = new Map<String,Invoice_Item__c>();
+            List<Invoice_Item__c> lstInvoiceItem = 
+                [SELECT Invoice__c, Subscription_Number__c 
+                FROM Invoice_Item__c
+                WHERE Subscription_Number__c in :subscriptionNumbers
+                ORDER BY CreatedDate DESC];
+
+            if (!lstInvoiceItem.isEmpty()){
+                for(Invoice_Item__c ii : lstInvoiceItem){
+                    invoiceItemBySFSubscriptionName.put(ii.Subscription_Number__c,ii);
+                }
+            } 
+            return invoiceItemBySFSubscriptionName;
+                
+        }
+        catch(Exception ex) {
+            throw new IECApplicationException('Could not retrieve invoice items. Error: ' + ex.getMessage());
+        }
+
+        return null;
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Query SF for an Invoice based on its Id
@@ -1540,6 +2110,33 @@ public with sharing class IECSubscriptionManager {
         }
         
         return null;
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Query SF for an Invoice based on its Ids
+    public static Map<Id,Zuora__ZInvoice__c> getInvoiceById (set<Id> idInvoices) {
+        try {
+            Map<Id,Zuora__ZInvoice__c> invoiceById = new Map<Id,Zuora__ZInvoice__c>();
+            List<Zuora__ZInvoice__c> invoices =
+                [SELECT Name, Id, Zuora__Zuora_Id__c
+                    , (SELECT Name, Id, Zuora__Invoice__c, Zuora__PaymentMethod__c, Zuora__Amount__c
+                        FROM Zuora__Payments__r) 
+                FROM Zuora__ZInvoice__c
+                WHERE Id in :idInvoices]; 
+
+            if (invoices != null && invoices.size() > 0){
+                for(Zuora__ZInvoice__c invoice : invoices){
+                    invoiceById.put(invoice.Id,invoice);
+                }
+            }
+            return invoiceById;    
+        }
+        catch(Exception ex) {
+            throw new IECApplicationException('Could not retrieve invoices: ' + ex.getMessage());
+        }
+        
+        return null;
+        
     }
 
     
@@ -1571,12 +2168,12 @@ public with sharing class IECSubscriptionManager {
             if (!lstAddresses.isEmpty()) {
                 IECAddress__c oBillingAddress = lstAddresses.get(0);
                 oSubHist.Billing_City__c = oBillingAddress.City__c;
-                oSubHist.Billing_Country__c = oBillingAddress.Country__c;
-                oSubHist.Billing_State__c = oBillingAddress.State__c;
+                oSubHist.Billing_Country__c = oBillingAddress.ISO_Country_Name__c;  //*** changed by Thai (2016-02-26) from "Country__c"
+                oSubHist.Billing_State__c = oBillingAddress.ISO_State_Name__c;      //*** changed by Thai (2016-02-26) from "State__c"
                 oSubHist.Billing_Street__c = oBillingAddress.Street__c;
                 oSubHist.Billing_Zip__c = oBillingAddress.ZipCode__c;
 
-                IECVATUtil.VATConfiguration vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+                IECVATUtil.VATConfiguration vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country_Name__c);  //*** changed by Thai (2016-02-26) from "Country__c"
 
                 // Only provide VAT Number for VAT Countries that require validation for their VAT Number
                 if (vatConfig != null && vatConfig.VATValidationRequired)
@@ -1618,6 +2215,7 @@ public with sharing class IECSubscriptionManager {
             return [SELECT Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,Zuora__AutoRenew__c
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
+                        , Zuora__TermSettingType__c
                         , Zuora__ContractAcceptanceDate__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
@@ -1651,6 +2249,7 @@ public with sharing class IECSubscriptionManager {
             return [SELECT Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,Zuora__AutoRenew__c
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
+                        , Zuora__TermSettingType__c
                         , Zuora__ContractAcceptanceDate__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
@@ -1686,6 +2285,7 @@ public with sharing class IECSubscriptionManager {
                     [SELECT Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,Zuora__AutoRenew__c
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
+                        , Zuora__TermSettingType__c
                         , Zuora__ContractAcceptanceDate__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
@@ -1745,6 +2345,47 @@ public with sharing class IECSubscriptionManager {
         }
         catch(Exception ex) {
             throw new IECApplicationException('Could not get Subscription History for subscription: '+ sName + ' for the error: ' + ex.getMessage());
+        }
+    }
+    
+    /**
+     * Retrieve the latest IEC_Subscription_History_c using subscription name
+     * @param sName The subscription name
+     * @return oSubsResult The SubscribeResult returned by Zuora after the subscribe() call
+     */
+    public static Map<String,IEC_Subscription_History__c> getSubscriptionHistoryByName(set<String> sNames) {
+        try {
+            // Validate name is not empty
+            if (sNames == null) return null;
+            
+            Map<String,IEC_Subscription_History__c> subscriptionHistoryByName = new Map<String,IEC_Subscription_History__c>();
+            List<IEC_Subscription_History__c> lstSubHist =
+                [SELECT Subscription_Number__c, Accepted_Terms_and_Conditions__c, Billing_Account_Number__c, Invoice_Number__c, CreatedDate
+                    , Action__c, Purchased_Product_Category__c, Purchased_Product_Information__c, Purchased_Product_Rate_Plan_Information__c
+                    , Purchased_Product_SKU__c, Rate_Plan_Quantity__c, Related_Contact__c, Related_Account__c, Selected_Payment_Method__c
+                    , Credit_Card__c
+                    , Purchased_Product_Category__r.Name
+                    , Purchased_Product_Category__r.Display_Name__c
+                    , Purchased_Product_Category__r.Renewal_Window__c
+                    , Purchased_Product_Category__r.Auto_Renewal_Window__c
+                    , Purchased_Product_Category__r.Application_URL__c
+                    , Purchased_Product_Information__r.Product_Audience__c
+                    , Purchased_Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
+                FROM IEC_Subscription_History__c
+                WHERE Subscription_Number__c in :sNames
+                order by CreatedDate desc limit 1];
+
+            if(lstSubHist != null && !lstSubHist.isEmpty()){
+                for(IEC_Subscription_History__c sh : lstSubHist){
+                    subscriptionHistoryByName.put(sh.Subscription_Number__c,sh);
+                }
+            }
+            
+            //return (lstSubHist.isEmpty() ? null : lstSubHist.get(0));
+            return subscriptionHistoryByName;
+        }
+        catch(Exception ex) {
+            throw new IECApplicationException('Could not get Subscription History for subscription: '+ JSON.serialize(sNames) + ' for the error: ' + ex.getMessage());
         }
     }
     

@@ -1473,7 +1473,7 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ErrMsg Shipping &amp; Tax - general error</shortDescription>
-        <value>System Error: {0}</value>
+        <value>Error: {0}</value>
     </labels>
     <labels>
         <fullName>ErrMsg_Shipping_Tax_No_Conversion</fullName>
@@ -11799,9 +11799,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_UserExist</shortDescription>
-        <value>This Email is already registered in customer portal. 
-If you are an E-Commerce user, please use your E-Commerce credentials. 
-If you want to reset your password, go back to login screen and use &quot;forgot your password function&quot;.</value>
+        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_acceptGeneralConditions</fullName>

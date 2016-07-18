@@ -9,6 +9,13 @@ public virtual class IECPageController {
 	private IECComponentControllerBase myComponentController;
 	private Map<String, IECComponentControllerBase> componentControllerMap;
 
+	public String language { get{
+        if(language == null){
+            language = UserInfo.getLanguage().split('_')[0];
+        }
+        return language;
+    } set; }
+
 	/**
 	 * Constructor
 	 */

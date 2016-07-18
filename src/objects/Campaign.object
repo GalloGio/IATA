@@ -700,6 +700,67 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <url>/camp/rptcmpgncalldown.jsp?scope=1&amp;scopeid={!Campaign_Name}</url>
     </webLinks>
     <webLinks>
+        <fullName>Export_Campaign_Members</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Export Campaign Members</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>window.open(&apos;/00O7E000000KUim?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Export_Renewal_Notification_Headers</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Export Renewal Notification Headers</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if ({!ISBLANK(Campaign.Renewal_notice_generated__c)}) {
+	alert(&quot;Renewal Notifications have not been generated yet, please generate them and try again.&quot;);
+}
+else {
+	window.open(&apos;/00O7E000000KUit?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Export_Renewal_Notifications_Details</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Export Renewal Notifications Details</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if ({!ISBLANK(Campaign.Renewal_notice_generated__c)}) {
+	alert(&quot;Renewal Notifications have not been generated yet, please generate them and try again.&quot;);
+}
+else {
+	window.open(&apos;/00O7E000000KUis?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Generate_Renewal_Notice</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate Renewal Notice</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)} 
+
+if ({!ISBLANK(Campaign.Generate_Members_Completed_On__c)}) {
+	alert(&quot;Campaign Members have not been generated yet, please generate them and try again.&quot;);
+}
+else {
+	var response = sforce.apex.execute(&quot;Campaign_Svc&quot;,&quot;generateRenewalNotice&quot;,{ 
+	campaignId:&quot;{!Campaign.Id}&quot;,campaignNumber:&quot;{!Campaign.Campaign_AutoNumber__c}&quot; 
+	});
+	alert(response);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>LeadImportTemplate</fullName>
         <availability>online</availability>
         <displayType>link</displayType>

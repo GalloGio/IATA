@@ -24,10 +24,6 @@
                 <field>Airline_code_3digit__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SAP_ID_8digit__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>ICH_Member__c</field>
             </layoutItems>

@@ -50,6 +50,7 @@
     <description>Object containing addresses</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -120,6 +121,19 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Migration_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>IEC - temporary field for data migration - to delete when complete</description>
+        <externalId>true</externalId>
+        <label>IEC_Migration_Key</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>IEC_Zip_Postal_Code_required__c</fullName>
@@ -265,7 +279,34 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>IEC Addresses</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Street__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>City__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ISO_Country__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ISO_State__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ZipCode__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Full_Address__c</lookupPhoneDialogsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>No_Change_On_ISO_Country</fullName>
+        <active>true</active>
+        <description>SAP does not accept change on country because it links to taxation</description>
+        <errorConditionFormula>AND(NOT(ISNEW())
+  , ISCHANGED(ISO_Country__c)
+)</errorConditionFormula>
+        <errorDisplayField>ISO_Country__c</errorDisplayField>
+        <errorMessage>Data entry is not allowed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Change_On_ISO_State</fullName>
+        <active>true</active>
+        <description>SAP does not accept change on state because it links to taxation</description>
+        <errorConditionFormula>AND(NOT(ISNEW())
+  , ISCHANGED(ISO_State__c)
+)</errorConditionFormula>
+        <errorDisplayField>ISO_State__c</errorDisplayField>
+        <errorMessage>Data entry is not allowed</errorMessage>
+    </validationRules>
 </CustomObject>
