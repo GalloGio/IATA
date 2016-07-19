@@ -62,7 +62,7 @@ public with sharing class IFAP_BusinessRules {
             /*isValid = (contactMap.get(theCase.id).Agent_Type__c != null
                         && (contactMap.get(theCase.id).Agent_Type__c == 'IATA Cargo Agent' ||  contactMap.get(theCase.id).Agent_Type__c == 'IATA Passenger Sales Agent' || contactMap.get(theCase.id).Agent_Type__c == 'CASS Associate' ||  contactMap.get(theCase.id).Agent_Type__c == 'Domestic Agent'));*/
             isValid = (theCase.IFAP_Agent_Type__c != null
-                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate'));
+                       && (theCase.IFAP_Agent_Type__c == 'IATA Cargo Agent' ||  theCase.IFAP_Agent_Type__c == 'IATA Passenger Sales Agent' || theCase.IFAP_Agent_Type__c == 'CASS Associate' || theCase.IFAP_Agent_Type__c == 'Import Agent'));
 
 
 
@@ -89,15 +89,15 @@ public with sharing class IFAP_BusinessRules {
 
 
                 isValid = (accountMap.get(theCase.id).IATACode__c.length() >= 7 && accountMap.get(theCase.id).IATACode__c.length() <= 11);
-
-                Pattern valid_characters = Pattern.compile('([0-9]+)'); //only numbers
-                Matcher check_chars = valid_characters.matcher(accountMap.get(theCase.id).IATACode__c);
-
-
+                //INC249798
+                //Pattern valid_characters = Pattern.compile('([0-9]+)'); //only numbers
+                //Matcher check_chars = valid_characters.matcher(accountMap.get(theCase.id).IATACode__c);
 
 
 
-                isValid &= check_chars.matches();
+
+
+                //isValid &= check_chars.matches();
             }
         } catch (Exception ex) {
 
