@@ -384,7 +384,7 @@ public without sharing class ISSP_APProcess {
     
     public Case retrieveCase(String vCaseId){
         List <Case> newCases = [
-            SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
+            SELECT OwnerId, Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
             Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c
             FROM Case 
             WHERE Id=:vCaseId 
@@ -749,6 +749,7 @@ public without sharing class ISSP_APProcess {
             newForm.Submitted_to_IATA__c = TRUE;
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
+            if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
             newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
             upsert newCase;
             
