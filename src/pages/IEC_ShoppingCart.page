@@ -101,7 +101,7 @@
 	        							<table class="data-table table-shopping-cart">
 		        							<tr class="heading">
 						                        <th class="product-name">Product Name</th>
-						                        <th class="product-number">Product Number</th>
+						                        <th class="product-number" style="text-align: left!important;">Product Number</th>
 						                        <th class="delete"></th>
 						                        <th class="quantity" style="text-align: left!important;">Quantity</th>
 						                        <th class="item-price">Item Price</th>
@@ -118,7 +118,7 @@
 								                		<h2 class="item-name">{!item.productName}</h2>
 								                		<div class="product-number">Product Number: {!item.productCode}</div>
 								                	</td>
-								                	<td class="product-number">{!item.productCode}</td>
+								                	<td class="product-number" style="text-align: left!important;">{!item.productCode}</td>
 								                	<td class="delete">
 								                		<a href="javascript:deleteOrderItem('{!item.productCode}')" class="icon delete"><span class="reader-only">Delete</span><i class="fa fa-trash-o"></i></a>
 							                		</td>
