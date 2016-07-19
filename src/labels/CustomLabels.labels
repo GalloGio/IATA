@@ -1473,7 +1473,7 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ErrMsg Shipping &amp; Tax - general error</shortDescription>
-        <value>System Error: {0}</value>
+        <value>Error: {0}</value>
     </labels>
     <labels>
         <fullName>ErrMsg_Shipping_Tax_No_Conversion</fullName>
