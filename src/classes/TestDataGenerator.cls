@@ -1525,7 +1525,8 @@ public with sharing class TestDataGenerator
         }else{
             isoState = new IATA_ISO_State__c(
                 Name = 'QC',
-                ISO_Code__c = 'QC'
+                ISO_Code__c = 'QC',
+                IATA_ISO_Country__c = isoCountry.Id
             );
             insert isoState;
         }
