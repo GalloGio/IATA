@@ -590,20 +590,20 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>OI_Action_Plan_4_5_days_Information</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Operational_Improvements__c.Action_4_Due_Date__c</offsetFromField>
-            <timeLength>-5</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>OI_Action_Plan_4_15_days_Information</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>Operational_Improvements__c.Action_4_Due_Date__c</offsetFromField>
             <timeLength>-15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_4_5_days_Information</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Operational_Improvements__c.Action_4_Due_Date__c</offsetFromField>
+            <timeLength>-5</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

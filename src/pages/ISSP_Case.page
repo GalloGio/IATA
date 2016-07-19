@@ -308,10 +308,10 @@
                                         </apex:pageblocksectionitem>
                                         <apex:pageblocksectionitem >
                                             <!--<apex:outputpanel rendered="{!IF(newCase.status != 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">-->
-                                            <apex:outputpanel rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">
+                                            <!--<apex:outputpanel rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false , true , false )}">
 
                                                 <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink>
-                                            </apex:outputpanel>
+                                            </apex:outputpanel>-->
                                         </apex:pageblocksectionitem>
                                         <!-- Fields for non-DPC user -->
                                         <!-- <apex:inputField styleClass="form-control" value="{!newCase.CaseArea__c}" required="true" rendered="{!AND(NOT(isDPCUser), NOT(isFDSRecordType))}"/> -->
@@ -443,11 +443,12 @@
 
                                     <apex:pageblocksection title="{!$Label.IDCard_CaseDetails}" columns="1" rendered="{!NOT(isDPCUser)}">
 
-                                        <!-- SURVEY BUTTON -->
-                                        <apex:outputpanel styleclass="btn pull-right" rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false && caseType == '' && mySurveyCompletedVariable != true, true , false )}">
+                                        <!--SURVEY BUTTON -->
+                                        <apex:outputpanel styleclass="btn pull-right" rendered="{!IF(newCase.status == 'Closed' && newCase.status != 'Draft' && isPWCCase == false && isDPCuser == false && isToShowSurveyBtn == true && caseType == '' && mySurveyCompletedVariable != true, true , false )}">
                                             <apex:outputlink value="http://survey.clicktools.com/go?iv={!$Label.ISSP_SurveyClosedCase}&q1={!newCase.Id}&q2={!newCase.CaseNumber}&q3={!newCase.ContactId}&q9={!newCase.Contact.FirstName}|{!newCase.Contact.LastName}|{!newCase.Contact.Email}|{!newCase.Contact.Phone}&language={!SurveyLanguage}" target="_blank">{!$Label.ISSP_Survey} </apex:outputlink>
-                                        </apex:outputpanel>
+                                        </apex:outputpanel> 
                                         <!-- END SURVEY BUTTON -->
+                                        
                                         <apex:outputfield value="{!newCase.CaseNumber}" />
                                         <apex:outputfield styleclass="lbl" value="{!newCase.Portal_Case_Status__c}" />
                                         <apex:outputfield value="{!newCase.Subject}" />

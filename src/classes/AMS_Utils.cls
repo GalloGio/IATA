@@ -18,7 +18,7 @@ public without sharing class AMS_Utils {
             if(iataIsoStates == null){
                 iataIsoStates = new Map<String, IATA_ISO_State__c>();
                 for(IATA_ISO_State__c state : [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_State__c]){
-                    iataIsoStates.put(state.Name, state);
+                    iataIsoStates.put(state.Name.toLowerCase(), state);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoStates] iataIsoStates - ' + iataIsoStates);
             }
@@ -33,7 +33,7 @@ public without sharing class AMS_Utils {
             if(iataIsoCountries == null){
                 iataIsoCountries = new Map<String, IATA_ISO_Country__c>();
                 for(IATA_ISO_Country__c country : [SELECT Id, Name FROM IATA_ISO_Country__c]){
-                    iataIsoCountries.put(country.Name, country);
+                    iataIsoCountries.put(country.Name.toLowerCase(), country);
                 }
                 System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - iataIsoCountries] iataIsoCountries - ' + iataIsoCountries);
             }
@@ -52,9 +52,12 @@ public without sharing class AMS_Utils {
     public static final String WITHDRAWAL = 'Application Withdrawal';
 
     public static final String PASSED = 'Passed';
+    public static final String FAILED = 'Failed';
     public static final String AUTH_APPROVAL = 'Authorize Approval';
-
+    public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
     public static final String LOCATION_TYPE = 'Location type';
+    public static final String LOCATION = 'Location';
+    public static final String LOCATION_INSPECTION = 'Location with inspection';
     public static final String OWNERSHIP_IATA = 'Ownership to IATA Agent';
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
 
@@ -62,7 +65,23 @@ public without sharing class AMS_Utils {
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
+    public static final String SA = 'SA';
 
+    public static final String new_HO           = 'NEW.HO.1.0'      ;
+    public static final String new_BR           = 'NEW.BR'          ;
+    public static final String new_BR_ABROAD    = 'NEW.BR.ABROAD'   ;
+    public static final String new_TIDS         = 'NEW.TIDS.1.0'    ;
+    public static final String new_MSO          = 'NEW.MSO.1.0'     ;
+    public static final String new_GSA          = 'NEW.GSA.1.0'     ;
+    public static final String new_GSA_BSP      = 'NEW.GSA.1.0.BSP' ;
+    public static final String new_GSSA         = 'NEW.GSSA.1.0'    ;
+    public static final String new_AHA          = 'NEW.AHA.1.0'     ;
+    public static final String new_AHA_BSP      = 'NEW.AHA.1.0.BSP' ;
+    public static final String new_SA           = 'NEW.SA.1.0'      ;
+
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA};
+
+    public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA};
 
     public static final String ACC_S0_TERMINATED = 'Terminated';
     public static final String ACC_S1_NOTACCREDITED = 'Not accreditated';
@@ -74,11 +93,23 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+    
+    public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
+    public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
+    public static final String SECTOR_CARGO = 'Cargo Agent';
+    public static final String SECTOR_PASSENGER = 'Travel Agent';
 
+    public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
+    public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
+    public static final String TYPECHANGE_LOCATION = 'Location';
+    public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
+    public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
+    public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
+
 
     static {
         refreshCache();
@@ -246,7 +277,21 @@ public without sharing class AMS_Utils {
         return result;
     }
 
+    public static String getStatusDescFromChangeCode(String sChangeCode) {
 
+        String sRes = '';
+
+        if (sChangeCode.equalsIgnoreCase('NEW')) {
+            sRes = 'in progress';
+        } else if (sChangeCode.equalsIgnoreCase('FIN')) {
+            sRes = 'finalized';
+        }
+        else if (sChangeCode.equalsIgnoreCase('DIS')) {
+            sRes = 'disapproved';
+        }
+        
+        return sRes;
+    }
     /**
     //Based on the Change code passed we get the Rec ID
     Indicates if record is A=Added, C=Changed or D=Deleted.
@@ -256,11 +301,29 @@ public without sharing class AMS_Utils {
         String sRes = '';
 
         //Validates the Changes codes for "A=Added" and "D=Deleted", all other Change Codes not mentioned return "C=Changed"
+
+        // «A» Section
         if (sChangeCode.equalsIgnoreCase('NEW')) {
             sRes = 'A';
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
             sRes = 'A';
-        } else if (sChangeCode.equalsIgnoreCase('DIS')) {
+        } else if (sChangeCode.equalsIgnoreCase('CON')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NCA')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NFN')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NWH')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('REC')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NEP')) {
+            sRes = 'A';
+        } else if (sChangeCode.equalsIgnoreCase('NAC')) {
+            sRes = 'A';
+        } 
+        // «D» Section
+        else if (sChangeCode.equalsIgnoreCase('DIS')) {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('NWD')) {
             sRes = 'D';
@@ -268,7 +331,9 @@ public without sharing class AMS_Utils {
             sRes = 'D';
         } else if (sChangeCode.equalsIgnoreCase('CLO')) {
             sRes = 'D';
-        } else {
+        } 
+        // «C» Section
+        else {
             sRes = 'C';
         }
 
@@ -277,23 +342,49 @@ public without sharing class AMS_Utils {
 
     public static Boolean isAddressEmpty(Account acc, String addressType) {
 
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingStreet - ' + acc.BillingStreet);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingCity - ' + acc.BillingCity);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingPostalCode - ' + acc.BillingPostalCode);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.IATA_ISO_Country__c - ' + acc.IATA_ISO_Country__c);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.Iso_State__c - ' + acc.Iso_State__c);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingStreet - ' + acc.ShippingStreet);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingCity - ' + acc.ShippingCity);
-        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingPostalCode - ' + acc.ShippingPostalCode);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingStreet - ' + acc.BillingStreet);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingCity - ' + acc.BillingCity);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.BillingPostalCode - ' + acc.BillingPostalCode);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.IATA_ISO_Country__c - ' + acc.IATA_ISO_Country__c);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.Iso_State__c - ' + acc.Iso_State__c);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingStreet - ' + acc.ShippingStreet);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingCity - ' + acc.ShippingCity);
+        //System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - isAddressEmpty] acc.ShippingPostalCode - ' + acc.ShippingPostalCode);
         
         if(addressType.equalsIgnoreCase('Billing')){
-            return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
+            //R3.1 - removed the state validation
+            //return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null || acc.Iso_State__c == null);
+            return ((acc.BillingStreet == null && acc.BillingCity == null && acc.BillingPostalCode == null) || acc.IATA_ISO_Country__c == null );
         }
         if(addressType.equalsIgnoreCase('Shipping')){
             return ((acc.ShippingStreet == null && acc.ShippingCity == null && acc.ShippingPostalCode == null) );
         }
         
         return false;   
+    }
+
+    //VALID = TRUE; INVALID = FALSE
+    public static Boolean isValidState(String state) {
+        if(String.isEmpty(state)){
+            return false;
+        }
+        state = state.toLowerCase().trim();
+        if(AMS_Utils.iataIsoStates.get(state) == null){
+            return false;
+        }        
+        return true;
+    }
+
+    //VALID = TRUE; INVALID = FALSE
+    public static Boolean isValidCountry(String country) {
+        if(String.isEmpty(country)){
+            return false;
+        }
+        country = country.toLowerCase().trim();
+        if(AMS_Utils.iataIsoCountries.get(country) == null){
+            return false;
+        }        
+        return true;
     }
 
 
@@ -626,43 +717,43 @@ public without sharing class AMS_Utils {
 
         List<Account> accountsToUpdate = new List<Account>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
-		
-		//DT: reindented and added 3 fields for iso shipping/billin
+        
+        //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
-																	,'IATACode__c' => 'IATACode__c'
-																	,'Short_Name__c' => 'Short_Name__c'
-																	,'TradeName__c' => 'Trade_Name__c'
-																	,'License_Number__c' => 'ISSP_AMS_License_No__c'
-																	,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
-																	,'BillingStreet' => 'Branch_Office_Street_name_number__c'
-																	,'Website' => 'Website__c'
-																	,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
-																	,'BillingState' => 'Billing_State__c'
-																	,'BillingCity' => 'Branch_Office_City__c'
-																	,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
-																	,'Iso_State__c' => 'IATA_ISO_State__c'
-																	,'ShippingCountry' => 'Shipping_Country__c'
-																	,'ShippingStreet' => 'Shipping_Street__c'
-																	,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
-																	,'ShippingState' => 'Shipping_State__c'
-																	,'Email__c' => 'Branch_Office_Email__c'
-																	,'Phone' => 'Branch_Office_Phone__c'
-																	,'Fax' => 'Branch_Office_FAX__c'
-																	,'ShippingCity' => 'Shipping_City__c'
-																	,'Operation__c' => 'Operation__c'
-																	,'Abbreviated_name__c' => 'Abbreviated_name__c'
-																	,'Abbreviated_address__c' => 'Abbreviated_Address__c'
-																	,'Remittance_frequency__c' => 'Remittance_frequency__c'
-																	,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
-																	,'VAT_Number_2__c' => 'VAT_Number_2__c'
-																	,'CASS_Number__c' => 'CASS_Number__c'
-																	,'Location_Class__c' => 'Location_Class__c'
-																	,'Location_Type__c' => 'Location_Type__c'
-																	,'Mobile__c' => 'Mobile__c'
-																	,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
-																	,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
-																	,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
-																	,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    //,'BillingState' => 'Billing_State__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    //,'ShippingCountry' => 'Shipping_Country__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    //,'ShippingState' => 'Shipping_State__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
 
         //Need to get Accounts and AMS Online Accreditation related to these oscars
         Set<Id> oscarAccountIds = new Set<Id>();
@@ -677,7 +768,7 @@ public without sharing class AMS_Utils {
                 BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -686,7 +777,7 @@ public without sharing class AMS_Utils {
                 Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                 Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                 Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,Shipping_ISO_Country__c,Shipping_ISO_State__c
+                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name
                 FROM AMS_Pax_Accreditation_Form__c
                 WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -699,37 +790,6 @@ public without sharing class AMS_Utils {
 
             if (acc != null && onlineAcc != null) {
 
-                /*Set<String> fieldsToMigrate;
-                if (oscar.recordTypeID == changeRT) {
-
-                    fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(oscar, configs);
-
-                    if (fieldsToMigrate != null) {
-
-                        for (String key : fieldsMapping.keySet()) {
-                            String value = fieldsMapping.get(key);
-                            if (fieldsToMigrate.contains(value)) {
-                                acc.put(key, onlineAcc.get(value));
-                                System.debug(key + ':' + onlineAcc.get(value));
-                            }
-                        }
-
-                        //fields that require transformation
-                        if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
-                            acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
-                        if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                            acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
-                        if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
-                            acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
-                        if (fieldsToMigrate.contains('Branch_Office_Country__c'))
-                            acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
-                        if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
-                            onlineAccToCreateAccountRole.add(onlineAcc);
-
-                    }
-
-                } else {*/
-
                     for (String key : fieldsMapping.keySet()) {
                         String value = fieldsMapping.get(key);
                         acc.put(key, onlineAcc.get(value));
@@ -740,8 +800,10 @@ public without sharing class AMS_Utils {
                     acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
                     acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
                     acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
+                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                    acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
                     onlineAccToCreateAccountRole.add(onlineAcc);
-                //}
 
                 accountsToUpdate.add(acc);
 
@@ -774,43 +836,43 @@ public without sharing class AMS_Utils {
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
         List<Account> accountsToUpdate = new List<Account>();
-		
-		//DT: Reindented and added 3 fields for addresses
+        
+        //DT: Reindented and added 3 fields for addresses
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
-																	,'IATACode__c' => 'IATACode__c'
-																	,'Short_Name__c' => 'Short_Name__c'
-																	,'TradeName__c' => 'Trade_Name__c'
-																	,'License_Number__c' => 'ISSP_AMS_License_No__c'
-																	,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
-																	,'BillingStreet' => 'Branch_Office_Street_name_number__c'
-																	,'Website' => 'Website__c'
-																	,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
-																	,'BillingState' => 'Billing_State__c'
-																	,'BillingCity' => 'Branch_Office_City__c'
-																	,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
-																	,'Iso_State__c' => 'IATA_ISO_State__c'
-																	,'ShippingCountry' => 'Shipping_Country__c'
-																	,'ShippingStreet' => 'Shipping_Street__c'
-																	,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
-																	,'ShippingState' => 'Shipping_State__c'
-																	,'Email__c' => 'Branch_Office_Email__c'
-																	,'Phone' => 'Branch_Office_Phone__c'
-																	,'Fax' => 'Branch_Office_FAX__c'
-																	,'ShippingCity' => 'Shipping_City__c'
-																	,'Operation__c' => 'Operation__c'
-																	,'Abbreviated_name__c' => 'Abbreviated_name__c'
-																	,'Abbreviated_address__c' => 'Abbreviated_Address__c'
-																	,'Remittance_frequency__c' => 'Remittance_frequency__c'
-																	,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
-																	,'VAT_Number_2__c' => 'VAT_Number_2__c'
-																	,'CASS_Number__c' => 'CASS_Number__c'
-																	,'Location_Class__c' => 'Location_Class__c'
-																	,'Location_Type__c' => 'Location_Type__c'
-																	,'Mobile__c' => 'Mobile__c'
-																	,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
-																	,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
-																	,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
-																	,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    //,'BillingState' => 'Billing_State__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    //,'ShippingCountry' => 'Shipping_Country__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    //,'ShippingState' => 'Shipping_State__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
 
         if (fieldsToMigrate != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
@@ -833,6 +895,12 @@ public without sharing class AMS_Utils {
                     accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
                 if (fieldsToMigrate.contains('Branch_Office_Country__c'))
                     accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
+                if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
+                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+                if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
+                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.Shipping_ISO_State__r.Name);
+                if (fieldsToMigrate.contains('IATA_ISO_State__c'))
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Name);
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
@@ -1126,6 +1194,136 @@ public class AgChangesConfig {
 
 public static boolean isAMSProfile(Id profileId) {
     return AMSPROFILES.contains(profileId);
+}
+
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+public static String getChangeCodeMemoText(String process,String changeCodeId) {
+
+    String memoText = 'New application';
+
+    if (process == AMS_Utils.new_HO || process == AMS_Utils.new_BR_ABROAD)
+
+        memoText = 'New application - Head Office';
+    else if (process == AMS_Utils.new_BR)
+        memoText = 'New application - Branch';
+    else if (process == AMS_Utils.new_TIDS)
+        memoText = 'New application - TIDS';
+    else if (process == AMS_Utils.new_SA)
+        memoText = 'New application - SA';
+    else if (process == AMS_Utils.new_GSA_BSP || process == AMS_Utils.new_GSA)
+        memoText = 'New application - GSA';
+    else if (process == AMS_Utils.new_AHA_BSP || process == AMS_Utils.new_AHA)
+        memoText = 'New application - AHA';
+ 
+    return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+}
+
+
+// Converts a base64 string into a list of integers representing the encoded bytes
+public static List<Integer> B64ToBytes (String sIn) {
+    Map<Integer,Integer> base64 = new Map<Integer,Integer>{65=>0,66=>1,67=>2,68=>3,69=>4,70=>5,71=>6,72=>7,73=>8,74=>9,75=>10,76=>11,77=>12,78=>13,79=>14,80=>15,81=>16,82=>17,83=>18,84=>19,85=>20,86=>21,87=>22,88=>23,89=>24,90=>25
+                                                           ,97=>26,98=>27,99=>28,100=>29,101=>30,102=>31,103=>32,104=>33,105=>34,106=>35,107=>36,108=>37,109=>38,110=>39,111=>40,112=>41,113=>42,114=>43,115=>44,116=>45,117=>46,118=>47,119=>48,120=>49,121=>50,122=>51
+                                                           ,48=>52,49=>53,50=>54,51=>55,52=>56,53=>57,54=>58,55=>59,56=>60,57=>61,43=>62,47=>63};
+
+    List<Integer> lstOut = new List<Integer>();
+    if ( sIn == null || sIn == '' ) return lstOut;
+    
+    sIn += '='.repeat( 4 - Math.mod( sIn.length(), 4) );
+
+    for ( Integer idx=0; idx < sIn.length(); idx += 4 ) {
+        if ( base64.get(sIn.charAt(idx+1)) != null ) lstOut.add( (base64.get(sIn.charAt(idx)) << 2) | (base64.get(sIn.charAt(idx+1)) >>> 4) );
+        if ( base64.get(sIn.charAt(idx+2)) != null ) lstOut.add( ((base64.get(sIn.charAt(idx+1)) & 15)<<4) | (base64.get(sIn.charAt(idx+2)) >>> 2) );
+        if ( base64.get(sIn.charAt(idx+3)) != null ) lstOut.add( ((base64.get(sIn.charAt(idx+2)) & 3)<<6) | base64.get(sIn.charAt(idx+3)) );
+    }
+
+    //System.Debug('B64ToBytes: [' + sIn + '] = ' + lstOut);
+    return lstOut;
+}//B64ToBytes
+public static List<Integer> BlobToBytes (Blob input) {
+    return B64ToBytes( EncodingUtil.base64Encode(input) );
+}//BlobToBytes
+
+// Converts a base64 string into a list of integers indicating at which position the bits are on
+public static List<Integer> cnvBits (String b64Str) {
+    List<Integer> lstOut = new List<Integer>();
+    if ( b64Str == null || b64Str == '' ) return lstOut;
+
+    List<Integer> lstBytes = B64ToBytes(b64Str);
+
+    Integer i, b, v;
+    for ( i = 0; i < lstBytes.size(); i++ ) {
+        v = lstBytes[i];
+        //System.debug ( 'i['+i+'] v['+v+']' );
+        for ( b = 1; b <= 8; b++ ) {
+            //System.debug ( 'i['+i+'] b['+b+'] v['+v+'] = ['+(v & 128)+']' );
+            if ( ( v & 128 ) == 128 ) lstOut.add( (i*8) + b );
+            v <<= 1;
+        }
+    }
+
+    //System.Debug('cnvBits: [' + b64Str + '] = ' + lstOut);
+    return lstOut;
+}//cnvBits
+
+public class TPicklistEntry{
+    public string active {get;set;}
+    public string defaultValue {get;set;}
+    public string label {get;set;}
+    public string value {get;set;}
+    public string validFor {get;set;}
+    public TPicklistEntry(){
+    }
+}//TPicklistEntry
+ 
+
+/**
+Process Dependent Picklists (Apex workaround)
+*/
+public static Map<String,List<String>> GetDependentOptions(String pObjName, String pControllingFieldName, String pDependentFieldName) {
+    Map<String,List<String>> mapResults = new Map<String,List<String>>();
+
+    //verify/get object schema
+    Schema.SObjectType pType = Schema.getGlobalDescribe().get(pObjName);
+    if ( pType == null ) return mapResults;
+    Map<String, Schema.SObjectField> objFieldMap = pType.getDescribe().fields.getMap();
+
+    //verify field names
+    if (!objFieldMap.containsKey(pControllingFieldName) || !objFieldMap.containsKey(pDependentFieldName)) return mapResults;     
+
+    //get the control & dependent values   
+    List<Schema.PicklistEntry> ctrl_ple = objFieldMap.get(pControllingFieldName).getDescribe().getPicklistValues();
+    List<Schema.PicklistEntry> dep_ple = objFieldMap.get(pDependentFieldName).getDescribe().getPicklistValues();
+
+    //clear heap
+    objFieldMap = null;
+
+    //initialize results mapping
+    for(Integer pControllingIndex=0; pControllingIndex<ctrl_ple.size(); pControllingIndex++){           
+        mapResults.put( ctrl_ple[pControllingIndex].getLabel(), new List<String>());
+    }
+    //cater for null and empty
+    mapResults.put('', new List<String>());
+    mapResults.put(null, new List<String>());
+
+    //serialize dep entries        
+    List<TPicklistEntry> objDS_Entries = new List<TPicklistEntry>();
+    objDS_Entries = (List<TPicklistEntry>)JSON.deserialize(JSON.serialize(dep_ple), List<TPicklistEntry>.class);
+
+    List<Integer> validIndexes;
+    for (TPicklistEntry objDepPLE : objDS_Entries){
+
+        validIndexes = cnvBits(objDepPLE.validFor);
+        //System.Debug('cnvBits: [' + objDepPLE.label + '] = ' + validIndexes);
+
+        for (Integer validIndex : validIndexes){                
+            mapResults.get( ctrl_ple[validIndex-1].getLabel() ).add( objDepPLE.label );
+        }
+    }
+
+    //clear heap
+    objDS_Entries = null;
+
+    return mapResults;
 }
 
 }

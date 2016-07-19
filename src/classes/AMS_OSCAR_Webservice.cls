@@ -18,7 +18,7 @@ global class AMS_OSCAR_Webservice {
         
         List<AMS_OSCAR__c> oscar = database.query(theQuery);
         if(oscar != null && oscar.size()>0){    
-            for(Integer i = 0; i < fieldsToUpdateKey.size(); i++){
+            for(Integer i = 0; i < fieldsToUpdateKey.size(); i++) {
                 
                 Object fieldValue = oscar[0].get(fieldsToUpdateKey[i]);
 
@@ -114,8 +114,8 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 String accountType = oscar[0].Account__r.Type;
-                if(accountType == null || !Pattern.matches('IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associates', accountType)){
-                    result = 'The type of account related to this oscar must be one of the following: IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associates';
+                if(accountType == null || !Pattern.matches('IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate', accountType)){
+                    result = 'The type of account related to this oscar must be one of the following: IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate';
                     return 'ERROR: ' + result;
                 }
 
@@ -134,7 +134,7 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 Date currentDate = Date.today();
-                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'New Head Office – ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
+                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Changes – ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
                                          Financial_Review_Type__c = 'New applications', IFAP_Financial_Year__c = String.valueOf(currentDate.year()),
                                          Deadline_Date__c = currentDate+5, ContactId = ifapContact[0].Id, OSCAR__c = oscar[0].Id, Financial_Assessment_requested__c = currentDate);
 
@@ -220,11 +220,7 @@ global class AMS_OSCAR_Webservice {
 
             changeCode.name = 'NEW';
             changeCode.reasonCode = '21';
-
-            if(theOSCAR.Process__c == 'NEW.HO.1.0' || theOSCAR.Process__c == 'NEW.BR.ABROAD')
-                changeCode.memoText = 'New application in progress';
-            else if(theOSCAR.Process__c =='NEW.BR')
-                changeCode.memoText = 'New application - Branch in progress';
+            changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c,changeCode.name);
             changeCode.reasonDesc  = 'NEW APPLICATION';
             changeCode.status  = '2';
 

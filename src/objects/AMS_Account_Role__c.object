@@ -344,6 +344,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Owner_Sequence__c</fullName>
+        <description>Created for Sprint 15: used to merge owners that have long names</description>
+        <externalId>false</externalId>
+        <label>Owner Sequence</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Percentage__c</fullName>
         <description>Percentage of the Account that this Entity owns</description>
         <externalId>false</externalId>

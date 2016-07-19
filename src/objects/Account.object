@@ -2295,6 +2295,40 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>AFRD_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>AFRD Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AFRD_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>AFRD Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending customer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending ICCS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>AIMS_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
@@ -4400,6 +4434,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Education</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Aircraft Manufacturer</fullName>
                 <default>false</default>
                 <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
@@ -4408,6 +4446,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <fullName>Airline Global Card Acquirer</fullName>
                 <default>false</default>
                 <controllingFieldValues>Financial Institution</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Holding Company</fullName>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Airline Point of Sale</fullName>
@@ -4535,6 +4577,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>GSSA Cargo</fullName>
                 <default>false</default>
+                <controllingFieldValues>Cargo Agent</controllingFieldValues>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
@@ -4895,7 +4938,7 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>Count_Accumulated_Irregularities__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(SUM_W_Irregularities__c - SUM_A_Irregularities__c &lt; 0, 0, SUM_W_Irregularities__c - SUM_A_Irregularities__c)</formula>
+        <formula>IF(SUM_A_Irregularities__c - SUM_W_Irregularities__c &lt; 0, 0, SUM_A_Irregularities__c - SUM_W_Irregularities__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Accumulated Irregularities</label>
         <precision>18</precision>
@@ -5571,6 +5614,60 @@ V - Co-operative</inlineHelpText>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
         <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Customer_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Ecommerce Customer Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-member</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accredited Training Schools (ATS)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accredited Training Center (ATC)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agents (Platinum)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agents (Gold)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agents (Generic)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Employees (work related reason)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Employee (commercial purposes)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Training &amp; Development Institute</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>DDS_Last_Notification_Date__c</fullName>
@@ -6792,6 +6889,28 @@ V - Co-operative</inlineHelpText>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Default_Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Payment Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Description</fullName>
@@ -8434,6 +8553,36 @@ J-Joint Vent</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Location_Type_Ordered__c</fullName>
+        <externalId>false</externalId>
+        <formula>case (TEXT(Location_Type__c)
+       , &apos;AO&apos;, 1
+       , &apos;EP&apos;, 1
+       , &apos;HO&apos;, 1
+
+       , &apos;BR&apos;, 2
+       , &apos;CS&apos;, 2
+       , &apos;EB&apos;, 2
+       , &apos;ES&apos;, 2
+       , &apos;SE&apos;, 2
+       , &apos;TD&apos;, 2
+       , &apos;WH&apos;, 2
+
+       , &apos;ST&apos;, 3
+       , &apos;AW&apos;, 3
+       , &apos;SA&apos;, 3
+       , 99
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Type Ordered</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Type__c</fullName>
         <description>Field used to determine the Location Type of travel agents (used in Americas)</description>
         <externalId>false</externalId>
@@ -8800,6 +8949,977 @@ J-Joint Vent</inlineHelpText>
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>Non_Members_Sub_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Non Members Sub Category</label>
+        <picklist>
+            <controllingField>Customer_Type__c</controllingField>
+            <picklistValues>
+                <fullName>-</fullName>
+                <default>true</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aircraft Maintenance/Repair/Overhaul</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aircraft Manufacturer/Seller</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aircraft Parts/Avionics/Systems/Safety Equipment</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airport/Airport Management/Airport Terminal</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Automobile/Engine Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo/Logistics Services/Freight Forwarder</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chemical &amp; Gas Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Compliance/Regulatory/Safety/Testing Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consultant/Law Firm</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Defense/Security/Weapons/Ammunition</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Educational Institution/Library</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Engineering/Architectural/Construction Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Entertainment/Museums</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Flavouring &amp; Fragrances</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Sales Agent (GSA)</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Government Agency/Aviation Authority</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ground Handling/Fueling/Ground Power/Airline Catering/FBO</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Information Technology/Telecommunications/Electronics Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jewelry/Watches</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medical Services/Health/Research/Pharmaceuticals</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mining &amp; Metals Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Packaging/Labeling/Transport Containers</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Printing &amp; Ink Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pyrotechnics/Special Effects Industry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United Nations/Other NGOs</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waste Management/Remediation/Treatment/Environmental Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wholesaler of stamps, coins, &amp; paper money</fullName>
+                <default>false</default>
+                <controllingFieldValues>Accredited Training Center (ATC)</controllingFieldValues>
+                <controllingFieldValues>Accredited Training Schools (ATS)</controllingFieldValues>
+                <controllingFieldValues>IATA Employee (commercial purposes)</controllingFieldValues>
+                <controllingFieldValues>IATA Employees (work related reason)</controllingFieldValues>
+                <controllingFieldValues>IATA Training &amp; Development Institute</controllingFieldValues>
+                <controllingFieldValues>Member Airline</controllingFieldValues>
+                <controllingFieldValues>Non-member</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Generic)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Gold)</controllingFieldValues>
+                <controllingFieldValues>Sales Agents (Platinum)</controllingFieldValues>
+                <controllingFieldValues>Strategic Partners</controllingFieldValues>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>NumberOfEmployees</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -9020,6 +10140,16 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Payment_Term__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Terms</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Phone</fullName>
         <trackHistory>true</trackHistory>
     </fields>
@@ -9107,6 +10237,16 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Price_Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Group</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Primary_address__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -9139,6 +10279,14 @@ J-Joint Vent</inlineHelpText>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Purge_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Purge Flag</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Quality__c</fullName>
@@ -9410,6 +10558,16 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>Sales_Office__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Office</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Search_Code__c</fullName>
         <description>InvoiceWorks</description>
         <externalId>true</externalId>
@@ -9466,6 +10624,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Holding Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA</fullName>
                 <default>false</default>
             </picklistValues>
@@ -9493,6 +10655,14 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Send_Irregularity_Email__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send Irregularity Email</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Sent_to_External_System__c</fullName>
@@ -11217,6 +12387,18 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SoldTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SoldTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Accounts</relationshipLabel>
+        <relationshipName>Accounts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Solicitation_Flag__c</fullName>
@@ -29159,6 +30341,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -32856,6 +34085,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AFRD_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending ICCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -34978,6 +36226,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Zimbabwe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40926,6 +42221,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57714,11 +59056,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Aircraft Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57963,6 +59313,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58489,6 +59886,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61383,11 +62784,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Aircraft Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61484,6 +62893,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Ground Handler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61659,6 +63072,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>V</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62303,6 +63763,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63818,6 +65282,13 @@ CONTAINS(Name,&quot;Ltd&quot;),
 CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorDisplayField>Name</errorDisplayField>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
+        <active>true</active>
+        <description>BR and SA Standard Account Parent Id must be filled.</description>
+        <errorConditionFormula>AND($RecordType.Name=&quot;Standard Account&quot;, OR(ISPICKVAL(Sector__c,&apos;Cargo Agent&apos;),ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)), ISBLANK(ParentId), OR(ISPICKVAL(Location_Type__c,&apos;BR&apos;),ISPICKVAL(Location_Type__c,&apos;SA&apos;)))</errorConditionFormula>
+        <errorMessage>Standard Accounts of type BR and SA must have Parent Id filled for Travel and Cargo Agents.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Billing_Address</fullName>

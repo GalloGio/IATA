@@ -196,5 +196,52 @@ public class AMS_OscarCaseTriggerHelper {
 
     }
 
+    public static Set<Id> caseIrregularityCreated{
+        get{
+            if(caseIrregularityCreated == null) caseIrregularityCreated = new Set<Id>();
+            return caseIrregularityCreated;
+        }
+
+        set;
+    }
+    
+
+    //creates new change codes when a sidra case is closed
+    public static void createSidraIrregularities() {
+        List<Case> IRRCases = new List<Case>();
+        List<Case> IRRWDCases = new List<Case>();
+
+        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+        for(Case c : (List<Case>)Trigger.new){
+            Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
+            if(c.RecordTypeId == sidraRecTypeId){
+                if(c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Withdrawal_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRWDCases.add(c);
+                if(c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
+            }
+        }
+
+        if(IRRCases.isEmpty() && IRRWDCases.isEmpty()) return;
+
+        List<Agency_Applied_Change_code__c> irregularities = new List<Agency_Applied_Change_code__c>();
+
+        for(Case c : IRRCases) irregularities.add(createChangeCodeFromCase(c, 'A'));
+        for(Case c : IRRWDCases) irregularities.add(createChangeCodeFromCase(c, 'W'));
+
+        insert irregularities;
+    }
+
+    private static Agency_Applied_Change_code__c createChangeCodeFromCase(Case c, String operation) {
+        Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c();
+        irr.Account__c = c.AccountId;
+        irr.Change_Code__c = 'IRR';
+        irr.SIDRA_Case__c = c.Id;
+        irr.Operation__c = operation;
+
+        irr.Irregularities_Points__c = 0;
+        if(c.IRR_Type__c == 'Single Irregularity') irr.Irregularities_Points__c = 1;
+        if(c.IRR_Type__c == 'Double Irregularity') irr.Irregularities_Points__c = 2;
+
+        return irr;
+    }
 
 }

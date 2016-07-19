@@ -1878,6 +1878,10 @@
             <recipient>hazbounc@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>pommiers@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>IDFS_SIDRA_cases_templates/Alert_possible_Check_rejection</template>
     </alerts>
@@ -11202,6 +11206,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>Workflow to inform DPC team that CSR case has been created.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>DateTime Stamp Reopened</fullName>
+        <actions>
+            <name>update_Date_Time_Reopened</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Reopen&quot;))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>DueDiligenceAlertForSanctionsOnNewJoiningCase</fullName>

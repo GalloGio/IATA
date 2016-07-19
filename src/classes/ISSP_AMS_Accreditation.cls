@@ -3292,7 +3292,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 CargoAgentAccount = agentaccounts[0];
                 if (accountType == 'IATA Cargo Agent')
                     newForm.Name_under_which_it_was_issued__c = CargoAgentAccount.Name;
-                else if (accountType == 'CASS Associates')
+                else if (accountType == 'CASS Associate')
                     newForm.CASS_Name_under_which_it_was_issued__c = CargoAgentAccount.Name;
             } else {
                 TravelAgentPrevAccount = agentaccounts[0];

@@ -3,7 +3,6 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>ExactTarget for AppExchange with Campaign Support</description>
     <label>ExactTarget</label>
-    <logo>PublicFolder/ExactTargetforAppExchangeLogo.gif</logo>
     <tab>AboutExactTargetforAppExchange</tab>
     <tab>standard-Lead</tab>
     <tab>standard-Contact</tab>

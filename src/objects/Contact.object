@@ -2920,6 +2920,18 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>BillTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BillTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Birthdate</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -8647,6 +8659,18 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ShipTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ShipTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Contacts (ShipTo Location)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Skype_Call_Contact__c</fullName>
@@ -26364,21 +26388,15 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <customTabListAdditionalFields>CONTACT.PHONE1</customTabListAdditionalFields>
         <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Airline_Contact_Type__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
-        <lookupFilterFields>CONTACT.SALUTATION</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
-        <lookupFilterFields>00Nw0000008j6ci</lookupFilterFields>
         <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
         <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
         <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
@@ -26388,26 +26406,12 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE3</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE4</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE5</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE6</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00N20000000pQOX</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00N20000000pQOZ</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwe</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwf</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwg</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaT</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaU</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaV</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaW</lookupPhoneDialogsAdditionalFields>
         <searchFilterFields>CONTACT.FIRST_NAME</searchFilterFields>
         <searchFilterFields>CONTACT.LAST_NAME</searchFilterFields>
         <searchFilterFields>ACCOUNT.NAME</searchFilterFields>
         <searchFilterFields>ACCOUNT.SITE</searchFilterFields>
         <searchFilterFields>CONTACT.ADDRESS2_CITY</searchFilterFields>
         <searchFilterFields>CONTACT.EMAIL</searchFilterFields>
-        <searchFilterFields>Area__c</searchFilterFields>
-        <searchFilterFields>CONTACT.ADDRESS2_COUNTRY</searchFilterFields>
-        <searchFilterFields>InvoiceWorks_Customer__c</searchFilterFields>
-        <searchFilterFields>Central_Billing_Contact__c</searchFilterFields>
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.TITLE</searchResultsAdditionalFields>
@@ -26417,7 +26421,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.EMAIL</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>

@@ -75,24 +75,10 @@ var dyn_functions = {
                
                     if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
                             && records[0].Flag_Data_to_SAPECC__c == 'false') {
-
-                        //if (records.length>0 && records[0].Process_Start_Date__c != null) {
-                        //    alert('Billing Document has already been issued');
-                        //}
-
-                        result3 = sforce.apex.execute("AMS_2_MDM_Webservice", "sendAgencyECC", {agencyId: argList[0], oscarId: argList[2]});
-                        if(result3 != 'OK'){
-                            records[0].STEP8__c = 'Failed';
-                            sResult = sResult + '- Issue Invoice error - ' + result3;
-                            bUpdate = true;
-                        }else{
-                            records[0].Flag_Data_to_SAPECC__c = 'true';
-                            records[0].STEP8__c = 'In Progress';
-                            bUpdate = true;
-                            sResult = sResult + '- Issue Invoice - Success!\n\r';
-                        }
-                    }else{
-                        sResult = sResult + '- Issue Invoice - ByPassed! \n\r';
+                        
+                        records[0].Flag_Data_to_SAPECC__c = 'true';
+                        records[0].STEP8__c = 'In Progress';
+                        
                     }
 
                     if(bUpdate){

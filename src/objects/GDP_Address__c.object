@@ -99,10 +99,40 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_IATA_Custom_ISO_Country_Code__c</fullName>
+        <description>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table. 
+For UP (US Proctectorates), use the State Code, otherwise, it is equals to Address_ISO_Country_Code__c</description>
+        <externalId>false</externalId>
+        <formula>IF( Address_ISO_Country_Code__c = &apos;UP&apos;
+   , Address_State_Code__c
+   , Address_ISO_Country_Code__c
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table, based on Address_ISO_Country_Code__c or Address_State_Code__c</inlineHelpText>
+        <label>Address IATA Custom ISO Country Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_ISO_Country_Code__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
         <label>Address ISO Country Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Line_1_Clean__c</fullName>
+        <description>Remove bar from Address line 1. 
+This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;)</formula>
+        <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
+        <label>Address Line 1 Clean</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -212,8 +242,12 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     </fields>
     <fields>
         <fullName>Address__c</fullName>
+        <description>Formula address, containing the concatenation of Address_1, Address_2, Address_3</description>
         <externalId>false</externalId>
-        <formula>Address_Line_1__c + &apos; &apos; + Address_Line_2__c + &apos; &apos; + Address_Line_3__c</formula>
+        <formula>SUBSTITUTE( Address_Line_1__c 
++ IF( ISBLANK(Address_Line_2__c), &apos;&apos;, &apos; &apos; + Address_Line_2__c)
++ IF( ISBLANK(Address_Line_3__c), &apos;&apos;, &apos; &apos; + Address_Line_3__c)
+, &apos;|&apos;, &apos;/&apos;)</formula>
         <label>Address</label>
         <required>false</required>
         <trackTrending>false</trackTrending>

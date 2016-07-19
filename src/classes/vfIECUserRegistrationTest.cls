@@ -167,10 +167,10 @@ private class vfIECUserRegistrationTest {
         Test.setCurrentPage(pgRef);
 
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        
+                    User existingUser = [SELECT Name, Id, Username,email,contact.email  FROM User  WHERE contactID <> null and contact.email <> null limit 1];
+
         System.runAs(usr) {
         
-            User existingUser = [SELECT Name, Id, Username,email,contact.email  FROM User  WHERE contactID <> null and contact.email <> null limit 1];
 
             
         
@@ -229,7 +229,7 @@ private class vfIECUserRegistrationTest {
         Test.setCurrentPage(pgRef);
 
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        
+        Test.startTest();
         System.runAs(usr) {
         
             //Instantiate Controller
@@ -277,6 +277,7 @@ private class vfIECUserRegistrationTest {
             
             system.assertNotEquals(pgCont.con.Id,null);
         }
+        Test.stopTest();
     }
     
     

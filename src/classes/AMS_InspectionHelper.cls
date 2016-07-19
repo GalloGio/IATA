@@ -1,194 +1,160 @@
 public class AMS_InspectionHelper {
 
+    // this method updates the agencies (account) depending on the inspection attached to them
+    // if the Accreditation_Endorsement_Status_code__c 
     public static void setStatusCodeOnAgency(list<AMS_Inspection__c> inspections){
+        
+        if(inspections.isEmpty())
+            return; // no processing to be done.
+        
+        //getting available airlines...
+        Map<Id,AMS_Accreditation_Organization__c> airlines = new Map<Id,AMS_Accreditation_Organization__c>( [select id, Air_Code__c from AMS_Accreditation_Organization__c where Air_Code__c in ('DOM','IATA','IATAN')]);
+        
+        //let's find out if any of the inspections belong to the agencies
+
+        if(airlines.isEmpty())
+            return; // no processing to be done.
+
         
         List<AMS_Inspection__c> iataInspections = new List<AMS_Inspection__c>();
         Set<String> agencyIds = new Set<String>();
-        
-        Map<Id,AMS_Accreditation_Organization__c> dom = new Map<Id,AMS_Accreditation_Organization__c>( [select id from AMS_Accreditation_Organization__c where Air_Code__c = 'DOM']);
-        Map<Id,AMS_Accreditation_Organization__c> iata = new Map<Id,AMS_Accreditation_Organization__c>( [select id from AMS_Accreditation_Organization__c where Air_Code__c = 'IATA']);
-        Map<Id,AMS_Accreditation_Organization__c> iatan = new Map<Id,AMS_Accreditation_Organization__c>( [select id from AMS_Accreditation_Organization__c where Air_Code__c = 'IATAN']);
-        
-        if(dom.size() > 0){
-            for(AMS_Inspection__c i:inspections){
-                if(dom.get(i.Accreditation_Endorsement_organisation__c)!=null){
-                    iataInspections.add(i);
-                    agencyIds.add(i.Account__c);
-                }
 
-            }
-
-            //Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
-            Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
-
-            for(AMS_Inspection__c i:iataInspections){
-                if(mapAgencies.get(i.Account__c) != null){
-                    mapAgencies.get(i.Account__c).Status__c = AMS_Utils.getIATAReadableStatus(i.Accreditation_Endorsement_Status_code__c);
-                }
-            }
-            if(mapAgencies.values().size() > 0)
-                update mapAgencies.values();
-        }
-
-        if(iata.size() > 0){
-            for(AMS_Inspection__c i:inspections){
-                if(iata.get(i.Accreditation_Endorsement_organisation__c)!=null){
-                    iataInspections.add(i);
-                    agencyIds.add(i.Account__c);
-                }
-
-            }
-
-            //Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
-            Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
+         for(AMS_Inspection__c i:inspections){
             
-            for(AMS_Inspection__c i:iataInspections){
-                if(mapAgencies.get(i.Account__c) != null){
-                    mapAgencies.get(i.Account__c).Status__c = AMS_Utils.getIATAReadableStatus(i.Accreditation_Endorsement_Status_code__c);
-                }
+            if(i.Account__c == null)
+                continue; // should not be necessary if this is coming from the trigger because the validation is being made ... but this is a public static method.
+
+            if(airlines.get(i.Accreditation_Endorsement_organisation__c) !=null ){
+                iataInspections.add(i);
+                agencyIds.add(i.Account__c);
             }
-            if(mapAgencies.values().size() > 0)
-                update mapAgencies.values();
+         
+         }
+
+        if(agencyIds.isEmpty())
+            return; // no processing to be done.
+
+        
+        Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
+
+        Set<Account> accountsToUpdate = new Set<Account>();
+
+        Account accountToProcess;
+
+        for(AMS_Inspection__c i:iataInspections){
+
+            accountToProcess = mapAgencies.get(i.Account__c);
+
+            if(accountToProcess != null){
+                
+                //accordng to the type of airline, the status can be diff, so let's divide and conquer.
+
+                String newStatus = getDecodedStatus(i.Accreditation_Endorsement_Status_code__c,airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c);
+               
+                if(newStatus != null && accountToProcess.Status__c <> newStatus){
+                    
+                    accountToProcess.Status__c = newStatus;
+
+                    accountsToUpdate.add(accountToProcess);
+                }
+            
+            }
         }
-        
-        // reseting...
-        iataInspections = new List<AMS_Inspection__c>();
-        agencyIds = new Set<String>();
-        
-        if(iatan.size() > 0){
-            for(AMS_Inspection__c i:inspections){
-                if(iatan.get(i.Accreditation_Endorsement_organisation__c)!=null){
-                    iataInspections.add(i);
-                    agencyIds.add(i.Account__c);
-                }
 
-            }
-
-            //Map<Id,AMS_Agency__c> mapAgencies = new Map<Id,AMS_Agency__c>([select id, Account__c, Account__r.Status__c, Account__r.Id, Agency_Status__c from AMS_Agency__c where id IN :agencyIds]);
-            Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
-
-            for(AMS_Inspection__c i:iataInspections){
-                if(mapAgencies.get(i.Account__c) != null){
-                    mapAgencies.get(i.Account__c).Status__c = AMS_Utils.getIATANReadableStatus(i.Accreditation_Endorsement_Status_code__c);
-                }
-            }
-            if(mapAgencies.values().size() > 0)
-                update mapAgencies.values();
-        }
-        
+        if(!accountsToUpdate.isEmpty())
+            update new List<Account>(accountsToUpdate);
         
     }
-    
-        /*public static String getIATAReadableStatus(String endorsmentCode){
+
+    private static String getDecodedStatus(String inspectionStatusCode, String airlineCode){
+
+        if(airlineCode.equalsIgnoreCase('IATAN'))
+            return AMS_Utils.getIATANReadableStatus(inspectionStatusCode);
+
+        if(airlineCode.equalsIgnoreCase('DOM') || airlineCode.equalsIgnoreCase('IATA'))
+            return AMS_Utils.getIATAReadableStatus(inspectionStatusCode);
+       
+        return null; // this shouldn't happen ...
+    }
+
+
+
+            
+    public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
+    {
+        Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
         
-                    if(endorsmentCode == '0'){
-                        return 'Terminated';
-                    }
-            
-     
-                    if(endorsmentCode == '1'){
-                       return 'Not accreditated';
-                    }
-                   if(endorsmentCode == '2'){
-                        return 'New application pending';
-                   }
-                    if(endorsmentCode == '3'){
-                        return 'Not in operation';
-                   }
-                    
- 
-                    if(endorsmentCode == '4'){
-                        return 'Listed';
-                    }
-                    
-                    if(endorsmentCode ==  '5'){
-                       return 'Cash basis/no commission';
-                    }
-                    
-                    if(endorsmentCode == '6'){
-                        return 'Cash basis/with commission';
-                    }
-            
-                    if(endorsmentCode == '7'){
-                        return 'Under review';
-                    }
-            
-                    if(endorsmentCode == '8'){
-                        return 'Changes processed';
-                    }
-                    if(endorsmentCode == '9'){
-                        return 'Accredited';
-                    }
-            
-                    return null;
+        List<Account> accountsToProcess = [select id, Expiry_Date__c from Account where id in :statusCodeChanged.keySet()];
+
+        if(accountsToProcess.isEmpty())
+            return;
+
+        for(Account acc : accountsToProcess){
+            acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
+        }
+
+        update accountsToProcess;
+
+    }
+    
+    private static Map<Id, AMS_Inspection__c> findAMSInspectionsWhereStatusCodeChangedToZero(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
+    {
+        Map<Id, AMS_Inspection__c> changedRecords = new Map<Id, AMS_Inspection__c>();
+        for(AMS_Inspection__c current : newValues.values())
+        {
+            if(oldValues != null && oldValues.get(current.Id) != null)
+            {
+                AMS_Inspection__c currentOldRecord = oldValues.get(current.Id);
+                if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c != currentOldRecord.Accreditation_Endorsement_Status_code__c && current.Accreditation_Endorsement_Status_code__c.equals('0'))
+                {
+                    changedRecords.put(current.Account__c, current);
+                }
+            } else if(current.Account__c != null && current.Accreditation_Endorsement_Status_code__c.equals('0'))
+            {
+                // inserting with status code 0, so let's consider this an updatable record
+                changedRecords.put(current.Account__c, current);
+            } else
+            {
+                // This is just an insert of StatusCode != 0, so no need to do any updates
             }
+        }
+        return changedRecords;
+    }
     
-            public static String getIATANReadableStatus(String endorsmentCode){
+        /**  Comparison of two AMS_Inspection__c records. Used to prevent a last synchronization datetime issue caused by DST.
+     *   If any of the fields apart from last sync is not equal to the old value, 
+     *   it means something else than the Last Sync value got updated as well.
+    */
+    public static boolean compareAmsInspectionRecords_IgnoringLastSyncDate(AMS_Inspection__c newRecord, AMS_Inspection__c oldRecord)
+    {
+        Set<String> ignoredFields = new Set<String>{'LastModifiedById', 'LastModifiedDate', 'SystemModstamp', 'Last_synchronization__c'};
+        Map <String, Schema.SObjectField> inspectionFieldsMap = schema.SObjectType.AMS_Inspection__c.fields.getMap();
+        List <Schema.SObjectField> inspectionFields = inspectionFieldsMap.values();
+        List <String> inspectionAPIFieldNames = new List<String>();
+        for (Schema.SObjectField field : inspectionFields)
+        {
+            inspectionAPIFieldNames.add(field.getDescribe().getName());
+        }
         
-                    if(endorsmentCode == '0'){
-                        return 'Terminated';
-                    }
-                    if(endorsmentCode == '2'){
-                        return 'New application pending';
-                    }
-                   
-                    if(endorsmentCode == '4'){
-                        return 'Listed';
-                    }
-                    
-                    if(endorsmentCode ==  '5'){
-                       return 'Listed(BSP)';
-                    }
-                    
-                    if(endorsmentCode == '6'){
-                        return 'Under review';
-                    }
-            
-                    if(endorsmentCode == '7'){
-                        return 'Accredited';
-                    }
-            
-                    return null;
-            }*/
-            
-            
-	public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
-	{
-		Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
-		List<Account> accountsToProcess = new List<Account>();
-		accountsToProcess = [select id, Expiry_Date__c from Account where id in :statusCodeChanged.keySet()];
-		if(accountsToProcess.size() > 0)
-		{
-			for(Account acc : accountsToProcess)
-			{
-				acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
-			}
-			update accountsToProcess;
-		}
-	}
-	
-	private static Map<Id, AMS_Inspection__c> findAMSInspectionsWhereStatusCodeChangedToZero(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
-	{
-		Map<Id, AMS_Inspection__c> changedRecords = new Map<Id, AMS_Inspection__c>();
-		for(AMS_Inspection__c current : newValues.values())
-		{
-			if(oldValues != null && oldValues.get(current.Id) != null)
-			{
-				AMS_Inspection__c currentOldRecord = oldValues.get(current.Id);
-				if(current.Accreditation_Endorsement_Status_code__c != currentOldRecord.Accreditation_Endorsement_Status_code__c && current.Accreditation_Endorsement_Status_code__c.equals('0'))
-				{
-					changedRecords.put(current.Account__c, current);
-				}
-			} else if(current.Accreditation_Endorsement_Status_code__c.equals('0'))
-			{
-				// inserting with status code 0, so let's consider this an updatable record
-				changedRecords.put(current.Account__c, current);
-			} else
-			{
-				// This is just an insert of StatusCode != 0, so no need to do any updates
-			}
-		}
-		return changedRecords;
-	}
+        boolean valueChanged = false;
+
+        for(String field : inspectionAPIFieldNames)
+        {
+            System.debug('*************** inspection field: '+field);
+            if(!ignoredFields.contains(field))
+            {
+                if(newRecord.get(field) != oldRecord.get(field))
+                {
+                    System.debug('*************** field that CHANGED: '+field);
+                    valueChanged = true;
+                }
+            }
+        }
+        if(valueChanged)
+        {
+            return true;
+        }
+        return false;
+    }
     
 }

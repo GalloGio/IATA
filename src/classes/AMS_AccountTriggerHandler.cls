@@ -9,7 +9,14 @@ public class AMS_AccountTriggerHandler {
                 'shippingaddress',
                 'manager_first_name__c',
                 'manager_last_name__c',
-                'tradename__c'
+                'tradename__c',
+                'shippingstreet',
+                'shippingcity',
+                'shippingcountry',
+                'shippingstate',
+                'shippingpostalcode',
+                'VAT_number__c',
+                'VAT_number_2__c'
             };
 
     public static boolean processMinorChangesValidationFlag = true;
@@ -17,12 +24,22 @@ public class AMS_AccountTriggerHandler {
     public static Integer runningVCU = 0;
 
     public static void handleBeforeInsert(List<Account> accs){
+        Set<String> disallowedSources = new Set<String>();
+        disallowedSources.add('AIMS1');
+        disallowedSources.add('AIMS2');
+        disallowedSources.add('AIMS3');
+        disallowedSources.add('WebStar');
+        disallowedSources.add('DataLoader');
         for(Account ag : accs){
-            if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
-                setCassNumberOnHO(ag);
+	if(!disallowedSources.contains(ag.Source_System__c))
+       	{
+		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_PASSENGER){
 
-                if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
-                    ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+			setCassNumberOnHO(ag);
+
+                    if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
+                        ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+                    }
                 }
             }
         }
@@ -51,7 +68,8 @@ public class AMS_AccountTriggerHandler {
     public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
         //resizeNumericString
         for(Account  ag: accs){
-            if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
+            if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+                
                 if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
                     ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
                 }
@@ -69,6 +87,12 @@ public class AMS_AccountTriggerHandler {
        }else{
             System.debug('Not Handling minor changes');
        }
+
+
+       System.debug('Start Check for irregularity thresold');
+       //checkIrregularityThresold(accs, oldMap);
+       System.debug('End Check for irregularity thresold');
+
 
     }
 
@@ -89,8 +113,12 @@ public class AMS_AccountTriggerHandler {
         */
 
         for(Account ag:accs){
-            if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
-                agencies.add(ag);
+            if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent')
+            {
+                if(verifyFieldChanges(ag, oldMap.get(ag.Id)))    
+                {
+                    agencies.add(ag);
+                }
                 //consider agency with iata code with NEW primary Address  OR agencies with Address with new iata code
                 if((ag.IATA_ISO_Country__c!= oldMap.get(ag.Id).IATA_ISO_Country__c && ag.IATACode__c!=null) || (ag.IATA_ISO_Country__c!=null && ag.IATACode__c!=null && oldMap.get(ag.Id).IATACode__c != ag.IATACode__c)){
                     system.debug('[AMS_AgencyTrigger] updated Primary Address for Agency '+ag.Id);
@@ -352,8 +380,92 @@ public class AMS_AccountTriggerHandler {
     }
 
 
+    private static void checkIrregularityThresold(List<Account> accs, Map<Id,Account> oldMap) {
+        List<Account> updatedAcc = new List<Account>();
+        Set<ID> isoCountries = new Set<ID>();
+        for(Account a : accs){
+            Account oldAcc = oldMap.get(a.Id);
 
+            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] a.Count_Accumulated_Irregularities__c - ' + a.Count_Accumulated_Irregularities__c);
+            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] oldAcc.Count_Accumulated_Irregularities__c - ' + oldAcc.Count_Accumulated_Irregularities__c);
 
+            if(a.Count_Accumulated_Irregularities__c > oldAcc.Count_Accumulated_Irregularities__c){
+                updatedAcc.add(a);
+                isoCountries.add(a.IATA_ISO_Country__c);
+            }
+        }
 
+        if(updatedAcc.isEmpty()) return;
 
+        System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] updatedAcc - ' + updatedAcc);
+
+        Map<String, Decimal> thresholds = new Map<String, Decimal>();
+        for(IATA_ISO_Country__c country : [SELECT
+                                                        Id
+                                                        , (SELECT
+                                                                Id
+                                                                , Threshold__c
+                                                                , Location_Class__c
+                                                            FROM AMS_Country_Specific_Attributes__r
+                                                            WHERE RecordType.Name = 'Irregularity Threshold')
+                                                    FROM IATA_ISO_Country__c
+                                                    WHERE Id IN :isoCountries])
+        {
+            for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
+                thresholds.put(country.Id+att.Location_Class__c, att.Threshold__c);
+            }
+        }
+        System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] thresholds - ' + thresholds);
+
+        for(Account a : updatedAcc){
+            Decimal threshold = thresholds.get(a.IATA_ISO_Country__c+a.Location_Class__c);
+
+            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] a.Count_Accumulated_Irregularities__c - ' + a.Count_Accumulated_Irregularities__c);
+            System.debug(loggingLevel.Debug, '____ [trg AMS_AccountTriggerHandler - checkIrregularityThresold] threshold - ' + threshold);
+
+            if(threshold != null && a.Count_Accumulated_Irregularities__c >= threshold) a.Send_Irregularity_Email__c = true;
+        }
+    }
+    
+    
+	
+    /** This method is called to verify if the Account field changes should create a new record into AMS Agency Updates table. The scenarios are:
+     *  1) Status__c changes => Create a new record
+     *  2) Status__c DOES NOT change && another field value changes => Create a new record
+     *  3) All fields remain the same => No records are created
+     *     Scenario no. 3 sounds stupid, but it can happen, because Dataloader pushes data into Accounts, causing the triggers to run, and this class
+     *     previously was always firing AMS_AgencyUpdateHelper.agencyUpdate(agencies). The result was unintentional records to getting created.
+     */
+    public static boolean verifyFieldChanges(Account newRecord, Account oldRecord)
+    {
+        Set<String> ignoredFields = new Set<String>{'LastModifiedById', 'LastModifiedDate', 'SystemModstamp'};
+        Map <String, Schema.SObjectField> AccountFieldsMap = schema.SObjectType.Account.fields.getMap();
+        List <Schema.SObjectField> accountFields = accountFieldsMap.values();
+        List <String> accountAPIFieldNames = new List<String>();
+        for (Schema.SObjectField field : accountFields)
+        {
+            accountAPIFieldNames.add(field.getDescribe().getName());
+        }
+        
+        boolean valueChanged = false;
+
+        for(String field : accountAPIFieldNames)
+        {
+            System.debug('*************** field: '+field);
+            
+            if(!ignoredFields.contains(field))
+            {
+                if(newRecord.get(field) != oldRecord.get(field))
+                {
+                    System.debug('*************** field that CHANGED: '+field);
+                    valueChanged = true;
+                }
+            }
+        }
+        if(valueChanged)
+        {
+            return true;
+        }
+        return false;
+    }
 }
