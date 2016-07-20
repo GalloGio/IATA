@@ -16,6 +16,18 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
     public boolean bDisplayError      {get; set;}
     public String sErrorMessage        {get; set;}
     public boolean bDisableState        {get; set;}
+    public String PageTitle        {
+        public get {
+            if (PageTitle == null) {
+                if (sProductCode =='GAD') PageTitle='Global Agency Directory';
+                else if (sProductCode =='PAL') PageTitle='Passenger Agency List';
+                else if (sProductCode =='CAL') PageTitle='Cargo Agency List';
+                else if (sProductCode =='ASL') PageTitle='MSO & GSA';
+            }
+            return PageTitle;
+        }
+        private set;
+    }
     public boolean bLoadLocationFilter, bLoadTypeFilter;
     
     private Set<String> setSubContinent;
@@ -86,8 +98,20 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
   
   public String sProductCode {
     get {
-      return IECConstants.ProductCategory_SF_GAD;
+            if (sProductCode == null) {
+                Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
+                if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
+        			sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
+                    storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
+                } else if (storedIECProductCode != null) {
+                    sProductCode = (String)storedIECProductCode.getValue();
+                }
+                
+                ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
+            }
+            return sProductCode;
     }
+        private set;
   }
     
     /**
@@ -97,7 +121,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         //Initilize subscription component        
         ctrSubsInfo = new vfIECSubscriptionInfo(); 
         ctrSubsInfo.loggedCustomer = loggedCustomer;
-        ctrSubsInfo.sApplicationName = IECConstants.ProductCategory_SF_GAD;
+        ctrSubsInfo.sApplicationName = sProductCode;
         
         ctrSavedFilters = new vfIECSavedFilters();
         ctrSavedFilters.loggedCustomer = loggedCustomer;   
@@ -125,14 +149,14 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                 validUserProfile();
                 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(); 
+                ctrSubsInfo.validateAccess(new Set<String>{'GAD', 'PAL', 'ASL', 'CAL'}); 
                 
                 // if no access, redirect to the unauthorized page
         if (!ctrSubsInfo.hasPageAccess)
           return Page.IECUnauthorized;
                 
                 //Load Saved filters
-                ctrSavedFilters.loadFilters();
+                ctrSavedFilters.loadFilters(sProductCode);
                 
                 sParamFilterId = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
 
@@ -167,8 +191,9 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
               CleanupFilterBeforeSave();
                 filter.Id = null;
                 filter.Related_Contact__c = loggedCustomer.RelatedContact.Id;
-        filter.System_Generated__c = false;
-        filter.Filter_Type__c = 'Advanced';
+        		filter.System_Generated__c = false;
+        		filter.Filter_Type__c = 'Advanced';
+                filter.Product_Line__c=sProductCode;
         
                 insert filter;
                 
@@ -177,7 +202,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                 if (pgRef == null)
                   delete filter;
                 else
-                  ctrSavedFilters.loadFilters();
+                  ctrSavedFilters.loadFilters(sProductCode);
                 
                 return pgRef;
             }               
@@ -360,12 +385,25 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
             Set<String> setAreaofActivity = new Set<String>();
             for (IEC_Agency_Type__c agencyType :
                 [SELECT Area_of_Activity__c
+                        ,Agency_Program_Code__c
                 FROM IEC_Agency_Type__c]) {
+                if (sProductCode == 'GAD' && agencyType.Agency_Program_Code__c=='C') continue;
+                if (sProductCode == 'PAL' && !(agencyType.Agency_Program_Code__c=='P' 
+                                            || agencyType.Agency_Program_Code__c=='D'
+                                            ))  continue;
+                if (sProductCode == 'CAL' && agencyType.Agency_Program_Code__c!='C') continue;
+                if (sProductCode == 'ASL' && !(agencyType.Agency_Program_Code__c=='M'
+                                            || agencyType.Agency_Program_Code__c=='X'
+                                            || agencyType.Agency_Program_Code__c=='K'
+                                            || agencyType.Agency_Program_Code__c=='G'
+                                            ))  continue;
                 setAreaofActivity.add(agencyType.Area_of_Activity__c);
             }
 
             if (setAreaofActivity.size() > 0) {
-                options.add(new SelectOption('All', 'All'));
+                if (sProductCode == 'GAD') options.add(new SelectOption('All', 'All'));
+                if (sProductCode == 'ASL') options.add(new SelectOption('All', 'All'));
+                
                 // Sort the area of activity list options alphabetically
                 List<String> lstAreaofActivity = new List<String>();
                 lstAreaofActivity.addAll(setAreaofActivity);
@@ -414,7 +452,20 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
                     bDisableState = false;
                     options.add(new SelectOption('All', 'All'));
                     for(IEC_Agency_Type__c agType : lstAgencyProgram)
+                    {
+                        //if (sProductCode == 'CAL') continue;
+                        if (sProductCode == 'PAL' && !(agType.Agency_Program_Code__c=='D' 
+                                            || agType.Agency_Program_Code__c=='P'
+                                            ))  continue;       
+                        if (sProductCode == 'ASL' && filter.Area_of_Activity__c == 'All' 
+                                                 && (agType.Agency_Program_Code__c=='C' 
+                                                     || agType.Agency_Program_Code__c=='D'
+                                                     || agType.Agency_Program_Code__c=='P'
+                                                     || agType.Agency_Program_Code__c=='T'
+                                                     || agType.Agency_Program_Code__c=='V'
+                                                     )) continue;                                           
                         options.add(new SelectOption(agType.Agency_Program_Code__c, agType.Agency_Program__c));
+                    }
                 }
                 else
                     options.add(new SelectOption('None', '--None--'));
@@ -444,7 +495,8 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
             Agency_Name_Search_Condition__c = 'Both'
             , Area_of_Activity__c = 'All'
             , Hierarchy__c = 'All'
-            , Sub_Continent__c = 'All');
+            , Sub_Continent__c = 'All'
+            , Product_Line__c = sProductCode);
     }
     
     /**
@@ -458,9 +510,9 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         throw new IECApplicationException(Label.IEC_Error_One_Filter_Required);
       
       CleanupFilterBeforeSave();
-
       if (filter.Id == null) {
-        List<IEC_Application_Filter__c> sysFilter = IECApplicationsManager.LoadFilterByContact(loggedCustomer.RelatedContact.Id, true);
+        List<IEC_Application_Filter__c> sysFilter = IECApplicationsManager.LoadFilterByContact(sProductCode, loggedCustomer.RelatedContact.Id, true);
+        
 
         if (sysFilter.size() > 0)
         {
@@ -471,11 +523,13 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         filter.System_Generated__c = true;
         filter.Filter_Type__c = 'Advanced';
         filter.IATA_Code__c = '';
+        filter.Product_Line__c = sProductCode;
         upsert filter;
       }
       else {
         //just in case iata code is entered in basic search this will clear it
         filter.IATA_Code__c = '';
+        filter.Product_Line__c = sProductCode;
         update filter;
       }
       return NavigateToResult();
@@ -490,7 +544,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
   private PageReference NavigateToResult() {
     
     //check if records returned is more than 250 or zero
-        Integer searchCount = IECApplicationsManager.getNumberOfResultsByAppFilterID(loggedCustomer, filter.Id, IECConstants.ProductCategory_SF_GAD);
+        Integer searchCount = IECApplicationsManager.getNumberOfResultsByAppFilterID(loggedCustomer, filter.Id, sProductCode);
         
         if (searchCount > vfIECGAD.MAX_RESULTS) {
         bDisplayError = true;
@@ -505,6 +559,7 @@ public without sharing class vfIECGADAdvanced extends IECPageController {
         
     Pagereference pgRef = Page.IECGADResult;
     pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(filter.Id));
+        pgRef.getParameters().put(IECConstants.PARAM_LIMITTOIDS, IECUtil.EncryptEncodeParameter(String.join(IECApplicationsManager.cachedAgencyIds, ','))); // Added by Mathieu Beausoleil
     pgRef.setRedirect(true);
     return pgRef;
   }

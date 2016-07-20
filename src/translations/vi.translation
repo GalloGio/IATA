@@ -6460,7 +6460,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Cuộc khảo sát</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>

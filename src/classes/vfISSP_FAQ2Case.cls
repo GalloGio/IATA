@@ -69,6 +69,8 @@ public without sharing class vfISSP_FAQ2Case
     public  boolean isComplain1 = false;
     public  boolean isCompliment1 = false;
 
+    public Boolean isTopicDefault = false; // INC263231
+
     public list<String> errorMessage {get; set;}
 
     public vfISSP_FAQ2Case() 
@@ -552,9 +554,11 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('Kerensen refreshTopicPickList: After  resetCase(); '+topic+'     Env.SelectOptionDefaultValue===>'+Env.SelectOptionDefaultValue  );
         if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
         {system.debug('Kerensen refreshTopicPickList: IN If '  );
+
             this.lst_selectsubTopics = new list<SelectOption>();
             this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
             articleViewLines = new list<ArticleViewLine>();
+            isTopicDefault = true; //INC263231
         }       
         else
         {system.debug('Kerensen refreshTopicPickList: After  resetCase(); ELSE'  );
@@ -584,8 +588,9 @@ public without sharing class vfISSP_FAQ2Case
                 articleViewLines = buildArticleViewLines(selectDataCategory.topCategoryName, subtopic, Userinfo.getLanguage());
             }
         } 
-        system.debug('SFI2 CALL setSubTopicByPermissions ' );  
-        setSubTopicByPermissions(); 
+        system.debug('SFI2 CALL setSubTopicByPermissions ' + topic + ' isTopicDefault ' + isTopicDefault); 
+        if(isTopicDefault != true) //INC263231
+            setSubTopicByPermissions();  
         system.debug('JK22 isComplain refreshTopicPickList END: ' + isComplain);
     }
         
@@ -1418,41 +1423,47 @@ public without sharing class vfISSP_FAQ2Case
     }
 
     public PageReference GenerateTopicHelpText(){
-        Integer index = Integer.valueOf(this.topic.trim());
-        clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+        if(topic != Env.SelectOptionDefaultValue){ // INC263231 - IF topic was the default don't do the logic
+            Integer index = Integer.valueOf(this.topic.trim());
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
-        List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
-                                                                                      From ISSP_HelpText__c 
-                                                                                      WHERE Topic__c =: selectDataCategory.CategoryName
-                                                                                      AND SubTopic__c =: null]);
-            
-        System.debug('Kerensen1 ISSP_TopicHelptext_Lst ==>'+ISSP_TopicHelptext_Lst);
-        if(ISSP_TopicHelptext_Lst != null && ISSP_TopicHelptext_Lst.size() > 0){
-            ISSP_TopicHelptext = ISSP_TopicHelptext_Lst[0];
-        }else{
-            ISSP_TopicHelptext = new ISSP_HelpText__c();
+            List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
+                                                                                          From ISSP_HelpText__c 
+                                                                                          WHERE Topic__c =: selectDataCategory.CategoryName
+                                                                                          AND SubTopic__c =: null]);
+                
+            System.debug('Kerensen1 ISSP_TopicHelptext_Lst ==>'+ISSP_TopicHelptext_Lst);
+            if(ISSP_TopicHelptext_Lst != null && ISSP_TopicHelptext_Lst.size() > 0){
+                ISSP_TopicHelptext = ISSP_TopicHelptext_Lst[0];
+            }else{
+                ISSP_TopicHelptext = new ISSP_HelpText__c();
+            }
         }
-        return null;
+            return null;
+
     }
 
 
     public PageReference GeneratesubTopicHelpText(){ 
-        System.debug('Kerensen1 START GenerateTopicHelpText ==>'+subtopic);
-        Integer index = Integer.valueOf(this.topic.trim()); 
-        clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
-        List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
-                                                                                      From ISSP_HelpText__c 
-                                                                                      WHERE 
-                                                                                          Topic__c =: selectDataCategory.CategoryName
-                                                                                      And SubTopic__c =:subtopic
-                                                                                      And SubTopic__c != null]);
-            
-        System.debug('Kerensen1 ISSP_SubTopicHelptext_Lst ==>'+ISSP_SubTopicHelptext_Lst);
-        if(ISSP_SubTopicHelptext_Lst != null && ISSP_SubTopicHelptext_Lst.size() > 0){
-            ISSP_SubTopicHelptext = ISSP_SubTopicHelptext_Lst[0];
-        }else{
-            ISSP_SubTopicHelptext = new ISSP_HelpText__c();
+        System.debug('Kerensen1 START GenerateTopicHelpText ==>'+subtopic);
+        if(subtopic != Env.SelectOptionDefaultValue){  // INC263231 - IF topic was the default don't do the logic
+            Integer index = Integer.valueOf(this.topic.trim()); 
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+
+            List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
+                                                                                          From ISSP_HelpText__c 
+                                                                                          WHERE 
+                                                                                              Topic__c =: selectDataCategory.CategoryName
+                                                                                          And SubTopic__c =:subtopic
+                                                                                          And SubTopic__c != null]);
+                
+            System.debug('Kerensen1 ISSP_SubTopicHelptext_Lst ==>'+ISSP_SubTopicHelptext_Lst);
+            if(ISSP_SubTopicHelptext_Lst != null && ISSP_SubTopicHelptext_Lst.size() > 0){
+                ISSP_SubTopicHelptext = ISSP_SubTopicHelptext_Lst[0];
+            }else{
+                ISSP_SubTopicHelptext = new ISSP_HelpText__c();
+            }
         }
         return null;
     }

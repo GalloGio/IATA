@@ -47,17 +47,21 @@
 						</td>
 						<td>
 							<p class="data">
-                <apex:outputText value="{0,date, dd MMMM yyyy}" >
+								<apex:outputText value="{0,date, dd MMMM yyyy}" rendered="{!infoController.isNotEvergreen}">
 									<apex:param value="{!infoController.dtAccessEndDate}" />
+								</apex:outputText>
+								<apex:outputText value="Evergreen" rendered="{!!infoController.isNotEvergreen}">
 								</apex:outputText>
 							</p>
 						</td>
 					</tr>
 					<tr>
+        				<apex:variable id="subscriptionDaysLeftRow" var="showRenewalDays" value="" rendered="{!infoController.isNotEvergreen}">
 						<td width="175px"></td>
 						<td>
 							<p class="alert">{!infoController.iDaysLeft}&nbsp;Days Left</p>
 						</td>
+                        </apex:variable>
 					</tr>
 				</tbody>
 			</table>
@@ -89,6 +93,7 @@
 			</div>
 		</apex:outputPanel>
 		
+        <apex:variable id="subscriptionRenewalRow" var="showRenewalOptions" value="" rendered="{!infoController.isNotEvergreen}">
             <div class="infoHolder">
                 <table>
                     <tbody>
@@ -109,6 +114,7 @@
                     </tbody>
                 </table>
             </div>
+        </apex:variable>
         
 		<div class="infoHolder">
 			<table>

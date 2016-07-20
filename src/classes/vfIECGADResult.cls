@@ -14,6 +14,7 @@ public without sharing class vfIECGADResult extends IECPageController {
     public vfIECSavedFilters 		ctrSavedFilters     {get; set;}
 
 	public String sParamIECApplicationFiltersID {get; set;}
+    public String sParamIECApplicationLimitToIDs {get; set;} // Added by Mathieu Beausoleil
 	public String sIECApplicationFiltersID {get; set;}
 	public IEC_Application_Filter__c oApplicationFilters { get; private set; }
 	public List<GDP_Products_Account_View__c> lstAgencies { get; private set; }
@@ -25,6 +26,22 @@ public without sharing class vfIECGADResult extends IECPageController {
 	public String sSelectedAgencyId { get; set; }
 	public Map<String, String> mapListIndexAndAgencyID { get; private set; }
 	public Map<String, String> mapAreaOfActivityByCode {get; private set;}
+    //Ashok
+    public List<GSA_Territory__c> territoryListToDisplay { get;set;}
+    public boolean displayAgentsTab{get;private set;}    
+    public String territoryDisplayMessage {get;set;}
+    public String PageTitle        {
+        public get {
+            if (PageTitle == null) {
+                if (sProductCode =='GAD') PageTitle='Global Agency Directory';
+                else if (sProductCode =='PAL') PageTitle='Passenger Agency List';
+                else if (sProductCode =='CAL') PageTitle='Cargo Agency List';
+                else if (sProductCode =='ASL') PageTitle='Airline Sales Agency List';
+            }
+            return PageTitle;
+        }
+        private set;
+    }
 
 	public Boolean bPreviousPageIsEnabled {
 		get {
@@ -90,9 +107,21 @@ public without sharing class vfIECGADResult extends IECPageController {
 	
 	public String sProductCode {
 		get {
-			return IECConstants.ProductCategory_SF_GAD;
+            if (sProductCode == null) {
+                Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
+                if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
+        			sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
+                    storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
+                } else if (storedIECProductCode != null) {
+                    sProductCode = (String)storedIECProductCode.getValue();
+                }
+                
+                ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
 		}
+            return sProductCode;
 	}
+        private set;
+    }
 
 	/**
 	 * Constructor
@@ -105,7 +134,7 @@ public without sharing class vfIECGADResult extends IECPageController {
         //Initilize subscription component        
         ctrSubsInfo = new vfIECSubscriptionInfo(); 
         ctrSubsInfo.loggedCustomer = loggedCustomer;
-        ctrSubsInfo.sApplicationName = IECConstants.ProductCategory_SF_GAD;
+        ctrSubsInfo.sApplicationName = sProductCode;
         
         ctrSavedFilters = new vfIECSavedFilters();
         ctrSavedFilters.loggedCustomer = loggedCustomer;   
@@ -116,24 +145,40 @@ public without sharing class vfIECGADResult extends IECPageController {
    		iCurrentAgencyIndex = -1;
    		
    		iNBR_RECORDS_PER_PAGE = (iNbrResultsPerPage != null && iNbrResultsPerPage > 0 ? iNbrResultsPerPage : DEFAULT_NBR_OF_RECORDS_PER_PAGE);
+    
+        // Added by Ashok
+        displayAgentsTab = false;
+        
    	}
    	
-   	private void fillAreOfActivityMap() {
-   		
-   		mapAreaOfActivityByCode = new Map<String, String>();
-   		mapAreaOfActivityByCode.put('D', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('E', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('K', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('N', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('O', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('F', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('P', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('T', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('S', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('V', 'Travel Agency');
-   		mapAreaOfActivityByCode.put('G', 'General Sales Agent');
-   		mapAreaOfActivityByCode.put('M', 'Airline Sales Office');
-   	}
+    private void fillAreOfActivityMap() {
+        mapAreaOfActivityByCode = new Map<String, String>();
+        if (sProductCode == 'ASL') {
+            mapAreaOfActivityByCode.put('M', 'Member Sales Offices');
+            mapAreaOfActivityByCode.put('G', 'General Sales Agents');
+            mapAreaOfActivityByCode.put('X', 'Handling Agents and Shipping Lines');
+            mapAreaOfActivityByCode.put('K', 'Combined Airlines Ticket Office CATO');
+        } else if (sProductCode == 'CAL') {
+            mapAreaOfActivityByCode.put('C', 'Cargo');
+        } else if (sProductCode == 'PAL') {
+            mapAreaOfActivityByCode.put('P', 'Passenger');
+            mapAreaOfActivityByCode.put('D', 'Domestic');
+        } else {
+            mapAreaOfActivityByCode.put('D', 'Travel Agency');
+            mapAreaOfActivityByCode.put('E', 'Travel Agency');
+            mapAreaOfActivityByCode.put('K', 'Travel Agency');
+            mapAreaOfActivityByCode.put('N', 'Travel Agency');
+            mapAreaOfActivityByCode.put('O', 'Travel Agency');
+            mapAreaOfActivityByCode.put('F', 'Travel Agency');
+            mapAreaOfActivityByCode.put('P', 'Travel Agency');
+            mapAreaOfActivityByCode.put('T', 'Travel Agency');
+            mapAreaOfActivityByCode.put('S', 'Travel Agency');
+            mapAreaOfActivityByCode.put('V', 'Travel Agency');
+            mapAreaOfActivityByCode.put('G', 'General Sales Agent');
+            mapAreaOfActivityByCode.put('M', 'Airline Sales Office');
+            mapAreaOfActivityByCode.put('X', 'Airline Sales Office');
+        }
+    }
    	
    	/**
    	 * Triggered once the page is loaded
@@ -156,17 +201,18 @@ public without sharing class vfIECGADResult extends IECPageController {
 				validUserProfile();
 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(); 
+                ctrSubsInfo.validateAccess(new Set<String>{'GAD', 'CAL', 'PAL', 'ASL'}); 
                 
                 // if no access, redirect to the unauthorized page
 				if (!ctrSubsInfo.hasPageAccess)
 					return Page.IECUnauthorized;
 
                 //Load Saved filters
-                ctrSavedFilters.loadFilters();
+                ctrSavedFilters.loadFilters(sProductCode);
 
 
 				sParamIECApplicationFiltersID = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
+                sParamIECApplicationLimitToIDs = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_LIMITTOIDS); // Added by Mathieu Beausoleil
 
 				// Validate that there is parameter passed to the page
 				if (String.isBlank(sParamIECApplicationFiltersID)) {
@@ -185,7 +231,12 @@ public without sharing class vfIECGADResult extends IECPageController {
 					}
 
 					// run the search
-					lstAgencies = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oApplicationFilters, IECConstants.ProductCategory_SF_GAD, loggedCustomer);
+                    lstAgencies = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oApplicationFilters, sProductCode, loggedCustomer); 
+                    // if list of ids available, use it
+                    if (!String.isBlank(sParamIECApplicationLimitToIDs)) {
+                    	sParamIECApplicationLimitToIDs = IECUtil.DecodeDecryptParameter(sParamIECApplicationLimitToIDs);
+                    	IECApplicationsManager.cachedAgencyIds = sParamIECApplicationLimitToIDs.split(',');
+                    }
 
 				
 					//Update usage counter (UI Only)
@@ -206,9 +257,15 @@ public without sharing class vfIECGADResult extends IECPageController {
 					}
 					
 					// if 1 result, show agency detail page
-					if (lstAgencies != null && lstAgencies.size() == 1) {
+                    if (lstAgencies != null && lstAgencies.size() == 1) 
+                    {
 						sAgencyIDToViewDetail = lstAgencies.get(0).Id;
 						iCurrentAgencyIndex = 0;
+                        
+                        // Added by Ashok
+                        fetchGSATerritoryList(lstAgencies.get(0).Id);
+                        
+                                                
 					}
 					// 0 or more than 1 agency found, show list
 					else {
@@ -238,6 +295,9 @@ public without sharing class vfIECGADResult extends IECPageController {
 		try {
 			sAgencyIDToViewDetail = sSelectedAgencyId;
 			
+            // Added by Ashok
+            fetchGSATerritoryList(sSelectedAgencyId); 
+           
 			// get the list index associated to this agency
 			iCurrentAgencyIndex = Integer.valueOf(mapListIndexAndAgencyID.get(sAgencyIDToViewDetail));
 		}
@@ -255,6 +315,9 @@ public without sharing class vfIECGADResult extends IECPageController {
 				throw new IECApplicationException('Invalid record index');
 			
 			iCurrentAgencyIndex--;
+            
+            // Added by Ashok
+             fetchGSATerritoryList(lstAgencies.get(iCurrentAgencyIndex).Id);            
 			sAgencyIDToViewDetail = lstAgencies.get(iCurrentAgencyIndex).Id;
 		}
 		catch (Exception ex) {
@@ -271,6 +334,8 @@ public without sharing class vfIECGADResult extends IECPageController {
 				throw new IECApplicationException('Invalid record index');
 			
 			iCurrentAgencyIndex++;
+            // Added by Ashok
+            fetchGSATerritoryList(lstAgencies.get(iCurrentAgencyIndex).Id);
 			sAgencyIDToViewDetail = lstAgencies.get(iCurrentAgencyIndex).Id;
 		}
 		catch (Exception ex) {
@@ -339,4 +404,43 @@ public without sharing class vfIECGADResult extends IECPageController {
 			return null;
 		}
 	}
+    
+    // Added By Ashok , Method to get GSA Territories
+    /************************************************************************
+    @ Last modified by: Bhargavi Rayavarapu
+    @ Last modified date : 2016 - 03 - 23
+    @ Description : For the Product Account selected/searched for, get all the teritories where the Accrediation is General Sales Agent
+    *****************************************************************************/
+    public void fetchGSATerritoryList(id GDPProductAccountId)
+    {
+        territoryListToDisplay = new List<GSA_Territory__c>();
+        territoryDisplayMessage = '';
+        system.debug('ProductAccountID**'+GDPProductAccountId);
+        
+        if(GDPProductAccountId !=null)
+        {
+            	territoryListToDisplay = [select id, Name, Related_GDP_Products_Account_View__r.name, Related_Accreditation__r.name,
+            	         Airline_Code__c,Airline_Name__c,Territory_ISO_Country__c,Appointment_Date__c,Territory_Description__c
+                         from GSA_Territory__c 
+                         where Related_Accreditation__r.Related_GDP_Products_Account_View__c = : GDPProductAccountId 
+                         and Related_Accreditation__r.Related_GDP_Products_Account_View__r.Accreditation_Class__c = 'General Sales Agent'];              
+          
+               	if([select Accreditation_Class__c 
+               	    from  GDP_Products_Account_View__c 
+               	    where id =: GDPProductAccountId].Accreditation_Class__c == 'General Sales Agent')
+               	{
+                  	displayAgentsTab  = true;
+               	}
+               	else
+               	{
+                 	displayAgentsTab   = false;
+               	} 
+               	// Added by Bhargavi: If no territories are retured for the specified search criteria, then display the message instead of the table
+        		if(!(territoryListToDisplay.size()>0))   
+               	{
+               		territoryListToDisplay = null;
+               		territoryDisplayMessage = 'There are no relevant territories found for this Agency.';
+               	}        
+        }
+    }
 }

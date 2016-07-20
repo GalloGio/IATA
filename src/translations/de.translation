@@ -6462,7 +6462,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Umfrage</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
