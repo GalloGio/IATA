@@ -34,9 +34,17 @@
     .medium-4 {
         width: 33.333333%;
     }
+    
+    .medium-5 {
+        width: 42%;
+    }
 
     .medium-6 {
         width: 50%;
+    }
+
+    .medium-7 {
+        width: 58%;
     }
 
     .medium-8 {
@@ -56,6 +64,14 @@
 @media #{$screen-desktop} {
     .large-4 {
         width: 33.333333%;
+    }
+
+    .large-5 {
+        width: 42%;
+    }
+
+    .large-7 {
+        width: 58%;
     }
 
     .large-8 {

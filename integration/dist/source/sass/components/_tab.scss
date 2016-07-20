@@ -56,3 +56,10 @@
         display: block;
     }
 }
+
+.page-title .tab-pane {
+
+    &.is-open {
+        display: inline-block;
+    }
+}

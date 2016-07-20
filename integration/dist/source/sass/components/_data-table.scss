@@ -169,6 +169,30 @@
 
 }
 
+.table-service-details {
+    margin: 20px 0;
+
+    th,
+    td {
+        text-align: left;
+        padding: 10px 0;
+        font-weight: bold;
+        vertical-align: top;
+        font-size: 1.4rem;
+    }
+
+    th {
+        text-align: right;
+        padding-right: 20px;
+        color: #666;
+    }
+    
+    a {
+        font-weight: normal;
+    }
+   
+}
+
 .zibra {
     tr:nth-child(odd) th,
     tr:nth-child(odd) td {
@@ -350,4 +374,8 @@
 .data-table-container {
     border: 1px solid #B4E1E5;
     padding-top: 10px;
+}
+
+.start-end-date {
+    font-size: 1.4rem;
 }

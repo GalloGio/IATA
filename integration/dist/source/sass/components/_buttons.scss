@@ -39,6 +39,16 @@
         width: 20px;
         color: #777;
     }
+
+    &.block {
+        display: block;
+    }
+
+    &.dark {
+        background-color: #2a3940;
+        border-color: #2a3940;
+    }
+
 }
 
 .text-link {
