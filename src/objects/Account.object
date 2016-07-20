@@ -7083,6 +7083,30 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Level__c</fullName>
+        <description>Client level clasification within E&amp;F, to set standard, premium, VIP</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Level</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_Liquidator_Administrator__c</fullName>
         <description>E&amp;F CRM Project 
 (EF-864) Add airline status details. 
@@ -23320,6 +23344,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -25646,6 +25685,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28046,6 +28100,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -30339,6 +30408,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sanctioned%2E Please contact compliance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33528,6 +33612,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -36350,6 +36449,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sanctioned%2E Please contact compliance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40264,6 +40378,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -42452,6 +42581,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46529,6 +46673,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sanctioned%2E Please contact compliance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50631,6 +50790,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -52868,6 +53042,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -55030,6 +55219,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57303,6 +57507,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59902,6 +60121,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63710,6 +63944,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Level__c</picklist>
+            <values>
+                <fullName>Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
