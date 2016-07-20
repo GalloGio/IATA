@@ -24,7 +24,6 @@ global class ISSP_AmazonS3_Ctrl {
     public list<AmazonFile> listFile {get; set;}
     public Map<String, list<AmazonFile>> fileMap {get; set;}
     public Map<String, list<AmazonFileAMS>> amazonFileMap {get; set;}
-    public Map<String, boolean> reviewStatusMap {get; set;}
     private Map<String,String> mapUniqueFileList;
     
     public String currentFileName {get; set;}
@@ -70,7 +69,6 @@ global class ISSP_AmazonS3_Ctrl {
         
         //this.refreshListDoc();
         this.refreshAmazonFileMap(); 
-        this.refreshReviewStatusMap();
      }
      
      public ISSP_AmazonS3_Ctrl(ApexPages.StandardController stdController) {
@@ -98,7 +96,6 @@ global class ISSP_AmazonS3_Ctrl {
          
         //this.refreshListDoc();
         this.refreshAmazonFileMap();
-        this.refreshReviewStatusMap();
      }
 
     
@@ -127,7 +124,6 @@ global class ISSP_AmazonS3_Ctrl {
 
         //this.refreshListDoc();
         this.refreshAmazonFileMap();
-        this.refreshReviewStatusMap();
     }
 
     public ISSP_AmazonS3_Ctrl(ISSP_AddAttachment amsCtrl) {
@@ -154,9 +150,9 @@ global class ISSP_AmazonS3_Ctrl {
         calculePolicy('');
         //this.refreshListDoc();
         this.refreshAmazonFileMap();
-        this.refreshReviewStatusMap();
     }
 
+    
     public String getStorageFolder() {
         Id idVal;
         String FOLDER = FOLDER_STEM;
@@ -262,13 +258,13 @@ global class ISSP_AmazonS3_Ctrl {
         
         return null;
     }
-**/
-    
+**/    
+
     private map<String,AmazonFile__c> getMapAmazonFile() {
         System.DEBUG('Get File Map Case Id: ' + this.cse.Id);
         
         list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
+            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c
             From AmazonFile__c
             Where Case__c = :this.cse.Id AND isPublic__c = true
         ];
@@ -285,9 +281,9 @@ global class ISSP_AmazonS3_Ctrl {
     public map<String, List<AmazonFileAMS>> refreshAmazonFileMap() {
        
         list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
+            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c
             From AmazonFile__c
-            Where Case__c = :this.cse.Id AND isPublic__c = true AND Review_Status__c != 'Rejected Closed'
+            Where Case__c = :this.cse.Id AND isPublic__c = true
         ];
         
         SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
@@ -311,27 +307,6 @@ global class ISSP_AmazonS3_Ctrl {
         SYSTEM.DEBUG('REQ IDENTIFIER SIZE' + reqIdentifierList.size());
         return amazonFileMap;
     }
-
-    public map<String, Boolean> refreshReviewStatusMap() {
-       
-        reviewStatusMap = new Map<String, Boolean>();
-        
-        for ( String identifier: amazonFileMap.keySet()) {
-            Boolean isLocked = true;
-            for(AmazonFileAMS amazonFile:amazonFileMap.get(identifier)){
-                if(amazonFile.getStatus()=='Rejected'){
-                    isLocked = false;
-                    break;
-                }
-            }
-            reviewStatusMap.put(identifier,isLocked);
-        }
-
-        reviewStatusMap.put('PORTAL_CASE_DIRECT',false);
-        
-        SYSTEM.DEBUG('Review Status Map Size' + reviewStatusMap.size());
-        return reviewStatusMap;
-    }
     
     
     public void deleteThisFile(){
@@ -349,7 +324,6 @@ global class ISSP_AmazonS3_Ctrl {
     public void refreshAfterDelete(){
         AmazonRest.deleteFile(currentFileName,CREDENTIALS );
         refreshAmazonFileMap();
-        refreshReviewStatusMap();
         //refreshListDoc();
     }
     
@@ -411,7 +385,7 @@ global class ISSP_AmazonS3_Ctrl {
         
         //Get File identifiers for AmzonFile records assoc. with case
         list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
+            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c
             From AmazonFile__c 
             Where Case__c = :cse.Id
         ];
@@ -445,9 +419,6 @@ global class ISSP_AmazonS3_Ctrl {
                 Name = uploadedFileName,
                 Full_Name_Unique__c = FOLDER + uploadedFileName,
                 File_Identifier__c = uploadedFileIdentifier,
-                File_Identifier_picklist__c = uploadedFileIdentifier,
-                Review_Status__c = 'Pending',
-                RecordTypeId = Schema.SObjectType.AmazonFile__c.RecordTypeInfosByName.get('AMS File').RecordTypeId,
                 Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
                 isPublic__c = true,
                 Case__c = Id
@@ -461,7 +432,6 @@ global class ISSP_AmazonS3_Ctrl {
             }
             
             refreshAmazonFileMap();
-            refreshReviewStatusMap();
         } catch ( Exception e) {
             System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
         }
@@ -483,10 +453,6 @@ global class ISSP_AmazonS3_Ctrl {
 		public String getFullName() {
 			return this.amazonFile.Full_Name_Unique__c;
 		}
-
-        public String getStatus() {
-            return this.amazonFile.Review_Status__c;
-        }
     }
     
 }

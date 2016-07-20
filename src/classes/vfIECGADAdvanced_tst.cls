@@ -103,8 +103,6 @@ private class vfIECGADAdvanced_tst {
 		
 		System.debug('Unit Test: Finish: Init');
 	}
-    
-    class Test_Exception extends Exception {}
 	
     static testMethod void TestGADAdvanced() {
     	System.debug('Unit Test: Start: TestGADAdvanced');
@@ -116,8 +114,6 @@ private class vfIECGADAdvanced_tst {
     	User usr = IECTestUtil.createSampleGuestUserAndLogin();
     	System.runAs(usr) {
 	    	Init();
-            
-            Test.startTest();
 	    	
 	    	//Instantiate Base Controller
 	    	IECPageController baseCont = new IECPageController();
@@ -149,16 +145,9 @@ private class vfIECGADAdvanced_tst {
 	        pgCont.sHierarchy = new String[] {'a', 'b'};
 	        pgCont.sAgencyProgram = new String[] {'a', 'b'};
 
-	        //Test 002: Save filter while 5 already exists 
-	        //
-	        
-            System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
+	        //Test 002: Save filter while 5 already exists
 	        pgCont.filter = IECTestUtil.CreateSampleApplicationFilter(baseCont.loggedCustomer.RelatedContact);
-            System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
 	        pgCont.saveFilter();
-            System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
-            
-            /*
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Maximum5Filters));
 
 	        //Test 004: Save filter while 4 already exists
@@ -229,7 +218,6 @@ private class vfIECGADAdvanced_tst {
 	        // Misc Coverage
 	        pgCont.OnChangeCountry();
 	        pgCont.onClickOKError();
-*/
     	}
         System.debug('Unit Test: Finish: TestGADAdvanced');
     }

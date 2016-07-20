@@ -117,42 +117,50 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>Eastern Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Gulf Area</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Levant</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>North Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Saudi &amp; Yemen</fullName>
+                <fullName>SA-YE</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>South Western Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Southern Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Central West Africa</fullName>
                 <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Arg-Par-Uru</fullName>
@@ -212,67 +220,67 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>India</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Indonesia</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Japan</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pakistan</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Philippines</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Republic of Korea</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Southwest Pacific</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Thailand</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Vietnam</fullName>
                 <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>China-Mongolia-North Korea</fullName>
                 <default>false</default>
-                <controllingFieldValues>Nth. Asia</controllingFieldValues>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Chinese Taipei</fullName>
                 <default>false</default>
-                <controllingFieldValues>Nth. Asia</controllingFieldValues>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>HK_MO</fullName>
                 <default>false</default>
-                <controllingFieldValues>Nth. Asia</controllingFieldValues>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Central Asia</fullName>
@@ -372,34 +380,50 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>Eastern Africa</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Gulf Area</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Levant</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>North Africa</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>SA-YE</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
+                <controllingFieldValues>MENA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>South Western Africa</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Southern Africa</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Central West Africa</fullName>
                 <default>false</default>
+                <controllingFieldValues>Africa</controllingFieldValues>
+                <controllingFieldValues>Africa &amp; Middle East</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Arg-Par-Uru</fullName>
@@ -459,54 +483,67 @@ Object used to store objectives that can be independent, related to other object
             <picklistValues>
                 <fullName>India</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Indonesia</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Japan</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Pakistan</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Philippines</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Republic of Korea</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Southwest Pacific</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Thailand</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Vietnam</fullName>
                 <default>false</default>
+                <controllingFieldValues>Asia &amp; Pacific</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>China-Mongolia-North Korea</fullName>
                 <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Chinese Taipei</fullName>
                 <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>HK_MO</fullName>
                 <default>false</default>
+                <controllingFieldValues>China &amp; North Asia</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Central Asia</fullName>
@@ -640,7 +677,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Children Current Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -656,7 +693,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Children Forecast</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -672,7 +709,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Current Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>0</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -757,10 +794,6 @@ Object used to store objectives that can be independent, related to other object
                 <fullName>RVPO</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackFeedHistory>false</trackFeedHistory>
@@ -789,7 +822,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Forecast</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>0</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -886,7 +919,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Initial Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -916,25 +949,77 @@ Object used to store objectives that can be independent, related to other object
         <inlineHelpText>Region this objective is related to</inlineHelpText>
         <label>Region</label>
         <picklist>
+            <controllingField>Division__c</controllingField>
             <picklistValues>
-                <fullName>AME</fullName>
+                <fullName>Africa &amp; Middle East</fullName>
                 <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Americas</fullName>
                 <default>false</default>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>ASPAC</fullName>
+                <fullName>Asia &amp; Pacific</fullName>
                 <default>false</default>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Nth. Asia</fullName>
+                <fullName>China &amp; North Asia</fullName>
                 <default>false</default>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Europe</fullName>
                 <default>false</default>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>CS</controllingFieldValues>
+                <controllingFieldValues>FDS</controllingFieldValues>
+                <controllingFieldValues>MACS</controllingFieldValues>
+                <controllingFieldValues>MER</controllingFieldValues>
+                <controllingFieldValues>PPD</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Africa</fullName>
+                <default>false</default>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MENA</fullName>
+                <default>false</default>
+                <controllingFieldValues>APCS</controllingFieldValues>
+                <controllingFieldValues>RVPO</controllingFieldValues>
+                <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -982,31 +1067,6 @@ Object used to store objectives that can be independent, related to other object
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Sub_region__c</fullName>
-        <description>Some divisions may need to report at a sub-region level instead of regional</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Some divisions may need to report at a sub-region level instead of regional</inlineHelpText>
-        <label>Sub-region</label>
-        <picklist>
-            <controllingField>Region__c</controllingField>
-            <picklistValues>
-                <fullName>AFI</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MENA</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-    </fields>
-    <fields>
         <fullName>Target_Progress__c</fullName>
         <description>Percentage of progress</description>
         <externalId>false</externalId>
@@ -1029,7 +1089,7 @@ Object used to store objectives that can be independent, related to other object
         <label>Target Value</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>3</scale>
+        <scale>0</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1138,7 +1198,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <columns>Target_Progress__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All objectives</label>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Incomplete_Objectives</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>is_Incomplete__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Incomplete Objectives</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1162,6 +1234,68 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             <value>Levant</value>
         </filters>
         <label>Levant Area Objectives</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Objectives_with_missing_Area_Objectives</fullName>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Division__c</columns>
+        <columns>Region__c</columns>
+        <columns>Area__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target_Progress__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>All_Areas_Created__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Objectives with missing Area Objectives</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Objectives_with_missing_RegionObjectives</fullName>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Division__c</columns>
+        <columns>Region__c</columns>
+        <columns>Area__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target_Progress__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>All_Regions_Created__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Objectives with missing RegionObjectives</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>VP_Divisional_Objectives</fullName>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <columns>Type__c</columns>
+        <columns>Cascade_To_Region__c</columns>
+        <columns>Target__c</columns>
+        <columns>Current__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Division</value>
+        </filters>
+        <filters>
+            <field>Division__c</field>
+            <operation>equals</operation>
+            <value>VP</value>
+        </filters>
+        <label>VP Divisional Objectives</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1317,11 +1451,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>SA-YE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1602,10 +1736,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -1688,11 +1818,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
-                <fullName>AME</fullName>
+                <fullName>Africa</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ASPAC</fullName>
+                <fullName>Africa %26 Middle East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1700,11 +1830,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Europe</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Nth%2E Asia</fullName>
+                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1732,17 +1870,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>On hold</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sub_region__c</picklist>
-            <values>
-                <fullName>AFI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1917,11 +2044,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>SA-YE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2202,10 +2329,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -2288,11 +2411,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
-                <fullName>AME</fullName>
+                <fullName>Africa</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ASPAC</fullName>
+                <fullName>Africa %26 Middle East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2300,11 +2423,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Europe</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Nth%2E Asia</fullName>
+                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2332,17 +2463,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>On hold</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sub_region__c</picklist>
-            <values>
-                <fullName>AFI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2517,11 +2637,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>SA-YE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2802,10 +2922,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -2888,11 +3004,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
-                <fullName>AME</fullName>
+                <fullName>Africa</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ASPAC</fullName>
+                <fullName>Africa %26 Middle East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2900,11 +3016,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Europe</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Nth%2E Asia</fullName>
+                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2932,17 +3056,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>On hold</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sub_region__c</picklist>
-            <values>
-                <fullName>AFI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3117,11 +3230,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                <fullName>SA-YE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
+                <fullName>SG_LK_MY_BD_MV_BN</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3402,10 +3515,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>FDS</fullName>
                 <default>false</default>
             </values>
@@ -3488,11 +3597,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
-                <fullName>AME</fullName>
+                <fullName>Africa</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>ASPAC</fullName>
+                <fullName>Africa %26 Middle East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3500,11 +3609,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Europe</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Nth%2E Asia</fullName>
+                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3532,17 +3649,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>On hold</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sub_region__c</picklist>
-            <values>
-                <fullName>AFI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -33,7 +33,7 @@ public with sharing class ISSP_CaseList {
     public String getSortDirection() {
         //if not column is selected 
         if (sortExpression == null || sortExpression == '')
-			return 'DESC';
+			return 'ASC';
         else
 			return sortDirection;
     }
@@ -53,7 +53,7 @@ public with sharing class ISSP_CaseList {
     public PageReference initialization() {
         try {
             if(!isExtinstion){
-                sortDirection = 'DESC';
+                sortDirection = 'ASC';
             }
             else{
 				ApexPages.currentPage().getParameters().put('ListViewName', '3_MyRecentCases');

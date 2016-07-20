@@ -96,6 +96,7 @@ public with sharing class IECTestUtil {
             prpi.Active__c = true;
             prpi.Monthly_Price__c = 10.00;
             prpi.Display_As_Monthly_Fee__c = !triable;
+            prpi.User_Interface_Display__c = 'Yes';
             prpi.Order__c = 1;
             prpi.Short_Description__c = 'Sample Product Rate Plan Information';
             prpi.Long_Description__c = 'long desc';
@@ -185,69 +186,6 @@ public with sharing class IECTestUtil {
         return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
     }
     
-      public static User createSampleGuestUserAndLoginOlder() {
-        return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
-    }
-    public static User createSampleGuestUserAndLoginOLD(String ClientType) {
-        // insert account
-        Account newAccount = createSampleAccount(ClientType);
-        insert newAccount;
-
-        // create Bill To contact info
-        Contact newContact = new Contact();
-        newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
-        newContact.AccountId = newAccount.Id;
-        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
-        newContact.FirstName = 'Test';
-        newContact.LastName = 'User';
-        newContact.Title = 'TestTitle';
-        newContact.Email = 'testIECGuest@test.iata.org';
-        newContact.Phone = '514123345';
-        newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
-        insert newContact;
-        
-        Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
-        insert oBillingAccount;        
-
-        User u = new User(
-            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
-            , Email = 'testIECGuest@test.iata.org'
-            , emailencodingkey = 'UTF-8'
-            , Alias = IECUserManager.createAliasFromName(newContact.LastName)
-            , FirstName = newContact.FirstName
-            , LastName = newContact.LastName
-            , LocaleSidKey = 'en_US'
-            , CommunityNickname = 'testIECGuest@iata.org'
-            , ProfileId = IECUserManager.getProfileIdForIECUser()
-            , LanguageLocaleKey = 'en_US'
-            , timezonesidkey = 'America/New_York'
-            , ContactId = newContact.Id
-            , IsActive = true
-            , ReceivesAdminInfoEmails = false
-            , ReceivesInfoEmails = false
-        );
-        insert u;
-        trgPortalUserAfterInserUpdate = true;
-        String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-      //  trgPortalUserAfterInserUpdate = false;
-        /*
-        // assign Permission Set to provide access to objects
-        Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
-        if (permissionSetId != null) {
-            PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
-            oPermissionSetAssignment.AssigneeId = userId;
-            oPermissionSetAssignment.PermissionSetId = permissionSetId;
-            insert oPermissionSetAssignment;
-        }
-        */
-        
-        IECUserManager.login(u.Username, 'testpassword', null);
-           
-        return u;
-    }
-    
-    
-    
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
         Account newAccount = createSampleAccount(ClientType);
@@ -267,10 +205,10 @@ public with sharing class IECTestUtil {
         insert newContact;
         
         Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
-        insert oBillingAccount;        
+        insert oBillingAccount;
 
         User u = new User(
-            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
+            Username = 'testIECGuest@test.iata.org'
             , Email = 'testIECGuest@test.iata.org'
             , emailencodingkey = 'UTF-8'
             , Alias = IECUserManager.createAliasFromName(newContact.LastName)
@@ -286,7 +224,6 @@ public with sharing class IECTestUtil {
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
         );
-        insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
       //  trgPortalUserAfterInserUpdate = false;
@@ -971,14 +908,5 @@ public with sharing class IECTestUtil {
     public static String getSystemIntegrationProfileId() {
         List<Profile> lstProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator - automated processes'];
         return (lstProfile.isEmpty() ? null : lstProfile.get(0).Id) + '' + ((bIgnoreCurrentUserProfile == null || !bIgnoreCurrentUserProfile) ? ',' + Userinfo.getProfileId() : '');
-    }
-    
-    public static GDP_File_Description__c CreateSampleGDPFileDescription(String sClass, String sFrequency, String sProductType) {
-        return new GDP_File_Description__c (
-          Name = 'Test File Description-' + (Math.random()*1000000000)
-          , Class__c = sClass
-          , Frequency__c = sFrequency
-          , Product_Type__c = sProductType
-        );
     }
 }

@@ -64,8 +64,8 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Child_Account__c</fields>
-        <fields>Parent_Account__c</fields>
+        <fields>Child_Agency__c</fields>
+        <fields>HO_Flag__c</fields>
         <fields>Relationship_details__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Hierarchy__c</relatedList>
     </relatedLists>
@@ -79,7 +79,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hw000000dO5nA</masterLabel>
+        <masterLabel>00hZ0000000a2s8</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

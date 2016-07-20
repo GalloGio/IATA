@@ -13,5 +13,4 @@
     <tab>UAT__c</tab>
     <tab>UAT_Calendar</tab>
     <tab>Operational_Improvements__c</tab>
-    <tab>Deployment_Plan__c</tab>
 </CustomApplication>

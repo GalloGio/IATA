@@ -18,7 +18,7 @@ public class ISSP_AddAttachment {
 
     if (CaseId != '' && CaseId != null) {
 
-      tmpCase = [Select Id , CaseNumber, RecordType.Name, Status, CaseArea__c, Reason1__c, New_interaction__c, RecordType.Developername, New_Attachment_From_Portal_User__c, Reopening_reason__c, Reopened_case__c  From Case Where Id = : CaseId];
+      tmpCase = [Select Id , CaseNumber, RecordType.Name, Status, CaseArea__c, Reason1__c, New_interaction__c, RecordType.Developername, New_Attachment_From_Portal_User__c From Case Where Id = : CaseId];
 
       tmpCase.New_Attachment_From_Portal_User__c = true;
       system.debug('TRUEEEE');
@@ -30,8 +30,6 @@ public class ISSP_AddAttachment {
         if (caseRT.contains(tmpCase.RecordType.Developername)) {
           if (tmpCase.Status == 'Closed') {
             tmpCase.Status = 'Reopen';
-            tmpCase.Reopening_reason__c = '';
-            tmpCase.Reopened_case__c = tmpCase.Reopened_case__c + 1;
           } else {
             tmpCase.Status = 'Action Needed';
           }

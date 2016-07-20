@@ -317,15 +317,13 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             // the rejected one should be deleted
             results = [SELECT Id FROM ID_Card_Application__c WHERE VER_Number__c = '2'];
-            //MGO - CI comment because sometimes is passes tests and sometimes fails...
-            //system.assertEquals(0, results.size());
+            system.assertEquals(0, results.size());
             
             // the accepted should be put in status unpaid and related to the mass
             results = [SELECT Application_status__c, Mass_order_Application__c FROM ID_Card_Application__c WHERE VER_Number__c = '1' AND RecordTypeId = :rtsingle];
             system.assertEquals(1, results.size());
-            //MGO - CI comment because sometimes is passes tests and sometimes fails...
-            //system.assertEquals('Unpaid', results[0].Application_status__c);
-            //system.assertEquals(mass1.id, results[0].Mass_order_Application__c);
+            system.assertEquals('Unpaid', results[0].Application_status__c);
+            system.assertEquals(mass1.id, results[0].Mass_order_Application__c);
             
             
             // A case related to the mass application should not be created (it's created after payment)
@@ -386,8 +384,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             // the rejected one should be deleted
             results = [SELECT Id FROM ID_Card_Application__c WHERE VER_Number__c = '6' OR VER_Number__c = '7' OR VER_Number__c = '8'];
-            //MGO - CI comment because sometimes is passes tests and sometimes fails...
-            //system.assertEquals(0, results.size());
+            system.assertEquals(0, results.size());
             
             // the accepted should be put in status unpaid and related to the mass
             results = [SELECT Application_status__c, Mass_order_Application__c 
@@ -396,8 +393,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                         AND Application_status__c = 'Unpaid'
                         AND Mass_order_Application__c =: mass2.id
                         AND (VER_Number__c = '3' OR VER_Number__c = '4' OR VER_Number__c = '5')];
-            //MGO - CI comment because sometimes is passes tests and sometimes fails...
-            //system.assertEquals(3, results.size());
+            system.assertEquals(3, results.size());
             
             // A case related to the mass application should not be created (it's created after payment)
             cases = [SELECT AccountId,Subject, Status  FROM Case WHERE RecordTypeId = :rtcase AND Related_ID_Card_Application__c = :mass2.id];
@@ -416,10 +412,9 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             // On the page payment history I should be able to see the 2 mass application I just created
             IDCard_AdmPaymentsCtrl payctrl = new IDCard_AdmPaymentsCtrl();
-            system.assertEquals(2, payctrl.IdCardApplications.size());            
-            //MGO - CI comment because sometimes is passes tests and sometimes fails...
-            //system.assertEquals(mass1.id, payctrl.IdCardApplications[0].id);
-            //system.assertEquals(mass2.id, payctrl.IdCardApplications[1].id);
+            system.assertEquals(2, payctrl.IdCardApplications.size());
+            system.assertEquals(mass1.id, payctrl.IdCardApplications[0].id);
+            system.assertEquals(mass2.id, payctrl.IdCardApplications[1].id);
             
             
             
@@ -445,8 +440,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                         AND Application_status__c = 'Pending'
                         AND (VER_Number__c = '3' OR VER_Number__c = '4' OR VER_Number__c = '5')];
             system.debug(LoggingLevel.ERROR, '****************  Results = '+results);
-            //MGO - CI comment because sometimes is passes tests and sometimes fails...
-            //system.assertEquals(3, results.size());
+            system.assertEquals(3, results.size());
 
             
             
@@ -554,20 +548,20 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
             
             // The case status become Ready for production (until a sfdc user will manually close it)
             theCase = [SELECT Id, Status FROM Case WHERE Related_Id_Card_Application__c = :singles[0].id ];
-          // --   system.debug(LoggingLevel.ERROR,'Ho trovato caso con id = '+thecase[0].id);
-          // --  system.assertEquals(1, theCase.size());
+            system.debug(LoggingLevel.ERROR,'Ho trovato caso con id = '+thecase[0].id);
+            system.assertEquals(1, theCase.size());
             //INC157243 system.assertEquals('Ready for production',theCase[0].Status);
             
-          //  system.debug(LoggingLevel.ERROR,'############### Contacts '+ [SELECT Id, Name, Email FROM Contact]);
+           system.debug(LoggingLevel.ERROR,'############### Contacts '+ [SELECT Id, Name, Email FROM Contact]);
             
             // An id card will be created for each contact
-           /* List<ID_Card__c> cards = [SELECT VER_Number__c,Is_Active_Card__c,Date_Of_Birth__c, Valid_To_Date__c, Photo__c, Name_on_ID_Card__c,FirstName__c, LastName__c,
+            List<ID_Card__c> cards = [SELECT VER_Number__c,Is_Active_Card__c,Date_Of_Birth__c, Valid_To_Date__c, Photo__c, Name_on_ID_Card__c,FirstName__c, LastName__c,
                                             ID_Card_Application__c, Card_Status__c, Cancellation_Date__c, Blacklisted__c, Agency_IATA_Code__c
                                      FROM ID_Card__c];
-            system.assertEquals(1, cards.size());*/
+            system.assertEquals(1, cards.size());
             
             // Check the data stored on idcard
-           /* integer i = 0;
+            integer i = 0;
             for(ID_Card__c card : cards){
                 system.assertEquals(cs[i].FirstName, card.FirstName__c);
                 system.assertEquals(cs[i].LastName, card.LastName__c);
@@ -581,7 +575,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
                 system.assertEquals(singles[i].VER_Number__c, card.VER_Number__c);
                 
                 i++;
-            }*/
+            }
             
        }
        
@@ -784,8 +778,8 @@ system.debug(LoggingLevel.ERROR,'################  [TESTCLASS] Fine checkout ###
             
             // The case status become Ready for production (until a sfdc user will manually close it)
             theCase = [SELECT Id, Status FROM Case WHERE Related_Id_Card_Application__c = :singles[0].id ];
-           // system.debug(LoggingLevel.ERROR,'Ho trovato caso con id = '+thecase[0].id);
-           // system.assertEquals(1, theCase.size());
+            system.debug(LoggingLevel.ERROR,'Ho trovato caso con id = '+thecase[0].id);
+            system.assertEquals(1, theCase.size());
             //INC157243  system.assertEquals('Ready for production',theCase[0].Status);
             
             
@@ -793,7 +787,7 @@ system.debug(LoggingLevel.ERROR,'################  [TESTCLASS] Fine checkout ###
             List<ID_Card__c> cards = [SELECT VER_Number__c,Is_Active_Card__c,Date_Of_Birth__c, Valid_To_Date__c, Photo__c, Name_on_ID_Card__c,FirstName__c, LastName__c,
                                             ID_Card_Application__c, Card_Status__c, Cancellation_Date__c, Blacklisted__c, Agency_IATA_Code__c
                                      FROM ID_Card__c];
-         /*   system.assertEquals(1, cards.size());
+            system.assertEquals(1, cards.size());
             
             // Check the data stored on idcard
             integer i = 0;
@@ -811,7 +805,7 @@ system.debug(LoggingLevel.ERROR,'################  [TESTCLASS] Fine checkout ###
                 
                 i++;
             }
-            */
+            
        }
        
        

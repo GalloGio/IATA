@@ -341,7 +341,7 @@
             <name>SARA_Security_status_Not_Active_Yet</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <description>Not active guarantee status changes</description>
         <formula>Validity_Start_Date__c &gt;  DATEVALUE(now())</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -353,66 +353,6 @@
             <offsetFromField>Financial_Security__c.Validity_Start_Date__c</offsetFromField>
             <timeLength>0</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SARA Not active guarantees and Region %3C%3E ASPAC</fullName>
-        <actions>
-            <name>SARA_Security_status_Not_Active_Yet</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Not active guarantee status changes</description>
-        <formula>AND(Validity_Start_Date__c &gt; DATEVALUE(now()),  OR(ISPICKVAL(Region__c, &apos;Europe&apos;),  ISPICKVAL(Region__c, &apos;Africa &amp; Middle East&apos;),  ISPICKVAL(Region__c, &apos;Americas&apos;)))</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Active</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Financial_Security__c.Validity_Start_Date__c</offsetFromField>
-            <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SARA Not active guarantees and Region %3D ASPAC</fullName>
-        <actions>
-            <name>SARA_Security_status_Not_Active_Yet</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Not active guarantee status changes</description>
-        <formula>AND(Validity_Start_Date__c &gt; DATEVALUE(now()),  OR(ISPICKVAL(Region__c, &apos;Asia &amp; Pacific&apos;),  ISPICKVAL(Region__c, &apos;China &amp; North Asia&apos;)))</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Active</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Financial_Security__c.Validity_Start_Date__c</offsetFromField>
-            <timeLength>-6</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SARA Not active guarantees and Region %3D ASPAC old</fullName>
-        <actions>
-            <name>SARA_Security_status_Not_Active_Yet</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>Not active guarantee status changes</description>
-        <formula>AND(Validity_Start_Date__c &gt; DATEVALUE(now()),  OR(ISPICKVAL(Region__c, &apos;Asia &amp; Pacific&apos;),  ISPICKVAL(Region__c, &apos;China &amp; North Asia&apos;)))</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Active</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Financial_Security__c.Validity_Start_Date__c</offsetFromField>
-            <timeLength>-5</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
     <rules>
@@ -451,7 +391,7 @@
     </rules>
     <rules>
         <fullName>SARA Security Status %3D Expired2</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Financial_Security__c.Unlimited_Security__c</field>
             <operation>equals</operation>
@@ -475,105 +415,6 @@
             <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SARA Security Status %3D Expired2 and Region %3C%3E ASPAC</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Financial_Security__c.Unlimited_Security__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Expiry_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Security_Status__c</field>
-            <operation>equals</operation>
-            <value>Not Active yet,Active,Close to Expiry Date</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East,Americas</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Expired</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SARA Security Status %3D Expired2 and Region %3D ASPAC</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Financial_Security__c.Unlimited_Security__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Expiry_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Security_Status__c</field>
-            <operation>equals</operation>
-            <value>Not Active yet,Active,Close to Expiry Date</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific,China &amp; North Asia</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Expired</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
-            <timeLength>18</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>SARA Security Status %3D Expired2 and Region %3D ASPAC old</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Financial_Security__c.Unlimited_Security__c</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Expiry_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Security_Status__c</field>
-            <operation>equals</operation>
-            <value>Not Active yet,Active,Close to Expiry Date</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Financial_Security__c.Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific,China &amp; North Asia</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Expired</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
-            <timeLength>19</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
 </Workflow>

@@ -303,11 +303,6 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Product__c</fields>
-        <relatedList>Non_Compliant_Country__c.IATA_ISO_Country__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <relatedList>Price_Table__c.ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -9,18 +9,9 @@ public without sharing class IECUsageCompiler {
      * @return A list of IEC_Usage_Tracker_Live__c
      */
     public static List<IEC_Usage_Tracker_Live__c> getListOfLiveUsageToCompileDaily(Date dtTargetEndDate) {
-        return [SELECT Hash_Value__c
-                    ,Counter__c
-                    ,Date__c
-                    ,Related_Application_Type__c
-                    ,CAC_Subscription_Detail__c
-                    ,Authorized_Consumption__c
-                    ,RelatedContact__c
-                    ,Search_Status__c
-                    ,Search_Target__c 
+        return [SELECT Hash_Value__c, Counter__c, Date__c, Related_Application_Type__c, RelatedContact__c, Search_Status__c, Search_Target__c 
                 FROM IEC_Usage_Tracker_Live__c
-                WHERE DAY_ONLY(Date__c) <= :dtTargetEndDate
-                ORDER by Date__c];
+                WHERE DAY_ONLY(Date__c) <= :dtTargetEndDate];
     }
 
     /**
@@ -92,8 +83,7 @@ public without sharing class IECUsageCompiler {
                     }
                 }
                 
-                if (oCompiledUsageRecord.Counter__c == null) oCompiledUsageRecord.Counter__c = 0;
-                
+                // increment the global counter
                 oCompiledUsageRecord.Counter__c += mapHashUsageCount.get(hash);
                 
                 lstCompiledUsageToUpsert.add(oCompiledUsageRecord);
@@ -114,7 +104,11 @@ public without sharing class IECUsageCompiler {
             }
             
             // Delete the live usage that was compiled
-            delete lstLiveUsageToDelete;
+            map<Id,IEC_Usage_Tracker_Live__c> IEC_Usage_Tracker_LivePerID = new map<Id,IEC_Usage_Tracker_Live__c>();
+           for(IEC_Usage_Tracker_Live__c iec: lstLiveUsageToDelete){
+                   IEC_Usage_Tracker_LivePerID.put(iec.id, iec);}
+          
+            delete IEC_Usage_Tracker_LivePerID.Values();
             
             return lstCompiledUsageToUpsert;
         }
@@ -132,13 +126,7 @@ public without sharing class IECUsageCompiler {
     private static IEC_Compiled_Usage_Tracker__c findCompiledDailyRecordByHash(string sHash) {
         
         List<IEC_Compiled_Usage_Tracker__c> lstCompiledUsage =
-            [SELECT Counter__c
-                ,Date__c
-                ,Related_Application__c
-                ,Related_Client__c
-                ,Validation_Result__c
-                ,Validation_Type__c
-                ,Hash_Value__c 
+            [SELECT Counter__c, Date__c, Related_Application__c, Related_Client__c, Validation_Result__c, Validation_Type__c, Hash_Value__c 
              FROM IEC_Compiled_Usage_Tracker__c
              WHERE Hash_Value__c = :sHash];
         
@@ -151,15 +139,11 @@ public without sharing class IECUsageCompiler {
      * @return The IEC_Compiled_Usage_Tracker__c object that was created
      */
     private static IEC_Compiled_Usage_Tracker__c createCompiledUsageRecordFromLiveRecordData(IEC_Usage_Tracker_Live__c oLiveUsage) {
-        if (oLiveUsage.Authorized_Consumption__c==null) oLiveUsage.Authorized_Consumption__c=0;
-        
         return new IEC_Compiled_Usage_Tracker__c(
             Counter__c = 0,
             Date__c = oLiveUsage.Date__c.date(),
             Related_Application__c = oLiveUsage.Related_Application_Type__c,
             Related_Client__c = oLiveUsage.RelatedContact__c,
-            CAC_Subscription_Detail__c = oLiveUsage.CAC_Subscription_Detail__c,
-            Max_API_Call_Per_Month__c  = oLiveUsage.Authorized_Consumption__c,
             Validation_Result__c = oLiveUsage.Search_Status__c,
             Validation_Type__c = oLiveUsage.Search_Target__c
         );

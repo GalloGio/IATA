@@ -1,10 +1,11 @@
-<apex:page title="{!PageTitle}" controller="vfIECGAD" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
-    <title>{!PageTitle}</title>
+<apex:page title="Global Agency Directory" controller="vfIECGAD" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>Global Agency Directory</title>
    
        <div class="gdpwrapper">
     
     <div class="gdpbody">
-    <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+   
+    <c:IECAppHeader applicationTitle="Global Agency Directory" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
     
     <script>
 
@@ -108,7 +109,7 @@
                     <div class="box register large">
 
                         <div class="header" style="margin-top: 18px;">
-                            <p>{!PageTitle}</p>
+                            <p>Global Agency Directory</p>
                         </div>
 
                         <div class="content">
@@ -128,7 +129,7 @@
 
                                     <td>
                                         <div class="customInputLabelIn lastElm" style="width:330px;">
-                                            <apex:inputtext onkeypress="return isNumberKey(event)" id="txtCode" value="{!filter.IATA_Code__c}" maxlength="{!IF(sProductCode != 'CAL', 8, 11)}" />
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" id="txtCode" value="{!filter.IATA_Code__c}" maxlength="8" />
                                         </div>
                                     </td>
 
@@ -192,8 +193,7 @@
                                         <a href="IECGADAdvanced" class="customButton lastElm searchButton" style="width:380px;">Advanced Search &nbsp;></a>
                                     </td>
                                     <td>
-                                        <apex:commandLink value="Interactive Statistics >" style="width:380px;" styleClass="customButton lastElm searchButton"  action="{!URLFOR($Page.IECGADMaps)}" rendered="{!IF(sProductCode == 'PAL' || sProductCode == 'CAL' || sProductCode == 'ASL', false, true)}" />
-                                        <apex:commandLink value="Statistics >" style="width:380px;" styleClass="customButton lastElm searchButton"  action="{!URLFOR($Page.IATAPassengersList)}" rendered="{!IF(sProductCode == 'PAL' || sProductCode == 'CAL' || sProductCode == 'ASL', true, false)}" />
+                                        <a href="IECGADMaps" class="customButton lastElm searchButton" style="width:380px;">Interactive Statistics &nbsp;></a>
                                     </td>
                                 </tr>
                             </table>

@@ -354,10 +354,6 @@
                 <behavior>Edit</behavior>
                 <field>Site_index__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reinstated_date__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -458,6 +454,12 @@
     </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SAP_ID__c</fields>
+        <fields>SAP_Account_type__c</fields>
+        <relatedList>SAP_Account__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Issues__c</fields>
         <fields>Status__c</fields>
         <fields>Duplicate_Account__c</fields>
@@ -508,19 +510,6 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>NAME</fields>
-        <fields>CASES.SUBJECT</fields>
-        <fields>CASES.STATUS</fields>
-        <fields>Portal_Case_Status__c</fields>
-        <fields>BSPCountry__c</fields>
-        <fields>ACCA_Case_Country__c</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>OWNER_NAME</fields>
-        <fields>RecordType__c</fields>
-        <relatedList>Case.Account_Concerned__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>Status_image__c</fields>
         <fields>Security_Type__c</fields>
@@ -535,18 +524,17 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>Date_of_movement__c</fields>
+        <fields>Default_date__c</fields>
+        <fields>Currency__c</fields>
+        <fields>Defaulted_Amount__c</fields>
+        <fields>Recovered_Amount__c</fields>
+        <fields>Defaulted_amount_USD__c</fields>
+        <fields>Recovered_amount_USD__c</fields>
+        <fields>SIDRA_Case__c</fields>
         <fields>NAME</fields>
-        <fields>Balance__c</fields>
-        <fields>Amount_to_be_Paid__c</fields>
-        <fields>Group__c</fields>
-        <fields>Operation__c</fields>
-        <fields>Paid__c</fields>
-        <fields>Period__c</fields>
-        <fields>Remittance_Date__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>LAST_UPDATE</fields>
-        <relatedList>Account_Statement__c.Account__c</relatedList>
-        <sortField>Remittance_Date__c</sortField>
+        <relatedList>SIDRA_eDefault__c.Account__c</relatedList>
+        <sortField>Date_of_movement__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -559,6 +547,12 @@
         <relatedList>RelatedOpportunityList</relatedList>
         <sortField>OPPORTUNITY.CLOSE_DATE</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>Contact.NAME</fields>
+        <fields>Contact.VER_Number_2__c</fields>
+        <fields>Delegate__c</fields>
+        <relatedList>Managed_agency__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
@@ -588,26 +582,6 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Contact.NAME</fields>
-        <fields>Contact.VER_Number_2__c</fields>
-        <fields>Delegate__c</fields>
-        <relatedList>Managed_agency__c.Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Date_of_movement__c</fields>
-        <fields>Default_date__c</fields>
-        <fields>Currency__c</fields>
-        <fields>Defaulted_Amount__c</fields>
-        <fields>Recovered_Amount__c</fields>
-        <fields>Defaulted_amount_USD__c</fields>
-        <fields>Recovered_amount_USD__c</fields>
-        <fields>SIDRA_Case__c</fields>
-        <fields>NAME</fields>
-        <relatedList>SIDRA_eDefault__c.Account__c</relatedList>
-        <sortField>Date_of_movement__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>Purchased_Product_Category__c</fields>
         <fields>Purchased_Product_SKU__c</fields>
@@ -620,19 +594,14 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>SAP_ID__c</fields>
-        <fields>SAP_Account_type__c</fields>
-        <relatedList>SAP_Account__c.Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Zuora__BillToCountry__c</fields>
         <fields>Zuora__Balance__c</fields>
-        <fields>Zuora__LastInvoiceDate__c</fields>
         <fields>Zuora__MRR__c</fields>
+        <fields>Zuora__LastInvoiceDate__c</fields>
         <fields>Zuora__AutoPay__c</fields>
-        <fields>Zuora__DefaultPaymentMethod__c</fields>
-        <fields>Zuora__SalesRepName__c</fields>
+        <fields>Zuora__Status__c</fields>
+        <fields>Zuora__PaymentTerm__c</fields>
+        <fields>Zuora__CreditCard_Number__c</fields>
+        <fields>Zuora__CreditCard_Expiration__c</fields>
         <relatedList>Zuora__CustomerAccount__c.Zuora__Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>

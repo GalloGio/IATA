@@ -104,30 +104,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>AMS_Account_Role__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>AMS Account Role</label>
-        <referenceTo>AMS_Account_Role__c</referenceTo>
-        <relationshipLabel>Fields Translations</relationshipLabel>
-        <relationshipName>Fields_Translations</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>Fields Translations</relationshipLabel>
-        <relationshipName>Fields_Translations</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Address__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

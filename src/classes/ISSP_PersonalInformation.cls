@@ -13,8 +13,7 @@ public with sharing class ISSP_PersonalInformation {
     public String accountCountryISOCode {get; set;}
     //If the user is admin and already opt-out, optin option will be visible
     public boolean bIsAdmin				{get; set;}		//identify if a user is administrator or not
-    public boolean bIsOSCARenabled {get; set;} 
-    public boolean bIsMinorChangeEnabled {get; set;} //Hide edit buttons on Company Info page if Country for Agencies is not pointing to OSCAR
+    public boolean bIsOSCARenabled {get; set;} //Hide edit buttons on Company Info page if Country for Agencies is not pointing to OSCAR
     public boolean bBlockTradeNameChange {get; set;}
     public boolean isHOAccredited {get;set;}
     
@@ -52,7 +51,6 @@ public with sharing class ISSP_PersonalInformation {
     	hasIdCard = false;
     	bIsAdmin = false;
         bIsOSCARenabled = false;
-        bIsMinorChangeEnabled = false;
         bBlockTradeNameChange = false;
         isHOAccredited = false;
         
@@ -136,7 +134,6 @@ public with sharing class ISSP_PersonalInformation {
         	bIsAdmin = true;
         
         bIsOSCARenabled = con.Account.IATA_ISO_Country__r.OSCAR_enabled__c;
-        bIsMinorChangeEnabled = con.Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c;
         bBlockTradeNameChange = con.Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
     }
     
@@ -197,7 +194,7 @@ public with sharing class ISSP_PersonalInformation {
     public Pagereference saveAccount(){
         try {
             isEditMode = false;
-            if(isHOAccredited && bIsMinorChangeEnabled){
+            if(isHOAccredited && bIsOSCARenabled){
                 ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
             }
             update con.Account;

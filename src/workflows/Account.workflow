@@ -42,17 +42,6 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching2</template>
     </alerts>
-    <alerts>
-        <fullName>Irregularity_Thresold_Met</fullName>
-        <description>Irregularity Thresold Met</description>
-        <protected>false</protected>
-        <recipients>
-            <type>accountOwner</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
-    </alerts>
     <fieldUpdates>
         <fullName>AIMS_Accounts_RT_Assignment</fullName>
         <description>Assign &quot;Agenciy&quot; as Record Type when an AIMS Account is created</description>
@@ -62,24 +51,6 @@
         <name>AIMS Accounts RT Assignment</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>AccountIATAAirlineSetName</fullName>
-        <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
-        <field>Name</field>
-        <formula>IF(
-  OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
-  IF (
-    OR( ISNULL( Name_on_AOC__c ), Name_on_AOC__c == &apos;&apos;),
-    Name,
-    Name_on_AOC__c
-  ),
-  TradeName__c
-)</formula>
-        <name>AccountIATAAirlineSetName</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -149,15 +120,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <name>Rename Branch</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Reset_irregularity_email</fullName>
-        <field>Send_Irregularity_Email__c</field>
-        <literalValue>0</literalValue>
-        <name>Reset irregularity email</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -277,17 +239,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <protected>false</protected>
     </fieldUpdates>
     <rules>
-        <fullName>ACLIAccountSetName</fullName>
-        <actions>
-            <name>AccountIATAAirlineSetName</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>AIMS Accounts RT Assignment Rule</fullName>
         <actions>
             <name>AIMS_Accounts_RT_Assignment</name>
@@ -322,7 +273,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
-            <value>IATA Cargo Agent,Import Agent,CASS Associate,Couriers</value>
+            <value>IATA Cargo Agent,Import Agent,CASS Associates,Couriers</value>
         </criteriaItems>
         <criteriaItems>
             <field>Account.Is_AIMS_Account__c</field>
@@ -383,7 +334,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Update account site if the account Record Type is Airline Branch or Airline Headquarters</description>
-        <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,(and (RecordType.DeveloperName= &apos;Standard_Account&apos;, ISPICKVAL(Sector__c,&apos;Airline&apos;)))))</formula>
+        <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,RecordType.DeveloperName= &apos;Standard_Account&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -595,25 +546,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>SIS</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Send Irregularity Email</fullName>
-        <actions>
-            <name>Irregularity_Thresold_Met</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Reset_irregularity_email</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.Send_Irregularity_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Sends email when the account reaches the irregularity thresold for the country. This validation is made on the AccountTrigger trigger</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Site Index</fullName>

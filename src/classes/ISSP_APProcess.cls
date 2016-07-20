@@ -5,8 +5,6 @@ public without sharing class ISSP_APProcess {
     private Id vHQAccountId;
     private Id vGSSAAccountId;
     private Id vAccountConcernedId;
-    private Id caseId;
-    private Id contactId;
     public string cassairlineid {get;set;}
     public Case newCase {get;set;}
     public Account hqAccount {get;set;}
@@ -96,9 +94,6 @@ public without sharing class ISSP_APProcess {
         
         //If controller called internally then get Account from URL param, else from account of portal user / contact
         vAccountConcernedId = ApexPages.currentPage().getParameters().get('vAccountId');
-        contactId = Apexpages.currentPage().getParameters().get('vContactID');
-        con = retrieveContact(contactId);
-
         if(vAccountConcernedId==null) {
             //Case has not been created at this stage, so need to get AL Account (can be HQ or BR) for logged in user
             popContact();
@@ -113,7 +108,7 @@ public without sharing class ISSP_APProcess {
             vGSSAAccountId = con.AccountId;
         } else if (con.Account.Top_Parent__c == null) { //User is from HQ  Account
             vHQAccountId = con.AccountId;
-        } else { 
+        } else {
             vHQAccountId = con.Account.Top_Parent__c;
         }
         
@@ -122,7 +117,7 @@ public without sharing class ISSP_APProcess {
         
         if (ApexPages.currentPage().getParameters().containsKey('isMandatory')) {
             isMandatory = true; 
-        } else { 
+        } else {
             isMandatory = false;
         }
         
@@ -133,19 +128,19 @@ public without sharing class ISSP_APProcess {
                 isStep1= true;
       	}
         
-        if(ApexPages.currentPage().getParameters().containsKey('proc')) {
-            APprocess = ApexPages.currentPage().getParameters().get('proc');
-            if(APprocess=='chg' || APprocess=='bnk') {
-                strAreaType = 'Airline Change';
-                if(APprocess=='chg') {
-                    strChangeType = 'Minor database changes';
-                } else {
-                    strChangeType = 'Bank Account Instructions';
-                }
+         if(ApexPages.currentPage().getParameters().containsKey('proc')) {
+             APprocess = ApexPages.currentPage().getParameters().get('proc');
+             if(APprocess=='chg' || APprocess=='bnk') {
+                 strAreaType = 'Airline Change';
+                 if(APprocess=='chg') {
+                     strChangeType = 'Minor database changes';
+                 } else {
+                      strChangeType = 'Bank Account Instructions';
+                 }
              } else {
                  strAreaType = 'Airline Joining';
-            }
-        } else {
+             }
+         } else {
              strAreaType = 'Airline Joining';
          }
          
@@ -384,7 +379,7 @@ public without sharing class ISSP_APProcess {
     
     public Case retrieveCase(String vCaseId){
         List <Case> newCases = [
-            SELECT OwnerId, Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
+            SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
             Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c
             FROM Case 
             WHERE Id=:vCaseId 
@@ -392,15 +387,6 @@ public without sharing class ISSP_APProcess {
         if (newCases.size()>0) {
             return newCases[0];
         } else {
-            return null;
-        }
-    }
-
-    public Contact retrieveContact (String vContactID){
-        List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c FROM Contact where Id = :vContactID ];
-        if(contact.size()>0){
-            return contact[0];
-        }else{
             return null;
         }
     }
@@ -749,7 +735,6 @@ public without sharing class ISSP_APProcess {
             newForm.Submitted_to_IATA__c = TRUE;
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
-            if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
             newCase.ownerid = APQueue('Airline Participation - Head Office').Id;
             upsert newCase;
             
@@ -1074,7 +1059,7 @@ public without sharing class ISSP_APProcess {
         public String percentage{get;set;}
     }
     
-    public void retrieveHQAccountDetails (Id hqId){
+    public void retrieveHQAccountDetails (Id hqId){ 
         hqAccount = [
             SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode,
             BillingCountry, Airline_designator__c, TradeName__c, Membership_status__c, IATACode__c, Top_Parent__c, Top_Parent__r.BillingStreet, Top_Parent__r.BillingCity, Top_Parent__r.BillingState, Top_Parent__r.BillingPostalCode,
@@ -1084,7 +1069,7 @@ public without sharing class ISSP_APProcess {
             WHERE Id = :hqId
             LIMIT 1
         ];
-         
+        
         //Only want to display AL HQ details on the joining form, so need to get them if the user applying is from a Branch office
         strParentMembershipStatus = hqAccount.Membership_status__c;
         

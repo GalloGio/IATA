@@ -262,7 +262,6 @@ notifications with this box checked will be first in the list of notification on
         <columns>Language__c</columns>
         <columns>Type__c</columns>
         <columns>Expire_in_days__c</columns>
-        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All templates</label>
         <language>en_US</language>

@@ -62,8 +62,8 @@ private class ISSP_ContentPage_Test {
       		controller.Title = 'lemon';
           	controller.Init();
          	controller.runQuery();
-         	//String mySoql = controller.debugSoql;
-         	//controller.toggleSort();
+         	String mySoql = controller.debugSoql;
+         	controller.toggleSort();
          	controller.ClearFilters();
          	controller.getCountries();
         }

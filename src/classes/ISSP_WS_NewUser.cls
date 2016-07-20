@@ -14,7 +14,7 @@ global class ISSP_WS_NewUser {
         // Get request IP
         List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
                                         WHERE UserId = :UserInfo.getUserId()
-                                        ORDER BY LoginTime DESC LIMIT 1];
+                                        ORDER BY LoginTime DESC];
         
         // Create log object record
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
@@ -74,7 +74,7 @@ global class ISSP_WS_NewUser {
         // Get request IP
         List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
                                         WHERE UserId = :UserInfo.getUserId()
-                                        ORDER BY LoginTime DESC LIMIT 1];
+                                        ORDER BY LoginTime DESC];
         
         // Create log object record
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
@@ -255,9 +255,9 @@ global class ISSP_WS_NewUser {
                         }
                         else{
                             List <Contact> contactList = [SELECT Id, Status__c, User_Portal_Status__c, Email,
-                                                        FirstName, LastName, AccountId, Salutation,
-                                                        Preferred_Language__c
-                                                        FROM Contact WHERE Id = :thisUser.ContactId];
+                            							FirstName, LastName, AccountId, Salutation,
+                            							Preferred_Language__c
+                            							FROM Contact WHERE Id = :thisUser.ContactId];
                             if (contactList.isEmpty()){
                                 //contact not found
                                 errorCode = '008';
@@ -276,7 +276,7 @@ global class ISSP_WS_NewUser {
                                 return retResponseOne;
                             }
                             else{
-                                theContact = contactList[0].Id;
+                            	theContact = contactList[0].Id;
                                 //inactive contact
                                 if(contactList[0].User_Portal_Status__c == 'Rejected'
                                     || contactList[0].User_Portal_Status__c == 'Inactive'
@@ -301,8 +301,8 @@ global class ISSP_WS_NewUser {
                                     //found contact
                                     Contact thisContact = contactList[0];
                                     if (thisContact.User_Portal_Status__c == 'Pending Approval'){
-                                        thisContact.User_Portal_Status__c = 'Approved User';
-                                        update thisContact;
+                                    	thisContact.User_Portal_Status__c = 'Approved User';
+                                    	update thisContact;
                                     }
                                     List <Portal_Application_Right__c> appRightList = [SELECT Id, Right__c FROM
                                                                     Portal_Application_Right__c
@@ -352,11 +352,11 @@ global class ISSP_WS_NewUser {
                                             newLog.Error_Message__c = errorMessage;
                                             newLog.Finished__c = system.now();
                                             if (theUser != null && theUser != ''){
-                                                newLog.User__c = theUser;
-                                            }
-                                            if (theContact != null && theContact != ''){
-                                                newLog.Contact__c = theContact;
-                                            }
+									        	newLog.User__c = theUser;
+									        }
+									        if (theContact != null && theContact != ''){
+									        	newLog.Contact__c = theContact;
+									        }
                                             insert newLog;
                                             
                                             retResponseOne.federationId = thisUser.FedContactId__c;
@@ -421,11 +421,11 @@ global class ISSP_WS_NewUser {
                     else{
                         //user with that email doesn't exist
                         List <Contact> contactList = [SELECT Id, Email, AccountId, Account.RecordType.DeveloperName,
-                                                    User_Portal_Status__c, Status__c, FirstName, LastName,
-                                                    Preferred_Language__c, Salutation
-                                                    FROM Contact WHERE Email = :userEmail];
+                        							User_Portal_Status__c, Status__c, FirstName, LastName,
+                        							Preferred_Language__c, Salutation
+                        							FROM Contact WHERE Email = :userEmail];
                         if (!contactList.isEmpty()){
-                            theContact = contactList[0].Id;
+                        	theContact = contactList[0].Id;
                             //inactive contact
                             if(contactList[0].User_Portal_Status__c == 'Rejected'
                                 || contactList[0].User_Portal_Status__c == 'Inactive'
@@ -501,11 +501,11 @@ global class ISSP_WS_NewUser {
                                         newLog.Error_Message__c = errorMessage;
                                         newLog.Finished__c = system.now();
                                         if (theUser != null && theUser != ''){
-                                            newLog.User__c = theUser;
-                                        }
-                                        if (theContact != null && theContact != ''){
-                                            newLog.Contact__c = theContact;
-                                        }
+											newLog.User__c = theUser;
+										}
+										if (theContact != null && theContact != ''){
+											newLog.Contact__c = theContact;
+										}
                                         insert newLog;
                                         
                                         retResponseOne.federationId = conId15;
@@ -549,85 +549,85 @@ global class ISSP_WS_NewUser {
                             //user with that email doesn't exist
                             //create contact, user and app access
                             if (userIataCode == '' || userIataCode == null){
-                                //empty account
-                                errorCode = '004';
-                                errorMessage = ISSP_Int_Error__c.getValues('004').Error_Message__c;
-                                retResponseOne.isSuccess = false;
-                                retResponseOne.responseErrorCode = errorCode;
-                                retResponseOne.responseErrorMessage = errorMessage;
-                                
-                                //insert log record
-                                newLog.Success__c = false;
-                                newLog.Error_Code__c = errorCode;
-                                newLog.Error_Message__c = errorMessage;
-                                newLog.Finished__c = system.now();
-                                insert newLog;
-                                
-                                return retResponseOne;
-                            }
-                            else{
-                                List <Account> accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
+					            //empty account
+					            errorCode = '004';
+					            errorMessage = ISSP_Int_Error__c.getValues('004').Error_Message__c;
+					            retResponseOne.isSuccess = false;
+					            retResponseOne.responseErrorCode = errorCode;
+					            retResponseOne.responseErrorMessage = errorMessage;
+					            
+					            //insert log record
+					            newLog.Success__c = false;
+					            newLog.Error_Code__c = errorCode;
+					            newLog.Error_Message__c = errorMessage;
+					            newLog.Finished__c = system.now();
+					            insert newLog;
+					            
+					            return retResponseOne;
+					        }
+					        else{
+                            	List <Account> accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
                                         FROM Account
                                         WHERE IATACode__c =: userIataCode
                                         AND RecordType.DeveloperName IN
                                         ('IATA_Agency', 'IATA_Airline_BR', 'IATA_Airline')];
-                                if (accountList.isEmpty() && userIataCode != 'RA'){
-                                    accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
+								if (accountList.isEmpty() && userIataCode != 'RA'){
+									accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
                                         FROM Account
                                         WHERE Site =: userIataCode
                                         AND RecordType.DeveloperName IN
                                         ('IATA_Agency', 'IATA_Airline_BR', 'IATA_Airline')];
-                                }
-                                if (accountList.isEmpty() && userIataCode != 'RA'){
-                                    accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
+								}
+								if (accountList.isEmpty() && userIataCode != 'RA'){
+									accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
                                         FROM Account
                                         WHERE BSPlink_code__c =: userIataCode
                                         AND RecordType.DeveloperName IN
                                         ('IATA_Agency', 'IATA_Airline_BR', 'IATA_Airline')];
-                                }
-                                if (accountList.isEmpty() && userIataCode != 'RA'){
-                                    //invalid account
-                                    errorCode = '005';
-                                    errorMessage = ISSP_Int_Error__c.getValues('005').Error_Message__c;
-                                    retResponseOne.isSuccess = false;
-                                    retResponseOne.responseErrorCode = errorCode;
-                                    retResponseOne.responseErrorMessage = errorMessage;
-                                    
-                                    //insert log record
-                                    newLog.Success__c = false;
-                                    newLog.Error_Code__c = errorCode;
-                                    newLog.Error_Message__c = errorMessage;
-                                    newLog.Finished__c = system.now();
-                                    insert newLog;
-                                    
-                                    return retResponseOne;
-                                }
-                                else{
-                                    userAccount = '';
-                                    if (userIataCode != 'RA'){
-                                        if (userIataCountry != null && userIataCountry != ''){
-                                            for (Account thisAccount : accountList){
-                                                if (userIataCountry == thisAccount.IATA_ISO_Country__r.ISO_Code__c){
-                                                    userAccount = thisAccount.Id;
-                                                    userAccountType = thisAccount.RecordType.DeveloperName;
-                                                }
-                                            }
-                                        }
-                                        if (userAccount == ''){
-                                            for (Account thisAccount : accountList){
-                                                if (thisAccount.RecordType.DeveloperName == 'IATA_Airline'){
-                                                    userAccount = thisAccount.Id;
-                                                    userAccountType = thisAccount.RecordType.DeveloperName;
-                                                }
-                                            }
-                                        }
-                                        if (userAccount == ''){
-                                            userAccount = accountList[0].Id;
-                                            userAccountType = accountList[0].RecordType.DeveloperName;
-                                        }
-                                    }
-                                }
-                            }
+								}
+				                if (accountList.isEmpty() && userIataCode != 'RA'){
+				                    //invalid account
+				                    errorCode = '005';
+				                    errorMessage = ISSP_Int_Error__c.getValues('005').Error_Message__c;
+				                    retResponseOne.isSuccess = false;
+				                    retResponseOne.responseErrorCode = errorCode;
+				                    retResponseOne.responseErrorMessage = errorMessage;
+				                    
+				                    //insert log record
+				                    newLog.Success__c = false;
+				                    newLog.Error_Code__c = errorCode;
+				                    newLog.Error_Message__c = errorMessage;
+				                    newLog.Finished__c = system.now();
+				                    insert newLog;
+				                    
+				                    return retResponseOne;
+				                }
+				                else{
+				                    userAccount = '';
+				                    if (userIataCode != 'RA'){
+					                    if (userIataCountry != null && userIataCountry != ''){
+					                        for (Account thisAccount : accountList){
+					                            if (userIataCountry == thisAccount.IATA_ISO_Country__r.ISO_Code__c){
+					                                userAccount = thisAccount.Id;
+					                                userAccountType = thisAccount.RecordType.DeveloperName;
+					                            }
+					                        }
+					                    }
+					                    if (userAccount == ''){
+					                        for (Account thisAccount : accountList){
+					                            if (thisAccount.RecordType.DeveloperName == 'IATA_Airline'){
+					                                userAccount = thisAccount.Id;
+					                                userAccountType = thisAccount.RecordType.DeveloperName;
+					                            }
+					                        }
+					                    }
+					                    if (userAccount == ''){
+					                        userAccount = accountList[0].Id;
+					                        userAccountType = accountList[0].RecordType.DeveloperName;
+					                    }
+				                    }
+				                }
+					        }
                             
                             Contact con = ISSP_WS_Utilities.createContact(userFirstName, userLastName, userEmail,  userAccount);
                             String conId15 = '';
@@ -692,10 +692,10 @@ global class ISSP_WS_NewUser {
         }
         newLog.Finished__c = system.now();
         if (theUser != null && theUser != ''){
-            newLog.User__c = theUser;
+        	newLog.User__c = theUser;
         }
         if (theContact != null && theContact != ''){
-            newLog.Contact__c = theContact;
+        	newLog.Contact__c = theContact;
         }
         insert newLog;
         return retResponseOne;

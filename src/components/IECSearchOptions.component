@@ -1,5 +1,4 @@
 <apex:component layout="none">
-   <apex:attribute name="ProductLine" description="Product Line" type="String" required="false"/>
    
  
      <h3>Search Options</h3>
@@ -34,8 +33,7 @@
 		        
 		        <tr>
 		        	<td class="searchOptionTD">
-                        <apex:commandLink value="Interactive Statistics"  styleClass="searchOptionLink"  action="{!URLFOR($Page.IECGADMaps)}" rendered="{!IF(ProductLine == 'PAL' || ProductLine == 'CAL' || ProductLine == 'ASL', false, true)}" />
-                        <apex:commandLink value="Statistics"  styleClass="searchOptionLink"  action="{!URLFOR($Page.IATAPassengersList)}" rendered="{!IF(ProductLine == 'PAL' || ProductLine == 'CAL' || ProductLine == 'ASL', true, false)}" />
+		        		<apex:commandLink value="Interactive Statistics"  styleClass="searchOptionLink"  action="{!URLFOR($Page.IECGADMaps)}" />
 		            </td>
 		   	        <td  class="searchOptionTD -right">
 		   	        <!-- 

@@ -83,16 +83,6 @@
         <fullName>HasResponded</fullName>
     </fields>
     <fields>
-        <fullName>Key__c</fullName>
-        <description>Technical field to perform upserts</description>
-        <externalId>true</externalId>
-        <label>Key</label>
-        <length>50</length>
-        <required>false</required>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>LastName</fullName>
     </fields>
     <fields>
@@ -200,17 +190,6 @@
     </fields>
     <fields>
         <fullName>MobilePhone</fullName>
-    </fields>
-    <fields>
-        <fullName>Order__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Quote</label>
-        <referenceTo>Order</referenceTo>
-        <relationshipLabel>Campaign Members</relationshipLabel>
-        <relationshipName>Campaign_Member</relationshipName>
-        <required>false</required>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Phone</fullName>

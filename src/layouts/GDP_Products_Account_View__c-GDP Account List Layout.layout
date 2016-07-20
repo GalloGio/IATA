@@ -376,7 +376,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Phone_Type__c</fields>
-        <fields>Full_Phone_Number__c</fields>
         <fields>ISD_Code__c</fields>
         <fields>STD_Code__c</fields>
         <fields>Number__c</fields>
@@ -416,10 +415,6 @@
         <relatedList>GDS__c.Related_GDP_Products_Account_View__c</relatedList>
         <sortField>GDS_ID__c</sortField>
         <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>GSA_Territory__c.Related_GDP_Products_Account_View__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -1,4 +1,4 @@
-<apex:page standardController="Account" extensions="AMS_DemoTreeview" showHeader="false" sidebar="false">  
+<apex:page standardController="AMS_Agency__c" extensions="AMS_DemoTreeview" showHeader="false" sidebar="false">  
     <!-- Mobile View -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- jQuery CDN Reference -->
@@ -103,7 +103,6 @@
                 }
             };
             //Open a new agency primary tab
-           
             sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
         }
     </script>
@@ -131,20 +130,20 @@
             </ul>
         </apex:repeat>
     </div>-->
-<apex:outputPanel rendered="{!AND(IF(Parent != NULL, true, false), ag != null)}">
+<apex:outputPanel rendered="{!IF(Parent != NULL, true, false)}">
 <apex:form >
     <div class="tree well">
             <ul>
                 <li>
-                    <span><i class="icon-folder-open icon-minus-sign"></i>{!Parent.Parent_Account__r.Location_Type__c} ({!Parent.Parent_Account__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!Parent.Parent_Account__c}','');return false;">{!Parent.Parent_Account__r.Name}</apex:commandLink><br></br>{!Parent.Parent_Account__r.IATACode__c}<br></br>{!Parent.Parent_Account__r.Primary_Address__r.Country__r.Name} - {!Parent.Parent_Account__r.Primary_Address__r.City__c}<br></br>{!Parent.Parent_Account__r.Status__c}
+                    <span><i class="icon-folder-open icon-minus-sign"></i>{!Parent.Parent_Agency__r.Account__r.Location_Type__c} ({!Parent.Parent_Agency__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!Parent.Parent_agency__c}','{!Parent.Parent_Agency__r.Name}');return false;">{!Parent.Parent_Agency__r.Name}</apex:commandLink><br></br>{!Parent.Parent_Agency__r.IATACode__c}<br></br>{!Parent.Parent_agency__r.Primary_Address__r.Country__r.Name} - {!Parent.Parent_Agency__r.Primary_Address__r.City__c}<br></br>{!Parent.Parent_Agency__r.Agency_Status__c}
                     <ul>
                             <li>
-                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Status__c}
+                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Account__r.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Agency_Status__c}
                                 <ul>
                                 <apex:repeat value="{!Childs}" var="c">
                                     <apex:repeat value="{!Childs[c]}" var="ca">
                                         <li>
-                                            <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Account__r.Location_Type__c} ({!ca.Child_Account__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Account__c}','');return false;">{!ca.Child_Account__r.Name}</apex:commandLink><br></br>{!ca.Child_Account__r.IATACode__c}<br></br>{!ca.Child_Account__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Account__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Account__r.Status__c}
+                                            <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Agency__r.Account__r.Location_Type__c} ({!ca.Child_Agency__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Agency__c}','{!ca.Child_Agency__r.Name}');return false;">{!ca.Child_Agency__r.Name}</apex:commandLink><br></br>{!ca.Child_Agency__r.IATACode__c}<br></br>{!ca.Child_Agency__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Agency__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Agency__r.Agency_Status__c}
                                         </li>
                                     </apex:repeat>
                                 </apex:repeat>
@@ -156,17 +155,17 @@
     </div>
     </apex:form>
 </apex:outputPanel>
-<apex:outputPanel rendered="{!AND(IF(Parent == NULL, true, false), ag != null)}">
+<apex:outputPanel rendered="{!IF(Parent == NULL, true, false)}">
 <apex:form >
     <div class="tree well">
         <ul>
                 <li>
-                    <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Status__c}
+                    <span><i class="icon-folder-open icon-minus-sign"></i>{!ag.Account__r.Location_Type__c} ({!ag.Location_Class__c})</span><br></br>{!ag.Name}<br></br>{!ag.IATACode__c}<br></br>{!ag.Primary_Address__r.Country__r.Name} - {!ag.Primary_Address__r.City__c}<br></br>{!ag.Agency_Status__c}
                     <ul>
                     <apex:repeat value="{!Childs}" var="c">
                         <apex:repeat value="{!Childs[c]}" var="ca">
                             <li>
-                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Account__r.Location_Type__c} ({!ca.Child_Account__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Account__c}','');return false;">{!ca.Child_Account__r.Name}</apex:commandLink><br></br>{!ca.Child_Account__r.IATACode__c}<br></br>{!ca.Child_Account__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Account__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Account__r.Status__c}
+                                <span><i class="icon-folder-open icon-minus-sign"></i>{!ca.Child_Agency__r.Account__r.Location_Type__c} ({!ca.Child_Agency__r.Location_Class__c})</span><br></br><apex:commandLink onclick="testOpenPrimaryTab('/{!ca.Child_Agency__c}','{!ca.Child_Agency__r.Name}');return false;">{!ca.Child_Agency__r.Name}</apex:commandLink><br></br>{!ca.Child_Agency__r.IATACode__c}<br></br>{!ca.Child_Agency__r.Primary_Address__r.Country__r.Name} - {!ca.Child_Agency__r.Primary_Address__r.City__c}<br></br>{!ca.Child_Agency__r.Agency_Status__c}
                             </li>
                         </apex:repeat>
                     </apex:repeat>

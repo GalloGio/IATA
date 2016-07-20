@@ -62,55 +62,24 @@
         <referenceTo>AMS_Owner__c</referenceTo>
         <relationshipLabel>AMS Agencies Ownership</relationshipLabel>
         <relationshipName>AMS_Agencies_Ownership</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
+        <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Account_Role__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Account Role</label>
-        <referenceTo>AMS_Account_Role__c</referenceTo>
-        <relationshipLabel>AMS Agencies Ownership</relationshipLabel>
-        <relationshipName>AMS_Agencies_Ownership</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>AMS Agencies Ownership</relationshipLabel>
-        <relationshipName>AMS_Agencies_Ownership2</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipLabel>AMS Agency Ownership</relationshipLabel>
         <relationshipName>AMS_Agency_Ownership</relationshipName>
-        <required>false</required>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Migration_Executed__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Migration Executed</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Percentage__c</fullName>

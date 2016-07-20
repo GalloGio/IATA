@@ -58,7 +58,13 @@
     <fields>
         <fullName>Active__c</fullName>
         <externalId>false</externalId>
-        <formula>OR( Status__c == &apos;Active&apos;, Status__c = &apos;Pending To Deactivate&apos; )</formula>
+        <formula>AND(
+ TODAY()&gt;= Effective_date__c,
+ OR(
+  ISNULL(Cancellation_date__c), 
+  TODAY() &lt; Cancellation_date__c
+ )
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Active</label>
         <trackHistory>false</trackHistory>
@@ -164,13 +170,18 @@
         <fullName>Airline_1__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Airline 1</label>
+        <label>Airline</label>
         <lookupFilter>
             <active>true</active>
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Airline Headquarters</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.MITA_Member__c</field>
+                <operation>equals</operation>
+                <value>True</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -186,13 +197,18 @@
         <fullName>Airline_2__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Airline 2</label>
+        <label>Airline</label>
         <lookupFilter>
             <active>true</active>
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Airline Headquarters</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.MITA_Member__c</field>
+                <operation>equals</operation>
+                <value>True</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -203,34 +219,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Cancellation_Reason__c</fullName>
-        <description>The reason why this agreement was cancelled</description>
-        <externalId>false</externalId>
-        <label>Cancellation Reason</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Requested by Airline 1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Requested by Airline 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline 1 leaves agreement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline 2 leaves agreement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Cancellation_date__c</fullName>
@@ -297,27 +285,6 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Status__c</fullName>
-        <description>Describes the situtation of the agreement</description>
-        <externalId>false</externalId>
-        <formula>IF( ISNULL(Cancellation_processed_date__c),
-  IF ( Effective_date__c &lt;= TODAY(), &apos;Active&apos;, &apos;Not Active Yet&apos;),
-  IF ( Cancellation_date__c &lt;= TODAY(), &apos;Inactive&apos;, &apos;Pending To Deactivate&apos;)
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <inlineHelpText>Possible values are:
- - Not Active Yet,
- - Active
- - Pending To Deactivate
- - Inactive</inlineHelpText>
-        <label>Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Withdrawal_Request_Reception_Date__c</fullName>
         <externalId>false</externalId>
         <label>Withdrawal Request Reception Date</label>
@@ -349,7 +316,6 @@
         <errorConditionFormula>AND(
  ISNEW(),
  ISPICKVAL(MITAorBIETA__c, &apos;BIETA&apos;),
- Active__c,
  OR(
   NOT(Airline_1__r.BIETA_Member__c),   
   NOT(Airline_2__r.BIETA_Member__c)
@@ -363,7 +329,6 @@
         <errorConditionFormula>AND(
  ISNEW(),
  ISPICKVAL(MITAorBIETA__c, &apos;MITA&apos;),
- Active__c,
  OR(
   NOT(Airline_1__r.MITA_Member__c),   
   NOT(Airline_2__r.MITA_Member__c)
@@ -374,45 +339,32 @@
     <validationRules>
         <fullName>N3_BIETA_Agreement_type_not_enabled</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(
- Active__c,
-
- IF(CASE(TEXT(Agreement_type__c),
-
+        <errorConditionFormula>IF(CASE(TEXT(Agreement_type__c),
  &apos;Bilateral, both carriers can issue electronic tickets&apos;,
  IF((OR(ISNULL(Airline_1__r.BIETA_Bilateral_Date__c),ISNULL(Airline_2__r.BIETA_Bilateral_Date__c))),&apos;t&apos;,&apos;f&apos;),
   
  &apos;One Way Passenger Issuing Airline&apos;,
- IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Electronic_Issuing_Airline__c),ISNULL(Airline_2__r.BIETA_One_way_Electronic_Participating__c))),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Electronic_Issuing_Airline__c),ISNULL(Airline_2__r.BIETA_One_way_Electronic_Issuing_Airline__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;One Way Passenger Partcipating&apos;,
- IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Electronic_Participating__c),ISNULL(Airline_2__r.BIETA_One_way_Electronic_Issuing_Airline__c))),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Electronic_Participating__c),ISNULL(Airline_2__r.BIETA_One_way_Electronic_Participating__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;One Way Intermodal Issuing Date&apos;,
- IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Intermodal_Issuing_Airline__c),ISNULL(Airline_2__r.BIETA_One_way_Intermodal_Participating__c))),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Intermodal_Issuing_Airline__c),ISNULL(Airline_2__r.BIETA_One_way_Intermodal_Issuing_Airline__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;One Way Intermodal Participating Date&apos;,
- IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Intermodal_Participating__c),ISNULL(Airline_2__r.BIETA_One_way_Intermodal_Issuing_Airline__c))),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.BIETA_One_way_Intermodal_Participating__c),ISNULL(Airline_2__r.BIETA_One_way_Intermodal_Participating__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;f&apos;
-)=&apos;t&apos;,true,false)
-)</errorConditionFormula>
+)=&apos;t&apos;,true,false)</errorConditionFormula>
         <errorMessage>This agreement type is not enabled for the selected airlines</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>N3_MITA_Agreement_type_not_enabled</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(
- Active__c,
- IF(CASE(TEXT(Agreement_type__c),
-
+        <errorConditionFormula>IF(CASE(TEXT(Agreement_type__c),
  &apos;The Passenger and Cargo Interline Traffic Agreement&apos;,
- IF(
-  (OR(ISNULL(Airline_1__r.MITA_IATA_Interline_Passenger__c),
-  ISNULL(Airline_2__r.MITA_IATA_Interline_Passenger__c),
-  ISNULL(Airline_1__r.MITA_IATA_Interline_Cargo__c),
-  ISNULL(Airline_2__r.MITA_IATA_Interline_Cargo__c))
-  ),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.MITA_IATA_Interline_Passenger__c),ISNULL(Airline_2__r.MITA_IATA_Interline_Passenger__c),ISNULL(Airline_1__r.MITA_IATA_Interline_Cargo__c),ISNULL(Airline_2__r.MITA_IATA_Interline_Cargo__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;The Passenger Interline Agreement&apos;,
  IF((OR(ISNULL(Airline_1__r.MITA_IATA_Interline_Passenger__c),ISNULL(Airline_2__r.MITA_IATA_Interline_Passenger__c))),&apos;t&apos;,&apos;f&apos;),
@@ -421,14 +373,13 @@
  IF((OR(ISNULL(Airline_1__r.MITA_IATA_Interline_Cargo__c),ISNULL(Airline_2__r.MITA_IATA_Interline_Cargo__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;The One Way Issuing Airline&apos;,
- IF((OR(ISNULL(Airline_1__r.MITA_One_way_Pass_Issuing_Airline__c),ISNULL(Airline_2__r.MITA_One_way_Pass_Participating__c))),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.MITA_One_way_Pass_Issuing_Airline__c),ISNULL(Airline_2__r.MITA_One_way_Pass_Issuing_Airline__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;The One Way Participating Airline&apos;,
- IF((OR(ISNULL(Airline_1__r.MITA_One_way_Pass_Participating__c),ISNULL(Airline_2__r.MITA_One_way_Pass_Issuing_Airline__c))),&apos;t&apos;,&apos;f&apos;),
+ IF((OR(ISNULL(Airline_1__r.MITA_One_way_Pass_Participating__c),ISNULL(Airline_2__r.MITA_One_way_Pass_Participating__c))),&apos;t&apos;,&apos;f&apos;),
  
  &apos;f&apos;
-)=&apos;t&apos;,true,false)
-)</errorConditionFormula>
+)=&apos;t&apos;,true,false)</errorConditionFormula>
         <errorMessage>This agreement type is not enabled for the selected airlines</errorMessage>
     </validationRules>
     <validationRules>
@@ -436,20 +387,24 @@
         <active>true</active>
         <description>Prevents &quot;junior&quot; BIETA members from requesting agreements to senior airlines.
 The seniorship is calculate on a different date for each agreement type.</description>
-        <errorConditionFormula>IF(CASE(TEXT(Agreement_type__c),
-
+        <errorConditionFormula>IF(CASE(TEXT(Agreement_type__c), 
 &apos;Bilateral, both carriers can issue electronic tickets&apos;, 
 IF(Airline_1__r.BIETA_Bilateral_Date__c &gt; Airline_2__r.BIETA_Bilateral_Date__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;One Way Passenger Issuing Airline&apos;, &apos;f&apos;,
+&apos;One Way Passenger Issuing Airline&apos;, 
+IF(Airline_1__r.BIETA_One_way_Electronic_Issuing_Airline__c &gt; Airline_2__r.BIETA_One_way_Electronic_Issuing_Airline__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;One Way Passenger Partcipating&apos;, &apos;f&apos;,
+&apos;One Way Passenger Partcipating&apos;, 
+IF(Airline_1__r.BIETA_One_way_Electronic_Participating__c &gt; Airline_2__r.BIETA_One_way_Electronic_Participating__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;One Way Intermodal Issuing Date&apos;, &apos;f&apos;,
+&apos;One Way Intermodal Issuing Date&apos;, 
+IF(Airline_1__r.BIETA_One_way_Intermodal_Issuing_Airline__c &gt; Airline_2__r.BIETA_One_way_Intermodal_Issuing_Airline__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;One Way Intermodal Participating Date&apos;, &apos;f&apos;,
+&apos;One Way Intermodal Participating Date&apos;, 
+IF(Airline_1__r.BIETA_One_way_Intermodal_Participating__c &gt; Airline_2__r.BIETA_One_way_Intermodal_Participating__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;f&apos; )=&apos;t&apos;,true,false)</errorConditionFormula>
+&apos;f&apos; 
+)=&apos;t&apos;,true,false)</errorConditionFormula>
         <errorMessage>The selected airline has more seniority than the actual one</errorMessage>
     </validationRules>
     <validationRules>
@@ -457,24 +412,25 @@ IF(Airline_1__r.BIETA_Bilateral_Date__c &gt; Airline_2__r.BIETA_Bilateral_Date__
         <active>true</active>
         <description>Prevents &quot;junior&quot; MITA members from requesting agreements to senior airlines.
 The seniorship is calculate on a different date for each agreement type.</description>
-        <errorConditionFormula>AND(
- Active__c,
-IF(CASE(TEXT(Agreement_type__c), 
+        <errorConditionFormula>IF(CASE(TEXT(Agreement_type__c), 
 &apos;The Passenger and Cargo Interline Traffic Agreement&apos;, 
-IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
+IF(OR(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
 
 
-&apos;The Passenger Interline Agreement&apos;, &apos;f&apos;,
+&apos;The Passenger Interline Agreement&apos;, 
+IF(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;The Cargo Interline Agreement&apos;, &apos;f&apos;,
+&apos;The Cargo Interline Agreement&apos;, 
+IF(Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;The One Way Issuing Airline&apos;, &apos;f&apos;,
+&apos;The One Way Issuing Airline&apos;, 
+IF(Airline_1__r.MITA_One_way_Pass_Issuing_Airline__c &gt; Airline_2__r.MITA_One_way_Pass_Issuing_Airline__c,&apos;t&apos;,&apos;f&apos;), 
 
-&apos;The One Way Participating Airline&apos;, &apos;f&apos;,
+&apos;The One Way Participating Airline&apos;, 
+IF(Airline_1__r.MITA_One_way_Pass_Participating__c &gt; Airline_2__r.MITA_One_way_Pass_Participating__c,&apos;t&apos;,&apos;f&apos;), 
 
 &apos;f&apos; 
-)=&apos;t&apos;,true,false)
-)</errorConditionFormula>
+)=&apos;t&apos;,true,false)</errorConditionFormula>
         <errorMessage>The selected airline has more seniority than the actual one</errorMessage>
     </validationRules>
 </CustomObject>

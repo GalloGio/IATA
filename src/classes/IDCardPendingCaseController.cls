@@ -20,9 +20,7 @@ public with sharing class IDCardPendingCaseController{
     }
     
     public Case myCase {get;set;}
-     public ID_Card_Application__c myIdApp{get;set;}
     private String cid;
-    private String apId;
     
     private static String IDCARD_PORTAL_LANG = 'idcard_portal_lang';
     
@@ -43,16 +41,12 @@ public with sharing class IDCardPendingCaseController{
         }       
         
         
-        if (System.currentPageReference().getParameters().containsKey('cid')){ 
+        if (System.currentPageReference().getParameters().containsKey('cid')) 
             cid = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get('cid'));
-            myCase  = [Select Id, Status,CaseNumber, IATA_Code__c,CreatedDate,Related_ID_Card_Application__r.Name,Related_ID_Card_Application__r.Type_of_application__c,Related_ID_Card_Application__r.Displayed_Name__c from Case where Id=: cid limit 1];    
-        }
         
-        else if(System.currentPageReference().getParameters().containsKey('apId')){ //INC239933
-            apId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get('apId'));
-            myIdApp  = [Select Id, Name, Displayed_Name__c, IATA_Code__c, VER_Number__c, Start_Date_Agency_Month__c , Application_Status__c, Start_Date_Agency_Year__c, Type_of_application__c, Terms_and_Conditions_Time_Stamp__c from ID_Card_Application__c where Id=: apId limit 1];    
-
-        }
+        
+        myCase  = [Select Id, Status,CaseNumber, IATA_Code__c,CreatedDate,Related_ID_Card_Application__r.Name,Related_ID_Card_Application__r.Type_of_application__c,Related_ID_Card_Application__r.Displayed_Name__c from Case where Id=: cid limit 1];    
+        
     
     }
 

@@ -6,8 +6,6 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
     public List<String> filesToBeDeleted;
     public List<AmazonFile__c> amazonFilesToInsert;
     public map<String,AmazonFile__c> setAmazonFilesToInsert;
-    global Map<Id, String> errorMap {get; set;}
-    
 
     public IfapProcessResultsBatch(IfapToolManager.PWCResponses pwcress ) {
         this.errors = new list<String>();
@@ -16,7 +14,6 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
         this.amazonFilesToInsert = new List<AmazonFile__c>();
         this.setAmazonFilesToInsert = new map<String,AmazonFile__c>(); 
         listObjectsToProcess = processPWCResults(pwcress);
-        errorMap = new Map<Id,String>();
     }
 
     global List<sObject> start(Database.BatchableContext BC){
@@ -39,39 +36,17 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
             }
             System.debug('*********** INSERTS ' + listInserts);
             System.debug('*********** UPDATES ' + listUpdates);
- 
+
             TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
             TransformationHelper.CalculateBusinessHoursAges = true;
           //  CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
             // Do the inserts
             Database.SaveResult[] listInsertResult = Database.insert(listInserts,false);
-            for(Database.SaveResult sr : listInsertResult){
-                if(sr.isSuccess()){
-                    processSaveResults('INSERT', listInserts, listInsertResult);        
-                }else{
-                    for(Database.Error err : sr.getErrors()){
-                        processSaveResults('INSERT', listInserts, listInsertResult);
-                        String errMsg = 'ERROR INSERTING - IFAP ID ' + sr.getID() + ' error message ' + err.getMessage();
-                        errorMap.put(sr.getId(), errMsg);
-                    }
-                }
-            }
-            
+            processSaveResults('INSERT', listInserts, listInsertResult);
             //Do the updates
             Database.SaveResult[] listUpdateResult = Database.update(listUpdates,false);
-            for(Database.SaveResult sr : listUpdateResult){
-                if(sr.isSuccess()){
-                    processSaveResults('UPDATE', listUpdates, listUpdateResult);        
-                }
-                else{
-                    for(Database.Error err : sr.getErrors()){
-                        processSaveResults('UPDATE', listUpdates, listUpdateResult);
-                        String errMsg = 'ERROR UPDATING - IFAP ID ' + sr.getID() + ' error message ' + err.getMessage();
-                        errorMap.put(sr.getId(), errMsg); 
-                    }
-                }
-            }
+            processSaveResults('UPDATE', listUpdates, listUpdateResult);
 
             TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
             TransformationHelper.CalculateBusinessHoursAges = false;
@@ -83,7 +58,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 
             TransformationHelper.sendEmailSupport('FATAL: IfapProcessBatch', e.getMessage() + '   ' + e.getStackTraceString());
         }
- 
+
     }
 
     private void processSaveResults( String label, List<sObject> listObject, Database.SaveResult[] listSaveResult ) {
@@ -142,7 +117,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
         try{
             deleteResults(filesToBeDeleted);
             //  insert AmazonFile__c objects
-            amazonFilesToInsert.addAll( setAmazonFilesToInsert.values());
+               amazonFilesToInsert.addAll( setAmazonFilesToInsert.values());
             Database.SaveResult[] listInsertResult = Database.insert(setAmazonFilesToInsert.values(),false);
                     ///    TransformationHelper.sendEmailSupport('SALVATORE finish',' amazonFile ' + amazonFilesToInsert);
             System.debug(LoggingLevel.ERROR, '######################### (IfapProcessResultsBatch)SALVATORE finish: '+listInsertResult +' ERRORS');
@@ -156,41 +131,6 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
             String title = 'Ifap process results batch ';
             IfapProcessScheduler.sendErrorEmail(title, errors);
             System.debug(LoggingLevel.ERROR, '######################### (IfapProcessResultsBatch) BATCH FINISHED: '+errors.size()+' ERRORS');
-
-            //Sending email if something wrong happend
-            List<String> supEmails = new List<String>();
-             for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
-                  supEmails.add(email.Support_Email__c);
-
-            if(!errorMap.isEmpty()){
-                String body = 'The IfapProcessResultsBatch job has finished\n'
-                              + 'There were ' + errorMap.size() + ' erros. Please find error list attached.';
-
-                //Creating CSV file with errors
-                String finalstr = 'Id,Error,Errors-XML\n';
-                String subject = 'Ifap Process Results Batch Error List';
-
-                for(Id id : errorMap.keySet()){
-                    String err = errorMap.get(id);
-                    String recordString = '"'+id+'","'+err+'","'+errors+'"\n';
-                    finalstr = finalstr + recordString;
-                }
-
-                Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-
-                Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
-                efa.setFileName('IfapProcessResultsBatchErrors_'+datetime.now()+'.csv');
-                efa.setBody(Blob.valueOf(finalstr));
-
-                //Set email parametrs
-                email.setSubject(subject);
-                email.setToAddresses(supEmails);
-                email.setPlainTextBody( body );
-                email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
-
-                Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});   
-
-            }
 
         }catch(Exception e){
 

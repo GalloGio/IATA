@@ -68,15 +68,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Data__c</fullName>
-        <externalId>false</externalId>
-        <label>Input Data</label>
-        <length>32768</length>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>5</visibleLines>
-    </fields>
-    <fields>
         <fullName>Displayed_Message__c</fullName>
         <externalId>false</externalId>
         <label>Displayed Message</label>
@@ -161,6 +152,19 @@
     </fields>
     <label>IEC Error Log</label>
     <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Source__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>AllErrors</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
@@ -175,72 +179,6 @@
             <value>Error</value>
         </filters>
         <label>Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>DataLoader_All_Errors</fullName>
-        <columns>NAME</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>IATACODE__c</columns>
-        <columns>Source__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source__c</field>
-            <operation>startsWith</operation>
-            <value>DataLoader</value>
-        </filters>
-        <label>DataLoader - All Errors</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Errors_GSS_CACWEB</fullName>
-        <columns>NAME</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>GSS,CAC</value>
-        </filters>
-        <label>Errors for GSS &amp; CACWEB</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Errors_for_GSS_CACWEB_File_Production</fullName>
-        <columns>NAME</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Type__c</columns>
-        <columns>Errror_Message__c</columns>
-        <columns>Source__c</columns>
-        <columns>Displayed_Message__c</columns>
-        <columns>Stack_Trace__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Type__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <filters>
-            <field>Source__c</field>
-            <operation>contains</operation>
-            <value>GSS,CAC</value>
-        </filters>
-        <filters>
-            <field>Displayed_Message__c</field>
-            <operation>startsWith</operation>
-            <value>File Generation</value>
-        </filters>
-        <label>Errors for GSS &amp; CACWEB File Production</label>
         <language>en_US</language>
     </listViews>
     <listViews>

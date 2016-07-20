@@ -57,46 +57,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Authorized_Consumption__c</fullName>
-        <externalId>false</externalId>
-        <label>Authorized Consumption</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>CAC_Subscription_Detail__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Related Record of the CAC Subscription Detail (Authorized Limit, File Description and Web Service Type)</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Related Record of the CAC Subscription Detail (Authorized Limit, File Description and Web Service Type)</inlineHelpText>
-        <label>CAC Subscription Detail</label>
-        <referenceTo>CAC_Subscription_Detail__c</referenceTo>
-        <relationshipLabel>IEC Usage Trackers Live</relationshipLabel>
-        <relationshipName>IEC_Usage_Trackers_Live</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>CAC_Web_Service_Id__c</fullName>
-        <description>Unique Id form the CAC Web service</description>
-        <externalId>true</externalId>
-        <inlineHelpText>Unique Id form the CAC Web service</inlineHelpText>
-        <label>CAC Web Service Id</label>
-        <length>15</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Counter__c</fullName>
         <defaultValue>1</defaultValue>
         <description>Usage value</description>
@@ -127,24 +87,8 @@
         <fullName>Hash_Value__c</fullName>
         <description>Hash generated from a set of values. Used for compiling the live usage into daily usage.</description>
         <externalId>false</externalId>
-        <formula>IF(
-    TEXT(Related_Application_Type__c) == &apos;CACSWS&apos; ||
-    TEXT(Related_Application_Type__c) == &apos;CACEWS&apos;,
-        TEXT(YEAR(DATEVALUE(Date__c)))+
-        LPAD(TEXT(MONTH(DATEVALUE(Date__c))), 2, &apos;0&apos;)+
-        LPAD(TEXT(DAY(DATEVALUE(Date__c))), 2, &apos;0&apos;)+
-        BLANKVALUE(CAC_Subscription_Detail__c, &apos;Anonymous&apos;)+
-        TEXT(Search_Target__c)+
-        TEXT(Search_Status__c)
-    ,
-        TEXT(YEAR(DATEVALUE(Date__c)))+
-        TEXT(MONTH(DATEVALUE(Date__c)))+
-        TEXT(DAY(DATEVALUE(Date__c)))+
-        TEXT(Related_Application_Type__c)+
-        BLANKVALUE(RelatedContact__c, &apos;Anonymous&apos;)+
-        TEXT(Search_Target__c)+
-        TEXT(Search_Status__c)
-)</formula>
+        <formula>TEXT(YEAR(DATEVALUE(Date__c)))+TEXT(MONTH(DATEVALUE(Date__c)))+TEXT(DAY(DATEVALUE(Date__c)))+TEXT(Related_Application_Type__c)
++BLANKVALUE(RelatedContact__c, &apos;Anonymous&apos;)+TEXT(Search_Target__c)+TEXT(Search_Status__c)</formula>
         <inlineHelpText>Hash generated from a set of values. Used for compiling the live usage into daily usage.</inlineHelpText>
         <label>Hash Value</label>
         <required>false</required>
@@ -185,26 +129,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>GAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACSWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CACEWS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ASL</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>

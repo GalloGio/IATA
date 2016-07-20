@@ -7,15 +7,15 @@ public class AMS_AgencyUpdateHelperTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
 
-        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
+        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
 
-        List<Account> agencylist = new List<Account>();
-        Account a1 = new Account(Name='Test1 Parent Agency',Short_Name__c='Test1 Parent Agency', IATAcode__c = '1234567', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        Account a2 = new Account(Name='Test1 Child Agency',Short_Name__c='Test1 Child Agency', IATAcode__c = '4566123', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        Account a3 = new Account(Name='Test2 Parent Agency',Short_Name__c='Test2 Parent Agency', IATAcode__c = '7891234', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        Account a4 = new Account(Name='Test2 Child Agency',Short_Name__c='Test2 Child Agency', IATAcode__c = '0001234', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        Account a5 = new Account(Name='Test3 Parent Agency',Short_Name__c='Test3 Parent Agency', IATAcode__c = '7891235', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        Account a6 = new Account(Name='Test3 Child Agency',Short_Name__c='Test3 Child Agency', IATAcode__c = '0001235', IATA_ISO_Country__c = ctry.id, Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        List<AMS_Agency__c> agencylist = new List<AMS_Agency__c>();
+        AMS_Agency__c a1 = new AMS_Agency__c(Name='Test1 Parent Agency',Legal_Name_1__c='Test1 Parent Agency', IATAcode__c = '1234567', Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'));
+        AMS_Agency__c a2 = new AMS_Agency__c(Name='Test1 Child Agency',Legal_Name_1__c='Test1 Child Agency', IATAcode__c = '4566123', Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'));
+        AMS_Agency__c a3 = new AMS_Agency__c(Name='Test2 Parent Agency',Legal_Name_1__c='Test2 Parent Agency', IATAcode__c = '7891234', Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'));
+        AMS_Agency__c a4 = new AMS_Agency__c(Name='Test2 Child Agency',Legal_Name_1__c='Test2 Child Agency', IATAcode__c = '0001234', Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'));
+        AMS_Agency__c a5 = new AMS_Agency__c(Name='Test3 Parent Agency',Legal_Name_1__c='Test3 Parent Agency', IATAcode__c = '7891235', Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'));
+        AMS_Agency__c a6 = new AMS_Agency__c(Name='Test3 Child Agency',Legal_Name_1__c='Test3 Child Agency', IATAcode__c = '0001235', Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'));
         agencylist.add(a1);
         agencylist.add(a2);
         agencylist.add(a3);
@@ -32,9 +32,9 @@ public class AMS_AgencyUpdateHelperTest {
         insert hierachieslist;
 
         List<AMS_Agencies_relationhip__c> relationshiplist = new List<AMS_Agencies_relationhip__c>();
-        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a2.id,Parent_Account__c=a1.id);
-        AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=a4.id,Parent_Account__c=a3.id);
-        AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a6.id,Parent_Account__c=a4.id);
+        AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Agency__c=a2.id,Parent_agency__c=a1.id);
+        AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Agency__c=a4.id,Parent_agency__c=a3.id);
+        AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Agency__c=a6.id,Parent_agency__c=a4.id);
         relationshiplist.add(ar1);
         relationshiplist.add(ar2);
         relationshiplist.add(ar3);
@@ -52,22 +52,22 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(ar2);
         update updateAll;
 
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c where Account__c = null];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c where Agency__c = null];
         System.assertEquals(3, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c != null);
-            System.assert(au.Account__c == null);
+            System.assert(au.Agency__c == null);
         }
         Test.stopTest();
     }
     
     // DATA Test content
     public static IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-    public static Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-    public static List<Account> agencylist = new List<Account>();
+    public static Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+    public static List<AMS_Agency__c> agencylist = new List<AMS_Agency__c>();
     public static List<AMS_Agency_Profile__c> agencyprofileList = new List<AMS_Agency_Profile__c>();
-    public static List<AMS_Account_Role__c> agencyOwnershipList = new List<AMS_Account_Role__c>();
+    public static List<AMS_Agency_Ownership__c> agencyOwnershipList = new List<AMS_Agency_Ownership__c>();
     public static List<AMS_Address__c> agencyAddressList = new List<AMS_Address__c>();
     public static List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
     public static List<AMS_Agency_Segment__c> agencySegmentList = new List<AMS_Agency_Segment__c>();
@@ -81,20 +81,20 @@ public class AMS_AgencyUpdateHelperTest {
     public static AMS_Affiliation__c aff = new AMS_Affiliation__c();
     public static List<AMS_Agency_Affiliation__c> agencyAffiliations = new List<AMS_Agency_Affiliation__c>();
 
-    public static Account a1 = null;
-    public static Account a2 = null;
-    public static Account a3 = null;
-    public static Account a4 = null;
+    public static AMS_Agency__c a1 = null;
+    public static AMS_Agency__c a2 = null;
+    public static AMS_Agency__c a3 = null;
+    public static AMS_Agency__c a4 = null;
     
     public static AMS_Agency_Profile__c ap1 = null;
     public static AMS_Agency_Profile__c ap2 = null;
     public static AMS_Agency_Profile__c ap3 = null;
     public static AMS_Agency_Profile__c ap4 = null;
     
-    public static AMS_Account_Role__c ao1 = null;
-    public static AMS_Account_Role__c ao2 = null;
-    public static AMS_Account_Role__c ao3 = null;
-    public static AMS_Account_Role__c ao4 = null;
+    public static AMS_Agency_Ownership__c ao1 = null;
+    public static AMS_Agency_Ownership__c ao2 = null;
+    public static AMS_Agency_Ownership__c ao3 = null;
+    public static AMS_Agency_Ownership__c ao4 = null;
  
     public static AMS_Address__c aa1 = null;
     public static AMS_Address__c aa2 = null;
@@ -134,21 +134,69 @@ public class AMS_AgencyUpdateHelperTest {
         insert air;
 
         
-        a1 = new Account(Name='Test1 Agency',Short_Name__c='Test1 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '1234567', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a2 = new Account(Name='Test2 Agency',Short_Name__c='Test2 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '2345671', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a3 = new Account(Name='Test3 Agency',Short_Name__c='Test3 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '3456712', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a4 = new Account(Name='Test4 Agency',Short_Name__c='Test4 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '4567123', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a1 = new AMS_Agency__c(Name='Test1 Agency',Legal_Name_1__c='Test1 Agency', Country__c = ctry.id, IATAcode__c = '1234567', RecordTypeId = agenciesRT.get('PASSENGER'));
+        a2 = new AMS_Agency__c(Name='Test2 Agency',Legal_Name_1__c='Test2 Agency', Country__c = ctry.id, IATAcode__c = '2345671', RecordTypeId = agenciesRT.get('PASSENGER'));
+        a3 = new AMS_Agency__c(Name='Test3 Agency',Legal_Name_1__c='Test3 Agency', Country__c = ctry.id, IATAcode__c = '3456712', RecordTypeId = agenciesRT.get('PASSENGER'));
+        a4 = new AMS_Agency__c(Name='Test4 Agency',Legal_Name_1__c='Test4 Agency', Country__c = ctry.id, IATAcode__c = '4567123', RecordTypeId = agenciesRT.get('PASSENGER'));
         agencylist.add(a1);
         agencylist.add(a2);
         agencylist.add(a3);
         agencylist.add(a4);
         insert agencylist;
         
+        /*
+        ap1 = new AMS_Agency_Profile__c(Agency__c=a1.id);
+        ap2 = new AMS_Agency_Profile__c(Agency__c=a2.id);
+        ap3 = new AMS_Agency_Profile__c(Agency__c=a3.id);
+        ap4 = new AMS_Agency_Profile__c(Agency__c=a4.id);
+        agencyprofileList.add(ap1);
+        agencyprofileList.add(ap2);
+        agencyprofileList.add(ap3);
+        agencyprofileList.add(ap4);
+        insert agencyprofileList;
+       
         
-        aair1 = new AMS_Agency_Airport__c(Account__c=a1.id,Airport__c=air.id);
-        aair2 = new AMS_Agency_Airport__c(Account__c=a2.id,Airport__c=air.id);
-        aair3 = new AMS_Agency_Airport__c(Account__c=a3.id,Airport__c=air.id);
-        aair4 = new AMS_Agency_Airport__c(Account__c=a4.id,Airport__c=air.id);
+        aa1 = new AMS_Address__c(Agency__c=a1.id);
+        aa2 = new AMS_Address__c(Agency__c=a2.id);
+        aa3 = new AMS_Address__c(Agency__c=a3.id);
+        aa4 = new AMS_Address__c(Agency__c=a4.id);
+        agencyAddressList.add(aa1);
+        agencyAddressList.add(aa2);
+        agencyAddressList.add(aa3);
+        agencyAddressList.add(aa4);
+        insert agencyAddressList;
+        
+        
+        ins1 = new AMS_Inspection__c(Agency__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins2 = new AMS_Inspection__c(Agency__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins3 = new AMS_Inspection__c(Agency__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins4 = new AMS_Inspection__c(Agency__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        agencyInspectionList.add(ins1);
+        agencyInspectionList.add(ins2);
+        agencyInspectionList.add(ins3);
+        agencyInspectionList.add(ins4);       
+        insert agencyInspectionList;
+       
+        
+        
+        as1 = new AMS_Agency_Segment__c(Agency__c=a1.id,Segment__c=s.id);
+        as2 = new AMS_Agency_Segment__c(Agency__c=a2.id,Segment__c=s.id);
+        as3 = new AMS_Agency_Segment__c(Agency__c=a3.id,Segment__c=s.id);
+        as4 = new AMS_Agency_Segment__c(Agency__c=a4.id,Segment__c=s.id);
+        agencySegmentList.add(as1);
+        agencySegmentList.add(as2);
+        agencySegmentList.add(as3);
+        agencySegmentList.add(as4);
+        insert agencySegmentList;
+        
+         */
+
+        
+        
+        aair1 = new AMS_Agency_Airport__c(Agency__c=a1.id,Airport__c=air.id);
+        aair2 = new AMS_Agency_Airport__c(Agency__c=a2.id,Airport__c=air.id);
+        aair3 = new AMS_Agency_Airport__c(Agency__c=a3.id,Airport__c=air.id);
+        aair4 = new AMS_Agency_Airport__c(Agency__c=a4.id,Airport__c=air.id);
         agencyAirportList.add(aair1);
         agencyAirportList.add(aair2);
         agencyAirportList.add(aair3);
@@ -157,15 +205,15 @@ public class AMS_AgencyUpdateHelperTest {
         
         
         
-        emp1 = new AMS_Employee__c(Account__c=a1.id,Person__c=per.id);
+        emp1 = new AMS_Employee__c(Agency__c=a1.id,Person__c=per.id);
         agencyEmployees.add(emp1);
         insert agencyEmployees;
         
             
-        aaff1 = new AMS_Agency_Affiliation__c(Account__c=a1.id,Affiliation__c=aff.id);
-        aaff2 = new AMS_Agency_Affiliation__c(Account__c=a2.id,Affiliation__c=aff.id);
-        aaff3 = new AMS_Agency_Affiliation__c(Account__c=a3.id,Affiliation__c=aff.id);
-        aaff4 = new AMS_Agency_Affiliation__c(Account__c=a4.id,Affiliation__c=aff.id);
+        aaff1 = new AMS_Agency_Affiliation__c(Agency__c=a1.id,Affiliation__c=aff.id);
+        aaff2 = new AMS_Agency_Affiliation__c(Agency__c=a2.id,Affiliation__c=aff.id);
+        aaff3 = new AMS_Agency_Affiliation__c(Agency__c=a3.id,Affiliation__c=aff.id);
+        aaff4 = new AMS_Agency_Affiliation__c(Agency__c=a4.id,Affiliation__c=aff.id);
         agencyAffiliations.add(aaff1);
         agencyAffiliations.add(aaff2);
         agencyAffiliations.add(aaff3);
@@ -190,14 +238,13 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(a2);
         updateAll.add(a3);
         updateAll.add(a4);
-        update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
     }        
@@ -209,10 +256,10 @@ public class AMS_AgencyUpdateHelperTest {
     public static testmethod void test_agencyUpdate_Profile(){
         configureTest();
         //custom coinfiguration
-        ap1 = new AMS_Agency_Profile__c(Account__c=a1.id);
-        ap2 = new AMS_Agency_Profile__c(Account__c=a2.id);
-        ap3 = new AMS_Agency_Profile__c(Account__c=a3.id);
-        ap4 = new AMS_Agency_Profile__c(Account__c=a4.id);
+        ap1 = new AMS_Agency_Profile__c(Agency__c=a1.id);
+        ap2 = new AMS_Agency_Profile__c(Agency__c=a2.id);
+        ap3 = new AMS_Agency_Profile__c(Agency__c=a3.id);
+        ap4 = new AMS_Agency_Profile__c(Agency__c=a4.id);
         agencyprofileList.add(ap1);
         agencyprofileList.add(ap2);
         agencyprofileList.add(ap3);
@@ -231,12 +278,12 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(ap4);
         update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
     }
@@ -248,11 +295,10 @@ public class AMS_AgencyUpdateHelperTest {
     public static testmethod void test_agencyUpdate_Owner(){
         configureTest();
         //custom coinfiguration
-
-        ao1 = new AMS_Account_Role__c(Account__c = a1.id, Person__c = per.id);
-        ao2 = new AMS_Account_Role__c(Account__c = a2.id, Person__c = per.id);
-        ao3 = new AMS_Account_Role__c(Account__c = a3.id, Person__c = per.id);
-        ao4 = new AMS_Account_Role__c(Account__c = a4.id, Person__c = per.id);
+        ao1 = new AMS_Agency_Ownership__c(Agency__c=a1.id,AMS_Agency_Owner__c=o.id);
+        ao2 = new AMS_Agency_Ownership__c(Agency__c=a2.id,AMS_Agency_Owner__c=o.id);
+        ao3 = new AMS_Agency_Ownership__c(Agency__c=a3.id,AMS_Agency_Owner__c=o.id);
+        ao4 = new AMS_Agency_Ownership__c(Agency__c=a4.id,AMS_Agency_Owner__c=o.id);
         agencyOwnershipList.add(ao1);
         agencyOwnershipList.add(ao2);
         agencyOwnershipList.add(ao3);
@@ -272,12 +318,12 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(ao4);
         update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
     }
@@ -286,14 +332,14 @@ public class AMS_AgencyUpdateHelperTest {
         //custom coinfiguration
         //because of too many SOQL queries
         insert ctry ;
-        a1 = new Account(Name='Test1 Agency',Short_Name__c='Test1 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '1234567', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
-        a2 = new Account(Name='Test2 Agency',Short_Name__c='Test2 Agency', IATA_ISO_Country__c = ctry.id, IATAcode__c = '2345671', Sector__c = 'Travel Agent'/*, RecordTypeId = agenciesRT.get('PASSENGER')*/);
+        a1 = new AMS_Agency__c(Name='Test1 Agency',Legal_Name_1__c='Test1 Agency', Country__c = ctry.id, IATAcode__c = '1234567', RecordTypeId = agenciesRT.get('PASSENGER'));
+        a2 = new AMS_Agency__c(Name='Test2 Agency',Legal_Name_1__c='Test2 Agency', Country__c = ctry.id, IATAcode__c = '2345671', RecordTypeId = agenciesRT.get('PASSENGER'));
         agencylist.add(a1);
         agencylist.add(a2);
         insert agencylist;
         
-        aa1 = new AMS_Address__c(Account__c=a1.id);
-        aa2 = new AMS_Address__c(Account__c=a2.id);
+        aa1 = new AMS_Address__c(Agency__c=a1.id);
+        aa2 = new AMS_Address__c(Agency__c=a2.id);
         agencyAddressList.add(aa1);
         agencyAddressList.add(aa2);
         insert agencyAddressList;
@@ -307,12 +353,12 @@ public class AMS_AgencyUpdateHelperTest {
         //updateAll.add(aa2);
 
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(2, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
     }
@@ -322,10 +368,10 @@ public class AMS_AgencyUpdateHelperTest {
         configureTest();
         
         //custom coinfiguration
-        ins1 = new AMS_Inspection__c(Account__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
-        ins2 = new AMS_Inspection__c(Account__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
-        ins3 = new AMS_Inspection__c(Account__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
-        ins4 = new AMS_Inspection__c(Account__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins1 = new AMS_Inspection__c(Agency__c=a1.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins2 = new AMS_Inspection__c(Agency__c=a2.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins3 = new AMS_Inspection__c(Agency__c=a3.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
+        ins4 = new AMS_Inspection__c(Agency__c=a4.id,Accreditation_Endorsement_organisation__c=ao.id,Accreditation_Endorsement_Status_code__c = '0');
         agencyInspectionList.add(ins1);
         agencyInspectionList.add(ins2);
         agencyInspectionList.add(ins3);
@@ -343,12 +389,12 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(ins3);
         updateAll.add(ins4);
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
     }
@@ -357,10 +403,10 @@ public class AMS_AgencyUpdateHelperTest {
       public static testmethod void test_agencyUpdate_Assignment(){
         configureTest();
         //custom coinfiguration
-        as1 = new AMS_Agency_Segment__c(Account__c=a1.id,Segment__c=s.id);
-        as2 = new AMS_Agency_Segment__c(Account__c=a2.id,Segment__c=s.id);
-        as3 = new AMS_Agency_Segment__c(Account__c=a3.id,Segment__c=s.id);
-        as4 = new AMS_Agency_Segment__c(Account__c=a4.id,Segment__c=s.id);
+        as1 = new AMS_Agency_Segment__c(Agency__c=a1.id,Segment__c=s.id);
+        as2 = new AMS_Agency_Segment__c(Agency__c=a2.id,Segment__c=s.id);
+        as3 = new AMS_Agency_Segment__c(Agency__c=a3.id,Segment__c=s.id);
+        as4 = new AMS_Agency_Segment__c(Agency__c=a4.id,Segment__c=s.id);
         agencySegmentList.add(as1);
         agencySegmentList.add(as2);
         agencySegmentList.add(as3);
@@ -380,12 +426,12 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(as4);
         update updateAll;
         
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
     }
@@ -425,33 +471,15 @@ public class AMS_AgencyUpdateHelperTest {
         updateAll.add(aaff4);
         update updateAll;
 
-        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
+        List<AMS_Agency_Updates__c> agencyUpdateList = [select id, Update_Type__c, RelationShip__c, Agency__c from AMS_Agency_Updates__c];
         System.assertEquals(4, agencyUpdateList.size());
         for(AMS_Agency_Updates__c au :agencyUpdateList){
             System.assertEquals('Update', au.Update_Type__c);
             System.assert(au.RelationShip__c == null);
-            System.assert(au.Account__c != null);
+            System.assert(au.Agency__c != null);
         }
         Test.stopTest();
         
-    }
-
-    static testMethod void test_agencyUpdate_sentUpdate() {
-        configureTest();
-        
-        List<SObject> updateAll = new List<SObject>();
-        a1.Name='Update Agency 1';
-        update a1;
-        
-        AMS_Agency_Updates__c agencyUpdate = [select id, Update_Type__c, RelationShip__c, Account__c from AMS_Agency_Updates__c];
-
-        Test.startTest();
-        agencyUpdate.Update_Type__c = 'Update_Sent';
-        update agencyUpdate;
-
-
-        //system.assertEquals(true, [SELECT Sent_To_External_System__c FROM Account WHERE Id = :a1.id].Sent_To_External_System__c);
-        Test.stopTest();
     }
     
 }

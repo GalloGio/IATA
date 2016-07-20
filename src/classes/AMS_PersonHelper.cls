@@ -1,18 +1,4 @@
 public class AMS_PersonHelper {
-
-    public static void updateContactInfo(Set<ID> contactIDS){
-        List<Contact> cts = [select id, email,phone, MobilePhone, Fax, Person__r.Email__c, Person__r.Phone__c, Person__r.DOB__c, Person__r.Mobile__c, Person__r.Fax__c from contact where Id in :contactIDS];
-        for(Contact c:cts){
-           
-            c.email = c.Person__r.Email__c; //trigger.newMap.get(personPerContact.get(c.id)).Email__c;#AMSFTS
-            c.phone  = c.Person__r.Phone__c;//trigger.newMap.get(personPerContact.get(c.id)).Phone__c;#AMSFTS
-            c.Birthdate= c.Person__r.DOB__c;//trigger.newMap.get(personPerContact.get(c.id)).DOB__c;#AMSFTS
-            c.MobilePhone= c.Person__r.Mobile__c;//trigger.newMap.get(personPerContact.get(c.id)).Mobile__c;#AMSFTS
-            c.Fax= c.Person__r.Fax__c;//trigger.newMap.get(personPerContact.get(c.id)).Fax__c;#AMSFTS
-            
-        }
-        update cts;
-    }
 /*
     public static void Ensure0to1ContactLookup(list<AMS_Person__c> persons){
         Map<Id,AMS_Person__c> contactIdToPerson = new Map<Id,AMS_Person__c>();

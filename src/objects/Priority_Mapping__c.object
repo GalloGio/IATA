@@ -334,14 +334,6 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
-    <fields>
-        <fullName>Visible_in_ISS_Portal__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Visible in ISS Portal</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
     <label>Priority Mapping</label>
     <listViews>
         <fullName>All</fullName>

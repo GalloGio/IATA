@@ -183,17 +183,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Financial_Security_Validation__c</fullName>
-        <description>ACR 06749697 - This field to validate FS in order to prevent fraudulent financial securities.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Fill the date when the financial security is validated with the financial institution issuer upon receipt.</inlineHelpText>
-        <label>Financial Security Validation</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>First_Call_Letter_required__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(
@@ -499,10 +488,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
             </picklistValues>
             <picklistValues>
                 <fullName>DIP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Guarantee</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2310,19 +2295,6 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
-        <fullName>Financial_Security_Validation_is_mandato</fullName>
-        <active>true</active>
-        <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>
-        <errorConditionFormula>ISNULL(Financial_Security_Validation__c)==TRUE
-&amp;&amp;
-ISPICKVAL(Security_Type__c,&quot;Bank Guarantee&quot;)
-&amp;&amp;
-(Account__r.IATA_ISO_Country__r.Name=&quot;Nigeria&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;South Africa&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Benin&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Senegal&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mali&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cote D&apos;ivoire&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Togo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Niger&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Gabon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Congo&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Chad&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Mauritania&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Cameroon&quot;||Account__r.IATA_ISO_Country__r.Name=&quot;Burkina Faso&quot;)
-&amp;&amp;ISNEW()</errorConditionFormula>
-        <errorDisplayField>Financial_Security_Validation__c</errorDisplayField>
-        <errorMessage>Please validate the FS and update this field</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Financial_institution_is_mandatory</fullName>
         <active>true</active>
         <errorConditionFormula>ISBLANK(Financial_Institution__c )</errorConditionFormula>
@@ -2423,8 +2395,7 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;Surety Bond&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;TAANZ Bonding Scheme&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
-NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
-NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>

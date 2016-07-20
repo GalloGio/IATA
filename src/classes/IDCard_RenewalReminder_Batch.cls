@@ -31,7 +31,7 @@ global class IDCard_RenewalReminder_Batch implements Database.Batchable<sObject>
                                                    and Valid_To_Date__c > NEXT_MONTH];
 
             //create list of pending idcard cases
-            Case[] pendingCases = [Select Id, Contact.Id From Case where Contact.Id IN :contactsIds and RecordType.Name = 'ID Card Application' and Status != 'Closed' limit 100];
+            Case[] pendingCases = [Select Id, Contact.Id From Case where Contact.Id IN :contactsIds and RecordType.Name = 'ID Card Application' and Status != 'Closed' limit 1];
 
             //create set of contacts that will be removed from renewal noticed if already have renewed their idcards or have pending idcard case
             Set<ID> contactsIdstoIgnore = new Set<id>();

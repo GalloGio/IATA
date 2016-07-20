@@ -154,13 +154,10 @@ public with sharing class vfIECGADResult_tst {
 				// trigger the Product Access creation
 				update oSubscription;
 				
-                SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
-                bat.execute(null);
 				Test.stopTest();
 	    		
 	    		// Set current page
 	    		PageReference pgRef = Page.IECGADResult;
-                pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter('GAD'));
 	    		Test.setCurrentPage(pgRef);
 	    		
 	    		// instantiate Controller
@@ -195,9 +192,6 @@ public with sharing class vfIECGADResult_tst {
 	    		// un-terminate agency3
 		    	oAccreditation3.Status__c = oRefAgencyStatus.Id;
 		    	update oAccreditation3;
-                bat = new SchdlGDPProductsAccountSnapshotCleanup();
-                List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
-                bat.execute(null, gpav);
 
 	    		pgCont = new vfIECGADResult(2); // since we'll have 3 agencies, use 2 per page so we can have 2 pages
 	    		pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(oAppFilters.Id));

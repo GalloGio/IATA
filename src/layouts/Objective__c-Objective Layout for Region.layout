@@ -54,10 +54,6 @@
                 <behavior>Required</behavior>
                 <field>Region__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Sub_region__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -76,7 +72,7 @@
                 <field>Initial__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Current__c</field>
             </layoutItems>
             <layoutItems>
@@ -84,7 +80,7 @@
                 <field>Children_Current_Value__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Deadline__c</field>
             </layoutItems>
         </layoutColumns>
@@ -93,7 +89,7 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Target__c</field>
             </layoutItems>
             <layoutItems>

@@ -6,7 +6,7 @@ global  class AcliUpdateBatch implements Database.Batchable<sObject>, Database.S
 global Database.QueryLocator start(Database.BatchableContext BC){
        String Query =                'SELECT Id,name,IATACode__c,Name_on_AOC__c,'
                                    +' Airline_designator__c,ICAO_designator__c,'
-                                   +' billingStreet,'
+                                   +' duplicate_flag_indicato__c,billingStreet,'
                                    +' billingCity,billingState,'
                                    +' billingCountry,billingPostalCode,'
                                    +' Membership_SITA__c,Memmership_ARINC__c,'

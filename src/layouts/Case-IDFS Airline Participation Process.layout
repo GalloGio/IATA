@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>E2CP__New_Comment</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>New_LBM_Checklist</customButtons>
     <customButtons>New_ICCS_Checklist</customButtons>
@@ -105,10 +104,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Groups__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -278,11 +273,11 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>MDM Validation</label>
+        <label>Bank Mandate Validation</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>MDM_Updated__c</field>
+                <field>Bank_Mandate_Validated__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -454,22 +449,6 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Related cases</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>200</height>
-                <page>AirlineSuspensionChildCases</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
     <quickActionList/>
     <relatedContent>
         <relatedContentItems>
@@ -518,7 +497,6 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>Case_Type__c</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

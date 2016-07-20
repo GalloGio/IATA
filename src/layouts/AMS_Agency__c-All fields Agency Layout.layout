@@ -222,6 +222,10 @@
                 <field>License_Number__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NPrimaryAddresses__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Parent_Reference_Number__c</field>
             </layoutItems>
@@ -323,7 +327,7 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>AMS_Agency_Owner__c</fields>
+        <fields>AMS_Owner__c.NAME</fields>
         <fields>Percentage__c</fields>
         <relatedList>AMS_Agency_Ownership__c.Agency__c</relatedList>
     </relatedLists>
@@ -341,7 +345,8 @@
         <fields>NAME</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <fields>Date_Organisation_Status_attained__c</fields>
-        <fields>Accreditation_Endorsement_organisation__c</fields>
+        <fields>AMS_Accreditation_Organization__c.Air_Code__c</fields>
+        <fields>AMS_Accreditation_Organization__c.NAME</fields>
         <relatedList>AMS_Inspection__c.Agency__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -374,7 +379,8 @@
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Person__c</fields>
+        <fields>AMS_Person__c.NAME</fields>
+        <fields>AMS_Person__c.First_Name__c</fields>
         <fields>Title__c</fields>
         <relatedList>AMS_Employee__c.Agency__c</relatedList>
     </relatedLists>
@@ -384,7 +390,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Affiliation__c</fields>
+        <fields>AMS_Affiliation__c.Affiliation_Code__c</fields>
+        <fields>AMS_Affiliation__c.NAME</fields>
         <relatedList>AMS_Agency_Affiliation__c.Agency__c</relatedList>
     </relatedLists>
     <relatedLists>

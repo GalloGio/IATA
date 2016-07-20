@@ -1,5 +1,5 @@
 public without sharing class vfIECSavedFilters {
-    public String ProductLine { get; set; }
+	
 	public String sErrorMessage {get; set;}
 	
 	public IECCustomer loggedCustomer { get; set; }
@@ -21,10 +21,6 @@ public without sharing class vfIECSavedFilters {
         lstSavedFilters = new List<IEC_Application_Filter__c>();
     }	
     
-    public void loadFilters(String iProductLine) {
-        ProductLine = iProductLine;
-        lstSavedFilters = IECApplicationsManager.LoadFilterByContact(ProductLine, loggedCustomer.RelatedContact.Id, false);      
-    }
     public void loadFilters() {
 		lstSavedFilters = IECApplicationsManager.LoadFilterByContact(loggedCustomer.RelatedContact.Id, false);   	
     }
@@ -34,8 +30,7 @@ public without sharing class vfIECSavedFilters {
         	//String sFilterId = lstSavedFilters.get(iFilterIndex).Id;
         	//String sParam = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_APPFILTER_ID);
             delete lstSavedFilters.get(iFilterIndex);
-            if (ProductLine != null) loadFilters(ProductLine);
-            else loadFilters();
+            loadFilters();
 
 			/*if (!String.isBlank(sParam)) {
 				sParam = IECUtil.DecodeDecryptParameter(sParam);

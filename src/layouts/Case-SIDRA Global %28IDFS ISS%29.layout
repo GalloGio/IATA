@@ -166,10 +166,6 @@
                 <behavior>Edit</behavior>
                 <field>New_interaction__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Visible_on_ISS_Portal__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -1048,6 +1044,10 @@
                 <field>New_SIDRA__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IsVisibleInSelfService</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -1172,9 +1172,9 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>GenericAttachmentListCase</page>
+                <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
+                <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -1209,7 +1209,6 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>Case_Type__c</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
         <fields>CASES.CREATED_DATE</fields>

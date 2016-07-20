@@ -57,12 +57,12 @@
             <apex:outputPanel id="searchPanel" >
             <Script>
             var $j = jQuery.noConflict();
-            $j('#IATACode').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
-            $j('#Country').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
-            $j('#IATACodeAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
-            $j('#CountryAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
-            $j('#DesignatorCodeBubble').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Designator_Bubble)}',title:''});    
-            </Script>
+	        $j('#IATACode').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
+	        $j('#Country').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
+	        $j('#IATACodeAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_IATACode_Bubble)}',title:''});
+	        $j('#CountryAirline').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Country_Bubble)}',title:''});
+	        $j('#DesignatorCodeBubble').popover({placement:'top',trigger:'click',html:true,content:'{!JSENCODE($Label.ISSP_Registration_Designator_Bubble)}',title:''});    
+	        </Script>
             <apex:form styleclass="login_box" forceSSL="true">
                 <div class="alert alert-danger" id="errorBox" style="display:{!if(errorMessage.size==0,'none','')}">
                     <strong>{!$Label.ISSP_Error} </strong>
@@ -86,35 +86,35 @@
                     <apex:actionFunction action="{!checkSearchDesignatorCode}" name="checkSearchDesignatorCode" status="changeData" />
                     
                     <div class="form-group" id="TypeOfCustomer">
-                        <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Type_of_Customer}</label>
-                        <apex:selectList styleclass="form-control rec" id="TypeSelect" value="{!selectedCustomerType}" onchange="selectType()" size="1" required="true">
-                        <apex:selectOptions value="{!CustomerTypeList}" />
-                        <!-- 
-                            <apex:selectOption itemValue="" itemLabel=" - Select the Type of your Company - "/>
-                            <apex:selectOption itemValue="Airline" itemLabel="Airline"/>
-                            <apex:selectOption itemValue="GloballSalesAgent" itemLabel="General Sales Agent"/>
-                            <apex:selectOption itemValue="Agency" itemLabel="Agency"/>
-                            <apex:selectOption itemValue="NonIATAAgent" itemLabel="Non IATA Agent"/>
-                            <apex:selectOption itemValue="TIESS" itemLabel="TIESS"/>
-                            <apex:selectOption itemValue="OtherCompany" itemLabel="Other Company"/>
-                            <apex:selectOption itemValue="GeneralPublic" itemLabel="General public"/>
-                         -->
-                        </apex:selectList>
-                        <div class="hiddenerror" style="display: none;">
-                            <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_TypeofCustomer}</p>
-                        </div>             
-                    </div>
-                    
-                    <!-- TF - SP10 - If airline, ask if has Airline Designator --> 
-                    <div class="form-group" style="display:{!IF(isAirline,'','none')}">
-                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Designator_Code_Question}</label>
-                        <apex:selectRadio style="width:15%" value="{!toSearchDesignatorCodeString}" onchange="checkSearchDesignatorCode()" >
-                            <apex:selectOptions value="{!iataCodeQuestion}"/>
-                        </apex:selectRadio>
-                    </div>
-                    
-                    <!-- TF - SP10 - If airline, search for Airline Designator -->
-                    <div class="form-group" id="DesignatorCode" style="display:{!IF(toSearchDesignatorCode,'','none')}">
+		                <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Type_of_Customer}</label>
+		                <apex:selectList styleclass="form-control rec" id="TypeSelect" value="{!selectedCustomerType}" onchange="selectType()" size="1" required="true">
+		                <apex:selectOptions value="{!CustomerTypeList}" />
+		                <!-- 
+		                  	<apex:selectOption itemValue="" itemLabel=" - Select the Type of your Company - "/>
+		                  	<apex:selectOption itemValue="Airline" itemLabel="Airline"/>
+		                  	<apex:selectOption itemValue="GloballSalesAgent" itemLabel="General Sales Agent"/>
+		                  	<apex:selectOption itemValue="Agency" itemLabel="Agency"/>
+		                  	<apex:selectOption itemValue="NonIATAAgent" itemLabel="Non IATA Agent"/>
+		                  	<apex:selectOption itemValue="TIESS" itemLabel="TIESS"/>
+		                  	<apex:selectOption itemValue="OtherCompany" itemLabel="Other Company"/>
+							<apex:selectOption itemValue="GeneralPublic" itemLabel="General public"/>
+						 -->
+		                </apex:selectList>
+		                <div class="hiddenerror" style="display: none;">
+							<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_TypeofCustomer}</p>
+						</div>             
+					</div>
+					
+					<!-- TF - SP10 - If airline, ask if has Airline Designator --> 
+					<div class="form-group" style="display:{!IF(isAirline,'','none')}">
+						<label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Designator_Code_Question}</label>
+						<apex:selectRadio style="width:15%" value="{!toSearchDesignatorCodeString}" onchange="checkSearchDesignatorCode()" >
+							<apex:selectOptions value="{!iataCodeQuestion}"/>
+						</apex:selectRadio>
+					</div>
+					
+					<!-- TF - SP10 - If airline, search for Airline Designator -->
+					<div class="form-group" id="DesignatorCode" style="display:{!IF(toSearchDesignatorCode,'','none')}">
                         <label class="control-label" for="inputError">{!$Label.ISSP_Designator_Code}</label>
                         <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
                         <apex:inputText styleclass="form-control" value="{!searchDesignatorCode}"/>
@@ -136,22 +136,22 @@
                             <apex:selectOptions value="{!ISOCountry}"/>
                         </apex:selectList>
                     </div>
-                    
-                    <!-- TF - SP08 - If agency, ask if Cargo or Agent --> 
-                    <div class="form-group" style="display:{!IF(OR(isAgency, isNotIATA),'','none')}">
-                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Select_Agency_Type}</label>
-                        <apex:selectRadio style="width:25%" value="{!cargoTravel}" onchange="checkAgencyType()" >
-                            <apex:selectOptions value="{!cargoTravelOptions}"/>
-                        </apex:selectRadio>
-                    </div>
-                    
-                    <!-- TF - SP08 - If agency, ask if has IATA Code --> 
-                    <div class="form-group" style="display:{!IF(agencyTypeSelected,'','none')}">
-                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_IATA_Code_Question}</label>
-                        <apex:selectRadio style="width:15%" value="{!toSearchIataCodeString}" onchange="checkSearchIataCode()" >
-                            <apex:selectOptions value="{!iataCodeQuestion}"/>
-                        </apex:selectRadio>
-                    </div>
+					
+					<!-- TF - SP08 - If agency, ask if Cargo or Agent --> 
+					<div class="form-group" style="display:{!IF(OR(isAgency, isNotIATA),'','none')}">
+						<label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Select_Agency_Type}</label>
+						<apex:selectRadio style="width:25%" value="{!cargoTravel}" onchange="checkAgencyType()" >
+							<apex:selectOptions value="{!cargoTravelOptions}"/>
+						</apex:selectRadio>
+					</div>
+					
+					<!-- TF - SP08 - If agency, ask if has IATA Code --> 
+					<div class="form-group" style="display:{!IF(agencyTypeSelected,'','none')}">
+						<label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_IATA_Code_Question}</label>
+						<apex:selectRadio style="width:15%" value="{!toSearchIataCodeString}" onchange="checkSearchIataCode()" >
+							<apex:selectOptions value="{!iataCodeQuestion}"/>
+						</apex:selectRadio>
+					</div>
                     
                     <div class="form-group" style="display:{!IF(showSearchCountry,'','none')}"> 
                         <label class="control-label"  for="inputError"><span class="required">*</span>{!$Label.ISSP_CompanyLocation}</label>
@@ -178,18 +178,18 @@
                     </div>
                      -->
                     <div class="form-group">
-                        <apex:actionstatus id="changeData">
-                            <apex:facet name="start">
-                                <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
-                                    height: 100%;opacity:0.65;width:100%;">
-                                    <div class="waitingHolder" style="top: 74.2px; width: 91px;">
-                                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
-                                        <span class="waitingDescription">Please wait...</span>
-                                    </div>
-                                </div>
-                            </apex:facet>
-                        </apex:actionstatus>
-                    </div>
+						<apex:actionstatus id="changeData">
+							<apex:facet name="start">
+								<div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                         			height: 100%;opacity:0.65;width:100%;">
+									<div class="waitingHolder" style="top: 74.2px; width: 91px;">
+										<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+										<span class="waitingDescription">Please wait...</span>
+									</div>
+								</div>
+							</apex:facet>
+						</apex:actionstatus>
+					</div>
                     
                     <div class="form-group col-lg-3">
                     </div>
@@ -207,9 +207,9 @@
                     <h4>{!$Label.ISSP_Results}</h4>
                     <!-- 
                     <apex:selectRadio value="{!selectedAccId}" layout="pageDirection" >
-                        <apex:selectOptions value="{!accListRadio}" />
-                    </apex:selectRadio>
-                      -->
+						<apex:selectOptions value="{!accListRadio}" />
+					</apex:selectRadio>
+					  -->
                     <apex:repeat value="{!accList}" var="acc">
                         <div class="form-group input-group">
                             <span class="input-group-addon">
@@ -235,16 +235,16 @@
                             </span>
                         </div>
                     </apex:repeat>
-                    <span>
-                        <i>{!$Label.ISSP_NoteWhenAccountFound}</i>
-                    </span>
+					<span>
+						<i>{!$Label.ISSP_NoteWhenAccountFound}</i>
+					</span>
                 </div>
                 
                 <!-- Shown if matching account is not found but airline HQ exists-->
                 <div class="panel panel-default row" style="display:{!IF(hqFound,'','none')}" id="searchResultsHQ">
                     <h4>{!$Label.ISSP_Results}</h4>
                     <div class="form-group input-group">
-                        <span class="input-group-addon">
+                    	<span class="input-group-addon">
                         </span>
                         <span class="form-control" style="display: -webkit-inline-flex;height: auto">
                             <label class="control-label"  for="inputError">{!hqAccount.Name}</label>&nbsp;
@@ -254,10 +254,10 @@
                         </span>
                     </div>
                     <!-- 
-                    <span>
-                        <i><apex:outputText value="{!$Label.ISSP_NoRecordsFoundBranch}" escape="false" /></i>
-                    </span>
-                     -->
+					<span>
+						<i><apex:outputText value="{!$Label.ISSP_NoRecordsFoundBranch}" escape="false" /></i>
+					</span>
+					 -->
                 </div>
                 
                 <div class="panel panel-default row" style="display:{!IF(showCreateAccount,'none','')}" id="submitAccountButtons1" >
@@ -267,14 +267,14 @@
                      <div class="col-md-6"> 
                         <!-- <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitExistAccount" onClick="if(!validateSelectAccount())return false;blockme2();" action="{!register}" value="{!$Label.site.submit}" style="display:none" rendered="{!accountFound}" /> -->
                         <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitExistAccount" onClick="blockme2();" action="{!register}" value="{!$Label.site.submit}" style="display:none" rendered="{!accountFound}" />
-                            <!-- <apex:param name="selectedAccId" value="{!selectedAccId}" assignTo="{!selectedAccId}" />
+                        	<!-- <apex:param name="selectedAccId" value="{!selectedAccId}" assignTo="{!selectedAccId}" />
                         </apex:commandButton> -->
                         <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 nextAsGP" onClick="blockme2();" action="{!nextAsGP}" value="{!$Label.ISSP_Next}" rendered="{!showNextAsGP}"/>
                     </div>
                 </div> 
     
-                </apex:form>
-                </apex:outputPanel>
+				</apex:form>
+				</apex:outputPanel>
                     
                     
                      
@@ -282,7 +282,7 @@
                <div style="display:none" id="createAccountForm">
                 <div class="panel panel-default row">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{!$Label.ISSP_CompanyInformation}</h3>
+						<h3 class="panel-title">{!$Label.ISSP_CompanyInformation}</h3>
                     </div>
                     <div class="form-group col-lg-6" style="display:{!IF(!createBranch,'','none')}">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Legal_name__c.Label}</label>
@@ -304,16 +304,16 @@
                     </div>
                     <!-- 
                     <div class="form-group col-lg-6" style="display:{!IF(AND(!showSearchIataCode, createAgency),'','none')}" >
-                        <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                    	<label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
                         <apex:inputField id="tradeNameAgency" styleclass="form-control rec"  value="{!acc.TradeName__c}" rendered="{!AND(!showSearchIataCode, createAgency)}" />
                     </div>
                     <div class="form-group col-lg-6" style="display:{!IF(AND(!showSearchIataCode, !createAgency),'','none')}" >
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                    	<label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
                         <apex:inputField id="tradeNameOther" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(!showSearchIataCode, !createAgency)}" />
                     </div>
                      -->
                     <div class="form-group col-lg-6" style="display:{!IF(!showSearchIataCode,'','none')}" >
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+                    	<label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
                         <apex:inputField id="tradeNameOther" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(!showSearchIataCode)}" />
                     </div>
                     <div class="form-group col-lg-6" style="display:{!IF(showSearchIataCode,'','none')}" >
@@ -363,13 +363,13 @@
                   
                 <div class="panel panel-default row" style="display:{!IF(showCreateAccount,'','none')}" id="otherAccountFields">
                       <div class="panel-heading">
-                        <h3 class="panel-title">{!$Label.ISSP_CompanyAddressInformation}</h3>
+						<h3 class="panel-title">{!$Label.ISSP_CompanyAddressInformation}</h3>
                       </div>
                        <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
                        </div>
                       <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
                         <input type="checkbox" name="vehicle" id="copyCheckBox" onChange="copyBillingAddress()"/>
-                        <label for="exampleInputEmail1">{!$Label.ISSP_CopyBillingAddress}</label> 
+						<label for="exampleInputEmail1">{!$Label.ISSP_CopyBillingAddress}</label> 
                       </div>
                       <div class="form-group col-lg-6">
                       <DSE:DS_DataQuality id="BillingAddress"
@@ -397,9 +397,9 @@
                         FormControlStyle="form-control" rendered="{!preventAddressDoctorService==false}">
                       </DSE:DS_DataQuality>
                       </div>
-                        <apex:inputHidden value="{!acc.Phone}" id="businessphone"/>
-                        <apex:inputHidden value="{!acc.Mobile__c}" id="businessmobile"/>
-                        <apex:inputHidden value="{!acc.Fax}" id="businessfax"/>
+                      	<apex:inputHidden value="{!acc.Phone}" id="businessphone"/>
+                		<apex:inputHidden value="{!acc.Mobile__c}" id="businessmobile"/>
+                		<apex:inputHidden value="{!acc.Fax}" id="businessfax"/>
                       <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Office_Phone}</label><br/>
                             <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');$j('.phone').change();"/>
@@ -463,34 +463,34 @@
                </div>
         
                 <div class="panel panel-default row" style="display:{!IF(accountFound,'none','')}" id="submitAccountButtons">
-                    
-                    <div class="alert alert-info" id="infoBox" style="display:{!if(infoMessage.size==0,'none','')};margin-top:-9%">
-                        <apex:repeat value="{!infoMessage}" var="er" id="theRepeat2">
-                            <p><apex:outputText value="{!er}" escape="false" /></p>
-                        </apex:repeat>
-                    </div>
+                	
+                	<div class="alert alert-info" id="infoBox" style="display:{!if(infoMessage.size==0,'none','')};margin-top:-9%">
+	                    <apex:repeat value="{!infoMessage}" var="er" id="theRepeat2">
+	                        <p><apex:outputText value="{!er}" escape="false" /></p>
+	                    </apex:repeat>
+	                </div>
                 
                     <div class="col-md-6">
                         <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" immediate="true" action="{!backToContactPage}" value="{!$Label.ISSP_Back}" id="back"/>
                     </div>
                     <div class="col-md-6">
                       <input type="button" class="btn_iata btn-lg btn-block btn-success2" onClick="showCreateAccountForm()"
-                        value="{!IF(createBranch, $Label.ISSP_Create_New_Airline_Branch,
-                                 IF(isAirline, $Label.ISSP_Create_New_Airline,
-                                 IF(isNotIATA, $Label.ISSP_Create_New_Agency,
-                                 IF(isOther, $Label.ISSP_Create_New_Other_Account,
-                                 IF(showCreateStandardAirline, $Label.ISSP_NoRecordsFoundCreateStandardAirline,
-                                 $Label.ISSP_Next
-                                 )))))}"
-                        id="btnShowCreateAccount"
-                        style="display:{!if(showCreateAccount,'','none')}"
-                        />
+                      	value="{!IF(createBranch, $Label.ISSP_Create_New_Airline_Branch,
+                      			 IF(isAirline, $Label.ISSP_Create_New_Airline,
+                      			 IF(isNotIATA, $Label.ISSP_Create_New_Agency,
+                      			 IF(isOther, $Label.ISSP_Create_New_Other_Account,
+                      			 IF(showCreateStandardAirline, $Label.ISSP_NoRecordsFoundCreateStandardAirline,
+                      			 $Label.ISSP_Next
+                      			 )))))}"
+                      	id="btnShowCreateAccount"
+                      	style="display:{!if(showCreateAccount,'','none')}"
+                      	/>
                       <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitNewAccount" onClick="if(!validateNewAccount('{!$Component.categoryField}'))return false;blockme();" action="{!register}" value="{!$Label.site.submit}" id="submit" style="display:none" />
                     </div>
                 </div>`
                 <div id="pleaseWait2" style="display:none" >
-                    <h3> {!$Label.ISSP_PleaseWait}</h3>
-                </div>
+                	<h3> {!$Label.ISSP_PleaseWait}</h3>
+            	</div>
                <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>  
         <script>
         var natphone = $j("input[name='{!$Component.newAccount.businessphoneinput}']");
@@ -505,25 +505,25 @@
         });
                         
         var natmobile = $j("input[name='{!$Component.newAccount.businessmobileinput}']");
-        var mobile = $j("input[name='{!$Component.newAccount.businessmobile}']");
+    	var mobile = $j("input[name='{!$Component.newAccount.businessmobile}']");
         
          natmobile.intlTelInput({
             defaultCountry: '{!searchCountryISOCode}',
             nationalMode: true,
             preferredCountries: [""],
             numberType: "MOBILE",
-            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        	utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
   
         var natfax = $j("input[name='{!$Component.newAccount.businessfaxinput}']");
-        var fax = $j("input[name='{!$Component.newAccount.businessfax}']");
+    	var fax = $j("input[name='{!$Component.newAccount.businessfax}']");
     
          natfax.intlTelInput({
             defaultCountry: '{!searchCountryISOCode}',
             nationalMode: true,
             preferredCountries: [""],
             numberType: "FIXED_LINE",
-            utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+        	utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
         
         function setInternationalPhoneNo(p) {
@@ -552,17 +552,17 @@
         }
         
         function selectAccId(theAccId){
-            var accId = $j('input[name="group1"]:checked').val();
+            var accId = $('input[name="group1"]:checked').val();
             $j('.accId').val(accId);
             //document.getElementById(theAccId).val = accId;
             $j('.submitExistAccount').show();
         }
             
         if({!accList.size}==1) {
-            if ({!!showNextAsGP}){
-                $j('#searchResults input[name="group1"]').first().prop("checked", true);
-                $j('.submitExistAccount').show();
-                //selectAccId();
+        	if ({!!showNextAsGP}){
+	            $j('#searchResults input[name="group1"]').first().prop("checked", true);
+	            $j('.submitExistAccount').show();
+	            //selectAccId();
             }
         }
 
@@ -594,52 +594,52 @@
         }
                           
     function validateNewAccount(categoryField){
-        
-        var flag = true;
+    	
+    	var flag = true;
         $j('#recFields').hide();
-        
-        var myCategoryField = document.getElementById(categoryField);
-        if (myCategoryField == null){
-            //alert("is null");
-        }
-        else
-        {
-            if (myCategoryField.value == '' || myCategoryField.value == null){
-                flag = false;
-                $j('#theCategoryMainDiv').addClass('has-error');
-            }
-            else{
-                $j('#theCategoryMainDiv').removeClass('has-error');
-            }
-        }
-        
+    	
+    	var myCategoryField = document.getElementById(categoryField);
+    	if (myCategoryField == null){
+    		//alert("is null");
+    	}
+    	else
+    	{
+	    	if (myCategoryField.value == '' || myCategoryField.value == null){
+	    		flag = false;
+	    		$j('#theCategoryMainDiv').addClass('has-error');
+	    	}
+	    	else{
+	    		$j('#theCategoryMainDiv').removeClass('has-error');
+	    	}
+	    }
+    	
         if ({!accountFound}) {
             if ($j('.accId').val()!='') {
-                alert("return 1");
+            	alert("return 1");
                 return true;
             }
             else {
-                alert("return 2");
+            	alert("return 2");
                 $j('.accId').parents('.form-group').addClass('has-error');
                 return false;
             }
         }
         
         $j('.rec').each(function (){
-            $j(this).parents('.form-group').removeClass('has-error');
-            if(!$j(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
-                if($j(this).css('display') != 'none'){
-                    flag = false;
-                    $j(this).parents('.form-group').addClass('has-error');
-                }
-            }
-        }
+			$j(this).parents('.form-group').removeClass('has-error');
+			if(!$j(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
+				if($j(this).css('display') != 'none'){
+                   	flag = false;
+                   	$j(this).parents('.form-group').addClass('has-error');
+				}
+			}
+		}
         )
         
         /*
         if (myCategoryField.value == '')
-            flag = false;
-        */
+			flag = false;
+		*/
         if(flag == false){
             $j('#recFields').show();
         }
@@ -662,13 +662,13 @@
     }
                    
     function copyBillingAddress() {
-        var checkBox = document.getElementById('copyCheckBox');
-        if (checkBox.checked){
-            $j("#shippingstreet").find("textarea").val($j("#billingstreet").find("textarea").val());
-            $j("#shippingcity").find("input").val($j("#billingcity").find("input").val());
-            $j("#shippingstate").find("input").val($j("#billingstate").find("input").val());
-            $j("#shippingpostalcode").find("input").val($j("#billingpostalcode").find("input").val());
-        }
+    	var checkBox = document.getElementById('copyCheckBox');
+    	if (checkBox.checked){
+        	$j("#shippingstreet").find("textarea").val($j("#billingstreet").find("textarea").val());
+        	$j("#shippingcity").find("input").val($j("#billingcity").find("input").val());
+        	$j("#shippingstate").find("input").val($j("#billingstate").find("input").val());
+        	$j("#shippingpostalcode").find("input").val($j("#billingpostalcode").find("input").val());
+		}
     }
     
     function saveCountryName() {
@@ -676,67 +676,67 @@
     }
     
     function showCategory(div1, div2, inputValue, div3){
-        var myDiv1 = document.getElementById(div1);
-        var myDiv2 = document.getElementById(div2);
-        var myDiv3 = document.getElementById(div3);
-        var myInputValue = document.getElementById(inputValue).value;
-        if (myInputValue == 'Other'){
-            myDiv1.style.display='block';
-            myDiv2.style.display='block';
-            myDiv3.style.display='block';
-        }
-        else {
-            myDiv1.style.display='none';
-            myDiv2.style.display='none';
-            myDiv3.style.display='none';
-        }
-            
+    	var myDiv1 = document.getElementById(div1);
+    	var myDiv2 = document.getElementById(div2);
+    	var myDiv3 = document.getElementById(div3);
+    	var myInputValue = document.getElementById(inputValue).value;
+    	if (myInputValue == 'Other'){
+    		myDiv1.style.display='block';
+    		myDiv2.style.display='block';
+    		myDiv3.style.display='block';
+    	}
+    	else {
+    		myDiv1.style.display='none';
+    		myDiv2.style.display='none';
+    		myDiv3.style.display='none';
+    	}
+    		
     }
     
     function blockme() {
-        var myDiv = document.getElementById('submitAccountButtons');
-        var myDivWait1 = document.getElementById('pleaseWait1');
-        var myDivWait2 = document.getElementById('pleaseWait2');
-        myDiv.style.display='none';
-        myDivWait1.style.display='block';
-        myDivWait2.style.display='block';
-    }
-    
-    function blockme2() {
-        var myDiv = document.getElementById('submitAccountButtons1');
-        var myDivWait1 = document.getElementById('pleaseWait1');
-        var myDivWait2 = document.getElementById('pleaseWait2');
-        myDiv.style.display='none';
-        myDivWait1.style.display='block';
-        myDivWait2.style.display='block';
-    }
-    
-    function removeSectorValues(customerType, sector){
-        if (customerType == 'NonIATAAgent'){
-            var myPicklist = document.getElementById(sector);
-            if (myPicklist.length > 3){
-                myPicklist.innerHTML = null;
-                var option = document.createElement("option");
-                option.text = "";
-                myPicklist.add(option);
-                var option1 = document.createElement("option");
-                option1.text = "Cargo Agent";
-                myPicklist.add(option1);
-                var option2 = document.createElement("option");
-                option2.text = "Travel Agent";
-                myPicklist.add(option2);
-            }
-            /*
-            alert(myPicklist.length);
-            for (i = 0 ; i < myPicklist.length ; i++){
-                if (myPicklist.options[i].text != 'Cargo Agent' && myPicklist.options[i].text != 'Travel Agent'){
-                    alert("REMOVING: " + myPicklist.options[i].text + " : " + i);
-                    myPicklist.remove(i);
-                }
-            }
-            */
-        }
-    }
+		var myDiv = document.getElementById('submitAccountButtons');
+		var myDivWait1 = document.getElementById('pleaseWait1');
+		var myDivWait2 = document.getElementById('pleaseWait2');
+		myDiv.style.display='none';
+		myDivWait1.style.display='block';
+		myDivWait2.style.display='block';
+	}
+	
+	function blockme2() {
+		var myDiv = document.getElementById('submitAccountButtons1');
+		var myDivWait1 = document.getElementById('pleaseWait1');
+		var myDivWait2 = document.getElementById('pleaseWait2');
+		myDiv.style.display='none';
+		myDivWait1.style.display='block';
+		myDivWait2.style.display='block';
+	}
+	
+	function removeSectorValues(customerType, sector){
+		if (customerType == 'NonIATAAgent'){
+			var myPicklist = document.getElementById(sector);
+			if (myPicklist.length > 3){
+				myPicklist.innerHTML = null;
+				var option = document.createElement("option");
+				option.text = "";
+				myPicklist.add(option);
+				var option1 = document.createElement("option");
+				option1.text = "Cargo Agent";
+				myPicklist.add(option1);
+				var option2 = document.createElement("option");
+				option2.text = "Travel Agent";
+				myPicklist.add(option2);
+			}
+			/*
+			alert(myPicklist.length);
+			for (i = 0 ; i < myPicklist.length ; i++){
+				if (myPicklist.options[i].text != 'Cargo Agent' && myPicklist.options[i].text != 'Travel Agent'){
+					alert("REMOVING: " + myPicklist.options[i].text + " : " + i);
+					myPicklist.remove(i);
+				}
+			}
+			*/
+		}
+	}
                   
 </Script>                           
                         

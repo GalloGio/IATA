@@ -54,6 +54,10 @@
                 <field>Amount</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_Business_Booking__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
@@ -78,12 +82,8 @@
                 <field>Main_Loss_Reason__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>LeadSource</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Event_Source__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

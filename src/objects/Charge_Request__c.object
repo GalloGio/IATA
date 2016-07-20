@@ -1038,11 +1038,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>ICCS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>FDS_TDSUP</fullName>
-                <default>false</default>
-                <controllingFieldValues>ICCS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>GSSA_ANUAL</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
@@ -1141,6 +1136,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Treasury Dashboard Set-up Fee (800964)</fullName>
+                <default>false</default>
+                <controllingFieldValues>ICCS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>TSF_ADPX</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
@@ -1214,17 +1214,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>SAP_ID_8digit__c</fullName>
-        <externalId>false</externalId>
-        <label>SAP ID</label>
-        <length>8</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -1373,7 +1362,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>BSPFEE_ADMIN</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRR1</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRTR</controllingFieldValues>
-                <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <controllingFieldValues>GSSA_ANUAL</controllingFieldValues>
                 <controllingFieldValues>IBCS_YEAR</controllingFieldValues>
                 <controllingFieldValues>NOIATA_ANUAL</controllingFieldValues>
@@ -1383,7 +1371,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>1000.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
-                <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINA</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINF</controllingFieldValues>
                 <controllingFieldValues>IBCS_SWICH</controllingFieldValues>
@@ -1397,7 +1384,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>3000.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
-                <controllingFieldValues>FDS_TDSUP</controllingFieldValues>
+                <controllingFieldValues>Treasury Dashboard Set-up Fee (800964)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>3400.00</fullName>
@@ -1408,7 +1395,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_JOIN</controllingFieldValues>
                 <controllingFieldValues>FDS_TDPMS</controllingFieldValues>
-                <controllingFieldValues>FDS_TDSUP</controllingFieldValues>
+                <controllingFieldValues>Treasury Dashboard Set-up Fee (800964)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>4000.00</fullName>

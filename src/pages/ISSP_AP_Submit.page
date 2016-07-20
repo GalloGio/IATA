@@ -6,12 +6,12 @@
                <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                A. Participation Country &amp; Type
+    	<div class="progress">
+  			<div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+            	A. Participation Country &amp; Type
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-                B. {!strLoB} Country requirements
+            	B. {!strLoB} Country requirements
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
                  C. BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
@@ -40,9 +40,9 @@
                         <div style="padding-bottom:10px">
                             <div class="aplabel">The Airline needs to provide a Bank Account Mandate to IATA, so that the BSP / CASS proceedings can be settled. The bank account must either be:</div>
                             <div style="margin:20px 20px">
-                                <p>1- an ICCS account (for cross border transfers) </p>
-                                <p>2- or a local bank account in the ISS country and currency of settlement. </p>
-                            </div>
+                            	<p>1- an ICCS account (for cross border transfers) </p>
+                            	<p>2- or a local bank account in the ISS country and currency of settlement. </p>
+                        	</div>
                             
                         </div>
                     </apex:outputText>
@@ -56,35 +56,35 @@
                                 
                                 <b>Please download the Bank Mandate form using the link below:</b><br/>
                                 <div id="bankmandatelink_p">
-                                    <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS Local Bank Account Beneficiary</a></u>
-                                </div>
+                        			<u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS Local Bank Account Beneficiary</a></u>
+                    			</div>
                                 <br/>
                                 Kindly note the bank mandate must be issued from your Company’s Head Office and signed by two Head Office senior officers, at least one of which must be:<br/>
                                 <ul style="display:lock;list-style-type: disc;">
                                     <li>Chief Financial Officer (CFO) or</li>
-                                    <li>Head of Treasury or Cash Management Department</li>
-                                </ul>
+									<li>Head of Treasury or Cash Management Department</li>
+                            	</ul>
                                 <apex:outputPanel rendered="{!(strChangeType!='Bank Account Instructions')}">
                                 <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
-                                <div style="padding-bottom:5px">2) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process):</div>
-                                </apex:outputPanel>
-                                <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
+								<div style="padding-bottom:5px">2) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process):</div>
+                    			</apex:outputPanel>
+                            	<apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
                                 <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
-                                <div style="padding-bottom:5px">2) Kindly note any change in the bank account instructions must be requested by the participant at least 15 days in advance. The implementation of such instructions can only be considered as valid by the participant when acknowledged by IATA, including the settlement date in which the new instructions will be effective. Until such confirmation, please ensure that you current account remains active.</div>
-                                <div style="padding-bottom:5px">3) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process). Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements it can delay the process.</div>
-                                </apex:outputPanel>
-                                <br/>
-                                <div style="font-weight:bold;margin-left:100px;display:block">
-                                Airline Participation<br/>
-                                International Air Transport Association<br/>
+								<div style="padding-bottom:5px">2) Kindly note any change in the bank account instructions must be requested by the participant at least 15 days in advance. The implementation of such instructions can only be considered as valid by the participant when acknowledged by IATA, including the settlement date in which the new instructions will be effective. Until such confirmation, please ensure that you current account remains active.</div>
+								<div style="padding-bottom:5px">3) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process). Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements it can delay the process.</div>
+                    			</apex:outputPanel>
+ 								<br/>
+                            	<div style="font-weight:bold;margin-left:100px;display:block">
+								Airline Participation<br/>
+								International Air Transport Association<br/>
                                     33, Route de l'Aéroport<br/>
                                     1215 Geneva<br/>
                                     Switzerland<br/>
-                                </div>
+                            	</div>
                                 <br/>
                                 <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
                                 <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
-                                    <div style="padding-bottom:5px"><b>NOTE II:</b>&nbsp;In case you are applying for a change from ICCS to a Local Bank Account in the concerned operation, you are requested to coordinate with ICCS team (ICCSO@iata.org) in order to take the necessary adjustments in regards to your ICCS participation.</div>
+                                	<div style="padding-bottom:5px"><b>NOTE II:</b>&nbsp;In case you are applying for a change from ICCS to a Local Bank Account in the concerned operation, you are requested to coordinate with ICCS team (ICCSO@iata.org) in order to take the necessary adjustments in regards to your ICCS participation.</div>
                                 </apex:outputPanel>
                                 <apex:outputText rendered="{!apCountryISOCode='BO'}">
                                     <br/><br/><b>NOTE:</b>&nbsp;If you choose only one currency that travel agents may use to issue tickets, please inform your travel agents accordingly.  However, please note that GDSs do not have the capability to restrict ticketing to only one currency.
@@ -98,7 +98,7 @@
                         <div class="aplabel">
                             <p id="bankmandatenotes_p" style="{!IF (newForm.Airline_wish_to_join_ICCS__c == 'Yes', '', 'display:none')}" >
                                 
-                                Please coordinate directly with ICCS department via our Customer Portal. Please ensure the ICCS documents are submitted directly to ICCS Geneva.<br/>
+                                Please coordinate directly with ICCS through <a href="mailto:info.iccs@iata.org" target="_blank">info.iccs@iata.org</a>. Please ensure the ICCS documents are submitted directly to ICCS Geneva.<br/>
                                 <br/>NOTE: The Bank account change from your local Bank account to ICCS will only start once the ICCS Agreement is received and validated by IATA's ICCS department.
                                 
                             </p>

@@ -9,7 +9,7 @@
 					<apex:selectList value="{!sectionActive}" size="1" onchange="rerenderMemorandumPanel()">
 						<apex:selectOptions value="{!memorandumTypes}" />
 					</apex:selectList>
-
+	
 					<apex:actionFunction name="rerenderMemorandumPanel" action="{!hideMemorandum}" rerender="memorandumPanel, messages" status="Loading" />
 				</apex:actionRegion>
 			</apex:pageBlockSection>
@@ -24,7 +24,7 @@
 					</apex:selectList>
 					<apex:commandButton value="Generate Memorandum" action="{!showMemorandum}" rerender="memorandumPanel" status="Loading"/>
 				</apex:pageBlockSection>
-
+				
 				<apex:pageBlockSection id="MEMOConcurrencies" rendered="{!AND(sectionActive=1, showMemorandum)}" title="{!memorandumTypes[1].label} from {!fromdate.Effective_date__c} to {!todate.Effective_date__c}" columns="1">
 					<apex:pageBlockSectionItem >
 						<apex:pageBlockSectionItem >
@@ -33,25 +33,25 @@
 						</apex:pageBlockSectionItem>
 						<apex:commandLink action="{!getMEMOConcurrences}" target="_blank" value="Download memorandum" styleclass="btn" style="text-decoration:none"/>
 					</apex:pageBlockSectionItem>
-
-					<apex:pageBlocktable value="{!ConcurrencesAgreements}" var="wrapper">
+					
+					<apex:pageBlocktable value="{!ConcurrencesAgreements}" var="agr">
 						<apex:column headerValue="Concurring party">
-							<apex:outputField value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}" />
+							<apex:outputField value="{!agr.Airline_1__r.Name}" />
 						</apex:column>
 						<apex:column headerValue="With">
-						<apex:outputField value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}" />
+							<apex:outputField value="{!agr.Airline_2__r.Name}" />
 						</apex:column>
 						<apex:column headerValue="Agreement">
-							<apex:outputText value="{!wrapper.TypeCode}" />
+							<apex:outputField value="{!agr.Agreement_type__c}" />
 						</apex:column>
 						<apex:column headerValue="Effective date">
-							<apex:outputField value="{!wrapper.agreement.Effective_date__c}" />
+							<apex:outputField value="{!agr.Effective_date__c}" />
 						</apex:column>
 					</apex:pageBlocktable>
-
+				
 				</apex:pageBlockSection>
-
-
+				
+				
 				<!-- MEMORANDUM FOR WITHDRAWALS -->
 				<apex:pageBlockSection id="headerMEMOWithdrawals" rendered="{!sectionActive=2}" title="{!memorandumTypes[2].label}" columns="4">
 					<apex:inputField label="From" value="{!fromdate.Cancellation_processed_date__c}" required="true"/>
@@ -61,7 +61,7 @@
 					</apex:selectList>
 					<apex:commandButton value="Generate Memorandum" action="{!showMemorandum}" rerender="memorandumPanel" status="Loading"/>
 				</apex:pageBlockSection>
-
+				
 				<apex:pageBlockSection id="MEMOWithdrawals" rendered="{!AND(sectionActive=2, showMemorandum)}" title="{!memorandumTypes[2].label} from {!fromdate.Effective_date__c} to {!todate.Effective_date__c}" columns="1">
 					<apex:pageBlockSectionItem >
 						<apex:pageBlockSectionItem >
@@ -70,24 +70,24 @@
 						</apex:pageBlockSectionItem>
 						<apex:commandLink action="{!getMEMOWithdrawals}" target="_blank" value="Download memorandum" styleclass="btn" style="text-decoration:none"/>
 					</apex:pageBlockSectionItem>
-
-					<apex:pageBlocktable value="{!WithdrawalsAgreements}" var="wrapper">
+					
+					<apex:pageBlocktable value="{!WithdrawalsAgreements}" var="agr">
 						<apex:column headerValue="Concurring party">
-							<apex:outputField value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}" />
+							<apex:outputField value="{!agr.Airline_1__r.Name}" />
 						</apex:column>
 						<apex:column headerValue="With">
-							<apex:outputField value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}" />
+							<apex:outputField value="{!agr.Airline_2__r.Name}" />
 						</apex:column>
 						<apex:column headerValue="Agreement">
-							<apex:outputText value="{!wrapper.TypeCode}" />
+							<apex:outputField value="{!agr.Agreement_type__c}" />
 						</apex:column>
 						<apex:column headerValue="Cancellation date">
-							<apex:outputField value="{!wrapper.agreement.Cancellation_date__c}" />
+							<apex:outputField value="{!agr.Cancellation_date__c}" />
 						</apex:column>
 					</apex:pageBlocktable>
-
+				
 				</apex:pageBlockSection>
-
+				
 			</apex:outputPanel>
 		</apex:form>
 	</apex:pageBlock>

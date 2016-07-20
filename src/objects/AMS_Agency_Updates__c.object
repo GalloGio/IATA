@@ -56,18 +56,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>AMS Agency Updates</relationshipLabel>
-        <relationshipName>AMS_Agency_Updates</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -129,11 +117,10 @@
     <listViews>
         <fullName>AMS</fullName>
         <columns>NAME</columns>
-        <columns>Account__c</columns>
+        <columns>Agency__c</columns>
         <columns>RelationShip__c</columns>
         <columns>Update_Type__c</columns>
         <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>AMS</label>
         <language>en_US</language>

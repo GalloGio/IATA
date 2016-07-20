@@ -259,26 +259,14 @@ global class IfapToolManager {
         try {
             
              theCase = [Select c.Id, c.Status, c.Account.Status__c, c.caseNumber, c.Account.Location_Type__c from Case c where c.Id = :caseId limit 1];
-            
-             // get the user ids authorized to close cases from any status
-             List<IFAP_Close_IFAP_from_any_status__c> userIds = IFAP_Close_IFAP_from_any_status__c.getAll().values();
-            
-             // users authorized to close cases from any status
-             set<string> authorizedUserIds = new set<string>();
-            
-            	for(IFAP_Close_IFAP_from_any_status__c i : userIds) authorizedUserIds.add(i.UserID__c);
-            
-                    if(!authorizedUserIds.contains(UserInfo.getUserId())){
                 
+                if (theCase.Status <> 'Submitted' && theCase.Account.Location_Type__c != 'BR')
+                return 'The case cannot be cancelled when the status is not Submitted';
                 
-                    if (theCase.Status <> 'Submitted' && theCase.Account.Location_Type__c != 'BR')
-                    return 'The case cannot be cancelled when the status is not Submitted';
-                    
-                    set<string> statusesOfTheAgent = new set<string>{'Terminated','No longer a customer','Not accreditated'};
-                    if(!statusesOfTheAgent.contains(theCase.Account.Status__c) && theCase.Account.Location_Type__c != 'BR')
-                    return 'The case cannot be cancelled : valid agent';
-                    
-                }
+                set<string> statusesOfTheAgent = new set<string>{'Terminated','No longer a customer','Not accreditated'};
+                if(!statusesOfTheAgent.contains(theCase.Account.Status__c) && theCase.Account.Location_Type__c != 'BR')
+                return 'The case cannot be cancelled : valid agent';
+                
                 string FOLDER = 'IFAP/FinancialDocuments/'+ theCase.CaseNumber;
                 
                 list<AmazonRest.S3File> tmpList = AmazonRest.getListFiles(FOLDER,AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME));
@@ -390,7 +378,7 @@ global class IfapToolManager {
         
         
         map<id,list<IFAP_Reassessment_Accounting_Issue__c>> reassAccIssuePerCaseID = new map<id,list<IFAP_Reassessment_Accounting_Issue__c>>();
-        System.debug('Total Number of SOQL Queries allowed in this apex code context: ' +  Limits.getQueries());
+        
         for(IFAP_Reassessment_Accounting_Issue__c accIssue: [SELECT Id,Comment__c,Field_Name__c,
                                                                     IFAP_Reassessment__c,Value_to_use__c,Wrong_value__c 
                                                             FROM IFAP_Reassessment_Accounting_Issue__c

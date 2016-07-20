@@ -5,10 +5,17 @@ private class AMS_AgencyContactsControllerTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
+        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
 
-        Account acc1 = new Account(Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account acc1 = new Account(Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associates');
         insert acc1;
+        
+        AMS_Agency__c a = new AMS_Agency__c(Account__c=acc1.Id,RecordTypeId = agenciesRT.get('PASSENGER'), Country__c = isoc.id, Name='Test Agency', IATAcode__c = '1234567', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency', Legacy_External_ID__c = '12345678', Legacy_System__c = 'AIMS');
+        insert a;
+
+        Account acc = [select id, Type, Location_Type__c from Account];
+        acc.Location_Type__c = 'HO';
+        update acc;
 
         Contact c1 = new Contact(AccountId = acc1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com',
                                     Financial_Assessment_Contact__c = false);
@@ -34,10 +41,10 @@ private class AMS_AgencyContactsControllerTest {
         listOfPersons.add(p3);
         insert listOfPersons;
 
-        AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p1.id, Contact__c = c1.id);
-        AMS_Account_Role__c e2 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p2.id, Contact__c = c2.id);
-        AMS_Account_Role__c e3 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p3.id, Contact__c = c3.id);
-        List<AMS_Account_Role__c> listOfEmployees = new List<AMS_Account_Role__c>();
+        AMS_Employee__c e1 = new AMS_Employee__c(Agency__c = a.id, Person__c = p1.id, Contact__c = c1.id);
+        AMS_Employee__c e2 = new AMS_Employee__c(Agency__c = a.id, Person__c = p2.id, Contact__c = c2.id);
+        AMS_Employee__c e3 = new AMS_Employee__c(Agency__c = a.id, Person__c = p3.id, Contact__c = c3.id);
+        List<AMS_Employee__c> listOfEmployees = new List<AMS_Employee__c>();
         listOfEmployees.add(e1);
         listOfEmployees.add(e2);
         listOfEmployees.add(e3);
@@ -48,7 +55,7 @@ private class AMS_AgencyContactsControllerTest {
         PageReference pageRef = Page.AMS_AgencyContacts;
         Test.setCurrentPageReference(pageRef);
 
-        Account ag = [select id from Account];
+        AMS_Agency__c ag = [select id from AMS_Agency__c];
 
         ApexPages.CurrentPage().getparameters().put('pid', ag.id);
         ApexPages.StandardController sc = new ApexPages.standardController(ag);

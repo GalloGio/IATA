@@ -27,7 +27,7 @@
              -->
             Best regards<br/><br/><br/>
             
-            IATA Operations Service Center
+            IATA Operations Service Center - Europe
                           <hr />
                           {!$Label.site.error} : 
 			<apex:param value="{!$Site.ErrorDescription}"/>

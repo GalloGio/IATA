@@ -6,9 +6,6 @@
     </customApplicationComponents>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <detailPageRefreshMethod>none</detailPageRefreshMethod>
-    <domainWhitelist>
-        <domain>iata--AmsDev1.cs86.my.salesforce.com</domain>
-    </domainWhitelist>
     <enableCustomizeMyTabs>false</enableCustomizeMyTabs>
     <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
     <enableListViewReskin>true</enableListViewReskin>
@@ -175,30 +172,14 @@
     </listPlacement>
     <listRefreshMethod>none</listRefreshMethod>
     <saveUserSessions>true</saveUserSessions>
-    <tab>standard-Account</tab>
-    <tab>standard-Case</tab>
-    <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
-    <tab>IATA_Code_Loader</tab>
-    <tab>Code_Range__c</tab>
+    <tab>AMS_Agency__c</tab>
+    <tab>Operational_Improvements__c</tab>
     <workspaceMappings>
         <mapping>
-            <tab>Code_Range__c</tab>
+            <tab>AMS_Agency__c</tab>
         </mapping>
         <mapping>
-            <tab>IATA_Code_Loader</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-Account</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-Case</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-Dashboard</tab>
-        </mapping>
-        <mapping>
-            <tab>standard-report</tab>
+            <tab>Operational_Improvements__c</tab>
         </mapping>
     </workspaceMappings>
 </CustomApplication>

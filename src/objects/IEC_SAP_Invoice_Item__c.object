@@ -163,19 +163,6 @@ else
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Product__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Product</label>
-        <referenceTo>Product2</referenceTo>
-        <relationshipLabel>IEC SAP Invoice Items</relationshipLabel>
-        <relationshipName>IEC_SAP_Invoice_Items</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Profit_Center__c</fullName>
         <externalId>false</externalId>
         <label>Profit Center</label>
@@ -261,15 +248,6 @@ else
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Use_Contract__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Use Contract</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <label>IEC SAP Invoice Item</label>
     <nameField>

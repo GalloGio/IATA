@@ -486,12 +486,11 @@ public without sharing class IECUserManager {
      */
     public static User getUser(Id userId) {
         if (userId != null) {
-           /* List<User> listUser = [SELECT UserType, Username, IsActive, AccountId, CompanyName, 
+            List<User> listUser = [SELECT UserType, Username, IsActive, AccountId, CompanyName, 
                                     ContactId, Email, FirstName, Name, LastName, Id, Portal_User_Frozen__c
                                     FROM User
-                                    WHERE Id = :userId];*/
-                                    
-            return IECUSerSingleTon.getIECUser(userID);
+                                    WHERE Id = :userId];
+            return listUser.get(0);
         }
         else
             return null;

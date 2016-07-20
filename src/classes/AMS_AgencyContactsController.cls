@@ -1,7 +1,6 @@
 public with sharing class AMS_AgencyContactsController {
 
-	//private AMS_Agency__c ag; #AMSFTS
-    private Account ag;
+	private AMS_Agency__c ag;
     //public List<ContactWrapper> contactTable {get;set;}
 
     // The extension constructor initializes the private member
@@ -9,8 +8,8 @@ public with sharing class AMS_AgencyContactsController {
     // controller.
     public AMS_AgencyContactsController(ApexPages.StandardController stdController) {
         //stdController.addFields(new List<String>{'Account__c'});
-        this.ag = (Account)stdController.getRecord();
-        //this.ag = [select id from Account where id =: this.ag.id];
+        this.ag = (AMS_Agency__c)stdController.getRecord();
+        this.ag = [select id, Account__c from AMS_Agency__c where id =: this.ag.id];
         //contactTable= new List<ContactWrapper>();
 
         /*List<AMS_Employee__c> employees = [select id, Name, Contact__c, Contact__r.Name, Contact__r.Phone, Contact__r.MobilePhone, Contact__r.Email,
@@ -58,8 +57,7 @@ public with sharing class AMS_AgencyContactsController {
     }
 
     public void buildStructure(){
-        //List<Contact> contacts = [select id, Person__c from Contact where AccountId =: this.ag.Account__c]; #AMSFTS
-        List<Contact> contacts = [select id, Person__c from Contact where AccountId =: this.ag.Id];
+        List<Contact> contacts = [select id, Person__c from Contact where AccountId =: this.ag.Account__c];
 
         for(Contact c: contacts){
             if(c.Person__c == null){
@@ -73,8 +71,7 @@ public with sharing class AMS_AgencyContactsController {
         List<ContactWrapper> contactTable= new List<ContactWrapper>();
 
         //List<Contact> contacts = [select id, Name, Person__r.Phone__c, Person__r.Mobile__c, Person__r.Email__c, Financial_Assessment_Contact__c, User_Portal_Status__c, Person__c, Person__r.Name from Contact where AccountId =: this.ag.Account__c];
-        //List<AMS_Person__c> persons = [select id, Name, Contact__c, Phone__c, Mobile__c, Email__c, Contact__r.User_Portal_Status__c, Contact__r.Financial_Assessment_Contact__c from AMS_Person__c where id IN (select Person__c from AMS_Employee__c where Agency__c =: this.ag.id)];#AMSFTS
-        List<AMS_Person__c> persons = [select id, Name, Contact__c, Phone__c, Mobile__c, Email__c, Contact__r.User_Portal_Status__c, Contact__r.Financial_Assessment_Contact__c from AMS_Person__c where id IN (select Person__c from AMS_Account_Role__c where Account__c =: this.ag.id and Person__c != null)];
+        List<AMS_Person__c> persons = [select id, Name, Contact__c, Phone__c, Mobile__c, Email__c, Contact__r.User_Portal_Status__c, Contact__r.Financial_Assessment_Contact__c from AMS_Person__c where id IN (select Person__c from AMS_Employee__c where Agency__c =: this.ag.id)];
 
         //for(Contact c: contacts){
         for(AMS_Person__c c: persons){

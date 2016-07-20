@@ -92,10 +92,8 @@ public with sharing class IECSAPHelper_tst {
 			
 			IEC_SAP_Invoice__c oSAPInv = IECSAPManager.getSAPInvoiceByInvoiceNumber(TEST_INV_NUM);
 			
-            system.debug('oSAPInv ' + oSAPInv);
-            
 			system.assert(oSAPInv != null, 'The SAP Invoice should be found');
-			//system.assert(oSAPInv.Ready_for_SAP__c, 'The SAP Invoice should be ready for SAP');
+			system.assert(oSAPInv.Ready_for_SAP__c, 'The SAP Invoice should be ready for SAP');
 			
 			// test create methods
 			iataComXiSalesforceOtcWid5600Sales3.Header_element oElement = IECSAPHelper.createHeaderForInvoiceSending(oSAPInv);

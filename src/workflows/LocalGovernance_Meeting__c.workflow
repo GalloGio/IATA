@@ -6,7 +6,15 @@
         <description>ALWG/LCAG-C - send notification to meeting owner that Legal has signed off agenda</description>
         <protected>false</protected>
         <recipients>
+            <recipient>ludlowj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>torneroc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -21,7 +29,15 @@
         <description>ALWG/LCAG-C - send notification to meeting owner that Legal has signed off minutes</description>
         <protected>false</protected>
         <recipients>
+            <recipient>ludlowj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>torneroc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -36,11 +52,63 @@
         <description>ALWG/LCAG-C - send notification when agenda is uploaded</description>
         <protected>false</protected>
         <recipients>
-            <recipient>LG_meeting_alerts</recipient>
-            <type>group</type>
+            <recipient>amorl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dcruzr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dsaj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>gilj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hanonl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hoychin@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>larranagad@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lusm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>orejasj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>praban@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <recipients>
             <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vitel@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wallacee@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -55,11 +123,63 @@
         <description>ALWG/LCAG-C - send notification when minutes are uploaded</description>
         <protected>false</protected>
         <recipients>
-            <recipient>LG_meeting_alerts</recipient>
-            <type>group</type>
+            <recipient>amorl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dcruzr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dsaj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>gilj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hanonl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hoychin@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>larranagad@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lusm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>orejasj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>praban@iata.org</recipient>
+            <type>user</type>
         </recipients>
         <recipients>
             <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vitel@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wallacee@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -73,6 +193,14 @@
         <fullName>ALWG_LCAG_C_send_request_to_Legal_for_them_to_sign_off_agenda</fullName>
         <description>ALWG/LCAG-C - send request to Legal for them to sign off agenda</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>ludlowj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <recipient>torneroc@iata.org</recipient>
             <type>user</type>
@@ -89,6 +217,14 @@
         <description>ALWG/LCAG-C - send request to Legal for them to sign off minutes</description>
         <protected>false</protected>
         <recipients>
+            <recipient>ludlowj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>torneroc@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -100,56 +236,15 @@
         <template>Local_Governance/Request_for_Legal_to_sign_off_ALWG_LCAG_C_Minutes</template>
     </alerts>
     <alerts>
-        <fullName>ALWG_send_notification_to_meeting_owner_that_Legal_has_rejected_the_agenda</fullName>
-        <description>ALWG - send notification to meeting owner that Legal has rejected the agenda</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>reckmannr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <field>Meeting_Responsible__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Local_Governance/Legal_has_rejected_the_Agenda</template>
-    </alerts>
-    <alerts>
-        <fullName>ALWG_send_notification_to_meeting_owner_that_Legal_has_rejected_the_minutes</fullName>
-        <description>ALWG - send notification to meeting owner that Legal has rejected the minutes</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>reckmannr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <field>Meeting_Responsible__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Local_Governance/Legal_has_rejected_the_Minutes</template>
-    </alerts>
-    <alerts>
-        <fullName>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_agenda</fullName>
-        <description>APJC - send notification to meeting owner that Legal has rejected the agenda</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>petterssonl@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <field>Meeting_Responsible__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Local_Governance/Legal_has_rejected_the_Agenda</template>
-    </alerts>
-    <alerts>
         <fullName>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_minutes</fullName>
         <description>APJC - send notification to meeting owner that Legal has rejected the minutes</description>
         <protected>false</protected>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>mekkaouij@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -157,12 +252,20 @@
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Local_Governance/Legal_has_rejected_the_Minutes</template>
+        <template>unfiled$public/Legal_has_rejected_the_Minutes</template>
     </alerts>
     <alerts>
         <fullName>APJC_send_notification_to_meeting_owner_that_Legal_has_signed_off_APJC_agenda</fullName>
         <description>APJC - send notification to meeting owner that Legal has signed off APJC agenda</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>mekkaouij@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
@@ -175,6 +278,14 @@
         <description>APJC - send notification to meeting owner that Legal has signed off APJC minutes</description>
         <protected>false</protected>
         <recipients>
+            <recipient>mekkaouij@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
         </recipients>
@@ -186,15 +297,67 @@
         <description>APJC - send notification when APJC agenda is uploaded</description>
         <protected>false</protected>
         <recipients>
-            <recipient>LG_meeting_alerts</recipient>
-            <type>group</type>
-        </recipients>
-        <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>amorl@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>dcruzr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dsaj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>gilj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hanonl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hattinghc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hoychin@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>larranagad@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lusm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>orejasj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>praban@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vitel@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wallacee@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -209,15 +372,67 @@
         <description>APJC - send notification when APJC minutes are uploaded</description>
         <protected>false</protected>
         <recipients>
-            <recipient>LG_meeting_alerts</recipient>
-            <type>group</type>
-        </recipients>
-        <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>amorl@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>dcruzr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dsaj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>gilj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hanonl@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hattinghc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hoychin@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>larranagad@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lusm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mulai@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>orejasj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>praban@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>vitel@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wallacee@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -236,6 +451,14 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>mekkaouij@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
         </recipients>
@@ -251,52 +474,20 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>mekkaouij@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>reckmannr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Local_Governance/Request_for_Legal_to_sign_off_APJC_Minutes</template>
     </alerts>
-    <rules>
-        <fullName>ALWG - Notification that Agenda have been rejected</fullName>
-        <actions>
-            <name>ALWG_send_notification_to_meeting_owner_that_Legal_has_rejected_the_agenda</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>LocalGovernance_Meeting__c.Date_Legal_REJECTED_the_agenda__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>LocalGovernance__c.Local_Governance_type__c</field>
-            <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
-        </criteriaItems>
-        <description>Notification that Legal has rejected the Agenda. Used for IDFS ISS.
-ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ALWG - Notification that Minutes have been rejected</fullName>
-        <actions>
-            <name>ALWG_send_notification_to_meeting_owner_that_Legal_has_rejected_the_minutes</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>LocalGovernance_Meeting__c.Date_Legal_REJECTED_the_minutes__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>LocalGovernance__c.Local_Governance_type__c</field>
-            <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
-        </criteriaItems>
-        <description>Notification that Legal has rejected the minutes. Used for IDFS ISS.
-ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
     <rules>
         <fullName>ALWG%2FLCAG-C%2FCEC%2FICAP - Notification that Agenda have been signed off</fullName>
         <actions>
@@ -311,11 +502,10 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>LCAG-C,CEC,ICAP,ALWG,CGA,EACP JC</value>
         </criteriaItems>
-        <description>Notification that Legal has signed off the Agenda. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <description>Notification that Legal has signed off the Agenda. Used for IDFS ISS.</description>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ALWG%2FLCAG-C%2FCEC%2FICAP - Notification that Minutes have been signed off</fullName>
@@ -331,11 +521,10 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>LCAG-C,CEC,ICAP,ALWG,CGA,EACP JC</value>
         </criteriaItems>
-        <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.</description>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ALWG%2FLCAG-C%2FCEC%2FICAP - Request for Legal to sign off Agenda</fullName>
@@ -355,14 +544,13 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>LCAG-C,CEC,ICAP,ALWG,CGA,EACP JC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_off_Agenda__c</field>
             <operation>equals</operation>
         </criteriaItems>
-        <description>Request for legal to sign off agenda. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+        <description>Request for legal to sign off agenda. Used for IDFS ISS.</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -383,55 +571,14 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>LCAG-C,CEC,ICAP,ALWG,CGA,EACP JC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_Off_the_Minutes__c</field>
             <operation>equals</operation>
         </criteriaItems>
-        <description>Request for legal to sign off minutes. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+        <description>Request for legal to sign off minutes. Used for IDFS ISS.</description>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>APJC - Notification that Agenda have been rejected</fullName>
-        <actions>
-            <name>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_agenda</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>LocalGovernance_Meeting__c.Date_Legal_REJECTED_the_agenda__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>LocalGovernance__c.Local_Governance_type__c</field>
-            <operation>equals</operation>
-            <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
-        </criteriaItems>
-        <description>Notification that Legal has rejected the Agenda. Used for IDFS ISS.
-APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>APJC - Notification that Minutes have been rejected</fullName>
-        <actions>
-            <name>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_minutes</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>LocalGovernance_Meeting__c.Date_Legal_REJECTED_the_minutes__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>LocalGovernance__c.Local_Governance_type__c</field>
-            <operation>equals</operation>
-            <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
-        </criteriaItems>
-        <description>Notification that Legal has rejected the minutes. Used for IDFS ISS.
-APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>APJC%2FJALWG%2FLCAG-P - Notification that Agenda have been signed off</fullName>
@@ -447,10 +594,23 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
+            <value>APJC,LCAG-P,JALWG</value>
         </criteriaItems>
-        <description>Notification that Legal has signed off the agenda. Used for IDFS ISS.
-APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
+        <description>Notification that Legal has signed off the agenda. Used for IDFS ISS.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>APJC%2FJALWG%2FLCAG-P - Notification that Minutes have been rejected</fullName>
+        <actions>
+            <name>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_minutes</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>LocalGovernance_Meeting__c.Date_Legal_REJECTED_the_minutes__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Notification that Legal has rejected the minutes. Used for IDFS ISS.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -467,11 +627,10 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
+            <value>APJC,LCAG-P,JALWG</value>
         </criteriaItems>
-        <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
-APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.</description>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>APJC%2FJALWG%2FLCAG-P - Request for Legal to sign off Agenda</fullName>
@@ -491,14 +650,13 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
+            <value>JALWG,LCAG-P,APJC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_off_Agenda__c</field>
             <operation>equals</operation>
         </criteriaItems>
-        <description>Request for legal to sign off APJC agenda. Used for IDFS ISS.
-APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
+        <description>Request for legal to sign off APJC agenda. Used for IDFS ISS.</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -519,13 +677,13 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
+            <value>APJC,LCAG-P,JALWG</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_Off_the_Minutes__c</field>
             <operation>equals</operation>
         </criteriaItems>
-        <description>Request for legal to sign off APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG minutes. Used for IDFS ISS.</description>
+        <description>Request for legal to sign off APJC minutes. Used for IDFS ISS.</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

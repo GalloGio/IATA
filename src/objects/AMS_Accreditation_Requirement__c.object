@@ -90,10 +90,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>APP_FORM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>ARTICLES_ASSOC</fullName>
                 <default>false</default>
             </picklistValues>
@@ -111,10 +107,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>BR_REG_CERT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -446,7 +438,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>ownership / shareholding / legal status</fullName>
+                <fullName>ownership or shareholding or legal status</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -484,10 +476,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>APP_FORM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ARTICLES_ASSOC</fullName>
                 <default>false</default>
             </values>
@@ -505,10 +493,6 @@
             </values>
             <values>
                 <fullName>BR_REG_CERT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -767,7 +751,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>ownership %2F shareholding %2F legal status</fullName>
+                <fullName>ownership or shareholding or legal status</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -795,10 +779,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>APP_FORM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ARTICLES_ASSOC</fullName>
                 <default>false</default>
             </values>
@@ -816,10 +796,6 @@
             </values>
             <values>
                 <fullName>BR_REG_CERT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1066,7 +1042,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>ownership %2F shareholding %2F legal status</fullName>
+                <fullName>ownership or shareholding or legal status</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1094,10 +1070,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>APP_FORM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ARTICLES_ASSOC</fullName>
                 <default>false</default>
             </values>
@@ -1115,10 +1087,6 @@
             </values>
             <values>
                 <fullName>BR_REG_CERT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS_FORM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1357,7 +1325,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>ownership %2F shareholding %2F legal status</fullName>
+                <fullName>ownership or shareholding or legal status</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

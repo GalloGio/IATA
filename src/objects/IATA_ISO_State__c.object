@@ -69,25 +69,6 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>IEC_Valid_SAP__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>IEC - true means to display in list of provinves for eCommerce because the ISO code matched with SAP</description>
-        <externalId>false</externalId>
-        <label>Valid for Ecommerce</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ISO_CODE_STANDARD__c</fullName>
-        <externalId>false</externalId>
-        <label>ISO CODE STANDARD</label>
-        <length>25</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>ISO_Code__c</fullName>
         <externalId>true</externalId>
         <label>ISO Code</label>
@@ -110,6 +91,17 @@
         <unique>false</unique>
     </fields>
     <label>IATA ISO State</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>ISO_Code__c</columns>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>ISO State Name</label>
         <type>Text</type>

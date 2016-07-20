@@ -109,71 +109,57 @@ private class ISSP_HomepageTest {
         
     }
      public static testMethod void testISSP_HomepageTest2() {
-        ISSP_Constant.adminIdSet.add(ISSP_Constant.TEST_User_ProfileID);
+     	ISSP_Constant.adminIdSet.add(ISSP_Constant.TEST_User_ProfileID);
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
-        List<Account> accList = new List<Account>();
         Account topacc = ISSP_ObjectFactory.createNewAccount();
-        accList.add(topacc);
-        
+        insert topacc;
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.Top_Parent__c = topacc.Id;
         acc.Industry = 'Cargo Agent';
-        accList.add(acc);
-        
-        insert accList;
-
-        List<Contact> conList = new List<Contact>();
+        insert acc;
         
         //Contact con2 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,3);
         Contact con2 = ISSP_ObjectFactory.createNewContact();
         con2.Email = 'test2@test.test';
         con2.AccountId= acc.Id;
         con2.User_Portal_Status__c='Active';
-        conList.add(con2);
-
-        //Contact con3 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,4);
-        Contact con3 = ISSP_ObjectFactory.createNewContact();
-        con3.Email = 'test3@test.test';
-        con3.AccountId= acc.Id;
-        con3.User_Portal_Status__c='Approved Admin';
-        conList.add(con3);
-
-        Contact con4 = ISSP_ObjectFactory.createNewContact();
-        con4.Email = 'test4@test.test';
-        con4.AccountId= acc.Id;
-        con4.User_Portal_Status__c='Regional Administrator';
-        conList.add(con4);
-
-        Contact con5 = ISSP_ObjectFactory.createNewContact();
-        con5.Email = 'test5@test.test';
-        con5.AccountId= acc.Id;
-        con5.User_Portal_Status__c='Active';
-        conList.add(con5);
-
-        insert conList;
-
+        insert con2;
         User newUser2 = ISSP_ObjectFactory.createPortalUser(con2);
         con2.OwnerId = newUser2.Id;
         update con2;
         Portal_Applications__c app = new Portal_Applications__c(Name = 'test app'); 
         insert app;
         Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
-        insert appRight;    
-
+        insert appRight;
+        
+        //Contact con3 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,4);
+        Contact con3 = ISSP_ObjectFactory.createNewContact();
+        con3.Email = 'test3@test.test';
+        con3.AccountId= acc.Id;
+        con3.User_Portal_Status__c='Approved Admin';
+        insert con3;
         User newUser3 = ISSP_ObjectFactory.createPortalUser(con3);
         con3.OwnerId = newUser3.Id;
-        update con3;   
-
+        update con3;
+        
+        Contact con4 = ISSP_ObjectFactory.createNewContact();
+        con4.Email = 'test4@test.test';
+        con4.AccountId= acc.Id;
+        con4.User_Portal_Status__c='Regional Administrator';
+        insert con4;
         User newUser4 = ISSP_ObjectFactory.createPortalUser(con4);
         con4.OwnerId = newUser4.Id;
         update con4;
         
+        Contact con5 = ISSP_ObjectFactory.createNewContact();
+        con5.Email = 'test5@test.test';
+        con5.AccountId= acc.Id;
+        con5.User_Portal_Status__c='Active';
+        insert con5;
         User newUser5 = ISSP_ObjectFactory.createPortalBasicAirlineUser(con5);
         con5.OwnerId = newUser5.Id;
         update con5;
-
-        update conList;
           
         Test.startTest() ;
         system.runAs(newUser2){
@@ -202,10 +188,10 @@ private class ISSP_HomepageTest {
      */
      
      public static testMethod void test_addNumberOfViews() {
-        Contact contact = new Contact(LastName='test');
-        insert contact;
-        Notification__c notification = new Notification__c(Contact__c=contact.Id);
-        insert notification;
-        ISSP_Homepage.addNumberOfViews(notification.Id);
+     	Contact contact = new Contact(LastName='test');
+     	insert contact;
+     	Notification__c notification = new Notification__c(Contact__c=contact.Id);
+     	insert notification;
+     	ISSP_Homepage.addNumberOfViews(notification.Id);
      }
 }

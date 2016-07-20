@@ -1,11 +1,11 @@
-<apex:page title="{!PageTitle}" controller="vfIECGADAdvanced" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
-    <title>{!PageTitle}</title>
+<apex:page title="Global Agency Directory" controller="vfIECGADAdvanced" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>Global Agency Directory</title>
 
       <div class="gdpwrapper">
     
     <div class="gdpbody">
 
-    <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+    <c:IECAppHeader applicationTitle="Global Agency Directory" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
 
     <link rel="stylesheet" type="text/css" href="https://harvesthq.github.io/chosen/chosen.css" />
     <script type="text/javascript" src="https://harvesthq.github.io/chosen/chosen.jquery.js"></script>
@@ -152,17 +152,15 @@
                 <apex:outputpanel id="panelAccess" layout="block" rendered="{!ctrSubsInfo.hasPageAccess}">
                     <div class="box register large">
                         <div class="header" style="margin-top: 18px;">
-                            <p>{!PageTitle}</p>
+                            <p>Global Agency Directory</p>
                         </div>
                         <div class="content">
                       	   <h2>Advanced Search</h2>
                             <p class="descText" style="margin-top:17px;font-weight:300;">Find IATA Agencies using any combination of search criteria. Search criteria are cumulative unless otherwise specified.</p>
 
-                            <apex:outputText id="errorPanel">
-                            	<div class="errorPanel">
-                            	    <apex:pageMessages escape="no" />
-                            	</div>
-                            </apex:outputText>
+                            <div class="errorPanel">
+                                <apex:pageMessages escape="no" />
+                            </div>
 
                             <div class="searchBlock">
                                 <h2>Agency Location</h2>
@@ -340,7 +338,7 @@
                                         <apex:commandButton id="btnSave" styleClass="customButton small" style="background:#737d87;width:283px;" value="Save Filter" onclick="saveFilterPopup('');return false;" reRender="errorMessage,panelAccess" />
                                     </td>
                                     <td>
-                                        <apex:commandButton id="btnSearch" styleClass="customButton small" style="width:284px;" value="Search Agencies" action="{!searchAgencies}" reRender="errorMessage,errorPanel" oncomplete="changeCursorDefault(this)" onclick="changeCursorProgress(this); increaseUssage();" />
+                                        <apex:commandButton id="btnSearch" styleClass="customButton small" style="width:284px;" value="Search Agencies" action="{!searchAgencies}" onclick="changeCursorProgress(this); increaseUssage();" oncomplete="changeCursorDefault(this)" reRender="errorMessage" />
                                     </td>
                                 </tr>
                             </table>

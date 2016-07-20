@@ -745,11 +745,12 @@ private class IDCard_AdmUserListAndFormTest {
 	                    WHERE Mass_Order_Application__c = :mass.id];
 
 	        // A contact will be created
-          /*  Contact c = [SELECT VER_Number_2__c,Date_Of_Birth__c, FirstName, LastName, AccountId, IATA_code__c, Hours_per_week__c, Phone, Email, Salutation,
+            Contact c = [SELECT VER_Number_2__c,Date_Of_Birth__c, FirstName, LastName, AccountId, IATA_code__c, Hours_per_week__c, Phone, Email, Salutation,
     							Position__c, Start_Date_Agency_Month__c, Start_Date_Agency_Year__c, Start_Date_Industry__c, Duties__c, Gender__c, UIR__C
                          FROM Contact 
                          WHERE VER_Number_2__c = :apps[0].VER_Number__c 
                          LIMIT 1];
+            //system.assertEquals(apps[0].Title__c, c.salutation);
             system.assertEquals(apps[0].First_Name__c, c.FirstName);
             system.assertEquals(apps[0].Last_Name__c, c.LastName);
             system.assertEquals(apps[0].Date_of_Birth__c, c.Date_of_birth__c);
@@ -757,6 +758,7 @@ private class IDCard_AdmUserListAndFormTest {
             system.assertEquals(apps[0].Hours_worked__c, c.Hours_per_week__c);
             system.assertEquals(apps[0].Telephone__c, c.Phone);
             system.assertEquals(apps[0].Gender__c, c.Gender__c);
+            //system.assertEquals(apps[0].Email_admin__c, c.Email);
             system.assertEquals(apps[0].Position_in_Current_Agency__c, c.Position__c);
             system.assertEquals(apps[0].Duties_in_Current_Agency__c, c.Duties__c);
             system.assertEquals(apps[0].Start_Date_Agency_Month__c, c.Start_Date_Agency_Month__c);
@@ -764,16 +766,16 @@ private class IDCard_AdmUserListAndFormTest {
             system.assertEquals(apps[0].Start_Date_Industry__c, ''+c.Start_Date_Industry__c);
             system.assertEquals(apps[0].VER_Number__c, c.VER_Number_2__c);
             system.assertEquals(apps[0].UIR__c, c.UIR__c);
-            */
+            
             
 	        // An id card will be created for each contact
-/*            ID_Card__c card = [SELECT VER_Number__c,Is_Active_Card__c,Date_Of_Birth__c, Valid_To_Date__c, Photo__c, Name_on_ID_Card__c,FirstName__c, LastName__c,
+            ID_Card__c card = [SELECT VER_Number__c,Is_Active_Card__c,Date_Of_Birth__c, Valid_To_Date__c, Photo__c, Name_on_ID_Card__c,FirstName__c, LastName__c,
                                             ID_Card_Application__c, Card_Status__c, Cancellation_Date__c, Blacklisted__c, Agency_IATA_Code__c
                                      FROM ID_Card__c 
-                                     WHERE VER_Number__c = :apps[0].VER_Number__c];*/
+                                     WHERE VER_Number__c = :apps[0].VER_Number__c];
             
             // Check the data stored on idcard
-          /*  system.assertEquals(c.FirstName, card.FirstName__c);
+            system.assertEquals(c.FirstName, card.FirstName__c);
             system.assertEquals(c.LastName, card.LastName__c);
             system.assertEquals(c.Date_Of_Birth__c, card.Date_Of_Birth__c);
             system.assertEquals(c.FirstName+' '+c.LastName, card.Name_on_ID_Card__c);
@@ -782,7 +784,7 @@ private class IDCard_AdmUserListAndFormTest {
             system.assertEquals('Approved', card.Card_Status__c);
             system.assertEquals(apps[0].Id, card.ID_Card_Application__c);
             system.assertEquals(apps[0].Photo__c, card.Photo__c);
-            system.assertEquals(apps[0].VER_Number__c, card.VER_Number__c); */
+            system.assertEquals(apps[0].VER_Number__c, card.VER_Number__c);
 	        
  	   }
  	   
@@ -989,7 +991,7 @@ private class IDCard_AdmUserListAndFormTest {
             system.assertEquals(apps[0].First_Name__c, c.FirstName);
             system.assertEquals(apps[0].Last_Name__c, c.LastName);
             system.assertEquals(apps[0].Date_of_Birth__c, c.Date_of_birth__c);
-          /*  system.assertEquals(a2.IATAcode__c, c.IATA_code__c);*/
+            system.assertEquals(a2.IATAcode__c, c.IATA_code__c);
             system.assertEquals(apps[0].Hours_worked__c, c.Hours_per_week__c);
             system.assertEquals(apps[0].Telephone__c, c.Phone);
             system.assertEquals(apps[0].Gender__c, c.Gender__c);
@@ -1000,7 +1002,7 @@ private class IDCard_AdmUserListAndFormTest {
             system.assertEquals(apps[0].Start_Date_Agency_Year__c, ''+c.Start_Date_Agency_Year__c);
             system.assertEquals(apps[0].Start_Date_Industry__c, ''+c.Start_Date_Industry__c);
             system.assertEquals(apps[0].VER_Number__c, c.VER_Number_2__c);
-            system.assertEquals(apps[0].UIR__c, c.UIR__c); 
+            system.assertEquals(apps[0].UIR__c, c.UIR__c);
             
             
 	        // An id card will be created for each contact
@@ -1018,10 +1020,10 @@ private class IDCard_AdmUserListAndFormTest {
             system.assertEquals(c.FirstName+' '+c.LastName, card.Name_on_ID_Card__c);
             system.assertEquals(false, card.Blacklisted__c);
             system.assertEquals(null, card.Cancellation_Date__c);
-       /*     system.assertEquals(apps[0].Id, card.ID_Card_Application__c);
+            system.assertEquals(apps[0].Id, card.ID_Card_Application__c);
             system.assertEquals(apps[0].Photo__c, card.Photo__c);
             system.assertEquals(apps[0].VER_Number__c, card.VER_Number__c);
-	        */
+	        
  	   }
  	   
        static testMethod void testOtherMethods(){

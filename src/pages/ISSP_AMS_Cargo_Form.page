@@ -301,7 +301,7 @@
         var event = event || window.event; // for trans-browser compatibility
         var charCode = event.which || event.keyCode;
      
-        if (charCode === 46){
+        if (charCode === 44 || charCode === 46){
             return true;
         } else if ( charCode > 31 && (charCode < 48 || charCode > 57) ){
             return false;
@@ -1170,7 +1170,7 @@
                     <apex:actionFunction name="fetchCargoAgent1" status="actCargoAgent1" action="{!fetchAgentDetails}" reRender="cargoagentdetails1,cargoaccountname1">
                             <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                             <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
-                            <apex:param name="AccountType" assignTo="{!accountType}" value="CASS Associate"/>
+                            <apex:param name="AccountType" assignTo="{!accountType}" value="CASS Associates"/>
                     </apex:actionFunction>
                     <apex:actionFunction name="fetchCargoAgent2" status="actCargoAgent2" action="{!fetchAgentDetails}" reRender="cargoagentdetails2">
                             <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
@@ -1979,7 +1979,7 @@
                                 </td></tr>
                             <tr><td class="modalrow">
                                 <apex:outputText value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsFirstNameENG, $ObjectType.Contact.fields.FirstName.Label)}" /><br/>
-                                <apex:inputField value="{!newContact.First_name__c}" required="true"/>
+                                <apex:inputField value="{!newContact.First_name__c}" />
                                 </td></tr>
                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
                             <tr><td class="modalrow">

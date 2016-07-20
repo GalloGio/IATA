@@ -8,8 +8,7 @@ public class NewLocalGroupMeetingCtrl {
         List<String> fieldNames = new List<String>{'Name','Date_of_Meeting__c','Meeting_Responsible__c', 'Date_Legal_Requested_to_Sign_off_Agenda__c',
                                                     'Date_Legal_Signed_off_Agenda__c','Criteria_Reviewed__c','Remittance_Frequency_Reviewed__c','VMFR__c',
                                                     'Date_Legal_Requested_to_Sign_Off_Minutes__c','Date_Legal_Signed_Off_the_Minutes__c',
-                                                    'Date_Legal_REJECTED_the_minutes__c','Comments__c', 'Local_Governance__c',
-                                                    'Local_Governance__r.Local_Governance_type__c','Date_Legal_REJECTED_the_agenda__c'};
+                                                    'Date_Legal_REJECTED_the_minutes__c','Comments__c', 'Local_Governance__c','Local_Governance__r.Local_Governance_type__c'};
         
         if(!Test.isRunningTest()) ctrl.addFields(fieldNames);
         lm = (LocalGovernance_Meeting__c) ctrl.getRecord();
@@ -37,7 +36,7 @@ public class NewLocalGroupMeetingCtrl {
         
         // Then I'll retrieve all the participants not listed before
         for(Participant__c p : [SELECT Contact__c, Contact__r.Name, Participant_Type__c, Head_Quartier__c, Title__c, Contact__r.AccountId, Contact__r.Account.RecordTypeId, 
-                                        Contact__r.Account.ParentId, Contact__r.Account.Top_Parent__c
+        								Contact__r.Account.ParentId, Contact__r.Account.Top_Parent__c
                                 FROM Participant__c 
                                 WHERE Local_Governance__c = :lm.Local_Governance__c AND ID NOT IN :usedParts]){
             Meeting_Participant__c mp = new Meeting_Participant__c(Local_Governance_Meeting__c = lm.Id,

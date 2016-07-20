@@ -56,25 +56,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>AMS Agency Affiliations</relationshipLabel>
-        <relationshipName>AMS_Agency_Affiliations</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Affiliation__c</fullName>
         <externalId>false</externalId>
         <label>Affiliation</label>
         <referenceTo>AMS_Affiliation__c</referenceTo>
         <relationshipLabel>AMS Agency Affiliations</relationshipLabel>
         <relationshipName>AMS_Agency_Affiliations</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
+        <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -82,15 +70,16 @@
     </fields>
     <fields>
         <fullName>Agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
         <relationshipLabel>AMS Agency Affiliations</relationshipLabel>
         <relationshipName>AMS_Agency_Affiliations</relationshipName>
-        <required>false</required>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Last_synchronization__c</fullName>

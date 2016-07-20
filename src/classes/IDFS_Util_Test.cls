@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- *
+ * 
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -27,25 +27,4 @@ public class IDFS_Util_Test{
         IDFS_Util.getRecordTypeEmail('ProcessEuropeSCE','');
         IDFS_Util.getRecordTypeEmail('','');
     }
-
-    TestMethod static void createInternalCaseTest(){
-        Case cse = new Case(
-            Subject = 'test',
-            Region__c = 'Europe',
-            BSPCountry__c = 'Switzerland',
-            Reason1__c = '',
-            CaseArea__c = '',
-            Complaint_Analysis__c = ''
-        );
-        insert cse;
-
-        Test.startTest();
-        IDFS_Util.createInternalCase(cse.Id);
-        Test.stopTest();
-
-        list<Case> results = [Select Id from Case where ParentId = :cse.Id];
-        System.assert(results.size() == 1);
-    }
-
-
 }

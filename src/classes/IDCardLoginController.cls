@@ -4,15 +4,10 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     public String IATACodeLocation {get; set;}
     public String IATACodeLocation2 {get; set;}
     public String VERNumber {get; set;}
-    public String TempVERNumber {get; set;}
-    public String verNum {get; set;}
-    public String idCardQuery {get;set;}
-    public String idCardAppQuery {get;set;}
-    public ID_Card_Application__c [] pendingIdCardsAppV2 {get;set;}
- 
+
     public String DOB {get; set;}
 
-    public Boolean isNew {get; set;} 
+    public Boolean isNew {get; set;}
 
     private String applicationType = null;
 
@@ -20,7 +15,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
     public String FNAME {
         get;
-        set { FNAME = String.escapeSingleQuotes(value);  } 
+        set { FNAME = String.escapeSingleQuotes(value);  }
     }
     public String LNAME {
         get;
@@ -50,8 +45,8 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
     //Login with Codes
     public PageReference verify() {
-        
-        Boolean validCaptcha =validCaptcha();
+
+        Boolean validCaptcha = validCaptcha();
 
         //@@ Disables captcha
         //validCaptcha = true;
@@ -121,7 +116,6 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
             // Kofi: 12/09/2013. Card_Status__c is removed from the criteria.
             // INC183592
-            
             contacts = [Select   c.VER_Number_2__c, c.FirstName, c.LastName, c.Date_of_Birth__c,
                         c.Account.IDCard_Key_Account__c, c.Account.type, c.Account.Short_Name__c, c.Account.Is_AIMS_Account__c , c.Id,
                         c.Account.Status__c, c.Account.IATACode__c, c.Account.ID_Card_KeyAccount_features__c
@@ -195,23 +189,10 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
                 //check if theres any pending cases
                 Case[] pendingCase =  [Select Id from Case where RecordType.Name = 'ID Card Application' AND Contact.Id = : contacts[0].Id AND status <> 'Closed' limit 1];
-                //INC239933
-                TempVERNumber = 'Z'+VERNumber;
-                ID_Card_Application__c [] pendingIdCardsApp = [Select id from ID_Card_Application__c where RecordType.Name = 'Single ID Card Operation' 
-                                                                                                        AND (((VER_Number__c = :VERNumber OR VER_Number__c = :TempVERNumber) AND IATA_Code__c =:IATACodeLocation.trim())
-                                                                                                        OR (VER_Number__c = :VERNumber OR VER_Number__c = :TempVERNumber )) 
-                                                                                                        AND (Application_Status__c = 'Pending' OR Application_Status__c = 'Unpaid')  limit 1];
-                                                          
-                
-                if (pendingCase != null && pendingCase.size() > 0){
+                if (pendingCase != null && pendingCase.size() > 0) {
+                    //redirect to new pending case information
                     prAgencyDetails = Page.IDCard_PendingCase_Details;
                     prAgencyDetails.getParameters().put('cid', IDCardUtil.EncryptEncodeParameter(pendingCase[0].Id));
-                    return prAgencyDetails;
-                    //redirect to new pending case information
-
-                } else if (pendingIdCardsApp != null && pendingIdCardsApp.size() > 0) { //INC239933
-                    prAgencyDetails = Page.IDCard_PendingIdCardApp_Details;
-                    prAgencyDetails.getParameters().put('apId', IDCardUtil.EncryptEncodeParameter(pendingIdCardsApp[0].Id));
                     return prAgencyDetails;
                 }
 
@@ -230,11 +211,11 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                     prAgencyDetails.getParameters().put(IDCardUtil.PARAM_DOB, IDCardUtil.EncryptEncodeParameter(String.ValueOf(contacts[0].Date_of_Birth__c)));//parsedDtDOB.format('yyyy-MM-dd')));
                 }
 
-                // INC183592 & INC243166
-                if (contacts[0].Account.Status__c == 'Terminated' || cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED){
-                        /*(cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED &&
+                // INC183592
+                if (contacts[0].Account.Status__c == 'Terminated' ||
+                        (cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED &&
                          contacts[0].Account.IDCard_Key_Account__c == TRUE &&
-                         contacts[0].Account.ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase))) {*/
+                         contacts[0].Account.ID_Card_KeyAccount_features__c.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase))) {
 
                     Pagereference prSkipDetails = Page.IDCard_Portal;
                     prSkipDetails.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
@@ -273,6 +254,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     *
     */
     public PageReference verifyAlternative() {
+
         Boolean validCaptcha = validCaptcha();
 
         //@@ Disables captcha
@@ -350,10 +332,9 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                                                       and (a.Status__c in :IDCardUtil.ALLOWED_ACCOUNT_STATUS OR Account.Status__c = 'Terminated') // INC183592
                                                       AND a.Is_AIMS_Account__c = true
                                                               and (a.type  in :IDCardUtil.ALLOWED_ACCOUNT_TYPES)];
-                                                              
 
                 if (accounts == null || accounts.size() == 0) {
-                    AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'})); 
+                    AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + IATACodeLocation2.trim() + '</i>'}));
                     System.debug('*** ' + accounts);
                     return null;
                 }
@@ -412,14 +393,15 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
 
             ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
 
-            String IDCardQuery = 'Select i.Related_Contact__c, i.Blacklisted__c, Card_Status__c '
+            String IDCardQuery = 'Select i.Related_Contact__c, i.Blacklisted__c '
                                  + ' From ID_Card__c i '
                                  + 'where '
                                  + '  i.RecordTypeId = \'' + rectypeid
                                  + '\' and i.FirstName__c = \'' + FNAME.trim() + '\' '
                                  + ' and i.LastName__c = \'' + LNAME.trim() + '\' '
-                                 + ' and i.Date_of_Birth__c = ' + parsedDtDOB.format('yyyy-MM-dd') 
-                                 + ' order by i.Valid_To_Date__c desc LIMIT 1';
+                                 + ' and i.Date_of_Birth__c = ' + parsedDtDOB.format('yyyy-MM-dd') +
+                                 + ' and i.Card_Status__c != \'' + IDCardUtil.CARDSTATUS_CANCELED
+                                 + '\' order by i.Valid_To_Date__c desc LIMIT 1';
 
             system.debug('[IDCardLoginController] Existing card search query ' + IDCardQuery);
             ID_Card__c[] cards = Database.query(IDCardQuery);
@@ -433,63 +415,26 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
                 }
             }
             system.debug('[IDCardLoginController]FOUND ' + contacts.size() + ' CONTACTS AND  ' + cards.size() + ' CARDS');
-
-            //INC239933
-            Date birthDate = Date.newInstance(parsedDtDOB.year(), parsedDtDOB.month(), parsedDtDOB.day());
-            
-            idCardQuery = 'Select id,FirstName__c,LastName__c,Date_of_Birth__c,Card_Status__c, VER_Number__c'
-                                      + ' from ID_Card__c '
-                                      + ' where Agency_IATA_Code__c=\'' + IATACodeLocation2.trim() + '\' '                                      
-                                      + ' and LastName__c =  \'' + LNAME.trim() + '\''
-                                      + ' and FirstName__c = \'' + FNAME.trim() +'\''
-                                      + ' and Date_of_Birth__c =  ' + parsedDtDOB.format('yyyy-MM-dd')
-                                      + ' AND Card_Status__c != \'Cancelled\' limit 1';
-
-            idCardAppQuery = 'Select id,Last_Name__c,First_Name__c,Date_of_Birth__c'
-                                + ' from ID_Card_Application__c '
-                                + ' where RecordType.Name=\'Single ID Card Operation\''
-                                + ' and Date_of_Birth__c=  ' + parsedDtDOB.format('yyyy-MM-dd')
-                                + ' and First_Name__c=\''+FNAME.trim()+'\''
-                                + ' AND ( Application_Status__c=\'Pending\''
-                                    + ' OR Application_Status__c=\'Unpaid\')'; 
-
-
-            ID_Card__c[] checkIdCard = Database.query(idCardQuery);
-
-            if(checkIdCard != null && checkIdCard.size() > 0){
-                verNum = checkIdCard[0].VER_Number__c;
-                pendingIdCardsAppV2 = Database.query(idCardAppQuery + ' AND VER_Number__c=\''+ verNum +'\'' + 'limit 1');
-            }
-            else{
-                pendingIdCardsAppV2 = Database.query(idCardAppQuery + 'AND IATA_Code__c=\'' +IATACodeLocation2.trim() +'\'' + 'limit 1');
-            }
-
-            system.debug('pendingIdCardsAppV2 ' + pendingIdCardsAppV2 + ' iata code ' + IATACodeLocation2.trim() + ' birthDate ' + birthDate + ' FNAME.trim() ' + FNAME.trim() + ' verNum ' + verNum);
-            if (pendingIdCardsAppV2 != null && pendingIdCardsAppV2.size() > 0) {
-                    Pagereference pendingIdCardApp = Page.IDCard_PendingIdCardApp_Details;
-                    pendingIdCardApp.getParameters().put('apId', IDCardUtil.EncryptEncodeParameter(pendingIdCardsAppV2[0].Id));
-                    return pendingIdCardApp;
-            }
-
             //check if theres any pending cases for that contact
             //if (contacts.size() > 0 || cards.size() > 0) {
-            if (cards.size() > 0 && pendingIdCardsAppV2 == null) {
+            if (cards.size() > 0) {
 
                 //ID contID = contacts.size() > 0 ? contacts[0].Id : cards[0].Related_Contact__c;
 
                 ID contID = cards[0].Related_Contact__c;
+
                 Case[] pendingCase =  [Select Id
                                        from Case
                                        where RecordType.Name = 'ID Card Application'
                                                AND Contact.Id = : contID
                                                        AND status <> 'Closed' limit 1];
-                                
-                if (pendingCase != null && pendingCase.size() > 0){
+
+                if (pendingCase != null && pendingCase.size() > 0) {
                     //redirect to new pending case information
                     Pagereference  pendingCasePage = Page.IDCard_PendingCase_Details;
                     pendingCasePage.getParameters().put('cid', IDCardUtil.EncryptEncodeParameter(pendingCase[0].Id));
                     return pendingCasePage;
-                } 
+                }
             }
 
 
@@ -521,8 +466,8 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
             //if (contacts.size() + cards.size() >= 1) {
             if (cards.size() >= 1) {
 
-                // INC183592 & INC243166
-                if (agencyStatus == 'Terminated' || cards[0].Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED) {
+                // INC183592
+                if (agencyStatus == 'Terminated') {
                     Pagereference prSkipDetails = Page.IDCard_Portal;
                     prSkipDetails.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
                     prSkipDetails.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(contacts[0].VER_Number_2__c));

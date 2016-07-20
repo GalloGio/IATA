@@ -11,85 +11,6 @@
         <template>MarketingPAX/Opportunity90DaysToContractEnd</template>
     </alerts>
     <alerts>
-        <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
-        <description>MACS alert of new deals over 10K (non rcrm)</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorAmericas</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorAsiaPac</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorEurope</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorMEA</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesDirector</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesDirectorBIITCO</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>abulkheirk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>astridgec@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ayarik@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>heinickem@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>itania@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kikanor@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>legerf@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mccorleys@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mckayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>siponenp@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wangw@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
-    </alerts>
-    <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
         <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
@@ -134,6 +55,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>hubblem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>itania@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -154,15 +79,15 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>seifeddinh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>siponenp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>wangw@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>webbj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -280,14 +205,29 @@
         <fullName>Africa Deal Alert</fullName>
         <active>false</active>
         <description>Identifies an opportunity closing in IATA&apos;s Africa RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND (
+    ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),
+    OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Asia Pac Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s Asia Pacific RCT</description>
-        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),                ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND (
+
+        OR (
+               ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),
+               ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),
+               ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)
+                ),
+     OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -409,51 +349,64 @@
         <fullName>Europe Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s Europe RCT</description>
-        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Europe&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Russia and CIS&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND (
+
+        OR (
+               ISPICKVAL(Geographic_Region__c, &apos;Europe&apos;),
+               ISPICKVAL(Geographic_Region__c, &apos;Russia and CIS&apos;)
+                ),
+     OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>MACS - Close Deal Notification %28RCRM%29</fullName>
+        <fullName>MACS - Close Deal Notification</fullName>
         <actions>
             <name>Marketingalertofnewdeals</name>
             <type>Alert</type>
         </actions>
         <active>true</active>
         <description>Notifications sent to sales and marketing about closed deals over US$ 10,000</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>MACS - Close Deal Notification %28non RCRM%29</fullName>
-        <actions>
-            <name>MACS_alert_of_new_deals_over_10K_non_rcrm</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000
-As it concerns non RCRM opps, the NBB is not included in the message</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;),  RecordType.Name &lt;&gt; &quot;RCRM Opportunity&quot; )</formula>
+        <formula>AND(            Amount   &gt;= 10000           ,ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;)      )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>MENA Deal Alert</fullName>
         <active>false</active>
         <description>Identifies an opportunity closing in IATA&apos;s MENA RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;MENA&apos; ),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND (
+    ISPICKVAL(Geographic_Region__c, &apos;MENA&apos; ),
+    OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>North America Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s North America RCT</description>
-        <formula>AND  (     ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND  (
+    ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),
+    OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>North Asia Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s North Asia RCT</description>
-        <formula>AND (       ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND (
+
+     ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),
+     OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -622,7 +575,12 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <fullName>The Americas Deal Alert</fullName>
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s The Americas RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <formula>AND (
+    ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),
+    OwnerId = LastModifiedById, Amount   &gt;= 10000,
+     ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),
+     $User.Division = &apos;MACS&apos;
+           )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <tasks>

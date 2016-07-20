@@ -1,7 +1,5 @@
 trigger AMS_EmployeeTrigger on AMS_Employee__c (before insert,after insert, before update, after update) {
 
-    /*#AMSFTS moved it into AMS_AccountRoleTrigger
-
     //bind employee to contact
     if(Trigger.isBefore){
         list<AMS_Employee__c> bindToContact = new list<AMS_Employee__c>();
@@ -16,23 +14,14 @@ trigger AMS_EmployeeTrigger on AMS_Employee__c (before insert,after insert, befo
         if(bindToContact.size()>0)
             AMS_EmployeeHelper.addContactIfEmpty(bindToContact);
     }
-    #AMSFTS*/
-    
-   /*#AMSFTS
-    Map<String , AMS_Employee__c > accountIds2UpdateWithQTAEmployee = new Map<String , AMS_Employee__c >();
+
+    Map<String , AMS_Employee__c > agenciesIds2UpdateWithQTAEmployee = new Map<String , AMS_Employee__c >();
     if(Trigger.isAfter){
         for(AMS_Employee__c  e:trigger.new){
-            if(e.isTicketingAgent__c && (trigger.isInsert || !trigger.oldMap.get(e.Id).isTicketingAgent__c )){
-                //agenciesIds2UpdateWithQTAEmployee.put(e.agency__c,e);#AMSFTS
-                accountIds2UpdateWithQTAEmployee.put(e.Account__c,e);
-            }
+            if(e.isTicketingAgent__c && (trigger.isInsert || !trigger.oldMap.get(e.Id).isTicketingAgent__c ))
+                agenciesIds2UpdateWithQTAEmployee.put(e.agency__c,e);
         }
-
-        if(accountIds2UpdateWithQTAEmployee.size()>0){
-            AMS_EmployeeHelper.updateAccountQTAemployee(accountIds2UpdateWithQTAEmployee);
-        }
-
-        if(Trigger.isUpdate){
+        if(  Trigger.isUpdate){
             AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
         }
     }
@@ -42,7 +31,7 @@ trigger AMS_EmployeeTrigger on AMS_Employee__c (before insert,after insert, befo
         for(AMS_Agency__c a:agencies2update )
             a.Qualified_ticketing_agent2__c  = agenciesIds2UpdateWithQTAEmployee.get(a.Id).Id;
         update agencies2update;
-    }#AMSFTS*/
+    }
     
     
     

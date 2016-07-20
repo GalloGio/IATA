@@ -12,7 +12,7 @@ public with sharing class NewObjectiveController {
 
     public Pagereference redirect() {
         Objective__c parent = [
-            Select Unit_Type__c, SystemModstamp, Region__c, Sub_region__c, Name, Id, Functional_Area__c, Division__c, Description__c, Type__c, Deadline__c, CurrencyIsoCode
+            Select Unit_Type__c, SystemModstamp, Region__c, Name, Id, Functional_Area__c, Division__c, Description__c, Type__c, Deadline__c, CurrencyIsoCode
             from Objective__c
             where Id = :this.parentId
         ];

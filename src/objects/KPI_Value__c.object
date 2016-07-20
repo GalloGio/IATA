@@ -555,9 +555,9 @@
         <columns>Responsible__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>NAME</field>
+            <field>Responsible__c</field>
             <operation>equals</operation>
-            <value>% of Interdependencies matched</value>
+            <value>Valerie Courtas</value>
         </filters>
         <filters>
             <field>Deadline__c</field>

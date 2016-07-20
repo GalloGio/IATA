@@ -331,27 +331,6 @@
         <template>Quality/OI_Action_Plan_9_5_days</template>
     </alerts>
     <alerts>
-        <fullName>OI_Approval_notification</fullName>
-        <description>OI Approval notification</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Approved_by_RPM</template>
-    </alerts>
-    <alerts>
-        <fullName>OI_Approved_by_RPM</fullName>
-        <description>OI Approved by RPM</description>
-        <protected>false</protected>
-        <recipients>
-            <field>LastModifiedById</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Approved_by_RPM</template>
-    </alerts>
-    <alerts>
         <fullName>OI_Info_Next_follow_up_date</fullName>
         <description>OI Info Next follow up date</description>
         <protected>false</protected>
@@ -361,24 +340,6 @@
         <senderType>CurrentUser</senderType>
         <template>Quality/OI_Action_Plan_10_5_days</template>
     </alerts>
-    <fieldUpdates>
-        <fullName>OI_Submitted_for_approval</fullName>
-        <field>Submission_for_Approval_Date__c</field>
-        <formula>now()</formula>
-        <name>OI Submitted for approval</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>OI_Update_Approval_date</fullName>
-        <field>OI_Approval_date__c</field>
-        <formula>NOW()</formula>
-        <name>OI Update Approval date</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
     <fieldUpdates>
         <fullName>Update_Date_Time_Closed</fullName>
         <field>Date_Time_Closed__c</field>
@@ -590,20 +551,20 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>OI_Action_Plan_4_15_days_Information</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Operational_Improvements__c.Action_4_Due_Date__c</offsetFromField>
-            <timeLength>-15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>OI_Action_Plan_4_5_days_Information</name>
                 <type>Alert</type>
             </actions>
             <offsetFromField>Operational_Improvements__c.Action_4_Due_Date__c</offsetFromField>
             <timeLength>-5</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>OI_Action_Plan_4_15_days_Information</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Operational_Improvements__c.Action_4_Due_Date__c</offsetFromField>
+            <timeLength>-15</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

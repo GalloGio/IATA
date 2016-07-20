@@ -4,7 +4,6 @@ public with sharing class AmsTranslatedPanelController {
     public String amsAddressId {get;set;}
     public String iataIsoStateId {get;set;}
     public String amsPersonId {get;set;}
-    public String accountId {get;set;}
     
     public String language{get;set;}
     
@@ -85,7 +84,6 @@ public with sharing class AmsTranslatedPanelController {
         editableFields = false;
         List<AMS_Fields_Translation__c> translationsToUpsert = new List<AMS_Fields_Translation__c>();
         for(TranslationWrapper t:listOfTranslations){
-        	System.debug('****************** t: ' +t);
             //if(t.Translation.Translation__c != null && t.Translation.Translation__c != ''){
                     translationsToUpsert.add(t.Translation);
             //}
@@ -99,16 +97,10 @@ public with sharing class AmsTranslatedPanelController {
         fieldInfo = new Map<String,String>();
         Map<String,String>  fieldsMap = new Map<String,String>();
         translationMapping = new Map<String,AMS_Fields_Translation__c>();
-        if(accountId!=null){
-            fieldInfo  = getObjectMetaData('Account');
-            fieldsValues = [select Id, Name, Translation__c, Language__c, Field_name__c from AMS_Fields_Translation__c where Account__c = :accountId];
-        }
-        /* #AMSFTS
         if(agencyid!=null){
             fieldInfo  = getObjectMetaData('AMS_Agency__c');
             fieldsValues = [select Id, Name, Translation__c, Language__c, Field_name__c from AMS_Fields_Translation__c where Agency__c = :agencyId];
         }
-        */
         if(ownerId!=null){
             fieldInfo = getObjectMetaData('AMS_Owner__c');
             fieldsValues = [select Id, Name, Translation__c, Language__c, Field_name__c from AMS_Fields_Translation__c where AMSOwner__c = :ownerId];
@@ -137,7 +129,6 @@ public with sharing class AmsTranslatedPanelController {
         JSONParser parser = JSON.createParser(jsonstring);
         while (parser.nextToken() != null) {
             //check for the JSON object depending on the record
-         /* #AMSFTS
             if(parser.getCurrentName() == 'Agency' && agencyid != null){
                 // END_ARRAY This token is returned when ']' is encountered.
                 while(parser.nextToken() != null && parser.getCurrentToken() != JSONToken.END_ARRAY){
@@ -157,9 +148,7 @@ public with sharing class AmsTranslatedPanelController {
                     }
                 }
             }
-            else
-            */
-             if(parser.getCurrentName() == 'Address' && amsAddressId != null){
+            else if(parser.getCurrentName() == 'Address' && amsAddressId != null){
                 // END_ARRAY This token is returned when ']' is encountered.
                 while(parser.nextToken() != null && parser.getCurrentToken() != JSONToken.END_ARRAY){
                     // FIELD_NAME This token is returned when there is a field name
@@ -235,28 +224,7 @@ public with sharing class AmsTranslatedPanelController {
                     }
                 }
             }
-            else if(parser.getCurrentName() == 'Account' && accountId != null){
-                // END_ARRAY This token is returned when ']' is encountered.
-                while(parser.nextToken() != null && parser.getCurrentToken() != JSONToken.END_ARRAY){
-                    // FIELD_NAME This token is returned when there is a field name
-                    if(parser.getCurrentToken() == JSONToken.FIELD_NAME){
-                        // Build the translation object
-                        TranslationWrapper aux = new TranslationWrapper();
-                        aux.Field = parser.getText();
-                        parser.nextToken();
-                        if(translationMapping.get(fieldInfo.get(parser.getText())) == null){
-                            //aux.Translation = new AMS_Fields_Translation__c(Field_name__c=parser.getText(),Language__c='CN',Translation__c=translationMapping.get(aux.Field));
-                            aux.Translation = new AMS_Fields_Translation__c(Field_name__c=parser.getText(),Language__c='CN',Account__c=accountId);
-                        }else{
-                            aux.Translation = translationMapping.get(fieldInfo.get(parser.getText()));
-                        }
-                        parsedTranslations.add(aux);
-                    }
-                }
-            }
         }
-        System.debug('*************** parsedTranslations: '+parsedTranslations);
-        System.debug('*************** listOfTranslations: '+listOfTranslations);
         listOfTranslations = parsedTranslations;
         return parsedTranslations;
     }

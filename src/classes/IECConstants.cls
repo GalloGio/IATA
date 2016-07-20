@@ -19,7 +19,6 @@ global class IECConstants {
 	public static final string PARAM_PAYMENT_ID = 			'payid';
 	public static final string PARAM_RESETPASSWORD =		'respw';
 	public static final string PARAM_APPFILTER_ID =			'appfid';
-	public static final string PARAM_LIMITTOIDS =			'limittoids'; // Added by Mathieu Beausoleil
 	
 	//Get customer types constants
 	public static final string PARAM_CUSTOMERTYPE_AIRLINE = 		'Airline';
@@ -35,7 +34,7 @@ global class IECConstants {
 	public static final string PARAM_SHOWMAPSEMAILS =	 			'se';
 	public static final string PARAM_SHOWMAPSFLAGS = 				'sf';
 
-	
+
 	
 	// Custom Labels: Error
 	public static string Error_InvalidProductCode = Label.IEC_Error_InvalidProductCode;
@@ -112,9 +111,6 @@ global class IECConstants {
 	public static final string ProductCategory_SF_CACFREE = 'CACFREE';
 	public static final string ProductCategory_SF_CACPRO = 'CACPRO';
 	public static final string ProductCategory_SF_CACWEB = 'CACWEB';
-	public static final string ProductCategory_SF_PAL = 'PAL';
-	public static final string ProductCategory_SF_CAL = 'CAL';
-	public static final string ProductCategory_SF_ASL = 'ASL';
 	public static final string ProductCategory_SF_GSS = 'GSS';
 	public static final string ProductCategory_SF_MDP = 'MDP';
 	public static final string ProductCategory_SF_GAD = 'GAD';
@@ -129,7 +125,6 @@ global class IECConstants {
 	
 	// Product Category in Zuora
 	public static final string ProductCategory_Zuora_CAC = 'CheckACode Professional';
-	public static final string ProductCategory_Zuora_CACWEB = 'CheckACode Web Service';    
 	public static final string ProductCategory_Zuora_GSS = 'Global System Solutions';
 	public static final string ProductCategory_Zuora_MDP = 'Marketing Data Package';
 	public static final string ProductCategory_Zuora_GAD = 'Global Agency Directory';
@@ -238,7 +233,7 @@ global class IECConstants {
 			return IEC_Settings__c.getOrgDefaults().InvoiceTemplate_Bank_Transfer_Zuora_ID__c;
 		}
 	}
-
+	
 	public static String InvoiceTemplate_Credit_Card_ZuoraID {
 		get {
 			return IEC_Settings__c.getOrgDefaults().InvoiceTemplate_Credit_Card_Zuora_ID__c;

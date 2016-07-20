@@ -71,8 +71,8 @@ private class ISSP_WS_Test {
         myInput.services = 'CASS02';
         ISSP_WS_NewUser.createUser(myInput);
         
-       /* myInput.services = 'CASS03';
-        ISSP_WS_NewUser.createUser(myInput);*/
+        myInput.services = 'CASS03';
+        ISSP_WS_NewUser.createUser(myInput);
  
     }
     

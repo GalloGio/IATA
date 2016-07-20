@@ -129,12 +129,13 @@ trigger updateAccountFieldBasedOnIATAwebCode on Case (before insert, before upda
             for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
                 if (c.AccountId != acc.Id) {
 
-                    if ( c.RecordTypeId == EuropecaseRecordTypeID
-                            || c.RecordTypeId == AmericacaseRecordTypeID
-                            || c.RecordTypeId == AfricaMEcaseRecordTypeID
-                            || c.RecordTypeId == AsiaPacificcaseRecordTypeID
-                            || c.RecordTypeId == ChinaAsiacaseRecordTypeID
-                            || c.RecordTypeId == ISSPcaseRecordTypeID ) {
+                    if ( c.AccountId != null &&
+                            (c.RecordTypeId == EuropecaseRecordTypeID
+                             || c.RecordTypeId == AmericacaseRecordTypeID
+                             || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                             || c.RecordTypeId == AsiaPacificcaseRecordTypeID
+                             || c.RecordTypeId == ChinaAsiacaseRecordTypeID
+                             || c.RecordTypeId == ISSPcaseRecordTypeID) ) {
                         // For these record types, set the Account Concerned field
                         system.debug('FOUND AND SETTING Account Concerned');
                         c.Account_Concerned__c = acc.Id;

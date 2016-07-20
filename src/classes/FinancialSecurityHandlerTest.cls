@@ -36,14 +36,9 @@ private class FinancialSecurityHandlerTest {
         
         // check that the renewal case has been created and linked to the FS record
         fs = [SELECT Id, Renewal_Case__c FROM Financial_Security__c WHERE Id = :fs.Id];
-        if (userinfo.getProfileId() != '00e20000000h0gFAAQ') {
-        	system.assertNotEquals(null, fs.Renewal_Case__c);
-            lstCases = [SELECT Id FROM Case LIMIT 10];
-        	system.assertEquals(2, lstCases.size());
-        } else {
-            system.assertEquals(null, fs.Renewal_Case__c);
-        }  
+        system.assertNotEquals(null, fs.Renewal_Case__c);
         
-        
+        lstCases = [SELECT Id FROM Case LIMIT 10];
+        system.assertEquals(2, lstCases.size());
     }   
 }

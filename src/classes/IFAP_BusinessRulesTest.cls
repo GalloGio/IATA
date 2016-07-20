@@ -789,8 +789,6 @@ private class IFAP_BusinessRulesTest {
         email1.Agent_Types__c = 'Domestic Agent';
         email1.IATA_ISO_Country__c = countryFR[0].Id;
         insert email1;
-        
-        Test.startTest();
 
         // test #1 - FA template country does not match case country
         case1.IFAP_Country_ISO__c = countryCA[0].ISO_Code__c;
@@ -887,7 +885,6 @@ private class IFAP_BusinessRulesTest {
             system.assert(true);
         }
 
-    Test.stopTest();
 
     }
 

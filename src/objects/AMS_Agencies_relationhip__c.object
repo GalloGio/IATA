@@ -56,28 +56,15 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Child_Account__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
-        <description>Child account in hierarchy relationship</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Child account in hierarchy relationship</inlineHelpText>
-        <label>Child Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>AMS Agencies relationships</relationshipLabel>
-        <relationshipName>AMS_Agencies_relationships</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Child_Agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
-        <label>Agency (AMS)</label>
+        <inlineHelpText>Child agency in relationship</inlineHelpText>
+        <label>Child Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
-        <relationshipLabel>AMS Agencies relationships</relationshipLabel>
-        <relationshipName>AMS_Agencies_relationships</relationshipName>
-        <required>false</required>
+        <relationshipLabel>Parent Agencies</relationshipLabel>
+        <relationshipName>AMS_Agencies_parentships1</relationshipName>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -99,7 +86,7 @@
         <referenceTo>AMS_Agencies_Hierarchy__c</referenceTo>
         <relationshipLabel>Agency relationships</relationshipLabel>
         <relationshipName>AMS_Agencies_relationships</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
+        <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -168,30 +155,18 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Parent_Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Parent account in relationship</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Parent account in relationship</inlineHelpText>
-        <label>Parent Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>AMS Agencies relationships (Parent Account)</relationshipLabel>
-        <relationshipName>AMS_Agencies_relationships1</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Parent_agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Agency (AMS)</label>
+        <inlineHelpText>Parent agency in relationship</inlineHelpText>
+        <label>Parent agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
-        <relationshipLabel>AMS Agencies relationships (Agency (AMS))</relationshipLabel>
-        <relationshipName>AMS_Agencies_relationships1</relationshipName>
-        <required>false</required>
+        <relationshipLabel>Child Agencies</relationshipLabel>
+        <relationshipName>AMS_Agencies_parentships</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Relationship_details__c</fullName>
@@ -211,11 +186,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Agencies relationships</pluralLabel>
-    <searchLayouts>
-        <lookupDialogsAdditionalFields>Hierarchy__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Child_Account__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Parent_Account__c</lookupDialogsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

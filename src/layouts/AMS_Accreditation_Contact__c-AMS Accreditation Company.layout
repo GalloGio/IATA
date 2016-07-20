@@ -16,10 +16,6 @@
                 <field>First_name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Company_Name_Local__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Last_name__c</field>
             </layoutItems>

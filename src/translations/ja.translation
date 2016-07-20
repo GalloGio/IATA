@@ -9,226 +9,6 @@
         <name>AIMSAccountBeforeUpdate_AutoProcess_Restricted</name>
     </customLabels>
     <customLabels>
-        <label><!-- AMS Conga Merge --></label>
-        <name>AMS_Conga_Merge</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR AGENCYFEES --></label>
-        <name>AMS_OSCAR_AGENCYFEES</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_ANTIMONEYLAUNDERING --></label>
-        <name>AMS_OSCAR_ANTIMONEYLAUNDERING</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR APPLICATIONPROCESSING --></label>
-        <name>AMS_OSCAR_APPLICATIONPROCESSING</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR APPLICATIONRECEIPT --></label>
-        <name>AMS_OSCAR_APPLICATIONRECEIPT</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR APPLICATION FINALIZATION --></label>
-        <name>AMS_OSCAR_APPLICATION_FINALIZATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR APPROVAL --></label>
-        <name>AMS_OSCAR_APPROVAL</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_APP_FINALIZATION --></label>
-        <name>AMS_OSCAR_APP_FINALIZATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_APP_RECONSIDERATION --></label>
-        <name>AMS_OSCAR_APP_RECONSIDERATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR APP WITHDRAWAL --></label>
-        <name>AMS_OSCAR_APP_REJECTION_WITHDRAWAL</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Action1 --></label>
-        <name>AMS_OSCAR_Action1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Action2 --></label>
-        <name>AMS_OSCAR_Action2</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_Action3 --></label>
-        <name>AMS_OSCAR_Action3</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_Action4 --></label>
-        <name>AMS_OSCAR_Action4</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_CHANGE_DISAPPROVAL --></label>
-        <name>AMS_OSCAR_CHANGE_DISAPPROVAL</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_CHANGE_FINALIZATION --></label>
-        <name>AMS_OSCAR_CHANGE_FINALIZATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_CHANGE_PROCESSING --></label>
-        <name>AMS_OSCAR_CHANGE_PROCESSING</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_CHANGE_RECONSIDERATION --></label>
-        <name>AMS_OSCAR_CHANGE_RECONSIDERATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_CHANGE_WITHDRAWAL --></label>
-        <name>AMS_OSCAR_CHANGE_WITHDRAWAL</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_CODEASSIGNMENT --></label>
-        <name>AMS_OSCAR_CODEASSIGNMENT</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR DISAPPROVAL --></label>
-        <name>AMS_OSCAR_DISAPPROVAL</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR MASTERDATA --></label>
-        <name>AMS_OSCAR_MASTERDATA</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Process A1 --></label>
-        <name>AMS_OSCAR_Process_A1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Process D1 --></label>
-        <name>AMS_OSCAR_Process_D1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Process F1 --></label>
-        <name>AMS_OSCAR_Process_F1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Process F2 --></label>
-        <name>AMS_OSCAR_Process_F2</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR Process F3 --></label>
-        <name>AMS_OSCAR_Process_F3</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_Process_F4 --></label>
-        <name>AMS_OSCAR_Process_F4</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_REJECTION_FINALIZATION --></label>
-        <name>AMS_OSCAR_REJECTION_FINALIZATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP1 --></label>
-        <name>AMS_OSCAR_STEP1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP10 --></label>
-        <name>AMS_OSCAR_STEP10</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP11 --></label>
-        <name>AMS_OSCAR_STEP11</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP12 --></label>
-        <name>AMS_OSCAR_STEP12</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP13 --></label>
-        <name>AMS_OSCAR_STEP13</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP14 --></label>
-        <name>AMS_OSCAR_STEP14</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP15 --></label>
-        <name>AMS_OSCAR_STEP15</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP16 --></label>
-        <name>AMS_OSCAR_STEP16</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP17 --></label>
-        <name>AMS_OSCAR_STEP17</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP18 --></label>
-        <name>AMS_OSCAR_STEP18</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP19 --></label>
-        <name>AMS_OSCAR_STEP19</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP2 --></label>
-        <name>AMS_OSCAR_STEP2</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP20 --></label>
-        <name>AMS_OSCAR_STEP20</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP21 --></label>
-        <name>AMS_OSCAR_STEP21</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP22 --></label>
-        <name>AMS_OSCAR_STEP22</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP23 --></label>
-        <name>AMS_OSCAR_STEP23</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP24 --></label>
-        <name>AMS_OSCAR_STEP24</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP3 --></label>
-        <name>AMS_OSCAR_STEP3</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP4 --></label>
-        <name>AMS_OSCAR_STEP4</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP5 --></label>
-        <name>AMS_OSCAR_STEP5</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP6 --></label>
-        <name>AMS_OSCAR_STEP6</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP7 --></label>
-        <name>AMS_OSCAR_STEP7</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP8 --></label>
-        <name>AMS_OSCAR_STEP8</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR STEP9 --></label>
-        <name>AMS_OSCAR_STEP9</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS OSCAR VALIDATION --></label>
-        <name>AMS_OSCAR_VALIDATION</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AMS_OSCAR_Warning_1 --></label>
-        <name>AMS_OSCAR_Warning_1</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ANY --></label>
         <name>ANY</name>
     </customLabels>
@@ -237,20 +17,8 @@
         <name>API_URL</name>
     </customLabels>
     <customLabels>
-        <label><!-- Acceptance date --></label>
-        <name>Acceptance_date</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
         <name>Account_Invoicing_Collection_Cases_Report_ID</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Account activity --></label>
-        <name>Account_activity</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Account information updated --></label>
-        <name>Account_information_updated</name>
     </customLabels>
     <customLabels>
         <label><!-- Action --></label>
@@ -259,26 +27,6 @@
     <customLabels>
         <label><!-- Action Needed --></label>
         <name>Action_Needed</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- AddToCart --></label>
-        <name>AddToCart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Add campaign member error --></label>
-        <name>Add_campaign_member_error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Address Line 1 --></label>
-        <name>Address_Line_1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Address creation error --></label>
-        <name>Address_creation_error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Address edition error --></label>
-        <name>Address_edition_error</name>
     </customLabels>
     <customLabels>
         <label><!-- Airline Suspension Child Cases Contact Id --></label>
@@ -325,176 +73,20 @@
         <name>Attachments</name>
     </customLabels>
     <customLabels>
-        <label><!-- Attention --></label>
-        <name>Attention</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Auto renew payment method error --></label>
-        <name>Auto_renew_payment_method_error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Availability --></label>
-        <name>Availability</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Available --></label>
-        <name>Available</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- BCC --></label>
-        <name>BCC</name>
-    </customLabels>
-    <customLabels>
         <label>本サービスは、IATA Billing and Settlement Plan（BSP）に参加する旅行代理店と航空会社間のやりとりおよび情報交換を円滑にします。</label>
         <name>BSPLink_Description</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Bank transfer validation for auto renew --></label>
-        <name>Bank_transfer_validation_for_auto_renew</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Billing address --></label>
-        <name>Billing_address</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Body --></label>
-        <name>Body</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Browse by category --></label>
-        <name>Browse_by_category</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Browser --></label>
-        <name>Browser</name>
     </customLabels>
     <customLabels>
         <label><!-- Browser type --></label>
         <name>Browser_type</name>
     </customLabels>
     <customLabels>
-        <label><!-- Button Add --></label>
-        <name>Button_Add</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Add To Order --></label>
-        <name>Button_Add_To_Order</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Button Cancel --></label>
         <name>Button_Cancel</name>
     </customLabels>
     <customLabels>
-        <label><!-- Button_Cart --></label>
-        <name>Button_Cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button_Contact --></label>
-        <name>Button_Contact</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Continue Shopping --></label>
-        <name>Button_Continue_Shopping</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Data &amp; Statistics --></label>
-        <name>Button_Data_Statistics</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button First Page --></label>
-        <name>Button_First_Page</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Go --></label>
-        <name>Button_Go</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Last Page --></label>
-        <name>Button_Last_Page</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button New Releases --></label>
-        <name>Button_New_Releases</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Next --></label>
-        <name>Button_Next</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Open search field --></label>
-        <name>Button_Open_search_field</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Pre Order --></label>
-        <name>Button_Pre_Order</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Previous --></label>
-        <name>Button_Previous</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Proceed Checkout --></label>
-        <name>Button_Proceed_Checkout</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Publications --></label>
-        <name>Button_Publications</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Remove --></label>
-        <name>Button_Remove</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Search --></label>
-        <name>Button_Search</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Select --></label>
-        <name>Button_Select</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Sign in --></label>
-        <name>Button_Sign_in</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Sign out --></label>
-        <name>Button_Sign_out</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Toggle Main Navigation --></label>
-        <name>Button_Toggle_Main_Navigation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button Update Cart --></label>
-        <name>Button_Update_Cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button View More --></label>
-        <name>Button_View_More</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Button View all --></label>
-        <name>Button_View_all</name>
-    </customLabels>
-    <customLabels>
         <label>本サービスは、IATA Cargo Accounts Settlement System（CASS）に参加する貨物仲介会社/代理店と航空会社のやりとりおよび情報交換を円滑にします。</label>
         <name>CASSLink_Description</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CC --></label>
-        <name>CC</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Campaign already created --></label>
-        <name>Campaign_already_created</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Campaign creation error --></label>
-        <name>Campaign_creation_error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Campaign submitted --></label>
-        <name>Campaign_submitted</name>
     </customLabels>
     <customLabels>
         <label><!-- Cancel --></label>
@@ -507,14 +99,6 @@
     <customLabels>
         <label><!-- IDCard Card can&apos;t be updated once sent to aims --></label>
         <name>Card_can_t_be_updated</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Cart --></label>
-        <name>Cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CaseKPI2_RecordType --></label>
-        <name>CaseKPI2_RecordType</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseTypeReason1List1 --></label>
@@ -569,68 +153,16 @@
         <name>Cases_SIS_Help_Desk</name>
     </customLabels>
     <customLabels>
-        <label><!-- Change password --></label>
-        <name>Change_password</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Check payment msg --></label>
-        <name>Check_payment_msg</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Check popup settings --></label>
         <name>Check_popup_settings</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- City --></label>
-        <name>City</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- City cannot be empty --></label>
-        <name>City_cannot_be_empty</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Click here --></label>
-        <name>Click_here</name>
     </customLabels>
     <customLabels>
         <label><!-- Company --></label>
         <name>Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- Company name --></label>
-        <name>Company_name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Confirm password --></label>
-        <name>Confirm_password</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Confirm purchase --></label>
-        <name>Confirm_purchase</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ContactDirectSalesMessage --></label>
-        <name>ContactDirectSalesMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Contact Information --></label>
-        <name>Contact_Information</name>
-    </customLabels>
-    <customLabels>
         <label>担当者名を半角アルファベット入力</label>
         <name>Contact_Name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Copyright --></label>
-        <name>Copyright</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Country --></label>
-        <name>Country</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Country cannot be empty --></label>
-        <name>Country_cannot_be_empty</name>
     </customLabels>
     <customLabels>
         <label><!-- Country concerned by the query --></label>
@@ -643,22 +175,6 @@
     <customLabels>
         <label><!-- Created Date --></label>
         <name>Created_Date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Creation date --></label>
-        <name>Creation_date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Credit card payment msg --></label>
-        <name>Credit_card_payment_msg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Credit card validation --></label>
-        <name>Credit_card_validation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Current password --></label>
-        <name>Current_password</name>
     </customLabels>
     <customLabels>
         <label><!-- Custom Queue Notifications Email Subject --></label>
@@ -713,14 +229,6 @@
         <name>DPCservice_request</name>
     </customLabels>
     <customLabels>
-        <label><!-- DataAndStatistics --></label>
-        <name>DataAndStatistics</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Date --></label>
-        <name>Date</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Del --></label>
         <name>Del</name>
     </customLabels>
@@ -729,20 +237,8 @@
         <name>Delete_Attachment_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Description --></label>
-        <name>Description</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Description Edit --></label>
         <name>Description_Edit</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Direct_Sales --></label>
-        <name>Direct_Sales</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Download Invoice --></label>
-        <name>Download_Invoice</name>
     </customLabels>
     <customLabels>
         <label><!-- E-mail to Case - IS Help Desk --></label>
@@ -757,14 +253,6 @@
         <name>Edit</name>
     </customLabels>
     <customLabels>
-        <label><!-- Edition --></label>
-        <name>Edition</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Effective_Date --></label>
-        <name>Effective_Date</name>
-    </customLabels>
-    <customLabels>
         <label>メールアドレス</label>
         <name>Email</name>
     </customLabels>
@@ -777,52 +265,8 @@
         <name>EmailParsingExceptionKaleStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- Email To --></label>
-        <name>Email_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Email address --></label>
-        <name>Email_address</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Email cannot be empty --></label>
-        <name>Email_cannot_be_empty</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- EmptyCart --></label>
-        <name>EmptyCart</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Encryption_Key --></label>
         <name>Encryption_Key</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- End date --></label>
-        <name>End_date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ErrMsg Shipping &amp; Tax - general error --></label>
-        <name>ErrMsg_Shipping_Tax_General_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ErrMsg Shipping &amp; Tax - No conversion --></label>
-        <name>ErrMsg_Shipping_Tax_No_Conversion</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ErrMsg Shipping &amp; Tax - SAP Error --></label>
-        <name>ErrMsg_Shipping_Tax_SAP_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Error Invalid Product Number --></label>
-        <name>Error_Invalid_Product_Number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Error_SendEmail_EmailTo_Required --></label>
-        <name>Error_SendEmail_EmailTo_Required</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Error_SendEmail_Subject_Required --></label>
-        <name>Error_SendEmail_Subject_Required</name>
     </customLabels>
     <customLabels>
         <label>上申</label>
@@ -873,52 +317,8 @@
         <name>Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- First name --></label>
-        <name>First_name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- First name required --></label>
-        <name>First_name_required</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- FooterLeadMessage --></label>
-        <name>FooterLeadMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Generate_Quote --></label>
-        <name>Generate_Quote</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- GetQuoteConfirmationMsg --></label>
-        <name>GetQuoteConfirmationMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Go --></label>
-        <name>Go</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Go to IATA corporate site --></label>
-        <name>Go_to_IATA_corporate_site</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Handling --></label>
-        <name>Handling</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Handling charges message --></label>
-        <name>Handling_charges_message</name>
-    </customLabels>
-    <customLabels>
         <label><!-- HelpDesk_SIS_ICH_Type_Area_Mismatch --></label>
         <name>HelpDesk_SIS_ICH_Type_Area_Mismatch</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Hide details --></label>
-        <name>Hide_details</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Home --></label>
-        <name>Home</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -943,14 +343,6 @@
     <customLabels>
         <label><!-- ICH Help Desk Agent --></label>
         <name>ICH_Help_Desk_Agent</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ICH customer invoice message --></label>
-        <name>ICH_customer_invoice_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ICH payment processed msg --></label>
-        <name>ICH_payment_processed_msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCARD CheckList VerificationPurpose --></label>
@@ -1750,10 +1142,6 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_PendingCaseH2</name>
     </customLabels>
     <customLabels>
-        <label><!-- IDCard_PendingIdCardAppH1 --></label>
-        <name>IDCard_PendingIdCardAppH1</name>
-    </customLabels>
-    <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
         <name>IDCard_Pending_Apps_Missing_Args</name>
     </customLabels>
@@ -2405,14 +1793,6 @@ and
         <name>IEC_Confirm_DefaultPaymentUpdate</name>
     </customLabels>
     <customLabels>
-        <label><!-- IEC_Confirm_EmailSent --></label>
-        <name>IEC_Confirm_EmailSent</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- IEC_Confirm_SaveSuccessful --></label>
-        <name>IEC_Confirm_SaveSuccessful</name>
-    </customLabels>
-    <customLabels>
         <label><!-- IEC_Error_AcceptTermAndCondition --></label>
         <name>IEC_Error_AcceptTermAndCondition</name>
     </customLabels>
@@ -2505,10 +1885,6 @@ and
         <name>IEC_Error_InvalidEmail</name>
     </customLabels>
     <customLabels>
-        <label><!-- IEC_Error_InvalidFileNameFormat --></label>
-        <name>IEC_Error_InvalidFileNameFormat</name>
-    </customLabels>
-    <customLabels>
         <label><!-- IEC_Error_InvalidPageParameter --></label>
         <name>IEC_Error_InvalidPageParameter</name>
     </customLabels>
@@ -2537,10 +1913,6 @@ and
         <name>IEC_Error_MustLogin</name>
     </customLabels>
     <customLabels>
-        <label><!-- IEC Error Must Select Subscription --></label>
-        <name>IEC_Error_Must_Select_Subscription</name>
-    </customLabels>
-    <customLabels>
         <label><!-- IEC Error No Application Access --></label>
         <name>IEC_Error_No_Application_Access</name>
     </customLabels>
@@ -2555,18 +1927,6 @@ and
     <customLabels>
         <label><!-- IEC Error OnlyOneAddressPerType --></label>
         <name>IEC_Error_OnlyOneAddressPerType</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- IEC_Error_OnlyOneLocationPerBillTo --></label>
-        <name>IEC_Error_OnlyOneLocationPerBillTo</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- IEC_Error_OnlyOneLocationPerShipToCombination --></label>
-        <name>IEC_Error_OnlyOneLocationPerShipToCombination</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- IEC_Error_OnlyOneLocationPerSoldTo --></label>
-        <name>IEC_Error_OnlyOneLocationPerSoldTo</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC Error OnlyOneSwapConfiguration --></label>
@@ -2633,10 +1993,6 @@ and
         <name>IEC_GAD_Max_Results</name>
     </customLabels>
     <customLabels>
-        <label><!-- IEC Invalid VAT number --></label>
-        <name>IEC_Invalid_VAT</name>
-    </customLabels>
-    <customLabels>
         <label><!-- IEC_Recaptcha_PrivateKey --></label>
         <name>IEC_Recaptcha_PrivateKey</name>
     </customLabels>
@@ -2651,18 +2007,6 @@ and
     <customLabels>
         <label><!-- IEC_Trial_RequestSucceed --></label>
         <name>IEC_Trial_RequestSucceed</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels &amp; Messages for VF page IEC_UpdateAddress --></label>
-        <name>IEC_UpdateAddress_Labels1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels &amp; Messages for VF page IEC_UpdateAddress --></label>
-        <name>IEC_UpdateAddress_Labels2</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- IEC Update Address PageTitle --></label>
-        <name>IEC_UpdateAddress_PageTitle</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC Warning Must Login --></label>
@@ -3233,22 +2577,6 @@ and
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Current Legal details --></label>
-        <name>ISSP_AMS_NOC_Current_Legal_details</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP AMS NOC Current Location --></label>
-        <name>ISSP_AMS_NOC_Current_Location</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP AMS NOC Instructions --></label>
-        <name>ISSP_AMS_NOC_Instructions</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
-        <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP AMS Name of employer --></label>
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
@@ -3687,10 +3015,6 @@ and
     <customLabels>
         <label>新規本社</label>
         <name>ISSP_AMS_Reason_New_HO</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP_AMS_Rejected_File --></label>
-        <name>ISSP_AMS_Rejected_File</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS STEP 3_1 Branch Title --></label>
@@ -6447,7 +5771,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Subject</name>
     </customLabels>
     <customLabels>
-        <label>提出</label>
+        <label>登録</label>
         <name>ISSP_Submit</name>
     </customLabels>
     <customLabels>
@@ -6459,7 +5783,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label>調査は</label>
+        <label><!-- ISSP Survey --></label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
@@ -6744,48 +6068,8 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
-        <label><!-- InputRequiredMessage --></label>
-        <name>InputRequiredMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Internal and external emails error --></label>
-        <name>Internal_and_external_emails_error</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Invalid Source Case --></label>
         <name>Invalid_Source_Case</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Invoice number --></label>
-        <name>Invoice_number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Invoice_text --></label>
-        <name>Invoice_text</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Item Price --></label>
-        <name>Item_Price</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Item already in your cart --></label>
-        <name>Item_already_in_your_cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Itemalready in cart --></label>
-        <name>Itemalready_in_cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- JS_Confirm_Cart_Item_Deletion --></label>
-        <name>JS_Confirm_Cart_Item_Deletion</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Job title --></label>
-        <name>Job_title</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Job title required --></label>
-        <name>Job_title_required</name>
     </customLabels>
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
@@ -7052,62 +6336,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>LAST_N_DAYS_FA</name>
     </customLabels>
     <customLabels>
-        <label><!-- Label to display for missing Product Category --></label>
-        <name>Label_For_Missing_Product_Category</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECInvoice --></label>
-        <name>LabelsVF_IECInvoice</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECQuoteDetail --></label>
-        <name>LabelsVF_IECQuoteDetail</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECQuoteList --></label>
-        <name>LabelsVF_IECQuoteList</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page Order --></label>
-        <name>LabelsVF_Order</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page Order 2 --></label>
-        <name>LabelsVF_Order2</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECConfirmOrder --></label>
-        <name>Labels_IECConfirmOrder</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECConfirmOrder --></label>
-        <name>Labels_IECConfirmOrder2</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels IECDiscountType --></label>
-        <name>Labels_IECDiscountType</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECProductDetail --></label>
-        <name>Labels_IECProductDetail</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for component IECProductRelated --></label>
-        <name>Labels_IECProductRelated</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECRecProducts --></label>
-        <name>Labels_IECRecProducts</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Labels for VF page IECViewCart --></label>
-        <name>Labels_IECViewCart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Language --></label>
-        <name>Language</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Fax Validation --></label>
         <name>Laq_Fax_Validation</name>
     </customLabels>
@@ -7116,32 +6344,8 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Laq_PhoneValidation</name>
     </customLabels>
     <customLabels>
-        <label><!-- Last Name required --></label>
-        <name>Last_Name_required</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Last name --></label>
-        <name>Last_name</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Location --></label>
         <name>Location</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Login --></label>
-        <name>Login</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Login date --></label>
-        <name>Login_date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Login history --></label>
-        <name>Login_history</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Login information --></label>
-        <name>Login_information</name>
     </customLabels>
     <customLabels>
         <label>ログアウト</label>
@@ -7164,32 +6368,8 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Make_Public</name>
     </customLabels>
     <customLabels>
-        <label><!-- Media --></label>
-        <name>Media</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Message --></label>
-        <name>Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- My_Renewals --></label>
-        <name>My_Renewals</name>
-    </customLabels>
-    <customLabels>
         <label><!-- New --></label>
         <name>New</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- New password --></label>
-        <name>New_password</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- New product email body --></label>
-        <name>New_product_email_body</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- New product email subject --></label>
-        <name>New_product_email_subject</name>
     </customLabels>
     <customLabels>
         <label><!-- NoSameName --></label>
@@ -7200,16 +6380,8 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>No_Reply</name>
     </customLabels>
     <customLabels>
-        <label><!-- No account yet? Sign up! --></label>
-        <name>No_account_yet_Sign_up</name>
-    </customLabels>
-    <customLabels>
         <label><!-- No attachments were found on the source case --></label>
         <name>No_attachments_were_found_on_the_source_case</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- No product found --></label>
-        <name>No_product_found</name>
     </customLabels>
     <customLabels>
         <label><!-- No related cases were found --></label>
@@ -7220,72 +6392,8 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>No_special_characters</name>
     </customLabels>
     <customLabels>
-        <label><!-- Only one subscription can  be purchased --></label>
-        <name>Only_one_subscription_can_be_purchased</name>
-    </customLabels>
-    <customLabels>
         <label>未処理</label>
         <name>Open</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Option name --></label>
-        <name>Option_name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order --></label>
-        <name>Order</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order Check confirmation message --></label>
-        <name>Order_Check_confirmation_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order Credit Card confirmation message --></label>
-        <name>Order_Credit_Card_confirmation_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order ICH confirmation message --></label>
-        <name>Order_ICH_confirmation_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order Total Amount validation message --></label>
-        <name>Order_Total_Amount_validation_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order history --></label>
-        <name>Order_history</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order number --></label>
-        <name>Order_number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order prevent deletion message --></label>
-        <name>Order_prevent_deletion_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order prevent modification message --></label>
-        <name>Order_prevent_modification_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order select credit card message --></label>
-        <name>Order_select_credit_card_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order transaction failed message --></label>
-        <name>Order_transaction_failed_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order type --></label>
-        <name>Order_type</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Order wire transfer confirmation message --></label>
-        <name>Order_wire_transfer_confirmation_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Orders --></label>
-        <name>Orders</name>
     </customLabels>
     <customLabels>
         <label><!-- Overall maximum size --></label>
@@ -7872,164 +6980,16 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>PKB2_yesterday</name>
     </customLabels>
     <customLabels>
-        <label><!-- PO_number --></label>
-        <name>PO_number</name>
-    </customLabels>
-    <customLabels>
         <label><!-- PWC service request --></label>
         <name>PWC_service_request</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageTitleConfirmOrder --></label>
-        <name>PageTitleConfirmOrder</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleCustomerInformation --></label>
-        <name>PageTitleCustomerInformation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleMyInvoices --></label>
-        <name>PageTitleMyInvoices</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleMyPaymentMethods --></label>
-        <name>PageTitleMyPaymentMethods</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleProductDetails --></label>
-        <name>PageTitleProductDetails</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleProductList --></label>
-        <name>PageTitleProductList</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleShippingPayment --></label>
-        <name>PageTitleShippingPayment</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PageTitleShoppingCart --></label>
-        <name>PageTitleShoppingCart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page Product Detail --></label>
-        <name>Page_Product_Detail</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page Products --></label>
-        <name>Page_Products</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page_Title_Confirm_Order --></label>
-        <name>Page_Title_Confirm_Order</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page_Title_Products --></label>
-        <name>Page_Title_Products</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page_Title_Products_By_Category --></label>
-        <name>Page_Title_Products_By_Category</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page_Title_Search --></label>
-        <name>Page_Title_Search</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Page_Title_View_Cart --></label>
-        <name>Page_Title_View_Cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Payment ID --></label>
-        <name>Payment_ID</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Payment amount --></label>
-        <name>Payment_amount</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Payment date --></label>
-        <name>Payment_date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Payment history --></label>
-        <name>Payment_history</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Payment method --></label>
-        <name>Payment_method</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Payment number --></label>
-        <name>Payment_number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Personal information --></label>
-        <name>Personal_information</name>
-    </customLabels>
-    <customLabels>
-        <label>電話番号</label>
+        <label><!-- Phone --></label>
         <name>Phone</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Phone required --></label>
-        <name>Phone_required</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Placeholder_Search --></label>
-        <name>Placeholder_Search</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Platform --></label>
-        <name>Platform</name>
     </customLabels>
     <customLabels>
         <label><!-- Please select the target Case --></label>
         <name>Please_select_the_target_Case</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Postal_code --></label>
-        <name>Postal_code</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PreOrderAddToCart --></label>
-        <name>PreOrderAddToCart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Charges --></label>
-        <name>Pricing_model_Charges</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Country --></label>
-        <name>Pricing_model_Country</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Coupon code --></label>
-        <name>Pricing_model_Coupon_code</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Customer type --></label>
-        <name>Pricing_model_Customer_type</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Ending unit --></label>
-        <name>Pricing_model_Ending_unit</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Percentage --></label>
-        <name>Pricing_model_Percentage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Price --></label>
-        <name>Pricing_model_Price</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Region --></label>
-        <name>Pricing_model_Region</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Pricing model Start unit --></label>
-        <name>Pricing_model_Start_unit</name>
     </customLabels>
     <customLabels>
         <label><!-- Priority 1 (Showstopper) --></label>
@@ -8048,124 +7008,16 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Priority_4_Trivial_Defects</name>
     </customLabels>
     <customLabels>
-        <label><!-- Product --></label>
-        <name>Product</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Product Name --></label>
-        <name>Product_Name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Product Not Found --></label>
-        <name>Product_Not_Found</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Product_Number --></label>
-        <name>Product_Number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Products --></label>
-        <name>Products</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Promo code --></label>
-        <name>Promo_code</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Promotion --></label>
-        <name>Promotion</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Public --></label>
         <name>Public</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Publications --></label>
-        <name>Publications</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Publications subscriptions --></label>
-        <name>Publications_subscriptions</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PurchaseAsAutoRenew --></label>
-        <name>PurchaseAsAutoRenew</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- PurchaseAsAutoRenewInfo --></label>
-        <name>PurchaseAsAutoRenewInfo</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- QTY --></label>
-        <name>QTY</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Quantity --></label>
-        <name>Quantity</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Quote --></label>
-        <name>Quote</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Quote ID --></label>
-        <name>Quote_ID</name>
     </customLabels>
     <customLabels>
         <label><!-- RE --></label>
         <name>RE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Reader Main Content --></label>
-        <name>Reader_Main_Content</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Reference number --></label>
-        <name>Reference_number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Refine --></label>
-        <name>Refine</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Refine by --></label>
-        <name>Refine_by</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Region --></label>
-        <name>Region</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Related invoice --></label>
-        <name>Related_invoice</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Related invoices --></label>
-        <name>Related_invoices</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Related payment --></label>
-        <name>Related_payment</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Relationship --></label>
         <name>Relationship</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ReleaseDateMessage --></label>
-        <name>ReleaseDateMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Renewal_Number --></label>
-        <name>Renewal_Number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Request_Date --></label>
-        <name>Request_Date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Reset your password? --></label>
-        <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
         <label><!-- Response message --></label>
@@ -8208,52 +7060,12 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
-        <label><!-- Salutation --></label>
-        <name>Salutation</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search --></label>
-        <name>Search</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Search Products picklist --></label>
-        <name>Search_Products_Picklist</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Section Services --></label>
-        <name>Section_Services</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Section Title Top Sellers --></label>
-        <name>Section_Title_Top_Sellers</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- See details --></label>
-        <name>See_details</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Select --></label>
         <name>Select</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- SelectRequiredMessage --></label>
-        <name>SelectRequiredMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Select File --></label>
-        <name>Select_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- -Select a Country- --></label>
-        <name>Select_a_Country</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- -Select a State/Province- --></label>
-        <name>Select_a_State_Province</name>
     </customLabels>
     <customLabels>
         <label><!-- Select one Attachment --></label>
@@ -8280,42 +7092,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Send_FS_Request_Letter_Ok</name>
     </customLabels>
     <customLabels>
-        <label><!-- Services dates --></label>
-        <name>Services_dates</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Shipping --></label>
-        <name>Shipping</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Shipping address --></label>
-        <name>Shipping_address</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Shipping and handling --></label>
-        <name>Shipping_and_handling</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Shipping instructions --></label>
-        <name>Shipping_instructions</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ShoppingCartCurrencyMsg --></label>
-        <name>ShoppingCartCurrencyMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ShoppingCartFooterMsg --></label>
-        <name>ShoppingCartFooterMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ShoppingCartQtyMsg --></label>
-        <name>ShoppingCartQtyMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- SignIn --></label>
-        <name>SignIn</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Signaturit Allowed Users --></label>
         <name>Signaturit_Allowed_Users</name>
     </customLabels>
@@ -8324,84 +7100,12 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Signaturit_Endpoint</name>
     </customLabels>
     <customLabels>
-        <label><!-- SiteTitle --></label>
-        <name>SiteTitle</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- SortBy --></label>
-        <name>SortBy</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Source IP --></label>
-        <name>Source_IP</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Start date --></label>
-        <name>Start_date</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- State / Province --></label>
-        <name>State_Province</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- State cannot be empty --></label>
-        <name>State_cannot_be_empty</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Status --></label>
-        <name>Status</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- StayInformedMessage --></label>
-        <name>StayInformedMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Stay Informed! --></label>
-        <name>Stay_Informed</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Street cannot be empty --></label>
-        <name>Street_cannot_be_empty</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Subject --></label>
         <name>Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- Submit Order --></label>
-        <name>Submit_Order</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Subtotal --></label>
-        <name>Subtotal</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Summary --></label>
-        <name>Summary</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- SurveyCustomerRecoveriesAnnFARRELL --></label>
-        <name>SurveyCustomerRecoveriesAnnFARRELL</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Taxes --></label>
-        <name>Taxes</name>
-    </customLabels>
-    <customLabels>
         <label><!-- The attachments you select will be copied to the target case --></label>
         <name>The_attachments_you_select_will_be_copied_to_the_target_case</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Title_Home_Page --></label>
-        <name>Title_Home_Page</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Total Price --></label>
-        <name>Total_Price</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Tracking Number --></label>
-        <name>Tracking_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- Transfer Attachments --></label>
@@ -8412,10 +7116,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Trust_Weaver</name>
     </customLabels>
     <customLabels>
-        <label><!-- Until --></label>
-        <name>Until</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Upload File --></label>
         <name>Upload_File</name>
     </customLabels>
@@ -8424,92 +7124,12 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Upload_Financial_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- User name --></label>
-        <name>User_name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- VAT_number --></label>
-        <name>VAT_number</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- VAT required --></label>
-        <name>VAT_required</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Valid_Until --></label>
-        <name>Valid_Until</name>
-    </customLabels>
-    <customLabels>
         <label><!-- View --></label>
         <name>View</name>
     </customLabels>
     <customLabels>
-        <label><!-- ViewCart --></label>
-        <name>ViewCart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- View_6_more --></label>
-        <name>View_6_more</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- View all --></label>
-        <name>View_all</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- View quotes --></label>
-        <name>View_quotes</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning Empty Cart --></label>
-        <name>Warning_Empty_Cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning_Expired --></label>
-        <name>Warning_Expired</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning Invalid Coupon --></label>
-        <name>Warning_Invalid_Coupon</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning_Invalid_CouponCode --></label>
-        <name>Warning_Invalid_CouponCode</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning Invalid Quantity --></label>
-        <name>Warning_Invalid_Quantity</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning_No_Renewal_Notice --></label>
-        <name>Warning_No_Renewal_Notice</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning No Shippable Product --></label>
-        <name>Warning_No_Shippable_Product</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning_OrderItem_Exist --></label>
-        <name>Warning_OrderItem_Exist</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Warning SalesOrder Already Created --></label>
-        <name>Warning_SalesOrder_Already_Created</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Web --></label>
         <name>Web</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Welcome Message --></label>
-        <name>Welcome_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Welcome_Message1 --></label>
-        <name>Welcome_Message1</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Welcome_Message2 --></label>
-        <name>Welcome_Message2</name>
     </customLabels>
     <customLabels>
         <label><!-- 1 - High --></label>
@@ -8520,52 +7140,12 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Your</name>
     </customLabels>
     <customLabels>
-        <label><!-- Your cart --></label>
-        <name>Your_cart</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ZQuotes --></label>
-        <name>ZQuotes</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Zip code cannot be empty --></label>
-        <name>Zip_code_cannot_be_empty</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Zuora Hosted Payment Method error message --></label>
-        <name>Zuora_Hosted_Payment_Method_error_message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- days left --></label>
-        <name>days_left</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- deselect all --></label>
-        <name>deselect_all</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- discounted price --></label>
-        <name>discounted_price</name>
-    </customLabels>
-    <customLabels>
         <label><!-- doubleHash --></label>
         <name>doubleHash</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_replacementHeadText --></label>
         <name>idcard_replacementHeadText</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- label custom price --></label>
-        <name>label_custom_price</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- label direct sales price --></label>
-        <name>label_direct_sales_price</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- label regular price --></label>
-        <name>label_regular_price</name>
     </customLabels>
     <customLabels>
         <label><!-- noreplyEmail --></label>
@@ -8742,17 +7322,5 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- Chinese (Traditional) --></label>
         <name>pkb2_lang_zh_TW</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- regular price --></label>
-        <name>regular_price</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- select all --></label>
-        <name>select_all</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- wire transfer payment msg --></label>
-        <name>wire_transfer_payment_msg</name>
     </customLabels>
 </Translations>

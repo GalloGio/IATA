@@ -187,8 +187,8 @@ public class IECSAPManager_tst {
 		// verify SAP Invoice
 		system.assert(oSAPInvoice1 != null, 'A SAP Invoice should be created');
 		system.assertEquals(IECConstants.IECSAPInvoice_Status_New, oSAPInvoice1.Status__c, 'The SAP Invoice status should be New');
-//		system.assertEquals(true, oSAPInvoice1.Ready_for_SAP__c, 'The Ready_for_SAP__c should be true');
-//		system.assertEquals(oInvoice1.Name, oSAPInvoice1.Name, 'The method getSAPInvoiceByInvoiceNumber should return the SAP Invoice having the same invoice number');
+		system.assertEquals(true, oSAPInvoice1.Ready_for_SAP__c, 'The Ready_for_SAP__c should be true');
+		system.assertEquals(oInvoice1.Name, oSAPInvoice1.Name, 'The method getSAPInvoiceByInvoiceNumber should return the SAP Invoice having the same invoice number');
 		
 		/////////////////////////////////////////////////////////////////////////////
 		// Test #2 - validation errors on SAP Invoice (field Dist Chan and Billing Country is missing)
@@ -202,7 +202,7 @@ public class IECSAPManager_tst {
 		
 		// reselect SAP Invoice and check status
 		oSAPInvoice1 = IECSAPManager.getSAPInvoiceByInvoiceNumber(oInvoice1.Name);
-		//system.assertEquals(IECConstants.IECSAPInvoice_Status_ValidationError, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to Validation Error');
+		system.assertEquals(IECConstants.IECSAPInvoice_Status_ValidationError, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to Validation Error');
 		
 		// fix validation error on SAP Invoice (still missing fields on Invoice Items)
 		oSAPInvoice1.Dist_Chan__c = 'asdfa';
@@ -226,9 +226,9 @@ public class IECSAPManager_tst {
 		
 		// reselect SAP Invoice
 		oSAPInvoice1 = IECSAPManager.getSAPInvoiceByInvoiceNumber(oInvoice1.Name);
-		//system.assertEquals(IECConstants.IECSAPInvoice_Status_ValidationError, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to Validation Error.');
+		system.assertEquals(IECConstants.IECSAPInvoice_Status_ValidationError, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to Validation Error.');
 		for (IEC_SAP_Invoice_Item__c oSAPInvoiceItem : oSAPInvoice1.IEC_SAP_Invoice_Items__r) {
-			//system.assertEquals(IECConstants.IECSAPInvoiceItem_Status_ValidationError, oSAPInvoiceItem.Status__c, 'The SAP Invoice Item status should be Validation Error. SAP Invoice Item Error Message: ' + oSAPInvoice1.Error_Message__c);
+			system.assertEquals(IECConstants.IECSAPInvoiceItem_Status_ValidationError, oSAPInvoiceItem.Status__c, 'The SAP Invoice Item status should be Validation Error. SAP Invoice Item Error Message: ' + oSAPInvoice1.Error_Message__c);
 		}
 		
 		// fix validation errors on SAP Invoice Item
@@ -256,10 +256,10 @@ public class IECSAPManager_tst {
 		oSAPInvoice1 = IECSAPManager.getSAPInvoiceByInvoiceNumber(oInvoice1.Name);
 		
 		// make sure status is SAP Error
-		//system.assertEquals(IECConstants.IECSAPInvoice_Status_SAPError, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to SAP Error. Error Message: ' + oSAPInvoice1.Error_Message__c);
+		system.assertEquals(IECConstants.IECSAPInvoice_Status_SAPError, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to SAP Error. Error Message: ' + oSAPInvoice1.Error_Message__c);
 		
 		// make sure test error message is in the error field
-		//system.assert(String.isNotBlank(oSAPInvoice1.Error_Message__c) && oSAPInvoice1.Error_Message__c.contains(INVOICE_ERROR_MSG), 'The SAP Invoice error message should contain the test error message');
+		system.assert(String.isNotBlank(oSAPInvoice1.Error_Message__c) && oSAPInvoice1.Error_Message__c.contains(INVOICE_ERROR_MSG), 'The SAP Invoice error message should contain the test error message');
 		
 		// NOTE: not sure if the SAP INvoice Items status should be updated...
 		// make sure that the SAP invoice items status are SAP Error
@@ -270,7 +270,7 @@ public class IECSAPManager_tst {
 		// Test #5 - the interface should not try to send SAP Invoices that have validation errors
 		
 		lstSAPInvoices = IECSAPManager.getNewSAPInvoices();
-		//system.assert(lstSAPInvoices == null || lstSAPInvoices.size() == 0, 'There should be no test SAP Invoices to send because it is in validation error');
+		system.assert(lstSAPInvoices == null || lstSAPInvoices.size() == 0, 'There should be no test SAP Invoices to send because it is in validation error');
 		
 		/////////////////////////////////////////////////////////////////////////////
 		// Test #6 - simulate sending to SAP success
@@ -294,16 +294,15 @@ public class IECSAPManager_tst {
 		oSAPInvoice1 = IECSAPManager.getSAPInvoiceByInvoiceNumber(oInvoice1.Name);
 		
 		// make sure status is Sent to SAP
-		//system.assertEquals(IECConstants.IECSAPInvoice_Status_SentToSAP, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to Sent to SAP');
-		for (IEC_SAP_Invoice_Item__c oSAPInvoiceItem : oSAPInvoice1.IEC_SAP_Invoice_Items__r) {
-			//system.assertEquals(IECConstants.IECSAPInvoiceItem_Status_SentToSAP, oSAPInvoiceItem.Status__c, 'The SAP Invoice Items status shoudld be updated to Sent to SAP');
-		}
+		system.assertEquals(IECConstants.IECSAPInvoice_Status_SentToSAP, oSAPInvoice1.Status__c, 'The SAP Invoice status should be updated to Sent to SAP');
+		for (IEC_SAP_Invoice_Item__c oSAPInvoiceItem : oSAPInvoice1.IEC_SAP_Invoice_Items__r)
+			system.assertEquals(IECConstants.IECSAPInvoiceItem_Status_SentToSAP, oSAPInvoiceItem.Status__c, 'The SAP Invoice Items status shoudld be updated to Sent to SAP');
 		
 		// make sure we received the SAP Contract number
-		//system.assert(String.isNotblank(oSAPInvoice1.SAP_Contract_Number__c), 'The SAP Contract number should be set');
+		system.assert(String.isNotblank(oSAPInvoice1.SAP_Contract_Number__c), 'The SAP Contract number should be set');
 		
 		// make sure the test warning message has been set
-		//system.assertEquals(INVOICE_WARNING_MSG, oSAPInvoice1.Warning_Message__c, 'The test warning message should bet set');
+		system.assertEquals(INVOICE_WARNING_MSG, oSAPInvoice1.Warning_Message__c, 'The test warning message should bet set');
     }
     
     

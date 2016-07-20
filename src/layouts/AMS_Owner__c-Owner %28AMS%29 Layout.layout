@@ -93,8 +93,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Agency__c</fields>
+        <fields>AMS_Agency__c.NAME</fields>
         <fields>Percentage__c</fields>
+        <fields>AMS_Agency__c.IATACode__c</fields>
         <relatedList>AMS_Agency_Ownership__c.AMS_Agency_Owner__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

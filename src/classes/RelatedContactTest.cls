@@ -4,34 +4,21 @@
 
 @isTest
 private class RelatedContactTest {
-	@testSetup static void setup(){
-		// Create accounts
-		list<Account> lsAccount = new list<Account>();
-        Id StandardAccount_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
-        lsAccount.add(new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id));
-        lsAccount.add(new Account(Name = 'Qatar Airways France', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id));
-        lsAccount.add(new Account(Name = 'Qatar Airways UK', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id));
-        
-        insert lsAccount;
-	}
-	
+
     static testMethod void myUnitTest() {
+    	// Create accounts
+        Id StandardAccount_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account');
+        Account a1 = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id);
+        insert a1;
+        
+        Account a2 = new Account(Name = 'Qatar Airways France', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id);
+        insert a2;
+        
+        Account a3 = new Account(Name = 'Qatar Airways UK', Airline_designator__c = 'QR', RecordTypeId = StandardAccount_RT_Id);
+        insert a3;
+        
         // Create a contact linked to the first account
         Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
-        
-        Account a1;
-        Account a2;
-        Account a3;
-        
-        list<Account> lsAccnt = [select id, name, Airline_designator__c from Account];
-        system.assert(lsAccnt.size()==3);
-        
-        a1 = lsAccnt.get(0);
-        a2 = lsAccnt.get(1);
-        a3 = lsAccnt.get(2);
-        
-        test.startTest();
-        
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a1.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -68,7 +55,6 @@ private class RelatedContactTest {
         // check that the trigger updated the Related_to_Accounts__c field on the contact
         c = [SELECT Id, Related_to_Accounts__c FROM Contact WHERE Id = :c.Id];
         system.assertEquals(null, c.Related_to_Accounts__c);
-        test.stopTest();
     }
 
 }

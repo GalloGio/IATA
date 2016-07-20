@@ -8,7 +8,6 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
     
     global AcliSyncBatch(String content) {
         fileContent = content;
-        codingCasesLog = '';
     }
     
     
@@ -24,15 +23,10 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
     
     // The scope is a list of lines from the ACLI file
     global void execute (Database.BatchableContext batchableContext, List<String> scope){
-    	processLines(scope);
-    }
-    
-    
-    public void processLines(list<String> listLines) {
         
         //// Create a map of AcliAccounts per SAP ID
         map<String, AcliAccount> mapAcliAccountPerSapId = new map<String, AcliAccount>();
-        for(String line : listLines){
+        for(String line : scope){
         	
             // parse the lines into AcliAccounts
             AcliAccount acliAcc = new AcliAccount(line, true);
@@ -46,13 +40,13 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
         //// Get related data from SF
         // Get corresponding accounts from SF into a map per SAP ID
         list<String> lstAcctRecordTypes = new list<String>{'IATA_Airline', 'Standard_Account', 'Others'};
-        list<Account> lstSFaccounts = [SELECT Id,name,IATACode__c,Name_on_AOC__c, Airline_designator__c,ICAO_designator__c,billingStreet, billingCity,billingState, billingCountry,billingPostalCode, 
+        list<Account> lstSFaccounts = [SELECT Id,name,IATACode__c,Name_on_AOC__c, Airline_designator__c,ICAO_designator__c, duplicate_flag_indicato__c,billingStreet, billingCity,billingState, billingCountry,billingPostalCode, 
                                					Membership_SITA__c, Memmership_ARINC__c, IATA_Member__c, Memmership_ATA__c, Type_of__c, Account_code_secondary_flag__c, Airline_Prefix__c, IATA_ISO_Country__c, ACLI_Status__c, 
-                               					IATA_ISO_Country__r.ISO_Code__c, Membership_status__c, ACLI_SAP_Id__c, MITA_Member__c, AOC_Expiry_Date__c
+                               					IATA_ISO_Country__r.ISO_Code__c, Membership_status__c, ACLI_SAP_Id__c, MITA_Member__c, AOC_Expiry_Date__c                                    					
                            					 FROM Account 
                            					 WHERE RecordType.DeveloperName IN :lstAcctRecordTypes 
                            					 AND ACLI_SAP_Id__c IN :mapAcliAccountPerSapId.keyset()];
-
+   		
    		list<Id> lstAccountIds = new list<Id>();
    		map<String, Account> mapAccountsPerSapId = new map<String, Account>();
    		for (Account a : lstSFaccounts) {
@@ -66,51 +60,42 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
    		for (SAP_Account__c sa : lstSapAccounts) {
    			// only interested if the SAP ID on the record is the same as the SAP Id in the account, because that's the value from the ACLI file (the account was matched based on that)
    			if (sa.SAP_ID__c == sa.Account__r.ACLI_SAP_Id__c) {
-   				if ( mapSapAccountsPerSapId.get(sa.SAP_ID__c) == null ) {
-   					mapSapAccountsPerSapId.put(sa.SAP_ID__c, sa);
-   				} else {
-   					// there is another account with the same ID, and this should not happen
-   					codingCasesLog += 'There is more than one account with the SAP ID "' + sa.SAP_ID__c + '\r\n';
-   				}
+   				mapSapAccountsPerSapId.put(sa.SAP_ID__c, sa);
    			}
    		}
    		
    		// get related cases into a map per Account Id
-   		map<Id, list<Case>> mapCasesPerAccId = new map<Id, list<Case>>();
-   		list<Case> listUpdateCases = new list<Case>();
-   		list<Case> lstAirlineCodingCases = [SELECT Id, AccountId, Coding_Application_ID__c, Coding_Application_Reception_Date__c, Coding_Application_Status__c, Reason1__c
+   		map<Id, Case> mapCasesPerAccId = new map<Id, Case>();
+   		list<Case> lstAirlineCodingCases = [SELECT Id, AccountId, Coding_Application_ID__c, Coding_Application_Reception_Date__c, Coding_Application_Status__c 
    												FROM Case 
    												WHERE RecordType.DeveloperName = 'Airline_Coding_Application' AND isClosed = false AND AccountId IN :lstAccountIds];
         for (Case cs : lstAirlineCodingCases) {
-        	list<Case> listCases = mapCasesPerAccId.get(cs.AccountId);
-        	if (listCases == null) {
-        		listCases = new list<Case>();
-        	}
-        	listCases.add(cs);
-        	mapCasesPerAccId.put(cs.AccountId, listCases);
+        	mapCasesPerAccId.put(cs.AccountId, cs);
         }
+        
         
         //// Process the accounts from the ACLI file
         map<String, Account> mapAccountsToUpsertPerSapId = new map<String, Account>();
-
+        
         for (String AcliSapId : mapAcliAccountPerSapId.keyset()) {
         	// get the ACLI account
         	AcliAccount acliAcc = mapAcliAccountPerSapId.get(AcliSapId);
         	// get the match from SF
         	Account SFacc =  mapAccountsPerSapId.get(AcliSapId);
-        
+        	
         	if (SFacc != null) {
         		///// Handle the Account update
         		// add the SF account info to the ACLI account
         		acliAcc.AcctID = SFacc.Id;
         		acliAcc.Membership_status = SFacc.Membership_status__c;
-        
+        		
         		// current acli account is updated, but only if any field is changed
         		if (acliAcc.updateAccount(SFacc) ) {
 	        		// create the updated account with info from ACLI
 	        		mapAccountsToUpsertPerSapId.put( acliAcc.AcliSAPId, SFacc );
+	        		//mapAccountsToUpsertPerSapId.put( acliAcc.AcliSAPId, AcliAccount.createAcctFromAcliAccount(acliAcc) );
         		}
-
+        		
         		// add the old account data to the backup
         		backUp += AcliAccount.lineOfAcliFromACct(SFacc);
         		
@@ -132,32 +117,21 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
         		}
         		
         		
-				///// Find in the list of cases linked to the account, one with the same reason
-        		list<Case> listCase = mapCasesPerAccId.get(SFacc.Id);
-        		list<Case> listTmpCase = new list<Case>();
+        		///// Handle the Case update
+        		if (mapCasesPerAccId.get(SFacc.Id) != null) {
+        			Case tempCase = mapCasesPerAccId.get(SFacc.Id);
+        			tempCase.Coding_Application_ID__c = acliAcc.ApplicationId;
+        			tempCase.Coding_Application_Status__c = acliAcc.CodingApplicationStatus;
+        			tempCase.Coding_Application_Reception_Date__c = acliAcc.CodingApplicationReceptionDate != null ? Date.valueOf(acliAcc.CodingApplicationReceptionDate) : null;
+        			
+        			mapCasesPerAccId.put(SFacc.Id, tempCase);
+        			
+        		} else if (acliAcc.CodingApplicationStatus.trim() != '' || acliAcc.CodingApplicationReceptionDate != null) {
+        			// if there is coding data to sync, but no coding case open, log this in the coding case log
+        			codingCasesLog += 'No open coding case found for account "' + acliAcc.AirlineName + '" with the Id "' + SFacc.Id + '" and the SAP Id "' + AcliSapId + '"\r\n';
+        		}
         		
-        		if ( listCase != null ) {
-        			for ( Case tempCase: listCase) {
-        				if (tempCase.Reason1__c == acliAcc.reason ) {
-		        			tempCase.Coding_Application_ID__c = acliAcc.ApplicationId;
-		        			tempCase.Coding_Application_Status__c = acliAcc.CodingApplicationStatus;
-		        			tempCase.Coding_Application_Reception_Date__c = acliAcc.CodingApplicationReceptionDate != null ? Date.valueOf(acliAcc.CodingApplicationReceptionDate) : null;
-		        			
-		        			listTmpCase.add(tempCase);
-        				}
-        			}
-        		}
-        		// if there is coding data to sync, but no coding case open or more than one, log this in the coding case log
-        		if (acliAcc.CodingApplicationStatus.trim() != '' || acliAcc.CodingApplicationReceptionDate != null) {
-	        		if (listTmpCase.isEmpty()) {
-	        			codingCasesLog += 'No open coding case found for account "' + acliAcc.AirlineName + '" with the Id "' + SFacc.Id + '" and the SAP Id "' + AcliSapId + '"\r\n';
-	        		} else if (listTmpCase.size() > 1) {
-	        			codingCasesLog += 'More than one open coding case found for account "' + acliAcc.AirlineName + '" with the Id "' + SFacc.Id + '" and the SAP Id "' + AcliSapId + '"\r\n';
-	        		} else {
-	        			listUpdateCases.add(listTmpCase.get(0));
-	        		}
-        		}
-
+        		
         	} else {
         		///// If not account in SF found, create a new account
         		Account newAcc = AcliAccount.createAcctFromAcliAccount(acliAcc);
@@ -173,6 +147,7 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
     			mapSapAccountsPerSapId.put(acliAcc.AcliSAPId, tempSapAcct);
         	}
         }
+        
         
         //// Update the data in SF
         if (!mapAccountsToUpsertPerSapId.values().isEmpty()) {
@@ -210,35 +185,37 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
         			}
         		}
         	}
-	        if (!mapSapAccountsPerSapId.values().isEmpty()) {
-	        	urList = Database.upsert(mapSapAccountsPerSapId.values(), false);
-	        	
-	        	for (Integer i = 0; i < urList.size(); i++) {
-	        		if (!urList[i].isSuccess()) {
-	        			updateErrors += 'Error(s) updating the SAP Account with ID = ' + mapSapAccountsPerSapId.values()[i].Id + ': \r\n';
-	        			for(Database.Error err : urList[i].getErrors()) {
-				            updateErrors += '\t' + err.getStatusCode() + ': ' + err.getMessage() + '. Fields affected: ' + err.getFields() + '. \r\n';
-				        }
-	        		}
-	        	}
-	        }
-        }
-        
-    	// Cases
-        if (!mapSapAccountsPerSapId.values().isEmpty()) {
-        	Database.SaveResult[] srList = Database.update(listUpdateCases, false);
+        	
+        	urList = Database.upsert(mapSapAccountsPerSapId.values(), false);
+        	
+        	for (Integer i = 0; i < urList.size(); i++) {
+        		if (!urList[i].isSuccess()) {
+        			updateErrors += 'Error(s) updating the SAP Account with ID = ' + mapSapAccountsPerSapId.values()[i].Id + ': \r\n';
+        			for(Database.Error err : urList[i].getErrors()) {
+			            updateErrors += '\t' + err.getStatusCode() + ': ' + err.getMessage() + '. Fields affected: ' + err.getFields() + '. \r\n';
+			        }
+        		}
+        	}
+        	
+        	
+        	// Cases
+        	Database.SaveResult[] srList = Database.update(mapCasesPerAccId.values(), false);
+        	
         	for (Integer i = 0; i < srList.size(); i++) {
         		if (!srList[i].isSuccess()) {
-        			codingCasesLog += 'Error(s) updating the Case with ID = ' + listUpdateCases[i].Id + ': \r\n';
+        			codingCasesLog += 'Error(s) updating the Case with ID = ' + mapCasesPerAccId.values()[i].Id + ': \r\n';
         			for(Database.Error err : srList[i].getErrors()) {
 			            codingCasesLog += '\t' + err.getStatusCode() + ': ' + err.getMessage() + '. Fields affected: ' + err.getFields() + '. \r\n';
 			        }
         		} else {
-        			codingCasesLog += 'Successfully updated the Case with ID = ' + listUpdateCases[i].Id + ': \r\n';
+        			codingCasesLog += 'Successfully updated the Case with ID = ' + mapCasesPerAccId.values()[i].Id + ': \r\n';
         		}
         	}
         }
+        
     }
+    
+    
     
     global void finish (Database.BatchableContext batchableContext){
         // Create the confirmation email, with the logs attached

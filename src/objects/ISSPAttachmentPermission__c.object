@@ -50,8 +50,8 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
-    <enableReports>true</enableReports>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -61,7 +61,6 @@
         <label>AttachmentId</label>
         <length>18</length>
         <required>true</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -71,14 +70,12 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>ShowToPortalUsers</label>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <label>ISSPAttachmentPermission</label>
     <nameField>
         <label>ISSPAttachmentPermission Name</label>
-        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>ISSPAttachmentPermissions</pluralLabel>

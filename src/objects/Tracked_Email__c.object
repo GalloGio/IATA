@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,7 +62,6 @@
         <label>BccAddress</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -76,7 +75,6 @@
         <relationshipLabel>Tracked Emails</relationshipLabel>
         <relationshipName>Tracked_Emails</relationshipName>
         <required>true</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -86,7 +84,6 @@
         <label>CcAddress</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -98,7 +95,6 @@
         <label>EmailMessage</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -108,7 +104,6 @@
         <externalId>false</externalId>
         <label>From Address</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -119,7 +114,6 @@
         <label>From Name</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -129,31 +123,26 @@
         <externalId>false</externalId>
         <label>Html Body</label>
         <length>32768</length>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
     </fields>
     <fields>
         <fullName>Signaturit_Certificate_Ids__c</fullName>
-        <description>Recipient ID</description>
         <externalId>false</externalId>
         <label>Signaturit Certificate Ids</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Signaturit_Id__c</fullName>
-        <description>Email ID</description>
         <externalId>false</externalId>
         <label>Signaturit Id</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -164,7 +153,6 @@
         <label>Status</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -175,7 +163,6 @@
         <label>Subject</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -185,7 +172,6 @@
         <externalId>false</externalId>
         <label>Body</label>
         <length>32768</length>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -199,7 +185,6 @@
         <relationshipLabel>Tracked Emails</relationshipLabel>
         <relationshipName>Tracked_Emails</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -207,24 +192,9 @@
     <nameField>
         <displayFormat>TE-{00000000}</displayFormat>
         <label>Tracked Email Number</label>
-        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Tracked Emails</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
-    <webLinks>
-        <fullName>Refresh_Events</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Refresh Events</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/connection.js&quot;)}
-{!REQUIRESCRIPT(&quot;/soap/ajax/29.0/apex.js&quot;)}
-
-var result = sforce.apex.execute(&quot;WSJavascript&quot;,&quot;refreshSignaturitEvents &quot;,{signaturitid:&quot;{!Tracked_Email__c.Id}&quot;});
-window.location.reload();</url>
-    </webLinks>
 </CustomObject>

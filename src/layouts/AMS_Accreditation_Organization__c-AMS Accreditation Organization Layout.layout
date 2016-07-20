@@ -77,7 +77,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Agency__c</fields>
+        <fields>AMS_Agency__c.NAME</fields>
+        <fields>AMS_Agency__c.Company_Type__c</fields>
+        <fields>AMS_Agency__c.CUST_RECORDTYPE</fields>
         <fields>Date_Organisation_Status_attained__c</fields>
         <fields>Accreditation_Endorsement_Status_code__c</fields>
         <relatedList>AMS_Inspection__c.Accreditation_Endorsement_organisation__c</relatedList>

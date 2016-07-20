@@ -72,7 +72,9 @@
         </actions>
         <active>true</active>
         <description>Alerts twhen a deal  has been closed for advertising</description>
-        <formula>and(Opportunity.OwnerId = LastModifiedById  ,ispickval(Product2.Line_of_Business__c,  &apos;Advertising&apos;) ,Opportunity.IsWon = TRUE)</formula>
+        <formula>and(Opportunity.OwnerId = LastModifiedById 
+,ispickval(Product2.Line_of_Business__c,  &apos;Advertising&apos;)
+,Opportunity.IsWon = TRUE)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -99,7 +101,10 @@
         <fullName>ITDI - Close Deal VP Notification</fullName>
         <active>true</active>
         <description>Alerts the VP Human Resources when a deal over 10000 has been closed for ITDI</description>
-        <formula>and(Opportunity.OwnerId = LastModifiedById  ,ispickval(Product2.Line_of_Business__c,  &apos;training&apos;) ,Opportunity.Amount &gt;=10000  ,Opportunity.IsWon = TRUE)</formula>
+        <formula>and(Opportunity.OwnerId = LastModifiedById 
+,ispickval(Product2.Line_of_Business__c,  &apos;training&apos;)
+,Opportunity.Amount &gt;=10000 
+,Opportunity.IsWon = TRUE)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -109,7 +114,8 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>and(ispickval(Product2.Family,  &apos;Pax IS&apos;) ,ispickval(Opportunity.StageName,  &apos;6. Contract stage&apos;))</formula>
+        <formula>and(ispickval(Product2.Family,  &apos;Pax IS&apos;)
+,ispickval(Opportunity.StageName,  &apos;6. Contract stage&apos;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

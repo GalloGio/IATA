@@ -19,27 +19,53 @@ global with sharing class IfapRest {
         
         try{
             if(caseNumber <> null){
-                List<Case> cse =[select Id, OwnerID, Casenumber, IFAP_Agent_Code__c, From_IFAPRest__c FROM case where CaseNumber = : caseNumber and STATUS != 'Submitted' ];
+                List<Case> cse =[select Id, Casenumber, IFAP_Agent_Code__c FROM case where CaseNumber = : caseNumber and STATUS != 'Submitted' ];
                 if(cse <> null && cse.size()>0){
     
-                    //CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+                    CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
                     cse[0].status = 'Submitted';
-                    cse[0].From_IFAPRest__c = true;
+                    cse[0].IsComplaint__c = false;
                     update cse;
+
+                    List<AmazonFile__c> listOfFiles = [Select ID, Name, Full_Name_Unique__c from AmazonFile__c WHERE Case__c=: cse[0].Id];
+                    List<Id> idsFileToDelete = new list<Id>();
+                    
+
+                    for(AmazonFile__c amFile: listOfFiles){
+                        if(amFile.name <> fileName)
+                            idsFileToDelete.add(amFile.id);
+                   }
+
+
+                   deleteRemainingFiles(idsFileToDelete);
+                   String amazonKey = FOLDER + cse[0].caseNumber +'/' + FileName ;
+     
+                  try{
+                      amazonFile = new AmazonFile__c(
+                        Name = filename,
+                        Full_Name_Unique__c = amazonKey,
+                        Size_MB__c = FileSize, //convert to MB
+                        Case__c = cse[0].Id
+                    );
+                    insert amazonFile;
+
+                    } catch ( Exception e) {
+                     System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
+                    return false;
+                    }
                 }
             }
 
             return true;   
                                                 
             }catch(Exception ex){
-                //TransformationHelper.sendEmailSupport('FATAL: IFAP changeStatus ' +caseNumber ,'STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
+                TransformationHelper.sendEmailSupport('FATAL: IFAP changeStatus ' +caseNumber ,'STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
                 return false;                                                       
             }
         }
 
-       @future(callout=true)
-       @TestVisible
-       private static void deleteRemainingFiles(list<Id> iDAmazonFiles){
+        @future(callout=true)
+        private static void deleteRemainingFiles(list<Id> iDAmazonFiles){
             List<AmazonFile__c> amazonFiles = new List<AmazonFile__c>();
             
             try{

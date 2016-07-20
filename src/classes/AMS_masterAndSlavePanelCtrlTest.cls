@@ -1,4 +1,25 @@
-@isTest
+/**
+ * This class contains unit tests for validating the behavior of Apex classes
+ * and triggers.
+ *
+ * Unit tests are class methods that verify whether a particular piece
+ * of code is working properly. Unit test methods take no arguments,
+ * commit no data to the database, and are flagged with the testMethod
+ * keyword in the method definition.
+ *
+ * All test methods in an organization are executed whenever Apex code is deployed
+ * to a production organization to confirm correctness, ensure code
+ * coverage, and prevent regressions. All Apex classes are
+ * required to have at least 75% code coverage in order to be deployed
+ * to a production organization. In addition, all triggers must have some code coverage.
+ * 
+ * The @isTest class annotation indicates this class only contains test
+ * methods. Classes defined with the @isTest annotation do not count against
+ * the organization size limit for all Apex scripts.
+ *
+ * See the Apex Language Reference for more information about Testing and Code Coverage.
+ */
+ @isTest
 public class AMS_masterAndSlavePanelCtrlTest{
 
 
@@ -15,6 +36,7 @@ public class AMS_masterAndSlavePanelCtrlTest{
     private static IATA_ISO_State__c stateCA ;
     private static IATA_ISO_State__c stateAL ;
 
+    private static  Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
     private static IATA_ISO_Country__c[] ctries = null;
     
     private static IATA_ISO_State__c[] states = null;
@@ -53,27 +75,26 @@ public class AMS_masterAndSlavePanelCtrlTest{
         return randStr; 
     }
     
-    public static Account createAgency(String icode, IATA_ISO_Country__c c,String RecordTypeId){
-        Account a = new Account(IATA_ISO_Country__c = c.Id);
+    public static AMS_Agency__c createAgency(String icode, IATA_ISO_Country__c c,String RecordTypeId){
+        AMS_Agency__c a = new AMS_Agency__c(Country__c = c.Id);
        
         a.RecordTypeId = RecordTypeId ; 
         a.Name = generateRandomString(10);
-        a.Short_Name__c =a.Name;
+        a.Legal_Name_1__c =a.Name;
         a.IATACode__c = icode;
         return a;
     }
 
 
-    static testMethod void testController(){
+    static testMethod void testComtroller(){
        //IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         //insert ctry;
         createData(false);
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-        List<Account> ags = new List<Account>();
+        List<AMS_Agency__c> ags = new List<AMS_Agency__c>();
         List<AMS_Address__c> adds = new List<AMS_Address__c>();
         for(Integer i=0;i<2;i++){
             String iCode = '102'+ resizeNumericString(''+i,4);
-            Account ag = createAgency(iCode,c3, accountRt);
+            AMS_Agency__c ag = createAgency(iCode,c3,agenciesRT.get('PASSENGER'));
             ags.add(ag);
         }
         insert ags;
@@ -81,55 +102,8 @@ public class AMS_masterAndSlavePanelCtrlTest{
         AMS_masterAndSlavePanelCtrl ctr = new AMS_masterAndSlavePanelCtrl();
         ctr.setMasterObject(ags.get(0));
         
-        ctr.setMasterObject(ags.get(0));
-    }
-
-    static testMethod void testController2(){
-
-        PageReference pageRef = Page.AMS_DemoTreeViewPage;
-        Test.setCurrentPageReference(pageRef);
-
-        Account acct = new Account(Name='testAccount');
- 
-        insert acct;
-        
-        Contact con =new contact(lastname = 'pluto' ,
-                                 phone = '123',
-                                 accountid = acct.id,
-                                 Financial_Assessment_Contact__c = false,
-                                 email = 'asd.arg@wewt.et',
-                                 HasOptedOutOfEmail = false
-                                 );
-        insert con;
-
-    AMS_Person__c p1 = new AMS_Person__c(Name='test1', LastName__c='LastName', First_Name__c='FirstNameNotToUse', Email__c='unique@email.com', Contact__c = con.Id);
-
-        insert p1;
-
-        AMS_Employee__c e = new AMS_Employee__c(Name='Employee name',Account__c=acct.Id,Contact__c=con.Id, Person__c = p1.Id);
-
-        insert e;
-
-        ApexPages.CurrentPage().getparameters().put('id', e.id);
-        ApexPages.StandardController sc = new ApexPages.standardController(e);
-        
-        AMS_masterAndSlavePanelCtrl controller = new AMS_masterAndSlavePanelCtrl(sc);
-
-        AMS_masterAndSlavePanelCtrl.Pair p = new AMS_masterAndSlavePanelCtrl.Pair('test1','test2');
-
-        String x1 = 'testString';
-        String x2 = 'testString2.string3';
-
-        AMS_masterAndSlavePanelCtrl masterslave = new AMS_masterAndSlavePanelCtrl();
-/*
-        Case c = new Case();
-
-        masterslave.slaveObject = c;
-
-        masterslave.getFieldValue('Case.CaseNumber');
-        masterslave.getFieldValue('Case');
-        AMS_masterAndSlavePanelCtrl.normalize('CaseNumber__c');
-  */
+        Account acc = [select Id from Account where Id in (select Account__c from AMS_Agency__c where Id = :ags.get(1).Id ) limit 1];   
+        ctr.setMasterObject(acc);
     }
 
 }

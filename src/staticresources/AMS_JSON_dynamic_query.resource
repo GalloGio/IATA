@@ -9,8 +9,10 @@
 				"fieldToQuery": "Account__c",
 				"fieldsToGet":
 						[
-							"Region_formula__c",
+							"Region__c",
+							"Location_Type__c",
 							"Assessment_Performed_Date__c",
+							"Accreditation_date__c",
 							"Expiry_Date__c",
 							"Financial_Review_Result__c",
 							"Financial_Year_End__c",

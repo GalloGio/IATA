@@ -22,6 +22,10 @@
                 <field>Amount</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_Business_Booking__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Sales_Team__c</field>
             </layoutItems>
@@ -34,12 +38,8 @@
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>LeadSource</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Event_Source__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -48,6 +48,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Bill_To_Confirmation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Event_Source__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

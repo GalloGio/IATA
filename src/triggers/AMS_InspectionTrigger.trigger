@@ -1,18 +1,30 @@
-trigger AMS_InspectionTrigger on AMS_Inspection__c (before insert, before update, after insert, after update) {
+trigger AMS_InspectionTrigger on AMS_Inspection__c (after insert, after update) {
+    if(Trigger.isAfter){
+        if(Trigger.isUpdate)
+            AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);
 
-    if(!AMS_TriggerExecutionManager.checkExecution(AMS_Inspection__c.getSObjectType(), 'AMS_InspectionTrigger')) { return; }
+        AMS_InspectionHelper.setStatusCodeOnAgency(Trigger.new);
+    }
+/*trigger AMS_InspectionTrigger on AMS_Inspection__c (after update) {
+	if(Trigger.isAfter)
+        if(Trigger.isUpdate)
+            AMS_AgencyUpdateHelper.agencyUpdate(Trigger.new);*/
+/*
+    list<AMS_Appointment__c> checkAgencies = new list<AMS_Appointment__c>();
     
-
-    if(Trigger.isAfter && Trigger.isInsert){
-
-        AMS_InspectionTriggerHandler.handleAfterInsert(Trigger.old, Trigger.new);
-
+    if(Trigger.isInsert){
+        for(AMS_Appointment__c ap : trigger.new){
+            if(ap.Agency__c!=null)
+                checkAgencies.add(ap);
+        }
+    
+    }else if(Trigger.isUpdate){
+        for(AMS_Appointment__c ap : trigger.new){
+            if(ap.Agency__c!=null && trigger.oldMap.get(ap.Id).Agency__c != ap.Agency__c )
+                checkAgencies.add(ap);
+        }
     }
 
-    if(Trigger.isAfter && Trigger.isUpdate){
-
-        AMS_InspectionTriggerHandler.handleAfterUpdate(Trigger.old, Trigger.new);
-
-    }
-
+    if(checkAgencies.size()>0)
+        AMS_AppointmentHelper.EnsureMax1ManagerPerAgency(checkAgencies);*/
 }

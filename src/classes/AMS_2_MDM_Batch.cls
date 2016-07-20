@@ -16,12 +16,12 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         return Database.getQueryLocator(query);
     }
 
-    global void execute(Database.BatchableContext BC, List<Agency_Applied_Change_code__c> scope) {
+    global void execute(Database.BatchableContext BC, List<AMS_Agency_Updates__c> scope) {
 
         //Initiate Log
         Technical_Logs__c tlog = new Technical_Logs__c();
         tlog.Status__c = 'Success';
-        tlog.Operation__c = 'AMS 2 MDM - Sales Order';
+        tlog.Operation__c = 'AMS 2 MDM - AgencyList';
         DateTime dtStart = system.now();
         tlog.start_date__c = dtStart;
         String sLog = '';
@@ -34,32 +34,28 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         String sCurrentGroupBy = '';
         String sCurrentIndicator = '';
 
-        system.debug('AMS_2_MDM_Batch: 1 - entrei - ' + scope);
+        if(scope.size() > 0){
+            AMS_Agency_Updates__c agUpd = scope.get(0);
 
-        //if(scope.size() > 0){
-        //    Agency_Applied_Change_code__c agUpd = scope.get(0);
+            //By Country Iso code and record type (Passenger/Cargo)
+            List<AMS_Agency__c> ag = [select Country__r.ISO_Code__c, RecordType.name from AMS_Agency__c where id = :agUpd.Agency__c limit 1 ];
+            if(ag.size() > 0){
+              sCurrentGroupBy = ag[0].Country__r.ISO_Code__c;
+              sCurrentIndicator = ag[0].RecordType.name;
+            }
 
-        //    ////By Country Iso code and record type (Passenger/Cargo)
-        //    //List<AMS_Agency__c> ag = [select Country__r.ISO_Code__c, RecordType.name from AMS_Agency__c where id = :agUpd.Agency__c limit 1 ];
-        //    //if(ag.size() > 0){
-        //    //  sCurrentGroupBy = ag[0].Country__r.ISO_Code__c;
-        //    //  sCurrentIndicator = ag[0].RecordType.name;
-        //    //}
-
-        //    //sLogRecord = sCurrentGroupBy + '-' + sCurrentIndicator;
-        //    ////By Settlement
-        //    ////List<AMS_Agency_Operations__c> agOp = [select Operation__r.Settlement__r.Name from AMS_Agency_Operations__c where Agency__c = :agUpd.Agency__c limit 1 ];
-        //    ////if(agOp.size() > 0){
-        //    ////  sCurrentGroupBy = agOp[0].Operation__r.Settlement__r.Name;
-        //    ////}
-        //}
-        
-        for(Agency_Applied_Change_code__c au :scope){
-            //i++;
-            //ids.add(au.Account__c);
-            sLog += au.Account__r.IATACode__c + ',';
+            sLogRecord = sCurrentGroupBy + '-' + sCurrentIndicator;
+            //By Settlement
+            //List<AMS_Agency_Operations__c> agOp = [select Operation__r.Settlement__r.Name from AMS_Agency_Operations__c where Agency__c = :agUpd.Agency__c limit 1 ];
+            //if(agOp.size() > 0){
+            //  sCurrentGroupBy = agOp[0].Operation__r.Settlement__r.Name;
+            //}
         }
-       
+        
+        for(AMS_Agency_Updates__c au :scope){
+            i++;
+            ids.add(au.Agency__c);
+        }
 
         String[] headerParams = new String[5];
         headerParams[0] = ''; //'PreviousID'
@@ -68,17 +64,16 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         headerParams[3] = ''; //'ChunkKey'
         headerParams[4] = ''; //'ChunkTotal'
 
-        AMS_XML_Generator xmlGen = new AMS_XML_Generator();
-        //String s = xmlGen.getAgencySalesOrder(ids);
-        String s = xmlGen.getAgencySalesOrder(scope);
 
+        AMS_XML_Generator xmlGen = new AMS_XML_Generator();
+        String s = xmlGen.getAgencyList(ids, sCurrentGroupBy,sCurrentIndicator, headerParams);
+    
         //Decomment if XML is necessary on the Log entry
-        sLog += 'XML Sent: '+s+'\n';
+        //sLog += 'XML Sent: '+s+'\n';
         
         //Call WebService
         // instantiate the web service proxy
-        //AMS_2_MDM_WS_AgencyList.HTTP_Port ws = new AMS_2_MDM_WS_AgencyList.HTTP_Port();
-        AMS_2_MDM_WS_SalesOrder.HTTP_Port ws = new AMS_2_MDM_WS_SalesOrder.HTTP_Port();
+        AMS_2_MDM_WS_AgencyList.HTTP_Port ws = new AMS_2_MDM_WS_AgencyList.HTTP_Port();
         
         // set the credentials
         String sPwd = '';
@@ -98,27 +93,22 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
             if(!Test.isRunningTest()) {
                 // Call SAP web service
-                //sRespStatusCode = ws.SI_SFDC_AgencyList_OB_Http(s,authorizationHeader);
-                sRespStatusCode = ws.SI_SFDC_SalesOrder_OB_Http(s,authorizationHeader);
+                sRespStatusCode = ws.SI_SFDC_AgencyList_OB_Http(s,authorizationHeader);
             }else{
                 sRespStatusCode = '200';
             }
             
             sLog += 'Response Status Code: '+sRespStatusCode+'\n';
             
-
             if(sRespStatusCode.equalsIgnoreCase('200')){
 
-                //for(AMS_Agency_Updates__c au :scope){
-                //    au.Update_Type__c = au.Update_Type__c + '_Sent';
-                //}
-                for(Agency_Applied_Change_code__c au :scope){
-                    au.Sent_to_external_system__c = true;
+                for(AMS_Agency_Updates__c au :scope){
+                    au.Update_Type__c = au.Update_Type__c + '_Sent';
                 }
                 update scope;
 
             }else{
-                system.debug('SAP Web Service - SI_SFDC_SalesOrder_OB - callout ERROR! ');
+                system.debug('SAP Web Service - SI_SFDC_AgencyList_OB - callout ERROR! ');
                 
                 tlog.Status__c = 'Error';
                 //TODO implement error handling
@@ -151,10 +141,10 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
     global void finish(Database.BatchableContext BC) {
         
         //CLEAN UPDATE TABLE
-        //List<AMS_Agency_Updates__c> lAMS_Agency_Updates = [SELECT Agency__r.BSP_Code__c ,Agency__c,Id,Name,OwnerId,RelationShip__c,Update_Type__c FROM AMS_Agency_Updates__c
-        //                where Update_Type__c like '%_Sent' and  LastModifiedDate < LAST_N_DAYS:2 Limit 8000]; 
+        List<AMS_Agency_Updates__c> lAMS_Agency_Updates = [SELECT Agency__r.BSP_Code__c ,Agency__c,Id,Name,OwnerId,RelationShip__c,Update_Type__c FROM AMS_Agency_Updates__c
+                        where Update_Type__c like '%_Sent' and  LastModifiedDate < LAST_N_DAYS:2 Limit 8000]; 
                         
-        //delete lAMS_Agency_Updates;                               
+        delete lAMS_Agency_Updates;                               
         
     }
     

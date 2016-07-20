@@ -6,8 +6,6 @@ We don t want to have Operation assigned several time to the same agency.
 */
 trigger AMS_Agency_OperationsTrigger on AMS_Agency_Operations__c (before insert, before update) {
 
-    if(!AMS_TriggerExecutionManager.checkExecution(AMS_Agency_Operations__c.getSObjectType(), 'AMS_Agency_OperationsTrigger')) { return; }
-    
     Integer i = 0;
     Integer j = 0;
     Integer k = 0;
@@ -18,9 +16,9 @@ trigger AMS_Agency_OperationsTrigger on AMS_Agency_Operations__c (before insert,
     SET<Id> kAg = new SET<Id>();
 
     for(AMS_Agency_Operations__c AgOp : Trigger.new){
-        kAg.add(AgOp.Account__c);
+        kAg.add(AgOp.Agency__c);
     }
-    List<AMS_Agency_Operations__c> lAMS_Agency_Operations = [SELECT id,Account__c,Operation__c FROM AMS_Agency_Operations__c where Account__c in :kAg]; 
+    List<AMS_Agency_Operations__c> lAMS_Agency_Operations = [SELECT id,Agency__c,Operation__c FROM AMS_Agency_Operations__c where Agency__c in :kAg]; 
 
 
     if(Trigger.isInsert || Trigger.isUpdate){
@@ -30,7 +28,7 @@ trigger AMS_Agency_OperationsTrigger on AMS_Agency_Operations__c (before insert,
         
             for(AMS_Agency_Operations__c xAgOp : lAMS_Agency_Operations){
                 
-                if(AgOp.Account__c == xAgOp.Account__c && AgOp.Operation__c == xAgOp.Operation__c){
+                if(AgOp.Agency__c == xAgOp.Agency__c && AgOp.Operation__c == xAgOp.Operation__c){
                     AgOp.Operation__c.addError('Agency Operation already exists');
                     bError = True;
                     break;

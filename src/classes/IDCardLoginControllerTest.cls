@@ -78,7 +78,7 @@ public class IDCardLoginControllerTest{
     }
     
     public static TestMethod void TestVerifyAlternative(){
-        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+    	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TestIDCardLoginController();
         
         idCardLoginController.FNAME = '';
@@ -101,7 +101,6 @@ public class IDCardLoginControllerTest{
         nextPage = idCardLoginController.verifyAlternative();
          
         // Invalid Account
-        Test.startTest();
         Date dateTemp = testData.IDCards_IDCardApplications[0].Date_of_Birth__c;        
         idCardLoginController.IATACodeLocation2 = testData.IDCards_IDCardApplications[0].IATA_Code__c;     
          idCardLoginController.FNAME = testData.IDCards_IDCardApplications[0].First_Name__c;
@@ -145,6 +144,6 @@ public class IDCardLoginControllerTest{
         // Wrong Date of Birth format
         idCardLoginController.DOB = dateTemp.month() + '/' + dateTemp.day() + '/' + dateTemp.year() + '2';        
         nextPage = idCardLoginController.verifyAlternative();
-        Test.stopTest();
+         
     }
 }

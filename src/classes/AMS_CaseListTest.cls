@@ -4,12 +4,17 @@ private class AMS_CaseListTest {
     @testSetup static void setup(){
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TransformationHelper.triggerOnCaseNSerRen = true;
-		Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+
 
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry ;
-		
-        Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = standardAccountRt, Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', Source_System__c = 'AIMS');
+
+        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+
+        Account acc1 = new Account(Name='Test Account1', IATAcode__c = '12345678');
+        insert acc1;
+        
+        AMS_Agency__c a = new AMS_Agency__c(Account__c=acc1.Id, Country__c = ctry.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test Agency', IATAcode__c = '1234567', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency', Legacy_External_ID__c = '12345678', Legacy_System__c = 'AIMS');
         insert a;
 
         Account acc = [select id from Account];
@@ -66,15 +71,15 @@ private class AMS_CaseListTest {
     }
 
     @isTest static void test_CaseList() {
-    	Id standardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+    	
         PageReference pageRef = Page.AMS_DemoCaseListPage;
         Test.setCurrentPageReference(pageRef);
 
-        Account ag = [select id from Account where RecordTypeId = :standardAccountRt];
+        AMS_Agency__c ag = [select id from AMS_Agency__c];
 
-        ApexPages.CurrentPage().getparameters().put('id', ag.id);
+        ApexPages.CurrentPage().getparameters().put('pid', ag.id);
         ApexPages.StandardController sc = new ApexPages.standardController(ag);
-		
+
         Test.startTest();
         AMS_DemoCaseList sic = new AMS_DemoCaseList(sc);
         sic.getItems();

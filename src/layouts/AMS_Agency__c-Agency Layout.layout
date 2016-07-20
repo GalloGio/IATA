@@ -348,12 +348,15 @@
         <relatedList>AMS_Agency_Profile__c.Agency__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Segment__c</fields>
+        <fields>AMS_Segment__c.NAME</fields>
+        <fields>AMS_Segment__c.CUST_RECORDTYPE</fields>
+        <fields>AMS_Segment__c.Label__c</fields>
+        <fields>AMS_Segment__c.Segment_type__c</fields>
         <relatedList>AMS_Agency_Segment__c.Agency__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
-        <fields>AMS_Agency_Owner__c</fields>
+        <fields>AMS_Owner__c.NAME</fields>
         <fields>Percentage__c</fields>
         <relatedList>AMS_Agency_Ownership__c.Agency__c</relatedList>
     </relatedLists>
@@ -400,7 +403,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Affiliation__c</fields>
+        <fields>AMS_Affiliation__c.Affiliation_Code__c</fields>
+        <fields>AMS_Affiliation__c.NAME</fields>
         <relatedList>AMS_Agency_Affiliation__c.Agency__c</relatedList>
     </relatedLists>
     <relatedLists>

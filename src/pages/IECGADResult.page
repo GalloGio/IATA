@@ -1,10 +1,10 @@
-<apex:page title="{!PageTitle} - result" cache="false" controller="vfIECGADResult" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+<apex:page title="Global Agency Directory - result" cache="false" controller="vfIECGADResult" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
 
        <div class="gdpwrapper">
     
     <div class="gdpbody">
 
-    <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+    <c:IECAppHeader applicationTitle="Global Agency Directory" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
 
     <c:IECApp_Tootip />
 
@@ -47,11 +47,6 @@
 #register .box .informationTable td.address img{
 	top: 151px !important;
 }
-
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-.tg .tg-yw4l{vertical-align:top}
 
 </style>
 
@@ -120,7 +115,7 @@
 
           <div class="box register large">
 		        <div class="header" style="margin-top: 18px;">
-                 <p>{!PageTitle}</p>
+		         <p>Global Agency Directory</p>
 		        </div>
 		         
 		        <div class="content">
@@ -237,50 +232,6 @@
                                     </apex:facet>
                                 </apex:actionStatus>
                             </div>
-                            <br/><br/>
-                            <div>
-                            <apex:outputPanel rendered="{!displayAgentsTab}" id="territories" >
-                               <h3 style="text-transform: none; margin-bottom: 30px; font-weight: bold">Territory Details</h3>    
-                               
-                               <apex:outputPanel id="territoryTable" rendered="{!territoryListToDisplay != null}">
-	                               <table class="tg" style="width:100%;">
-	                                   <tr>
-	                                    
-	                                    <th class="tg-031e">Airline Code</th> 
-	                                    <th class="tg-yw4l">Airline Name</th>
-	                                    <th class="tg-yw4l">Territory ISO Country</th>
-	                                    <th class="tg-yw4l">Appointment Date</th> 
-	                                    <th class="tg-yw4l">Territory Description</th>                                                      
-	                                 </tr>
-	                                 <apex:repeat value="{!territoryListToDisplay}" var="ter">                                 
-	                                 <tr>
-                            
-	                                        
-	                                    <td class="tg-yw4l" align="center"><apex:outputfield value="{!ter.Airline_Code__c}"/></td>
-	                                    <td class="tg-yw4l" align="center"><apex:outputfield value="{!ter.Airline_Name__c}"/></td> 
-	                                    <td class="tg-yw4l" align="center"><apex:outputfield value="{!ter.Territory_ISO_Country__c}"/></td>
-	                                    <td class="tg-yw4l" align="center"><apex:outputfield value="{!ter.Appointment_Date__c}"/></td>
-	                                    <td class="tg-yw4l" align="center"><apex:outputfield value="{!ter.Territory_Description__c}"/></td>                                                                              
-	                                   
-	                                                                       
-	                                   </tr>
-	                                   </apex:repeat>                                 
-	                               </table>
-                                </apex:outputPanel>
-                                <apex:outputPanel id="territoryTableALTMessage" rendered="{!territoryListToDisplay == null}">
-                                 	<apex:outputText value="{!territoryDisplayMessage}" />
-                                </apex:outputPanel>
-                               
-                                 <!-- <apex:pageBlockTable value="{!territoryListToDisplay}" var="terr">
-                                  <apex:column headerValue="Name">
-                                    {!terr.Name}
-                                  </apex:column>
-                                  <apex:column value="{!terr.Related_GDP_Products_Account_View__r.name}"/>
-                                 <apex:column value="{!terr.Related_Accreditation__r.name}"/>
-                                 <apex:column value="{!terr.AIMS_Area_ID__c}"/> -->
-                                 
-                                 </apex:outputPanel>                                       
-                           </div>
                             
                           <br/><br/>
                           
@@ -295,7 +246,7 @@
                                     <td style="text-align: right;">
                                        
                                         <apex:outputPanel id="panelListNotEmpty" rendered="{!lstAgencies!=null && lstAgencies.size>1}">
-                                            <apex:commandLink style="font-weight: 700; color: #1ebec8; font-family: 'Raleway', sans-serif;"  id="linkPreviousAgency" value="<< Previous" action="{!previousAgency}" rendered="{!bPreviousAgencyIsEnabled && iTotalResult>1}" rerender="panelDetailAgency, errorMessage,territories" onclick="changeCursorProgress(this)" oncomplete="changeCursorDefault(this)" />
+                                            <apex:commandLink style="font-weight: 700; color: #1ebec8; font-family: 'Raleway', sans-serif;"  id="linkPreviousAgency" value="<< Previous" action="{!previousAgency}" rendered="{!bPreviousAgencyIsEnabled && iTotalResult>1}" rerender="panelDetailAgency, errorMessage" onclick="changeCursorProgress(this)" oncomplete="changeCursorDefault(this)" />
                                        
                                        		<apex:outputText >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
                                        		
@@ -303,7 +254,7 @@
                                        
                                             <apex:outputText rendered="{!bNextAgencyIsEnabled && iTotalResult>1}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputText>
                                        
-                                            <apex:commandLink style="font-weight: 700; color: #1ebec8; font-family: 'Raleway', sans-serif; padding-right: 20px;"  id="linkNextAgency" value="Next >>" action="{!nextAgency}" rendered="{!bNextAgencyIsEnabled && iTotalResult>1}" rerender="panelDetailAgency, errorMessage,territories" onclick="changeCursorProgress(this)" oncomplete="changeCursorDefault(this)" />
+                                            <apex:commandLink style="font-weight: 700; color: #1ebec8; font-family: 'Raleway', sans-serif; padding-right: 20px;"  id="linkNextAgency" value="Next >>" action="{!nextAgency}" rendered="{!bNextAgencyIsEnabled && iTotalResult>1}" rerender="panelDetailAgency, errorMessage" onclick="changeCursorProgress(this)" oncomplete="changeCursorDefault(this)" />
                                         </apex:outputPanel>
                                     </td>
                                 </tr>

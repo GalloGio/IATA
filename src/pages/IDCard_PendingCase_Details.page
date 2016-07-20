@@ -155,11 +155,15 @@
                     <div style="text-align: left">
                         <h1>{!$Label.IDCard_PendingCaseH1}</h1>
                     </div>
+                    <div style="text-align: left">
+                        <h2>{!$Label.IDCard_PendingCaseH2}</h2>
+                    </div>
                      <apex:pageMessages id="ErrMsg" escape="false" />
                     
                     <apex:pageBlockTable value="{!myCase}" var="c" id="agents" style="margin-top:1em; width:850px">
                     <apex:column style="vertical-align: top">
-                                                       
+                            <apex:facet name="header">{!$Label.IDCard_CaseDetails}</apex:facet>
+                            
                             <table style="margin-top:1em; width:400px">
                             
                             

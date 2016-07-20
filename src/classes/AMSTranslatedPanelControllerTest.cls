@@ -4,30 +4,23 @@ private class AMSTranslatedPanelControllerTest {
 	@isTest static void testTranslateAgency() {
                 IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
                 insert isoc;
-                Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
 
-				List<Account> agencylist = new List<Account>();
-                Account a1 = new Account(Name='Test1 Agency', Short_Name__c='Test1 Agency', IATA_ISO_Country__c = isoc.id);
+                Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+
+		List<AMS_Agency__c> agencylist = new List<AMS_Agency__c>();
+                AMS_Agency__c a1 = new AMS_Agency__c(Name='Test1 Agency',Legal_Name_1__c='Test1 Agency', Country__c = isoc.id);
                 agencylist.add(a1);
                 insert agencylist;
-                List<AMS_Fields_Translation__c> translationLineList = new List<AMS_Fields_Translation__c>();
-                AMS_Fields_Translation__c translationLine1 = new AMS_Fields_Translation__c(Name='Name', Translation__c='Name', Language__c='CN', Field_name__c='Name');
-                AMS_Fields_Translation__c translationLine2 = new AMS_Fields_Translation__c(Name='ABC', Translation__c='ABCDE', Language__c='CN', Field_name__c='Account__c');
-                translationLineList.add(translationLine1);
-                translationLineList.add(translationLine2);
-                insert translationLineList;
                 
                 Test.startTest();
                 AmsTranslatedPanelController translateAgency = new AmsTranslatedPanelController();
-                translateAgency.accountId = a1.id;
+                translateAgency.agencyId = a1.id;
                 translateAgency.gettranslations();
                 translateAgency.editFields();
                 translateAgency.cancel();
                 translateAgency.saveTranslations();
 
                 List<AMS_Fields_Translation__c> tr = [select id from AMS_Fields_Translation__c];
-                
-                // TODO: should be 2, but there's a bug to be fixed in the next sprint.
                 system.assertEquals(4,tr.size());
                 Test.stopTest();
 	}
@@ -50,15 +43,16 @@ private class AMSTranslatedPanelControllerTest {
 	@isTest static void testTranslateAddress() {
                 IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
                 insert isoc;
-				
-				Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-				List<Account> agencylist = new List<Account>();
-                Account a1 = new Account(Name='Test1 Agency', Short_Name__c='Test1 Agency', IATA_ISO_Country__c = isoc.id, Iatacode__c = '1234567');
+
+                Map<string, Id>  agenciesRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
+
+		List<AMS_Agency__c> agencylist = new List<AMS_Agency__c>();
+                AMS_Agency__c a1 = new AMS_Agency__c(Name='Test1 Agency',Legal_Name_1__c='Test1 Agency', Country__c = isoc.id, Iatacode__c = '1234567');
                 agencylist.add(a1);
                 insert agencylist;
 
                 List<AMS_Address__c> agencyAddressList = new List<AMS_Address__c>();
-                AMS_Address__c aa1 = new AMS_Address__c(Account__c=a1.id);
+                AMS_Address__c aa1 = new AMS_Address__c(Agency__c=a1.id);
                 agencyAddressList.add(aa1);
                 insert agencyAddressList;
                 
