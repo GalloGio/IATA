@@ -1537,6 +1537,7 @@ public with sharing class TestDataGenerator
                 Street__c = i + ' street',
                 City__c = 'Montreal',
                 ZipCode__c = 'H0H 0H0',
+                Address_Type__c = 'Type_'+i, 
                 //ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'QC'),
                 //ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
                 ISO_Country__c = isoCountry.Id,

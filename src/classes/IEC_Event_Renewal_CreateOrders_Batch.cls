@@ -80,7 +80,11 @@ global class IEC_Event_Renewal_CreateOrders_Batch implements Database.Batchable<
 
         //Tax ans Shipping calculation after order creation
         IEC_Evt_Renew_GetSAPFreightTax_Batch batch = new IEC_Evt_Renew_GetSAPFreightTax_Batch(eventRelease.Id, isReprocessingJob);
-        Database.executeBatch(batch, Utility.getIntegerSetting('IEC evt renewal batch size for taxes'));
+        Integer batchSize = Utility.getIntegerSetting('IEC evt renewal batch size for taxes'); 
+        if(Test.isRunningTest() && batchSize < 1) batchSize = 1; 
+        System.debug('batchSize::'+batchSize);
+
+        Database.executeBatch(batch, batchSize);
     }
     
 }

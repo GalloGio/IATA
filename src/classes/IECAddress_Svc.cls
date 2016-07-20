@@ -587,6 +587,11 @@ public class IECAddress_Svc
 			ZipCode__c = zipCode
 		);
 
+        if(Test.isRunningTest())
+        {
+            address.Address_Type__c = Utility.generateRandomString(8);
+        }
+
 		try{
 			insert address; 
 			return address;

@@ -4,6 +4,10 @@ private class IEC_AutoRenewCleanup_BatchTest
 	@isTest (SeeAllData=true)
 	static void test_method_one() 
 	{
+		//-- Generate Setting 
+        try{insert new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1);} 
+        catch(Exception ex){}
+        
 		//-- Create produc t
 		List<Product2> products = TestDataGenerator.generateProductsWithPrice(2);
 		System.debug('products[0]::'+products[0].Id);

@@ -48,6 +48,7 @@ private class Location_Dom_Test {
 	     	IECAddress__c oAddress2 = new IECAddress__c(
 	     		Street__c = '1 test street'
 		     	, City__c = 'Toronto'
+		     	, Address_Type__c = 'SoldTo'
 		     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
 		     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
 		     	, ZipCode__c = 'A9A9A9');
@@ -91,6 +92,7 @@ private class Location_Dom_Test {
 		IECAddress__c oAddress2 = new IECAddress__c(
      		Street__c = '1 test street'
 	     	, City__c = 'Toronto'
+	     	, Address_Type__c = 'Billing2'
 	     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
 	     	, ZipCode__c = 'A9A9A9');
 		insert oAddress2;
@@ -142,6 +144,7 @@ private class Location_Dom_Test {
 		IECAddress__c oAddress2 = new IECAddress__c(
      		Street__c = '1 test street'
 	     	, City__c = 'Toronto'
+	     	, Address_Type__c = 'Billing2'
 	     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
 	     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
 	     	, ZipCode__c = 'A9A9A9');
@@ -218,6 +221,7 @@ private class Location_Dom_Test {
 		IECAddress__c oAddress2 = new IECAddress__c(
 	     	Street__c = '12 test street'
 	     	, City__c = 'Toronto'
+	     	, Address_Type__c = 'SoldTo'
 	     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
 	     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
 	     	, ZipCode__c = 'A9A9A9A');
@@ -291,6 +295,7 @@ private class Location_Dom_Test {
 		
 		IECAddress__c oAddress2 = new IECAddress__c(
 	     	Street__c = '12 test street'
+	     	, Address_Type__c = 'Billing2'
 	     	, City__c = 'Toronto'
 	     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
 	     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
@@ -354,6 +359,7 @@ private class Location_Dom_Test {
 		IECAddress__c oAddress2 = new IECAddress__c(
 	     	Street__c = '12 test street'
 	     	, City__c = 'Toronto'
+	     	, Address_Type__c = 'Shipping'
 	     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
 	     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
 	     	, ZipCode__c = 'A9A9A9A');

@@ -9,6 +9,10 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 
 	private static void InitializeData()
 	{
+		 //-- Generate Setting 
+        try{insert new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1);} 
+        catch(Exception ex){}
+        
 		/* Possible scenarios and generated errors in the batch are as follows
 			[0] ERROR - Tax and Shipping have not been calculated on the order
 			[1] ERROR - Zuora Billing Account\'s default payment method is not set to credit card while trying to pay with credit card

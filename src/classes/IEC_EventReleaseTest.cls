@@ -4,6 +4,12 @@ private class IEC_EventReleaseTest
     @isTest (SeeAllData=true)
     static void test_validateProducts() 
     {
+        //-- Generate Setting 
+        try{insert new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1);} 
+        catch(Exception ex){}
+
+        
+
         Test.startTest();
         // Setup test data
         Account oAccount = TestDataGenerator.generateAccounts(1, false)[0];

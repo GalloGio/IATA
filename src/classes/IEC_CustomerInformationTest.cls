@@ -53,7 +53,9 @@ private class IEC_CustomerInformationTest
 			ApexPages.currentPage().getParameters().put('id', quote.OrderNumber);
 				
 			IEC_CustomerInformationController ctrl = new IEC_CustomerInformationController(); 
-			ctrl.onLoadAction();
+			Test.startTest();
+				ctrl.onLoadAction(); 
+			Test.stopTest();
 		}
 
 	}
@@ -86,7 +88,9 @@ private class IEC_CustomerInformationTest
 			System.assertNotEquals(0,ctrl.availableCountries.size());
 
 			//-- Load page 
-			ctrl.onLoadAction(); 
+			Test.startTest();
+				ctrl.onLoadAction(); 
+			Test.stopTest();
 
 			//-- Clear Billing form
 			ctrl.loggedCustomer.sfContact.Salutation = '';
@@ -121,6 +125,8 @@ private class IEC_CustomerInformationTest
 	@isTest (seeAllData=true) 
 	static void test_ValidForm() 
 	{
+		TestDataGenerator.generateISOCountryState();
+
 		Test.setCurrentPage(Page.IEC_CustomerInformation);
 
 		//-- Create an logged-in has portal customer 
@@ -144,8 +150,9 @@ private class IEC_CustomerInformationTest
 			System.assertNotEquals(0,ctrl.availableCountries.size());
 
 			//-- Load page 
-			ctrl.onLoadAction(); 
-
+			Test.startTest();
+				ctrl.onLoadAction(); 
+			//Test.stopTest();
 			//-- Clear Billing form
 			ctrl.loggedCustomer.sfContact.Salutation = 'Mr';
 			ctrl.loggedCustomer.sfContact.FirstName = 'Bob';
@@ -165,8 +172,8 @@ private class IEC_CustomerInformationTest
 			ctrl.regionChanged();
 
 			//-- Save Customer Information with blank form 
-			Test.startTest();
-			ctrl.saveCustomerInformation();
+			//Test.startTest();
+				ctrl.saveCustomerInformation();
 			Test.stopTest();
 			
 

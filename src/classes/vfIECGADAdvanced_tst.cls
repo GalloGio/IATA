@@ -148,8 +148,11 @@ private class vfIECGADAdvanced_tst {
 	        pgCont.sAgencyProgram = new String[] {'a', 'b'};
 
 	        //Test 002: Save filter while 5 already exists
+	        System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
 	        pgCont.filter = IECTestUtil.CreateSampleApplicationFilter(baseCont.loggedCustomer.RelatedContact);
+            System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
 	        pgCont.saveFilter();
+            System.debug(pgCont.ctrSavedFilters.lstSavedFilters.size());
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Maximum5Filters));
 
 	        //Test 004: Save filter while 4 already exists
