@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Product has been added in Salesforce from SAP</name>
+    <style>none</style>
+    <subject>Product has been added in Salesforce from SAP</subject>
+    <textOnly>Dear {!Product2.Product_Manager__c},
+
+Your product {!Product2.SAP_Material_Number__c} has just been created in eCommerce.
+
+Please add the product description and verify your pricing as your product is in production and should be ready for sale soon. In order to enable customers’ purchases via eCommerce, please ensure that the Post to eCommerce check box is checked off and fill in the date on which you wish your product to be available for sale on eCommerce.
+
+
+
+Best regards,
+eCommerce Support Team</textOnly>
+    <type>custom</type>
+</EmailTemplate>

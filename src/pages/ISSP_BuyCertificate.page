@@ -134,7 +134,7 @@
                                     {!$Label.ISSP_Certificate_Confirm}
                                 </div> 
                               <div class="col-md-6">  
-                           <apex:commandbutton styleclass="btn_iata_success btn btn-block" action="{!Purchase}" value="{!$Label.ISSP_Confirm}" id="PurchaseButton" />
+                           <apex:commandbutton styleclass="btn_iata_success btn btn-block" action="{!Purchase}" value="{!$Label.ISSP_Confirm}" id="PurchaseButton" rerender="loadStatusSpinner" status="loadStatusSpinner" />
                                 </div>
                                 <div class="col-md-6"> 
                                   <apex:commandbutton styleclass="btn_iata_cancel btn btn-block" action="{!home}" value="{!$Label.ISSP_Cancel}" id="CancelButton" />
@@ -275,6 +275,46 @@
             </div>
             <c:ISSP_CustomFooter />
         </div>
+
+    <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
+    <style>
+        .overlay {
+            display: none;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            opacity: 0.3;
+            -moz-opacity: 0.3;
+            width: 100%;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            background: #000;
+            -khtml-opacity: 0.3;
+            z-index: 1000;
+        }
+        .loader {
+            background: url('/img/loading32.gif') scroll no-repeat 0 0;
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            left: 50%;
+        }
+    </style>
+ 
+    <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
+    <div class="loadingBox overlay"> </div>
+
+
+    <script type="text/javascript">
+        function startLoading(){
+            $('#load_scrl').css('top', $(document).scrollTop() + 200);
+            $('.loadingBox').show();
+        }
+        function endLoading(){
+             $('.loadingBox').hide();
+        }
+    </script>
         
     </body>
    
