@@ -1,17 +1,17 @@
 global class UploadMultipleFileToAmazonButtonCtrl {
-
+    
     public String uploader {get;set;}
     public String source {get;set;}
     public AmazonFile__c amazonFile{get{
-
+     
         if(this.amazonFile == null) {
-
+            
             this.amazonFile = new AmazonFile__c();
         }
-
+        
         return this.amazonFile;
     }set;}
-
+    
     public static final Long MAX_FILE_SIZE = 20971520; // 20 MB
 
     public Id parentId {get; set;}
@@ -24,11 +24,11 @@ global class UploadMultipleFileToAmazonButtonCtrl {
             Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=edge');
         }
     }
-
+    
     @RemoteAction
     global static UploadFile createUploadFile(String id, String filenameupload, String contentType, Long filesize, String folder, String credentialName) {
         AmazonCredentials credential = AmazonCredentials.getCredentials(credentialName);
-
+        
         // remove all repeated spaces
         String filteredFileName = filenameupload.replaceAll('[ ]+', ' ');
 
@@ -40,28 +40,28 @@ global class UploadMultipleFileToAmazonButtonCtrl {
             upf.errorMessage =  Label.NoSameName;
             return upf;
         }
-
+        
         //check file size
         if (filesize > MAX_FILE_SIZE) {
             upf.isSuccess = false;
             upf.errorMessage =  Label.Overall_maximum_size;
             return upf;
         }
-
+        
         //Check file name length: no more than 80 characters
         if (filenameupload.length() > 80) {
             upf.isSuccess = false;
             upf.errorMessage =  Label.File_name_too_long;
             return upf;
         }
-
+        
         if (filenameupload.indexOf('\'') != -1 || filenameupload.indexOf('&') != -1) {
             upf.isSuccess = false;
             upf.errorMessage =  Label.No_special_characters;
             //upf.errorMessage =  'Special characters \' and & are not allowed';
             return upf;
         }
-
+        
         upf.isSuccess = true;
         return upF ;
     }
@@ -86,7 +86,7 @@ global class UploadMultipleFileToAmazonButtonCtrl {
                     amazonFile.RecordTypeId = rtInfo .getRecordTypeId();
                 }
             }
-
+                        
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
             }
@@ -104,7 +104,8 @@ global class UploadMultipleFileToAmazonButtonCtrl {
         It manages the key and signature to do a callout
     **/
     global class UploadFile {
-
+        
+        private AmazonCredentials credential;
         public String endpoint {get; set;}
         public String bucketName {get; set;}
         public String fullFileName {get; set;}
@@ -121,12 +122,13 @@ global class UploadMultipleFileToAmazonButtonCtrl {
             this.fullFileName = folder + filenameupload;
             this.fullFileNameEncoded = AmazonRest.EncodePath(this.fullFileName);
             this.contentType = contentType;
+            this.credential = credential;
             this.isSuccess = true;
             this.errorMessage = '';
-            calculePolicy(credential);
+            calculePolicy();
         }
 
-        public void calculePolicy(AmazonCredentials credential) {
+        public void calculePolicy() {
             //this.timestamp = DateTime.now().formatGMT('E, d MMM yyyy HH:mm:ss Z');
             this.timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
             system.debug('@@@timestamp: ' +this.timestamp);
@@ -135,9 +137,9 @@ global class UploadMultipleFileToAmazonButtonCtrl {
                 + this.contentType + ';charset=UTF-8\n\n'
                 + 'x-amz-date:' + this.timestamp + '\n'
                 + '/'+this.bucketName+'/'+this.fullFileNameEncoded;
-            String signedPolicy = AmazonRest.make_sig(policyString, credential);
-
-            this.authorization = 'AWS ' + credential.AWSAccessKeyId + ':' + signedPolicy;
+            String signedPolicy = AmazonRest.make_sig(policyString, this.credential);
+            
+            this.authorization = 'AWS ' + this.credential.AWSAccessKeyId + ':' + signedPolicy;
         }
     }
 }

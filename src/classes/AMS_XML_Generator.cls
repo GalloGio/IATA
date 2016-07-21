@@ -367,7 +367,7 @@ public with sharing class AMS_XML_Generator {
         
 
         //
-        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c, CreatedDate 
+        lAgencyChangeCode = [SELECT Account__c,Active__c,Change_Code__c 
                                 FROM Agency_Applied_Change_code__c 
                                 WHERE Change_Code__c != null 
                                 AND Active__c = true 
@@ -835,7 +835,6 @@ public with sharing class AMS_XML_Generator {
         //Begin - #AMSFTS
         //Map<String, Map<String, List<AMS_Agency__c>>> bsp_dpc_ag = new Map<String, Map<String, List<AMS_Agency__c>>>();
         Map<String, Map<String, List<Account>>> bsp_dpc_ag = new Map<String, Map<String, List<Account>>>();
-        Map<String, Map<String, List<Account>>> bsp_dpc_ag_Ordered = new Map<String, Map<String, List<Account>>>();
         //END - #AMSFTS
 
         //String sPasCargo = agency[0].Sector__c == Null?'':agency[0].Sector__c;
@@ -1011,48 +1010,7 @@ public with sharing class AMS_XML_Generator {
             }
         }
 
-        //Map<String, Map<String, List<Account>>> bsp_dpc_ag_Ordered = new Map<String, Map<String, List<Account>>>();
-
-        
-
-        
-
-        //Order the agencies in order to return on the same order they were asked!
-        
-        for(Integer i=0;i<orderedAgencyIds.size();i++){
-
-            for(String sBSP : bsp_dpc_ag.keySet()){
-                Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(sBSP);
-
-                for(String sDPC : mAuxAgDPC.keySet()){
-                    List<Account> l = mAuxAgDPC.get(sDPC);
-
-                    for(Account auxL: l){
-                        if(String.valueOf(auxL.Id).equalsIgnoreCase(orderedAgencyIds[i])){
-                            //lAgOrdered.add(mapAgToOrder.get(orderedAgencyIds[i]) );
-
-                            List<Account> aux1 = new List<Account>();
-                            aux1.add(auxL);
-                            Map<String, List<Account>> aux2 = new Map<String, List<Account>>();
-                            aux2.put(sDPC, aux1);
-                            bsp_dpc_ag_Ordered.put(sBSP, aux2);
-                        }
-                    }
-
-                }
-
-            }
-
-            
-        } 
-
-        System.debug('bsp_dpc_ag: ' + bsp_dpc_ag);
-        System.debug('bsp_dpc_ag_Ordered: ' + bsp_dpc_ag_Ordered);
-
-
-
-        //for(String sBSP : bsp_dpc_ag.keySet()){
-        for(String sBSP : bsp_dpc_ag_Ordered.keySet()){            
+        for(String sBSP : bsp_dpc_ag.keySet()){
             //Map<String, List<AMS_Agency__c>> mAuxAgDPC = bsp_dpc_ag.get(sBSP); - #AMSFTS
             Map<String, List<Account>> mAuxAgDPC = bsp_dpc_ag.get(sBSP);
 
@@ -1063,7 +1021,7 @@ public with sharing class AMS_XML_Generator {
                 //get 1st agency, since all agencies must be from the same country the 1st will work!
                 //AMS_Agency__c agForCtry = l[0]; - #AMSFTS
                 Account agForCtry = l[0];
-                String sPasCargo = l[0].Sector__c == Null?'':l[0].Sector__c;
+                String sPasCargo = l[0].Sector__c == Null?'':agency[0].Sector__c;
 
                 //get Country related to the agency 
                 IATA_ISO_Country__c ctry;
@@ -1190,7 +1148,7 @@ public with sharing class AMS_XML_Generator {
                         shippingAdd.Address_3__c = shippingStreet[2];
 
                         shippingAdd.City__c = ag.ShippingCity;
-                        
+                         
                         //shippingAdd.State__c = ag.ShippingState == null ? null : AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()).Id;
                         if(ag.ShippingState != null ){
                             if(AMS_Utils.iataIsoStates.get(ag.ShippingState.trim().toLowerCase()) != null){
@@ -1208,7 +1166,7 @@ public with sharing class AMS_XML_Generator {
                                 shippingAdd.Country__c = null;
                             }                            
                         }
-
+                        
                         shippingAdd.AMS_ZipCode__c = ag.ShippingPostalCode;
                         
                         System.debug(loggingLevel.Debug, '____ [cls AMS_XML_Generator - getAgencyDetail] shippingAdd - ' + shippingAdd);
@@ -1269,53 +1227,25 @@ public with sharing class AMS_XML_Generator {
         
                     Boolean bHaveInspections = False;
                     Dom.Xmlnode inspectionNode = agencyNode.addChildElement('endorsements', null, null);
-
-                    Agency_Applied_Change_code__c auxAgAppChangeCode = mAg_VS_AgChangeCode.get(ag.Id);
-                    
-                    //Inspection data not to send anymore! Decision done on R3.1, in exchange we gather information from the “account” data and “Applied Change Code”
-                    //if(lInspection.size() > 0){
-                    //    for (AMS_Inspection__c insp : lInspection) {
-                    //        //if(insp.Agency__c == ag.Id){ - #AMSFTS    
-                    //        if(insp.Account__c == ag.Id){                
-                    //            bHaveInspections = True;
-
-                    //            //Set the "Date_Organisation_Status_attained" value to the created date of the active change code
-                    //            if(auxAgAppChangeCode != null){
-                    //                insp.Date_Organisation_Status_attained__c = auxAgAppChangeCode.CreatedDate.date();
-                    //            }
-
-                    //            getObjectData(inspectionNode, 'AMS_Inspection__c', insp );
-                    //        }
-                    //    }
-                    //}
-                 
+                    if(lInspection.size() > 0){
+                        for (AMS_Inspection__c insp : lInspection) {
+                            //if(insp.Agency__c == ag.Id){ - #AMSFTS    
+                            if(insp.Account__c == ag.Id){                
+                                bHaveInspections = True;
+                                getObjectData(inspectionNode, 'AMS_Inspection__c', insp );
+                            }
+                        }
+                    }
                     //R3.1 - If we don't have inspections we still need to send the agency status 
                     if(!bHaveInspections){
                         Dom.Xmlnode agEndorsementNode = inspectionNode.addChildElement('endorsement', null, null);
                         getElementNode(agEndorsementNode, 'accreditation_endorsement_status_code',  AMS_Utils.getIATANumericStatus(ag.Status__c) );
 
-                        //Set the "Date_Organisation_Status_attained" value to the created date of the active change code
+                        Agency_Applied_Change_code__c auxAgAppChangeCode = mAg_VS_AgChangeCodeFIN.get(ag.Id);
                         if(auxAgAppChangeCode != null){
-                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.CreatedDate.year(), auxAgAppChangeCode.CreatedDate.month(),auxAgAppChangeCode.CreatedDate.day());
-                            getElementNode(agEndorsementNode, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
-                        }
-
-                        Datetime dtLast_Inspection_Date = ag.Last_Inspection_Date__c == Null ? Null : Datetime.newInstance(ag.Last_Inspection_Date__c.year(), ag.Last_Inspection_Date__c.month(),ag.Last_Inspection_Date__c.day());
-                        getElementNode(agEndorsementNode, 'last_inspection_date', dtLast_Inspection_Date == Null ? Null : String.valueOf(dtLast_Inspection_Date.format('yyyyMMdd')));
-                
-
-                        //Set the "original_approval_date" value to the created date of the "FIN" change code
-                        Agency_Applied_Change_code__c auxAgAppChangeCodeFIN = mAg_VS_AgChangeCodeFIN.get(ag.Id);
-                        if(auxAgAppChangeCodeFIN != null){
-                            Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCodeFIN.CreatedDate.year(), auxAgAppChangeCodeFIN.CreatedDate.month(),auxAgAppChangeCodeFIN.CreatedDate.day());
-                            getElementNode(agEndorsementNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
-                        }else{
-                            Datetime dtOriginal_Approval_DAte = ag.Original_Approval_DAte__c == Null ? Null : Datetime.newInstance(ag.Original_Approval_DAte__c.year(), ag.Original_Approval_DAte__c.month(),ag.Original_Approval_DAte__c.day());
+                            Datetime dtOriginal_Approval_DAte = Datetime.newInstance(auxAgAppChangeCode.CreatedDate.year(), auxAgAppChangeCode.CreatedDate.month(),auxAgAppChangeCode.CreatedDate.day());
                             getElementNode(agEndorsementNode, 'original_approval_date', dtOriginal_Approval_DAte == Null ? Null : String.valueOf(dtOriginal_Approval_DAte.format('yyyyMMdd')));
                         }
-
-                        Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
-                        getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     }
                     
                    
