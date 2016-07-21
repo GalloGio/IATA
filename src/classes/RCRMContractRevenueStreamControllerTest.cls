@@ -80,7 +80,7 @@ private class RCRMContractRevenueStreamControllerTest {
             
             Opportunity oppRCRM_1;
             
-            system.runAs(sm) {
+            system.runAs(thisUser ) {
                 oppRCRM_1 = new Opportunity(Name = 'RCRM Opp P1', RecordTypeId = RT_RCRM_Opportunity_Id, AccountId = a.Id, CurrencyIsoCode = 'USD', 
                         Product_Family__c = 'Fam1', CloseDate = date.today(), StageName = '3. Needs Assessment', Pricebook2Id = pricebookId,  
                         OwnerId = sm.Id, Renewal_under_Sales_Responsibility__c = true, Sales_Team__c = 'MACS - Field Sales');
@@ -115,7 +115,7 @@ private class RCRMContractRevenueStreamControllerTest {
                     RCRMContractRevenueStreamController controller = new RCRMContractRevenueStreamController(std);
                     
                     // Check the visibility on the buttons
-                  //  system.assertEquals(false, controller.showSaveButton);
+                  //  //system.asstEquals(false, controller.showSaveButton);
                 }
                 
                 // play the PM role 
@@ -124,7 +124,7 @@ private class RCRMContractRevenueStreamControllerTest {
                     RCRMContractRevenueStreamController controller = new RCRMContractRevenueStreamController(std);
                     
                     // Check the visibility on the buttons
-                  //  system.assertEquals(true, controller.showSaveButton);
+                  //  //system.asstEquals(true, controller.showSaveButton);
                     
                     controller.SaveRS();
                     
