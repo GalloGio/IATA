@@ -1763,14 +1763,14 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Footer</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D8E000000CwQT</value>
     </labels>
     <labels>
         <fullName>IDCARD_VFEmailTemplate_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D8E000000CwQT</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -8068,7 +8068,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Banner_img</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D2000000008TF&amp;lastMod=1433764815000</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D8E000000CwQT&amp;lastMod=1433764815000</value>
     </labels>
     <labels>
         <fullName>ISSP_Banner_link</fullName>
