@@ -5,56 +5,216 @@
  * as the access to the rate plan, etc.
  **/
 public virtual class vfIECEBC_Controller {
-    // Exception to be thrown by the controllers
+	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
-    
-    // The current user
-    public User usr {
-        get {
-            if (usr == null) usr = vfIECEBC.usr;
-            return usr;
-        }
-        set;
-    }
-    
-    // The billing account associated with the current user
-    public Zuora__CustomerAccount__c billingAccount {
-        get {
-            if (billingAccount == null) billingAccount = vfIECEBC.billingAccount;
-            return billingAccount;
-        }
-        set;
-    }
-    
-    // The zuora subscription associated with the current billing account
-    public Zuora__Subscription__c subscription {
-        get {
-            if (subscription == null) subscription = vfIECEBC.subscriptionInfo.oSubscription;
-            return subscription;
-        }
-        set;
-    }
-    
-    // The zuora rate plan associated with the current subscription
-    public zqu__ProductRatePlan__c productRatePlan {
-        get {
-            if (productRatePlan == null) productRatePlan = vfIECEBC.productRatePlan;
-            return productRatePlan;
-        }
-        set;
-    }
-    
-    // The zuora rate plan associated with the current subscription
-    public EBC_Preference__c preferences {
-        get {
-            if (preferences == null) preferences = vfIECEBC.pref;
-            return preferences;
-        }
-        set;
-    }
-    
-    // Used by visualforce pages to rerender block without reloading entire page
-    public PageReference doNothing() {
-        return null;
-    }
+	
+	// The current user
+	public User usr {
+		get {
+			if (usr == null) usr = vfIECEBC.usr;
+			return usr;
+		}
+		set;
+	}
+	
+	// The billing account associated with the current user
+	public Zuora__CustomerAccount__c billingAccount {
+		get {
+			if (billingAccount == null) billingAccount = vfIECEBC.billingAccount;
+			return billingAccount;
+		}
+		set;
+	}
+	
+	// The zuora subscription associated with the current billing account
+	public Zuora__Subscription__c subscription {
+		get {
+			if (subscription == null) subscription = vfIECEBC.subscription;
+			return subscription;
+		}
+		set;
+	}
+	
+	// The zuora rate plan associated with the current subscription
+	public zqu__ProductRatePlan__c productRatePlan {
+		get {
+			if (productRatePlan == null) productRatePlan = vfIECEBC.productRatePlan;
+			return productRatePlan;
+		}
+		set;
+	}
+	
+	// The zuora rate plan associated with the current subscription
+	public EBC_Preference__c preferences {
+		get {
+			if (preferences == null) preferences = vfIECEBC.pref;
+			return preferences;
+		}
+		set;
+	}
+	
+	// Used by visualforce pages to rerender block without reloading entire page
+	public PageReference doNothing() {
+		return null;
+	}
+	
+	// =======================================================================-
+	// current Product Rate Plan Charge based on given ProductRatePlan
+	// assumptions:
+	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
+	//  
+	public zqu__ProductRatePlanCharge__c productRatePlanCharge
+	{
+		get{
+			if ( productRatePlanCharge == null )
+			{ 
+				List<zqu__ProductRatePlanCharge__c> prodRatePlanChargeList = [select Id
+					, zqu__ProductRatePlan__c 
+					, zqu__ListPrice__c
+					, zqu__Description__c
+					from zqu__ProductRatePlanCharge__c 
+					where 
+						zqu__ProductRatePlan__c = : productRatePlan.Id];
+				productRatePlanCharge = (prodRatePlanChargeList.size() == 0) ? null : prodRatePlanChargeList[0];
+			}
+			return productRatePlanCharge;
+		}
+		set;
+	} // end of productRatePlanCharge getter/setter
+	
+	// =======================================================================-
+	// productRatePlanChargeUpgradeList return the list of zqu__ProductRatePlanCharge__c available as the upgrade destination from the current ProductRatePlan
+	// i.e. to which the current Product Rate Plan can be directly upgraded
+	// assumptions:
+	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
+	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
+	public List<zqu__ProductRatePlanCharge__c> productRatePlanChargeUpgradeList {
+		get{
+			if (productRatePlanChargeUpgradeList==null) 
+			{
+				List<Swap_Configuration__c> swapConfigList = [select Id
+						//, Source_Product_Rate_Plan_Information__c
+						//, Target_Product_Rate_Plan_Information__c
+						//, Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+						, Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+					from Swap_Configuration__c
+					where Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c = : productRatePlan.Id
+						and Relationship_Type__c = 'Upgrade'
+					order by Target_Product_Rate_Plan_Information__c
+					];
+				
+				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
+				for (Swap_Configuration__c swapConf : swapConfigList)
+				{
+					targetProductRatePlanIdSet.add(swapConf.Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
+				}
+				
+				productRatePlanChargeUpgradeList = [select Id, Name
+						, zqu__Description__c
+						, zqu__ListPrice__c
+						, zqu__ProductRatePlan__c
+						, zqu__ProductRatePlan__r.Id
+						, zqu__ProductRatePlan__r.Name
+						, zqu__ProductRatePlan__r.zqu__Description__c
+					from zqu__ProductRatePlanCharge__c
+					where zqu__ProductRatePlan__c  in : targetProductRatePlanIdSet
+						and zqu__Deleted__c = false
+					order by zqu__ListPrice__c asc
+					];	
+				
+			} // end if
+			
+			return productRatePlanChargeUpgradeList;
+		} // end getter
+		private set;
+	} // productRatePlanChargeUpgradeList getter/setter.
+	
+	
+/*
+	// ========================================================================
+	// potential additional requirements (these methods were needed before)
+	// the following might be added to vfIECEBC_Controller:
+	// Zuora__SubscriptionProductCharge__c.Product_Rate_Plan_Charge__c, Zuora__Subscription__c
+	// Zuora__SubscriptionProductCharge__c: currently not needed unless we are updating the old record
+	// productRatePlanInfo: current Product_Rate_Plan_Information__c
+	
+	
+	// ========================================================================
+	public Map<Id,zqu__ProductRatePlanCharge__c> productRatePlanChargeIdToObjectMap
+	{
+		
+		get{
+			if ( productRatePlanChargeIdToObjectMap == null) 
+			{
+				Map<Id,zqu__ProductRatePlanCharge__c> newMap = new Map<Id, zqu__ProductRatePlanCharge__c>();
+				for (zqu__ProductRatePlanCharge__c prpc : productRatePlanChargeUpgradeList)
+				{
+					newMap.put(prpc.Id, prpc);
+				}
+				productRatePlanChargeIdToObjectMap = newMap;
+			}
+			return productRatePlanChargeIdToObjectMap;
+		}
+		private set;
+	} // end of productRatePlanChargeIdToObjectMap getter/setter
+	
+	
+	// ========================================================================
+	// current Zuora__SubscriptionProductCharge__c 
+	// retrieved based on the current subscription
+	// assumption:
+	//   relationship between Subscription and SubscriptionProductCharge is 1:1 
+	public Zuora__SubscriptionProductCharge__c subscriptionProductCharge
+	{
+		get{
+			if ( subscriptionProductCharge == null )
+			{ 
+				List<Zuora__SubscriptionProductCharge__c> subscriptionProductChargeList = [select Id
+					, Zuora__Product__c, Zuora__Product__r.Name
+					, Zuora__Price__c
+					, Zuora__ProductDescription__c 
+					, Zuora__ProductName__c
+					, Product_Rate_Plan_Charge__c, Product_Rate_Plan_Charge__r.Name
+					, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
+					, Zuora__Subscription__c
+					, Zuora__EffectiveEndDate__c
+					from Zuora__SubscriptionProductCharge__c 
+					where Zuora__Subscription__c = : subscription.Id
+						and Product_Rate_Plan_Charge__c = : productRatePlan.Id];
+				subscriptionProductCharge = (subscriptionProductChargeList.size() == 0) ? null : subscriptionProductChargeList[0];
+			}
+			return subscriptionProductCharge;
+		}
+		set;
+	}
+*/
+
+	
+	
+/*
+	// ========================================================================
+	// EBC ProductRatePlanInfo of this BillingAccount.
+	// this is used to get the upgrade options
+	// assumptions: 
+	//  - Relationship between Product_Rate_Plan_Information__c and ProductRatePlan is 1 to 1
+	public Product_Rate_Plan_Information__c productRatePlanInfo {
+		get{
+			if (productRatePlanInfo == null)
+			{
+				List<Product_Rate_Plan_Information__c> productRatePlanInfoList = [select Id
+						 
+					from Product_Rate_Plan_Information__c 
+					where Related_Product_Information__r.Related_Product_Category__r.Name = : IECConstants.ProductCategory_SF_EBROADCAST
+					order by Id];
+					productRatePlanInfo = productRatePlanInfoList[0];
+			}
+			return productRatePlanInfo;
+		}
+		set;
+		
+	}
+*/	
+	
+	
+	
 }
