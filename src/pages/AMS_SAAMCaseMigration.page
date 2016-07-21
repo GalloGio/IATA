@@ -13,7 +13,7 @@
 				<apex:inputTextarea value="{!caseNumbers}" rows="5" rendered="{!showTextArea}" label="Case numbers:"/>
 			</apex:pageBlockSection>
 
-			<apex:pageBlockButtons location="bottom">
+			<apex:pageBlockButtons location="bottom" id="buttons">
 				<apex:commandButton action="{!search}" value="Search" reRender="pageMessages, caseTable" disabled="{!processing}" />
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
@@ -76,9 +76,9 @@
 				<apex:commandLink action="{!last}"		value="Last >>"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 			</apex:outputPanel>
 			
-			<apex:outputPanel layout="block" styleClass="loading-backdrop" rendered="{!processing}"/>				
-			<!-- <apex:image value="/../img/loading32.gif" styleClass="loading-img" rendered="{!processing}"/> -->
-			<apex:image value="{!URLFOR($Resource.loadinggif)}" styleClass="loading-img" rendered="{!processing}"/>
+			<apex:outputPanel layout="block" styleClass="loading-backdrop" rendered="{!processing}"/>
+			<apex:image value="/../img/loading32.gif" styleClass="loading-img" rendered="{!processing}"/>
+			<!-- <apex:image value="{!URLFOR($Resource.loadinggif)}" styleClass="loading-img" rendered="{!processing}"/> -->
 
 			<style>
 				.pos-relative{ position: relative; }
@@ -101,11 +101,23 @@
 			</style>
 
 			<apex:pageBlockButtons >
-				<apex:commandButton action="{!convert}" value="Convert" disabled="{!processing}" status="Loading" reRender="caseTable, pageMessages" />
+				<apex:commandButton action="{!convert}" value="Convert" disabled="{!processing}" reRender="buttons, caseTable, pageMessages" oncomplete="migrateCases();" />
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 
-		<apex:actionPoller rendered="{!processing}" reRender="caseTable, pageMessages" action="{!migrateCases}" interval="5" status="Loading" />
-		<c:Loading />
+		<!-- <apex:actionPoller rendered="{!processing}" reRender="caseTable, pageMessages" action="{!migrateCases}" interval="5" status="Loading" /> -->
+		<!-- <c:Loading /> -->
+
+		<apex:actionFunction reRender="caseTable, pageMessages" name="migrateCases" action="{!migrateCases}" oncomplete="migrate();" />		
+
+		<script type="text/javascript">
+		function migrate() {
+			console.info('Processing = {!processing}');
+
+			if('{!processing}'.toLowerCase() === 'true') migrateCases();
+		}
+	    </script>
 	</apex:form>
+
+	
 </apex:page>
