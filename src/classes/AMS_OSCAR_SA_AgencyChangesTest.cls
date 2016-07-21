@@ -1641,8 +1641,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             oscar.STEP6__c = AMS_Utils.FAILED;
             update oscar;
 
-            pds.clear();
-
             delete pds;
 
             //block is only done when trying to pass sanity check
