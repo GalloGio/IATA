@@ -354,7 +354,7 @@ private class IECApplicationsManager_tst {
             oGDPAccount1.Related_GDP_Address__c = oGDPAddress1.Id;
             update oGDPAccount1;
             SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
-            List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
+            List<GDP_Products_Account_View__c> gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query + ' limit 100 ');
             bat.execute(null, gpav);
 
 
