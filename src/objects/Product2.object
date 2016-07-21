@@ -857,35 +857,11 @@
         <label>IATA.ORG Group</label>
         <picklist>
             <picklistValues>
-                <fullName>A4A/IATA Reservations Interline Message Procedures Passenger</fullName>
+                <fullName>20 Year Passenger Forecast</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Agency List Cargo Agents</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aircraft Reliability</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Coding Directory</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Industry Freight Forecast</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Operational Cost Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Development Reference Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Handling Manual</fullName>
+                <fullName>Airline Operational Cost Management Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -893,323 +869,107 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Aviation Cyber Security</fullName>
+                <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <fullName>Cargo Claims &amp; Loss Prevention handbook</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Aviation Fuel Supply Model</fullName>
+                <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Baggage ID</fullName>
+                <fullName>Cargo Tariff Coordinating Conference Resolutions Manuals</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Baggage Reference Manual</fullName>
+                <fullName>Cargo-XML Tookit</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Agency Conference Resolution</fullName>
+                <fullName>DGR Handling Labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Agents Worldwide</fullName>
+                <fullName>DGR Hazard Labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
+                <fullName>DGR Limited- Excepted Labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo-IMP</fullName>
+                <fullName>DGR Posters</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Services Conference Resolution</fullName>
+                <fullName>DGR Training Books</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Tariff Coordinating Conference</fullName>
+                <fullName>Emergency Response Handbook</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo-XML</fullName>
+                <fullName>Flight Simulation Training  Device Design</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>City Code Directory</fullName>
+                <fullName>Fuel Efficiency Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Composite - Passenger Tariff</fullName>
+                <fullName>Global Passenger Survey</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Dangerous Goods Labels</fullName>
+                <fullName>Guidelines for Maintenance Training</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Dangerous Goods Posters</fullName>
+                <fullName>IATA Consolidated Exchange Rates</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Dangerous Goods Training Programme</fullName>
+                <fullName>Lithium Battery Guidelines Chinese</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DGR Compliance Kits &amp; Combos</fullName>
+                <fullName>Live Animals Regulation</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DGR Data eList Products</fullName>
+                <fullName>Maintenance Program Optimization Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DGR Print Manuals</fullName>
+                <fullName>Monthly Traffic Statistics</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DGR Software</fullName>
+                <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Enhanced Monthly Statistics</fullName>
+                <fullName>Passenger Services Conference Resolutions Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>e-Resolutions Manuals</fullName>
+                <fullName>Passenger Tariff Coordinating Conference Composite Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Essential Documents on International Air Carrier Liability</fullName>
+                <fullName>Passenger Tariffs e-resolution Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Fares to/from worldwide</fullName>
+                <fullName>The Combined Cargo Conference Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Flight Simulator Contract Negotiation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fuel Efficiency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guidance Material</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guidance Material and Best Practices for the Implementation of Competency-Based Training in Maintenance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Guide to Facilitation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Handling labels</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Hazard labels</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Consolidated Exchange Rate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Economic Report</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Electronic Airwaybill</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Emergency Response Best Practices</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Exchange Rates</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Flight Simulation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Fuel Program Implementation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Global Passenger Survey</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Ground Operations Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Operational Safety Audit (IOSA)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Rates of Exchange</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Ticketing Handbook</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Integrated Risk Management Guidance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>International Aircraft Financing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Limited/Expected Quantities</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lists of General Sales Agents</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lithium Battery Shipping Guidelines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Live Animal Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Maintenance Program Optimization</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marshalling Signals</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mileage Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly Statistics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Multilateral Interline Traffic Agreements</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Online Library</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other DGR Products</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Agency Conference Resolutions</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Fare Construction Toolkit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Forecast</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Markets Analyst</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Sales Agents</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Services Conference Resos</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Standards</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Perishable Cargo Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Regional Report</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reservations Services Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Revenue Accounting Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Revenue Accounting Tax Database</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standard Computerized Airplane Performance (SCAP)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Standard Schedules Information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tax Premium Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Temperature Control Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ticketed Point Mileage Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Time temperature labels</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TOP Premium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ULD Regulations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>World Air Transport Statistics</fullName>
+                <fullName>Ticketing Handbook</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -4040,43 +3800,15 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
             <values>
-                <fullName>Agency List Cargo Agents</fullName>
+                <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Baggage ID</fullName>
+                <fullName>Lithium Battery Guidelines Chinese</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Conference Resolution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agents Worldwide</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Enhanced Monthly Statistics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Flight Simulator Contract Negotiation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Consolidated Exchange Rate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Global Passenger Survey</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International Aircraft Financing</fullName>
+                <fullName>The Combined Cargo Conference Manual</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5967,35 +5699,7 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
             <values>
-                <fullName>A4A%2FIATA Reservations Interline Message Procedures Passenger</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agency List Cargo Agents</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aircraft Reliability</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Coding Directory</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Industry Freight Forecast</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Operational Cost Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Development Reference Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Handling Manual</fullName>
+                <fullName>Airline Operational Cost Management Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6003,323 +5707,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aviation Cyber Security</fullName>
+                <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <fullName>Lithium Battery Guidelines Chinese</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Aviation Fuel Supply Model</fullName>
+                <fullName>Passenger Services Conference Resolutions Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Baggage ID</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage Reference Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agency Conference Resolution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agents Worldwide</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Services Conference Resolution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Tariff Coordinating Conference</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo-IMP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo-XML</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>City Code Directory</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Composite - Passenger Tariff</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Compliance Kits %26 Combos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Data eList Products</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Print Manuals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DGR Software</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dangerous Goods Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dangerous Goods Posters</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dangerous Goods Training Programme</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Enhanced Monthly Statistics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Essential Documents on International Air Carrier Liability</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fares to%2Ffrom worldwide</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Flight Simulator Contract Negotiation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fuel Efficiency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Guidance Material</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Guidance Material and Best Practices for the Implementation of Competency-Based Training in Maintenance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Guide to Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Handling labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hazard labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Consolidated Exchange Rate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Economic Report</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Electronic Airwaybill</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Emergency Response Best Practices</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Exchange Rates</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Flight Simulation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Fuel Program Implementation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Global Passenger Survey</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Ground Operations Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Rates of Exchange</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Ticketing Handbook</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Integrated Risk Management Guidance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International Aircraft Financing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Limited%2FExpected Quantities</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Lists of General Sales Agents</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Lithium Battery Shipping Guidelines</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Live Animal Regulations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Maintenance Program Optimization</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Marshalling Signals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mileage Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly Statistics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Multilateral Interline Traffic Agreements</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Online Library</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other DGR Products</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Agency Conference Resolutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Fare Construction Toolkit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Forecast</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Markets Analyst</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Sales Agents</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Services Conference Resos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Standards</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Perishable Cargo Regulations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Regional Report</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reservations Services Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting Tax Database</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Standard Schedules Information</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOP Premium</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tax Premium Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Temperature Control Regulations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ticketed Point Mileage Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Time temperature labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ULD Regulations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>World Air Transport Statistics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>e-Resolutions Manuals</fullName>
+                <fullName>The Combined Cargo Conference Manual</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8162,43 +7562,15 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
             <values>
-                <fullName>Agency List Cargo Agents</fullName>
+                <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Baggage ID</fullName>
+                <fullName>Lithium Battery Guidelines Chinese</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Conference Resolution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agents Worldwide</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Enhanced Monthly Statistics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Flight Simulator Contract Negotiation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Consolidated Exchange Rate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Global Passenger Survey</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International Aircraft Financing</fullName>
+                <fullName>The Combined Cargo Conference Manual</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
