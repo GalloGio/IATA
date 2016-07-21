@@ -222,7 +222,7 @@
                 <div class="slds-page-header" role="banner" id="topLevelHeader">
                     <div class="slds-grid">
                         <div class="slds-col slds-has-flexi-truncate">
-                            <h1 class="slds-text-heading--small slds-truncate" title="Agency owners and employees" id="mainHeader"><b>Agency owners</b></h1>
+                            <h1 class="slds-text-heading--small slds-truncate" title="Agency owners and employees" id="mainHeader"><b>{!IF(isCorrection, 'Agency owners (Corrections done on the owners will be applied to all the agencies in the hierarchy)', 'Agency owners')}</b></h1>
                         </div>
                     </div>
                     <nav class="slds-m-bottom--xx-small" role="navigation">
@@ -586,16 +586,16 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-5" data-label="{!$ObjectType.Account.Fields.Legal_name__c.Label}">
-                                                                <apex:inputtextarea rows="1" label="Account Name" required="true" html-class="slds-input inputPointer" value="{!aw.account.Legal_name__c}" id="legalName" disabled="{!IF(blockOwnershipEdit, 'true', 'false')}"/>
+                                                                <apex:inputtextarea rows="1" label="Account Name" required="true" html-class="slds-input inputPointer" value="{!aw.account.Legal_name__c}" id="legalName" disabled="{!IF(OR(blockOwnershipEdit,NOT(aw.isNewRecord)), 'true', 'false')}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-5" data-label="{!$ObjectType.Account.Fields.IATACode__c.Label}">
-                                                                <apex:inputField html-class="slds-input inputPointer" value="{!aw.account.IATACode__c}" rendered="{!blockOwnershipEdit}" html-disabled=""/>
-                                                                <apex:inputField html-class="slds-input inputPointer" value="{!aw.account.IATACode__c}" id="accountIataCode"  rendered="{!NOT(blockOwnershipEdit)}"/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!aw.account.IATACode__c}" rendered="{!OR(blockOwnershipEdit, NOT(aw.isNewRecord))}" html-disabled=""/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!aw.account.IATACode__c}" id="accountIataCode"  rendered="{!AND(NOT(blockOwnershipEdit), aw.isNewRecord)}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-5" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Registration_number__c.Label}">
-                                                                <apex:inputtextarea rows="1" html-class="slds-input inputPointer" value="{!aw.registrationNumber}" id="accountRegistrationNumber" disabled="{!IF(blockOwnershipEdit, 'true', 'false')}"/>
+                                                                <apex:inputtextarea rows="1" html-class="slds-input inputPointer" value="{!aw.registrationNumber}" id="accountRegistrationNumber" disabled="{!IF(OR(blockOwnershipEdit,NOT(aw.isNewRecord)), 'true', 'false')}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-5" data-label="Financial Interest (%)">

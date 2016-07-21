@@ -30,8 +30,12 @@ public with sharing class AMS_AccountRoleCreator
 		system.debug('retrieveACsDynamically() -> final = '+soqlString.replace('ABC', setName));
         return Database.query(soqlString.replace('ABC', setName));
     }
+
+    public static void runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList){
+    	runRoleCreatorForOnlineAccreditations(aoaList, false);
+    }
     	
-	public static void runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList)
+	public static void runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList, boolean isCorrection)
     {
     	set<id> setAddedRoles = new set<id>();
     	AMS_AccountRoleCreator.aoaIdSet = new Set<String>();
@@ -125,7 +129,7 @@ public with sharing class AMS_AccountRoleCreator
 	        	newContactsToInsert.put(temp.Email, temp);
 	        }
 	        
-	        if(newContactsToInsert.size() > 0)
+	        if(newContactsToInsert.size() > 0 && !isCorrection)
 	   		{
 	   			List<Contact> conListToInsert = verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
 	   			insert conListToInsert;
@@ -190,7 +194,7 @@ public with sharing class AMS_AccountRoleCreator
 	        			toUpdateRole = AMS_AccreditationContactHelper.updateAmsAccountRole(idRoleMap.get(acPerson.AMS_Employee_Role__c), acPerson);
 	        			oldRolesToUpdate.add(toUpdateRole);
 	        		}*/
-	        		if(acPerson.AMS_Ownership_Role__c != null)
+	        		if(acPerson.AMS_Ownership_Role__c != null && !isCorrection)
 	        		{
 	        			if(!setAddedRoles.contains(acPerson.AMS_Ownership_Role__c)){
 		        			toUpdateRole = AMS_AccreditationContactHelper.updateAmsAccountRole(idRoleMap.get(acPerson.AMS_Ownership_Role__c), acPerson);
@@ -278,7 +282,7 @@ public with sharing class AMS_AccountRoleCreator
 	        			toUpdateRole = AMS_AccreditationContactHelper.updateAmsAccountRole(idRoleMap.get(acContact.AMS_Employee_Role__c), acContact);
 	        			oldRolesToUpdate.add(toUpdateRole);
 	        		}*/
-	        		if(acContact.AMS_Ownership_Role__c != null)
+	        		if(acContact.AMS_Ownership_Role__c != null  && !isCorrection)
 	        		{
 	        			if(!setAddedRoles.contains(acContact.AMS_Ownership_Role__c)){
 	        				toUpdateRole = AMS_AccreditationContactHelper.updateAmsAccountRole(idRoleMap.get(acContact.AMS_Ownership_Role__c), acContact);
@@ -302,7 +306,7 @@ public with sharing class AMS_AccountRoleCreator
                 newContactsToInsert.put(temp.Email, temp);
             }
             
-            if(newContactsToInsert.size() > 0)
+            if(newContactsToInsert.size() > 0 && !isCorrection)
 	   		{
 	   			List<Contact> conListToInsert = verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
 	   			insert conListToInsert;
@@ -364,7 +368,7 @@ public with sharing class AMS_AccountRoleCreator
 	        			toUpdateRole = AMS_AccreditationContactHelper.updateAmsAccountRole(idRoleMap.get(ac.AMS_Employee_Role__c), ac);
 	        			oldRolesToUpdate.add(toUpdateRole);
 	        		}*/
-	        		if(ac.AMS_Ownership_Role__c != null)
+	        		if(ac.AMS_Ownership_Role__c != null && !isCorrection)
 	        		{
 	        			if(!setAddedRoles.contains(ac.AMS_Ownership_Role__c)){
 	 		       			toUpdateRole = AMS_AccreditationContactHelper.updateAmsAccountRole(idRoleMap.get(ac.AMS_Ownership_Role__c), ac);
@@ -383,13 +387,17 @@ public with sharing class AMS_AccountRoleCreator
 	    }
 	    
 	    System.debug('********** newRolesToInsert: '+newRolesToInsert);
+
+
 	    for(AMS_Account_Role__c role : newRolesToInsert)
 	    {
 	    	//System.debug('********** before insert: '+role.Contact__c + ' - '+role.Person__c);
 	    	System.debug('DTULLO 366: '+role);
 	    	system.debug('DTULLO 367: role.Account__c: ' + role.Account__c + ';Owner_Account__c: ' + role.Owner_Account__c + ';Person__c: ' + role.Person__c + ';Legacy_External_ID__c: ' + role.Legacy_External_ID__c);
 	    }
-	    upsert newRolesToInsert;
+
+	    if(!isCorrection)
+	    	upsert newRolesToInsert;
         
         Id ownershipRecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
    		List<AMS_Accreditation_Contact__c> acToUpdateList = new List<AMS_Accreditation_Contact__c>();
@@ -397,7 +405,7 @@ public with sharing class AMS_AccountRoleCreator
    		{
    			//TD: Removed Employee from Role. Keep them on Contact object only
    			//if(ac.AMS_Ownership_Role__c == null && ac.AMS_Employee_Role__c == null)
-   			if(ac.AMS_Ownership_Role__c == null)
+   			if(ac.AMS_Ownership_Role__c == null && !isCorrection)
    			{
 	   			boolean toUpdate = false;
 	   			List<AMS_Account_Role__c> roleList = acRoleMap.get(ac);
@@ -456,7 +464,8 @@ public with sharing class AMS_AccountRoleCreator
    		}
    		
     	/** !! NOTE: This second step handles Account Ownership only! !! */
-    	insertAccountOwnershipsForAccreditationOnline(aoaList);
+    	if(!isCorrection)
+    		insertAccountOwnershipsForAccreditationOnline(aoaList);
     	
     	
     	// Because Contact's might have validation rules that prevent Contact updates, and the business requirement
@@ -617,6 +626,87 @@ public with sharing class AMS_AccountRoleCreator
 			
 			update acsToUpdate;
 		}
+    }
+
+    public static void insertAccountOwnershipsForAccreditationOnlineCorrections(Map<Id,Set<Id>> aoMap, Map<Id,List<AMS_Accreditation_Contact__c>> aoToAcList, Map<Id, Set<AMS_Account_Role__c>> rolesPerAccount)
+    {
+    	/** !! NOTE: This second step handles Account Ownership only! !! */
+    	
+    	List<AMS_Account_Role__c> oldRolesToUpdate = new List<AMS_Account_Role__c>();
+    	Map<Id, AMS_Account_Role__c> acNewRoleMap = new Map<Id, AMS_Account_Role__c>();
+
+        AMS_Account_Role__c toUpdateRole;
+		for(Id aoId : aoToAcList.keySet()){
+     		for(AMS_Accreditation_Contact__c ac: aoToAcList.get(aoId)){
+     			//Process only account owners
+     			if(ac.RecordTypeId == AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') || ac.RecordTypeId == AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')){
+
+     				System.debug('MACDEBUG ACCREDITATION CONTACT COMPANY: ' + ac.Company__c);
+			    	if(ac.AMS_Ownership_Role__c != null){
+			    		System.debug('MACDEBUG OWNERSHIP FILLED');
+			    		for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
+				    		//need to update existing owners related to this company
+				    		//find matching role in account
+					    	Set<AMS_Account_Role__c> rolesToSearch = rolesPerAccount.get(accountId);
+					    	if(rolesToSearch != null){
+
+					    		System.debug('MACDEBUG COR ROLES TO SEARCH: ' +  rolesToSearch);
+						    	for(AMS_Account_Role__c compareRole: rolesToSearch){
+						    		if(ac.Company__c == compareRole.Owner_Account__c)
+						    		{
+						    			Id oldAccountId = compareRole.Account__c;
+						    			toUpdateRole = AMS_AccreditationContactHelper.updateAmsRoleForAccount(compareRole, ac);
+						    			toUpdateRole.Account__c = oldAccountId;
+						    			oldRolesToUpdate.add(toUpdateRole);
+						    			System.debug('CHECK ROLE 1: ' + toUpdateRole);
+					    			}
+						    	}
+			    			}
+	    				}
+
+			    	}
+			    	else{
+			    		System.debug('MACDEBUG OWNERSHIP NOT FILLED');
+			    		for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
+				    		//need to create new owners for all hierarchy
+				    		System.debug('ACCREDITATION CONTACT COMPANY: ' + ac.Company__c);
+		    				AMS_Account_Role__c newRole = AMS_AccreditationContactHelper.createAmsRoleForAccount(ac);
+		    				if(newRole != null){
+		    					newRole.Account__c = accountId;
+				    			oldRolesToUpdate.add(newRole);
+				    			//acNewRoleMap.put(ac.Id, newRole);
+				    			System.debug('CHECK ROLE 2: ' + newRole);
+		    				}
+		    			}
+
+			    	}
+			    }
+		    }
+		}
+
+		if(oldRolesToUpdate.size() > 0)
+   		{
+   			for(AMS_Account_Role__c role: oldRolesToUpdate){
+   				System.debug('CHECK ROLE 3: ' + role);
+   			}
+   			upsert oldRolesToUpdate;
+   		}
+		
+		
+		/*List<AMS_Accreditation_Contact__c> acsToUpdate = new List<AMS_Accreditation_Contact__c>();
+		if(acNewRoleMap.size() > 0)
+		{
+			for(AMS_Accreditation_Contact__c ac : acList)
+			{
+				if(acNewRoleMap.get(ac.Id) != null)
+				{
+					ac.AMS_Ownership_Role__c = acNewRoleMap.get(ac.Id).Id;
+					acsToUpdate.add(ac);
+				}
+			}
+			
+			update acsToUpdate;
+		}*/
     }
     
     public static List<AMS_Accreditation_Contact__c> getPersonLinkingOnly(List<AMS_Accreditation_Contact__c> acListing)
@@ -823,16 +913,13 @@ public with sharing class AMS_AccountRoleCreator
         return arUpdateList;
     }
 
-
-
-
-
-
-
+    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
+    	runRoleCreatorForOnlineAccreditations(aoMap, false);
+    }
 
     // This is a clone of the method runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList)
     // This version will apply an online accreditation to several accounts
-    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
+    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
     	
     	// STEP 1) I have to build a map: accreditation online -> acs
     	Map<Id,List<AMS_Accreditation_Contact__c>> aoToAcList = new Map<Id,List<AMS_Accreditation_Contact__c>>();
@@ -843,7 +930,7 @@ public with sharing class AMS_AccountRoleCreator
 
     	
     	String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
-        String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, Person_AMS__r.Contact__c, RecordType.DeveloperName ';
+        String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Duty__c, AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c';
         query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c IN :aoIds AND (RecordTypeId in ';
         query = query + '(' + recordTypesPerson +' ) ';
         query = query + ' OR RecordTypeId in ';
@@ -853,7 +940,9 @@ public with sharing class AMS_AccountRoleCreator
     	system.debug('DTULLO 826 --> Query: ' + Query);
     	system.debug('DTULLO 826 --> aoMap.keyset() : ' + aoMap.keyset());
         String rolequery = '';
-        for(AMS_Accreditation_Contact__c ac :database.query(query)){
+
+        List<AMS_Accreditation_Contact__c> acsInAos = database.query(query);
+        for(AMS_Accreditation_Contact__c ac :acsInAos){
         	idToAc.put(ac.Id,ac);
 
         	if(!aoToAcList.containsKey(ac.AMS_Pax_Accreditation_Form__c))
@@ -889,6 +978,8 @@ public with sharing class AMS_AccountRoleCreator
     	// STEP 2) I have to build a map accreditation contact -> roles
     	Map<Id, List<AMS_Account_Role__c>> acToRoles = new Map<Id, List<AMS_Account_Role__c>>();
 
+    	Map<Id, Set<AMS_Account_Role__c>> rolesPerAccount = new Map<Id, Set<AMS_Account_Role__c>>();
+
     	for(AMS_Accreditation_Contact__c ac : idToAc.values()){
     		acToRoles.put(ac.Id, new List<AMS_Account_Role__c>());
     	}
@@ -896,15 +987,19 @@ public with sharing class AMS_AccountRoleCreator
     	if(rolequery != '')
     		rolequery = '('+rolequery+') AND ';
     	system.debug('runRoleCreatorForOnlineAccreditations() -> role query condition '+rolequery);
-    	for(AMS_Account_Role__c r : database.query('SELECT recordtype.DeveloperName, id, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, Owner_Account__r.Name '+
+    	for(AMS_Account_Role__c r : database.query('SELECT recordtype.DeveloperName, id, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c '+
 											  		'FROM AMS_Account_Role__c '+
 											  		'WHERE '+rolequery+' Termination_Date__c = NULL AND RecordType.DeveloperName = \'Ownership\'')){
+    		
+    		system.debug('MACDEBUG: CORRECTION PROCESS ROLE START: '+ r);
 
     		for(AMS_Accreditation_Contact__c ac : idToAc.values()){
-				
-				Set<Id> myAccounts = aoMap.get(ac.AMS_Pax_Accreditation_Form__c);
 
+    			Set<Id> myAccounts = aoMap.get(ac.AMS_Pax_Accreditation_Form__c);
+    			system.debug('MACDEBUG: CORRECTION PROCESS ACCOUNT TO PROCESS: ' + myAccounts);
+    			system.debug('MACDEBUG: ROLE DEBUG AC: ' + ac);
     			if(myAccounts.contains(r.Account__c)){
+    				system.debug('MACDEBUG: ROLE DEBUG ROLE: ' + r);
 	    			if((personDeveloperName.containsKey(ac.RecordType.DeveloperName) && r.Contact__c==ac.Contact__c && r.Person__c==ac.Person_AMS__c ) || 
 	    				(companyDeveloperName.containsKey(ac.RecordType.DeveloperName)  && r.Owner_Account__c==ac.Company__c)){
 		    			if(acToRoles.get(ac.Id)==null)
@@ -912,7 +1007,18 @@ public with sharing class AMS_AccountRoleCreator
 		    			acToRoles.get(ac.Id).add(r);
 		    		}
 	    		}
-    		}
+
+	    		if(isCorrectionProcess){
+					system.debug('MACDEBUG: CORRECTION PROCESS  FILL ROLES PER ACCOUNT MAP');
+					system.debug('MACDEBUG: CORRECTION PROCESSING ROLE: ' + r);
+			    	
+			    	if(rolesPerAccount.get(r.Account__c)==null)
+			    		rolesPerAccount.put(r.Account__c, new Set<AMS_Account_Role__c>());
+			    	rolesPerAccount.get(r.Account__c).add(r);
+		    	}	
+    		}	    				
+
+    		system.debug('MACDEBUG: CORRECTION PROCESS  ROLES PER ACCOUNT MAP: ' + rolesPerAccount);
 
     	}
     	
@@ -990,42 +1096,103 @@ public with sharing class AMS_AccountRoleCreator
     	Map<String,AMS_Account_Role__c> rolesToInsert = new Map<String,AMS_Account_Role__c>();
     	Set<Id> accountIdsToDeactivateRoles = new Set<Id>();
 
-    	for(Id acId : acToRoles.keySet()){
-    		AMS_Accreditation_Contact__c ac = idToAc.get(acId);
-    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' ---> TO DECIDE BASED ON '+ac.AMS_Ownership_Role__c);
+    	if(isCorrectionProcess){
+    		for(Id aoId : aoToAcList.keySet()){
+     			for(AMS_Accreditation_Contact__c ac: aoToAcList.get(aoId)){
+     				//process contact owners only
+     				if(ac.Agency_owner__c == true && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')){
+			    		if(ac.AMS_Ownership_Role__c != null){
+				    		system.debug('MACDEBUG COR ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c+')---> CASE B');
+						 	system.debug('MACDEBUG COR ac has account owner = '+ac.Company__c+' ---> CASE B');
+
+						    //if(ac.Agency_owner__c == true && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')){
+						    	//find matching roles in all hierarchy accounts and update them
+						    	for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
+						    		System.debug('MACDEBUG COR sweeping accounts... current id: ' + accountId);
+						    		//find matching role in account
+						    		Set<AMS_Account_Role__c> rolesToSearch = rolesPerAccount.get(accountId);
+						    		if(rolesToSearch != null){
+
+						    			System.debug('MACDEBUG COR ROLES TO SEARCH: ' +  rolesToSearch);
+							    		for(AMS_Account_Role__c compareRole: rolesToSearch){
+							    					
+							    			/*if(compareRole.Duty__c 		== ac.AMS_Ownership_Role__r.Duty__c &&
+											compareRole.Hours__c 		== ac.AMS_Ownership_Role__r.Hours__c &&
+											compareRole.IsManager__c 	== ac.AMS_Ownership_Role__r.IsManager__c &&
+											compareRole.Percentage__c 	== ac.AMS_Ownership_Role__r.Percentage__c &&
+											compareRole.Position__c 	== ac.AMS_Ownership_Role__r.Position__c &&
+											compareRole.Owner_Account__c 	== null){*/
+											if(compareRole.Contact__c == ac.Contact__c){
+												System.debug('MACDEBUG COR FOUND A MATCHING ROLE!!!');
+												Id oldAccountId = compareRole.Account__c;
+												compareRole = AMS_AccreditationContactHelper.updateAmsAccountRole(compareRole, ac);
+												compareRole.Account__c = oldAccountId;
+												System.debug('MACDEBUG COR ADDING ROLE TO LIST ' + compareRole);
+												System.debug('MACDEBUG COR ADDING ROLE TO LIST ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c);
+												System.debug('MACDEBUG COR ADDING ROLE TO LIST account ' + accountId);
+												rolesToUpdate.add(compareRole);
+											}
+							    		}
+							   		}
+							  	}
+					   		//}
+			    		}
+			    		else{
+			    			system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c+')---> CASE B');
+				    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac has account owner = '+ac.Company__c+' ---> CASE B');
+
+			    			for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
+			    				System.debug('runRoleCreatorForOnlineAccreditations() sweeping accounts... current id: ' + accountId);
+				    			AMS_Account_Role__c newRole = AMS_AccreditationContactHelper.createAmsAccountRole(ac);
+				    			newRole.Account__c = accountId;
+				    			System.debug('runRoleCreatorForOnlineAccreditations() new role: ' + newRole);
+				    			rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c+'-'+newRole.Owner_Account__c,newRole);
+				    		}
+			    		}
+			    	}
+		    	}
+		    }
+    	}else{
+	    	for(Id acId : acToRoles.keySet()){
+	    		AMS_Accreditation_Contact__c ac = idToAc.get(acId);
+	    		system.debug('CHECK runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' ---> TO DECIDE BASED ON '+ac.AMS_Ownership_Role__c);
 
 
-    		// CASE A) update existing roles
-    		if(ac.AMS_Ownership_Role__c != null){
-    			system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' ---> CASE A');
-    			for(AMS_Account_Role__c role : acToRoles.get(acId)){
-    				Id oldAccountId = role.Account__c;
-    				role = AMS_AccreditationContactHelper.updateAmsAccountRole(role, ac);
-    				role.Account__c = oldAccountId;
-        			rolesToUpdate.add(role);
+	    		// CASE A) update existing roles
+	    		if(ac.AMS_Ownership_Role__c != null){
+	    			
+		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' ---> CASE A');
+		    			
+		    		for(AMS_Account_Role__c role : acToRoles.get(acId)){
+		    			Id oldAccountId = role.Account__c;
+		    			role = AMS_AccreditationContactHelper.updateAmsAccountRole(role, ac);
+		    			role.Account__c = oldAccountId;
+		        		rolesToUpdate.add(role);
 
-	    		}
-	    	
+			    	}
+		    	
+		    	// CASE B) get the account for which I need to deactivate all the roles. Create new roles
+		    	}else if(ac.AMS_Ownership_Role__c == null){
+		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c+')---> CASE B');
+		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac has account owner = '+ac.Company__c+' ---> CASE B');
+		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) acToRoles.get('+acId+') '+acToRoles.get(acId));
 
-	    	// CASE B) get the account for which I need to deactivate all the roles. Create new roles
-	    	}else if(ac.AMS_Ownership_Role__c == null){
-	    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c+')---> CASE B');
-	    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac has account owner = '+ac.Company__c+' ---> CASE B');
-	    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) acToRoles.get('+acId+') '+acToRoles.get(acId));
 
-
-	    		if(ac.Agency_owner__c == true){
-    				for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
-    				
-	    				AMS_Account_Role__c newRole = AMS_AccreditationContactHelper.createAmsAccountRole(ac);
-	    				newRole.Account__c = accountId;
-	    				rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c+'-'+newRole.Owner_Account__c,newRole);
-	    				accountIdsToDeactivateRoles.add(accountId);
+		    		if(ac.Agency_owner__c == true){
+	    				for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
+	    					System.debug('runRoleCreatorForOnlineAccreditations() sweeping accounts... current id: ' + accountId);
+		    				AMS_Account_Role__c newRole = AMS_AccreditationContactHelper.createAmsAccountRole(ac);
+		    				newRole.Account__c = accountId;
+		    				System.debug('runRoleCreatorForOnlineAccreditations() new role: ' + newRole);
+		    				rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c+'-'+newRole.Owner_Account__c,newRole);
+		    				System.debug('runRoleCreatorForOnlineAccreditations() roles to insert list: ' + rolesToInsert);
+		    				accountIdsToDeactivateRoles.add(accountId);
+		    			}
 	    			}
-    			}
 
+		    	}
 	    	}
-    	}
+	    }
     	
     	if(accountIdsToDeactivateRoles.size()>0){
     		for(AMS_Account_Role__c role : [SELECT Id, Termination_Date__c FROM AMS_Account_Role__c WHERE Account__c IN :accountIdsToDeactivateRoles]){
@@ -1059,10 +1226,15 @@ public with sharing class AMS_AccountRoleCreator
 
     	// !! NOTE: This second step handles Account Ownership only! !! 
     	system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) START insertAccountOwnershipsForAccreditationOnline()');
-    	Set<String> setString = new Set<String>();
-    	for(Id id : aoMap.keyset())
-    		setString.add((String) id);
-    	insertAccountOwnershipsForAccreditationOnline(setString);
+    	if(!isCorrectionProcess){
+	    	Set<String> setString = new Set<String>();
+	    	for(Id id : aoMap.keyset())
+	    		setString.add((String) id);
+	    	insertAccountOwnershipsForAccreditationOnline(setString);
+	    }
+	    else{
+	    	insertAccountOwnershipsForAccreditationOnlineCorrections(aoMap, aoToAcList, rolesPerAccount);
+	    }
     	system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) FINISH insertAccountOwnershipsForAccreditationOnline()');
 
     }
