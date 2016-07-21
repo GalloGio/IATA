@@ -408,9 +408,10 @@ void buildShipToAddressPicklist()
     lstShipToAddress.clear();
     
     //*** set label as key for sorting
-    for (i1 = 0; i1 < loggedCustomer.shipTos.size(); i1++)
-        lstShipToAddress.add(new SelectOption((loggedCustomer.shipTos[i1].addressName == null ? loggedCustomer.shipTos[i1].street1 : loggedCustomer.shipTos[i1].addressName), loggedCustomer.shipTos[i1].locationId));
-    
+    if(loggedCustomer.shipTos != null)
+        for (i1 = 0; i1 < loggedCustomer.shipTos.size(); i1++)
+            lstShipToAddress.add(new SelectOption((loggedCustomer.shipTos[i1].addressName == null ? loggedCustomer.shipTos[i1].street1 : loggedCustomer.shipTos[i1].addressName), loggedCustomer.shipTos[i1].locationId));
+        
     //*** sort picklist by label
     lstShipToAddress.sort();
     
@@ -451,13 +452,14 @@ public void getShipToAutoCompleteAddress()
 ****************************************************************************************************/
 public void changeShipToAddress()
 {
-    for (Integer i1 = 0; i1 < loggedCustomer.shipTos.size(); i1++)
-        if (currentShipToLocationId == loggedCustomer.shipTos[i1].locationId)
-        {
-            dtoShipToAddress = copyAddress(loggedCustomer.shipTos[i1], null);
-            changeShipToCountry(false);
-            break;
-        }
+    if(loggedCustomer.shipTos != null)
+        for (Integer i1 = 0; i1 < loggedCustomer.shipTos.size(); i1++)
+            if (currentShipToLocationId == loggedCustomer.shipTos[i1].locationId)
+            {
+                dtoShipToAddress = copyAddress(loggedCustomer.shipTos[i1], null);
+                changeShipToCountry(false);
+                break;
+            }
 
     isDefaultShipTo = currentShipToLocationId == currentContact.ShipTo_Location__c;
     makeShipToDefault = isDefaultShipTo;

@@ -45,11 +45,15 @@ private class IEC_UpdateAddressControllerTest {
         //*** cover methods "onPageLoad" logged as first time customer i.e. the rest of method
         //*** cover methods "buildShipToAddressPicklist", "changeShipToAddress", "copyAddress"
         cls = new IEC_UpdateAddressController();
-        cls.onPageLoad();
+        Test.startTest();
+            cls.onPageLoad();
+        Test.stopTest();
+        
         system.assert([select count() from Location__c] == 3, '# Locations should be 3');
         system.assert(cls.dtoBillToAddress.locationId != null, 'Wrong default Bill To location');
         system.assert(cls.dtoShipToAddress.locationId != null && cls.lstShipToAddress.size() == 1, 'Wrong default Ship To location');
 
+        
         //*** cover method "cancelBillToAddress"
         cls.dtoBillToAddress.street1 = 'zzz';
         cls.cancelBillToAddress();

@@ -111,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     
   <div class="header">
     <div class="header__wrapper">
-      <a href="https://{!$Site.Domain}{!$Page.IECHomepage}" class="header__logo" style="background:url({!$Resource.IEC_iata_logo_60px}) center center no-repeat;" ></a>
+      <a href="https://{!$Site.Domain}{!$Page.IEC_Home}" class="header__logo" style="background:url({!$Resource.IEC_iata_logo_60px}) center center no-repeat;" ></a>
 
       <ul>
         <li class="header__navigation-li -first">
@@ -136,11 +136,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
            
           <apex:form >
               <div class="navigation-dropdown">             <!--  style="background-image:url({!$Resource.IEC_dropdownnavy})"  -->
-                <apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>
-                <apex:outputpanel layout="none" rendered="{!bAvailMDP}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdMDP}" class="navigation-dropdown__link">Marketing Data Package</a></apex:outputpanel>              
-                <apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>
-                <apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>
-                <!-- apex:outputpanel layout="none" rendered="{!bAvailCACWeb}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACWeb}" class="navigation-dropdown__link">Check-a-code Webservice</a></apex:outputpanel-->
+                <apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="https://{!$Site.Domain}{!$Page.IEC_SearchResults}?site-search={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>
+                <apex:outputpanel layout="none" rendered="{!bAvailMDP}"><a href="https://{!$Site.Domain}{!$Page.IEC_SearchResults}?site-search={!sProdMDP}" class="navigation-dropdown__link">Marketing Data Package</a></apex:outputpanel>              
+                <apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="https://{!$Site.Domain}{!$Page.IEC_SearchResults}?site-search={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>
+                <apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="https://{!$Site.Domain}{!$Page.IEC_SearchResults}?site-search={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>
+                <!-- apex:outputpanel layout="none" rendered="{!bAvailCACWeb}"><a href="https://{!$Site.Domain}{!$Page.IEC_SearchResults}?site-search={!sProdCACWeb}" class="navigation-dropdown__link">Check-a-code Webservice</a></apex:outputpanel-->
                 <!-- apex:outputpanel layout="none" rendered="{!bAvailEBro}"><a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdEBro}" class="navigation-dropdown__link">E-Broadcast</a></apex:outputpanel-->
               </div>
           </apex:form>
@@ -180,7 +180,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
  
  <!--   Cart Start -->
  
-        <li class="header__navigation-li -right">
+        <!-- li class="header__navigation-li -right">
             <apex:form id="formHeader">
               <a href="#" id="cart-anchor" class="header__navigation-link -cart" >
                 
@@ -192,7 +192,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     
               </a>
                </apex:form>
-              </li>
+              </li -->
                     
         
    <!--   Cart END -->     
@@ -243,10 +243,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                  </apex:form>   
                 
                  <h3>Menu Items</h3>                                 
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IECUpdateContact}">My Account</a></p>
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IECHistActiveSubscriptions}">My Subscriptions</a></p>
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IECHistInvoices}">My Invoices</a></p>
-                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IECHistQuotes}">My Quotes</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IEC_ContactInformation}">My Account</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IEC_DataStatisticsSubscriptions}">My Subscriptions</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IEC_MyInvoices}">My Invoices</a></p>
+                    <p class="itemTotal">&raquo;&nbsp;&nbsp;<a href="https://{!$Site.Domain}{!$Page.IEC_ZQuotes}">My Quotes</a></p>
                  <a style="margin-top:34px;" class="customButton signup" href="#" onClick="logout();">Already done? &nbsp;Logout</a>
                 
                 <!-- 
