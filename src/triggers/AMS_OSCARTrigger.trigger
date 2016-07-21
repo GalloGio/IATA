@@ -275,6 +275,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DD_setup_with_agent__c'            => 'DD_setup_with_agent_confirmed__c',
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
+            'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
             'Issue_billing_document__c'                 => 'Process_Start_Date__c'
             };
            //Map to update Date related checkbox values

@@ -303,6 +303,9 @@ public class AMS_OSCARTriggerHandler {
 
 					}
 
+					//check if ownership needs to be copied from online form to Accounts
+					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c))
+						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 

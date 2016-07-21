@@ -177,6 +177,16 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Account_data_rolled_back__c</fullName>
+        <externalId>false</externalId>
+        <label>Account data rolled back</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -1301,7 +1311,7 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
     <fields>
         <fullName>Criteria_remarks__c</fullName>
         <externalId>false</externalId>
-        <label>Rejection / Withdrawal Remarks</label>
+        <label>Criteria Remarks</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -1753,6 +1763,21 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IFAP_Financial_Year__c</fullName>
+        <description>Financial year - IFAP application</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Current Financial Year
+Format: YYYY</inlineHelpText>
+        <label>Financial Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>IRIS_update_result__c</fullName>
@@ -2434,6 +2459,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Release FS (if applicable)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Roll_back_account_data__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Roll back account data</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

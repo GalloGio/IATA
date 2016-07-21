@@ -103,15 +103,7 @@
 
 
 <target name="deployCodeProd"> 
-  <echo level="info">creating new folder</echo>
-  <antcallback target="deldir" />
-   <mkdir dir="${basedir}/Code"/>
-  
 
-
-
-      
-      <antcallback target="deployCodeLocal" />
        <antcallback target="deployCodeObjects" />
   
   </target> 

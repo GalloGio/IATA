@@ -68,6 +68,7 @@ public without sharing class AMS_Utils {
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
+    public static final String AO = 'AO';
     public static final String SA = 'SA';
 
     //Processes of type NEW
