@@ -1,5 +1,15 @@
 public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
-    public static Integer ITEMS_PER_PAGE = 25;
+    public static final Integer DEFAULT_ITEMS_PER_PAGE = 5;
+    
+    public static Integer itemsPerPage {
+        get{
+            if (itemsPerPage == null) {
+                itemsPerPage = DEFAULT_ITEMS_PER_PAGE;
+            }
+            return itemsPerPage;
+        }
+        set;
+    }
 
     public Id selectedItemId { get; set; } 
     public sObject selectedItem {
@@ -35,7 +45,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
         set {
             page = value;
             
-            offset = (page * ITEMS_PER_PAGE) - ITEMS_PER_PAGE;
+            offset = (page * itemsPerPage) - itemsPerPage;
             
             items = null;
         }
@@ -43,7 +53,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
      
     public Integer maxPage {
         get {
-            if (maxPage == null) maxPage = Integer.valueOf(Math.ceil(Double.valueOf(itemsCount) / Double.valueOf(ITEMS_PER_PAGE)));
+            if (maxPage == null) maxPage = Integer.valueOf(Math.ceil(Double.valueOf(itemsCount) / Double.valueOf(itemsPerPage)));
             return maxPage;
         }
         private set;
@@ -107,7 +117,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     public List<sObject> items {
         get {
             if (items == null) {
-                String query = getQuery(false) + ' ORDER BY ' + sortBy + ' LIMIT ' + ITEMS_PER_PAGE + ' OFFSET ' + offset;
+                String query = getQuery(false) + ' ORDER BY ' + sortBy + ' LIMIT ' + itemsPerPage + ' OFFSET ' + offset;
                 System.debug(query);
                 items = Database.query(query);
             }
@@ -116,6 +126,10 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
         private set;
     }
     
+    public void resetQuery() {
+        clear();
+        page = 1;
+    }
     private void clear() {
         itemsCount = null;
         items = null;
