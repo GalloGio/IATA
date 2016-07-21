@@ -147,7 +147,6 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			fields.add('Name');
 			fields.add('Activity_Type__c');
 			fields.add('Total_Count__c');
-			fields.add('Activity_Date__c');
 			fields.add('Activity_Date_Time__c');
 			fields.add('EBC_Campaign__r.Name');
 			fields.add('EBC_Campaign__r.Campaign_ID__c');

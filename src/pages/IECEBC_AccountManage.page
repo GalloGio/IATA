@@ -179,153 +179,153 @@
 											
 										</div>
 										<div class="tab-pane is-open" id="pane-1-b">
-										<apex:form id="dataTableForm">
-											<apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" >
-											</apex:actionFunction>
-											
-											<apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
-											<apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
-											<apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="actListOutputPanel" />
-											<apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
-											
-											<apex:commandButton id="testButton" value="testButton" action="{!refreshTable}" rerender="actListOutputPanel" />
-												
-											<div class="table-container data-table-container">
-												
-												<table class="data-table manage-lists">
-													<tbody>
-														<tr>
-															<th class="activity-type">
-															
-																<a class="js-toggle-type-sort" href="#">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-																<div class="type-sort" id="actPopUpMenu">
-																	<ul class="list">
-
-																		<apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="act">
-																			<li class="checkbox-box">
-																				<!-- -->																					
-																				<div class="custom-user-input checkbox">
-																					<apex:inputCheckbox id="chckActType" value="{!act.selected}" styleClass="user-input checkbox" 
-																										html-data-target-row="js-sort-type-adjustments" 
-																										onclick="refreshActivityTable();"
-																										/>
-																					<label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
-																				</div>
-																				<label class="input-label" for="{!$Component.chckActType}">{!act.activityType}</label>
-																			</li>
-																		</apex:repeat>
-																		
-
-<!--
-																				<div class="custom-user-input checkbox">
- 																					<input class="user-input checkbox" type="checkbox" id="actType{!act.index}" data-target-row="js-sort-type-adjustments" checked="" />
-																					<label class="custom-checkbox" for="actType{!act.index}"><i class="icon"></i></label>
-																				</div>
-																				<label class="input-label" for="actType{!act.index}">{!act.activityType}</label>
-
-
-
-
-																		<li class="checkbox-box">
-																			<div class="custom-user-input checkbox">
-																				<input class="user-input checkbox" type="checkbox" id="type-1" data-target-row="js-sort-type-adjustments" checked="" />
-																				<label class="custom-checkbox" for="type-1"><i class="icon"></i></label>
-																			</div>
-																			<label class="input-label" for="type-1">Adjustments</label>
-																		</li>
-																		<li class="checkbox-box">
-																			<div class="custom-user-input checkbox">
-																				<input class="user-input checkbox" type="checkbox" id="type-2" data-target-row="js-sort-type-credits" checked="" />
-																				<label class="custom-checkbox" for="type-2"><i class="icon"></i></label>
-																			</div>
-																			<label class="input-label" for="type-2">Credits</label>
-																		</li>
-																		<li class="checkbox-box">
-																			<div class="custom-user-input checkbox">
-																				<input class="user-input checkbox" type="checkbox" id="type-3" data-target-row="js-sort-type-sends" checked="" />
-																				<label class="custom-checkbox" for="type-3"><i class="icon"></i></label>
-																			</div>
-																			<label class="input-label" for="type-3">Sends</label>
-																		</li>
--->
-																	</ul>
-																</div>
-															</th>
-															
-															<th class="activity-date">Activity Date</th>
-															<th class="name">Activity Name</th>
-															<th class="id">Campaign ID</th>
-															<th class="total-count">Total Count</th>
-														</tr>
-														
-														<apex:outputPanel id="actListOutputPanel" >
-															<!-- 
-															{!NOW()} | <br/>
-															activityTypeWrapperList: {!activityTypeWrapperList} 
-															<br/>
-															activityList: {!activityList}
-															<br/>
-															page: {!page}
-															 -->
-															
-															<apex:repeat id="actListTable" value="{!activityList}" var="act">
-																<tr class="js-sort-type-credits">
-																	<td class="activity-type">{!act.Activity_Type__c}</td>
-																	<td class="activity-date">
-																		<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
-																	</td>																
-																	<td class="name">{!act.Name}</td>
-																	<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
-																	<td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
-																</tr>
-															</apex:repeat>
-														</apex:outputPanel>
-														
-<!--														
-														<tr class="js-sort-type-adjustments">
-															<td class="activity-type">Adjustments</td>
-															<td class="name">Campaign 2</td>
-															<td class="id">C-00000011</td>
-															<td class="activity-date">01 Mar. 2016</td>
-															<td class="total-count">5 email(s)</td>
-														</tr>
-														<tr class="js-sort-type-sends">
-															<td class="activity-type">Sends</td>
-															<td class="name">Campaign 3</td>
-															<td class="id">C-00000011</td>
-															<td class="activity-date">01 Mar. 2016</td>
-															<td class="total-count">5 email(s)</td>
-														</tr>
-														<tr class="js-sort-type-sends">
-															<td class="activity-type">Sends</td>
-															<td class="name">Campaign 4</td>
-															<td class="id">C-00000011</td>
-															<td class="activity-date">01 Mar. 2016</td>
-															<td class="total-count">5 email(s)</td>
-														</tr>
- -->													
-													</tbody></table>  
-												<div class="pagination">
-													<div class="page-number">
-														Page
-														<div class="custom-user-input select">
-															<i class="icon angle-down"></i>
-															<!-- 
-															<select class="user-input select">
-																<option value="{!page}">{!pageOptions}</option>
-															</select>
-															 -->
-															
-															<apex:selectList value="{!page}" styleClass="user-input select" size="1">
-																<apex:selectOptions value="{!pageOptions}"/>
-																<apex:actionSupport event="onchange" action="{!doNothing}" reRender="actListOutputPanel" />
-															</apex:selectList> 
-															
-														</div>
-														of {!maxPage}
-													</div>
-												</div>
-											</div>
+                                            <apex:form id="dataTableForm">
+                                                <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" >
+                                                </apex:actionFunction>
+                                                
+                                                <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
+                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
+                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="actListOutputPanel" />
+                                                <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
+                                                
+                                                <apex:commandButton id="testButton" value="testButton" action="{!refreshTable}" rerender="actListOutputPanel" />
+                                                    
+                                                <div class="table-container data-table-container">
+                                                    <apex:outputPanel id="actListOutputPanel" >
+                                                        
+                                                        <table class="data-table manage-lists">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th class="activity-type">
+                                                                    
+                                                                        <a class="js-toggle-type-sort" href="#">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                                                        <div class="type-sort" id="actPopUpMenu">
+                                                                            <ul class="list">
+        
+                                                                                <apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="act">
+                                                                                    <li class="checkbox-box">
+                                                                                        <!-- -->																					
+                                                                                        <div class="custom-user-input checkbox">
+                                                                                            <apex:inputCheckbox id="chckActType" value="{!act.selected}" styleClass="user-input checkbox" 
+                                                                                                                html-data-target-row="js-sort-type-adjustments" 
+                                                                                                                onclick="refreshActivityTable();"
+                                                                                                                />
+                                                                                            <label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
+                                                                                        </div>
+                                                                                        <label class="input-label" for="{!$Component.chckActType}">{!act.activityType}</label>
+                                                                                    </li>
+                                                                                </apex:repeat>
+                                                                                
+        
+        <!--
+                                                                                        <div class="custom-user-input checkbox">
+                                                                                            <input class="user-input checkbox" type="checkbox" id="actType{!act.index}" data-target-row="js-sort-type-adjustments" checked="" />
+                                                                                            <label class="custom-checkbox" for="actType{!act.index}"><i class="icon"></i></label>
+                                                                                        </div>
+                                                                                        <label class="input-label" for="actType{!act.index}">{!act.activityType}</label>
+        
+        
+        
+        
+                                                                                <li class="checkbox-box">
+                                                                                    <div class="custom-user-input checkbox">
+                                                                                        <input class="user-input checkbox" type="checkbox" id="type-1" data-target-row="js-sort-type-adjustments" checked="" />
+                                                                                        <label class="custom-checkbox" for="type-1"><i class="icon"></i></label>
+                                                                                    </div>
+                                                                                    <label class="input-label" for="type-1">Adjustments</label>
+                                                                                </li>
+                                                                                <li class="checkbox-box">
+                                                                                    <div class="custom-user-input checkbox">
+                                                                                        <input class="user-input checkbox" type="checkbox" id="type-2" data-target-row="js-sort-type-credits" checked="" />
+                                                                                        <label class="custom-checkbox" for="type-2"><i class="icon"></i></label>
+                                                                                    </div>
+                                                                                    <label class="input-label" for="type-2">Credits</label>
+                                                                                </li>
+                                                                                <li class="checkbox-box">
+                                                                                    <div class="custom-user-input checkbox">
+                                                                                        <input class="user-input checkbox" type="checkbox" id="type-3" data-target-row="js-sort-type-sends" checked="" />
+                                                                                        <label class="custom-checkbox" for="type-3"><i class="icon"></i></label>
+                                                                                    </div>
+                                                                                    <label class="input-label" for="type-3">Sends</label>
+                                                                                </li>
+        -->
+                                                                            </ul>
+                                                                        </div>
+                                                                    </th>
+                                                                    
+                                                                    <th class="activity-date">Activity Date/Time</th>
+                                                                    <th class="name">Activity Name</th>
+                                                                    <th class="id">Campaign ID</th>
+                                                                    <th class="total-count">Total Count</th>
+                                                                </tr>
+                                                                
+                                                                <!-- 
+                                                                {!NOW()} | <br/>
+                                                                activityTypeWrapperList: {!activityTypeWrapperList} 
+                                                                <br/>
+                                                                activityList: {!activityList}
+                                                                <br/>
+                                                                page: {!page}
+                                                                 -->
+                                                                    
+                                                                <apex:repeat id="actListTable" value="{!activityList}" var="act">
+                                                                    <tr class="js-sort-type-credits">
+                                                                        <td class="activity-type">{!act.Activity_Type__c}</td>
+                                                                        <td class="activity-date">
+                                                                               <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
+                                                                        </td>																
+                                                                        <td class="name">{!act.Name}</td>
+                                                                        <td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
+                                                                        <td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                                
+        <!--														
+                                                                <tr class="js-sort-type-adjustments">
+                                                                    <td class="activity-type">Adjustments</td>
+                                                                    <td class="name">Campaign 2</td>
+                                                                    <td class="id">C-00000011</td>
+                                                                    <td class="activity-date">01 Mar. 2016</td>
+                                                                    <td class="total-count">5 email(s)</td>
+                                                                </tr>
+                                                                <tr class="js-sort-type-sends">
+                                                                    <td class="activity-type">Sends</td>
+                                                                    <td class="name">Campaign 3</td>
+                                                                    <td class="id">C-00000011</td>
+                                                                    <td class="activity-date">01 Mar. 2016</td>
+                                                                    <td class="total-count">5 email(s)</td>
+                                                                </tr>
+                                                                <tr class="js-sort-type-sends">
+                                                                    <td class="activity-type">Sends</td>
+                                                                    <td class="name">Campaign 4</td>
+                                                                    <td class="id">C-00000011</td>
+                                                                    <td class="activity-date">01 Mar. 2016</td>
+                                                                    <td class="total-count">5 email(s)</td>
+                                                                </tr>
+         -->													
+                                                            </tbody></table>  
+                                                        <div class="pagination">
+                                                            <div class="page-number">
+                                                                Page
+                                                                <div class="custom-user-input select">
+                                                                    <i class="icon angle-down"></i>
+                                                                    <!-- 
+                                                                    <select class="user-input select">
+                                                                        <option value="{!page}">{!pageOptions}</option>
+                                                                    </select>
+                                                                     -->
+                                                                    
+                                                                    <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                                                                        <apex:selectOptions value="{!pageOptions}"/>
+                                                                        <apex:actionSupport event="onchange" action="{!doNothing}" reRender="actListOutputPanel" />
+                                                                    </apex:selectList> 
+                                                                    
+                                                                </div>
+                                                                of {!maxPage}
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </div>
 											</apex:form>
 										</div>
 									</div>

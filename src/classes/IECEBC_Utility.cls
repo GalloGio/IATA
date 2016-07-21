@@ -8,7 +8,7 @@ public class IECEBC_Utility {
         a.Total_Count__c = c.Number_of_Recipients__c;
         a.New_Balance__c = c.Billing_Account__r.eBroadcast_Email_Balance__c + c.Number_of_Recipients__c;
         a.Activity_Type__c = 'Credit';
-        a.Activity_Date__c  = Date.today();
+        a.Activity_Date_Time__c  = Datetime.now();
         insert a;
     }
     
@@ -19,6 +19,7 @@ public class IECEBC_Utility {
             Audience__c,
             Geo_Condition__c,
             Refinement_Condition__c,
+            IATA_Codes__c,
             (
                 Select Id,
                 Field_Name__c,
@@ -40,9 +41,11 @@ public class IECEBC_Utility {
         List<String> queryFields = new List<String>();
         List<String> queryGeoFilters = new List<String>();
         List<String> queryRefinementFilters = new List<String>();
+        String table = (masterFilter.Audience__c == 'Agent' ? 'ID_Card__c' : 'GDP_Products_Account_View__c');
+        String emailField = (table == 'ID_Card__c' ? 'Email__c' : 'Email_Address__c');
         
         if (columns == null) {
-        	queryFields.add('count()');
+            queryFields.add('COUNT_DISTINCT(' + emailField + ')');
         } else {
             queryFields.addAll(columns);
         }
@@ -50,11 +53,17 @@ public class IECEBC_Utility {
         for(EBC_Customer_Filter__c cf : masterFilter.EBC_Customer_Filters__r) {
             if (String.isBlank(cf.Field_Operator__c) || (String.isBlank(cf.EBC_Application_Filter__c) && cf.EBC_Application_Filter__r == null)) continue;
             
+            System.debug(masterFilter.Geo_Condition__c);
+            
             String fieldName = cf.Field_Name__c;
             String searchLevel = cf.EBC_Application_Filter__r.Search_Level__c;
             EBC_Application_Filter__c af = cf.EBC_Application_Filter__r;
+            System.debug(cf);
+            System.debug(af);
+            System.debug(cf.EBC_Application_Filter__c);
             if (af == null && cf.EBC_Application_Filter__c != null) {
                 af = [Select Id, Filter_Field__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Id = :cf.EBC_Application_Filter__c];
+                System.debug(af);
                 fieldName = af.Filter_Field__c;
                 searchLevel = af.Search_Level__c;
             }
@@ -72,9 +81,9 @@ public class IECEBC_Utility {
             
             if (searchLevel == 'Geo-Selection') {
                 if (masterFilter.Audience__c == 'Agent') { 
-                	queryGeoFilters.add('GDP_Products_Account_View__c  in (Select Id From GDP_Products_Account_View__c Where ' + filter + ')');
+                    queryGeoFilters.add('GDP_Products_Account_View__c  in (Select Id From GDP_Products_Account_View__c Where ' + filter + ')');
                 } else {
-                	queryGeoFilters.add(filter);
+                    queryGeoFilters.add(filter);
                 }
             } else {
                 queryRefinementFilters.add(filter);
@@ -84,32 +93,37 @@ public class IECEBC_Utility {
         System.debug(masterFilter);
         
         String query = 'Select ' + String.join(queryFields, ', ') + ' ';
-        query += 'From ' + (masterFilter.Audience__c == 'Agency' ? 'GDP_Products_Account_View__c' : 'ID_Card__c') + ' ';
+        System.debug(masterFilter.Audience__c);
+        query += 'From ' + table + ' ';
         
-        String queryWhereClause = '';
+        List<String> queryWhereClauses = new List<String>();
+        queryWhereClauses.add(emailField + ' != null');
+        
         if (masterFilter.Audience__c == 'Custom') {
-            List<String> iataCodes = masterFilter.IATA_Codes__c.split(';');
-            queryWhereClause = 'IATA_Code__c in :iataCodes';
+            if (!String.isBlank(masterFilter.IATA_Codes__c)) {
+            	queryWhereClauses.add('IATA_Code__c in (\'' + String.join(masterFilter.IATA_Codes__c.split(';'), '\',\'') + '\')');
+            }
         } else {
-        	System.debug(masterFilter);
-        	System.debug(queryGeoFilters);
+            System.debug(masterFilter);
+            System.debug(queryGeoFilters);
             
             if (queryGeoFilters.size() > 0) {
                 // Adding geo filtering
                 System.debug(masterFilter.Geo_Condition__c);
-                queryWhereClause += '(' + String.join(queryGeoFilters, ' ' + masterFilter.Geo_Condition__c + ' ') + ')';
-                if (queryRefinementFilters.size() > 0) {
-                    queryWhereClause += ' AND '; // Joins the geo and the refinement
-                }
+                queryWhereClauses.add('(' + String.join(queryGeoFilters, ' ' + masterFilter.Geo_Condition__c + ' ') + ')');
             }
             if (queryRefinementFilters.size() > 0) {
                 // Adding geo filtering
-                queryWhereClause += '(' + String.join(queryRefinementFilters, ' ' + masterFilter.Refinement_Condition__c + ' ') + ')';
+                queryWhereClauses.add('(' + String.join(queryRefinementFilters, ' ' + masterFilter.Refinement_Condition__c + ' ') + ')');
             }
         }
         
-        if (!String.isBlank(queryWhereClause)) {
-        	query += 'Where ' + queryWhereClause;
+        
+        query += 'Where ' + String.join(queryWhereClauses, ' AND ');
+        
+        
+        if (columns != null) {
+            query += ' GROUP BY ' + emailField;
         }
         
         System.debug(query);
