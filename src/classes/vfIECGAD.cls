@@ -165,7 +165,7 @@ public without sharing class vfIECGAD extends IECPageController {
             filter.Agency_Name_Search_Type__c = 'Contains';
                 
                 
-         List<IEC_Application_Filter__c> sysFilter = IECApplicationsManager.LoadFilterByContact(loggedCustomer.RelatedContact.Id, true);
+        List<IEC_Application_Filter__c> sysFilter = IECApplicationsManager.LoadFilterByContact(sProductCode, loggedCustomer.RelatedContact.Id, true);
          if (sysFilter.size() > 0)
             filter.Id = sysFilter.get(0).Id;     
           
