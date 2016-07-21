@@ -913,10 +913,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>BIETA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Cargo Agency Conference Resolution</fullName>
                 <default>false</default>
             </picklistValues>
@@ -958,10 +954,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Dangerous Goods Posters</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dangerous Goods Regulations</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1077,10 +1069,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Infectious Substances Shipping</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Integrated Risk Management Guidance</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1118,10 +1106,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Mileage Manual</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly Historical Data</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4060,10 +4044,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>BIETA</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Baggage ID</fullName>
                 <default>false</default>
             </values>
@@ -6035,10 +6015,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>BIETA</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Baggage ID</fullName>
                 <default>false</default>
             </values>
@@ -6104,10 +6080,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Dangerous Goods Posters</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dangerous Goods Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6203,10 +6175,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infectious Substances Shipping</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Integrated Risk Management Guidance</fullName>
                 <default>false</default>
             </values>
@@ -6244,10 +6212,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Mileage Manual</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly Historical Data</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8199,10 +8163,6 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>IATA_ORG_Group__c</picklist>
             <values>
                 <fullName>Agency List Cargo Agents</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>BIETA</fullName>
                 <default>false</default>
             </values>
             <values>

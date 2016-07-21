@@ -6471,7 +6471,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Survei</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
