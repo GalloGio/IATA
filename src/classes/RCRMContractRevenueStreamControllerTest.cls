@@ -115,7 +115,7 @@ private class RCRMContractRevenueStreamControllerTest {
                     RCRMContractRevenueStreamController controller = new RCRMContractRevenueStreamController(std);
                     
                     // Check the visibility on the buttons
-                  //  //system.asstEquals(false, controller.showSaveButton);
+                  //  system.assertEquals(false, controller.showSaveButton);
                 }
                 
                 // play the PM role 
@@ -124,7 +124,7 @@ private class RCRMContractRevenueStreamControllerTest {
                     RCRMContractRevenueStreamController controller = new RCRMContractRevenueStreamController(std);
                     
                     // Check the visibility on the buttons
-                  //  //system.asstEquals(true, controller.showSaveButton);
+                  //  system.assertEquals(true, controller.showSaveButton);
                     
                     controller.SaveRS();
                     
