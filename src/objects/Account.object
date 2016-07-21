@@ -4734,9 +4734,8 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Recreational</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Passenger &amp; Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
-                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger only</fullName>
@@ -26111,7 +26110,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -28744,7 +28743,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36185,7 +36184,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43380,7 +43379,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -51459,7 +51458,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57952,7 +57951,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60734,7 +60733,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64705,7 +64704,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
