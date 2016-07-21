@@ -834,8 +834,8 @@ public without sharing class AMS_Utils {
             if (!accountsToUpdate.isEmpty()) {
                 update accountsToUpdate;
             }
-            if (!onlineAccToCreateAccountRole.isEmpty())
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole);
+            if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/)
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
 
         }
     }

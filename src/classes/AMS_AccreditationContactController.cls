@@ -13,6 +13,7 @@ public with sharing class AMS_AccreditationContactController {
     public List<AccountWrapper> accountWrapper {get; set;}
     public decimal ownership {get; set;}
     public boolean blockOwnershipEdit {get; set;}
+    public boolean isCorrection {get; set;}
     private Id AcPersonRt;
     private Id AcCompanyRt;
 
@@ -79,12 +80,12 @@ public with sharing class AMS_AccreditationContactController {
                         if(accList.get(ac.Company__c) != null)
                         {
                             System.debug('********************* company found: '+accList.get(ac.Company__c));
-                            accWrapper = new AccountWrapper(ac, accList.get(ac.Company__c), accList.get(ac.Company__c).Id);
+                            accWrapper = new AccountWrapper(ac, accList.get(ac.Company__c), accList.get(ac.Company__c).Id, false);
                         }
                         else
                         {
                             System.debug('********************* no Company__c');
-                            accWrapper = new AccountWrapper(ac, new Account(), '');
+                            accWrapper = new AccountWrapper(ac, new Account(), '', false);
                         }
                         accountWrapper.add(accWrapper); 
                     }
@@ -101,6 +102,8 @@ public with sharing class AMS_AccreditationContactController {
 
         blockOwnershipEdit = aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
                              aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES;
+
+        isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
     }
     
     public void addEmptyRow()
@@ -133,7 +136,7 @@ public with sharing class AMS_AccreditationContactController {
     
     public void addEmptyCompanyRow()
     {
-        this.accountWrapper.add(new AccountWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcCompanyRt, Last_Name__c = '-', Phone__c = '-'), new Account(), ''));
+        this.accountWrapper.add(new AccountWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcCompanyRt, Last_Name__c = '-', Phone__c = '-'), new Account(), '', true));
     }
     
     public PageReference removeFromAcList()
@@ -614,7 +617,6 @@ public with sharing class AMS_AccreditationContactController {
     
     public void removeOwnership()
     {
-        System.debug('CHECKING CALL!!');
         acWrapper.get(toNullify).ac.Financial_Interest__c = 0;
     }
     
@@ -688,8 +690,9 @@ public with sharing class AMS_AccreditationContactController {
         public AMS_Accreditation_Contact__c accountAc {get; set;}
         public String registrationNumber {get; set;}
         public String recordId {get; set;}
+        public boolean isNewRecord {get; set;}
         
-        public AccountWrapper(AMS_Accreditation_Contact__c accountAc, Account acc, String accountRecordId)
+        public AccountWrapper(AMS_Accreditation_Contact__c accountAc, Account acc, String accountRecordId, boolean isNewRecord)
         {
             this.recordId = accountRecordId;
             this.account = acc;
@@ -703,6 +706,7 @@ public with sharing class AMS_AccreditationContactController {
             {
                 this.account.Legal_Name__c = this.AccountAc.Name;
             }
+            this.isNewRecord=isNewRecord;
         }
     }
 }

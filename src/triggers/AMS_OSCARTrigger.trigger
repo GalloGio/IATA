@@ -107,6 +107,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
     } //TD: Because I added "AFTER UPDATE", I added here the isBefore, which was missing
     else if (Trigger.isBefore && Trigger.isUpdate) {
 
+        Set<Id> oscarAccountIds = new Set<Id>();
+
+        for (AMS_OSCAR__c oscar : Trigger.new)
+            oscarAccountIds.add(oscar.Account__c);
+
+        Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(oscarAccountIds);
+
         AMS_OSCAR_JSONHelper helper = null;
         boolean resultLoad = false;
 
@@ -128,7 +135,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
             if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
-                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
+                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, accountHierarchyRelationships);
 
 
             processFieldsTracking(oldOSCAR, updatedOscar);
@@ -166,7 +173,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     }
 
-    private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
+    private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
         if (updatedOscar.recordTypeID == newRT){
@@ -220,9 +227,16 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 // THen move the owners
                 Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
-                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, new Set<Id>{updatedOscar.Account__c});
-                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts);
+                //Need to apply change of ownership to all the accounts in herarchy
+                Set<Id> allHierarchyAccountIds = new Set<Id>();
+                for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
+                    allHierarchyAccountIds.add(rel.Parent_Account__c);
+                    allHierarchyAccountIds.add(rel.Child_Account__c);
+                }
+
+                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
             }
 
         }
