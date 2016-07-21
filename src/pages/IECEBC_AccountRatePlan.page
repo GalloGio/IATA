@@ -20,7 +20,8 @@
 						<ul class="nav tabs">
 							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
-							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li> 
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
 						</ul>
 						
@@ -113,141 +114,16 @@
 											</ul>
 										</apex:form>
 										
-										<div class="group-container payment-info">
-											
-											<h3 class="group-title">Payment information</h3>
-											<div class="box box-payment-type js-payment-method">
-												<div class="field-group radio inline">
-													<div class="radio-box">
-														<div class="custom-user-input radio">
-															<input class="user-input radio" type="radio" name="pay-by" id="pay-by-credit-card" value="creditCard" checked=""/>
-															<label class="custom-radio" for="pay-by-credit-card"><i class="icon"></i></label>
-														</div>
-														<label class="input-label" for="pay-by-credit-card">Credit card</label>
-													</div>
-													<div class="radio-box">
-														<div class="custom-user-input radio">
-															<input class="user-input radio" type="radio" name="pay-by" id="pay-by-ich" value="ich"/>
-															<label class="custom-radio" for="pay-by-ich"><i class="icon"></i></label>
-														</div>
-														<label class="input-label" for="pay-by-ich">ICH</label>
-													</div>
-												</div>
-											</div>
-											
-											<div class="payment-method-container">
-												
-												<table class="data-table table-saved-cards js-card-data-table">
-													<tbody><tr class="heading">
-														<th class="card">Saved cards</th>
-														<th class="name">Name printed on card</th>
-														<th class="date" colspan="2">Expires</th>
-													</tr>
-													<tr class="item is-selected">
-														<td class="card">
-															<div class="field-group radio">
-																<div class="radio-box">
-																	<div class="custom-user-input radio">
-																		<input class="user-input radio" type="radio" name="pay-by-card-type" id="pay-by-credit-card-saved-card-1" checked=""/>
-																		<label class="custom-radio" for="pay-by-credit-card-saved-card-1"><i class="icon"></i></label>
-																	</div>
-																	<label class="input-label" for="pay-by-credit-card-saved-card-1">
-																		<span class="card-image">
-																			<img src="assets/img/components/icons/credit-card/Visa.png" alt="VISA" />
-																		</span>
-																		<span class="card-name">
-																			<strong>VISA</strong>
-																			<span class="ending-number">ending in 1234</span>
-																		</span>
-																	</label>
-																</div>
-															</div>
-														</td>
-														<td class="name">
-															Jonathan Doelipsum
-														</td>
-														<td class="date">
-															04/18
-														</td>
-														<td class="action">
-															<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
-														</td>
-													</tr>
-													<tr class="item">
-														<td class="card">
-															<div class="field-group radio">
-																<div class="radio-box">
-																	<div class="custom-user-input radio">
-																		<input class="user-input radio" type="radio" name="pay-by-card-type" id="pay-by-credit-card-saved-card-2" />
-																		<label class="custom-radio" for="pay-by-credit-card-saved-card-2"><i class="icon"></i></label>
-																	</div>
-																	<label class="input-label" for="pay-by-credit-card-saved-card-2">
-																		<span class="card-image">
-																			<img src="assets/img/components/icons/credit-card/MasterCard.png" alt="MASTERCARD" />
-																		</span>
-																		<span class="card-name">
-																			<strong>MASTERCARD</strong>
-																			<span class="ending-number">ending in 5148</span>
-																		</span>
-																	</label>
-																</div>
-															</div>
-														</td>
-														<td class="name">
-															Milli Max
-														</td>
-														<td class="date">
-															03/17
-														</td>
-														<td class="action">
-															<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
-														</td>
-													</tr>
-													<tr class="item">
-														<td class="card">
-															<div class="field-group radio">
-																<div class="radio-box">
-																	<div class="custom-user-input radio">
-																		<input class="user-input radio" type="radio" name="pay-by-card-type" id="pay-by-credit-card-saved-card-3" />
-																		<label class="custom-radio" for="pay-by-credit-card-saved-card-3"><i class="icon"></i></label>
-																	</div>
-																	<label class="input-label" for="pay-by-credit-card-saved-card-3">
-																		<span class="card-image">
-																			<img src="assets/img/components/icons/credit-card/AmericanExpress.png" alt="AMEX" />
-																		</span>
-																		<span class="card-name">
-																			<strong>AMEX</strong>
-																			<span class="ending-number">ending in 8957 <i class="text-error">(expired)</i></span>
-																		</span>
-																	</label>
-																</div>
-															</div>
-														</td>
-														<td class="name">
-															Jonathan Doelipsum
-														</td>
-														<td class="date">
-															04/18
-														</td>
-														<td class="action">
-															<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
-														</td>
-													</tr>
-												</tbody></table>
-												
-												<div class="footer table-actions">
-													<a class="icon plus js-open-modal" data-target-modal="#js-modal-add-credit-card" href="#">Add card</a>
-												</div>
-											</div>
-										</div>
-									</div>
+										
+										<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
+										
+                                    </div>
 									
 									
 									<div class="columns sub-container payment-confirmation">
 										<div class="is-sticky-confirmation" style="">
 											<div class="wrapper">
 												<apex:form id="paymentConfirmationForm">
-													<apex:actionRegion id="paymentConfirmationAr" rendered="{!showPaymentConfirmation}">
 														<h2 class="section-title">Payment Confirmation</h2>
 														<div class="table-container">
 															
@@ -255,6 +131,7 @@
 																<tbody>
 																	<tr class="item">
 																		<th>
+																		<apex:outputPanel id="paymentInfoShow" rendered="{!showPaymentConfirmation}">
 																			<strong>{!selectedProductRatePlanCharge.Name}</strong> subscription
 																			<div class="start-end-date">
 																				<strong>Start date:</strong>
@@ -262,7 +139,12 @@
 																				<strong>End date:</strong>
 																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveEndDate__c}" /></apex:outputText>
 																			</div>
+																		</apex:outputPanel>
+                                                                        <apex:outputPanel id="paymentInfoNoShow" rendered="{!!showPaymentConfirmation}">
+																			<strong>Please select the upgrade plan!</strong>
+                                                                        </apex:outputPanel>
 																		</th>
+                                                                            
 																		<td class="price top">
 																			<strong>
 																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!newSubscriptionProductCharge.Zuora__Price__c}" /></apex:outputText>
@@ -282,11 +164,10 @@
 														</div>
 														<div class="footer-actions">
 															<ul class="list actions">
-																<li><a class="text-link" href="#">Cancel</a></li>
+																<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Cancel</a></li>
 																<li><a class="button" href="#">Submit payment</a></li>
 															</ul>
 														</div>
-													</apex:actionRegion>
 												</apex:form>
 											</div>
 										</div>
