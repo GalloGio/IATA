@@ -7,6 +7,24 @@ public with sharing class vfIECAppHeaderComponent {
 	public Boolean bShowSavedFilters					{get; set;}
 	private static DateTime dtLastUpdate				{get; set;}
 	
+    public String sProductCode {
+        get { 
+            if (sProductCode == null) {
+                Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
+                if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
+        			sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
+                    storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
+                } else if (storedIECProductCode != null) {
+                    sProductCode = (String)storedIECProductCode.getValue();
+                }
+                
+                ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
+            }
+            return sProductCode;
+        }
+        private set;
+    }
+    
 	public DateTime dtDBLastUpdate {
 		get {
 			
