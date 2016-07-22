@@ -205,13 +205,15 @@ public class trgHndlrIECInvoice_tst {
         oInvoice = IECTestUtil.createSampleInvoice(lstBillingAccount.get(0), Date.today(), 113.0);
         insert oInvoice;
 
-        Test.stopTest();
+        //Test.stopTest();
 
         IECTestUtil.InvoiceTestOrigin = '';
         
         
         // 001: Make sure that the invoice item has been downloaded and linked properly
         List<Invoice_Item__c> lstInvoiceItem = [SELECT Product__c, Subscription_Zuora_ID__c, Subscription_Product_Charge_Zuora_ID__c FROM Invoice_Item__c WHERE Invoice__c = :oInvoice.Id];
+        
+ Test.stopTest();
         system.assertNotEquals(lstInvoiceItem.size(), 0);
         system.assertEquals(lstInvoiceItem.get(0).Product__c, oProduct.Id);
         system.assertEquals(lstInvoiceItem.get(0).Subscription_Zuora_ID__c, oSubscription.Zuora__External_Id__c);

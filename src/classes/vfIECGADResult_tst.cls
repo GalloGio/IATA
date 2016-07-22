@@ -184,7 +184,7 @@ public with sharing class vfIECGADResult_tst {
 	    		
 	    		system.assertEquals(oAppFilters.Id, pgCont.sIECApplicationFiltersID, 'The app filter Id should be loaded correctly');
 	    		system.assertEquals(oAppFilters.Id, pgCont.oApplicationFilters.Id, 'The app filter should be loaded correctly');
-	    		system.assertEquals(2, pgCont.lstAgencies == null ? 0 : pgCont.lstAgencies.size(), '2 agencies should be found');
+	    		system.assertEquals(2, pgCont.lstAgencies == null ? 0 : pgCont.lstAgencies.size(), '2 agencies should be found' + (pgCont.lstAgencies == null ? 0 : pgCont.lstAgencies.size()) + '--' + pgCont.lstAgencies);
 	    		system.assertEquals(2, pgCont.iTotalResult, 'The total result should be appropriated');
 	    		for (GDP_Products_Account_View__c agency : pgCont.lstAgencies)
 	    			system.assert(agency.Id == oGDPAccount1.ID || agency.Id == oGDPAccount2.ID, 'agency1 and agency2 should be found (agency3 is terminated)');
