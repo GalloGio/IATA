@@ -45,9 +45,9 @@ private class IEC_UpdateAddressControllerTest {
         //*** cover methods "onPageLoad" logged as first time customer i.e. the rest of method
         //*** cover methods "buildShipToAddressPicklist", "changeShipToAddress", "copyAddress"
         cls = new IEC_UpdateAddressController();
-        Test.startTest();
+Test.startTest();
             cls.onPageLoad();
-        Test.stopTest();
+        //Test.stopTest();
         
         //system.assert([select count() from Location__c] == 3, '# Locations should be 3');
         system.assert(cls.dtoBillToAddress.locationId != null, 'Wrong default Bill To location');
@@ -116,7 +116,7 @@ private class IEC_UpdateAddressControllerTest {
         cls.saveBillToAddress();
         system.assert(ApexPages.getMessages().size() == errCount + 0, 'Should have ' + (errCount + 0) + ' messages: ' + ApexPages.getMessages());
 
-        Test.startTest();  //*** bypass limit of # queries
+        //Test.startTest();  //*** bypass limit of # queries
             //*** cover methods "isAddressModified" and "saveBillToAddress" - case of only changes on location
             cls.dtoBillToAddress.phone = '999-999-9999';
             cls.saveBillToAddress();
@@ -128,7 +128,7 @@ private class IEC_UpdateAddressControllerTest {
             cls.saveBillToAddress();
             system.assert([select count() from IECAddress__c] == addressCount + 1, 'Should have ' + (addressCount + 1) + ' addresses');
             system.assert([select count() from Location__c where Id = :cls.dtoBillToAddress.locationId and ZipCode__c = :cls.dtoBillToAddress.postalCode] == 1, 'Location should have new address');
-            
+Test.stopTest();            
             //*** cover method "saveBillToAddress" - case of different country/province and new location
             locationCount = [select count() from Location__c];
             idLocationProvQC = cls.dtoBillToAddress.locationId;
@@ -155,7 +155,7 @@ private class IEC_UpdateAddressControllerTest {
             List<String> lstAddressAuto = IEC_UpdateAddressController.findAddresses(cls.dtoBillToAddress.street1, null, null);
             cls.autocompleteFullAddress = lstAddressAuto[0];
             cls.getBillToAutoCompleteAddress();
-        Test.stopTest();
+        //Test.stopTest();
     }
 } //*** end of "testBillToMethods"
 

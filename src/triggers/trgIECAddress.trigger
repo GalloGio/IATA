@@ -4,12 +4,17 @@
   * Version: 1.0
   * History: 
   */
-trigger trgIECAddress on IECAddress__c (before insert, after update) {
+trigger trgIECAddress on IECAddress__c (after update) {
 
-	if(Trigger.isInsert && Trigger.isBefore) {
-		trgHndlrIECAddress.OnBeforeInsert(Trigger.new);
-	}
-	else if(Trigger.isUpdate && Trigger.isAfter) {
-		trgHndlrIECAddress.OnAfterUpdate(Trigger.new, Trigger.newMap);
-	}
+    /* Commented by Samy Saied (2016-02-29) for using the new Location model instead of only iecaddress
+    if(Trigger.isInsert && Trigger.isBefore) {
+        //trgHndlrIECAddress.OnBeforeInsert(Trigger.new);
+    }
+    else */
+    if(Trigger.isUpdate && Trigger.isAfter) {
+        //On demand test run
+        if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger IECAddress') != 1) return;
+        
+        trgHndlrIECAddress.OnAfterUpdate(Trigger.new, Trigger.newMap);
+    }
 }
