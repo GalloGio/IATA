@@ -128,7 +128,7 @@ Test.startTest();
             cls.saveBillToAddress();
             system.assert([select count() from IECAddress__c] == addressCount + 1, 'Should have ' + (addressCount + 1) + ' addresses');
             system.assert([select count() from Location__c where Id = :cls.dtoBillToAddress.locationId and ZipCode__c = :cls.dtoBillToAddress.postalCode] == 1, 'Location should have new address');
-Test.stopTest();            
+      
             //*** cover method "saveBillToAddress" - case of different country/province and new location
             locationCount = [select count() from Location__c];
             idLocationProvQC = cls.dtoBillToAddress.locationId;
@@ -145,6 +145,7 @@ Test.stopTest();
             idLocationProvON = cls.dtoBillToAddress.locationId;
             cls.dtoBillToAddress.stateCode = 'CA-QC';
             cls.saveBillToAddress();
+Test.stopTest();                  
             system.assert([select count() from IECAddress__c] == addressCount + 2, 'Should have ' + (addressCount + 2) + ' addresses');
             system.assert([select count() from Location__c] == locationCount + 1, 'Should have ' + (locationCount + 1) + ' locations');
             system.assert(idLocationProvQC == cls.dtoBillToAddress.locationId, 'Should have 2 locations' + 'QC ' + idLocationProvQC + ' ON ' + idLocationProvON + ' DTL ' + cls.dtoBillToAddress.locationId);
@@ -196,6 +197,7 @@ Test.stopTest();
     system.runAs(usrPortal)
     {
         cls = new IEC_UpdateAddressController();
+Test.startTest();  //*** bypass limit of # queries
         cls.onPageLoad();
 
         //*** cover method "changeShipToCountry"
@@ -237,7 +239,7 @@ Test.stopTest();
         system.assert(cls.currentShipToLocationId != idLocationProvQC, 'Default ship to should be changed');
     }
     
-    Test.startTest();  //*** bypass limit of # queries
+    
         locationShipTo = new Location__c(Contact__c=conPortal.Id, Address__c=lstAddress[0].Id, Active__c=false, Type__c=IECConstants.SHIPTO);
         insert locationShipTo;
         
@@ -295,6 +297,7 @@ Test.stopTest();
             idLocationProvON = cls.dtoShipToAddress.locationId;
             cls.dtoShipToAddress.stateCode = 'CA-QC';
             cls.saveShipToAddress();
+Test.stopTest();
             system.assert([select count() from IECAddress__c] == addressCount + 2, 'Should have ' + (addressCount + 1) + ' addresses');
             system.assert([select count() from Location__c] == locationCount + 1, 'Should have ' + (locationCount + 1) + ' locations');
             system.assert(idLocationProvQC == cls.dtoShipToAddress.locationId, 'Should have 2 locations' + 'QC ' + idLocationProvQC + ' ON ' + idLocationProvON + ' DTL ' + cls.dtoShipToAddress.locationId);
@@ -321,7 +324,7 @@ Test.stopTest();
             cls.autocompleteFullAddress = lstAddressAuto[0];
             cls.getShipToAutoCompleteAddress();
         }
-    Test.stopTest();
+    
 } //*** end of "testShipToMethods"
 
 
