@@ -4736,6 +4736,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger only</fullName>
