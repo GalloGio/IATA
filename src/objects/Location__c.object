@@ -619,7 +619,7 @@
     </validationRules>
     <validationRules>
         <fullName>No_Change_On_SAP_Id</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Forbid entry/update in SAP Id</description>
         <errorConditionFormula>OR(AND(NOT(OR(ISPICKVAL(Type__c, &quot;Sold To&quot;)
             , ISPICKVAL(Type__c, &quot;Bill To&quot;)

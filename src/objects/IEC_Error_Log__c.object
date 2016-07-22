@@ -69,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Data__c</fullName>
+        <description>IEC - data that caused error</description>
         <externalId>false</externalId>
         <label>Input Data</label>
         <length>32768</length>

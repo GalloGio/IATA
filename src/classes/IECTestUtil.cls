@@ -4,8 +4,7 @@
   * Version: 1.0
   * History: 
   */
-//*** (Thai) change from "with" to "without" to fix error "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" on creating of a state in method "CreateSampleIECAddress"
-public without sharing class IECTestUtil {
+public with sharing class IECTestUtil {
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -192,67 +191,7 @@ public without sharing class IECTestUtil {
             , User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS
         );
     }
-  
-    public static User createSampleGuestUserAndLoginOlder() {
-        return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
-    }
-    public static User createSampleGuestUserAndLoginOLD(String ClientType) {
-        // insert account
-        Account newAccount = createSampleAccount(ClientType);
-        insert newAccount;
-
-        // create Bill To contact info
-        Contact newContact = new Contact();
-        newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
-        newContact.AccountId = newAccount.Id;
-        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
-        newContact.FirstName = 'Test';
-        newContact.LastName = 'User';
-        newContact.Title = 'TestTitle';
-        newContact.Email = 'testIECGuest@test.iata.org';
-        newContact.Phone = '514123345';
-        newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
-        insert newContact;
-        
-        Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
-        insert oBillingAccount;        
-
-        User u = new User(
-            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
-            , Email = 'testIECGuest@test.iata.org'
-            , emailencodingkey = 'UTF-8'
-            , Alias = IECUserManager.createAliasFromName(newContact.LastName)
-            , FirstName = newContact.FirstName
-            , LastName = newContact.LastName
-            , LocaleSidKey = 'en_US'
-            , CommunityNickname = 'testIECGuest@iata.org'
-            , ProfileId = IECUserManager.getProfileIdForIECUser()
-            , LanguageLocaleKey = 'en_US'
-            , timezonesidkey = 'America/New_York'
-            , ContactId = newContact.Id
-            , IsActive = true
-            , ReceivesAdminInfoEmails = false
-            , ReceivesInfoEmails = false
-        );
-        insert u;
-        trgPortalUserAfterInserUpdate = true;
-        String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
-      //  trgPortalUserAfterInserUpdate = false;
-        /*
-        // assign Permission Set to provide access to objects
-        Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
-        if (permissionSetId != null) {
-            PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
-            oPermissionSetAssignment.AssigneeId = userId;
-            oPermissionSetAssignment.PermissionSetId = permissionSetId;
-            insert oPermissionSetAssignment;
-        }
-        */
-        
-        IECUserManager.login(u.Username, 'testpassword', null);
-           
-        return u;
-    }
+    
     public static User createSampleGuestUserAndLogin() {
         return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
     }
@@ -712,7 +651,7 @@ public without sharing class IECTestUtil {
         catch (Exception e)
         {
             country = new IATA_ISO_Country__c(Name='Canada', ISO_Code__c='CA', ISO_Code_Numeric__c=1);
-            upsert country;
+            insert country;
         }
         //*** get ISO state
         IATA_ISO_State__c state;
@@ -723,11 +662,11 @@ public without sharing class IECTestUtil {
         catch (Exception e)
         {
             state = new IATA_ISO_State__c(IATA_ISO_Country__c=country.Id, Name='Quebec', ISO_Code__c='QC');
-            upsert state;
+            insert state;
         }
-        //*** create address -> also populate unused fields Country__c, State__c and Address_Type__c for "just in case"
+        //*** create address -> also populate unused fields Country__c and State__c for "just in case"
         IECAddress__c address = new IECAddress__c(Street__c='123 main street', City__c='Montreal', ISO_Country__c=country.Id, ISO_State__c=state.Id, ZipCode__c='h1q2w3'
-                                                , Country__c=country.ISO_Code__c, State__c=state.ISO_Code__c, Address_Type__c='Test' + system.now());
+                                                , Country__c=country.ISO_Code__c, State__c=state.ISO_Code__c);
         insert address;
         //*** create location
         Location__c location = new Location__c(Account__c=oContact.AccountId, Contact__c=oContact.Id, Address__c=address.Id, Type__c=sType, Active__c=true);

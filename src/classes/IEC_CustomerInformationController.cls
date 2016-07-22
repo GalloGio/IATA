@@ -333,13 +333,6 @@ global class IEC_CustomerInformationController extends IEC_PageController
 					update billingLocations[0];
 
 					//Create Bill To Location 
-
-					System.debug('billingAddress::'+billingAddress);
-					System.debug('loggedCustomer::'+loggedCustomer);
-					System.debug('vfOrder::'+vfOrder);
-					System.debug('vfOrder.billToAddress::'+vfOrder.billToAddress);
-
-
 					billingLocation = Location_Svc.createLocation(billingAddress.Id, loggedCustomer.sfContact, vfOrder.billToAddress.vatNumber, IECConstants.BILLTO);
 
 					//update Contact Default BillTo & Order BillTo

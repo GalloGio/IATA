@@ -47,7 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Contain releases (versions of renewal) for event subscriptions</description>
+    <description>IEC - Contain releases (versions of renewal) for event subscriptions</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -58,7 +58,7 @@
     <enableStreamingApi>false</enableStreamingApi>
     <fields>
         <fullName>Customer_Type__c</fullName>
-        <description>Type of customer to query subscribed customers for renewal</description>
+        <description>IEC - Type of customer to query subscribed customers for renewal</description>
         <externalId>false</externalId>
         <label>Customer Type</label>
         <picklist>
@@ -115,7 +115,7 @@
     <fields>
         <fullName>Last_Version__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Last version of the selected product</description>
+        <description>IEC - Latest version of product subscribed to auto-renew</description>
         <externalId>false</externalId>
         <label>Product Last Version</label>
         <referenceTo>Product2</referenceTo>
@@ -127,6 +127,7 @@
     </fields>
     <fields>
         <fullName>Material_Number__c</fullName>
+        <description>IEC - SAP material number of the product subscribed by customer</description>
         <externalId>false</externalId>
         <formula>Left( Product__r.SAP_Material_Number__c,4 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -138,6 +139,7 @@
     </fields>
     <fields>
         <fullName>Nb_Customer__c</fullName>
+        <description>IEC - Number of customers eligible to auto-renew</description>
         <externalId>false</externalId>
         <label># Customers</label>
         <precision>6</precision>
@@ -149,6 +151,7 @@
     </fields>
     <fields>
         <fullName>Processing_Message__c</fullName>
+        <description>IEC - Message to informing user the processing step</description>
         <externalId>false</externalId>
         <formula>IF( Sales_Amout__c&gt;0,&apos;&apos;,&apos;BATCH JOB IN PROGRESS TO GENERATE ORDERS&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -160,6 +163,7 @@
     </fields>
     <fields>
         <fullName>Processing_Status__c</fullName>
+        <description>IEC - Message to informing user the processing step</description>
         <externalId>false</externalId>
         <label>Processing Status</label>
         <length>255</length>
@@ -170,6 +174,7 @@
     </fields>
     <fields>
         <fullName>Product_Last_Version__c</fullName>
+        <description>IEC - SAP material number of the latest version of product subscribed to auto-renew</description>
         <externalId>false</externalId>
         <formula>Last_Version__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -181,6 +186,7 @@
     </fields>
     <fields>
         <fullName>Product_Number__c</fullName>
+        <description>IEC - SAP material number of the replacement product</description>
         <externalId>false</externalId>
         <formula>IF(ISBLANK( Swapped_Product__c ),  Last_Version__r.SAP_Material_Number__c ,  Swapped_Product__r.SAP_Material_Number__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -193,7 +199,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Subscribed product to renew</description>
+        <description>IEC - Subscribed product to auto-renew</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>
@@ -206,6 +212,7 @@
     <fields>
         <fullName>Released__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>IEC - Indicate if event for auto-renew is released</description>
         <externalId>false</externalId>
         <label>Released</label>
         <trackTrending>false</trackTrending>
@@ -213,6 +220,7 @@
     </fields>
     <fields>
         <fullName>Sales_Amout__c</fullName>
+        <description>IEC - Sales amount for the event</description>
         <externalId>false</externalId>
         <label>Sales Amount</label>
         <precision>18</precision>
@@ -223,6 +231,7 @@
     </fields>
     <fields>
         <fullName>Sales_Quantity__c</fullName>
+        <description>IEC - Total quantity needed for the event</description>
         <externalId>false</externalId>
         <label>Sales Quantity</label>
         <precision>8</precision>
@@ -235,7 +244,7 @@
     <fields>
         <fullName>Swapped_Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>The replacement product for renewal if applicable</description>
+        <description>IEC - Product that replaces the product subscribed to auto-renew</description>
         <externalId>false</externalId>
         <label>Swapped Product</label>
         <referenceTo>Product2</referenceTo>

@@ -183,6 +183,7 @@
     </fields>
     <fields>
         <fullName>Campaign_Link__c</fullName>
+        <description>IEC - URL to include in email for tracking purpose</description>
         <externalId>false</externalId>
         <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300)) + Id</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -268,6 +269,7 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
     </fields>
     <fields>
         <fullName>Generate_Members_Completed_On__c</fullName>
+        <description>IEC - Timestamp indicating when generation of campaign members is complete</description>
         <externalId>false</externalId>
         <label>Generate Members Completed On</label>
         <required>false</required>
@@ -346,6 +348,7 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
     </fields>
     <fields>
         <fullName>Renewal_notice_generated__c</fullName>
+        <description>IEC - Timestamp indicating when generation of renewal notices is complete</description>
         <externalId>false</externalId>
         <label>Renewal notice generated</label>
         <required>false</required>

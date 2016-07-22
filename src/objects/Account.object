@@ -5617,6 +5617,7 @@ V - Co-operative</inlineHelpText>
     </fields>
     <fields>
         <fullName>Customer_Type__c</fullName>
+        <description>IEC - type of customer</description>
         <externalId>false</externalId>
         <label>Ecommerce Customer Type</label>
         <picklist>
@@ -6892,6 +6893,7 @@ V - Co-operative</inlineHelpText>
     </fields>
     <fields>
         <fullName>Default_Payment_Type__c</fullName>
+        <description>IEC - default payment type</description>
         <externalId>false</externalId>
         <label>Default Payment Type</label>
         <picklist>
@@ -8950,6 +8952,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Non_Members_Sub_Category__c</fullName>
+        <description>IEC - Category of customer when type of customer is non-member</description>
         <externalId>false</externalId>
         <label>Non Members Sub Category</label>
         <picklist>
@@ -9209,7 +9212,7 @@ J-Joint Vent</inlineHelpText>
                 <fullName>Wholesaler of stamps, coins, &amp; paper money</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -9436,6 +9439,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Payment_Term__c</fullName>
+        <description>IEC - SAP payment term code to use when creates contracts</description>
         <externalId>false</externalId>
         <label>Payment Terms</label>
         <length>4</length>
@@ -9533,6 +9537,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Price_Group__c</fullName>
+        <description>IEC - SAP price group granted to customer</description>
         <externalId>false</externalId>
         <label>Price Group</label>
         <length>2</length>
@@ -9854,6 +9859,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     </fields>
     <fields>
         <fullName>Sales_Office__c</fullName>
+        <description>IEC - SAP sales office code</description>
         <externalId>false</externalId>
         <label>Sales Office</label>
         <length>4</length>
@@ -11686,6 +11692,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fields>
         <fullName>SoldTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - Reference to “Locations” object to facilitate code manipulation</description>
         <externalId>false</externalId>
         <label>SoldTo Location</label>
         <referenceTo>Location__c</referenceTo>

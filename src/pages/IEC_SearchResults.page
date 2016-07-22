@@ -133,8 +133,11 @@
 							<apex:outputPanel styleClass="main-container" layout="block" rendered="{!searchToken==null}">
 								<div class="alert error">Please specify search token</div>							
 							</apex:outputPanel>
+							<apex:outputPanel styleClass="main-container" layout="block" rendered="{!len(searchToken) <2}">
+								<div class="alert error">You should specify 2 characters for searching</div>							
+							</apex:outputPanel>
 
-							<apex:outputPanel styleClass="main-container" rendered="{!searchToken!=null}" id="main_container">
+							<apex:outputPanel styleClass="main-container" rendered="{!AND(searchToken!=null,len(searchToken) >=2)}" id="main_container">
 								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!products.size == 0}">
 									NO PRODUCT FOUND
 								</apex:outputPanel>

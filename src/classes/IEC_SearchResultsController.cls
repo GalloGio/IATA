@@ -48,7 +48,9 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
 	public IEC_SearchResultsController() 
 	{
 		//-- Search Token 
-        searchToken = ApexPages.currentPage().getParameters().get('site-search'); 
+        searchToken = ApexPages.currentPage().getParameters().get('site-search');
+        if (!String.isBlank(searchToken))
+            searchToken = searchToken.trim();
 
         //-- Product Sorting picklist
         sortingFields = Utility.getFieldSetSelectOptions('Product2', 'Ecoomerce_Sort_By', false);
@@ -60,7 +62,7 @@ public with sharing class IEC_SearchResultsController extends IEC_PageController
      **************************************************************************************************************/
 	public PageReference onLoadAction()
     {
-        if(String.isBlank(searchToken)) return null;
+        if(String.isBlank(searchToken) || searchToken.length() < 2) return null;
 
 
         //-- Query products to be displayed

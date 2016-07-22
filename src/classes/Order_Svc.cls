@@ -3265,18 +3265,21 @@ public without sharing class Order_Svc
     {
         if (mapOrderId_OrderNumber != null && mapOrderId_OrderNumber.size() > 0)
         {
-            List<Order> lstOrder = [select Id, (select id, SAP_Contract_Number__c from OrderItems) from Order where Id in :mapOrderId_OrderNumber.keySet() and SAP_Order_Number__c = null];
+            List<Order> lstOrder = [select Id, (select id, SAP_Contract_Number__c from OrderItems where SAP_Contract_Number__c != null) from Order where Id in :mapOrderId_OrderNumber.keySet() and SAP_Order_Number__c = null];
             if (lstOrder.size() > 0)
             {
                 List<Order> toUpdate = new List<Order>();
                 for (Order o : lstOrder){
                     o.SAP_Order_Number__c = mapOrderId_OrderNumber.get(o.Id);
-                    //Verified if the SAP order number is not a orderItem contract number before update the Order
-                    if(o.OrderItems != null && o.OrderItems.size() > 0){
-                        for(OrderItem oi : o.OrderItems){
-                            if(!o.SAP_Order_Number__c.contains(oi.SAP_Contract_Number__c)){
-                                toUpdate.add(o);
-                                break;
+                    if (!String.isBlank(o.SAP_Order_Number__c)) {
+                        toUpdate.add(o);
+                        //Verified if the SAP order number is not a orderItem contract number before update the Order
+                        if(o.OrderItems != null && o.OrderItems.size() > 0){
+                            for(OrderItem oi : o.OrderItems){
+                                if(o.SAP_Order_Number__c.contains(oi.SAP_Contract_Number__c)){
+                                    toUpdate.remove(toUpdate.size() - 1);
+                                    break;
+                                }
                             }
                         }
                     }

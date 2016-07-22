@@ -1812,8 +1812,8 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
     <fields>
         <fullName>Is_Non_Compliant__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>IEC - Indicate if country is non-compliant with the IEC products displayed on the portal</description>
         <externalId>false</externalId>
-        <inlineHelpText>Used to determine a specific country is non-compliant with the IEC products displayed on the portal</inlineHelpText>
         <label>Is Non Compliant</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
