@@ -205,38 +205,54 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
-                // If the checkbox is set create a COR change code.
-                if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
-                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
-                    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-                    changeCode.name = 'COR';
-                    changeCode.reasonCode = '91';
-                    changeCode.memoText = 'Correction';
-                    changeCode.reasonDesc  = 'ACCREDITED';
-                    changeCode.status  = '9';
+                Savepoint sp = Database.setSavepoint();
 
-                    Account acct = new Account(Id = updatedOscar.Account__c);
-                    AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                try {
+                    // If the checkbox is set create a COR change code.
+                    if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'COR';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = 'Correction';
+                        changeCode.reasonDesc  = 'ACCREDITED';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
+
+                    // Regardless the changecode is generated or not, move data to Master Data
+                    // First move the account
+                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
+                    AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar});
+
+                    // THen move the owners
+                    Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+                    //Need to apply change of ownership to all the accounts in herarchy
+                    Set<Id> allHierarchyAccountIds = new Set<Id>();
+                    for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
+                        allHierarchyAccountIds.add(rel.Parent_Account__c);
+                        allHierarchyAccountIds.add(rel.Child_Account__c);
+                    }
+
+                    stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                    system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+
+
+                    //verify ownership alignment
+                    if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
+                        throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
+
+                } catch (Exception ex) {
+                    System.debug('Exception: ' + ex);
+                    Database.rollback(sp);
+                    throw ex;
                 }
 
-                // Regardless the changecode is generated or not, move data to Master Data
-                // First move the account
-                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
-                AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar});
-
-                // THen move the owners
-                Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
-                //Need to apply change of ownership to all the accounts in herarchy
-                Set<Id> allHierarchyAccountIds = new Set<Id>();
-                for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
-                    allHierarchyAccountIds.add(rel.Parent_Account__c);
-                    allHierarchyAccountIds.add(rel.Child_Account__c);
-                }
-
-                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
-                system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
             }
 
         }
