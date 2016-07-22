@@ -94,12 +94,10 @@ public without sharing class IECUserManager {
 
         // check if SalesForce is redirecting the customer to the Change password page
       if(firstLogin ){
-          
             return pr;
 
         }  
         else if (pr != null) {
-            
             // get the contact that has just logged in
             Contact c = null;
             Id contactId = getContactIdFromUsername(sUsername);
@@ -329,7 +327,7 @@ public without sharing class IECUserManager {
     }
     
     /**
-     * Returns an Account object by Account Id 
+     * Returns an Account object by Account Id
      */
     public static Account getAccountById(Id accountId) {
         if (accountId != null) {
@@ -509,11 +507,12 @@ public without sharing class IECUserManager {
      */
     public static User getUser(Id userId) {
         if (userId != null) {
-            List<User> listUser = [SELECT UserType, Username, IsActive, AccountId, CompanyName, 
-                                    ContactId, Email, FirstName, Name, LastName, Id 
+           /* List<User> listUser = [SELECT UserType, Username, IsActive, AccountId, CompanyName, 
+                                    ContactId, Email, FirstName, Name, LastName, Id, Portal_User_Frozen__c
                                     FROM User
-                                    WHERE Id = :userId];
-            return listUser.get(0);
+                                    WHERE Id = :userId];*/
+                                    
+            return IECUSerSingleTon.getIECUser(userID);
         }
         else
             return null;

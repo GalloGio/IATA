@@ -166,6 +166,18 @@
                 <fullName>CACEWS</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>CAL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PAL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ASL</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>true</trackHistory>

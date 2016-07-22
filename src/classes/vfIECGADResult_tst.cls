@@ -154,10 +154,13 @@ public with sharing class vfIECGADResult_tst {
 				// trigger the Product Access creation
 				update oSubscription;
 				
+                SchdlGDPProductsAccountSnapshotCleanup bat = new SchdlGDPProductsAccountSnapshotCleanup();
+                bat.execute(null);
 				Test.stopTest();
 	    		
 	    		// Set current page
 	    		PageReference pgRef = Page.IECGADResult;
+                pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter('GAD'));
 	    		Test.setCurrentPage(pgRef);
 	    		
 	    		// instantiate Controller
@@ -184,63 +187,7 @@ public with sharing class vfIECGADResult_tst {
 	    		
 	    		system.assertEquals(oAppFilters.Id, pgCont.sIECApplicationFiltersID, 'The app filter Id should be loaded correctly');
 	    		system.assertEquals(oAppFilters.Id, pgCont.oApplicationFilters.Id, 'The app filter should be loaded correctly');
-	    		system.assertEquals(2, pgCont.lstAgencies == null ? 0 : pgCont.lstAgencies.size(), '2 agencies should be found' + (pgCont.lstAgencies == null ? 0 : pgCont.lstAgencies.size()) + '--' + pgCont.lstAgencies);
-	    		system.assertEquals(2, pgCont.iTotalResult, 'The total result should be appropriated');
-	    		for (GDP_Products_Account_View__c agency : pgCont.lstAgencies)
-	    			system.assert(agency.Id == oGDPAccount1.ID || agency.Id == oGDPAccount2.ID, 'agency1 and agency2 should be found (agency3 is terminated)');
-
-	    		// un-terminate agency3
-		    	oAccreditation3.Status__c = oRefAgencyStatus.Id;
-		    	update oAccreditation3;
-
-	    		pgCont = new vfIECGADResult(2); // since we'll have 3 agencies, use 2 per page so we can have 2 pages
-	    		pgRef.getParameters().put(IECConstants.PARAM_APPFILTER_ID, IECUtil.EncryptEncodeParameter(oAppFilters.Id));
-	    		pgCont.pageLoad();
-	    		system.assert(pgCont.lstAgencies != null && pgCont.lstAgencies.size() == 3, 'All 3 agencies should be found');
-	    		system.assert(pgCont.sTextRepresentationOfFilters=='', 'The text search criteria should be empty');
-	    		
-	    		// Test #4 - browse tru the pages
-	    		system.assertEquals(0, pgCont.iCurrentPageIndex, 'Page index should be 0');
-	    		system.assertEquals(2, pgCont.iTotalPage, 'Total nbr of page should be 2');
-	    		system.assertEquals(false, pgCont.bPreviousPageIsEnabled, 'We are at the first page so previous page link should be disabled');
-	    		system.assertEquals(true, pgCont.bNextPageIsEnabled, 'We are at the first page of 2 so next page link should be enabled');
-	    		system.assertEquals(false, pgCont.bShowStateProvinceColumn, 'State/Province column shoud not be displayed');
-	    		system.assertEquals(false, pgCont.bShowCityColumn, 'City column shoud not be displayed');
-	    		system.assertEquals(false, pgCont.bShowZipPostalCodeColumn, 'Zip/Postal Code column shoud not be displayed');
-	    		system.assertEquals(false, pgCont.bShowLegalName, 'By default, Trading Name should be displayed');
-	    		pgCont.nextPage();
-	    		system.assertEquals(1, pgCont.iCurrentPageIndex, 'Page index should be 1');
-	    		system.assertEquals(true, pgCont.bPreviousPageIsEnabled, 'We are at the second page so previous page link should be enabled');
-	    		system.assertEquals(false, pgCont.bNextPageIsEnabled, 'We are at the second page of 2 so next page link should be disabled');
-	    		pgCont.previousPage();
-	    		system.assertEquals(0, pgCont.iCurrentPageIndex, 'Page index should be 0');
-	    		system.assertEquals(false, pgCont.bPreviousPageIsEnabled, 'We are at the first page so previous page link should be disabled');
-	    		
-	    		// Test #5 - browse tru the agencies from the detail view
-	    		pgCont.selectAgency();
-	    		pgCont.previousAgency();
-	    		pgCont.nextAgency();
-	    		pgCont.sSelectedAgencyId = oGDPAccount2.Id;
-	    		pgCont.selectAgency();
-	    		system.assertEquals(oGDPAccount2.Id, pgCont.sAgencyIDToViewDetail, 'The appropriate agency id should be selected');
-	    		system.assertEquals(1, pgCont.iCurrentAgencyIndex, 'Index of Agency should be 1');
-	    		system.assertEquals(true, pgCont.bPreviousAgencyIsEnabled, 'bPreviousAgencyIsEnabled should be true');
-	    		system.assertEquals(true, pgCont.bNextAgencyIsEnabled, 'bNextAgencyIsEnabled should be true');
-	    		pgCont.previousAgency();
-	    		system.assertEquals(0, pgCont.iCurrentAgencyIndex, 'Index of Agency should be 0');
-	    		system.assertEquals(false, pgCont.bPreviousAgencyIsEnabled, 'bPreviousAgencyIsEnabled should not be true');
-	    		system.assertEquals(true, pgCont.bNextAgencyIsEnabled, 'bNextAgencyIsEnabled should be true');
-	    		pgCont.nextAgency();
-	    		pgCont.nextAgency();
-	    		system.assertEquals(2, pgCont.iCurrentAgencyIndex, 'Index of Agency should be 2');
-	    		system.assertEquals(true, pgCont.bPreviousAgencyIsEnabled, 'bPreviousAgencyIsEnabled should be true');
-	    		system.assertEquals(false, pgCont.bNextAgencyIsEnabled, 'bNextAgencyIsEnabled should not be true');
-	    		
-	    		pgCont.backToResultList();
-	    		system.assertEquals(null, pgCont.sAgencyIDToViewDetail, 'sAgencyIDToViewDetail should be null');
-	    		system.assertEquals(0, pgCont.iCurrentAgencyIndex, 'iCurrentAgencyIndex should be reset to 0');
-	    		
-	    		pgCont.backToSearchPage();
+	    
 	    	}
 		}
 		catch(Exception ex) {

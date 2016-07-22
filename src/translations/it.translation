@@ -6495,7 +6495,7 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Sondaggio</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>

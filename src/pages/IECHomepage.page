@@ -1,11 +1,11 @@
 <apex:page title="Home" controller="vfIECHomePage" cache="false"  sidebar="false" language="en" showHeader="false" standardStylesheets="false" action="{!pageLoad}">
-<title>Home</title>   
+<title>Home</title>     
 
 <c:IECSiteHeader />
 
  <style>
  .content-container .points p{
-  height: 90px !important;
+    height: 90px !important;
    background-size: contain;
    padding-left: 45px !important;
    
@@ -31,54 +31,54 @@
       </div>
     </div>
 
-    <div class="carousel">
-      <ul class="carousel__list">
-  
-  
-      <li class="carousel__slide" style="background-image: url({!$Resource.IECBannerHome})">
-        <div class="autoAdjustMargin">  
-          <div class="carousel__slide-wrapper">
-            <h2 class="carousel__slide-text -heading">Global Systems Solution</h2>
-            <p class="carousel__slide-text">Integrate and automate processes</p>
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGSS}" class="carousel__slide-anchor customButton">Read more</a>
-          </div>
-         </div>
-        </li>
-       
-        <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel01})">
-        <div class="autoAdjustMargin">  
-          <div class="carousel__slide-wrapper">
-            <h2 class="carousel__slide-text -heading">Marketing Data Package</h2>
-            <p class="carousel__slide-text">Expand your distribution reach</p>
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdMDP}" class="carousel__slide-anchor customButton">Read more</a>
-          </div>
-         </div>
-        </li>       
-              
-       <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel03})">
-        <div class="autoAdjustMargin">  
-          <div class="carousel__slide-wrapper">
-            <h2 class="carousel__slide-text -heading">Global Agency Directory</h2>
-            <p class="carousel__slide-text">Locate qualified business partners</p>
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGAD}" class="carousel__slide-anchor customButton">Read more</a>
-          </div>
-         </div>
-        </li>
-       
-        <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel02})">
-        <div class="autoAdjustMargin">        
-          <div class="carousel__slide-wrapper">
-            <h2 class="carousel__slide-text -heading">CheckACode Professional</h2>
-            <p class="carousel__slide-text">Validate IATA Codes online</p>
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdCACPro}" class="carousel__slide-anchor customButton">Read more</a>
-          </div>
-         </div>
-        </li> 
-        
-
-      </ul>
-    </div>
+      <div class="carousel">
+        <ul class="carousel__list">
     
+    
+          <li class="carousel__slide" style="background-image: url({!$Resource.IECBannerHome})">
+          <div class="autoAdjustMargin">    
+            <div class="carousel__slide-wrapper">
+              <h2 class="carousel__slide-text -heading">Global Systems Solution</h2>
+              <p class="carousel__slide-text">Integrate and automate processes</p>
+              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGSS}" class="carousel__slide-anchor customButton">Read more</a>
+            </div>
+           </div>
+          </li>
+         
+          <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel01})">
+          <div class="autoAdjustMargin">    
+            <div class="carousel__slide-wrapper">
+              <h2 class="carousel__slide-text -heading">Marketing Data Package</h2>
+              <p class="carousel__slide-text">Expand your distribution reach</p>
+              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdMDP}" class="carousel__slide-anchor customButton">Read more</a>
+            </div>
+           </div>
+          </li>       
+              
+         <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel03})">
+          <div class="autoAdjustMargin">    
+            <div class="carousel__slide-wrapper">
+              <h2 class="carousel__slide-text -heading">Global Agency Directory</h2>
+              <p class="carousel__slide-text">Locate qualified business partners</p>
+              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGAD}" class="carousel__slide-anchor customButton">Read more</a>
+            </div>
+           </div>
+          </li>
+         
+          <li class="carousel__slide" style="background-image:url({!$Resource.IEC_carrousel02})">
+          <div class="autoAdjustMargin">          
+            <div class="carousel__slide-wrapper">
+              <h2 class="carousel__slide-text -heading">CheckACode Professional</h2>
+              <p class="carousel__slide-text">Validate IATA Codes online</p>
+              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdCACPro}" class="carousel__slide-anchor customButton">Read more</a>
+            </div>
+           </div>
+          </li> 
+          
+
+        </ul>
+      </div>
+      
 </div>
 <!-------------  Carousel stuff  END ----------------->    
 
@@ -92,24 +92,21 @@
  <script>
   var iata_toggle_up = true;
 $(function() {
-  $(".available-services-a").click(function() {
-    var img;
-    if(iata_toggle_up) {
-      img = "https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}down_arrow_toggle.png" ;
-      iata_toggle_up = false;
-    } else {
-      img =  "https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}up_arrow_toggle.png" ;
-      iata_toggle_up = true;
-    }
-    $(".available-services-a img").attr("src", img);
-  });
+    $(".available-services-a").click(function() {
+        var img;
+        if(iata_toggle_up) {
+            img = "https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}down_arrow_toggle.png" ;
+            iata_toggle_up = false;
+        } else {
+            img =  "https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}up_arrow_toggle.png" ;
+            iata_toggle_up = true;
+        }
+        $(".available-services-a img").attr("src", img);
+    });
 });
  
  </script>
  
- 
-
-        
   <apex:variable value="{!$User}" var="u" rendered="{!isUserLoggedIn && bHasAnyProdAccess}">
   
   <a class="available-services-toggle__anchor available-services-a" href="javascript:void();">
@@ -122,57 +119,94 @@ $(function() {
   <div class="avilable-services-toggled-area -open">
     <div class="content-container">
 
-          <div class="available-services">
-            <ul >
-                
-                <apex:form id="navigateForm">
-                  <apex:outputpanel id="panelAccessCACPro" layout="none" rendered="{!bProdAccessCACPro}">
-                  <li class="available-services__item">
-                    <a href="{!$Page.IECCAC}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}cac_mini.gif"/> <h3 style="color :white;" >CheckACode Professional</h3></a>
-                  </li>
-                  </apex:outputpanel>               
-                <apex:outputpanel id="panelAccessGAD" layout="none" rendered="{!bProdAccessGAD}">
-                    <li class="available-services__item">
-                      <a href="{!$Page.IECGAD}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gad_mini.gif"/><h3 style="color :white;">Global Agency Directory</h3></a>
-                    </li>
-                  </apex:outputpanel>
-                  <apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
-                    <li class="available-services__item">
-                      <a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
-                    </li>
-                  </apex:outputpanel>
-                  <apex:outputpanel id="panelAccessGSS" layout="none" rendered="{!bProdAccessGSS}">
-                  <li class="available-services__item">
-                    <apex:commandLink action="{!NavigateTo}">
-                      <img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gss_mini.gif"/><h3 style="color :white;">Global Systems Solutions</h3>
-                              <apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
-                              <apex:param name="sProductCode" value="GSS" assignTo="{!sProductCode}"/>
-                          </apex:commandLink>
-                  </li>
-                  </apex:outputpanel>
-                <apex:outputpanel id="panelAccessMDP" layout="none" rendered="{!bProdAccessMDP}">
-              <li class="available-services__item">
-                <apex:commandLink action="{!NavigateTo}">
-                  <img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">Marketing Data Package</h3>
-                  <apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
-                              <apex:param name="sProductCode" value="MDP" assignTo="{!sProductCode}"/>
-                          </apex:commandLink>
-              </li>
-                  </apex:outputpanel>
+            <div class="available-services">
+                <ul >
+                    
+                    <apex:form id="navigateForm">
+                        <apex:outputpanel id="panelAccessCACPro" layout="none" rendered="{!bProdAccessCACPro}">
+                            <li class="available-services__item">
+                                <a href="{!$Page.IECCAC}"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}cac_mini.gif"/> <h3 style="color :white;" >CheckACode Professional</h3></a>
+                            </li>
+                        </apex:outputpanel>                 
+                        <apex:outputpanel id="panelAccessGAD" layout="none" rendered="{!bProdAccessGAD}">
+                            <li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gad_mini.gif"/><h3 style="color :white;">Global Agency Directory</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/> 
+			                        <apex:param name="sProductCode" value="GAD" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+                            </li>
+                        </apex:outputpanel>
+                        <apex:outputpanel id="panelAccessEBro" layout="none" rendered="{!bProdAccessEBro}">
+                            <li class="available-services__item">
+                                <a href="#"><img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">E-Broadcast</h3></a>
+                            </li>
+                        </apex:outputpanel>
+		          		<apex:outputpanel id="panelAccessGSS" layout="none" rendered="{!bProdAccessGSS}">
+		         			<li class="available-services__item">
+		         				<apex:commandLink action="{!NavigateTo}">
+		         					<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}gss_mini.gif"/><h3 style="color :white;">Global Systems Solutions</h3>
+			                        <apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="GSS" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+		         			</li>
+		          		</apex:outputpanel>
+		         		<apex:outputpanel id="panelAccessMDP" layout="none" rendered="{!bProdAccessMDP}">
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}mdp_mini.gif"/><h3 style="color :white;">Marketing Data Package</h3>
+									<apex:param name="sPageName" value="IECFD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="MDP" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- PAL -->
+		         		<apex:outputpanel id="panelAccessPAL" layout="none" rendered="{!bProdAccessPAL}"> <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Passenger Agency List</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="PAL" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- PAL end -->
+<!-- CAL -->
+		         		<apex:outputpanel id="panelAccessCAL" layout="none" rendered="{!bProdAccessCAL}"> <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Cargo Agency List</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="CAL" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- CAL end -->
+<!-- ASL -->
+		         		<apex:outputpanel id="panelAccessASL" layout="none" rendered="{!bProdAccessASL}"> <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Airline Sales Agency List</h3>
+									<apex:param name="sPageName" value="IECGAD" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="ASL" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- ASL end -->
 <!-- CACW -->
-                <apex:outputpanel id="panelAccessCACW" layout="none" rendered="{!bProdAccessCACWeb}"  > <!-- -->
-              <li class="available-services__item">
-                <apex:commandLink action="{!NavigateTo}">
-                  <img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Check a Code Web Service</h3>
-                  <apex:param name="sPageName" value="IEC_CACW" assignTo="{!sPageName}"/>
-                              <apex:param name="sProductCode" value="CACWEB" assignTo="{!sProductCode}"/>
-                          </apex:commandLink>
-              </li>
-                  </apex:outputpanel>
-<!-- CACW end -->                        
+		         		<apex:outputpanel id="panelAccessCACW" layout="none" rendered="{!bProdAccessCACWeb}"  > <!-- -->
+							<li class="available-services__item">
+								<apex:commandLink action="{!NavigateTo}">
+									<img class="available-services__icon" src="https://{!$Site.Domain}{!URLFOR($Resource.IECStyles,'img/')}code-error.png"/><h3 style="color :white;">Check a Code Web Service</h3>
+									<apex:param name="sPageName" value="IEC_CACW" assignTo="{!sPageName}"/>
+			                        <apex:param name="sProductCode" value="CACWEB" assignTo="{!sProductCode}"/>
+			                    </apex:commandLink>
+							</li>
+		          		</apex:outputpanel>
+<!-- CACW end -->                     
                     </apex:form>
-            </ul>
-          </div>
+                </ul>
+            </div>
     
     </div>  
   </div>  
@@ -191,9 +225,9 @@ $(function() {
 
 
    <apex:outputPanel id="errorMessage" >
-      <div class="errorPanel">
-          <apex:pageMessages escape="no"/>
-      </div>
+        <div class="errorPanel">
+            <apex:pageMessages escape="no"/>
+        </div>
    </apex:outputPanel>   
    
 
@@ -228,50 +262,50 @@ CACW end -->
     
     
     <div class="tab-container">
-      
-      <div class="tab-container__cell" id="check-a-code-tab">
-          <div class="tab-container__text-area">
-              <h2 class="tab-container__text -heading">CheckACode Professional</h2>
-              <p class="tab-container__text">Online application enabling manual validation of IATA Numeric Codes and IATA/IATAN ID Cards.<br/>Protect your company revenue in a quick and efficient manner.</p>
-              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdCACPro}" class="tab-container__anchor customButton">Read more</a>
-          </div>
-          <div class="tab-container__image-area">
-              <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc1.png" alt="CheckACode Professional" />
+        
+        <div class="tab-container__cell" id="check-a-code-tab">
+            <div class="tab-container__text-area">
+                <h2 class="tab-container__text -heading">CheckACode Professional</h2>
+                <p class="tab-container__text">Online application enabling manual validation of IATA Numeric Codes and IATA/IATAN ID Cards.<br/>Protect your company revenue in a quick and efficient manner.</p>
+                <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdCACPro}" class="tab-container__anchor customButton">Read more</a>
+            </div>
+            <div class="tab-container__image-area">
+                <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc1.png" alt="CheckACode Professional" />
             </div>
         </div>
         
         
         <div class="tab-container__cell" id="global-agency-tab"> 
-          <div class="tab-container__text-area">
-              <h2 class="tab-container__text -heading">Global Agency Directory</h2>
-              <p class="tab-container__text">Online interactive application with access to the IATA agency database.<br/>Perform custom searches and locate potential business partners worldwide.</p>
-              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGAD}" class="tab-container__anchor  customButton">Read more</a>
-          </div>
-          <div class="tab-container__image-area">
-              <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc3.png" alt="Global Agency Directory" />
-          </div>
+            <div class="tab-container__text-area">
+                <h2 class="tab-container__text -heading">Global Agency Directory</h2>
+                <p class="tab-container__text">Online interactive application with access to the IATA agency database.<br/>Perform custom searches and locate potential business partners worldwide.</p>
+                <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGAD}" class="tab-container__anchor  customButton">Read more</a>
+            </div>
+            <div class="tab-container__image-area">
+                <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc3.png" alt="Global Agency Directory" />
+            </div>
         </div>
         
         
         <div class="tab-container__cell" id="marketing-data-tab">
-          <div class="tab-container__text-area">
-              <h2 class="tab-container__text -heading">Marketing Data Package</h2>
-              <p class="tab-container__text">Subset of the IATA travel agency database delivered electronically in Excel&reg; format.<br/>Expand your reach through marketing and brand differentiation.</p>
-              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdMDP}" class="tab-container__anchor  customButton">Read more</a>
-          </div>
-          <div class="tab-container__image-area">
-              <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc4.png" alt="Marketing Data Package" />
-          </div>
+            <div class="tab-container__text-area">
+                <h2 class="tab-container__text -heading">Marketing Data Package</h2>
+                <p class="tab-container__text">Subset of the IATA travel agency database delivered electronically in Excel&reg; format.<br/>Expand your reach through marketing and brand differentiation.</p>
+                <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdMDP}" class="tab-container__anchor  customButton">Read more</a>
+            </div>
+            <div class="tab-container__image-area">
+                <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc4.png" alt="Marketing Data Package" />
+            </div>
         </div> 
         
         <div class="tab-container__cell -selected" id="global-systems-tab">
-          <div class="tab-container__text-area">
-              <h2 class="tab-container__text -heading">Global Systems Solutions</h2>
-              <p class="tab-container__text">Complete database of IATA agencies with ongoing updates designed for system integration.<br/>Radically improve your operational efficiency and productivity.</p>
-              <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGSS}" class="tab-container__anchor  customButton">Read more</a>
-          </div>
-          <div class="tab-container__image-area">
-              <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc5.png" alt="Global Systems Solutions" />
+            <div class="tab-container__text-area">
+                <h2 class="tab-container__text -heading">Global Systems Solutions</h2>
+                <p class="tab-container__text">Complete database of IATA agencies with ongoing updates designed for system integration.<br/>Radically improve your operational efficiency and productivity.</p>
+                <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sURLProdGSS}" class="tab-container__anchor  customButton">Read more</a>
+            </div>
+            <div class="tab-container__image-area">
+                <img src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc5.png" alt="Global Systems Solutions" />
             </div>
         </div>
         
@@ -292,7 +326,7 @@ CACW end -->
             <p style="height:90px;"><span class="title">120,000 IATA Agencies</span><br/>Global Data Products provides a turnkey access to a network of over 120,000 distribution partners</p>
             <p><span class="title">$290 billion</span><br/>Agencies part of Global Data Products are responsible for over $290 billion in annual air sales</p>
         </div>
-    
+        
         <div class="points second">
             <p style="height:90px;"><span class="title">5,000 updates/month</span><br/>IATA rigorously maintains Global Data Products, providing over 5,000 updates every month!</p>
             <p><span class="title">200 countries</span><br/>Gain access to distribution in over 200 countries thanks to Global Data Products</p>
@@ -346,9 +380,9 @@ CACW end -->
         <div class="rightDiv">       
             
             <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust1.png" />
-          <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust2.png" />
-          <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust3.png" />
-          <!-- <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust4.png" /> -->
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust2.png" />
+            <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust3.png" />
+            <!-- <img class="company_logo" src="{!URLFOR($Resource.IECStyles,'img/')}cust4.png" /> -->
         
         </div>
         <h2 class="callout-banner__header">Companies using <br/><span>Global Data<br/> Products</span></h2>

@@ -6491,7 +6491,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>調査は</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>

@@ -6493,7 +6493,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>고객 서비스 만족도 설문</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
