@@ -26530,7 +26530,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>
         <active>true</active>
         <description>Prevent creation of IFAP contacts under Branch Account.</description>
-        <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  Financial_Assessment_Contact__c  &amp;&amp; (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;))  &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;))) , true ,false)</errorConditionFormula>
+        <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  
+        Financial_Assessment_Contact__c  &amp;&amp; 
+        (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;)) &amp;&amp; 
+         NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; 
+         NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Type , &apos;Import Agent&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Category__c , &apos;Import Agent&apos;))), true ,false)</errorConditionFormula>
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
     </validationRules>
     <validationRules>
