@@ -45,10 +45,10 @@ global class IECConstants {
 	public static final string PARAM_CUSTOMERTYPE_PARTNER = 		'Partner';
 	public static final string PARAM_CUSTOMERTYPE_OTHER = 			'Other';
 
-	//Params to defin elements to be shown on Maps
-	public static final string PARAM_SHOWMAPSAGENCIES = 			'sa';
-	public static final string PARAM_SHOWMAPSEMAILS =	 			'se';
-	public static final string PARAM_SHOWMAPSFLAGS = 				'sf';
+    //Params to defin elements to be shown on Maps
+    public static final string PARAM_SHOWMAPSAGENCIES =             'sa';
+    public static final string PARAM_SHOWMAPSEMAILS =               'se';
+    public static final string PARAM_SHOWMAPSFLAGS =                'sf';
 
 	//Locations constants
 	public static final string SHIPTO = 'Ship To';
@@ -571,44 +571,44 @@ global class IECConstants {
     }
     
     public static Integer SAPSettings_SchedulePeriod {
-		get {
-			return integer.valueOf(IEC_SAP_Settings__c.getOrgDefaults().Schedule_Period__c);
-		}
-	}
-	
-	public static Boolean SAPSettings_ZuoraInterfaceActive {
-		get {
-			return IEC_SAP_Settings__c.getOrgDefaults().Activate_Zuora_Payment_Interface__c;
-		}
-	}
-	
-	public static Boolean SAPSettings_SAPInterfaceActive {
-		get {
-			return IEC_SAP_Settings__c.getOrgDefaults().Activate_SAP_Invoice_Interface__c;
-		}
-	}
+        get {
+            return integer.valueOf(IEC_SAP_Settings__c.getOrgDefaults().Schedule_Period__c);
+        }
+    }
+    
+    public static Boolean SAPSettings_ZuoraInterfaceActive {
+        get {
+            return IEC_SAP_Settings__c.getOrgDefaults().Activate_Zuora_Payment_Interface__c;
+        }
+    }
+    
+    public static Boolean SAPSettings_SAPInterfaceActive {
+        get {
+            return IEC_SAP_Settings__c.getOrgDefaults().Activate_SAP_Invoice_Interface__c;
+        }
+    }
     
     public static Integer GDPReplication_SchedulePeriod {
-		get {
-			return integer.valueOf(IEC_GDP_Replication__c.getOrgDefaults().Schedule_Period__c);
-		}
-	}
-	
-	public static Boolean GDPReplication_ScheduleActive {
-		get {
-			return IEC_GDP_Replication__c.getOrgDefaults().Schedule_Active__c;
-		}
-	}
+        get {
+            return integer.valueOf(IEC_GDP_Replication__c.getOrgDefaults().Schedule_Period__c);
+        }
+    }
+    
+    public static Boolean GDPReplication_ScheduleActive {
+        get {
+            return IEC_GDP_Replication__c.getOrgDefaults().Schedule_Active__c;
+        }
+    }
     
     public static String GDPReplication_SystemAdminEmail {
-		get {
-			return IEC_GDP_Replication__c.getOrgDefaults().System_Admin_Email__c;
-		}
-	}
+        get {
+            return IEC_GDP_Replication__c.getOrgDefaults().System_Admin_Email__c;
+        }
+    }
     
     public static String GDPReplication_ProfileIDswithAccess {
-		get {
-			return Test.isRunningTest() ? IECTestUtil.getSystemIntegrationProfileId() : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
-		}
-	}
+        get {
+            return Test.isRunningTest() ? IECTestUtil.getSystemIntegrationProfileId() : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
+        }
+    }
 }

@@ -6478,7 +6478,7 @@ and
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>الاستطلاع</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>

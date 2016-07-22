@@ -705,11 +705,12 @@ background-color:#428bca;
                 </a>
         </li>
 
+    <!-- INC262760
     <li>
     <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC','','none')}">
                 Reports
                 </a>
-    </li>
+    </li>-->
 
      </ul>  
      <ul  class="nav navbar-nav collapse" id="five">

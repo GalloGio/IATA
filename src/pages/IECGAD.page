@@ -1,11 +1,10 @@
-<apex:page title="Global Agency Directory" controller="vfIECGAD" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
-    <title>Global Agency Directory</title>
+<apex:page title="{!PageTitle}" controller="vfIECGAD" sidebar="false" showheader="false" language="en" action="{!pageLoad}" standardStylesheets="false">
+    <title>{!PageTitle}</title>
    
        <div class="gdpwrapper">
     
     <div class="gdpbody">
-   
-    <c:IECAppHeader applicationTitle="Global Agency Directory" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
+    <c:IECAppHeader applicationTitle="{!PageTitle}" subInfoController="{!ctrSubsInfo}" savedFiltersController="{!ctrSavedFilters}" showSearchOptions="true" />
     
     <script>
 
@@ -109,13 +108,20 @@
                     <div class="box register large">
 
                         <div class="header" style="margin-top: 18px;">
-                            <p>Global Agency Directory</p>
+                            <p>
+                            	<apex:outputText rendered="{!sProductCode != 'ASL'}" value="{!PageTitle}" />
+                            	<apex:outputText rendered="{!sProductCode == 'ASL'}" value="Member Airlines Sales Offices & General Sales Agents List" />
+                            </p>
                         </div>
 
                         <div class="content">
 
                             <h2>Quick Search</h2>
-                            <p class="descText" style="font-weight: 100;">Select one of the following search options and start searching for IATA Travel Agencies</p>
+                            <p class="descText" style="font-weight: 100;">
+                            	Select one of the following search options and start searching for&nbsp;
+                            	<apex:outputText rendered="{!sProductCode == 'ASL'}" value="MSO's & GSA's" />
+                            	<apex:outputText rendered="{!sProductCode != 'ASL'}" value="IATA Travel Agencies" />
+                            </p>
 
                             <div class="errorPanel">
                                 <apex:pageMessages escape="no" />
@@ -129,7 +135,7 @@
 
                                     <td>
                                         <div class="customInputLabelIn lastElm" style="width:330px;">
-                                            <apex:inputtext onkeypress="return isNumberKey(event)" id="txtCode" value="{!filter.IATA_Code__c}" maxlength="8" />
+                                            <apex:inputtext onkeypress="return isNumberKey(event)" id="txtCode" value="{!filter.IATA_Code__c}" maxlength="{!IF(sProductCode != 'CAL', 8, 11)}" />
                                         </div>
                                     </td>
 
@@ -190,10 +196,16 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <a href="IECGADAdvanced" class="customButton lastElm searchButton" style="width:380px;">Advanced Search &nbsp;></a>
+                                        <a href="IECGADAdvanced" class="customButton lastElm searchButton" style="width:{!IF(sProductCode != 'PAL', '380', '227')}px;">Advanced Search &nbsp;></a>
                                     </td>
+                                    <apex:outputText rendered="{!sProductCode == 'PAL'}">
+                                    	<td>
+                                            <a href="http://www.iata.org/tah" style="width:227px;" class="customButton lastElm searchButton" target="_blank">General Concurrence &gt;</a>
+                                        </td>
+                                    </apex:outputText>
                                     <td>
-                                        <a href="IECGADMaps" class="customButton lastElm searchButton" style="width:380px;">Interactive Statistics &nbsp;></a>
+                                        <apex:commandLink value="Interactive Statistics >" style="width:380px;" styleClass="customButton lastElm searchButton"  action="{!URLFOR($Page.IECGADMaps)}" rendered="{!IF(sProductCode == 'PAL' || sProductCode == 'CAL' || sProductCode == 'ASL', false, true)}" />
+                                        <apex:commandLink value="Statistics >" style="width:{!IF(sProductCode != 'PAL', '380', '227')}px;" styleClass="customButton lastElm searchButton"  action="{!URLFOR($Page.IATAPassengersList)}" rendered="{!IF(sProductCode == 'PAL' || sProductCode == 'CAL' || sProductCode == 'ASL', true, false)}" />
                                     </td>
                                 </tr>
                             </table>

@@ -33,7 +33,7 @@ public without sharing class IECApplicationsManager {
      * @return If agent and associated agency is valid: an ID Card
      *         If agent existed but is no longer valid (or agency): an ID Card with an empty status
      *         If agent not found: null
-     */
+     */ 
     private static ID_Card__c getAgentByVerCode(String verCode) {
 
         if (String.isBlank(verCode)) return null;
@@ -102,8 +102,8 @@ public without sharing class IECApplicationsManager {
                     AND Related_Accreditation_Class__r.Class__r.Code__c NOT IN ('A', 'I', 'L', 'Q', 'R', 'U', 'Y', 'Z') limit 2];
         }
         else {
-        	CASSCode = CASSCode.trim();
-        	
+            CASSCode = CASSCode.trim();
+            
             lstAgency = 
                 [SELECT g.Name, g.Trading_Name__c, g.Legal_Name__c, g.Last_Date_of_Update__c, g.Agency_Code__c,
                     g.Related_Accreditation_Class__r.Status__r.Name, g.Related_Accreditation_Class__r.Status__r.Definition__c, g.Related_Accreditation_Class__r.Status__r.Code__c,  g.Related_Accreditation_Class__r.Class__r.Name , g.Related_Accreditation_Class__r.Class__r.Definition__c,
@@ -149,7 +149,7 @@ public without sharing class IECApplicationsManager {
         system.debug('** - getAgencyByAgencyCode: agencyCode = ' + agencyCode + ', checkCode = ' + checkCode + ', CASSCode = ' + CASSCode);
         
         if (checkCode != null && checkCode != '') {
-        	checkCode = checkCode.trim();
+            checkCode = checkCode.trim();
             
             if (CASSCode == null || CASSCode == '') {
                 //No CASS Code --> Query for IATA + Check codes
@@ -212,19 +212,19 @@ public without sharing class IECApplicationsManager {
      * @return A list of GDP_Products_Account_View__c objects
      */
     private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode) {
-    	return getAgencyByAdvancedFilters(oAdvancedFilters, sProductCategoryCode, true);
+        return getAgencyByAdvancedFilters(oAdvancedFilters, sProductCategoryCode, true);
     }
-     
-    private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode, Boolean bReturnAllFields ) {
+    
+    private static List<GDP_Products_Account_View__c> getAgencyByAdvancedFilters(IEC_Application_Filter__c oAdvancedFilters, String sProductCategoryCode, Boolean bReturnAllFields) {
 
 
         String sQueryFields;
         
         if(bReturnAllFields)
-             sQueryFields = 'SELECT Account_View__c, Account_View__r.Id, Account_View__r.Agency_Code__c, Account_View__r.Agency_Status__c, Account_View__r.IATA_Code__c, Account_View__r.Name, Account_View__r.Agency_Status_Code__c, Account_View__r.Airline_Code__c, Account_View__r.BSP_CASS_Code__c, Account_View__r.CASS_Number__c, Account_View__r.Email_Address__c'
-                                + ', Account_View__r.Incorporation_Type__c, Account_View__r.Legal_Name__c, Account_View__r.Location_Type__r.Name, Account_View__r.Parent_GDP_Account_View__c, Account_View__r.Trading_Name__c, Account_View__r.City__c, Account_View__r.Zip_Postal_Code__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Name'
-                                + ', Account_View__r.Sub_Continent__c, Account_View__r.Country_Name__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Definition__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Code__c, Account_View__r.State_Province__c, Account_View__r.Related_Accreditation_Class__c' 
-                                + ' FROM GDP_Products_Account_Snapshot__c';
+        	 sQueryFields = 'SELECT Agency_Code__c, Agency_Status__c, IATA_Code__c, Name, Agency_Status_Code__c, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Email_Address__c'
+                                + ', Incorporation_Type__c, Legal_Name__c, Location_Type__r.Name, Parent_GDP_Account_View__c, Trading_Name__c, City__c, Zip_Postal_Code__c, Related_Accreditation_Class__r.Class__r.Name'
+                                + ', Sub_Continent__c, Country_Name__c, Related_Accreditation_Class__r.Class__r.Definition__c, Related_Accreditation_Class__r.Class__r.Code__c, State_Province__c, Related_Accreditation_Class__c' 
+                                + ' FROM GDP_Products_Account_View__c';
         else
              sQueryFields = 'SELECT Account_View__r.Id FROM GDP_Products_Account_Snapshot__c';
                                 
@@ -446,7 +446,7 @@ public without sharing class IECApplicationsManager {
      * @param sStatusOfSearch Success or Fail (use IECConstants.IECUsageTrackerSearchStatus_Fail or IECConstants.IECUsageTrackerSearchStatus_Success)
      */          
     private static void trackAndConsumeUsage(IECCustomer oCustomer, String sProductCategoryCode, String sSearchTarget, String sStatusOfSearch) {
-    	trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
+        trackAndConsumeUsage(oCustomer.RelatedContact.Id,  sProductCategoryCode,  sSearchTarget,  sStatusOfSearch);
     }
     
     //moved to a future method to reduce query time and optimize the returned result speed
@@ -636,12 +636,11 @@ public without sharing class IECApplicationsManager {
         return oSearchAgent;
     }
     
-
-     
     /**
      * Inserts a IEC_Product_Access__c granting access to a specific user for a Product/Application
      * @param sContactId
-     * @param oSubscription     */
+     * @param oSubscription
+     */
     /*@future (callout=true)*/
     public static void createProductAccessOnNewSubscription(Id sContactId, Zuora__Subscription__c oSubscription, String sInvoiceNumber) {
     	createProductAccessOnNewSubscription(sContactId, oSubscription, sInvoiceNumber, true);
@@ -727,7 +726,7 @@ public without sharing class IECApplicationsManager {
                 }
                 else {
                     oProductAccess.Usage_Qty_Start__c = null;
-                    oProductAccess.Usage_Qty_Left__c = null;
+                    oProductAccess.Usage_Qty_Left__c = null; 
                     oProductAccess.Usage_Unlimited__c = true;
                 }
             }
@@ -777,7 +776,7 @@ public without sharing class IECApplicationsManager {
                 ORDER BY Effective_End_Date__c];
     }
     
-    /** 
+    /**
      * Returns the list of Product Access that are currently effective for a Subscription Number, for a given Contact
      * @param idContact ID of the Contact associated to the customer
      * @param sSubscriptionNumber
@@ -976,7 +975,7 @@ public without sharing class IECApplicationsManager {
             ORDER BY Effective_End_Date__c];
         return lstAccess;
     }
-
+    
     /**
      * Returns a map of Product Access by subscription number
      */

@@ -6522,7 +6522,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Encuesta</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
