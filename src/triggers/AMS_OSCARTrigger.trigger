@@ -101,7 +101,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if (!oscars.isEmpty()){
-            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+            //AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
         }
 
     } //TD: Because I added "AFTER UPDATE", I added here the isBefore, which was missing
