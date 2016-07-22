@@ -374,56 +374,7 @@ private class IECApplicationsManager_tst {
             lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter,
                                                 IECConstants.ProductCategory_SF_CACPRO,
                                                  IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null
-                             && lstSearchResult.size() == 1 && 
-                             oGDPAccount1.Id == lstSearchResult.get(0).Id,
-                              'The Agency #1 should be found based on sub-continent');
-            
-            // Test #9 - search by multiple filters with 2 agencies having the same city, country and sub-continent
-            
-            //account 2 - start
-            oGDPAccount2 = IECTestUtil.createSampleGDPAccount(AGENCY1_NAME, AGENCY1_CODE, oRefAgencyStatus, oRefIncorporationType, oRefLocationType);
-            oGDPAccount1.Check_Digit__c = AGENCY_CHECK_DIGIT;
-            insert oGDPAccount2;
-            
-            oAccreditation2 = IECTestUtil.CreateSampleAccreditation(null, oGDPAccount2, 'GDP');
-            oAccreditation2.Status__c = oRefAgencyStatus.Id;
-            insert oAccreditation2;
-            oGDPAccount2.Related_Accreditation_Class__c = oAccreditation2.Id;
-            update oGDPAccount2;
-            
-            //account 2 - end
-            
-            //GDP_Geo_Detail__c 2 - start
-                    
-                GDP_Geo_Detail__c oGEODetail2 = IECTestUtil.CreateSampleGDPGeoDetail(oISOCountry);
-                insert oGEODetail2;
-                GDP_Address__c oGDPAddress2 = IECTestUtil.CreateSampleGDPAddress(oGDPAccount2, oISOCountry, null, oGEODetail2);
-                oGDPAddress2.Address_City__c = 'BOYA_2';
-                insert oGDPAddress2;
-                oGDPAccount2.Related_GDP_Address__c = oGDPAddress2.Id;
-                update oGDPAccount2;
-            	bat = new SchdlGDPProductsAccountSnapshotCleanup();
-            	gpav = Database.query(SchdlGDPProductsAccountSnapshotCleanup.query);
-            	bat.execute(null, gpav);
-
-            //GDP_Geo_Detail__c 2 - end 
-            
-            for (GDP_Products_Account_View__c g : [SELECT City__c, Sub_Continent__c, Country_ISO_Code__c FROM GDP_Products_Account_View__c WHERE ID IN (:oGDPAccount1.Id)]){
-                System.debug('SSS: City__c: ' + g.City__c + ', Sub_Continent__c: ' + g.Sub_Continent__c + ', Country_ISO_Code__c: ' + g.Country_ISO_Code__c);
-            }
-            
-            oFilter = new IEC_Application_Filter__c(); // reset filter
-            oFilter.City__c = oGDPAddress1.Address_City__c;
-            oFilter.Sub_Continent__c = oGEODetail.Sub_Continent__c;
-            oFilter.Country__c = oGDPAddress1.Address_ISO_Country_Code__c;
-            lstSearchResult = IECApplicationsManager.customerSearchAgencyByAdvancedFilters(oFilter, IECConstants.ProductCategory_SF_CACPRO, IECCustomer.getCurrentIECCustomer());
-            system.assert(lstSearchResult != null && lstSearchResult.size() == 2, '2 agencies should be found based on sub-continent and city');
-            
-            for (GDP_Products_Account_View__c oAgency : lstSearchResult)
-                system.assert(oAgency.Id == oGDPAccount1.Id || oAgency.Id == oGDPAccount2.Id, 'Agency #1 and #2 should be found');
-            
-            // Test #10 - search by zip/postal code with search type contains
+  
 
           } // end runAs
           test.stopTest();  
