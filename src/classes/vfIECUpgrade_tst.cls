@@ -35,59 +35,65 @@ private class vfIECUpgrade_tst {
     private static SAP_Account__c oSAPAccount2;
     
     private static void InitProduct() {
+            
         oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
         insert oProductCategory;
         
         oProduct = IECTestUtil.CreateSampleProduct('PTST');
-        insert oProduct;
-        
         oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
-        insert oProduct2;
-        
         oProduct3 = IECTestUtil.CreateSampleProduct('PTST3');
-        insert oProduct3;
+
+        insert new List<sObject> {oProduct, oProduct2, oProduct3};
         
         oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-        insert oProductInfo;
-        
         oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
         oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT; //ProductInformationAudience_MEMBERAIRLINE
-        insert oProductInfo2;
-        
         oProductInfo3 = IECTestUtil.CreateSampleProductInfo('PITST3', oProductCategory, oProduct3);
         oProductInfo3.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-        insert oProductInfo3;
+
+        insert new List<sObject> {oProductInfo, oProductInfo2, oProductInfo3};
         
         oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
-        insert oProductRatePlan;
-        
         oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', false, oProduct2);
-        insert oProductRatePlan2;
-        
         oProductRatePlan3Trial = IECTestUtil.CreateSampleProductRatePlan('PRPTST3', true, oProduct3);
-        insert oProductRatePlan3Trial;
+
+        insert new List<sObject> {oProductRatePlan, oProductRatePlan2, oProductRatePlan3Trial};
         
         oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 42);
         oProductRatePlanCharge.zqu__Deleted__c = false;
-        insert oProductRatePlanCharge;
-        
         oProductRatePlanCharge2 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan2, 'CHARGETEST', 42);
         oProductRatePlanCharge2.zqu__Deleted__c = false;
-        insert oProductRatePlanCharge2;
-        
         oProductRatePlanCharge3 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan3Trial, 'CHARGETEST', 10);
         oProductRatePlanCharge3.zqu__Deleted__c = false;
-        insert oProductRatePlanCharge3;
+
+        insert new List<sObject> {oProductRatePlanCharge, oProductRatePlanCharge2, oProductRatePlanCharge3};
         
+        insert new List<zqu__ProductRatePlanChargeTier__c> {
+            TestDataGenerator.generateZTiers(oProductRatePlanCharge.Id, 1, false)[0]
+            , TestDataGenerator.generateZTiers(oProductRatePlanCharge2.Id, 1, false)[0]
+            , TestDataGenerator.generateZTiers(oProductRatePlanCharge3.Id, 1, false)[0]
+        };      
+
         oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
-        insert oProductRatePlanInfo;
-        
         oProductRatePlanInfo2 = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST2', false, oProductRatePlan2, oProductInfo2);
-        insert oProductRatePlanInfo2;
-        
         oProductRatePlanInfo3Trial = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST3', true, oProductRatePlan3Trial, oProductInfo3);
-        insert oProductRatePlanInfo3Trial;
+
+        insert new List<sObject> {oProductRatePlanInfo, oProductRatePlanInfo2, oProductRatePlanInfo3Trial};
+
+        List<Product2> lstProduct = TestDataGenerator.generateProducts(4, true);
+        lstProduct[0].SAP_Material_Number__c = 'TESTPRODCODE';
+        
+        lstProduct[1].IEC_Parent_Product__c = lstProduct[0].Id;
+        lstProduct[1].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
+        
+        lstProduct[2].IEC_Parent_Product__c = lstProduct[0].Id;
+        lstProduct[2].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo2.Id;
+        
+        lstProduct[3].IEC_Parent_Product__c = lstProduct[0].Id;
+        lstProduct[3].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo3Trial.Id;
+        
+        update lstProduct;
     }
     
     private static void InitSubscription1(IECCustomer currentCustomer){
@@ -95,7 +101,7 @@ private class vfIECUpgrade_tst {
         insert oSAPAccount;
         
         IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(currentCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-        insert oBillingAddress;
+        //insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
 
         // create first Terms & Conditions
         oTnC = IECTestUtil.CreateSampleTermsAndConditions('My T&Cs', oProductInfo, true, 1);
@@ -130,7 +136,7 @@ private class vfIECUpgrade_tst {
         insert oSAPAccount2;
         
         IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(currentCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-        insert oBillingAddress;
+        //insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
 
         // create first Terms & Conditions
         oTnC2 = IECTestUtil.CreateSampleTermsAndConditions('My T&Cs', oProductInfo2, true, 1);
@@ -166,7 +172,6 @@ private class vfIECUpgrade_tst {
         // Initialize Data for test scenario
         InitProduct();
 
-        Test.startTest();
         User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
         IECPageController baseCont = new IECPageController();
 
@@ -175,7 +180,8 @@ private class vfIECUpgrade_tst {
         }
     
         InitSubscription1(baseCont.loggedCustomer);
-
+        
+        Test.startTest();
         System.runAs(usr) {
             PageReference pgRef = Page.IECUpgrade;
             pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
@@ -183,6 +189,7 @@ private class vfIECUpgrade_tst {
     
             //Instantiate Controller
             vfIECUpgrade pgCont = new vfIECUpgrade();
+            
             
             // Test #1 - test initial loading of page
             try {           
@@ -237,7 +244,9 @@ private class vfIECUpgrade_tst {
                 pgCont.selectUpgrade();
 
                 system.assert(pgCont.subTotal != null, 'The subTotal should not be null');
-                system.assert(pgCont.taxes != null, 'The taxes should not be null');
+//              system.assert(pgCont.taxes != null, 'The taxes should not be null');
+                system.assert(pgCont.taxCharge != null, 'The taxes should not be null');
+                system.assert(pgCont.shippingCharge != null, 'The shipping should not be null');
                 system.assert(pgCont.total != null, 'The total should not be null');
                 system.assertEquals(false, pgCont.needToAcceptTnC, 'Since the T&C havent changed, no need to accept the T&C again');
                 system.assert(pgCont.oTnCComponentController != null, 'The T&C component shouldnt be null');
@@ -245,7 +254,7 @@ private class vfIECUpgrade_tst {
                 system.assert(pgCont.defaultPaymentMethodIsICH != null, 'defaultPaymentMethodIsICH should be set');
                 system.assert(pgCont.defaultPaymentMethodIsBankTransfer != null, 'defaultPaymentMethodIsBankTransfer should be set');
                 system.assert(pgCont.isPaymentAvailableWithCreditCard != null, 'isPaymentAvailableWithCreditCard should be set');
-                system.assert(pgCont.isPaymentAvailableWithICH != null, 'isPaymentAvailableWithICH should be set');
+                //system.assert(pgCont.isPaymentAvailableWithICH != null, 'isPaymentAvailableWithICH should be set');
                 //system.assert(pgCont.isPaymentAvailableWithBankTransfer != null, 'isPaymentAvailableWithBankTransfer should be set');
             }
             catch(Exception ex) {
@@ -323,7 +332,6 @@ private class vfIECUpgrade_tst {
         // Initialize Data for test scenario
         InitProduct();
 
-        Test.startTest();
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         IECPageController baseCont = new IECPageController();
 
@@ -332,7 +340,8 @@ private class vfIECUpgrade_tst {
         }
     
         InitSubscription1(baseCont.loggedCustomer);
-
+        
+        Test.startTest();
         System.runAs(usr) {         
             PageReference pgRef = Page.IECUpgrade;
             pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
@@ -340,6 +349,7 @@ private class vfIECUpgrade_tst {
     
             //Instantiate Controller
             vfIECUpgrade pgCont = new vfIECUpgrade();
+            
 
             // Test # - perform the upgrade with a new credit card
             try {
@@ -382,7 +392,6 @@ private class vfIECUpgrade_tst {
         // Initialize Data for test scenario
         InitProduct();
 
-        Test.startTest();
         User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
         IECPageController baseCont = new IECPageController();
 
@@ -391,7 +400,8 @@ private class vfIECUpgrade_tst {
         }
     
         InitSubscription2(baseCont.loggedCustomer);
-
+        
+        Test.startTest();
         System.runAs(usr) {         
             PageReference pgRef = Page.IECUpgrade;
             pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription2.Id));
@@ -418,7 +428,9 @@ private class vfIECUpgrade_tst {
                 
                 system.assertEquals(true, pgCont.upgradePreviewSuccessful, 'The upgrade preview should be successful');
                 system.assert(pgCont.subTotal != null, 'The subTotal should not be null');
-                system.assert(pgCont.taxes != null, 'The taxes should not be null');
+                //system.assert(pgCont.taxes != null, 'The taxes should not be null');
+                system.assert(pgCont.taxCharge != null, 'The taxes should not be null');
+                system.assert(pgCont.shippingCharge != null, 'The shipping should not be null');
                 system.assert(pgCont.total != null, 'The total should not be null');
                 system.assertEquals(true, pgCont.needToAcceptTnC, 'It is mandatory to accept the T&C when upgrading from trial');
             }
@@ -467,15 +479,13 @@ private class vfIECUpgrade_tst {
     
     @isTest(SeeAllData=true)
     static void TestUpgrade_Misc() {
-        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         System.debug('Unit Test: Start: TestUpgrade_Misc');
         
         // Initialize Data for test scenario
-       
-        User usr = IECTestUtil.createSampleGuestUserAndLoginOlder();
+        InitProduct();
 
         Test.startTest();
-         InitProduct();
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
         IECPageController baseCont = new IECPageController();
         vfIECUpgrade pgCont;
 
@@ -488,7 +498,7 @@ private class vfIECUpgrade_tst {
         pgCont.pageLoad();
     
         InitSubscription1(baseCont.loggedCustomer);
-        
+
         System.runAs(usr) {
 
             PageReference pgRef = Page.IECUpgrade;
@@ -508,11 +518,11 @@ private class vfIECUpgrade_tst {
             pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
             pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
             pgCont.selectUpgrade();
+
             Contact oContact = pgCont.oContact;
             Account oAccount = pgCont.oAccount;
             List<SelectOption> lstOptions = pgCont.lstISOCountries;
-            lstOptions = pgCont.lstCanadaProvinces;
-            lstOptions = pgCont.lstUSAStates;
+            lstOptions = pgCont.lstStateProvince;
 
             pgCont.needToFillContactInfo = true;
             try {pgCont.proceedToUpgrade();} catch (Exception e) {}
@@ -541,7 +551,9 @@ private class vfIECUpgrade_tst {
             pgCont.oContact.Email = null;
             pgCont.oContact.Phone = null;
             
-                   // Test 005: Test contact update validation
+            Test.stopTest();
+
+            // Test 005: Test contact update validation
             pgCont.updateContactInfo();
             system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' First Name'));
             pgCont.oContact.FirstName = 'FirstName';
@@ -558,11 +570,15 @@ private class vfIECUpgrade_tst {
             system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Phone'));
             pgCont.oContact.Phone = '4169494949';
 
-            pgCont.oBillingAddress = new IECAddress__c(
-                Contact__c = pgCont.oContact.Id
-                , Address_Type__c = IECConstants.IECAddress_AddressType_Billing
+            pgCont.oBillingLocation = new Location__c(
+                Active__c = true
+                , Account__c = pgCont.oAccount.Id
+                , Contact__c = pgCont.oContact.Id
+                , Type__c = IECConstants.IECAddress_AddressType_Billing
             );
-                     pgCont.updateContactInfo();
+            pgCont.oBillingAddress = new IECAddress__c();
+            
+            pgCont.updateContactInfo();
             system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Address'));
             pgCont.oBillingAddress.Street__c = 'Address';
             pgCont.updateContactInfo();
@@ -570,62 +586,7 @@ private class vfIECUpgrade_tst {
             pgCont.oBillingAddress.City__c = 'City';
             pgCont.updateContactInfo();
             system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Country'));
-            pgCont.oBillingAddress.Country__c = 'Test';
             
-            
-
-            
-            
-                   
-        }
-        System.debug('Unit Test: Finish: TestUpgrade_Misc');
-
-    }
-
-
-    @isTest(SeeAllData=true)
-    static void TestUpgrade_Misc2() {
-        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-        System.debug('Unit Test: Start: TestUpgrade_Misc');
-        
-        // Initialize Data for test scenario
-       
-        User usr = IECTestUtil.createSampleGuestUserAndLoginOlder();
-
-        
-         InitProduct();
-        IECPageController baseCont = new IECPageController();
-        vfIECUpgrade pgCont;
-
-        System.runAs(usr) {
-            baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
-            //Instantiate Controller
-            pgCont = new vfIECUpgrade();
-        }
-        
-        pgCont.pageLoad();
-    
-        InitSubscription1(baseCont.loggedCustomer);
-        
-        System.runAs(usr) {
-
-            PageReference pgRef = Page.IECUpgrade;
-            pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
-            Test.setCurrentPage(pgRef);
-
-            pgCont = new vfIECUpgrade();
-              String sTest = pgCont.sOriginalProductName;
-            sTest = pgCont.sUpgradeProductName;
-            Boolean bTest = pgCont.hasFilledAutoRenewFlag;
-            
-            pgCont.pageLoad();
-            pgCont.previewUpgrades();
-            pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
-            pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
-            pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
-            pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-            pgCont.selectUpgrade();  
-           
             // Setup a VAT Configuration
             IATA_ISO_Country__c country = IECTestUtil.CreateSampleIATAISOCountry();
             country.VAT_Validation_Required__c =
@@ -633,16 +594,19 @@ private class vfIECUpgrade_tst {
             country.Tax_1_Label__c = 'Tax 1 ID';
             country.Tax_2_Label__c = 'Tax 2 ID';
             insert country;
+
+            pgCont.oBillingAddress.ISO_Country__c = country.Id;
             
-            Test.startTest();
             pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 1 ID'));
             pgCont.oContact.Tax_1_ID__c = 'Tax1ID';
             pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 2 ID'));
             pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
             pgCont.updateContactInfo();
             
             // Misc Coverage
-            pgCont.oBillingAddress.Country__c = 'Teesstt';
+            pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
             pgCont.onChangeBillingCountry();
             
             pgCont.cancelUpdateContactInfo();
@@ -655,15 +619,10 @@ private class vfIECUpgrade_tst {
             pgCont.bExpandedAutoRenewal = false;
             pgCont.toggleAutoRenew();
             pgCont.bExpandedPaymentMethod = false;
-            pgCont.togglePaymentMethod();   
-
-      Test.stopTest();      
-                   
+            pgCont.togglePaymentMethod();           
         }
         System.debug('Unit Test: Finish: TestUpgrade_Misc');
-
     }
-   
 
     @isTest
     public static void prepareHPMSetting(){
@@ -683,9 +642,5 @@ private class vfIECUpgrade_tst {
         HPM_Setting__c hpmsetting = HPM_Setting__c.getInstance ('Zuora HPM Setting');
         if(hpmsetting != null)
             delete hpmsetting;
-    }
-    
-   
-    
-    
+    }    
 }
