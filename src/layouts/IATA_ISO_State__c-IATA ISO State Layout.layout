@@ -14,10 +14,6 @@
                 <behavior>Required</behavior>
                 <field>ISO_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IEC_Valid_SAP__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
