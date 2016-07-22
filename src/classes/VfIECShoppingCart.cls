@@ -222,8 +222,8 @@ public class VfIECShoppingCart extends IECPageController {
     
     List<ISO_Country_State_DTO> lstCountryState;
     
-    public List<SelectOption> lstISOCountries {
-        get {
+	public List<SelectOption> lstISOCountries {
+		get {
             return ISO_Country_State_Helper.getPicklistISOCountry(lstCountryState);
         }
     }
@@ -235,12 +235,12 @@ public class VfIECShoppingCart extends IECPageController {
     }
     
     public Boolean bStateAvailable
-    {
-        get
-        {
-            return lstStateProvince.size() > 1;
-        }
-    }
+	{
+		get
+		{
+			return lstStateProvince.size() > 1;
+		}
+	}
     
     ///////////////////////////////////////////////////////
     // properties for HPM (Hosted Payment Method) of Zuora
@@ -427,14 +427,14 @@ public class VfIECShoppingCart extends IECPageController {
                     
                 // check if the customer needs to fill his contact information
                 if (IECUserManager.hasAddress(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)) {
-                    // Retrieve existing billing location for this contact
-                    oBillingLocation = Location_Sel.getLocationByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)[0];
-                    
+                	// Retrieve existing billing location for this contact
+                	oBillingLocation = Location_Sel.getLocationByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)[0];
+                	
                     List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
                     if (lstAddresses.size() > 0) {
                         oBillingAddress = lstAddresses.get(0);
-                        // Clone the record to check later whether it is changed when saving
-                        oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
+						// Clone the record to check later whether it is changed when saving
+                		oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
                         isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
                         vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
                     }
@@ -445,10 +445,10 @@ public class VfIECShoppingCart extends IECPageController {
                 else {
                     // customer does not have a billing address, so create a new one, and also create a new Location
                     oBillingLocation = new Location__c(
-                        Active__c = true
-                        , Account__c = loggedCustomer.RelatedAccount.Id
-                        , Contact__c = loggedCustomer.RelatedContact.Id
-                        , Type__c = IECConstants.IECAddress_AddressType_Billing
+                    	Active__c = true
+                    	, Account__c = loggedCustomer.RelatedAccount.Id
+                    	, Contact__c = loggedCustomer.RelatedContact.Id
+                    	, Type__c = IECConstants.IECAddress_AddressType_Billing
                     );
                     oBillingAddress = new IECAddress__c();
                     needToFillContactInfo = true;
@@ -727,13 +727,13 @@ public class VfIECShoppingCart extends IECPageController {
                         + '     ' + listCartItems.get(i).Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Display_Name__c + '&nbsp;-&nbsp;' + listCartItems.get(i).Related_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
                         + ' </td>'
                     
-                        + ' <td align="left" class="spacer-col" width="15" valign="top">&nbsp;</td>'
-                        + ' <td align="right" style="font-family: \'Lucida Grande\', \'Lucida Sans\', \'Lucida Sans Unicode\', Arial, Helvetica, Verdana, sans-serif; color:#000000; font-size: 12px; line-height:18px;" valign="top">'
-                        + '   <div class="noWrapPrice"></div>'
-                        + ' </td>'
-                        + ' <td align="left" class="spacer-col" width="15" valign="top">&nbsp;</td>'
-                        + ' <td align="right" width="30" style="font-family: \'Lucida Grande\', \'Lucida Sans\', \'Lucida Sans Unicode\', Arial, Helvetica, Verdana, sans-serif; color:#000000; font-size: 12px; line-height:18px;" valign="top">'
-                        + ' </td>'
+	                    + ' <td align="left" class="spacer-col" width="15" valign="top">&nbsp;</td>'
+	                    + ' <td align="right" style="font-family: \'Lucida Grande\', \'Lucida Sans\', \'Lucida Sans Unicode\', Arial, Helvetica, Verdana, sans-serif; color:#000000; font-size: 12px; line-height:18px;" valign="top">'
+	                    + '   <div class="noWrapPrice"></div>'
+	                    + ' </td>'
+	                    + ' <td align="left" class="spacer-col" width="15" valign="top">&nbsp;</td>'
+	                    + ' <td align="right" width="30" style="font-family: \'Lucida Grande\', \'Lucida Sans\', \'Lucida Sans Unicode\', Arial, Helvetica, Verdana, sans-serif; color:#000000; font-size: 12px; line-height:18px;" valign="top">'
+	                    + ' </td>'
                         
                         + ' <td width="97" class="paddingClass2" align="center" valign="middle" style="font-family: Arial, Helvetica, Verdana, sans-serif; color: #969696; font-size: 15px; font-weight: normal; line-height: 18px; padding: 20px 0;">' + listCartItems.get(i).Quantity__c + '</td>'
                         + ' <td width="136" class="paddingClass1" align="right" valign="middle" style="font-family: Arial, Helvetica, Verdana, sans-serif; color: #969696; font-size: 15px; font-weight: normal; line-height: 18px; padding: 20px 20px 20px 0;">'
@@ -924,7 +924,7 @@ public class VfIECShoppingCart extends IECPageController {
      * Updates the Contact Info of the customer
      */
     public void updateContactInfo() {
-        Savepoint sp = Database.setSavepoint();
+    	Savepoint sp = Database.setSavepoint();
         try {
             
             List<String> lstErrorMessages = new List<String>();
@@ -1010,22 +1010,22 @@ public class VfIECShoppingCart extends IECPageController {
                 // First check if the address has been changed before trying to save, otherwise just ignore
                 if (IECAddress_Svc.isAddressChanged(oBillingAddress, oOriginalBillingAddress))
                 {
-                    // First insert a new Billing Address
-                    // TODO: Provide autocomplete feature in the page to avoid having alot of orphaned Addresses
-                    oBillingAddress.Id = null; // Reset the ID to be able to insert a new IEC Address record
-                    insert oBillingAddress;
-                    
-                    // Then copy the ID into the location record
-                    oBillingLocation.Address__c = oBillingAddress.Id;
-                    upsert oBillingLocation;
-                    
-                    // re-query the Billing Address to refresh formula fields on the record
-                    List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
-                    if (lstAddresses.size() > 0) {
-                        oBillingAddress = lstAddresses.get(0);
-                        // Clone the record to check later whether it is changed when saving
-                        oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
-                    }
+	                // First insert a new Billing Address
+	                // TODO: Provide autocomplete feature in the page to avoid having alot of orphaned Addresses
+	                oBillingAddress.Id = null; // Reset the ID to be able to insert a new IEC Address record
+	                insert oBillingAddress;
+	                
+	                // Then copy the ID into the location record
+	                oBillingLocation.Address__c = oBillingAddress.Id;
+	                upsert oBillingLocation;
+	                
+	                // re-query the Billing Address to refresh formula fields on the record
+		            List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
+		            if (lstAddresses.size() > 0) {
+		                oBillingAddress = lstAddresses.get(0);
+						// Clone the record to check later whether it is changed when saving
+                		oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
+		            }
                 }
                 
                 inEditContactInfo = false;

@@ -484,6 +484,7 @@ private class vfIECUpgrade_tst {
     	// Initialize Data for test scenario
 	    InitProduct();
 
+		Test.startTest();
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
 		IECPageController baseCont = new IECPageController();
 		vfIECUpgrade pgCont;
@@ -511,7 +512,6 @@ private class vfIECUpgrade_tst {
 	        Boolean bTest = pgCont.hasFilledAutoRenewFlag;
 	        
 	        pgCont.pageLoad();
-			Test.startTest();
 	        pgCont.previewUpgrades();
         	pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
         	pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
@@ -551,6 +551,7 @@ private class vfIECUpgrade_tst {
 	        pgCont.oContact.Email = null;
 	        pgCont.oContact.Phone = null;
 	        
+	        Test.stopTest();
 
 	        // Test 005: Test contact update validation
 	        pgCont.updateContactInfo();
@@ -608,7 +609,6 @@ private class vfIECUpgrade_tst {
 	        pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
 	        pgCont.onChangeBillingCountry();
 	        
-	        Test.stopTest();
 	        pgCont.cancelUpdateContactInfo();
 	        pgCont.closePopup();
 	        pgCont.showPopUp();

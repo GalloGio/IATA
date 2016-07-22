@@ -1231,7 +1231,37 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
     
     private void RegisterContactBillingAddress(Account oAccount, Contact oContact) {
         
+        //---Create Bill To Location if not Exist
+        List<Location__c> lstBillingLocation = Location_Sel.getLocationByContact(oContact.Id, IECConstants.IECAddress_AddressType_Billing); 
+		Location__c oBillingLocation = (!lstBillingLocation.isEmpty())
+			? lstBillingLocation[0]
+			: new Location__c(
+                Contact__c = oContact.Id
+                , Account__c = oAccount.Id
+                , Type__c = 'Bill To'
+                , Active__c = true
+            );
+        	
         string temp = (oAccount.IATA_ISO_Country__r.Name == null) ? oAccount.BillingCountry+'' : oAccount.IATA_ISO_Country__r.Name+'';
+
+        List<IATA_ISO_Country__c> isoCountries = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = :temp];
+        List<IATA_ISO_State__c> isoStates = [SELECT Id FROM IATA_ISO_State__c WHERE Name = :oAccount.BillingState];
+ 
+        IECAddress__c oBillingAddress = new IECAddress__c(
+            Contact__c = oContact.Id
+            , City__c = oAccount.BillingCity
+            , Street__c = oAccount.BillingStreet
+            , ZipCode__c = oAccount.BillingPostalCode
+            , ISO_Country__c = (isoCountries.size() > 0) ? isoCountries[0].Id : null
+	        , ISO_State__c = (isoStates.size() > 0) ? isoStates[0].Id : null 
+        );
+        insert oBillingAddress;
+
+        oBillingLocation.Address__c = oBillingAddress.Id;
+        upsert oBillingLocation;
+
+        //EXISTING CODE
+       /*string temp = (oAccount.IATA_ISO_Country__r.Name == null) ? oAccount.BillingCountry+'' : oAccount.IATA_ISO_Country__r.Name+'';
         
         insert new IECAddress__c(
             Contact__c = oContact.Id
@@ -1241,6 +1271,6 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
             , State__c = oAccount.BillingState
             , Street__c = oAccount.BillingStreet
             , ZipCode__c = oAccount.BillingPostalCode
-        );
+        );*/
     }
 }
