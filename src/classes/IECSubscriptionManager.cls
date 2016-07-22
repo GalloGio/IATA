@@ -2285,7 +2285,8 @@ public with sharing class IECSubscriptionManager {
                     [SELECT Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,Zuora__AutoRenew__c
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
-                        , Zuora__TermSettingType__c , Zuora__ContractAcceptanceDate__c                      
+                        , Zuora__ContractAcceptanceDate__c , Zuora__TermSettingType__c
+                        ,  Zuora__ContractAcceptanceDate__c                      
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                             From Zuora__Subscription_Product_Charges__r)
