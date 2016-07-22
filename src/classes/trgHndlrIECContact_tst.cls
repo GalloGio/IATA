@@ -18,6 +18,8 @@ private class trgHndlrIECContact_tst {
 	     	Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(oAccount, oContact);
 	     	insert oBillingAccount;
 	     	
+	     	/* Commented by Samy Saied (2016-02-29) for using the new Location model instead of only iecaddress
+	     	And also the code that is referencing the IECAddress in the contact trigger is already commented.
 	     	IECAddress__c oBillingAddress = new IECAddress__c();
 	     	oBillingAddress.Address_Type__c = IECConstants.IECAddress_AddressType_Billing;
 	     	oBillingAddress.Contact__c = oContact.Id;
@@ -27,6 +29,7 @@ private class trgHndlrIECContact_tst {
 	     	oBillingAddress.State__c = 'QC';
 	     	oBillingAddress.ZipCode__c = 'h1q2w3';
 	     	insert oBillingAddress;
+	     	*/
 	     	
 	     	// modify the contact
 	     	oContact.FirstName = 'Johnny';

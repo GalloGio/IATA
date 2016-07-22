@@ -72,6 +72,26 @@ public class trgHndlrIECInvoice_tst {
 	}
 	
 	static void Init(IECCustomer loggedCustomer) {
+
+		//-- Generate Zuora related items 
+		
+		//-- ZProduct 1 for Tax & 1 for Shipping
+		List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(2, true);
+
+		//-- Generate one Rate plan for each
+		zqu__ProductRatePlan__c taxPlan  = TestDataGenerator.generateZRatePlans(zProducts[0].Id,1,false)[0];
+			taxPlan.zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Plan id');
+		zqu__ProductRatePlan__c shipPlan = TestDataGenerator.generateZRatePlans(zProducts[1].Id,1,false)[0];
+			shipPlan.zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Plan id');
+		upsert new List<zqu__ProductRatePlan__c>{taxPlan, shipPlan} zqu__ZuoraId__c;
+
+		//-- Generate Rate Plan Charges 
+		zqu__ProductRatePlanCharge__c taxCharge = TestDataGenerator.generateZCharges(taxPlan.Id, 1, false)[0];
+			taxCharge.zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Charge id');
+		zqu__ProductRatePlanCharge__c shipCharge = TestDataGenerator.generateZCharges(shipPlan.Id, 1, false)[0];
+			shipCharge.zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Charge id');
+		upsert new List<zqu__ProductRatePlanCharge__c>{taxCharge, shipCharge} zqu__ZuoraId__c;
+
 		
         // create dummy Zuora product
     	oProduct = IECTestUtil.CreateSampleProduct('Product1');
