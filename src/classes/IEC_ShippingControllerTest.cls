@@ -279,7 +279,7 @@ private class IEC_ShippingControllerTest {
 				//Change Shipping Address
 				System.debug('ctrl.sfOrder::'+ctrl.sfOrder);
 				System.debug('newShipToLocation::'+newShipToLocation);
-				ctrl.sfOrder.ShipTo_Location__c = newShipToLocation.Id;
+				//ctrl.sfOrder.ShipTo_Location__c = newShipToLocation.Id;
 				ctrl.changeShipToAddress();
 				ctrl.recalculateFreightTax = true;
 				ctrl.calculateFreightTaxDTO();
@@ -470,6 +470,8 @@ private class IEC_ShippingControllerTest {
 				ctrl.refreshCookieContent(orderItems, false);		
 
 				//-- Apply Invalid coupon Code 
+				System.debug('ctrl.vfOrder::'+ctrl.vfOrder);
+				System.debug('ctrl.vfOrder.orderitems[1]::'+ctrl.vfOrder.orderitems[1]);
 				ctrl.updateItemId = ctrl.vfOrder.orderitems[1].orderItemId;
 				ctrl.vfOrder.orderitems[1].couponCode = 'COUP123XX';
 				try{ctrl.applyCoupon();}catch(Exception ex){}

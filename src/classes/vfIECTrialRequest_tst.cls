@@ -75,7 +75,7 @@ private class vfIECTrialRequest_tst {
 	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
 
 			IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(baseCont.loggedCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-			insert oBillingAddress;		
+			//insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
 	
 			// Pass the rateplan id to the page parameters    	
 	    	pgRef.getParameters().put(IECConstants.PARAM_RATEPLAN_ID, IECUtil.EncryptEncodeParameter(ratePlanInfo.Id));
@@ -107,8 +107,7 @@ private class vfIECTrialRequest_tst {
 
 	        List<SelectOption> lstOptions;
 	        lstOptions = pgCont.lstISOCountries;
-	        lstOptions = pgCont.lstCanadaProvinces;
-	        lstOptions = pgCont.lstUSAStates;
+	        lstOptions = pgCont.lstStateProvince;
 	        
 	        pgCont.modifyContactInfo();
 	        pgCont.updateContactInfo();
@@ -156,7 +155,7 @@ Trial__c trl ;
 			// Insert billing address to continue testing
 			IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(baseCont.loggedCustomer.RelatedContact, 
 																				IECConstants.IECAddress_AddressType_Billing);
-			insert oBillingAddress;		
+			//insert oBillingAddress;	 //*** commented by Thai (2016-02-29) because address was inserted in the calling method
 
 			// Prepare the T&C component
 	        pgCont.oTnCComponentController.listProductInformationIDs = new String [] {myProdInfo.Id};
@@ -254,10 +253,13 @@ Trial__c trl ;
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Phone'));
 	        pgCont.oContact.Phone = '4169494949';
 
-			pgCont.oBillingAddress = new IECAddress__c(
-				Contact__c = pgCont.oContact.Id
-	            , Address_Type__c = IECConstants.IECAddress_AddressType_Billing
+			pgCont.oBillingLocation = new Location__c(
+            	Active__c = true
+            	, Account__c = pgCont.oAccount.Id
+            	, Contact__c = pgCont.oContact.Id
+            	, Type__c = IECConstants.IECAddress_AddressType_Billing
 			);
+			pgCont.oBillingAddress = new IECAddress__c();
 			
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Address'));
@@ -267,7 +269,6 @@ Trial__c trl ;
 	        pgCont.oBillingAddress.City__c = 'City';
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Country'));
-	        pgCont.oBillingAddress.Country__c = 'Test';
 	        
 	        // Setup a VAT Configuration
 	        IATA_ISO_Country__c country = IECTestUtil.CreateSampleIATAISOCountry();
@@ -276,6 +277,8 @@ Trial__c trl ;
 	        country.Tax_1_Label__c = 'Tax 1 ID';
         	country.Tax_2_Label__c = 'Tax 2 ID';
 	        insert country;
+	        
+	        pgCont.oBillingAddress.ISO_Country__c = country.Id;
 	        
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 1 ID'));
@@ -286,7 +289,7 @@ Trial__c trl ;
 	        pgCont.updateContactInfo();
 	        
 	        // Misc Coverage
-	        pgCont.oBillingAddress.Country__c = 'Teesstt';
+	        pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
 	        pgCont.onChangeBillingCountry();
     	}
         System.debug('Unit Test: Finish: TestTrialRequest_ContactUpdate');

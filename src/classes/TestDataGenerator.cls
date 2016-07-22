@@ -1309,16 +1309,16 @@ public with sharing class TestDataGenerator
         
         try
         {
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='Ontario', ISO_Code__c='CA-ON'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='ON', ISO_Code__c='ON'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='Quebec', ISO_Code__c='CA-QC'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='QC', ISO_Code__c='QC'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='Alaska', ISO_Code__c='US-AK'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='AK', ISO_Code__c='AK'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='California', ISO_Code__c='US-CA'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='CA', ISO_Code__c='CA'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='Florida', ISO_Code__c='US-FL'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='FL', ISO_Code__c='FL'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='Ontario', ISO_Code__c='CA-ON'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='ON', ISO_Code__c='ON'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='Quebec', ISO_Code__c='CA-QC'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='QC', ISO_Code__c='QC'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='Alaska', ISO_Code__c='US-AK'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='AK', ISO_Code__c='AK'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='California', ISO_Code__c='US-CA'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='CA', ISO_Code__c='CA'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='Florida', ISO_Code__c='US-FL'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='FL', ISO_Code__c='FL'));
             Database.upsert(listState, IATA_ISO_State__c.ISO_Code__c, false);
         }
         catch (Exception e) {}
@@ -1537,7 +1537,7 @@ public with sharing class TestDataGenerator
                 Street__c = i + ' street',
                 City__c = 'Montreal',
                 ZipCode__c = 'H0H 0H0',
-                Address_Type__c = 'Type_'+i, 
+                Address_Type__c = Utility.generateRandomString(8) + i, 
                 //ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'QC'),
                 //ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
                 ISO_Country__c = isoCountry.Id,

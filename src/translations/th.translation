@@ -269,6 +269,18 @@
         <name>Add_campaign_member_error</name>
     </customLabels>
     <customLabels>
+        <label>Error : ไม่มีข้อมูลของจังหวัดอยู่ในบิลลิ่ง โปรดกรุณาทำตามข้อมูลด้านล่างเพื่อแก้ไขข้อมูลดังนี้ 1.โปรดแก้ไขข้อมูล &quot;ชื่อเมือง - สำหรับเรียกเก็บเงินในบิลลิ่ง&quot; 2. เลือกที่อยู่ตามที่เสนอโดยระบบ</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบที่อยู่สำหรับเรียกเก็บเงินใน Billing และ ที่อยู่สำหรับการจัดส่งเอกสาร โดยคลิกที่ปุ่ม &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบที่อยู่สำหรับเรียกเก็บเงินใน Billing และ ที่อยู่สำหรับการจัดส่งเอกสาร โดยคลิกที่ปุ่มเครื่องหมายถูก</label>
+        <name>AddressDoctorValidate2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address Line 1 --></label>
         <name>Address_Line_1</name>
     </customLabels>
@@ -883,6 +895,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศ</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2659,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>E-mail: อีเมลนี้ได้ถูกลงทะเบียนไว้แล้ว หากคุณต้องการที่จะตั้งค่ารหัสผ่านของคุณใหม่ โปรดกลับไปที่หน้าจอเข้าสู่ระบบ (Login) และใช้ฟังก์ชั่น &quot;ลืมรหัสผ่านของคุณหรือไม่&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5176,6 +5196,10 @@ and
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>กรุณาคลิก &quot;Next&quot; เพื่อ ดำเนินการต่อไป</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>เนื่องจากคุณไม่ได้ เข้าสู่ระบบมาเป็นเวลาเกินกว่า 90 วัน รหัสผ่านใหม่จึงได้ทำการส่งไปยังอีเมลล์</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6198,6 +6222,10 @@ GSA - ตัวอักษร 3 ตัว
     <customLabels>
         <label>ความเป็นส่วนตัว</label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณจะถูกกลับไปยังหน้าเริ่มต้นในภายในอีก 5 วินาที</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>ขั้นตอนการลงทะเบียน</label>

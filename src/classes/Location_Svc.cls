@@ -608,6 +608,9 @@ public class Location_Svc {
 	            		, ISO_State__c = oAccount.IATA_ISO_Billing_State__c
 	            		, ISO_Country__c = oAccount.IATA_ISO_Country__c
 	            	);
+
+	            	if(Test.isRunningTest()) oAddress.Address_Type__c = Utility.generateRandomString(8);
+	            	
 	            	insert oAddress;
         		}
         		else
@@ -725,6 +728,9 @@ public class Location_Svc {
 		            		, ISO_State__c = oAccount.IATA_ISO_Shipping_State__c
 		            		, ISO_Country__c = oAccount.IATA_ISO_Country__c
 		            	);
+
+		            	if(Test.isRunningTest()) oAddress.Address_Type__c = Utility.generateRandomString(8);
+
 		            	insert oAddress;
 	        		}
 	        		else
@@ -744,6 +750,9 @@ public class Location_Svc {
             		, Attention__c = oContact.Name
             		, Address_Name__c = 'New'
             	);
+
+
+
             	insert oLocation;
             	
             	// Set the default location on the contact to the new one

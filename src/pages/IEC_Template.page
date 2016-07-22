@@ -88,6 +88,9 @@
                #addressmessage {
                     font-size:16px;font-family:Arial,​Helvetica,​sans-serif;font-weight:bold;
                 }
+                .list-group-item-text, .list-group-item-heading{
+                    font-family:Arial,​Helvetica,​sans-serif !important;
+                }
                 
                 .no_left_padding{
                     padding-left: 0!important; 
@@ -156,9 +159,9 @@
                         .addClass("col-lg-9"); 
 
                     //-- One phone number per line
-                    $("#Phoneone, #Phonetwo, #Phonethree")
-                        .removeClass("col-lg-4")
-                        .addClass("col-lg-7");
+                    // $("#Phoneone, #Phonetwo, #Phonethree")
+                    //     .removeClass("col-lg-4")
+                    //     .addClass("col-lg-7");
 
                     //-- Align Phone numbers labels 
                     $("#Phoneone>label, #Phonetwo>label, #Phonethree>label").addClass("col-lg-4 no_left_padding");
@@ -168,6 +171,18 @@
 
                     $("#DSEPhone input[type='image']").parent().parent().removeClass("col-lg-1 col-md-1 col-sm-1 col-xs-1");
 
+                    $(".alert-danger")
+                        .removeClass("alert-danger")
+                        .addClass("error")
+                        .css("font-family","Arial,​Helvetica,​sans-serif !important;");
+
+                    $("#confirmMessage")
+                    // .addClass("alert success")
+                        .css("font-family","Arial,​Helvetica,​sans-serif !important;")
+						.css("padding-left","0");
+					$("#confirmMessage h4").css("font-weight","normal");
+
+                    
                     // $("#PanelDiv .login_box").addClass("col-lg-8");
                 });
 

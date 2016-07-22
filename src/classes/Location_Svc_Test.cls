@@ -20,7 +20,8 @@ private class Location_Svc_Test {
         	// Test 01: Initialize the first contact where no location record exists
         	Location_Svc.InitializeContactLocations(lstContact[0].Id);
         	
-        	List<Location__c> lstLocation = [SELECT Id FROM Location__c];
+        	List<Location__c> lstLocation = [SELECT Id, Type__c FROM Location__c];
+            System.debug('lstLocation::'+lstLocation);
         	System.assertEquals(3, lstLocation.size(), 'Three location records must be created. Sold/Bill/Ship-To records.');
         	
         	List<IECAddress__c> lstAddress = [SELECT Id FROM IECAddress__c];

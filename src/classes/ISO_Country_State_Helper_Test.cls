@@ -12,10 +12,10 @@ private class ISO_Country_State_Helper_Test {
 	    System.debug('listCountry::'+listCountry);
 
 	    system.assert(listCountry.size() == 4, 'Size of listCountry: ' + listCountry.size());
-	    system.assert(listCountry[0].StateCode.size() == 2, 'Size of listState for Canada: ' + listCountry[0].CountryName + ' - ' + listCountry[0].StateCode.size());
+	    system.assert(listCountry[0].StateCode.size() == 4, 'Size of listState for Canada: ' + listCountry[0].CountryName + ' - ' + listCountry[0].StateCode.size());
 	    system.assert(listCountry[1].StateCode.size() == 0, 'Size of listState for Chile: ' + listCountry[1].CountryName + ' - ' + listCountry[1].StateCode.size());
 	    system.assert(listCountry[2].StateCode.size() == 0, 'Size of listState for Mexico: ' + listCountry[2].CountryName + ' - ' + listCountry[2].StateCode.size());
-	    system.assert(listCountry[3].StateCode.size() == 3, 'Size of listState for United States: ' + listCountry[3].CountryName + ' - ' + listCountry[3].StateCode.size());
+	    system.assert(listCountry[3].StateCode.size() == 6, 'Size of listState for United States: ' + listCountry[3].CountryName + ' - ' + listCountry[3].StateCode.size());
 	
 	    Map<String, String> mapName_Code = ISO_Country_State_Helper.getCountryCodeFromName(new List<String>{'Canada', 'Not Found'});
 	    system.assert(mapName_Code.get('Canada') == 'CA', 'Wrong code for Canada: ' + mapName_Code.get('Canada'));
@@ -30,7 +30,7 @@ private class ISO_Country_State_Helper_Test {
 	    system.assert(lstCountryOption.size() == 5, 'Size of lstCountryOption: ' + lstCountryOption.size());
 	    
 	    List<SelectOption> lstStateOption = ISO_Country_State_Helper.getPicklistISOState(listCountry, listCountry[0].CountryId);
-	    system.assert(lstStateOption.size() == 3, 'Size of lstStateOption: ' + lstStateOption.size());
+	    system.assert(lstStateOption.size() == 5, 'Size of lstStateOption: ' + lstStateOption.size());
 	}
 
 } //*** end of class

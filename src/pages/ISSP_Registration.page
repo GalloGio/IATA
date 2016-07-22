@@ -5,7 +5,7 @@
  </head>
  
   <apex:outputPanel rendered="{!displayNewCaseForm}" >
-    <c:ISSP_Registration_NewCaseForm ctrl="{!thisCtrlForNewCaseForm}" />
+
   </apex:outputPanel>
   
   <apex:outputPanel rendered="{!show90Days}" >
@@ -14,34 +14,37 @@
     window.location.replace('/ISSP_Login');
     </script>
   </apex:outputPanel>
-  
-  <style>
-  .btn-success2 {
-  color: #ffffff;
-  background-color: #a1bc00;
-  border: 1px solid #4E8E15;
-  font-weight: bold;
-  cursor: pointer;   
-}
-            h3.panel-title {background: none repeat scroll 0 0 #a1bc00;color: #fff;display: block;font-size: 19px;font-weight: normal;margin-top: 0;padding: 10px;}
-            .has-error .hiddenerror {display: inline !important;}
-            .errormsg {font-weight: bold; font-size: 14px; color: #C90435;}
-</style>
-  
-  <apex:composition template="ISS_Template">
+
+  <apex:composition template="{!templatename}">
     <apex:define name="body">
       <!-- FIRST LOG BOX  -->
-      <div class="registration_page">
+      <div class="registration_page" id="Registration">
         <div class="logo"> </div>
         <div class="col-md-6 col-md-push-3">
           <div class="panel panel-default">
-            
+            <div class="panel-heading2">
+              <h3 class="panel-title"> {!$Label.ISSP_Registration_RegistrationProcess}</h3>
+            </div>
             
             <!-- MESSAGE BOX -->
-          <div class="panel panel-default" style="display:{!if(showConfirmMessage,'','none')}">
+          <div class="panel panel-default" style="display:{!if(showConfirmMessage,'','none')}" id="confirmMessage">
             <div class="panel-body">
               <h4 class="list-group-item-heading">{!$Label.ISSP_Registration_Thank_you}</h4>
+              
+              <script>
+              var val = '{!showConfirmMessage}';
+              if (val == "true") { 
+                   setTimeout(function(){
+                         var url = document.URL;
+                         var first = url.split(".com/");
+                         var redir = first[0] + ".com/" + '{!urlredirect}'; 
+                         location.href = redir;
+                         },
+                   5000);
+               }
+              </script>
               <p class="list-group-item-text">{!$Label.ISSP_Registration_PleaseCheckYourMail}</p>
+              <p class="list-group-item-text">{!$Label.ISSP_Registration_Redirection}</p>
             </div>
           </div>
           <!-- END MESSAGE BOX  -->
@@ -53,9 +56,7 @@
         
         
         
-            <div class="panel-heading2">
-              <h3 class="panel-title"> {!$Label.ISSP_Registration_RegistrationProcess}</h3>
-            </div>
+            
             <apex:form styleclass="login_box" forceSSL="true" rendered="{!(!showConfirmMessage)}">
               <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
                 <strong>{!$Label.ISSP_Error} </strong>
@@ -67,14 +68,21 @@
                 <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
-                  </div>                 
+                  </div>                  
                 <apex:inputField styleclass="form-control rec"  id="email" value="{!con.email}"/>
               </div>
               <div class="form-group" >
                  <div>
+                  <apex:panelGrid columns="1" id="reCAPTCHAGrid" style="margin-left: 45px;" >
+                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}"/>
+                 </apex:panelGrid>
+                 
+                 <!-- 
                     <img src="//captchator.com/captcha/image/{!captchaId}" />
                     <br/><br/>
                     <apex:inputText value="{!captchaAnswer}" html-placeholder="{!$Label.ISSP_Enter_Value}" />
+                  -->
+                
                 </div>
               </div>
               <!--
@@ -105,6 +113,9 @@
       </div>
     </apex:define>
   </apex:composition>
+  
+  
+  
   
               <script>
               

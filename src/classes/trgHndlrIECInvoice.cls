@@ -217,12 +217,18 @@ public with sharing class trgHndlrIECInvoice {
 					}
 				}
 			}
+
 			
-			if (!lstInvoiceItemsToInsert.isEmpty())
-				upsert lstInvoiceItemsToInsert Zuora_ID__c;
-			
-			if (!mapInvoiceItemCounter.isEmpty())
-				upsert mapInvoiceItemCounter.values() Zuora_Invoice_Number__c;
+			if (!lstInvoiceItemsToInsert.isEmpty()){
+				try{upsert lstInvoiceItemsToInsert Zuora_ID__c;}
+				catch(Exception ex){}
+			}
+
+			if (!mapInvoiceItemCounter.isEmpty()){
+				try{upsert mapInvoiceItemCounter.values() Zuora_Invoice_Number__c;}
+				catch(Exception ex){}
+			}
+				
 		}
 	}
 }

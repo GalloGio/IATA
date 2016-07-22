@@ -59,12 +59,14 @@ private class SchdlIECSendInvoicesToSAP_tst {
                     ', Account__r.Sales_Office__c, Account__r.Payment_Term__c' +
 					', (SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
 						',Profit_Center__c,Quantity__c,Status__c,Status_Date__c,Unit_Price__c,Unit_Price_Currency__c, Name, Adjusted_Charge_Amount__c ' +
-                        ', Product__r.IEC_SAP_DocType__c, Product__r.Product_Manager_lookup__r.EmployeeNumber, Product__r.SAP_Contract_OrderReason__c' +
+                        ', Product__r.IEC_SAP_DocType__c, Product__r.Product_Manager_lookup__r.EmployeeNumber, Product__r.SAP_Contract_OrderReason__c ' +
 					 'FROM IEC_SAP_Invoice_Items__r) ' +
 					'FROM IEC_SAP_Invoice__c ' +
 					'WHERE Status__c = \'' + IECConstants.IECSAPInvoice_Status_New + '\' ' +
 						'AND Text_Print__c = \'' + IECSAPManager_tst.TEST_FLAG_SUCCESS + '\' ' +
 					'ORDER by CreatedDate';
+
+                System.debug('btchProc.query::'+btchProc.query);
 
 		Database.executeBatch(btchProc, 50);
 		Test.stopTest();

@@ -4,7 +4,8 @@
   * Version: 1.0
   * History: 
   */
-public with sharing class IECTestUtil {
+//*** (Thai) change from "with" to "without" to fix error "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" on creating of a state in method "CreateSampleIECAddress"
+public without sharing class IECTestUtil {
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -711,7 +712,7 @@ public with sharing class IECTestUtil {
         catch (Exception e)
         {
             country = new IATA_ISO_Country__c(Name='Canada', ISO_Code__c='CA', ISO_Code_Numeric__c=1);
-            insert country;
+            upsert country;
         }
         //*** get ISO state
         IATA_ISO_State__c state;
@@ -722,11 +723,11 @@ public with sharing class IECTestUtil {
         catch (Exception e)
         {
             state = new IATA_ISO_State__c(IATA_ISO_Country__c=country.Id, Name='Quebec', ISO_Code__c='QC');
-            insert state;
+            upsert state;
         }
-        //*** create address -> also populate unused fields Country__c and State__c for "just in case"
+        //*** create address -> also populate unused fields Country__c, State__c and Address_Type__c for "just in case"
         IECAddress__c address = new IECAddress__c(Street__c='123 main street', City__c='Montreal', ISO_Country__c=country.Id, ISO_State__c=state.Id, ZipCode__c='h1q2w3'
-                                                , Country__c=country.ISO_Code__c, State__c=state.ISO_Code__c);
+                                                , Country__c=country.ISO_Code__c, State__c=state.ISO_Code__c, Address_Type__c='Test' + system.now());
         insert address;
         //*** create location
         Location__c location = new Location__c(Account__c=oContact.AccountId, Contact__c=oContact.Id, Address__c=address.Id, Type__c=sType, Active__c=true);

@@ -269,6 +269,20 @@
         <name>Add_campaign_member_error</name>
     </customLabels>
     <customLabels>
+        <label>Lỗi: Thông tin về Tiểu Bang/Tỉnh còn thiếu, vui lòng làm theo các bước sau để điền thông tin:  
+1- Ấn sửa mục &apos;Thành Phố mà Hóa Đơn Được gửi Đến&apos;
+2- Chọn một địa chỉ mà hệ thống thể hiện</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng xác nhận địa chỉ nhận hóa đơn của bạn bằng cách ấn vào ô &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng xác nhận địa chỉ nhận hóa đơn của bạn bằng cách nhấn vào ký hiệu tick</label>
+        <name>AddressDoctorValidate2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address Line 1 --></label>
         <name>Address_Line_1</name>
     </customLabels>
@@ -883,6 +897,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Quốc Gia</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2661,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>Đia chỉ email này đã đăng ký trên Online Store. Nếu bạn muốn thay đổi mật khẩu, vui lòng vào lại trang đăng nhập và chọn &apos;Forgot your password?&apos;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5175,6 +5197,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Nhấn &apos;next&apos; để tiếp tục</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Vì tài khoản không được đăng nhập trong 90 ngày qua, một email với một mật khẩu mới đã được gửi cho bạn.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6196,6 +6222,10 @@ Nếu bạn không có Mã IATA, xin vui lòng quay lại và chọn ‘Other Co
     <customLabels>
         <label>Quyền riêng tư</label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn sẽ được chuyển tới trang chủ trong 5 giây tiếp theo</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>Quá trình đăng ký</label>
