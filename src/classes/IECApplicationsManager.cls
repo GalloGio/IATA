@@ -221,10 +221,14 @@ public without sharing class IECApplicationsManager {
         String sQueryFields;
         
         if(bReturnAllFields)
-        	 sQueryFields = 'SELECT Agency_Code__c, Agency_Status__c, IATA_Code__c, Name, Agency_Status_Code__c, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Email_Address__c'
-                                + ', Incorporation_Type__c, Legal_Name__c, Location_Type__r.Name, Parent_GDP_Account_View__c, Trading_Name__c, City__c, Zip_Postal_Code__c, Related_Accreditation_Class__r.Class__r.Name'
-                                + ', Sub_Continent__c, Country_Name__c, Related_Accreditation_Class__r.Class__r.Definition__c, Related_Accreditation_Class__r.Class__r.Code__c, State_Province__c, Related_Accreditation_Class__c' 
-                                + ' FROM GDP_Products_Account_View__c';
+        	 //sQueryFields = 'SELECT Agency_Code__c, Agency_Status__c, IATA_Code__c, Name, Agency_Status_Code__c, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Email_Address__c'
+          //                      + ', Incorporation_Type__c, Legal_Name__c, Location_Type__r.Name, Parent_GDP_Account_View__c, Trading_Name__c, City__c, Zip_Postal_Code__c, Related_Accreditation_Class__r.Class__r.Name'
+          //                      + ', Sub_Continent__c, Country_Name__c, Related_Accreditation_Class__r.Class__r.Definition__c, Related_Accreditation_Class__r.Class__r.Code__c, State_Province__c, Related_Accreditation_Class__c' 
+          //                      + ' FROM GDP_Products_Account_View__c';
+             sQueryFields = 'SELECT Account_View__c, Account_View__r.Id, Account_View__r.Agency_Code__c, Account_View__r.Agency_Status__c, Account_View__r.IATA_Code__c, Account_View__r.Name, Account_View__r.Agency_Status_Code__c, Account_View__r.Airline_Code__c, Account_View__r.BSP_CASS_Code__c, Account_View__r.CASS_Number__c, Account_View__r.Email_Address__c'
+                                + ', Account_View__r.Incorporation_Type__c, Account_View__r.Legal_Name__c, Account_View__r.Location_Type__r.Name, Account_View__r.Parent_GDP_Account_View__c, Account_View__r.Trading_Name__c, Account_View__r.City__c, Account_View__r.Zip_Postal_Code__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Name'
+                                + ', Account_View__r.Sub_Continent__c, Account_View__r.Country_Name__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Definition__c, Account_View__r.Related_Accreditation_Class__r.Class__r.Code__c, Account_View__r.State_Province__c, Account_View__r.Related_Accreditation_Class__c' 
+                                + ' FROM GDP_Products_Account_Snapshot__c';
         else
              sQueryFields = 'SELECT Account_View__r.Id FROM GDP_Products_Account_Snapshot__c';
                                 

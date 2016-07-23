@@ -211,6 +211,7 @@ public with sharing class trgHndlrIECInvoice {
 						mapInvoiceItemCounter.put(sInvoiceId
 							, new IEC_SAP_Invoice__c (
 								Zuora_Invoice_Number__c = mapInvoiceZIdToNumber.get(sInvoiceId)
+								, Name = mapInvoiceZIdToNumber.get(sInvoiceId)   //*** (Thai) add to fix test class
 								, Number_of_Zuora_Items__c = 1
 							)
 						);

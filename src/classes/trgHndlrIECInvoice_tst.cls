@@ -176,7 +176,7 @@ public class trgHndlrIECInvoice_tst {
 		oContact.ShipTo_Location__c = shipToLocation.Id;
 		update oContact;
 
-
+		Test.startTest();   //*** (Thai) to increase # SOQL and to complete future
 
 		// Initialize Data    	
     	Init(loggedCustomer);
@@ -199,13 +199,11 @@ public class trgHndlrIECInvoice_tst {
         lstBillingAccount[0].Zuora__Zuora_Id__c = TestDataGenerator.generateZuoraFakeId();
         update lstBillingAccount[0];
     	
-        Test.startTest();
-
         IECTestUtil.InvoiceTestOrigin = 'trgHndlrIECInvoice_tst';
         oInvoice = IECTestUtil.createSampleInvoice(lstBillingAccount.get(0), Date.today(), 113.0);
         insert oInvoice;
 
-        //Test.stopTest();
+        Test.stopTest();   //*** (Thai) stop to complete future method
 
         IECTestUtil.InvoiceTestOrigin = '';
         
@@ -213,8 +211,7 @@ public class trgHndlrIECInvoice_tst {
         // 001: Make sure that the invoice item has been downloaded and linked properly
         List<Invoice_Item__c> lstInvoiceItem = [SELECT Product__c, Subscription_Zuora_ID__c, Subscription_Product_Charge_Zuora_ID__c FROM Invoice_Item__c WHERE Invoice__c = :oInvoice.Id];
         
- Test.stopTest();
-        system.assertNotEquals(lstInvoiceItem.size(), 0);
+        system.assertNotEquals(lstInvoiceItem.size(), 0, trgHndlrIECInvoice_tst.getSampleInvoiceItems());
         system.assertEquals(lstInvoiceItem.get(0).Product__c, oProduct.Id);
         system.assertEquals(lstInvoiceItem.get(0).Subscription_Zuora_ID__c, oSubscription.Zuora__External_Id__c);
         system.assertEquals(lstInvoiceItem.get(0).Subscription_Product_Charge_Zuora_ID__c, oSubscriptionCharge.Zuora__External_Id__c);

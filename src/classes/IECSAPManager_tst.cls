@@ -143,7 +143,7 @@ public class IECSAPManager_tst {
 	/**
 	 * Tests the sending of invoices/invoice items to SAP
 	 */
-    static void testSendInvoiceToSAP() {
+    static testMethod void testSendInvoiceToSAP() {
         
         Decimal dInvoice1Amount = 142.0;
         Date dtInvoice1Date = Date.today().addDays(-5);
@@ -172,9 +172,6 @@ public class IECSAPManager_tst {
 		IECTestUtil.InvoiceTestOrigin = 'IECSAPManager_tst';
 		oInvoice1 = IECTestUtil.createSampleInvoice(oBillingAccount, dtInvoice1Date, dInvoice1Amount);
     	insert oInvoice1;
-
-    	System.debug('oInvoice1::'+oInvoice1);
-
     	/*
     	oInvoice2 = IECTestUtil.createSampleInvoice(oBillingAccount, dtInvoice2Date, dInvoice2Amount);
     	insert oInvoice2;
@@ -186,7 +183,6 @@ public class IECSAPManager_tst {
         	
         // make sure that a IEC SAP Invoice has been created
 		oSAPInvoice1 = IECSAPManager.getSAPInvoiceByInvoiceNumber(oInvoice1.Name);
-		System.debug('oSAPInvoice1::'+oSAPInvoice1);
 		
 		// verify SAP Invoice
 		system.assert(oSAPInvoice1 != null, 'A SAP Invoice should be created');

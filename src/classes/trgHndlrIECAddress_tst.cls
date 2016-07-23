@@ -62,6 +62,7 @@ private class trgHndlrIECAddress_tst {
     	
     	// Create multiple records of Contacts/Address/Location to test batch processing
     	List<Contact> lstContact = TestDataGenerator.generateContacts(oAccount.Id, 5, true);
+    	TestDataGenerator.generateISOCountryState();
     	
     	List<Zuora__CustomerAccount__c> lstZAccount = new List<Zuora__CustomerAccount__c>(); 
     	List<IECAddress__c> lstAddress = new List<IECAddress__c>();
@@ -110,7 +111,8 @@ private class trgHndlrIECAddress_tst {
      		for (IECAddress__c oAddress : lstAddress)
  			{
 		     	// modify the state
-		     	oAddress.ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON');
+		     	//oAddress.ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON');
+		     	oAddress.Street__c = 'new street';
  			}
  			
 	     	update lstAddress;
