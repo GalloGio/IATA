@@ -106,9 +106,11 @@ public class VfIECShoppingCart_tst {
             system.assertEquals(false, pgCont.hasSubscriptionResult, 'The flag hasSubscriptionResult should be false at first');
             
             pgCont.checkSwapAndCleanUp();
-            //*** (Thai) add 2 following lines because "checkSwapAndCleanUp" remove all products
-            IECShoppingCartHelper.addCartItem(cart, oProductRatePlanInfo.Id, 1);
-            pgCont.refreshShoppingCartItems();
+            //*** (Thai) add following if because "checkSwapAndCleanUp" may remove all products
+            if (pgCont.cartIsEmpty) {
+                IECShoppingCartHelper.addCartItem(cart, oProductRatePlanInfo.Id, 1);
+                pgCont.refreshShoppingCartItems();
+            }
             pgCont.updateShoppingCart();
             pgCont.refreshShoppingCartTotal();
             
@@ -182,11 +184,11 @@ public class VfIECShoppingCart_tst {
                 // udpate Billing Address
                 pgCont.updateContactInfo();
                 
-                system.assertEquals(false, pgCont.inEditContactInfo, 'The flag inEditContactInfo should be set to false we just updated the Billing Address' + pgCont.oBillingAddress + '---' + pgCont.oOriginalBillingAddress + '---' + ApexPages.getMessages());
+                system.assertEquals(false, pgCont.inEditContactInfo, 'The flag inEditContactInfo should be set to false we just updated the Billing Address');
                 system.assertEquals(true, pgCont.isCountryFilled, 'The flag isCountryFilled should be set to true because we just updated it');
             }
             catch(Exception ex) {
-                system.assert(false, 'Test units on contact Billing Address should not fail' + lsttest[1].getValue() + '--' + lsttest[1].getLabel());
+                system.assert(false, 'Test units on contact Billing Address should not fail');
             }
             Test.stopTest();
             
@@ -246,6 +248,11 @@ public class VfIECShoppingCart_tst {
             system.assertEquals(false, pgCont.hasSubscriptionResult, 'The flag hasSubscriptionResult should be false at first');
             
             pgCont.checkSwapAndCleanUp();
+            //*** (Thai) add following if because "checkSwapAndCleanUp" may remove all products
+            if (pgCont.cartIsEmpty) {
+                IECShoppingCartHelper.addCartItem(cart, oProductRatePlanInfo.Id, 1);
+                pgCont.refreshShoppingCartItems();
+            }
             pgCont.updateShoppingCart();
             pgCont.refreshShoppingCartTotal();
             
@@ -266,6 +273,7 @@ public class VfIECShoppingCart_tst {
                 oBillingAdd.City__c = 'San Francisco';
                 oBillingAdd.Contact__c = usr.ContactId;
                 oBillingAdd.Address_Type__c = IECConstants.IECAddress_AddressType_Billing;
+                oBillingAdd.ISO_Country__c = lsttest[1].getValue();  //*** (Thai) add this line according to new structure
                 insert oBillingAdd;
                 
                 // refresh page
@@ -282,6 +290,8 @@ public class VfIECShoppingCart_tst {
                 pgCont.oBillingAddress.Country__c = 'United States';
                 pgCont.oBillingAddress.State__c = 'CA';
                 pgCont.oBillingAddress.ZipCode__c = '12345';
+                pgCont.oBillingAddress.City__c = 'San Francisco';  //*** (Thai) add this 2 lines according to new structure
+                pgCont.oBillingAddress.ISO_Country__c = lsttest[1].getValue();
                 
                 // udpate Billing Address
                 pgCont.updateContactInfo();

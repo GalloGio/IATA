@@ -483,12 +483,22 @@ public class IECAddress_Svc
     // Determine whether there is a difference between two address records
     public static Boolean isAddressChanged(IECAddress__c oAddress1, IECAddress__c oAddress2)
     {
-        return (oAddress1.Street__c != oAddress2.Street__c || oAddress1.City__c != oAddress2.City__c || oAddress1.ZipCode__c != oAddress2.ZipCode__c || oAddress1.ISO_Country__c != oAddress2.ISO_Country__c || oAddress1.ISO_State__c != oAddress2.ISO_State__c);
+        if (oAddress1 == null && oAddress2 == null)
+            return false;
+        else if (oAddress1 == null && oAddress2 != null || oAddress1 != null && oAddress2 == null)
+            return true;
+        else
+            return (oAddress1.Street__c != oAddress2.Street__c || oAddress1.City__c != oAddress2.City__c || oAddress1.ZipCode__c != oAddress2.ZipCode__c || oAddress1.ISO_Country__c != oAddress2.ISO_Country__c || oAddress1.ISO_State__c != oAddress2.ISO_State__c);
     }
 
     public static Boolean isAddressChanged(Address_DTO adr1, Address_DTO adr2)
     {
-    	String full1 = adr1.street1 +'|'+ adr1.street2 +'|'+ adr1.city +'|'+ adr1.stateCode +'|'+ adr1.postalCode +'|'+ adr1.countryCode;
+        if (adr1 == null && adr2 == null)
+            return false;
+        else if (adr1 == null && adr2 != null || adr1 != null && adr2 == null)
+            return true;
+    	
+        String full1 = adr1.street1 +'|'+ adr1.street2 +'|'+ adr1.city +'|'+ adr1.stateCode +'|'+ adr1.postalCode +'|'+ adr1.countryCode;
     	full1 = full1.replace(' ','').trim().toLowerCase();
 		
 		String full2 = adr2.street1 +'|'+ adr2.street2 +'|'+ adr2.city +'|'+ adr2.stateCode +'|'+ adr2.postalCode +'|'+ adr2.countryCode;
