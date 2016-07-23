@@ -393,7 +393,9 @@ private class trgHndlrIECSubscriptionToDetailTest {
 					);
 			if (( subDet.GDP_File_Description__r.Frequency__c  != null) 
 				&& (subDet.GDP_File_Description__r.Frequency__c != 'Daily' ))
-			{ // Daily does not use calendar_Next_Submission_Date
+			{ 
+			System.debug ('subscripti');
+			// Daily does not use calendar_Next_Submission_Date
 			//	System.assertNotEquals(null, subDet.Calendar_Next_Submission_Date__c, 'Calendar_Next_Submission_Date should not be null: ' + subDet + ' frequency:' + subDet.GDP_File_Description__r.Frequency__c);
 			//	System.assert(todayInTest < subDet.Calendar_Next_Submission_Date__c, 'Calendar_Next_Submission_Date should be in the future from dToday ' + todayInTest + ' :'+ subDet);
 			}
