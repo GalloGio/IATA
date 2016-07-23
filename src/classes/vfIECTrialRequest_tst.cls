@@ -285,8 +285,13 @@ Trial__c trl ;
 	        pgCont.oContact.Tax_1_ID__c = 'Tax1ID';
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 2 ID'));
+//*** (Thai) add Test block to fix error "MIXED_DML_OPERATION"
+IECTestUtil.trgPortalUserAfterInserUpdate = true;
+ISSP_UserTriggerHandler.preventTrigger = true;
+Test.startTest();
 	        pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
 	        pgCont.updateContactInfo();
+Test.stopTest();
 	        
 	        // Misc Coverage
 	        pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;

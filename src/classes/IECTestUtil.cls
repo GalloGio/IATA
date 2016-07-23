@@ -4,7 +4,8 @@
   * Version: 1.0
   * History: 
   */
-public with sharing class IECTestUtil {
+//*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
+public without sharing class IECTestUtil {
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -159,7 +160,7 @@ public with sharing class IECTestUtil {
         newAccount.BillingPostalCode = 'H0H 0H0';
         newAccount.BillingCountry = 'Canada';
         newAccount.BillingCity = 'Montreal';
-        //newAccount.ClientType__c = ClientType;
+        newAccount.Customer_Type__c = ClientType;
         newAccount.Name = 'Company';
 
 
