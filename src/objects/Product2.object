@@ -861,6 +861,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>a4a iata reservations interline procedures</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
@@ -873,7 +877,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Claims &amp; Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -886,6 +890,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Compliance Kits - Combos</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3839,7 +3847,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims %26 Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3852,6 +3860,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3936,6 +3948,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>a4a iata reservations interline procedures</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5842,7 +5858,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims %26 Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5855,6 +5871,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5939,6 +5959,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>a4a iata reservations interline procedures</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7777,7 +7801,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims %26 Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7790,6 +7814,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7874,6 +7902,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>a4a iata reservations interline procedures</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
