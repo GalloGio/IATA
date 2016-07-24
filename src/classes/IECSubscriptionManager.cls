@@ -1387,7 +1387,10 @@ public with sharing class IECSubscriptionManager {
             List<Zuora__Subscription__c> subscriptions = null;
         
             if (idBillingAccount != null) {
-                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
+                                , Zuora__Account__c, Zuora__Status__c
+                                , Zuora__TermSettingType__c
+                                , (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
                                 FROM Zuora__Subscription__c
                                 WHERE Zuora__CustomerAccount__c = :idBillingAccount
                                     AND Zuora__Status__c = 'Active'
@@ -1414,6 +1417,7 @@ public with sharing class IECSubscriptionManager {
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c
                                     , Zuora__Account__c, Zuora__Status__c
+                                    , Zuora__TermSettingType__c
                                     , (Select Zuora__ProductName__c, Zuora__RatePlanName__c
                                         From Zuora__Subscription_Product_Charges__r
                                         LIMIT 1)
@@ -1452,7 +1456,9 @@ public with sharing class IECSubscriptionManager {
             if (idBillingAccount != null) {
                 
                 String qString =    'SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, ' +
-                                        'Zuora__Status__c, (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1) ' +
+                                        'Zuora__Status__c, ' + 
+                                        'Zuora__TermSettingType__c, ' +
+                                        '(Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1) ' +
                                     'FROM Zuora__Subscription__c ' + 
                                     'WHERE Zuora__CustomerAccount__c = \'' + idBillingAccount + '\'' +
                                     'AND Zuora__Status__c = \'Active\' ' +
@@ -1484,7 +1490,9 @@ public with sharing class IECSubscriptionManager {
             List<Zuora__Subscription__c> subscriptions = null;
         
             if (idBillingAccount != null) {
-                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
+                subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c,
+                                Zuora__TermSettingType__c, 
+                                (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)
                                 FROM Zuora__Subscription__c
                                 WHERE (Zuora__CustomerAccount__c = :idBillingAccount)
                                     AND ((Zuora__Status__c != 'Active')
@@ -1620,6 +1628,7 @@ public with sharing class IECSubscriptionManager {
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
                         , Zuora__ContractAcceptanceDate__c
+                        , Zuora__TermSettingType__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                             From Zuora__Subscription_Product_Charges__r)
@@ -1688,8 +1697,7 @@ public with sharing class IECSubscriptionManager {
                     [SELECT Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,Zuora__AutoRenew__c
                         , Name, Id, Zuora__Zuora_Id__c,  Zuora__RenewalTerm__c, Zuora__InitialTerm__c
                         , Zuora__TermStartDate__c, Zuora__TermEndDate__c, Zuora__NextRenewalDate__c
-                        , Zuora__ContractAcceptanceDate__c
-                        , Zuora__TermSettingType__c
+                        , Zuora__ContractAcceptanceDate__c , Zuora__TermSettingType__c
                         ,  (Select  Name, Zuora__ProductName__c, Zuora__RatePlanName__c, Zuora__Quantity__c, Zuora__Price__c
                                 , Zuora__Type__c, Zuora__BillingPeriod__c, Zuora__EffectiveStartDate__c, Zuora__EffectiveEndDate__c
                             From Zuora__Subscription_Product_Charges__r)
