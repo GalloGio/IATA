@@ -30,7 +30,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         testCase.Oscar__c = oscar.Id;
         insert testCase;
         
-        AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id);
+        AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = acc1.Name);
         insert onlineAccreditation;
         
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
@@ -803,6 +803,38 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         list<AMS_Accreditation_Contact__c> lsAccCont = [select Id, Person_AMS__c, Email__c, Contact__c from AMS_Accreditation_Contact__c];
         list<Contact> lsContacts = AMS_AccountRoleCreator.transformACsWithPersonLinking_createContactList(lsAccCont, null); 
+    }
+
+     @isTest static void test_RoleCreationForCorrectionProcess(){
+
+        Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+        Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+
+        AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
+
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+
+        List<Contact> conList = [select Id, Email, AccountId from Contact];
+        List<Account> accList = [select Id, Name from Account];
+
+        AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Contact__c = conList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
+        AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Owner_Account__c = accList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
+
+        List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>{owner1,owner2};
+        insert ownersList;
+
+        List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner1.Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, Contact__c = conList.get(0).id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner2.Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, First_name__c='', Last_name__c='Comapny', Job_title__c='', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='company@email.com', Agency_owner__c = true, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
+        insert acList;
+
+        oscar.RecordTypeId = correctionOSCARRecTypeId;
+        oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
+        oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.STEP6__c = 'Passed';
+
+        update oscar;
+        
     }
     
 }
