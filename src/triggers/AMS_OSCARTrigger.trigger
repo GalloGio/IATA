@@ -101,6 +101,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if (!oscars.isEmpty()){
+            //deprecated AMS-1665
             //AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
         }
 

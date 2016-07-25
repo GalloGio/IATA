@@ -436,7 +436,8 @@ private class AMS_OSCAR_TriggerTest {
         
     }
 
-     @isTest static void createOscarAndAssignToQueue() {
+    /* Deprecated AMS-1665
+    @isTest static void createOscarAndAssignToQueue() {
 
         Test.startTest();
         
@@ -550,7 +551,7 @@ private class AMS_OSCAR_TriggerTest {
 
         Test.stopTest();
 
-     }
+     }*/
 
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
