@@ -337,13 +337,20 @@
                                             <div class="slds-box-x--small slds-theme--info slds-theme--alert-texture">
                                             <p class="slds-h3">{!IF(NOT(s.blockEdit), 'Please select relevant roles and fill in the data.', '')}</p>
                                             <!-- ROLE SELECTION -->
+                                            <apex:outputPanel layout="none" id="roleSelection">
                                             <table class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>
                                                     <tr>
                                                         <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Agency_owner__c.Label}&nbsp;&nbsp;
-                                                            <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" rendered="{!blockOwnershipEdit}" html-disabled=""/>
-                                                            <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" id="agencyOwner" rendered="{!NOT(blockOwnershipEdit)}"/>
+                                                            <apex:actionRegion>
+                                                                <apex:inputCheckbox value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" disabled="{!blockOwnershipEdit}">
+                                                                    <apex:actionSupport event="onchange" reRender="roleSelection, messages"/>                                                                    
+                                                                </apex:inputCheckbox>
+                                                            </apex:actionRegion>
+
+                                                            <!-- <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" rendered="{!blockOwnershipEdit}" html-disabled=""/>
+                                                            <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" id="agencyOwner" rendered="{!NOT(blockOwnershipEdit)}"/> -->
                                                         </th>
                                                         <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Agency_role__c.Label}&nbsp;&nbsp;
@@ -395,7 +402,7 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Financial_interest__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input {!IF(s.ownershipEditable == false, 'inputLocked', 'inputPointer')}" value="{!s.ac.Financial_interest__c}" id="financialInterest" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input" value="{!s.ac.Financial_interest__c}" id="financialInterest" disabled="{!OR(s.blockEdit, blockOwnerShipEdit, NOT(s.ac.Agency_Owner__c))}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Time_devoted_to_Agency_business__c.Label}">
@@ -404,7 +411,7 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Date_joined_agency__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.dateJoined}" html-placeholder="YYYY-MM-DD" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.dateJoined}" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-8" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Job_title__c.Label}">
@@ -414,6 +421,7 @@
                                                         </tr>
                                                 </tbody>
                                             </table>
+                                            </apex:outputPanel>
                                             
                                             
                                             <!-- ADDRESS DETAILS ROW -->
@@ -480,11 +488,11 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_From__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1From}" id="prev1from" html-placeholder="YYYY-MM-DD" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1From}" id="prev1from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_To__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1To}" id="prev1to" html-placeholder="YYYY-MM-DD" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev1To}" id="prev1to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_IATA_accredited__c.Label}">
@@ -503,7 +511,7 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job1_Address__c.Label}">
-                                                                <apex:inputtextarea rows="1" html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_Address__c}" id="prev1address" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputtextarea rows="1" html-class="slds-input inputPointer" value="{!s.ac.Prev_Job1_Address__c}" id="prev1address" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                         </tr>
                                                         
@@ -515,11 +523,11 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_From__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2From}" id="prev2from" html-placeholder="YYYY-MM-DD" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2From}" id="prev2from" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_To__c.Label}">
-                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2To}" id="prev2to" html-placeholder="YYYY-MM-DD" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputTextArea rows="1" html-class="slds-input inputPointer" value="{!s.prev2To}" id="prev2to" html-placeholder="YYYY-MM-DD" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_IATA_accredited__c.Label}">
@@ -538,7 +546,7 @@
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-7" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Prev_Job2_Address__c.Label}">
-                                                                <apex:inputtextarea rows="1" html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_Address__c}" id="prev2address" disabled="{!IF(s.blockEdit, 'true', 'false')}"/>
+                                                                <apex:inputtextarea rows="1" html-class="slds-input inputPointer" value="{!s.ac.Prev_Job2_Address__c}" id="prev2address" disabled="{!s.blockEdit}"/>
                                                             </td>
                                                         </tr>
                                                 </tbody>

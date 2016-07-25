@@ -624,11 +624,6 @@ public with sharing class AMS_AccreditationContactController {
     {
         public AMS_Accreditation_Contact__c ac {get; set;}
         public String recordId {get; set;}
-        public boolean ownershipEditable
-        {
-            get{return ac.Agency_Owner__c;}
-            set;
-        }
         public String dateJoined {get; set;}
         public String prev1From {get; set;}
         public String prev1To {get; set;}
