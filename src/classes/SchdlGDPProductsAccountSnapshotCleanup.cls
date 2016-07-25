@@ -77,7 +77,7 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
         if (sch == null) {
             sch = '0 0 3 * * ?';
         }
-
-        String jobID = System.schedule('Snapshot Cleanup', sch, new SchdlGDPProductsAccountSnapshotCleanup());
+        String jobName = (Test.isRunningTest())? 'Test_'+Datetime.now().time() : 'Snapshot Cleanup';
+        String jobID = System.schedule(jobName, sch, new SchdlGDPProductsAccountSnapshotCleanup());
     }
 }
