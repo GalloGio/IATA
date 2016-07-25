@@ -1,39 +1,184 @@
-<apex:page applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+<apex:page id="thePage" controller="vfIECEBC_AccountRatePlan" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
 	<apex:composition template="IECEBC_Layout">
-        <apex:define name="pageHeadAdditions">
-            <!-- Start of Page <head> -->
-            <title>eBroadcast Manager Account</title>
-            <!-- End of Page </head> -->
-        </apex:define>
-        <apex:define name="pageScriptAdditions">
-            <!-- If any page specific .js, add them here -->
-        </apex:define>
-        <apex:define name="pageContent">
-            <!-- Start of Page Content -->
-            <main class="main-content manage-account">
-                <div class="inner-wrapper">
-                    <h1 class="page-title">Account Details</h1>
-                    
-                    <div class="tab-container js-tabs">
-                        <ul class="nav tabs">
-                            <li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Overview</a></li>
-                            <li class="active"><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
-                            <li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
-                            <li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
-                        </ul>
-                        
-                        <div class="tab-content"> 
-                            <div class="tab-pane is-open" id="pane-2">
-                                ...
-                            </div>
-                                
-                            
-                        </div>
-                    </div>
-                </div>
-                
-            </main>
-            <!-- End of Page Content -->
-        </apex:define>
-    </apex:composition>
+		<apex:define name="pageHeadAdditions">
+			<!-- Start of Page <head> -->
+			<title>eBroadcast Manager Account</title>
+			<!-- End of Page </head> -->
+		</apex:define>
+		<apex:define name="pageScriptAdditions">
+			<!-- If any page specific .js, add them here -->
+		</apex:define>
+		
+		
+		<apex:define name="pageContent">
+			<!-- Start of Page Content -->
+			<main class="main-content manage-account">
+				<div class="inner-wrapper">
+					<h1 class="page-title">Account Details</h1>
+					
+					<div class="tab-container">
+						<ul class="nav tabs">
+							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
+							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li> 
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+						</ul>
+						
+						<div class="tab-content"> 
+							<div class="tab-pane is-open" id="pane-2">
+								<div class="row row-payment">
+									<div class="columns main-container campaign-cost">
+										<h2 class="heading-2">Current plan: <strong>{!productRatePlan.Name}</strong></h2>
+										<p class="description light small">
+											{!productRatePlan.zqu__Description__c}
+										</p>
+										
+										<apex:actionRegion id="upgradeOptionMessage" rendered="{!IF((showUpgradeOption),true,false)}">
+											<h2 class="heading-2 strong">Change your plan</h2>
+											<h2 class="heading-3 flat">Prepaid</h2>
+											<p class="description light small">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+										</apex:actionRegion>
+										
+										<apex:form id="productRatePlanForm" >   										
+											<apex:actionFunction action="{!selectRatePlanCharge}" name="updateRatePlanChargeSelection" rerender="paymentConfirmationForm">
+												<apex:param name="recIndex" assignTo="{!selectedRatePlanChargeIndex}" value=""/>
+											</apex:actionFunction>
+											
+											
+											<ul class="list plan-list js-checkbox-list">
+												<apex:repeat id="productRatePlanRepeat" value="{!productRatePlanChargeWrapperUpgradeList}" var="prpc">
+													<li class="list-item">
+														<div class="checkbox-box">
+															<div class="custom-user-input checkbox" >
+																<input class="user-input checkbox" type="checkbox" id="checkbox_{!prpc.index}" value="{!prpc.selected}" 
+																	onclick="updateRatePlanChargeSelection({!prpc.index})"
+																/>
+																<label class="custom-checkbox" for="checkbox_{!prpc.index}"><i class="icon"></i></label>
+															</div>
+															<label class="input-label" for="checkbox_{!prpc.productRatePlanCharge.Id}">Get this plan</label>
+														</div>
+														<div class="plan-box">
+															<div class="box plan-name">
+																{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.Name}
+															</div>
+															<div class="box plan-price">
+																<div class="price">
+																	<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpc.productRatePlanCharge.zqu__ListPrice__c}" /></apex:outputText>
+																</div>
+																<span class="currency-per-year">USD/year</span>
+																<span class="billed-annually">(billed annually)</span>
+															</div>
+															<div class="box plan-description">
+																<ul class="list check-circle-list">
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
+																	<li class="icon check-circle">Nulla vitae elit libero, a pharetra augue.</li>
+																	<li class="icon check-circle">Curabitur blandit tempus porttitor.</li>
+																	<li class="icon check-circle">Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+																	<li class="icon check-circle">Donec ullamcorper nulla non metus auctor fringilla.</li>
+																</ul>
+															</div>
+														</div>
+													</li>
+												</apex:repeat>
+												
+<!-- 
+												<li class="list-item">
+													<div class="checkbox-box">
+														<div class="custom-user-input checkbox">
+															<input class="user-input checkbox" type="checkbox" id="get-this-plan-1"/>
+															<label class="custom-checkbox" for="get-this-plan-1"><i class="icon"></i></label>
+														</div>
+														<label class="input-label" for="get-this-plan-1">Get this plan</label>
+													</div>
+													<div class="plan-box">
+														<div class="box plan-name">
+															Starter edition											</div>
+														<div class="box plan-price">
+															<div class="price">$1,500.00</div>
+															<span class="currency-per-year">USD/year</span>
+															<span class="billed-annually">(billed annually)</span>
+														</div>
+														<div class="box plan-description">
+															<ul class="list check-circle-list">
+																<li class="icon check-circle">Nulla vitae elit libero, a pharetra augue.</li>
+																<li class="icon check-circle">Curabitur blandit tempus porttitor.</li>
+																<li class="icon check-circle">Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+																<li class="icon check-circle">Donec ullamcorper nulla non metus auctor fringilla.</li>
+															</ul>
+														</div>
+													</div>
+												</li>
+	 -->
+											</ul>
+										</apex:form>
+										
+										
+										<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
+										
+                                    </div>
+									
+									
+									<div class="columns sub-container payment-confirmation">
+										<div class="is-sticky-confirmation" style="">
+											<div class="wrapper">
+												<apex:form id="paymentConfirmationForm">
+														<h2 class="section-title">Payment Confirmation</h2>
+														<div class="table-container">
+															
+															<table class="data-table table-payment table-confirmation">
+																<tbody>
+																	<tr class="item">
+																		<th>
+																		<apex:outputPanel id="paymentInfoShow" rendered="{!showPaymentConfirmation}">
+																			<strong>{!selectedProductRatePlanCharge.Name}</strong> subscription
+																			<div class="start-end-date">
+																				<strong>Start date:</strong>
+																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveStartDate__c}" /></apex:outputText>
+																				<strong>End date:</strong>
+																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveEndDate__c}" /></apex:outputText>
+																			</div>
+																		</apex:outputPanel>
+                                                                        <apex:outputPanel id="paymentInfoNoShow" rendered="{!!showPaymentConfirmation}">
+																			<strong>Please select the upgrade plan!</strong>
+                                                                        </apex:outputPanel>
+																		</th>
+                                                                            
+																		<td class="price top">
+																			<strong>
+																				<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!newSubscriptionProductCharge.Zuora__Price__c}" /></apex:outputText>
+																			</strong>
+																		</td>
+																	</tr>
+																	<tr class="total">
+																		<th>Total</th>
+																		<td class="price">
+																			<strong>
+																				<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!newSubscriptionProductCharge.Zuora__Price__c}" /></apex:outputText>
+																			</strong>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<div class="footer-actions">
+															<ul class="list actions">
+																<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Cancel</a></li>
+																<li><a class="button" href="#">Submit payment</a></li>
+															</ul>
+														</div>
+												</apex:form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<!-- End of Page Content -->
+		</apex:define>
+	</apex:composition>
 </apex:page>

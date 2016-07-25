@@ -23,12 +23,14 @@
 *  Change Log: 
 *   - 20160704-sl: initial version, with EBC_Activity Activity_Type = Initial E-mail Balance
 *   - 20160705-sl: add EBC_Preference initialization
+*	- 20160721-sl: change Activity_Date to Activity_Date_Time, initial type is Credit
 */
 
 
 public with sharing class trgIECEBC_SubscriptionHandler {
 	
 	public static boolean firstRun = true; // this is used to prevent processEbcSubscription executed twice on one execution
+	private static final String EBC_ACTIVITY_NAME_INITIAL = 'Initial E-mail Balance';
 	
 	// ========================================================================
 	// processEbcSubscription will update related Zuora__CustomerAccount and insert an EBC_Activity
@@ -152,17 +154,16 @@ public with sharing class trgIECEBC_SubscriptionHandler {
 		Integer emailCredits = (subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c == null ) ? 0 : Integer.valueOf(subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_PrePaid_Emails__c);
 		Integer newBalance = currentBalance + emailCredits;
 		
-		String actName =  subs.Name + ' - ' + subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name;
+		String actName =  subs.Name + ' - ' + subs.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name + ' - ' + EBC_ACTIVITY_NAME_INITIAL;
 		actName = actName.substring(0, Math.min(actName.length(),80));
-		
 		EBC_Activity__c ebcAct = new EBC_Activity__c(
 			Related_Billing_Account__c = subs.Zuora__CustomerAccount__c
 			, Name = actName
 			//,EBC_Campaign__c = null
 			, Total_Count__c = emailCredits
 			, New_Balance__c = newBalance
-			, Activity_Type__c = 'Initial E-mail Balance'
-			, Activity_Date__c  = Date.today()
+			, Activity_Type__c = 'Credit'
+			, Activity_Date_Time__c  = Date.today()
 			);
 		
 		return ebcAct; 
