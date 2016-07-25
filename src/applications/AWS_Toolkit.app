@@ -3,7 +3,6 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Developers can easily create applications that combine the power of Force.com and the Amazon Web Services (AWS).</description>
     <label>Force.com for Amazon Web Services</label>
-    <logo>Logos/awslogo.gif</logo>
     <tab>EC2_Console</tab>
     <tab>AWSKey__c</tab>
     <tab>AWS_Explorer</tab>

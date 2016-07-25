@@ -149,6 +149,9 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
+		//map that will be used to verify ownership consistency between a list of agencies
+		Map<Id, Set<Id>> accsToCompareOwnership = new Map<Id, Set<Id>>();
+
 		//this Container will store all change codes that need to be created
 		List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
 
@@ -304,8 +307,20 @@ public class AMS_OSCARTriggerHandler {
 					}
 
 					//check if ownership needs to be copied from online form to Accounts
-					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c))
+					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c)){
 						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
+
+						//fill map to check ownership alignment in hierarchy
+						if(cascadingTOCs.contains(AMS_Utils.OWNERSHIP_IATA)){
+							//the target agency owners will be compared with the agency owners we are trying to migrate to the target agency hierarchy
+							Set<Id> agsToCompareOwner = new Set<Id>(agenciesAffected);
+							agsToCompareOwner.add(oscar.AMS_Target_Agency__c);
+							accsToCompareOwnership.put(oscar.Id, agsToCompareOwner);
+						}
+
+					}
+
+					
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
@@ -346,8 +361,18 @@ public class AMS_OSCARTriggerHandler {
 					hierarchyChanges.add(hs);
 
 					//check if ownership needs to be copied from online form to Accounts
-					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c))
+					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c)){
 						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
+
+						//fill map to check ownership alignment in hierarchy
+						if(cascadingTOCs.contains(AMS_Utils.OWNERSHIP_IATA)){
+							//the target agency owners will be compared with the agency owners we are trying to migrate to the target agency hierarchy
+							Set<Id> agsToCompareOwner = new Set<Id>(agenciesAffected);
+							agsToCompareOwner.add(oscar.AMS_Target_Agency__c);
+							accsToCompareOwnership.put(oscar.Id, agsToCompareOwner);
+						}
+
+					}
 
 
 				} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
@@ -424,7 +449,14 @@ public class AMS_OSCARTriggerHandler {
 			if (!accountsAffectedPerOnlineAccreditation.isEmpty()) {
 				system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
 				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation);
+
+				//verify ownership alignment
+				if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
+					throw new AMSException('Performing this operation will result in hierarchy ownership inconsistency. Please make sure the owners being processed match with the owners of the target agency.');
 			}
+
+
+
 		} catch (Exception ex) {
 			System.debug('DML exception: ' + ex);
 			Database.rollback(sp);

@@ -6034,6 +6034,42 @@ IFAP Application.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IATA_ISO_Billing_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Billing State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Shipping_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Shipping Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Contacts (ISO Shipping Country)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Shipping_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Shipping State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Contacts (ISO Shipping State)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ICCS_CWG__c</fullName>
         <description>Currency Coordinator Working Group Membership</description>
         <externalId>false</externalId>
