@@ -861,7 +861,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>a4a iata reservations interline procedures</fullName>
+                <fullName>A4A-IATA Reservations Interline Procedures (AIRIMP)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -877,7 +877,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3361,19 +3361,16 @@ The product will only appear on the Online Store when the date entered in this f
     <listViews>
         <fullName>LOB_IDFS1</fullName>
         <columns>PRODUCT2.NAME</columns>
-        <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
-        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
         <columns>PRODUCT2.FAMILY</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Line_of_Business__c</field>
-            <operation>contains</operation>
-            <value>T &amp; T</value>
-        </filters>
-        <filters>
-            <field>PRODUCT2.ACTIVE</field>
+            <field>PRODUCT2.FAMILY</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>GDP</value>
         </filters>
         <label>LOB: T&amp;T</label>
         <language>en_US</language>
@@ -3835,6 +3832,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -3847,7 +3848,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3948,10 +3949,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>a4a iata reservations interline procedures</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5846,6 +5843,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -5858,7 +5859,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5959,10 +5960,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>a4a iata reservations interline procedures</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7789,6 +7786,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
                 <default>false</default>
             </values>
@@ -7801,7 +7802,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims and Loss Prevention</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7902,10 +7903,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>a4a iata reservations interline procedures</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
