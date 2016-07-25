@@ -1387,7 +1387,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return null;
 
     if(locationType == 'SA')
-        return 'Sales Agent – Generic';
+        return 'IATA Travel Agent';
 
     if(category == null)
         return null;
