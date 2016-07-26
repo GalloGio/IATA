@@ -222,11 +222,11 @@
                 <apex:outputPanel id="correctionWarningMessageNew" rendered="{!IF( isCorrection ,true, false)}">
                   <div class="slds-box slds-theme--warning" role="alert">
                     <div class="slds-notify__content slds-grid">
-                      <svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex">
+                      <svg aria-hidden="true" class="slds-icon-text-default slds-icon--small slds-m-right--small slds-col slds-no-flex">
                         <use xlink:href="{!URLFOR($Resource.SLDS103, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
                       </svg>
                       <div class="slds-col slds-align-middle">
-                        <h2 class="slds-text-heading--small">Corrections done on the owners will be applied to all the agencies in the hierarchy.</h2>
+                        <h5 class="slds-section-title" >Corrections done on the owners will be applied to all the agencies in the hierarchy.</h5>
                       </div>
                     </div>
                   </div>
