@@ -54,7 +54,7 @@ public with sharing class vfIATAPassengersList extends IECPageController{
                 if (sProductCode =='GAD') PageTitle='Global Agency Directory';
                 else if (sProductCode =='PAL') PageTitle='Passenger Agency List';
                 else if (sProductCode =='CAL') PageTitle='Cargo Agency List';
-                else if (sProductCode =='ASL') PageTitle='Airline Sales Agency List';
+                else if (sProductCode =='ASL') PageTitle='MSO & GSA List';
             }
             return PageTitle;
         }

@@ -2566,19 +2566,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Profile_Name__c</field>
+            <field>CORE.PROFILE.NAME</field>
             <operation>equals</operation>
-            <value>IDFS Americas - Hub MGR AM/ARM</value>
-        </filters>
-        <filters>
-            <field>CORE.USERS.ACTIVE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>CORE.USER_ROLE.NAME</field>
-            <operation>equals</operation>
-            <value>China &amp; N. Asia Agency Management Mgr</value>
+            <value>Developer</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>
@@ -2635,7 +2625,18 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <fullName>Validate_User_License_Cost_Center</fullName>
         <active>true</active>
         <description>User license cost center format validation - first 3 Alphabets (Capitals), next 3 numeric, next 2 Alphabets (Capitals) and last 2 numeric</description>
-        <errorConditionFormula>AND(ISPICKVAL(UserType, &apos;Standard&apos;),NOT(OR(REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),REGEX (License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),REGEX (License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;), REGEX (License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;))))</errorConditionFormula>
+        <errorConditionFormula>AND(
+	ISPICKVAL(UserType, &apos;Standard&apos;),
+	IsActive,
+	NOT(
+		OR(
+			REGEX(License_Cost_Center__c , &quot;[A-Z]{3}[0-9]{3}[A-Z]{2}[0-9]{2}&quot;),
+			REGEX(License_Cost_Center__c , &quot;[A-Z]{4}[0-9]{2}[A-Z]{2}[0-9]{2}&quot;),
+			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{2}&quot;),
+			REGEX(License_Cost_Center__c , &quot;[A-Z]{2}[0-9]{4}[A-Z]{2}[0-9]{2}&quot;)
+		)
+	)
+)</errorConditionFormula>
         <errorDisplayField>License_Cost_Center__c</errorDisplayField>
         <errorMessage>The format for cost center is - &lt;2/4 Alphabets(Uppercase)&gt;&lt;2/4 Numeric&gt;&lt;2/4 Alphabets(Uppercase)&gt;&lt;2 Numeric&gt;, with a total of 10 characters. For example, ISF005CH01, XSMW01JO01.</errorMessage>
     </validationRules>

@@ -1,6 +1,0 @@
-<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
-<tr height="400" valign="top" >
-<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
-<![CDATA[<p>The following case has been assigned to your team&nbsp;for review and acceptance:</p><p>&nbsp;</p><p>Case Area: {!Case.CaseArea__c}</p><p> </p><p>Case Number: {!Case.CaseNumber}</p><p>Subject: {!Case.Subject}</p><p>Description: {!Case.Description}</p><p>Priority: {!Case.Priority}</p><p>Type: {!Case.Type}</p><p>Classification: {!Case.Classification_SIS__c}</p><p>Defect/ Issue: {!Case.Defect_Issue__c}</p><p>L2 Support Team: {!Case.L2_Support_Team_Account__c}</p><p>Company Name: {!Case.Account}</p><p>IATA AlphaNumeric Code:{!Case.Airline_Designator__c}{!Case.Member_Code_Numeric__c}</p><p> </p><p> </p><p>&nbsp;</p><p> </p><p> </p><p>Here's the link to the case: </p><p>{!Case.Link}</p>]]></td>
-</tr>
-</table>

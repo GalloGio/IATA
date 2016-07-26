@@ -7,16 +7,16 @@ public class SurveyBatchTest {
         ID europeRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope');
         ID chinaRTID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_China_North_Asia');
         
- 		User u1 = new User(FirstName='Ángel',
- 						   Division='UnitTest',
- 						   License_Cost_Center__c='AAA000AA00',
- 						   Username='test1@iata.org.amsdev1', 
- 						   LastName='Peña', Email='test1@iata.org', 
- 						   Alias='Test1', CommunityNickname='Test1', 
- 						   TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
- 						   EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', 
- 						   LanguageLocaleKey='en_US'); 
- 						   
+        User u1 = new User(FirstName='Ángel',
+                           Division='UnitTest',
+                           License_Cost_Center__c='AAA000AA00',
+                           Username='test1@iata.org.amsdev1', 
+                           LastName='Peña', Email='test1@iata.org', 
+                           Alias='Test1', CommunityNickname='Test1', 
+                           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
+                           EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', 
+                           LanguageLocaleKey='en_US'); 
+                           
         insert u1;
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c = 'CH', AIMS_Area_Name__c = 'Suisse', AIMS_Area_ID__c = '1' );
@@ -152,8 +152,8 @@ public class SurveyBatchTest {
             insert listCases;
             
             for(Case c : listCases)
-            	c.Status = 'Closed';
-            	
+                c.Status = 'Closed';
+                
             update listCases;
             
             // create instant surveys for the cases
@@ -221,22 +221,26 @@ public class SurveyBatchTest {
             CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
             
             User u1 = new User(FirstName='Ángel',
- 						   Division='UnitTest',
- 						   License_Cost_Center__c='AAA000AA00',
- 						   Username='test1@iata.org.amsdev1', 
- 						   LastName='Peña', Email='test1@iata.org', 
- 						   Alias='Test1', CommunityNickname='Test1', 
- 						   TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
- 						   EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', 
- 						   LanguageLocaleKey='en_US'); 
- 						   
-         	insert u1;
+                           Division='UnitTest',
+                           License_Cost_Center__c='AAA000AA00',
+                           Username='test1@iata.org.amsdev1', 
+                           LastName='Peña', Email='test1@iata.org', 
+                           Alias='Test1', CommunityNickname='Test1', 
+                           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
+                           EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ', 
+                           LanguageLocaleKey='en_US'); 
+                           
+            insert u1;
             
+            List<IATA_ISO_Country__c> isoList = new List<IATA_ISO_Country__c>();
+
             IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
-            insert isoCountry;
-            
             IATA_ISO_Country__c isoCountry1 = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_Name__c='',AIMS_Area_ID__c= '1',  Case_BSP_Country__c  = 'Canada');
-            insert isoCountry1;
+            isoList.add(isoCountry);
+            isoList.add(isoCountry1);
+            insert isoList;
+
+            List<Account> accList = new List<Account>();
             
             Account a = new Account( name ='IFAP ACCT',
                                      industry = 'pluto',
@@ -245,7 +249,7 @@ public class SurveyBatchTest {
                                      IATACode__c ='1234567',
                                      Type = 'IATA Cargo Agent',
                                      billingCountry = 'ss',Location_Type__c = 'AO');
-            insert a;
+            //insert a;
             
             Account a1 = new Account( name ='IFAP ACCT 1',
                                      industry = 'pluto',
@@ -254,8 +258,10 @@ public class SurveyBatchTest {
                                      IATACode__c ='7654321',
                                      Type = 'IATA Cargo Agent',
                                      billingCountry = 'ss',Location_Type__c = 'AO');
-            insert a1;
-
+            //insert a1;
+            accList.add(a);
+            accList.add(a1);
+            insert accList;
 
             List<Contact> contactList = new List<Contact>();
 
@@ -721,7 +727,7 @@ public class SurveyBatchTest {
             Date twoweeksAgo = date.today().addDays(- 14);
             
             u2.UserRoleId = r1.Id;
-          	update u2;
+            update u2;
             
             List<Case> cases = new List<Case>();
                         cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
@@ -911,18 +917,18 @@ public class SurveyBatchTest {
    }
    
    static testMethod void SurveyEmailTest3() {
-   	
+    
         Date dead = date.today().addDays(40);
         Date twoweeksAgo = date.today().addDays(- 14);
 
         //Record Types
-       	ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-       	ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
-       	ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-       	ID processRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-       	ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
+        ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
+        ID processRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
 
-       	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TransformationHelper.CalculateBusinessHoursAges = true;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
         
@@ -1004,7 +1010,7 @@ public class SurveyBatchTest {
                     CaseArea__c = 'SIS'                                                 
                     ));
 
-				      cases.add(new Case(recordtypeID = Cases_SIS_Help_DeskRecordTypeID,
+                      cases.add(new Case(recordtypeID = Cases_SIS_Help_DeskRecordTypeID,
                     Status = 'Financial Security Requested',
                     FS_Submitted_Date__c = date.today(),
                     FS_Deadline_Date__c = twoweeksAgo,

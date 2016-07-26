@@ -67,6 +67,19 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Full_Phone_Number__c</fullName>
+        <description>Complete full number based on Country code (ISD_Code), Area code (STD_Code), and phone number. Unlike the Name (Full Number) field, this allow the value to be blank.</description>
+        <externalId>false</externalId>
+        <formula>ISD_Code__c + &apos; &apos; +  STD_Code__c + &apos; &apos; +  Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Complete full number based on Country code (ISD_Code), Area code (STD_Code), and phone number</inlineHelpText>
+        <label>Full Phone Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ISD_Code__c</fullName>
         <externalId>false</externalId>
         <label>ISD Code</label>

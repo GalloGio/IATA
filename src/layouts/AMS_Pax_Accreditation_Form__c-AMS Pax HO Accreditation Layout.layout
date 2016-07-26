@@ -12,8 +12,8 @@
                 <field>SAAM_Case__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Type_of_Operation__c</field>
+                <behavior>Edit</behavior>
+                <field>Operation_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -263,11 +263,11 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Phone__c</fields>
         <fields>Email__c</fields>
-        <fields>Duplicate_contact_exists__c</fields>
         <fields>Agency_owner__c</fields>
         <fields>Agency_role__c</fields>
         <fields>Authorised_signatory__c</fields>

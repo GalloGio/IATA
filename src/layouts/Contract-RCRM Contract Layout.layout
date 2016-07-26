@@ -16,6 +16,10 @@
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Pricebook2Id</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -162,6 +166,9 @@
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Pricebook2Id</fields>
+    </miniLayout>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>
