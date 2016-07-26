@@ -70,13 +70,13 @@
                   </div>                 
                 <apex:inputField styleclass="form-control rec"  id="email" value="{!con.email}"/>
               </div>
-              <div class="form-group" >
+              <!-- <div class="form-group" >
                  <div>
                     <img src="//captchator.com/captcha/image/{!captchaId}" />
                     <br/><br/>
                     <apex:inputText value="{!captchaAnswer}" html-placeholder="{!$Label.ISSP_Enter_Value}" />
                 </div>
-              </div>
+              </div>  -->
               <!--
               <div class="form-group" style="display:{!IF(reCAPTCHA.verified,'none','')}">
                  <div>
