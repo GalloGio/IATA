@@ -3364,8 +3364,8 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
-        <columns>PRODUCT2.FAMILY</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
