@@ -28,7 +28,7 @@
             <a href="https://{!$Site.Domain}/iec/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
             <a href="mailto:{!sContactEmail}?subject={!sContactSubject}" class="header__navigation-link">Contact Us</a><span class="sep">|</span> 
             <a href="https://{!$Site.Domain}/iec/IECCustomers">Customers</a> <span class="sep">|</span> 
-            <a href="https://{!$Site.Domain}/iec/IECTerms">Terms of Use</a>       
+            <a href="{!$Site.BaseUrl}/IECTerms">Terms of Use</a>       
           </p>
         </div>
          <apex:image url="{!URLFOR($Resource.IECStyles,'img/')}logo.png" />

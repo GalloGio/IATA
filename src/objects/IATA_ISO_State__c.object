@@ -98,6 +98,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Informatica_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Informatica Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Local_Language__c</fullName>
         <description>Local Language</description>
         <externalId>false</externalId>
@@ -110,6 +120,18 @@
         <unique>false</unique>
     </fields>
     <label>IATA ISO State</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>ISO_CODE_STANDARD__c</columns>
+        <columns>Local_Language__c</columns>
+        <columns>CURRENCY_ISO_CODE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>ISO State Name</label>
         <type>Text</type>

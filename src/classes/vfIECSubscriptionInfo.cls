@@ -38,25 +38,45 @@ public without sharing class vfIECSubscriptionInfo {
     public ID idSelectedRatePlanInfo            {get; set;} // Initially set from Subscription History, but then swapped if applicable
     public ID idSelectedProdInfo                {get; set;} // Initially set from Subscription History, but then swapped if applicable
 
-    public IECCustomer loggedCustomer { get; set; }
+	public IECCustomer loggedCustomer { get; set; }
+	
+	public String sSubscriptionName { 
+		get { return oSubscription == null ? '' : oSubscription.Name;} }
+		 
+	
+	public Date	dtSubscriptionEndDate {
+		get {return oSubscription == null ? null : oSubscription.Zuora__SubscriptionEndDate__c;} }
+		
+    // used to define how to display subscription end date line in the pull down menu
+    public Boolean isNotEvergreen {
+        get {
+            Boolean result = true;
+            //result = (oSubscription.Zuora__SubscriptionEndDate__c != null);
+            result = (oSubscription.Zuora__TermSettingType__c != 'EVERGREEN');
+            return result;
+        }
+    } // isNotEvergreen
+	
     
-    public String sSubscriptionName { 
-        get { return oSubscription == null ? '' : oSubscription.Name;} }
-         
-    
-    public Date dtSubscriptionEndDate {
-        get {return oSubscription == null ? null : oSubscription.Zuora__SubscriptionEndDate__c;} }
-    
-
-    public Boolean validateAccess() {
-    
-        sDenyReason = '';
-        bDisplayRenewBtn = false;
-        bDisplayUpgradeBtn = false;
-        idSelectedRatePlanInfo = null;
-        idSelectedProdInfo = null;
-        dUnitsPurchased = 0;
-        dUnitsConsumed = 0;
+    public Boolean validateAccess(Set<String> allowedApplicationName) {
+        if (!allowedApplicationName.contains(sApplicationName)) {
+            sDenyReason = Label.IEC_Error_No_Application_Access;
+            hasPageAccess = false;
+            
+            return false;
+        }
+        
+        return validateAccess();
+    }
+	public Boolean validateAccess() {
+		
+		sDenyReason = '';
+		bDisplayRenewBtn = false;
+		bDisplayUpgradeBtn = false;
+		idSelectedRatePlanInfo = null;
+		idSelectedProdInfo = null;
+		dUnitsPurchased = 0;
+		dUnitsConsumed = 0;
 		
         oSubscription = IECSubscriptionManager.getSubscriptionByProductCategory(loggedCustomer.RelatedBillingAccount.Id, sApplicationName);
         Integer iValidation = IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, sApplicationName);
