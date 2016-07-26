@@ -66420,7 +66420,8 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   REGEX(EF_SIS_Location_ID__c, &quot;[10-99]{2}&quot;)
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )
                )
