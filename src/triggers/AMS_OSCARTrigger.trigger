@@ -234,10 +234,18 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
                     //Need to apply change of ownership to all the accounts in herarchy
                     Set<Id> allHierarchyAccountIds = new Set<Id>();
-                    for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
-                        allHierarchyAccountIds.add(rel.Parent_Account__c);
-                        allHierarchyAccountIds.add(rel.Child_Account__c);
+
+                                        //AMS-1671
+                    if(accountHierarchyRelationships.isEmpty()){// it means that the account does not have an hierarchy yet generated.
+                        allHierarchyAccountIds.add(updatedOscar.Account__c);
+                    }else{
+                        for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
+                            allHierarchyAccountIds.add(rel.Parent_Account__c);
+                            allHierarchyAccountIds.add(rel.Child_Account__c);
+                        }
                     }
+
+
 
                     stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
                     system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);

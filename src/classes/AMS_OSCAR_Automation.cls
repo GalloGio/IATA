@@ -22,6 +22,20 @@ public with sharing class AMS_OSCAR_Automation
                     oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                     oscar.Sanity_check_results__c = 'Passed';
                     res = True;
+
+                    //AMS-1674 - [Agency changes] when "Type of change" include "Location type" the "Change of location type behavior" shoule be pre-populated
+
+                    if(oscar.Process__c == AMS_Utils.AGENCYCHANGES && oscar.Type_of_change__c != null && oscar.Change_of_location_type_behavior__c == null){
+                        List<String> valueOfChange = oscar.Type_of_change__c.split(';');
+
+                        for(String val : valueOfChange){
+                            if(val.equalsIgnoreCase('Location type')){
+                                oscar.Change_of_location_type_behavior__c = 'Swap with the parent';
+                            }
+                        }
+
+                    }
+                    
                 }
             }catch(Exception e){
                 res = False;
