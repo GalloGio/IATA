@@ -76,6 +76,10 @@ global class SchdlIECSendInvoicesToSAP implements Schedulable {
         string cronvalue = second + ' ' + minute + ' * * * ?' ;
         string jobName = 'SchdlIECSendInvoicesToSAP ' + nextScheduleTime.format('hh:mm');
  
+ 
+          if(Test.isRunningTest())
+            jobName = 'Test_'+Datetime.now().time();
+ 
         system.schedule(jobName, cronvalue , new SchdlIECSendInvoicesToSAP());
 
  

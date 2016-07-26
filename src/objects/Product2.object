@@ -2956,7 +2956,7 @@ The product will only appear on the Online Store when the date entered in this f
     </fields>
     <fields>
         <fullName>SAP_Material_Number__c</fullName>
-        <caseSensitive>false</caseSensitive>
+        <caseSensitive>true</caseSensitive>
         <externalId>true</externalId>
         <label>Product Number</label>
         <length>20</length>

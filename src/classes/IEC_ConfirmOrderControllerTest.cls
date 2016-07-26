@@ -383,8 +383,14 @@ private class IEC_ConfirmOrderControllerTest
                 ctrl.onLoadAction();    
 
                 //-- Submit order with CC without credit ref
-                ctrl.sfOrder.Payment_Type__c = IECConstants.PaymentThresholdType_CreditCard;
-                ctrl.submitOrder();
+                try{
+                	if(ctrl.sfOrder == null)
+						ctrl.sfOrder = IECOrder_Svc.getPenddingOrder();
+
+	                ctrl.sfOrder.Payment_Type__c = IECConstants.PaymentThresholdType_CreditCard;
+	                ctrl.submitOrder();
+                }
+            	catch(Exception ex){}
 
                 //-- Subl=mit with CC with ref 
                 ctrl.card = new IEC_CreditCard_DTO();

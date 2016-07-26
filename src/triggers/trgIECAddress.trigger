@@ -13,7 +13,8 @@ trigger trgIECAddress on IECAddress__c (after update) {
     else */
     if(Trigger.isUpdate && Trigger.isAfter) {
         //On demand test run
-        if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger IECAddress') != 1) return;
+        //if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger IECAddress') != 1) return;
+        if (Utility.getNumericSetting('Stop Trigger:IECAddress') == 1) return;
         
         trgHndlrIECAddress.OnAfterUpdate(Trigger.new, Trigger.newMap);
     }

@@ -167,6 +167,10 @@ Test.stopTest();
         Test method "checkAddress" related with Ship To
 ****************************************************************************************************/
 @isTest(SeeAllData=false) static void testShipToMethods() {
+   
+      TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+
+   
     Integer i1, errCount, addressCount, locationCount;
     Id idLocationProvQC, idLocationProvON;
     Location__c locationShipTo;
@@ -199,6 +203,7 @@ Test.stopTest();
         cls = new IEC_UpdateAddressController();
 Test.startTest();  //*** bypass limit of # queries
         cls.onPageLoad();
+      TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 
         //*** cover method "changeShipToCountry"
         cls.dtoShipToAddress.countryCode = 'MX';
@@ -245,6 +250,9 @@ Test.startTest();  //*** bypass limit of # queries
         
         system.runAs(usrPortal)
         {
+        
+        
+            TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
             //*** cover method "saveShipToAddress" - case of new address already in system
             errCount = ApexPages.getMessages().size();
             cls.dtoShipToAddress.locationId = null;
@@ -289,6 +297,7 @@ Test.startTest();  //*** bypass limit of # queries
             cls.saveShipToAddress();
             system.assert([select count() from IECAddress__c] == addressCount + 1, 'Should have ' + (addressCount + 1) + ' addresses');
             system.assert([select count() from Location__c] == locationCount + 1, 'Should have ' + (locationCount + 1) + ' locations');
+       
             system.assert([select count() from Location__c where Id = :idLocationProvQC and Active__c = false] == 1, 'Location for QC should be inactive');
             system.assert(idLocationProvQC != cls.dtoShipToAddress.locationId, 'Should have 2 locations');
             system.assert([select count() from Location__c where Id = :cls.dtoShipToAddress.locationId and ISO_State_Code__c = :cls.dtoShipToAddress.stateCode] == 1, 'Location for ON should have new address');
@@ -297,7 +306,7 @@ Test.startTest();  //*** bypass limit of # queries
             idLocationProvON = cls.dtoShipToAddress.locationId;
             cls.dtoShipToAddress.stateCode = 'CA-QC';
             cls.saveShipToAddress();
-Test.stopTest();
+ Test.stopTest();    
             system.assert([select count() from IECAddress__c] == addressCount + 2, 'Should have ' + (addressCount + 1) + ' addresses');
             system.assert([select count() from Location__c] == locationCount + 1, 'Should have ' + (locationCount + 1) + ' locations');
             system.assert(idLocationProvQC == cls.dtoShipToAddress.locationId, 'Should have 2 locations' + 'QC ' + idLocationProvQC + ' ON ' + idLocationProvON + ' DTL ' + cls.dtoShipToAddress.locationId);

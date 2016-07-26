@@ -480,11 +480,13 @@ private class vfIECUpgrade_tst {
     @isTest(SeeAllData=true)
     static void TestUpgrade_Misc() {
         System.debug('Unit Test: Start: TestUpgrade_Misc');
-        
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         // Initialize Data for test scenario
         InitProduct();
 
         Test.startTest();
+                TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         IECPageController baseCont = new IECPageController();
         vfIECUpgrade pgCont;
@@ -500,7 +502,7 @@ private class vfIECUpgrade_tst {
         InitSubscription1(baseCont.loggedCustomer);
 
         System.runAs(usr) {
-
+            TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
             PageReference pgRef = Page.IECUpgrade;
             pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
             Test.setCurrentPage(pgRef);
@@ -515,6 +517,7 @@ private class vfIECUpgrade_tst {
             pgCont.previewUpgrades();
             pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
             pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
+            Test.stopTest();
             pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
             pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
             pgCont.selectUpgrade();
@@ -551,7 +554,7 @@ private class vfIECUpgrade_tst {
             pgCont.oContact.Email = null;
             pgCont.oContact.Phone = null;
             
-            Test.stopTest();
+           
 
             // Test 005: Test contact update validation
             pgCont.updateContactInfo();

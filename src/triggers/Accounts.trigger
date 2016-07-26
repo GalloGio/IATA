@@ -1,3 +1,4 @@
 trigger Accounts on Account (after update) {
-	Account_Dom.triggerHandler();
+    if (Utility.getNumericSetting('Stop Trigger:Account') == 1) return;
+    Account_Dom.triggerHandler();
 }

@@ -333,7 +333,7 @@ CACW end -->
         </div>
       
        <h2 class="callout-banner__header">See What <br/><span>Global Data Products</span><br/> can bring you</h2>
-        <a class="customButton" href="https://{!$Site.Domain}/iec/IECBrowseProducts">Find out more</a>
+        <a class="customButton" href="{!$Site.BaseUrl}/IECBrowseProducts">Find out more</a>
       
       
       <!-- 
@@ -362,7 +362,7 @@ CACW end -->
           <img class="block2" src="{!URLFOR($Resource.IECStyles,'img/')}imgbloc2.png" />
         </div>
         <h2 class="callout-banner__header"><span>Interactive Statistics</span><br/>IATA agencies on maps and charts</h2>
-        <a class="customButton" href="https://{!$Site.Domain}/iec/IECGADMaps" style="width:95px;">View now</a>
+        <a class="customButton" href="{!$Site.BaseUrl}/IECGADMaps" style="width:95px;">View now</a>
       </div>
     </div>
   </div>
