@@ -226,7 +226,7 @@
                         <use xlink:href="{!URLFOR($Resource.SLDS103, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
                       </svg>
                       <div class="slds-col slds-align-middle">
-                        <h2 class="slds-text-heading--small">Corrections done on the owners will be applied to all the agencies in the hierarchy.</h2>
+                        <h5 class="slds-section-title" >Corrections done on the owners will be applied to all the agencies in the hierarchy.</h5>
                       </div>
                     </div>
                   </div>
