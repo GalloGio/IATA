@@ -982,7 +982,7 @@
 
                                     <div class="footer-actions text-right">
                                         <apex:outputPanel id="displayButton">
-                                            <!-- apex:outputPanel rendered="{!!hasError}" -->
+                                            <apex:outputPanel rendered="{!!hasError}">
                                                 <ul class="list actions">
                                                     <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}">
                                                     <li>
@@ -1001,7 +1001,7 @@
                                                         <!-- <apex:commandButton action="{!processPayment}" status="payStatus" styleClass="button wide" value="Continue" reRender="errorBloc" oncomplete="$(window).scrollTop(0);" /> -->
                                                     </li>
                                                 </ul>
-                                        	<!-- /apex:outputPanel -->
+                                        	</apex:outputPanel>
                                         </apex:outputPanel>
                                         
                                         <!-- <apex:actionStatus id="payStatus">

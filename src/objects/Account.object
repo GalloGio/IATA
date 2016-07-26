@@ -5665,6 +5665,10 @@ V - Co-operative</inlineHelpText>
                 <fullName>IATA Training &amp; Development Institute</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Service Providers</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>

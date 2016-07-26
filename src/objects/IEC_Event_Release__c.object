@@ -127,7 +127,7 @@
     </fields>
     <fields>
         <fullName>Material_Number__c</fullName>
-        <description>IEC - SAP material number of the product subscribed by customer</description>
+        <description>IEC - SAP material number of the product subscribed to auto-renew</description>
         <externalId>false</externalId>
         <formula>Left( Product__r.SAP_Material_Number__c,4 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -151,7 +151,7 @@
     </fields>
     <fields>
         <fullName>Processing_Message__c</fullName>
-        <description>IEC - Message to informing user the processing step</description>
+        <description>IEC - Message to inform user the processing step</description>
         <externalId>false</externalId>
         <formula>IF( Sales_Amout__c&gt;0,&apos;&apos;,&apos;BATCH JOB IN PROGRESS TO GENERATE ORDERS&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -163,7 +163,7 @@
     </fields>
     <fields>
         <fullName>Processing_Status__c</fullName>
-        <description>IEC - Message to informing user the processing step</description>
+        <description>IEC - Message to inform user the processing step</description>
         <externalId>false</externalId>
         <label>Processing Status</label>
         <length>255</length>
@@ -186,7 +186,7 @@
     </fields>
     <fields>
         <fullName>Product_Number__c</fullName>
-        <description>IEC - SAP material number of the replacement product</description>
+        <description>IEC - SAP material number of product to renew</description>
         <externalId>false</externalId>
         <formula>IF(ISBLANK( Swapped_Product__c ),  Last_Version__r.SAP_Material_Number__c ,  Swapped_Product__r.SAP_Material_Number__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

@@ -2018,6 +2018,7 @@ public with sharing class IECSubscriptionManager {
         
             if (idBillingAccount != null) {
                 subscriptions = [SELECT Name, Id, Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c, Zuora__CustomerAccount__c, Zuora__Account__c, Zuora__Status__c, 
+                                Zuora__TermSettingType__c,
                                 Zuora__ContractAcceptanceDate__c,Product_Rate_Plan_Information__r.Related_Product_Information__c,Product_Rate_Plan_Information__r.Related_Product_Information__r.Product_Audience__c,
                                 Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c, Product_Rate_Plan_Information__c,OrderItemId__c,  
                                 (Select  Zuora__ProductName__c, Zuora__RatePlanName__c From Zuora__Subscription_Product_Charges__r LIMIT 1)

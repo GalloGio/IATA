@@ -71,10 +71,10 @@
                   </div>                  
                 <apex:inputField styleclass="form-control rec"  id="email" value="{!con.email}"/>
               </div>
-              <div class="form-group" >
+              <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
                  <div>
                   <apex:panelGrid columns="1" id="reCAPTCHAGrid" style="margin-left: 45px;" >
-                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}"/>
+                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}" lang="{!lang}"/>
                  </apex:panelGrid>
                  
                  <!-- 

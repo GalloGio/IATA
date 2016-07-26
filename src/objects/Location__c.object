@@ -47,6 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>IEC - Mapping between Salesforce and SAP for customer</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -57,6 +58,7 @@
     <enableStreamingApi>false</enableStreamingApi>
     <fields>
         <fullName>Account_Contact_Address_ID__c</fullName>
+        <description>IEC - technical field used for query in Apex code</description>
         <externalId>false</externalId>
         <formula>Account__c + &apos;|&apos; + Contact__c + &apos;|&apos; + Address__c</formula>
         <label>Account &amp; Contact &amp; Address ID</label>
@@ -68,6 +70,7 @@
     </fields>
     <fields>
         <fullName>Account_Contact_ID__c</fullName>
+        <description>IEC - technical field used for query in Apex code</description>
         <externalId>false</externalId>
         <formula>Account__c + &apos;|&apos; + Contact__c</formula>
         <label>Account &amp; Contact ID</label>
@@ -79,6 +82,7 @@
     </fields>
     <fields>
         <fullName>Account_Email__c</fullName>
+        <description>IEC - Email on account to use on sending to SAP</description>
         <externalId>false</externalId>
         <formula>Account__r.Email__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -91,6 +95,7 @@
     </fields>
     <fields>
         <fullName>Account_Name__c</fullName>
+        <description>IEC - Name of account to use on sending to SAP</description>
         <externalId>false</externalId>
         <formula>Account__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -163,6 +168,7 @@
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - Reference to account serving as SAP sold to</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>

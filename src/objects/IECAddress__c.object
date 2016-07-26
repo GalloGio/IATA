@@ -112,7 +112,7 @@
     </fields>
     <fields>
         <fullName>Full_Address__c</fullName>
-        <description>Used for auto complete</description>
+        <description>IEC - Concatenation of all address information that will be used for auto complete</description>
         <externalId>true</externalId>
         <label>Full Address</label>
         <length>255</length>
@@ -137,6 +137,7 @@
     </fields>
     <fields>
         <fullName>IEC_Zip_Postal_Code_required__c</fullName>
+        <description>IEC - Determine if postal code is required during address entry via customer dashboard</description>
         <externalId>false</externalId>
         <formula>ISO_Country__r.IEC_Zip_Postal_Code_required__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -147,6 +148,7 @@
     </fields>
     <fields>
         <fullName>ISO_Country_Code__c</fullName>
+        <description>IEC - ISO Country Code</description>
         <externalId>false</externalId>
         <formula>ISO_Country__r.ISO_Code__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -159,6 +161,7 @@
     </fields>
     <fields>
         <fullName>ISO_Country_Name__c</fullName>
+        <description>IEC - ISO Country Name</description>
         <externalId>false</externalId>
         <formula>ISO_Country__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -172,6 +175,7 @@
     <fields>
         <fullName>ISO_Country__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - ISO Country</description>
         <externalId>false</externalId>
         <label>ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -184,6 +188,7 @@
     </fields>
     <fields>
         <fullName>ISO_State_Code_SAP__c</fullName>
+        <description>IEC - ISO State Code without country code</description>
         <externalId>false</externalId>
         <formula>IF(OR(ISBLANK(ISO_Country_Code__c), ISBLANK(ISO_State__r.ISO_Code__c)), &quot;&quot;, IF(LEFT(ISO_State__r.ISO_Code__c, 3) = ISO_Country_Code__c &amp; &quot;-&quot;, MID(ISO_State__r.ISO_Code__c, 4, 3), ISO_State__r.ISO_Code__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -196,6 +201,7 @@
     </fields>
     <fields>
         <fullName>ISO_State_Code__c</fullName>
+        <description>IEC - ISO State Code with or without country code</description>
         <externalId>false</externalId>
         <formula>ISO_State__r.ISO_Code__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -208,6 +214,7 @@
     </fields>
     <fields>
         <fullName>ISO_State_Name__c</fullName>
+        <description>IEC - ISO State Name</description>
         <externalId>false</externalId>
         <formula>ISO_State__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -221,6 +228,7 @@
     <fields>
         <fullName>ISO_State__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - ISO State</description>
         <externalId>false</externalId>
         <label>ISO State</label>
         <lookupFilter>

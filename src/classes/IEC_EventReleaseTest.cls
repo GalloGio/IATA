@@ -20,7 +20,7 @@ private class IEC_EventReleaseTest
         // Test 01: Initialize the first contact where no location record exists
         Location_Svc.InitializeContactLocations(lstContact[0].Id);
         
-        List<Location__c> lstLocation = [SELECT Id FROM Location__c];
+        List<Location__c> lstLocation = [SELECT Id FROM Location__c limit 100];
         //System.assertEquals(3, lstLocation.size(), 'Three location records must be created. Sold/Bill/Ship-To records.');
 
         //-- Generate Generate 3 Products with Price 1 whithout

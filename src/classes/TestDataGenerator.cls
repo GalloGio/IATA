@@ -536,8 +536,9 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        insert pricebookEntries;
-    
+        Database.insert(pricebookEntries, false);
+        //insert pricebookEntries;
+        
         for(Integer i = 0; i < nb; i++)
         {
             orderItems.add(new OrderItem(
