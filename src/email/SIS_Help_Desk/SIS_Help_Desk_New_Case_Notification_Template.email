@@ -1,6 +1,0 @@
-<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
-<tr height="400" valign="top" >
-<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
-<![CDATA[<p>This is to inform you that a new case has been created in SIS Help Desk.</p><p>&nbsp;</p><p>Case Area:&nbsp;{!Case.CaseArea__c}</p><p>Case Number: {!Case.CaseNumber}</p><p>Type: {!Case.Type}</p><p>Classification: {!Case.Classification_SIS__c}</p><p>Priority: {!Case.Priority}</p><p>Subject: {!Case.Subject}</p><p>Company&nbsp;Name: {!Case.Account}</p><p>IATA AlphaNumeric Code: {!Case.IATAcode__c}<br></p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;{!Case.Link}</p>]]></td>
-</tr>
-</table>

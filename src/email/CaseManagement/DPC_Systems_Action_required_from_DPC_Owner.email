@@ -1,8 +1,0 @@
-Dear {!Case.ACCA_Owner__c},
-
-The case #{!Case.CaseNumber} - "{!Case.Subject}" has been updated to a new status: {!Case.Escalated_Status_ACCA__c}. Action is now required from your side.
-
-You can directly access the case by following this link: {!Case.Link}
-
-
-***Please note that this is an automated email notification, please do not reply to it.

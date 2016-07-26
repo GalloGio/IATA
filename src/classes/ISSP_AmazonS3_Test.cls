@@ -48,7 +48,7 @@ private class ISSP_AmazonS3_Test {
         key.IAS_Configation_name__c = 'test';
         key.IAS_configuration_name__c = 'test';
         key.Key__c = 'test';
-        key.Name = 'GenericProd';
+        key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
         key.Secret__c = 'test';
         insert key;
         

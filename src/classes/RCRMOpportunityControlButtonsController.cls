@@ -12,7 +12,7 @@ public with sharing class RCRMOpportunityControlButtonsController {
         public get {
             String currentUserProfile = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
             String allowedProfiles = 'MACS - Administrator,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' + 
-            		'MACS - Marketing & Publishing,MACS - Strategic Partnerships,System Administrator,GDP - Administrator';
+            		'MACS - Marketing & Publishing,MACS - Strategic Partnerships,System Administrator,GDP - Administrator,IATA - Sales Director';
             String validStatuses = 'No validation yet,Rejected by PM';
             
             // show button if stage 6; only show to the opportunity owner; don't show if the owner is the product manager (if PM handles the renewal, he won't send it 

@@ -1217,6 +1217,17 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SAP_ID_8digit__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP ID</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Totals_1__c</fullName>
         <externalId>false</externalId>
         <formula>Quantity__c  *  VALUE(TEXT(Unit_Price_List__c))</formula>

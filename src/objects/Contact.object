@@ -2128,6 +2128,16 @@
         <label>Lookup Popup Window</label>
     </fieldSets>
     <fields>
+        <fullName>AIMS_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>AIMS_ID</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AIMS_Qualification_Code__c</fullName>
         <description>Aims Qualification Code 
 
@@ -2139,6 +2149,253 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_Duty__c</fullName>
+        <externalId>false</externalId>
+        <label>Duty</label>
+        <picklist>
+            <picklistValues>
+                <fullName>A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>I</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>X</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Y</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Earning__c</fullName>
+        <externalId>false</externalId>
+        <label>Earning</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Employee_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Employee Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_Employee_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Employee Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>AMS_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Hours</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Position__c</fullName>
+        <externalId>false</externalId>
+        <label>Position</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>B</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>C</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>D</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>E</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>F</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>G</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>H</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>I</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>L</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>M</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>O</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>P</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>R</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>S</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Registration_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Registration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AMS_SIMPLEX__c</fullName>
+        <externalId>true</externalId>
+        <label>SIMPLEX</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Termination_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Termination Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Valid__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AMS_isManager__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Manager</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AMS_isTicketingAgent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Ticketing Agent</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>APCS_profile__c</fullName>
@@ -2663,6 +2920,18 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>BillTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BillTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Birthdate</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -2677,6 +2946,10 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <picklistValues>
                 <fullName>CFO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>COO</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -2943,6 +3216,16 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Contact_cleanup_remarks__c</fullName>
+        <description>FDS Contact maintenance cleansing / Manuel G</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field describes any details about the changes done to contacts on mass clean up / relocation exercises. for instance, could be &quot;moved as part of domain match exercise FDS May 2016&quot;</inlineHelpText>
+        <label>Contact cleanup remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Contact_on_Close_Case__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Specifies if the contact receives an email when an associated ICCS case is set to Closed.</description>
@@ -2950,6 +3233,18 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <label>Contact on Close Case</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact_previous_account_ID__c</fullName>
+        <description>FDS Contact maintenance cleansing / Manuel G</description>
+        <externalId>false</externalId>
+        <inlineHelpText>In case of relocation of contacts exercise, this field holds the information on the account that this contact was previously linked to.</inlineHelpText>
+        <label>Contact previous account ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Converted_Lead_Notes__c</fullName>
@@ -5371,6 +5666,26 @@ IFAP Application.</description>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Flagged_for__c</fullName>
+        <description>FDS Contact maintenance cleansing / Manuel G</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this field is used to flag contacts that are to be deleted or deactivated (for mass loading)</inlineHelpText>
+        <label>Flagged for</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Deletion</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deactivation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Function__c</fullName>
         <externalId>false</externalId>
         <label>Function</label>
@@ -5717,6 +6032,42 @@ IFAP Application.</description>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Billing_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Billing State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Shipping_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Shipping Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Contacts (ISO Shipping Country)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Shipping_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Shipping State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Contacts (ISO Shipping State)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ICCS_CWG__c</fullName>
@@ -6280,6 +6631,15 @@ TotalRows-Successes-Errors</description>
         <fullName>LastCUUpdateDate</fullName>
     </fields>
     <fields>
+        <fullName>Last_synchronization__c</fullName>
+        <description>AIMS-&gt;AMS Last synchronization Date</description>
+        <externalId>false</externalId>
+        <label>Last synchronization</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>LeadSource</fullName>
         <picklist>
             <picklistValues>
@@ -6377,6 +6737,36 @@ TotalRows-Successes-Errors</description>
             <sorted>true</sorted>
         </picklist>
         <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Legacy_System__c</fullName>
+        <externalId>false</externalId>
+        <label>Legacy System</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AIMS2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AIMS3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WEBSTAR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAIMS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -6600,7 +6990,7 @@ TotalRows-Successes-Errors</description>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Membership Main Contact</label>
+        <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7074,6 +7464,15 @@ TotalRows-Successes-Errors</description>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This box serves as a flag to show whether this is the primary contact for the account. Introduced by the Account Management project.</description>
+        <externalId>false</externalId>
+        <label>Primary Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Region_10__c</fullName>
@@ -8085,6 +8484,17 @@ TotalRows-Successes-Errors</description>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>SearchIdentifier__c</fullName>
+        <description>First Name , Last Name and Account Name</description>
+        <externalId>false</externalId>
+        <formula>FirstName &amp; &quot; &quot; &amp;  LastName &amp; &quot; (&quot; &amp;  Account.Name &amp; &quot;)&quot;</formula>
+        <label>SearchIdentifier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Search_Code__c</fullName>
         <description>InvoiceWorks</description>
         <externalId>true</externalId>
@@ -8287,6 +8697,18 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ShipTo_Location__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ShipTo Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Contacts (ShipTo Location)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Skype_Call_Contact__c</fullName>
         <externalId>false</externalId>
         <formula>HYPERLINK(&quot;callto://&quot;&amp;&quot;+1&quot;&amp;Phone,&quot;Call with Skype&quot;)</formula>
@@ -8379,6 +8801,52 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>StB Profile</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Stage__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS_Stage</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>8</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Start_Date_Agency_Month__c</fullName>
@@ -8563,6 +9031,24 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     <fields>
         <fullName>Title</fullName>
         <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Training_dangerous_goods_completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Training dangerous goods completed</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Type_of_Contact__c</fullName>
@@ -8802,6 +9288,14 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>list_Dangerous_Goods_Awareness__c</fullName>
+        <externalId>false</externalId>
+        <label>list Dangerous Goods Awareness</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>segment_lifecycle__c</fullName>
@@ -25299,6 +25793,25 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>MITA_Contact_Type__c</picklist>
+            <values>
+                <fullName>CGO Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGO Corresp%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAX Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PAX Corresp%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Mail_Status__c</picklist>
             <values>
                 <fullName>Bad Mail</fullName>
@@ -25911,21 +26424,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <customTabListAdditionalFields>CONTACT.PHONE1</customTabListAdditionalFields>
         <customTabListAdditionalFields>Use_Contact__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>CONTACT.SALUTATION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CONTACT.EMAIL</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Services__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Financial_Assessment_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
-        <lookupFilterFields>CONTACT.SALUTATION</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
+        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>ACCOUNT.SITE</lookupFilterFields>
         <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
         <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
-        <lookupFilterFields>00N20000003Jdqe</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
@@ -25933,26 +26442,12 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE3</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE4</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE5</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>CONTACT.PHONE6</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00N20000000pQOX</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00N20000000pQOZ</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwe</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwf</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000008UEwg</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaT</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaU</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaV</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>00Nw0000003LlaW</lookupPhoneDialogsAdditionalFields>
         <searchFilterFields>CONTACT.FIRST_NAME</searchFilterFields>
         <searchFilterFields>CONTACT.LAST_NAME</searchFilterFields>
         <searchFilterFields>ACCOUNT.NAME</searchFilterFields>
         <searchFilterFields>ACCOUNT.SITE</searchFilterFields>
         <searchFilterFields>CONTACT.ADDRESS2_CITY</searchFilterFields>
         <searchFilterFields>CONTACT.EMAIL</searchFilterFields>
-        <searchFilterFields>Area__c</searchFilterFields>
-        <searchFilterFields>CONTACT.ADDRESS2_COUNTRY</searchFilterFields>
-        <searchFilterFields>InvoiceWorks_Customer__c</searchFilterFields>
-        <searchFilterFields>Central_Billing_Contact__c</searchFilterFields>
         <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.TITLE</searchResultsAdditionalFields>
@@ -25962,7 +26457,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CONTACT.EMAIL</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
@@ -26006,6 +26500,14 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <errorConditionFormula>NOT(ISBLANK(TEXT(Data_quality_feedback__c))) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
         <errorDisplayField>Comment_data_quality_feedback__c</errorDisplayField>
         <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
+        <active>true</active>
+        <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
+        <errorConditionFormula>AND(TEXT(Account.Category__c)=&quot;MSO Member Sales Office&quot;,ISCHANGED(AccountId),datevalue(CreatedDate)&gt;DATE(2016,5,9),CreatedBy.LastName&lt;&gt;&quot;Site Guest User&quot;)</errorConditionFormula>
+        <errorDisplayField>AccountId</errorDisplayField>
+        <errorMessage>Contacts should not be created under the MSO account, but under the airline Headquarters or branch account.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_change_his_portal_status</fullName>

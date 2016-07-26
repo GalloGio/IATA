@@ -58,16 +58,18 @@ public without sharing class vfISSP_FAQ2Case
     //Added new Help Text to the Page 
     public ISSP_HelpText__c ISSP_TopicHelptext {get;set;} 
     public ISSP_HelpText__c ISSP_SubTopicHelptext {get;set;}
-	
-	//Added new Create button Functionality
+    
+    //Added new Create button Functionality
     //public ISSP_CreateButtonURL__c ISSP_CreateButtonURL {get;set;}  
-	public String CreateButtonURL {get;set;}  
+    public String CreateButtonURL {get;set;}  
 
-	//Sector field of the Account
-	public string Sector ;
+    //Sector field of the Account
+    public string Sector ;
     public String labelSubTopic = '';
     public  boolean isComplain1 = false;
     public  boolean isCompliment1 = false;
+
+    public Boolean isTopicDefault = false; // INC263231
 
     public list<String> errorMessage {get; set;}
 
@@ -77,8 +79,8 @@ public without sharing class vfISSP_FAQ2Case
     }
     
     public PageReference pageLoad() {
-    	errorMessage = new list<string>();
-    	
+        errorMessage = new list<string>();
+        
         SelectedArticleModalView = new ArticleModalView();
         //TF - SP9-C5
         isGSAUser = false;
@@ -121,10 +123,10 @@ public without sharing class vfISSP_FAQ2Case
                 pr = new PageReference('/ISSP_Case?mid=M1S1');
             return pr;
         }
-		//set Sector Field according to Account.Sector__c
-		User user	= DAL_ISSP.getUser(Userinfo.getUserId());
+        //set Sector Field according to Account.Sector__c
+        User user   = DAL_ISSP.getUser(Userinfo.getUserId());
         Contact con = DAL_ISSP.getContact(user.ContactId);
-		Sector		= con.Account.Sector__c != null ? con.Account.Sector__c : '';
+        Sector      = con.Account.Sector__c != null ? con.Account.Sector__c : '';
 
 
         myTopic = ApexPages.currentPage().getParameters().get('topic');
@@ -138,12 +140,12 @@ public without sharing class vfISSP_FAQ2Case
         this.lst_selectsubTopics = new list<SelectOption>();
         this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
         
-		//Initiliaze Fields:
+        //Initiliaze Fields:
         this.topic = '';
         this.subtopic = '';
         this.DataCategoryContainer = new clsDataCategoryContainer();
         
-		//this.DataCategoryContainer.print();
+        //this.DataCategoryContainer.print();
         initTopicsList();
         return null;
     }
@@ -160,7 +162,7 @@ public without sharing class vfISSP_FAQ2Case
         set; 
     }
 
-	public Case newCase1 
+    public Case newCase1 
     { 
         get 
         {
@@ -174,27 +176,27 @@ public without sharing class vfISSP_FAQ2Case
      
     private void resetCase() {
         this.newCase = new Case();
-		this.newCase1 = new Case();
+        this.newCase1 = new Case();
     } 
 
     private void addDecsription() {
         
 
-		String addDecsription ;
-		if (isCompliment1 == false)
-		{
-			 Integer index = Integer.valueOf(topic.trim());
-			 clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
-			 addDecsription = Label.ISSP_F2CTopic + ' - ' 
+        String addDecsription ;
+        if (isCompliment1 == false)
+        {
+             Integer index = Integer.valueOf(topic.trim());
+             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+             addDecsription = Label.ISSP_F2CTopic + ' - ' 
                               + selectDataCategory.CategoryLabel + '\n' 
                               + labelSubTopic + ' - '  
                               + selectDataCategory.getLabelByNameCategory(subtopic); 
-		}else {
-			 addDecsription = Label.ISSP_F2CTopic + ' - ' 
+        }else {
+             addDecsription = Label.ISSP_F2CTopic + ' - ' 
                               + 'COMPLIMENT' + '\n' 
                               + labelSubTopic + ' - '  
                               + 'COMPLIMENT'; 
-		}
+        }
          
         newCase.Description += '\n\n' + addDecsription;
       
@@ -320,22 +322,22 @@ public without sharing class vfISSP_FAQ2Case
         
     public Pagereference create()
     {
-		//Method that Provides the URL of Create Case button  ,
-		//According to ISSP_CreateButtonURL__c "Custom setting"
-		GenerateCreateCaseButtonURL();
-		if (CreateButtonURL != null && CreateButtonURL != '')
-		{
-			Integer index = Integer.valueOf(topic.trim());
-			clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
-			String extraURL = '&topic='+selectDataCategory.CategoryLabel+'&subtopic='+selectDataCategory.getLabelByNameCategory(subtopic);
-			return new Pagereference(CreateButtonURL+extraURL);
-		}
-		else
-		{
-			this.currentButtonsToShow = CancelAndSubmit;
-			createArticleStatisticsRecords(SelectedArticleModalView.SelectedArticle, ENV.ArticleStatType.UnSatisfied);
-			return null;
-		}
+        //Method that Provides the URL of Create Case button  ,
+        //According to ISSP_CreateButtonURL__c "Custom setting"
+        GenerateCreateCaseButtonURL();
+        if (CreateButtonURL != null && CreateButtonURL != '')
+        {
+            Integer index = Integer.valueOf(topic.trim());
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+            String extraURL = '&topic='+selectDataCategory.CategoryLabel+'&subtopic='+selectDataCategory.getLabelByNameCategory(subtopic);
+            return new Pagereference(CreateButtonURL+extraURL);
+        }
+        else
+        {
+            this.currentButtonsToShow = CancelAndSubmit;
+            createArticleStatisticsRecords(SelectedArticleModalView.SelectedArticle, ENV.ArticleStatType.UnSatisfied);
+            return null;
+        }
     }
 
     public PageReference create1()
@@ -383,13 +385,13 @@ public without sharing class vfISSP_FAQ2Case
                 ErrFields += System.Label.IDCard_Description+', ';
             }
             if(ErrFields != ''){
-				errorMessage = new list<string>();
-				String errorString = ErrFields+' '+system.Label.ISSP_Should_be_mandatory;
-				errorMessage.add(errorString);
-				 //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,ErrFields+' '+system.Label.ISSP_Should_be_mandatory);
-				 //ApexPages.addMessage(myMsg);
-				 return null;
-			}
+                errorMessage = new list<string>();
+                String errorString = ErrFields+' '+system.Label.ISSP_Should_be_mandatory;
+                errorMessage.add(errorString);
+                 //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,ErrFields+' '+system.Label.ISSP_Should_be_mandatory);
+                 //ApexPages.addMessage(myMsg);
+                 return null;
+            }
         }
         
         addDecsription();
@@ -402,8 +404,8 @@ public without sharing class vfISSP_FAQ2Case
         
         system.debug('wwe newCase: ' + newCase );
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
-        	errorMessage = new list<string>();
-			errorMessage.add(Label.ISSP_Select_Airline);
+            errorMessage = new list<string>();
+            errorMessage.add(Label.ISSP_Select_Airline);
             return null;
         }
         else if (isGSAOnly && accountId != null){
@@ -444,14 +446,14 @@ public without sharing class vfISSP_FAQ2Case
             if(newCase.Description == null ||newCase.Description == ''){
                 ErrFields += System.Label.IDCard_Description+', ';
             }
-			if(ErrFields != ''){
-				errorMessage = new list<string>();
-				String errorString = ErrFields+' '+system.Label.ISSP_Should_be_mandatory;
-				errorMessage.add(errorString);
-				 //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,ErrFields+' '+system.Label.ISSP_Should_be_mandatory);
-				 //ApexPages.addMessage(myMsg);
-				 return null;
-			}
+            if(ErrFields != ''){
+                errorMessage = new list<string>();
+                String errorString = ErrFields+' '+system.Label.ISSP_Should_be_mandatory;
+                errorMessage.add(errorString);
+                 //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,ErrFields+' '+system.Label.ISSP_Should_be_mandatory);
+                 //ApexPages.addMessage(myMsg);
+                 return null;
+            }
              
         }
         
@@ -464,8 +466,8 @@ public without sharing class vfISSP_FAQ2Case
         }
         
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
-        	errorMessage = new list<string>();
-			errorMessage.add(Label.ISSP_Select_Airline);
+            errorMessage = new list<string>();
+            errorMessage.add(Label.ISSP_Select_Airline);
             //ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,System.Label.ISSP_Select_Airline);
             //ApexPages.addMessage(myMsg);
             return null;
@@ -500,8 +502,8 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('JK22 isComplain IwishtoComplain END: ' + isComplain);
         labelSubTopic = Label.ISSP_I_wish_to_complain_about;
         isComplain1 = true ;
-		isCompliment1 = false ;
-		errorMessage = new list<string>();
+        isCompliment1 = false ;
+        errorMessage = new list<string>();
         return null;
     }
 
@@ -513,14 +515,14 @@ public without sharing class vfISSP_FAQ2Case
         Clicked_DPCServiceRequest = false;
         GenerateFieldsBySettings();
         isComplain = false ;
-		isCompliment = false;
-		isComplain1 = false ;
-		isCompliment1 = false ;
+        isCompliment = false;
+        isComplain1 = false ;
+        isCompliment1 = false ;
         this.currentButtonsToShow = OnlyCancel;
         topic = Env.SelectOptionDefaultValue ;
         subtopic = Env.SelectOptionDefaultValue ;
         labelSubTopic = Label.ISSP_F2CSubTopic;
-		errorMessage = new list<string>();
+        errorMessage = new list<string>();
         return null;
     }
 // Compliment additions ED sept 2015
@@ -534,13 +536,13 @@ public without sharing class vfISSP_FAQ2Case
         isCompliment = true;
         isComplain = false ;
         isComplain1 = false ;
-		isCompliment1 = true ;
+        isCompliment1 = true ;
         this.currentButtonsToShow = CancelAndCreateACase;
-		topic = '0' ;
-		refreshSubTopicPickList();
+        topic = '0' ;
+        refreshSubTopicPickList();
         subtopic = Env.SelectOptionDefaultValue ;
-		errorMessage = new list<string>();
-		create();
+        errorMessage = new list<string>();
+        create();
         return null;
     }
     
@@ -552,9 +554,11 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('Kerensen refreshTopicPickList: After  resetCase(); '+topic+'     Env.SelectOptionDefaultValue===>'+Env.SelectOptionDefaultValue  );
         if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
         {system.debug('Kerensen refreshTopicPickList: IN If '  );
+
             this.lst_selectsubTopics = new list<SelectOption>();
             this.lst_selectsubTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
             articleViewLines = new list<ArticleViewLine>();
+            isTopicDefault = true; //INC263231
         }       
         else
         {system.debug('Kerensen refreshTopicPickList: After  resetCase(); ELSE'  );
@@ -584,8 +588,9 @@ public without sharing class vfISSP_FAQ2Case
                 articleViewLines = buildArticleViewLines(selectDataCategory.topCategoryName, subtopic, Userinfo.getLanguage());
             }
         } 
-		system.debug('SFI2 CALL setSubTopicByPermissions ' );  
-		setSubTopicByPermissions(); 
+        system.debug('SFI2 CALL setSubTopicByPermissions ' + topic + ' isTopicDefault ' + isTopicDefault); 
+        if(isTopicDefault != true) //INC263231
+            setSubTopicByPermissions();  
         system.debug('JK22 isComplain refreshTopicPickList END: ' + isComplain);
     }
         
@@ -806,13 +811,15 @@ public without sharing class vfISSP_FAQ2Case
         {  
             parentVotIdsSet.add(article.ParentId);
         }
-		
+        
         // From the Top 5 articles create a list with articles in my language
-        List<FAQ__kav> myLanguageArticle_List = [SELECT Id, UrlName, Summary, Title, Language, Answer__c , KnowledgeArticleId,
+        List<FAQ__kav> myLanguageArticle_List = [SELECT Id, UrlName, Summary, Title, Language,
+         Answer__c , 
+         KnowledgeArticleId,
                                                     PublishStatus, ArticleNumber, LastPublishedDate 
                                                     FROM FAQ__kav 
                                                     WHERE KnowledgeArticleId IN :parentVotIdsSet AND Language =: lang AND PublishStatus = 'Online'];
-		
+        
         // Create a map with the parent Id of each article in 'myLanguageArticle_List'
         for (FAQ__kav otherlanguageArticle : myLanguageArticle_List) {
             parentIdToMyLanguageArticle_Map.put(otherlanguageArticle.KnowledgeArticleId, otherlanguageArticle);
@@ -871,7 +878,7 @@ public without sharing class vfISSP_FAQ2Case
                 this.lst_selectTopics.add(new SelectOption(String.valueOf(index),cdc.CategoryLabel));
             }
         }
-		setTopicByPermissions();
+        setTopicByPermissions();
     }
 
     /*
@@ -890,7 +897,7 @@ public without sharing class vfISSP_FAQ2Case
     public static list<FAQ__kav> getArticalsByCat(String cat, list<String> subCatList) 
     {
              
-        String queryText = 'SELECT Id ,UrlName ,Summary ,Title, Language, Answer__c'; 
+        String queryText = 'SELECT Id ,UrlName ,Summary ,Title, Language, Answer__c'; //
         queryText +=  ',KnowledgeArticleId ,PublishStatus, ArticleNumber, LastPublishedDate'; 
         queryText += ' FROM FAQ__kav WHERE PublishStatus = \'Online\''; 
         queryText += ' AND Language = \'en_US\''; 
@@ -1006,26 +1013,26 @@ public without sharing class vfISSP_FAQ2Case
     //TF - SP11
     public void setRecordType(){
         //set the Topic__c "English Value"
-		if (isCompliment1 == false)
-		{
-			clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
-			newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
-			//set the Topic__c "English Value"
+        if (isCompliment1 == false)
+        {
+            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
+            newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
+            //set the Topic__c "English Value"
 
-			for(Integer cIndex = 0; cIndex < cdc.lst_childs.size(); cIndex++)
-			{
-				clsDataCategory.CategoryChildWrapper childCat = cdc.lst_childs[cIndex];  
-				if(subtopic == childCat.CategoryName)
-				{
-					 newCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
-				}
-			}
-		}else
-		{
-			newCase.Topic__c = 'COMPLIMENT';
-			newCase.SubTopic__c = 'COMPLIMENT';
-			this.topic = '0';
-		}
+            for(Integer cIndex = 0; cIndex < cdc.lst_childs.size(); cIndex++)
+            {
+                clsDataCategory.CategoryChildWrapper childCat = cdc.lst_childs[cIndex];  
+                if(subtopic == childCat.CategoryName)
+                {
+                     newCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                }
+            }
+        }else
+        {
+            newCase.Topic__c = 'COMPLIMENT';
+            newCase.SubTopic__c = 'COMPLIMENT';
+            this.topic = '0';
+        }
 
         //Set Origin to be PORTAL
         newCase.Origin = 'Portal'; 
@@ -1055,8 +1062,8 @@ public without sharing class vfISSP_FAQ2Case
         List <ISSP_FAQ2Case_Record_Type__c> csList = [SELECT RecordType__c, OwnerId__c ,Topic__c ,SubTopic__c ,Complaint__c ,Country_concerned_by_the_query__c , 
                                                              Country_concerned_by_the_query2__c , Country_concerned_by_the_query3__c,    
                                                              Flag_Assignment_Rules__c
-													  FROM ISSP_FAQ2Case_Record_Type__c
-													  WHERE 
+                                                      FROM ISSP_FAQ2Case_Record_Type__c
+                                                      WHERE 
                                                             Complaint__c = :isComplain1
                                                             AND (Topic__c = :topicName
                                                                 OR SubTopic__c = :subtopic
@@ -1158,7 +1165,7 @@ public without sharing class vfISSP_FAQ2Case
         if(isComplain1 == true){ 
             newCase.IsComplaint__c = true ; 
         }
-		if(isCompliment1 == true){ 
+        if(isCompliment1 == true){ 
             newCase.Compliment__c = true ; 
         }
 
@@ -1416,157 +1423,163 @@ public without sharing class vfISSP_FAQ2Case
     }
 
     public PageReference GenerateTopicHelpText(){
-        Integer index = Integer.valueOf(this.topic.trim());
-        clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+        if(topic != Env.SelectOptionDefaultValue){ // INC263231 - IF topic was the default don't do the logic
+            Integer index = Integer.valueOf(this.topic.trim());
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
-        List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
-                                                                                      From ISSP_HelpText__c 
-                                                                                      WHERE Topic__c =: selectDataCategory.CategoryName
-                                                                                      AND SubTopic__c =: null]);
-            
-        System.debug('Kerensen1 ISSP_TopicHelptext_Lst ==>'+ISSP_TopicHelptext_Lst);
-        if(ISSP_TopicHelptext_Lst != null && ISSP_TopicHelptext_Lst.size() > 0){
-            ISSP_TopicHelptext = ISSP_TopicHelptext_Lst[0];
-        }else{
-            ISSP_TopicHelptext = new ISSP_HelpText__c();
+            List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
+                                                                                          From ISSP_HelpText__c 
+                                                                                          WHERE Topic__c =: selectDataCategory.CategoryName
+                                                                                          AND SubTopic__c =: null]);
+                
+            System.debug('Kerensen1 ISSP_TopicHelptext_Lst ==>'+ISSP_TopicHelptext_Lst);
+            if(ISSP_TopicHelptext_Lst != null && ISSP_TopicHelptext_Lst.size() > 0){
+                ISSP_TopicHelptext = ISSP_TopicHelptext_Lst[0];
+            }else{
+                ISSP_TopicHelptext = new ISSP_HelpText__c();
+            }
         }
-        return null;
+            return null;
+
     }
 
 
     public PageReference GeneratesubTopicHelpText(){ 
-        System.debug('Kerensen1 START GenerateTopicHelpText ==>'+subtopic);
-        Integer index = Integer.valueOf(this.topic.trim()); 
-        clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
-        List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
-                                                                                      From ISSP_HelpText__c 
-                                                                                      WHERE 
-                                                                                          Topic__c =: selectDataCategory.CategoryName
-                                                                                      And SubTopic__c =:subtopic
-                                                                                      And SubTopic__c != null]);
-            
-        System.debug('Kerensen1 ISSP_SubTopicHelptext_Lst ==>'+ISSP_SubTopicHelptext_Lst);
-        if(ISSP_SubTopicHelptext_Lst != null && ISSP_SubTopicHelptext_Lst.size() > 0){
-            ISSP_SubTopicHelptext = ISSP_SubTopicHelptext_Lst[0];
-        }else{
-            ISSP_SubTopicHelptext = new ISSP_HelpText__c();
+        System.debug('Kerensen1 START GenerateTopicHelpText ==>'+subtopic);
+        if(subtopic != Env.SelectOptionDefaultValue){  // INC263231 - IF topic was the default don't do the logic
+            Integer index = Integer.valueOf(this.topic.trim()); 
+            clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+
+            List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
+                                                                                          From ISSP_HelpText__c 
+                                                                                          WHERE 
+                                                                                              Topic__c =: selectDataCategory.CategoryName
+                                                                                          And SubTopic__c =:subtopic
+                                                                                          And SubTopic__c != null]);
+                
+            System.debug('Kerensen1 ISSP_SubTopicHelptext_Lst ==>'+ISSP_SubTopicHelptext_Lst);
+            if(ISSP_SubTopicHelptext_Lst != null && ISSP_SubTopicHelptext_Lst.size() > 0){
+                ISSP_SubTopicHelptext = ISSP_SubTopicHelptext_Lst[0];
+            }else{
+                ISSP_SubTopicHelptext = new ISSP_HelpText__c();
+            }
         }
         return null;
     }
 
-	// Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
-	private void setTopicByPermissions(){
-		//Help Selectoptuion List 
-		list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
+    // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
+    private void setTopicByPermissions(){
+        //Help Selectoptuion List 
+        list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
 
-		//Select Custom Setting to set permissions
+        //Select Custom Setting to set permissions
         List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c 
                                                             FROM ISSP_FAQ2Case_Permissions__c
-															Where Subtopic__c =: null
-															AND Topic__c != null
-															];
+                                                            Where Subtopic__c =: null
+                                                            AND Topic__c != null
+                                                            ];
         system.debug('SFI PermissionList: ' + PermissionList);
-		system.debug('SFI PermissionList SIZE: ' + PermissionList.size());
+        system.debug('SFI PermissionList SIZE: ' + PermissionList.size());
 
-		if(PermissionList != null && PermissionList.size() > 0){
-			for (SelectOption top : this.lst_selectTopics)
-			{
-				//set the Topic "English Value"
-				string TopicinEnglish = '';
-				if (top.getValue() != '-- Select --')
-				{
-					clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(top.getValue())];
-				    TopicinEnglish = ((cdc.CategoryName).replace('__c','')) ;//.replace('_',' ')
-				}else{
-					TopicinEnglish ='-- Select --';
-				}
-				//set the Topic "English Value"
+        if(PermissionList != null && PermissionList.size() > 0){
+            for (SelectOption top : this.lst_selectTopics)
+            {
+                //set the Topic "English Value"
+                string TopicinEnglish = '';
+                if (top.getValue() != '-- Select --')
+                {
+                    clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(top.getValue())];
+                    TopicinEnglish = ((cdc.CategoryName).replace('__c','')) ;//.replace('_',' ')
+                }else{
+                    TopicinEnglish ='-- Select --';
+                }
+                //set the Topic "English Value"
 
-				boolean FoundExcludePermission = false ;
-				for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
-				{
-					//Check if the topic has matched Custom setting record
-					if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
-					{
-						if (per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector))
-						{
-							FoundExcludePermission = true ;
-						}
-					}
-				}
-				//If topic has permission add it to the display List
-				if (!FoundExcludePermission)
-				{
-					tmpselectTopicsList.add(top);
-				}
-			}
+                boolean FoundExcludePermission = false ;
+                for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
+                {
+                    //Check if the topic has matched Custom setting record
+                    if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
+                    {
+                        if (per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector) || per.Sector_Permission__c.contains('All'))
+                        {
+                            FoundExcludePermission = true ;
+                        }
+                    }
+                }
+                //If topic has permission add it to the display List
+                if (!FoundExcludePermission)
+                {
+                    tmpselectTopicsList.add(top);
+                }
+            }
 
-			// Prepare Subtopics final list to display
-			if (tmpselectTopicsList != null && tmpselectTopicsList.size() > 0)
-			{
-				this.lst_selectTopics.clear();
-				this.lst_selectTopics = tmpselectTopicsList ;
-			}
+            // Prepare Subtopics final list to display
+            if (tmpselectTopicsList != null && tmpselectTopicsList.size() > 0)
+            {
+                this.lst_selectTopics.clear();
+                this.lst_selectTopics = tmpselectTopicsList ;
+            }
         }
-	}
+    }
 
 
-	// Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
-	private void setSubTopicByPermissions(){
-	    Integer index = Integer.valueOf(topic.trim());
+    // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
+    private void setSubTopicByPermissions(){
+        Integer index = Integer.valueOf(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
-		
-		//Help Selectoptuion List 
-		list<SelectOption> tmpselectSubTopicsList = new list<SelectOption>();
+        
+        //Help Selectoptuion List 
+        list<SelectOption> tmpselectSubTopicsList = new list<SelectOption>();
 
-		//Select Custom Setting to set permissions
+        //Select Custom Setting to set permissions
         List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c 
-						                                      FROM ISSP_FAQ2Case_Permissions__c
-															  Where Subtopic__c != null];
+                                                              FROM ISSP_FAQ2Case_Permissions__c
+                                                              Where Subtopic__c != null];
         system.debug('SFI2 PermissionList: ' + PermissionList);
 
-		if(PermissionList != null && PermissionList.size() > 0){
-			for (SelectOption subtop : this.lst_selectsubTopics)
-			{
-				boolean FoundExcludePermission = false ;
-				string subtopicVal = subtop.getValue() == 'Fees__c' || subtop.getValue() == 'Changes__c' ? ','+(subtop.getValue()).replace('__c','') : (subtop.getValue()).replace('__c','') ;
-				for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
-				{
-					//Check if the topic has matched Custom setting record
-					if (per.Subtopic__c != null && per.Subtopic__c.contains(subtopicVal) &&
-						(selectDataCategory.CategoryName == per.topic__c || per.topic__c == null || per.topic__c == ''))
-					{
-						if (per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector))
-						{
-							FoundExcludePermission = true ;
-						}
-					}
-				}
-				//If subtopic has permission add it to the display List
-				if (!FoundExcludePermission)
-				{
-					tmpselectSubTopicsList.add(subtop);
-				}
-			}
-			// Prepare Subtopics final list to display
-			if (tmpselectSubTopicsList != null && tmpselectSubTopicsList.size() > 0)
-			{
-				this.lst_selectsubTopics.clear();
-				this.lst_selectsubTopics = tmpselectSubTopicsList ;
-			}
+        if(PermissionList != null && PermissionList.size() > 0){
+            for (SelectOption subtop : this.lst_selectsubTopics)
+            {
+                boolean FoundExcludePermission = false ;
+                string subtopicVal = subtop.getValue() == 'Fees__c' || subtop.getValue() == 'Changes__c' ? ','+(subtop.getValue()).replace('__c','') : (subtop.getValue()).replace('__c','') ;
+                for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
+                {
+                    //Check if the topic has matched Custom setting record
+                    if (per.Subtopic__c != null && per.Subtopic__c.contains(subtopicVal) &&
+                        (selectDataCategory.CategoryName == per.topic__c || per.topic__c == null || per.topic__c == ''))
+                    {
+                        if (per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector))
+                        {
+                            FoundExcludePermission = true ;
+                        }
+                    }
+                }
+                //If subtopic has permission add it to the display List
+                if (!FoundExcludePermission)
+                {
+                    tmpselectSubTopicsList.add(subtop);
+                }
+            }
+            // Prepare Subtopics final list to display
+            if (tmpselectSubTopicsList != null && tmpselectSubTopicsList.size() > 0)
+            {
+                this.lst_selectsubTopics.clear();
+                this.lst_selectsubTopics = tmpselectSubTopicsList ;
+            }
         }
-	}  
+    }  
 
-	public PageReference copyCountryISO(){ 
-		this.newCase.IFAP_Country_ISO__c = newCase1.IFAP_Country_ISO__c ;
-		
-		return null;
-	}
+    public PageReference copyCountryISO(){ 
+        this.newCase.IFAP_Country_ISO__c = newCase1.IFAP_Country_ISO__c ;
+        
+        return null;
+    }
 
-	
+    
 
-	public void GenerateCreateCaseButtonURL(){
+    public void GenerateCreateCaseButtonURL(){
         System.debug('Kerensen2 START GenerateCreateButtonURL ==>');
         Integer index = Integer.valueOf(this.topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];

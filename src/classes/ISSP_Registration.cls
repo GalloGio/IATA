@@ -122,6 +122,8 @@ public without sharing class ISSP_Registration {
     public Boolean show90Days {get; set;}
     
     public String country {get; set;}
+
+    public Boolean newAirline = false;
     
     public ISSP_Registration(){
         
@@ -321,8 +323,8 @@ public without sharing class ISSP_Registration {
         //check IATA Code format
         decimal iataCodeInput;
         if (isAirline && toSearchDesignatorCode){
-        	searchIATACode = searchIATACodeAirline;
-        	searchCountry = searchCountryAirline;
+          searchIATACode = searchIATACodeAirline;
+          searchCountry = searchCountryAirline;
         }
         if (isAirline && searchIATACode != '' && searchIATACode != null && toSearchDesignatorCode){
             try {
@@ -393,23 +395,23 @@ public without sharing class ISSP_Registration {
         createBranch = false;
         // set query string
         if (isAirline && toSearchDesignatorCode) {
-        	whereStr = 'Id != null';
-        	system.debug('searchDesignatorCode: ' + searchDesignatorCode);
-        	system.debug('searchIATACode: ' + searchIATACode);
-        	system.debug('searchCountry: ' + searchCountry);
-        	if (searchDesignatorCode != '' && searchDesignatorCode != null){
-        		whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
-        	}
-        	if (searchIATACode != '' && searchIATACode != null){
-        		whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
-        	}
-        	if (searchCountry != '' && searchCountry != null){
-        		whereStr += ' AND IATA_ISO_Country__c=\'' + searchCountry + '\'';
-        	}
+          whereStr = 'Id != null';
+          system.debug('searchDesignatorCode: ' + searchDesignatorCode);
+          system.debug('searchIATACode: ' + searchIATACode);
+          system.debug('searchCountry: ' + searchCountry);
+          if (searchDesignatorCode != '' && searchDesignatorCode != null){
+            whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
+          }
+          if (searchIATACode != '' && searchIATACode != null){
+            whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
+          }
+          if (searchCountry != '' && searchCountry != null){
+            whereStr += ' AND IATA_ISO_Country__c=\'' + searchCountry + '\'';
+          }
             //whereStr = 'IATACode__c=\'' + searchIATACode + '\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
         else if (isAirline && !toSearchDesignatorCode) {
-        	whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\' AND Sector__c != \'General Public\'';
+          whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\' AND Sector__c != \'General Public\'';
         }
         /*
         else if (isGSA) {
@@ -481,54 +483,54 @@ public without sharing class ISSP_Registration {
                 }
             }
             else{
-            	if (toSearchDesignatorCode){
-	                system.debug('no branch was found');
-	                whereStr = 'Id != null';
-		        	system.debug('searchDesignatorCode: ' + searchDesignatorCode);
-		        	system.debug('searchIATACode: ' + searchIATACode);
-		        	system.debug('searchCountry: ' + searchCountry);
-		        	if (searchDesignatorCode != '' && searchDesignatorCode != null){
-		        		whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
-		        	}
-		        	if (searchIATACode != '' && searchIATACode != null){
-		        		whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
-		        	}
-	                queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c from Account where '
-	                         + whereStr + ' and RecordType.DeveloperName = \'IATA_Airline\'';
-	                system.debug('QUERY: ' + queryStr);
-	                try {
-	                    accList = Database.query(queryStr);
-	                } catch (Exception e) {
-	                    log(e);
-	                }
-	                system.debug('airline list: ' + accList);
-	                if (!accList.isEmpty()){
-	                    system.debug('not empty, to create branch');
-	                    hqAccount = accList[0];
-	                    hqFound = true;
-	                    createBranch = true;
-	                    showCreateAccount = true;
-	                    infoMessage.add(Label.ISSP_NoRecordsFoundBranch);
-	                    if (accList[0].Top_Parent__c != null){
-	                        acc.Name = accList[0].Top_Parent__r.Name;
-	                        acc.Top_Parent__c = accList[0].Top_Parent__c;
-	                        acc.ParentId = accList[0].Top_Parent__c;
-	                    }
-	                    else{
-	                        acc.Name = accList[0].Name;
-	                        acc.Top_Parent__c = accList[0].Id;
-	                        acc.ParentId = accList[0].Id;
-	                    }
-	                }
-	                else{
-	                    errorMessage.add(Label.ISSP_NoRecordsFoundGP);
-	                }
-            	}
-            	else{
-            		infoMessage.add(Label.ISSP_NoRecordsFoundCreateStandardAirline);
-            		showCreateAccount = true;
-            		acc.Name = searchCompanyName;
-            	}
+              if (toSearchDesignatorCode){
+                  system.debug('no branch was found');
+                  whereStr = 'Id != null';
+              system.debug('searchDesignatorCode: ' + searchDesignatorCode);
+              system.debug('searchIATACode: ' + searchIATACode);
+              system.debug('searchCountry: ' + searchCountry);
+              if (searchDesignatorCode != '' && searchDesignatorCode != null){
+                whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
+              }
+              if (searchIATACode != '' && searchIATACode != null){
+                whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
+              }
+                  queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c from Account where '
+                           + whereStr + ' and RecordType.DeveloperName = \'IATA_Airline\'';
+                  system.debug('QUERY: ' + queryStr);
+                  try {
+                      accList = Database.query(queryStr);
+                  } catch (Exception e) {
+                      log(e);
+                  }
+                  system.debug('airline list: ' + accList);
+                  if (!accList.isEmpty()){
+                      system.debug('not empty, to create branch');
+                      hqAccount = accList[0];
+                      hqFound = true;
+                      createBranch = true;
+                      showCreateAccount = true;
+                      infoMessage.add(Label.ISSP_NoRecordsFoundBranch);
+                      if (accList[0].Top_Parent__c != null){
+                          acc.Name = accList[0].Top_Parent__r.Name;
+                          acc.Top_Parent__c = accList[0].Top_Parent__c;
+                          acc.ParentId = accList[0].Top_Parent__c;
+                      }
+                      else{
+                          acc.Name = accList[0].Name;
+                          acc.Top_Parent__c = accList[0].Id;
+                          acc.ParentId = accList[0].Id;
+                      }
+                  }
+                  else{
+                      errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                  }
+              }
+              else{
+                infoMessage.add(Label.ISSP_NoRecordsFoundCreateStandardAirline);
+                showCreateAccount = true;
+                acc.Name = searchCompanyName;
+              }
             }
         }
         else if (isOther){
@@ -636,9 +638,9 @@ public without sharing class ISSP_Registration {
         if (!ISSP_Constant.languageMap.containsKey(lang))
             lang = 'en_US';
             
-        Boolean newAirline = false;
+        //Boolean newAirline = false;
         if (isAirline && !createBranch && showCreateAccount){
-        	newAirline = true;
+          newAirline = true;
         }
         
         system.debug('TO createNewUser');
@@ -739,10 +741,11 @@ public without sharing class ISSP_Registration {
                 acc.Sector__c = hqAccount.Sector__c;
                 acc.Category__c = hqAccount.Category__c;
                 acc.IATACode__c = hqAccount.IATACode__c;
-	            acc.Airline_designator__c = hqAccount.Airline_designator__c;
+              acc.Airline_designator__c = hqAccount.Airline_designator__c;
             }
             else{
                 acc.Reason_for_creation__c = 'Created by customer';
+
             }
             
             log('RecordTypeId ' + acc.RecordTypeId);
@@ -762,9 +765,9 @@ public without sharing class ISSP_Registration {
             system.debug('to register selectedAccId: ' + selectedAccId);
             system.debug('to register selectedAccId2: ' + selectedAccId2);
             if (selectedAccId != '' && selectedAccId != null)
-            	con.AccountId = selectedAccId;
+              con.AccountId = selectedAccId;
             else if (selectedAccId2 != '' && selectedAccId2 != null)
-            	con.AccountId = selectedAccId2;
+              con.AccountId = selectedAccId2;
         }
         
         if (searchCountry!=null && searchCountry!=''){
@@ -783,6 +786,18 @@ public without sharing class ISSP_Registration {
                     languageString = ISSP_Constant.languageMap.get(lang);
                 }
             }
+
+            //INC253595 - Start
+            system.debug('createAgency creating contact: ' + createAgency);
+            if (!con.ID_Cards__r.isEmpty() || selectedCustomerType == GeneralPublic || isNotIATA || newAirline){
+                system.debug('setting status to: ' + ISSP_Constant.APPROVED_CONTACT_STATUS);
+                con.User_Portal_Status__c = ISSP_Constant.APPROVED_CONTACT_STATUS;
+            }
+            else{
+                con.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS ;
+            }
+            //INC253595 - End
+
             con.Preferred_Language__c = languageString;
             upsert con;
             
@@ -1108,7 +1123,7 @@ public without sharing class ISSP_Registration {
     }
     
     public PageReference checkSearchDesignatorCode(){
-    	searchCountry = '';
+      searchCountry = '';
         searchIATACode = '';
         searchCountryAirline = '';
         searchIATACodeAirline = '';
@@ -1137,7 +1152,12 @@ public without sharing class ISSP_Registration {
         return null;
     }
     
-    public Boolean checkCaptcha()  {
+    public Boolean checkCaptcha()  { 
+        
+        captchaVerified = true;
+        return true;
+        
+        /*
         System.debug('captchaId: ' + captchaId);
         System.debug('captchaAnswer: ' + captchaAnswer);
         String url = 'http://captchator.com/captcha/check_answer/' + captchaId + '/' + captchaAnswer;
@@ -1146,25 +1166,26 @@ public without sharing class ISSP_Registration {
         req.setEndpoint(url);
         req.setMethod('GET');
         if (Test.isRunningTest()){
-        	captchaVerified = true;
-        	return true;
+          captchaVerified = true;
+          return true;
         }
         else{
-	        try {
-	            Http http = new Http();
-	            response = http.send(req);
-	            System.debug('reCAPTCHA response: ' + response);
-	            System.debug('reCAPTCHA body: ' + response.getBody());
-	            if (response.getBody() == '1'){
-	                captchaVerified = true;
-	                return true;
-	            }
-	        } catch(System.Exception e) {
-	            return false;
-	            System.debug('ERROR: ' + e);
-	        }
+          try {
+              Http http = new Http();
+              response = http.send(req);
+              System.debug('reCAPTCHA response: ' + response);
+              System.debug('reCAPTCHA body: ' + response.getBody());
+              if (response.getBody() == '1'){
+                  captchaVerified = true;
+                  return true;
+              }
+          } catch(System.Exception e) {
+              return false;
+              System.debug('ERROR: ' + e);
+          }
         }
         return false;
+        */
     }
     
     //TF-SP08 - for first agency user, give access to custom permission set 

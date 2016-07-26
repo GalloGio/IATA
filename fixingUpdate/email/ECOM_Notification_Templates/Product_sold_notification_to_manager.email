@@ -1,0 +1,14 @@
+<html> 
+<head> 
+</head> 
+<body> 
+<p>Dear,</p>
+
+<p>The product {!Product2.SAP_Material_Number__c} was successfully sold {!OrderItem.OrderItemNumber}</p> 
+
+<p>Best regards,<br />
+eCommerce Support Team
+</p>
+
+</body> 
+</html>
