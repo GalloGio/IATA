@@ -16,7 +16,7 @@
                 <behavior>Readonly</behavior>
                 <field>CaseNumber</field>
             </layoutItems>
-            <layoutItems>sdlkfjslkdfjldkfjdlfjd
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ContactId</field>
             </layoutItems>
