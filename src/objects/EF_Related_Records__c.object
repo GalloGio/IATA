@@ -3,7 +3,7 @@
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
-    </actionOverrides> 
+    </actionOverrides>
     <actionOverrides>
         <actionName>CancelEdit</actionName>
         <type>Default</type>
@@ -47,7 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>E&amp;F CRM Project test needs to test store simple information, therefore this &quot;Dummy&quot; object is created to store that information under different record types to fulfill different needs.</description>
+    <description>E&amp;F CRM Project needs to store simple information, therefore this &quot;Dummy&quot; object is created to store that information under different record types to fulfill different needs.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -87,6 +87,12 @@
         <active>true</active>
         <description>Used to store the Airport/FIR Codes (GVA, MAD...)</description>
         <label>FIR Code</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Location</fullName>
+        <active>true</active>
+        <description>Used to Store Location+Currency information, related to one contract.</description>
+        <label>Location</label>
     </recordTypes>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FIR_Code_Name__c</lookupDialogsAdditionalFields>
