@@ -222,7 +222,7 @@
                 <apex:outputPanel id="correctionWarningMessageNew" rendered="{!IF( isCorrection ,true, false)}">
                   <div class="slds-box slds-theme--warning" role="alert">
                     <div class="slds-notify__content slds-grid">
-                      <svg aria-hidden="true" class="slds-icon-text-default slds-icon--small slds-m-right--small slds-col slds-no-flex">
+                      <svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex">
                         <use xlink:href="{!URLFOR($Resource.SLDS103, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
                       </svg>
                       <div class="slds-col slds-align-middle">
