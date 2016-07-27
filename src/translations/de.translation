@@ -269,6 +269,22 @@
         <name>Add_campaign_member_error</name>
     </customLabels>
     <customLabels>
+        <label>Fehler: Rechnungsanschrift (Stadt)  fehlt, bitte folgen Sie diesen Schritten:
+
+
+1-Editieren Sie die &quot;&quot;Rechnungsstadt&quot;&quot; Linie
+2-Wähen Sie eine vom System angebotene Anschrift aus</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte validieren Sie Ihre Rechnungs-und Lieferanschrift, durch klicken auf den &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; Knopf</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte validieren Sie Ihre Rechnungs-und Lieferanschrift, durch klicken auf den Knopf zum Abhaken.</label>
+        <name>AddressDoctorValidate2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address Line 1 --></label>
         <name>Address_Line_1</name>
     </customLabels>
@@ -883,6 +899,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Land</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2663,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>Diese email ist bereits im Online Store registriert. Wenn Sie Ihr Passwort zurücksetzen möchten, gehen sie bitte zur Login Seite zurück und benutzen Sie die &quot;Passwort vergessen&quot; Funktion.</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5176,6 +5200,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Bitte klicken Sie, um fortzufahren</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Sie haben sich in den letzten 90 Tagen nicht eingeloggt. Daher wird eine Email mit einem neuen Passwort an Sie geschickt.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6198,6 +6226,10 @@ Wenn Sie keinen IATA-Code haben, gehen Sie zurück und wählen Sie „Anderes Un
     <customLabels>
         <label>Datenschutz</label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie werden in 5 Sekunden zur Startseite geleitet</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>Registrierungsprozess</label>

@@ -1,6 +1,8 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="false" >
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ISSP_Registration">
 <!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
 <html xmlns="http://www.w3.org/1999/xhtml">
+
+
 <head>
     
 
@@ -35,6 +37,7 @@
 <!--****{!ISPICKVAL($User.UserType,'Guest')}***-->
 
 	<div class="container">
+	
 		<div class="row">   </div>
 	    <div class="row">
 	        <div class="logbox">
@@ -45,6 +48,7 @@
 	<div id="dvBackgroundMaster" style="">
 	    <img id="ctl00_imgBackgroundMaster" class="wwBg" title="Page Background Image" alt="Page Background Image" src="{!urlfor($Resource.IIS_Portal,'/images/background_IATA.png')}" />
 	</div>
+
 
 </body>
 </html>

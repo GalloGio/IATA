@@ -1,0 +1,162 @@
+<apex:page controller="vfIECHistPayments" language="{!language}" action="{!pageLoad}" 
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+
+    <!--[if lte IE 8]>
+        <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+		<title>{!$Label.Payment_history} - {!$Label.SiteTitle}</title>
+    </head>
+
+    <body data-media-size="" class="page-dashboard" data-is-modal-open="false">
+        <div id="js-breakpoint-finder">
+            <span class="device-xs screen-xsmall"></span>
+            <span class="device-sm screen-small"></span>
+            <span class="device-md screen-medium"></span>
+            <span class="device-lg screen-large"></span>
+            <span class="device-xl screen-xlarge"></span>
+        </div>
+
+    <div class="app-container" id="js-app-container">
+
+    	<!-- Page Header -->
+        <c:IEC_PageHeader is_dashboard="true" page_name="IEC_PaymentHistory" />
+	
+    	<div class="page-container" id="js-page-container">
+
+    	<main class="main-content">
+		    <div class="inner-wrapper">
+		        <h1 class="page-title">{!$Label.Payment_history}</h1>
+		        
+		        <div class="table-container payment-history">
+		            <div class="table-heading">
+		                <table class="data-table table-history">
+		                    <tr class="heading">
+                                <th class="payment-id">{!$Label.Payment_ID}</th>
+                                <th class="payment-date">{!$Label.Payment_date}</th>
+                                <th class="payment-amount">{!$Label.Payment_amount}</th>
+                                <th class="status">{!$Label.Status}</th>
+                                <th class="action"></th>
+                            </tr>
+		                </table>
+		            </div>
+		            <div class="scroll-container history">
+
+		                <table class="data-table table-history table-togglable">
+		                    <!--<?=  $table_header ?>
+		                    <?php for ($i=0; $i < 20; $i++) { ?> -->
+		                    <apex:repeat var="payment" value="{!lstPaymentsToDisplay}" rendered="{!lstPaymentsToDisplay != null && lstPaymentsToDisplay.size > 0}" rows="{!iNbrRowsDisplayed}">
+		                    <tr class="listing-item">
+		                        <td class="payment-id" data-label="Payment ID">
+		                            <apex:outputText value="{!payment.Name}" />
+		                        </td>
+		                        <td class="payment-date" data-label="Payment date">
+		                            <apex:outputText value="{0,date,yyyy'/'MM'/'dd}">
+		                            	<apex:param value="{!payment.Zuora__EffectiveDate__c}" />
+		                            </apex:outputText>
+		                        </td>
+		                        <td class="payment-amount" data-label="Payment amount">
+		                            <apex:outputText value="${0, number,###,###,##0.00}">
+		                            	<apex:param value="{!payment.Zuora__Amount__c}"/>
+		                            </apex:outputText>
+		                        </td>
+		                        <td class="status" data-label="Status">
+		                            <span class="status-label processed"><apex:outputText value="{!payment.Zuora__Status__c}" /></span>
+		                        </td>
+		                        <td class="action js-toggle-table">
+		                            <a class="js-toggle-switch" href="#">
+		                                <span class="show-details">
+		                                    {!$Label.See_details}
+		                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+		                                </span>
+		                                <span class="hide-details">
+		                                    {!$Label.Hide_details}
+		                                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+		                                </span>
+		                            </a>
+		                        </td>
+		                        <td class="details js-toggle-details is-hidden">
+		                            <table class="data-table table-history-details">
+		                                <caption><apex:outputText value="{!payment.Name}" /></caption>
+		                                <tr class="heading">
+		                                    <th class="date">{!$Label.Date}</th>
+		                                    <th class="status">{!$Label.Status}</th>
+		                                    <th class="amount">{!$Label.IDCard_Amount}</th>
+		                                    <th class="method">{!$Label.Payment_method}</th>
+		                                    <th class="reference">{!$Label.Reference_number}</th>
+		                                    <th class="invoices">{!$Label.Related_invoices}</th>
+		                                </tr>
+		                                <tr class="listing-item">
+		                                    <td class="date" data-label="Date">
+		                                        <apex:outputText value="{0,date,yyyy'/'MM'/'dd}">
+		                                        	<apex:param value="{!payment.Zuora__EffectiveDate__c}" />
+		                                        </apex:outputText>
+		                                    </td>
+		                                    <td class="status" data-label="Status">
+		                                        <span class="status-label processed"><apex:outputText value="{!payment.Zuora__Status__c}" /></span>
+		                                    </td>
+		                                    <td class="amount" data-label="Amount">
+		                                        <apex:outputText value="${0, number,###,###,##0.00}">
+		                                        	<apex:param value="{!payment.Zuora__Amount__c}"/>
+		                                        </apex:outputText>
+		                                    </td>
+		                                    <td class="method" data-label="Payment method">
+		                                    	{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(payment.Zuora__PaymentMethod__c, 'Other', 'IATA Clearing House'), 'Credit Card', ''), 'ACH', 'IATA Clearing House')}
+		                                    </td>
+		                                    <td class="reference" data-label="Reference number">
+		                                        <apex:outputText value="{!payment.Zuora__ReferenceId__c}" />
+		                                    </td>
+		                                    <td class="invoices" data-label="Related invoices">
+												<apex:repeat value="{!payment.Zuora__PaymentInvoices__r}" var="inv" rendered="{! legacyInvoiceDate != null && payment.Zuora__EffectiveDate__c < legacyInvoiceDate}">
+													<!-- {!inv.Zuora__Invoice__r.Name}<br /> -->
+													<apex:form >
+														<apex:commandLink value="{!inv.Zuora__Invoice__r.Name}" action="{!selectInvoice}">
+	                                                        <apex:param name="sSelectedInvoiceID" value="{!inv.Zuora__Invoice__r.Id}" assignTo="{!sSelectedInvoiceID}" />
+	                                                    </apex:commandLink>
+                                                    </apex:form>
+												</apex:repeat>
+												<apex:outputPanel rendered="{! legacyInvoiceDate != null && payment.Zuora__EffectiveDate__c >= legacyInvoiceDate}">
+													<a href="IEC_OrderHistory">In Order</a>
+												</apex:outputPanel>
+		                                    </td>
+		                                </tr>
+		                            </table>
+		                        </td>
+		                    </tr>
+		                    <!-- <?php } ?> -->
+		                    </apex:repeat>
+		                </table>
+		            </div>
+		        </div>
+		    </div>
+		</main>
+
+        
+        <c:IEC_Footer is_dashboard="true" />
+
+    <!-- /END page-container --></div>
+    <!-- /END app-container --></div>
+    <div class="modal-container is-hidden" id="js-modal">
+        <div class="overlay"></div>
+        <div class="modal-dialog" id="js-modal-dialog"></div>
+    </div>
+    
+    <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+	<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+	<style type="text/css">
+		.warning{
+			color:#e5176e;
+		}
+	</style>
+    </body>
+	</html>
+</apex:page>

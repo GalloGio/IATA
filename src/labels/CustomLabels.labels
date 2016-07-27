@@ -472,6 +472,30 @@
         <value>You cannot add a member a this status of the campaign.</value>
     </labels>
     <labels>
+        <fullName>AddressDoctorNoState</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddressDoctorNoState</shortDescription>
+        <value>Error: Billing State/Province is empty, please follow this steps to fill it in:
+ 
+ 1- Edit the “Billing city” line
+ 2- Select one of the addresses proposed by the system</value>
+    </labels>
+    <labels>
+        <fullName>AddressDoctorValidate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddressDoctorValidate</shortDescription>
+        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
+    </labels>
+    <labels>
+        <fullName>AddressDoctorValidate2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddressDoctorValidate2</shortDescription>
+        <value>Please validate your billing and shipping addresses by clicking on the checkmark button</value>
+    </labels>
+    <labels>
         <fullName>Address_Line_1</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -1627,6 +1651,13 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>FooterLeadMessage</shortDescription>
         <value>Our mission is to represent, lead and serve the airline industry</value>
+    </labels>
+    <labels>
+        <fullName>GeneralPublicLocation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GeneralPublicLocation</shortDescription>
+        <value>Country</value>
     </labels>
     <labels>
         <fullName>Generate_Quote</fullName>
@@ -4742,14 +4773,21 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_Recaptcha_PrivateKey</shortDescription>
-        <value>6Le8YP8SAAAAAMG4L-1R6ferHHzVPAHIlxdKb1wf</value>
+        <value>6LeFvAYTAAAAAI7zjOUVELbcH6msdHgI2LZ5GdF0</value>
     </labels>
     <labels>
         <fullName>IEC_Recaptcha_SiteKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_Recaptcha_SiteKey</shortDescription>
-        <value>6Le8YP8SAAAAAGJlskhBcpj_QkcIsIpXx52_YaiD</value>
+        <value>6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW</value>
+    </labels>
+    <labels>
+        <fullName>IEC_Registration_UserExist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Registration UserExist</shortDescription>
+        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
         <fullName>IEC_Trial_RequestFail</fullName>
@@ -9736,6 +9774,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Forgot your password?</value>
     </labels>
     <labels>
+        <fullName>ISSP_FoundGeneralPublic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FoundGeneralPublic</shortDescription>
+        <value>Please click Next to proceed</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Frozen_User_Alert_Message</fullName>
         <categories>ISSP_Login, s6</categories>
         <language>en_US</language>
@@ -10879,7 +10924,7 @@ this is the tiess topic help</value>
         <shortDescription>ISSP_NoRecordsFound</shortDescription>
         <value>No Company was found matching your search criteria. Please ensure you have entered the correct IATA code, in the correct format.
 &lt;br/&gt;&lt;br/&gt;
-If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=mailto:onlinestoresupport@iata.org&gt;IATA Online Store Support Team&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundBranch</fullName>
@@ -10899,7 +10944,7 @@ If you want to create a new branch for this company in your country, click Creat
         <shortDescription>ISSP_NoRecordsFoundCreateAgency</shortDescription>
         <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record.
 &lt;br/&gt;&lt;br/&gt; 
-If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=mailto:onlinestoresupport@iata.org&gt;IATA Online Store Support Team&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundCreateStandardAirline</fullName>
@@ -10909,7 +10954,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline</shortDescription>
         <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt; 
-If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=mailto:onlinestoresupport@iata.org&gt;IATA Online Store Support Team&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundGP</fullName>
@@ -10919,7 +10964,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_NoRecordsFoundGP</shortDescription>
         <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as General Public or modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
-If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=mailto:onlinestoresupport@iata.org&gt;IATA Online Store Support Team&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundGSA</fullName>
@@ -10929,7 +10974,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_NoRecordsFoundGSA</shortDescription>
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
 &lt;br/&gt;&lt;br/&gt; 
-If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=mailto:onlinestoresupport@iata.org&gt;IATA Online Store Support Team&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundNext</fullName>
@@ -10939,7 +10984,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_NoRecordsFoundNext</shortDescription>
         <value>No Organization was found for these search criteria. Please modify your search and try again.
 &lt;br/&gt;&lt;br/&gt; 
-If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=mailto:onlinestoresupport@iata.org&gt;IATA Online Store Support Team&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_No_application_available</fullName>
@@ -11743,7 +11788,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Please check your mail box to finalize your registration</value>
+        <value>Please check your mailbox to finalize the registration process.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Privacy</fullName>
@@ -11752,6 +11797,13 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Privacy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Redirection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Redirection</shortDescription>
+        <value>You will be redirected to the starting page in 5 seconds.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_RegistrationProcess</fullName>
@@ -11783,7 +11835,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Thank you for your registration</value>
+        <value>Thank you for your registration.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Title_Bubble</fullName>
@@ -11799,9 +11851,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_UserExist</shortDescription>
-        <value>This Email is already registered in customer portal. 
-If you are an E-Commerce user, please use your E-Commerce credentials. 
-If you want to reset your password, go back to login screen and use &quot;forgot your password function&quot;.</value>
+        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_acceptGeneralConditions</fullName>
@@ -11809,7 +11859,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>I have read and accept the Terms of Use conditions</value>
+        <value>I have read and accept the Terms and Conditions of Use</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_generalError</fullName>

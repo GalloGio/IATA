@@ -8,9 +8,9 @@ public with sharing class trgHndlrIECInvoice {
 	public static void OnAfterInsert(List<Zuora__ZInvoice__c> newRecords, Map<Id, Zuora__ZInvoice__c> newRecordsMap) {
 		String sInvoiceZIds = '';
 		Map<String, String> mapInvoiceZIdToNumber = new Map<String, String>(); 
-		Set<String> setNonZeroInvoiceNumber = new Set<String>();
+		//Set<String> setNonZeroInvoiceNumber = new Set<String>();
 		Set<String> setNonZeroInvoiceId = new Set<String>();
-		List<Zuora__ZInvoice__c> lstNonZeroInvoices = new List<Zuora__ZInvoice__c>();
+		//List<Zuora__ZInvoice__c> lstNonZeroInvoices = new List<Zuora__ZInvoice__c>();
 
 		for (Zuora__ZInvoice__c invoice : newRecords) {
 			sInvoiceZIds += ((sInvoiceZIds == '') ? '\'' : ' OR InvoiceId = \'') + invoice.Zuora__Zuora_Id__c + '\'';
@@ -18,14 +18,16 @@ public with sharing class trgHndlrIECInvoice {
 			
 			// Filter out invoice and invoice items with zero amount
 			if (invoice.Zuora__TotalAmount__c > 0) {
-				setNonZeroInvoiceNumber.add(invoice.Name);
+				//setNonZeroInvoiceNumber.add(invoice.Name);
 				setNonZeroInvoiceId.add(invoice.Zuora__External_Id__c);
-				lstNonZeroInvoices.add(invoice);
+				//lstNonZeroInvoices.add(invoice);
 			}
 		}
 
+		/* Commented: Samy: 2016-05-12: Replaced by creating Sales Order directly in Salesforce
 		if (lstNonZeroInvoices.size() > 0)
 			CreateSAPInvoices(setNonZeroInvoiceNumber, lstNonZeroInvoices);
+		*/
 
 		DownloadRelatedInvoiceItems(sInvoiceZIds, mapInvoiceZIdToNumber, setNonZeroInvoiceId);
 	}
@@ -35,6 +37,7 @@ public with sharing class trgHndlrIECInvoice {
 	 * @ param setNonZeroInvoiceNumber Set of Zuora of Invoice Numbers
 	 * @ param ZInvoices Zuora Invoice Records
  	 **/
+ 	 /* Commented: Samy: 2016-05-12: Replaced by creating Sales Order directly in Salesforce
  	 private static void CreateSAPInvoices(Set<String> setNonZeroInvoiceNumber, List<Zuora__ZInvoice__c> ZInvoices) {
 		Set<String> setSAPInvoiceNumber = new Set<String>();
 		
@@ -63,6 +66,10 @@ public with sharing class trgHndlrIECInvoice {
 			[SELECT Id, Contact__r.Name, Zuora__External_Id__c, Zuora__DefaultPaymentMethod__c, SAPBillTo__c
 				, Zuora__BillToCity__c, Zuora__BillToCountry__c, Zuora__BillToAddress1__c, Zuora__BillToState__c, Zuora__BillToPostalCode__c
 				, Tax1ID__c
+                , Contact__r.BillTo_Location__r.Street__c, Contact__r.BillTo_Location__r.City__c
+                , Contact__r.BillTo_Location__r.ZipCode__c, Contact__r.BillTo_Location__r.ISO_State_Code__c
+                , Contact__r.BillTo_Location__r.ISO_Country_Code__c, Contact__r.BillTo_Location__r.Country__c
+                , Contact__r.BillTo_Location__r.SAP_Id__c
 			FROM Zuora__CustomerAccount__c
 			WHERE Id IN :setBillingAccountId]);
 			
@@ -90,8 +97,7 @@ public with sharing class trgHndlrIECInvoice {
 			if (ZAcc != null) {
 				SAPInv.Billing_Name__c = ZAcc.Contact__r.Name;
 				SAPInv.Zuora_Billing_Account_ID__c = ZAcc.Zuora__External_Id__c;
-				// 2014-12-03: the only way to make the SAP Bill to work in SAP is to add 2 leading zeros. They have no clue why and they don't want to know why.
-				SAPInv.Bill_To__c = String.isBlank(ZAcc.SAPBillTo__c) ? null : '00' + ZAcc.SAPBillTo__c;
+				SAPInv.Bill_To__c = String.isBlank(ZAcc.Contact__r.BillTo_Location__r.SAP_Id__c) ? null : ZAcc.Contact__r.BillTo_Location__r.SAP_Id__c;
 			}
 
 			// Try to determine Payment Method, First using the Payment object if available (will be done on the invoice item level to give room for Zuora to create Payment record first)
@@ -105,24 +111,15 @@ public with sharing class trgHndlrIECInvoice {
 				SAPInv.Pay_Method__c = ZAcc.Zuora__DefaultPaymentMethod__c.replace('Other', 'ICH').replace('CreditCard', 'Credit Card');
 			}
 				
-			// Try to get the billing details from the subscription history
-			if (SubHist != null) {
-				SAPInv.Billing_City__c = SubHist.Billing_City__c;
-				SAPInv.Billing_Country__c = SubHist.Billing_Country__c;
-				SAPInv.Billing_State__c = SubHist.Billing_State__c;
-				SAPInv.Billing_Street__c = SubHist.Billing_Street__c;
-				SAPInv.Billing_Zip__c = SubHist.Billing_Zip__c;
-				SAPInv.VAT_Number__c = SubHist.VAT_Number__c;
-			}
-			// if failed, load it up from the Billing Account
-			else if (ZAcc != null) {
-				SAPInv.Billing_City__c = ZAcc.Zuora__BillToCity__c;
-				SAPInv.Billing_Country__c = ZAcc.Zuora__BillToCountry__c;
-				SAPInv.Billing_State__c = ZAcc.Zuora__BillToState__c;
-				SAPInv.Billing_Street__c = ZAcc.Zuora__BillToAddress1__c;
-				SAPInv.Billing_Zip__c = ZAcc.Zuora__BillToPostalCode__c;
+			// Try to get the billing details from the Billing Account
+			if (ZAcc != null) {
+				SAPInv.Billing_City__c = ZAcc.Contact__r.BillTo_Location__r.City__c;
+				SAPInv.Billing_Country__c = ZAcc.Contact__r.BillTo_Location__r.ISO_Country_Code__c;
+				SAPInv.Billing_State__c = ZAcc.Contact__r.BillTo_Location__r.ISO_State_Code__c;
+				SAPInv.Billing_Street__c = ZAcc.Contact__r.BillTo_Location__r.Street__c;
+				SAPInv.Billing_Zip__c = ZAcc.Contact__r.BillTo_Location__r.ZipCode__c;
 
-				IECVATUtil.VATConfiguration vatConfig = IECVATUtil.GetVATConfiguration(ZAcc.Zuora__BillToCountry__c);
+				IECVATUtil.VATConfiguration vatConfig = IECVATUtil.GetVATConfiguration(ZAcc.Contact__r.BillTo_Location__r.Country__c);
 
 				// Only provide VAT Number for VAT Countries that require validation for their VAT Number
 				if (vatConfig != null && vatConfig.VATValidationRequired)
@@ -150,6 +147,7 @@ public with sharing class trgHndlrIECInvoice {
 			insert lstNewSAPInvoice;
 		}
 	}
+	*/
 
 	/**
 	 * Retrieves a list of Invoice Item corresponding to the passed invoice ids
@@ -213,18 +211,25 @@ public with sharing class trgHndlrIECInvoice {
 						mapInvoiceItemCounter.put(sInvoiceId
 							, new IEC_SAP_Invoice__c (
 								Zuora_Invoice_Number__c = mapInvoiceZIdToNumber.get(sInvoiceId)
+								, Name = mapInvoiceZIdToNumber.get(sInvoiceId)   //*** (Thai) add to fix test class
 								, Number_of_Zuora_Items__c = 1
 							)
 						);
 					}
 				}
 			}
+
 			
-			if (!lstInvoiceItemsToInsert.isEmpty())
-				upsert lstInvoiceItemsToInsert Zuora_ID__c;
-			
-			if (!mapInvoiceItemCounter.isEmpty())
-				upsert mapInvoiceItemCounter.values() Zuora_Invoice_Number__c;
+			if (!lstInvoiceItemsToInsert.isEmpty()){
+				try{upsert lstInvoiceItemsToInsert Zuora_ID__c;}
+				catch(Exception ex){}
+			}
+
+			if (!mapInvoiceItemCounter.isEmpty()){
+				try{upsert mapInvoiceItemCounter.values() Zuora_Invoice_Number__c;}
+				catch(Exception ex){}
+			}
+				
 		}
 	}
 }

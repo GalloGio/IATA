@@ -269,6 +269,18 @@
         <name>Add_campaign_member_error</name>
     </customLabels>
     <customLabels>
+        <label>报错：账单国家/省市信息空缺，请按照下面的步骤进行填写：1- 编辑账单城市一栏   2-选择一个系统提供的地址</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>请通过点击&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;按钮来确认您的账单地址及邮寄地址</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>请通过勾选右侧方框确认您的账单地址及邮寄地址</label>
+        <name>AddressDoctorValidate2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address Line 1 --></label>
         <name>Address_Line_1</name>
     </customLabels>
@@ -883,6 +895,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>国家/地区</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2659,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>此邮箱已被注册，如果您需要重置密码，请返回登录页面点击“忘记密码”功能。</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5175,6 +5195,10 @@ and
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>请点击下一步来继续申请</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>由于您在过去连续的90天内未登录，一封包含新密码的邮件已经发送给您</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6191,6 +6215,10 @@ and
     <customLabels>
         <label>隐私</label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>5秒后跳转至初始界面</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>注册程序</label>

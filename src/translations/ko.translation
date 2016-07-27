@@ -269,6 +269,21 @@
         <name>Add_campaign_member_error</name>
     </customLabels>
     <customLabels>
+        <label>에러 : 시(市)/지역 란이 공란으로 확인됩니다.   하기의 안내에 따라 기입 해 주시기 바랍니다. 
+
+1. &apos;도시&apos; 란을 수정하십시오.
+2. 시스템에서 제안 된 주소 중 선택 하십시오.</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;버튼을 클릭하시어, 귀하의 주소를 확인 해 주시기 바랍니다.</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>체크마크 버튼을 클릭하시어, 귀하의 주소를 확인 해 주시기 바랍니다.</label>
+        <name>AddressDoctorValidate2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address Line 1 --></label>
         <name>Address_Line_1</name>
     </customLabels>
@@ -883,6 +898,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>국가</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2662,12 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;입력 해 주신 이메일은 이미 Online Store 상 등록되어 있습니다. 
+비밀번호를 리셋하시려면, 로그인 화면의 &quot;&quot;암호를 분실하였습니까?&quot;&quot; 기능을 통해 재설정 하십시오.
+&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5175,6 +5200,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>다음을 클릭하시어 진행하시기 바랍니다.</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>귀하께서는 지난 90일동안 접속을 하시지 않으셨기 때문에, 새로운 비밀번호가 귀하의 이메일로 전송되었습니다.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6196,6 +6225,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>개인정보 보호</label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>5 초 후, 초기화면으로 이동합니다.</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>등록 절차</label>

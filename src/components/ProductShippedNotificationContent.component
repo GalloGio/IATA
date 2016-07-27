@@ -1,0 +1,37 @@
+<apex:component controller="ProductShippedNotificationContent_Ctrl" access="global" >
+  
+  <apex:attribute name="orderItem" assignTo="{!orderItemId}" description="OrderItem id" type="Id" />
+
+    <p>Dear {!contactName},</p>
+    
+    <p>Your item(s) has been shipped</p>
+	<p>
+        Here is the tracking Number: 
+        <apex:outputPanel rendered="{!showUrl}">
+            <apex:outputText escape="false" value=" {!trackingURL}" />
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{! !showUrl}">
+            <apex:outputText escape="false" value=" {!trackingNumber}" />
+        </apex:outputPanel>
+    </p>
+        
+    
+
+	<table border = "0" cellspacing = "5">
+        <tr>
+            <td>Product Name</td>
+            <td>Product number</td>                
+        </tr>
+        <apex:repeat value="{!orderItems}" var="oi">
+        <tr>
+            <td>{!oi.Product_Name__c}</td>
+            <td>{!oi.SAP_Product_Number__c}</td>              
+        </tr>
+        </apex:repeat>        
+    </table>
+
+    <p>Best regards,<br />
+    eCommerce Support Team
+    </p>
+
+</apex:component>
