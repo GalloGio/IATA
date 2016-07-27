@@ -116,6 +116,44 @@ private class IECUsageCompiler_tst {
             system.assert(false, 'Exception thrown: ' + ex.getMessage() + '\r\n' + ex.getStacktraceString());
         }
     }
-    
+    // @isTest (SeeAllData=true)
+    static void testCompileCustomerLiveUsage() {
+        
+        try {
+
+	        // create the data
+	        setupData();
+	        createCustomerData();
+
+	        // Test #1 - 7 live usage to compile into 5 compiled usage
+	        List<IEC_Compiled_Usage_Tracker__c> lstCompiledUsage = IECUsageCompiler.compileDailyUsage(IECUsageCompiler.getListOfLiveUsageToCompileDaily(Date.today().addDays(1)));
+	        system.assert(lstCompiledUsage != null && lstCompiledUsage.size() == 5, 'The usage should be compiled into 5 records.');
+	        
+	        // Test #2 - Contact1 should have 2 compiled usage (1 for success, one for fail)
+	        List<IEC_Compiled_Usage_Tracker__c> lstCompiledUsageContact1 = [SELECT Counter__c, Date__c, Related_Application__c, Related_Client__c, Validation_Result__c, Validation_Type__c, Hash_Value__c 
+			 																FROM IEC_Compiled_Usage_Tracker__c
+			 																WHERE Related_Client__c = :oContact1.Id];
+			system.assert(lstCompiledUsageContact1 != null && lstCompiledUsageContact1.size() == 2, 'Contact1 should have 2 compiled usage (1 for success, one for fail)');
+			for (IEC_Compiled_Usage_Tracker__c compiled : lstCompiledUsageContact1) {
+				if (compiled.Validation_Result__c == IECConstants.IECUsageTrackerSearchStatus_Success)
+					system.assertEquals(2, compiled.Counter__c, 'Contact1 should have a compiled counter of 2 for CACPRO/Success/Agency');
+				if (compiled.Validation_Result__c == IECConstants.IECUsageTrackerSearchStatus_Fail)
+					system.assertEquals(1, compiled.Counter__c, 'Contact1 should have a compiled counter of 1 for CACPRO/Fail/Agency');
+			}
+        	
+        	// Test #3 - add some live usage for contact 1 and compile again. It should be added to the already existing compiled usage.
+        	IEC_Usage_Tracker_Live__c oLiveUsage1 = IECTestUtil.createSampleLiveUsageCounter(oContact1, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
+			insert oLiveUsage1;
+			IEC_Usage_Tracker_Live__c oLiveUsage2 = IECTestUtil.createSampleLiveUsageCounter(oContact1, 1, IECConstants.ProductCategory_SF_CACPRO, IECConstants.IECUsageTrackerSearchStatus_Success, IECConstants.IECUsageTrackerSearchTarget_Agency);
+			insert oLiveUsage2;
+        	
+        	lstCompiledUsage = IECUsageCompiler.compileDailyUsage(IECUsageCompiler.getListOfLiveUsageToCompileDaily(Date.today().addDays(1)));
+	        system.assert(lstCompiledUsage != null && lstCompiledUsage.size() == 1, 'The usage should be compiled into 1 record.');
+        	system.assertEquals(4, lstCompiledUsage.get(0).Counter__c, 'Compiled usage for Contact1 should be 4 now');
+        }
+        catch(Exception ex) {
+        	system.assert(false, 'Exception thrown: ' + ex.getMessage() + '\r\n' + ex.getStacktraceString());
+        }
+    }
 
 }
