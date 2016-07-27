@@ -93,12 +93,14 @@ public class Customer_DTO
         if (sfContact == null) return false;
         
         //*** get information on contact and account and parent account to determine if eligible
-        Contact check = [select User_IECPortal_Status__c, Account.ParentId, Account.Industry, Account.IATACode__c
+        List<Contact> checks = [select User_IECPortal_Status__c, Account.ParentId, Account.Industry, Account.IATACode__c
                               , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c
                               , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c
                          from Contact
-                         where Id = :sfContact.Id limit 1];
-        
+                         where Id = :sfContact.Id ];
+         if(checks.isEmpty())return false; 
+
+         Contact check = checks[0];
         //*** not eligile if contact is not approved
         if (check.User_IECPortal_Status__c != IECConstants.APPROVED_CONTACT_STATUS) return false;
         

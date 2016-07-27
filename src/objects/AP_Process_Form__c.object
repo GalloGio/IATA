@@ -6201,7 +6201,7 @@ ISPICKVAL(Airline_wish_to_join_ICCS__c, &quot;&quot;)</errorConditionFormula>
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>/apex/ISSP_PDF_Form?caseid={!Case.Id}&amp;vAccountId={!Account.Id}&amp;step=3</url>
+        <url>/apex/ISSP_PDF_Form?caseid={!Case.Id}&amp;vAccountId={!Account.Id}&amp;vContactID={!Contact.Id}&amp;step=3</url>
     </webLinks>
     <webLinks>
         <fullName>View_as_PDF_CASS</fullName>
@@ -6220,6 +6220,6 @@ ISPICKVAL(Airline_wish_to_join_ICCS__c, &quot;&quot;)</errorConditionFormula>
         <protected>false</protected>
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
-        <url>/apex/ISSP_PDF_Form_cass?caseid={!Case.Id}&amp;vAccountId={!Account.Id}&amp;step=3</url>
+        <url>/apex/ISSP_PDF_Form_cass?caseid={!Case.Id}&amp;vAccountId={!Account.Id}&amp;vContactID={!Contact.Id}&amp;step=3</url>
     </webLinks>
 </CustomObject>

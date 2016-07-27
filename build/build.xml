@@ -201,6 +201,81 @@
   </target> 
 
 
+
+
+
+
+<target name="deployCodeProd"> 
+
+       <antcallback target="deployCodeObjects" />
+  
+  </target> 
+
+<target name="deployCodeObjectsOnly"> 
+  <echo level="info">creating new folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${object.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${object.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/objectPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
+       <antcallback target="deployLabelFolderOnlyObjects" />
+  
+  </target> 
+
+
+
+<target name="deployLabelFolderOnlyObjects"> 
+  <echo level="info">creating new label folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${labelsTranslation.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${labelsTranslation.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/labelPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+  </target> 
+
+
+
+
+
+
+
     <target name="getCode">
       <echo level="info">Retrieving the server's version of codeobject </echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>

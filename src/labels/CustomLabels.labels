@@ -22,6 +22,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_Duplicate_Username</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS Duplicate Username</shortDescription>
+        <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_AGENCYFEES</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4773,14 +4780,21 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_Recaptcha_PrivateKey</shortDescription>
-        <value>6Le8YP8SAAAAAMG4L-1R6ferHHzVPAHIlxdKb1wf</value>
+        <value>6LeFvAYTAAAAAI7zjOUVELbcH6msdHgI2LZ5GdF0</value>
     </labels>
     <labels>
         <fullName>IEC_Recaptcha_SiteKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_Recaptcha_SiteKey</shortDescription>
-        <value>6Le8YP8SAAAAAGJlskhBcpj_QkcIsIpXx52_YaiD</value>
+        <value>6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW</value>
+    </labels>
+    <labels>
+        <fullName>IEC_Registration_UserExist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Registration UserExist</shortDescription>
+        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
         <fullName>IEC_Registration_UserExist</fullName>

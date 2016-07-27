@@ -434,7 +434,7 @@
         <masterLabel>Pipeline report</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>window.open(&apos;/00O7E000000KUiq?pv0={!IEC_Event_Release__c.Id}&apos;, &apos;_blank&apos;);</url>
+        <url>window.open(&apos;/00Ow0000004xKDd?pv0={!IEC_Event_Release__c.Id}&apos;, &apos;_blank&apos;);</url>
     </webLinks>
     <webLinks>
         <fullName>Regenerate_Release</fullName>

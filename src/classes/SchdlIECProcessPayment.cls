@@ -26,6 +26,9 @@ global class SchdlIECProcessPayment implements Schedulable {
 		string cronvalue = second + ' ' + minute + ' * * * ?' ;
 		string jobName = 'SchdlIECProcessPayment ' + nextScheduleTime.format('hh:mm');
  
+  			if(Test.isRunningTest())
+            jobName = 'Test_'+Datetime.now().time();
+ 
 		system.schedule(jobName, cronvalue , new SchdlIECProcessPayment());
  
 		// this section of code will abort the current schedule job
