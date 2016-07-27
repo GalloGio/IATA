@@ -121,7 +121,7 @@ private class IEC_ShippingControllerTest {
         }
     }
 
-    @isTest (SeeAllData=true)
+   // @isTest (SeeAllData=true)
     static void test_valid() 
     {
         Test.setCurrentPage(Page.IEC_Shipping); 
@@ -238,7 +238,7 @@ private class IEC_ShippingControllerTest {
                 //-- Load Shipping page 
                 ctrl.onLoadAction();
 
-                ctrl.initializeOrder();
+                //ctrl.initializeOrder();
 
                 System.debug('sfOrer::'+ctrl.sfOrder);
 
@@ -292,16 +292,12 @@ private class IEC_ShippingControllerTest {
                 try{ctrl.calculateFreightTaxDTO();}catch(Exception ex){}
                 
                 
-                try{
-                    ctrl.vfOrder.shipToSameAsBilTo=true;
-                    ctrl.changeShipToAddressOption();
-                    ctrl.sendShipToCustomerToSAP();
+                ctrl.vfOrder.shipToSameAsBilTo=true;
+                ctrl.changeShipToAddressOption();
+                ctrl.sendShipToCustomerToSAP();
 
-                    //-- Validate Order has 2 items 
-                    //System.assertEquals(2, ctrl.vfOrder.orderitems.size());
-
-                }
-                catch(Exception ex){}
+                //-- Validate Order has 2 items 
+                System.assertEquals(2, ctrl.vfOrder.orderitems.size());
 
                 /*//-- Apply Invalid coupon COde 
                 ctrl.updateItemId = ctrl.vfOrder.orderitems[1].orderItemId;
