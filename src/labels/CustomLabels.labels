@@ -12807,7 +12807,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Account Statements</shortDescription>
-        <value>Account Statements</value>
+        <value>ICE - IATA Customer E-Statement</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Disclaimer</fullName>
