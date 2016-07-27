@@ -16,6 +16,8 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isCorrection {get; set;}
     private Id AcPersonRt;
     private Id AcCompanyRt;
+    private Id AcCurrentCompanyRt;
+    private Id AcCurrentOwnerRt;
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -97,6 +99,8 @@ public with sharing class AMS_AccreditationContactController {
         
         AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
+        AcCurrentCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+        AcCurrentOwnerRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner');
 
         forDeletion = new List<AMS_Accreditation_Contact__c>();
 
@@ -108,7 +112,9 @@ public with sharing class AMS_AccreditationContactController {
     
     public void addEmptyRow()
     {
-        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcPersonRt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
+        Id rt = this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.AGENCYCHANGES || this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR ? AcCurrentOwnerRt : AcPersonRt;
+
+        AccreditationContactWrapper acWrapper = new AccreditationContactWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId =  rt, Company__c = this.aoa.SAAM_Case__r.OSCAR__r.Account__c));
         this.acWrapper.add(acWrapper);
     }
     
@@ -696,7 +702,7 @@ public with sharing class AMS_AccreditationContactController {
             this.registrationNumber = accountAc.Registration_Number__c;
             this.accountAc.Company__c = this.account.Id;
             this.account.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
-            this.accountAc.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
+            //AMS-1669 this.accountAc.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             if(this.account.Legal_Name__c == null)
             {
                 this.account.Legal_Name__c = this.AccountAc.Name;

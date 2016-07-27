@@ -45,7 +45,7 @@
         .slds-text-body--small {
             font-size: 12px !important;
         }
-        
+
         .slds-m-bottom--xx-small {
             font-size: 13px !important;
         }
@@ -218,11 +218,24 @@
                     <apex:param value="" assignTo="{!rowNumber}" name="linkedRow" />
                     <apex:param value="" assignTo="{!linkedRecordId}" name="linkedContactOrPerson" />
                 </apex:actionFunction>
+                
+                <apex:outputPanel id="correctionWarningMessageNew" rendered="{!IF( isCorrection ,true, false)}">
+                  <div class="slds-box slds-theme--warning" role="alert">
+                    <div class="slds-notify__content slds-grid">
+                      <svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex">
+                        <use xlink:href="{!URLFOR($Resource.SLDS103, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
+                      </svg>
+                      <div class="slds-col slds-align-middle">
+                        <h5 class="slds-section-title" >Corrections done on the owners will be applied to all the agencies in the hierarchy.</h5>
+                      </div>
+                    </div>
+                  </div>
+               </apex:outputPanel>  
 
                 <div class="slds-page-header" role="banner" id="topLevelHeader">
                     <div class="slds-grid">
                         <div class="slds-col slds-has-flexi-truncate">
-                            <h1 class="slds-text-heading--small slds-truncate" title="Agency owners and employees" id="mainHeader"><b>{!IF(isCorrection, 'Agency owners (Corrections done on the owners will be applied to all the agencies in the hierarchy)', 'Agency owners')}</b></h1>
+                            <h1 class="slds-text-heading--small slds-truncate" title="Agency owners and employees" id="mainHeader"><b>Agency Owners</b></h1>
                         </div>
                     </div>
                     <nav class="slds-m-bottom--xx-small" role="navigation">
