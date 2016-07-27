@@ -1164,7 +1164,7 @@ public with sharing class TestDataGenerator
             Web_Service_Username__c = 'WS_SFORCE'
         ));
 
-        try{insert lst;}catch(Exception ex){}
+        database.insert(lst,false);
     }
 
 
@@ -1176,7 +1176,7 @@ public with sharing class TestDataGenerator
         delete [SELECT Id FROM UtilityCS__c];
         List<UtilityCS__c> listCS = new List<UtilityCS__c>();
         listCS.add(new UtilityCS__c(Name='Emails', Value__c='test@test.com'));
-        try{insert listCS;}catch(Exception ex){}
+        insert listCS;
     }//*** end of "generateUtilitySetting"
 
 
