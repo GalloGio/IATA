@@ -205,12 +205,6 @@
 
 
 
-<target name="deployCodeProd"> 
-
-       <antcallback target="deployCodeObjects" />
-  
-  </target> 
-
 <target name="deployCodeObjectsOnly"> 
   <echo level="info">creating new folder</echo>
   <antcallback target="deldir" />
