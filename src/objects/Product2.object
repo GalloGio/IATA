@@ -1428,7 +1428,7 @@
         <fullName>IEC_SAP_Contract_Type__c</fullName>
         <description>IEC - convert media code to contract type in order to send to SAP as contract instead of sales order</description>
         <externalId>false</externalId>
-        <formula>IF(CONTAINS(&apos;-028-030-031-032-&apos;, SAP_Media_Code__c), &apos;ZC01&apos;, &apos;&apos;)</formula>
+        <formula>IF(CONTAINS(&apos;-030-031-032-&apos;, SAP_Media_Code__c), &apos;ZC01&apos;, &apos;&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEC SAP Contract Type</label>
         <required>false</required>
