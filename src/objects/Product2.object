@@ -383,7 +383,6 @@
             <picklistValues>
                 <fullName>New</fullName>
                 <default>false</default>
-                <controllingFieldValues>accessories</controllingFieldValues>
                 <controllingFieldValues>data-and-statistics</controllingFieldValues>
                 <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
@@ -949,6 +948,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DGR Handling Labels</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1005,6 +1008,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Mileage Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Monthly Traffic Statistics</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1026,6 +1033,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>The Combined Cargo Conference Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ticketed Point Mileage Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1428,7 +1439,7 @@
         <fullName>IEC_SAP_Contract_Type__c</fullName>
         <description>IEC - convert media code to contract type in order to send to SAP as contract instead of sales order</description>
         <externalId>false</externalId>
-        <formula>IF(CONTAINS(&apos;-028-030-031-032-&apos;, SAP_Media_Code__c), &apos;ZC01&apos;, &apos;&apos;)</formula>
+        <formula>IF(CONTAINS(&apos;-030-031-032-033-034-035-036-037-038-039-&apos;, SAP_Media_Code__c), &apos;ZC01&apos;, &apos;&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEC SAP Contract Type</label>
         <required>false</required>
@@ -2158,14 +2169,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <picklistValues>
                 <fullName>data-and-statistics</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>accessories</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>training-and-consulting</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -5111,20 +5114,12 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
             <values>
-                <fullName>accessories</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>publications</fullName>
                 <default>true</default>
-            </values>
-            <values>
-                <fullName>training-and-consulting</fullName>
-                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -6227,6 +6222,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DGR Handling Labels</fullName>
                 <default>false</default>
             </values>
@@ -6283,6 +6282,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Monthly Traffic Statistics</fullName>
                 <default>false</default>
             </values>
@@ -6304,6 +6307,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>The Combined Cargo Conference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticketed Point Mileage Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7118,20 +7125,12 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
             <values>
-                <fullName>accessories</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>publications</fullName>
                 <default>true</default>
-            </values>
-            <values>
-                <fullName>training-and-consulting</fullName>
-                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -9053,20 +9052,12 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Mega_Menu__c</picklist>
             <values>
-                <fullName>accessories</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>data-and-statistics</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>publications</fullName>
                 <default>true</default>
-            </values>
-            <values>
-                <fullName>training-and-consulting</fullName>
-                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
