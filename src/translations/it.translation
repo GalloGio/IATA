@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,22 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>Errore : il campo Stato/Provincia di fatturazione è vuoto, la preghiamo di seguire 
+la seguente procedura per completarlo :
+
+1. Modificare il campo &quot;&quot; Cittá di Fatturazione&quot;&quot;
+2. Selezionare uno degli indirizzi proposti dal sistema</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Si prega di validare l&apos;indirizzo di fatturazione e quello di consegna cliccando sull&apos;icona &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Si prega di validare l&apos;indirizzo di fatturazione e quello di consegna cliccando sulla casella di selezione.</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -883,6 +903,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Paese</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2667,13 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>Quest&apos; indirizzo e-mail è già registrato nel Negozio Online .
+Se desidera reimpostare la password ,
+la preghiamo di tornare alla schermata di login ed utilizzare 
+la funzione &quot;Password dimenticata?&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5175,6 +5206,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Si prega di fare clic su Next per procedere</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Se non entra nel portale per 90 giorni, le verrá inviata un&apos;email con una nuova password.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6196,6 +6231,10 @@ Se non si dispone di un codice IATA, è necessario selezionare &quot;&quot;Altro
     <customLabels>
         <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>Verrà reindirizzato alla pagina iniziale in 5 secondi.</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>Processo di registrazione</label>

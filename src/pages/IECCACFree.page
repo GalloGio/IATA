@@ -107,11 +107,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td colspan="2" style="padding-top: 13px;">
-                                        <apex:panelGrid columns="1" id="reCAPTCHAGrid" rendered="{!bShowRECAPTCHA}">
-                                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}" />
-                                        </apex:panelGrid>
-                                    </td>
+
                                     <td colspan="1">&nbsp;</td>
                                 </tr>
 
@@ -123,7 +119,7 @@
 
 
 
-                    <apex:outputpanel id="panelResult2Colums" layout="block" rendered="{! bShowNoAgencyResults || bShowNoAgentResults || bshowInvalidCode || bshowreCAPTCHAFail || baskCASSCode ||bShowAgency || bShowAgent}">
+                    <apex:outputpanel id="panelResult2Colums" layout="block" rendered="{! bShowNoAgencyResults || bShowNoAgentResults || bshowInvalidCode || baskCASSCode ||bShowAgency || bShowAgent}">
 
                         <div class="box register large">
                             <div class="content">
@@ -141,9 +137,6 @@
                                     <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />Invalid code format. Please try again</h2>
                                 </apex:outputText>
 
-                                <apex:outputText rendered="{!bshowreCAPTCHAFail}">
-                                    <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />CAPTCHA validation failed. Please try again</h2>
-                                </apex:outputText>
 
                                 <apex:outputText rendered="{!baskCASSCode}">
                                     <h2 class="validation error"><img src="{!URLFOR($Resource.IECStyles,'img/')}code-error.png" />Please enter the 3 or 4 digit CASS Number</h2>

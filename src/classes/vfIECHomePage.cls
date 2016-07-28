@@ -11,10 +11,10 @@ public with sharing class vfIECHomePage extends IECPageController {
 	public Boolean bProdAccessGSS 		{get; set;}
 	public Boolean bProdAccessMDP		{get; set;}
 	public Boolean bProdAccessEBro 		{get; set;}
-    	public Boolean bProdAccessCACWeb      {get; set;}
-    	public Boolean bProdAccessPAL      {get; set;}
-    	public Boolean bProdAccessCAL      {get; set;}
-    	public Boolean bProdAccessASL      {get; set;}
+	public Boolean bProdAccessCACWeb      {get; set;}
+	public Boolean bProdAccessPAL      {get; set;}
+	public Boolean bProdAccessCAL      {get; set;}
+	public Boolean bProdAccessASL      {get; set;}
 
 	public Boolean bHasAnyProdAccess {
 		get {
@@ -23,10 +23,10 @@ public with sharing class vfIECHomePage extends IECPageController {
 				|| bProdAccessGSS
 				|| bProdAccessMDP
 				|| bProdAccessEBro
-                		|| bProdAccessCACWeb
-                		|| bProdAccessPAL
-                		|| bProdAccessCAL
-                		|| bProdAccessASL;
+        		|| bProdAccessCACWeb
+        		|| bProdAccessPAL
+        		|| bProdAccessCAL
+        		|| bProdAccessASL;
 		}
 	}
 
@@ -54,7 +54,7 @@ public with sharing class vfIECHomePage extends IECPageController {
 	/**
 	 * triggered when the page loads
 	 */
-	public void pageLoad() {
+	public PageReference pageLoad() {
 		if (isUserLoggedIn) {
 			validUserProfile();
 			
@@ -67,12 +67,16 @@ public with sharing class vfIECHomePage extends IECPageController {
 		  	bProdAccessPAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_PAL) != -1);
 		  	bProdAccessCAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CAL) != -1);
 		  	bProdAccessASL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_ASL) != -1);
-         
+         	return null;
+		}else{
+			PageReference pgRef = new PageReference('/IEC_Login?returl=/IEC_MyServices');
+				pgRef.setRedirect(true);
+        	return pgRef;
 		}		
 	}
 	
 	public PageReference NavigateTo() {
-		Pagereference pgRef = new PageReference('/iec/' + sPageName);
+		Pagereference pgRef = new PageReference(sPageName);
         pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(sProductCode));
 		pgRef.setRedirect(true);
 		return pgRef;

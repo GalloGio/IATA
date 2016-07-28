@@ -1,0 +1,210 @@
+@isTest
+private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
+	private static List<Account> lstAccount;
+	private static List<Contact> lstContact;
+	private static List<Order> lstOrder;
+	private static List<OrderItem> lstOrderItem;
+	private static IEC_Event_Release__c oEventRelease;
+	private static Set<Id> setOrderId;
+
+	private static void InitializeData()
+	{
+		 //-- Generate Setting 
+        try{insert new Apex_Setting__c(Name='IEC evt renewal batch size for taxes', Number_1__c=1);} 
+        catch(Exception ex){}
+        
+		/* Possible scenarios and generated errors in the batch are as follows
+			[0] ERROR - Tax and Shipping have not been calculated on the order
+			[1] ERROR - Zuora Billing Account\'s default payment method is not set to credit card while trying to pay with credit card
+			[2] ERROR - Zuora Billing Account was not found for order.
+			[3] ERROR - Event release only supports payment types of ICH or Credit Card
+			[4] ERROR - No default payment type defined on the Bill-To Account
+			[5] SUCCESS - Paid with ICH
+			[6] SUCCESS - Paid with Credit Card
+		*/
+		
+	    /*****************************************
+	    **	Create Accounts
+	    *****************************************/
+        lstAccount = TestDataGenerator.generateAccounts(7, false);
+        for (Account oAccount : lstAccount)
+        {
+        	oAccount.Default_Payment_Type__c = 'Credit Card';
+        }
+
+		// Make one account with non-supported default payment to test validation
+        lstAccount[3].Default_Payment_Type__c = 'Bank Transfer';
+        
+        // Make one account with no default payment to test validation
+        lstAccount[4].Default_Payment_Type__c = null;
+        
+        // Make one account paid by ICH to test ICH payment
+        lstAccount[5].Default_Payment_Type__c = 'ICH';
+        
+        insert lstAccount;
+        
+        /*****************************************
+	    **	Create Contacts
+	    *****************************************/
+        lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 7, false);
+        
+        // Assign a contact for each generated account
+        for (integer i = 0; i < lstContact.size(); i++)
+        {
+        	lstContact[i].AccountId = lstAccount[i].Id;
+        }
+        insert lstContact;
+        
+        /*****************************************
+	    **	Create Zuora Billing Accounts
+	    *****************************************/
+        List<Zuora__CustomerAccount__c> lstZAccount = new List<Zuora__CustomerAccount__c>
+        { 
+	        IECTestUtil.createSampleBillingAccount(lstAccount[1], lstContact[1])
+	        , IECTestUtil.createSampleBillingAccount(lstAccount[6], lstContact[6])
+        };
+        insert lstZAccount;
+        
+        /*****************************************
+	    **	Create Zuora Paymen Method
+	    *****************************************/
+	    Zuora__PaymentMethod__c zPaymentMethod_CC = new Zuora__PaymentMethod__c (
+	    	Zuora__Type__c = 'CreditCard'
+	    	, Zuora__External_Id__c = TestDataGenerator.generateZuoraFakeId()
+	    	, Zuora__BillingAccount__c = lstZAccount[1].Id
+	    );
+	    insert zPaymentMethod_CC;
+	    
+        // Set the default payment on one of the zAccounts to CreditCard
+        lstZAccount[1].Zuora__Default_Payment_Method__c = zPaymentMethod_CC.Id;
+        update lstZAccount[1];
+        
+        /*****************************************
+	    **	Create Event Release
+	    *****************************************/
+	    //-- Generate Product
+	    Product2 oProduct = TestDataGenerator.generateProductsWithPrice(1)[0];
+	    oProduct.Inventory_Status__c = 'In stock';
+		oProduct.SAP_Material_Number__c = '8888-98';
+		oProduct.Activity_Code__c = '8888';
+		oProduct.Line_of_Business__c = 'Publications';
+ 		update oProduct;
+ 		
+		zqu__ZProduct__c zProduct = [SELECT Id, SAPProductMaterialNo__c FROM zqu__ZProduct__c WHERE Id = :oProduct.ZProduct__c];
+		zProduct.SAPProductMaterialNo__c = '8888-98';
+    	update zProduct;
+ 		
+ 		Product2 p = [SELECT SAP_Material_Number__c
+				, Display_to_ECommerce__c
+				, Line_of_Business__c
+				, IEC_Parent_Product__c
+				, Restricted_Customer_Type__c
+			FROM Product2 WHERE ID = :oProduct.Id][0];
+
+
+		//Create IEC_Event_Subscription__c
+		IEC_Event_Subscription__c eveSubscription = new IEC_Event_Subscription__c(
+			Subscriber__c = lstContact[1].Id,
+			Product__c = oProduct.Id,
+			Start_Date__c = Date.today().AddDays(-20),
+			Quantity__c = 1
+		);
+		insert eveSubscription;	
+		
+	    oEventRelease = TestDataGenerator.generateEventRelease(oProduct.Id, 'Member Airline', true);
+        
+        /*****************************************
+	    **	Create Orders
+	    *****************************************/
+        lstOrder = TestDataGenerator.generateOrder(7, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, false);
+        for (integer i = 0; i < lstOrder.size(); i++)
+        {
+        	lstOrder[i].Type = 'Event Auto-Renew';
+	        lstOrder[i].Source__c = 'Inbound call';
+	        lstOrder[i].Order_Channel__c = 'Central Direct Sales';
+	        
+	        lstOrder[i].AccountId = lstAccount[i].Id;
+	        lstOrder[i].BillToAccount__c = lstAccount[i].Id;
+	        lstOrder[i].BillToContactId = lstContact[i].Id;
+	        lstOrder[i].ShipToContactId = lstContact[i].Id;
+
+	        lstOrder[i].IEC_Event_Release__c = oEventRelease.Id;
+        }
+        insert lstOrder;
+        
+        /*****************************************
+	    **	Create Order Items
+	    *****************************************/
+	    setOrderId = new Set<Id>();
+        lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 7, false);
+        for (integer i = 0; i < lstOrderItem.size(); i++)
+        {
+        	setOrderId.add(lstOrder[i].Id);
+        	lstOrderItem[i].OrderId = lstOrder[i].Id;
+        	lstOrderItem[i].Tax__c = 1000;
+        	lstOrderItem[i].Freight_Charge__c = 0;
+        }
+        
+        // Make one order item without taxes and shipping to test validation
+        lstOrderItem[0].Tax__c = null;
+    	lstOrderItem[0].Freight_Charge__c = null;
+    	
+        insert lstOrderItem;
+
+	}
+	
+	// Cover code of batch "IEC_Evt_Renew_ProcessPmt_Batch"
+    @isTest (seeAllData=true)
+    static void test_Batch() {
+
+    	
+    	InitializeData();
+
+     	Test.startTest();
+			IEC_Evt_Renew_SOAP.Event_Release(oEventRelease.Id);
+		Test.stopTest();
+
+		// Run the asserts after the STOPTEST to make sure the batch has finished
+		List<IEC_Event_Release_Log__c> lstLog = [SELECT Id, Order__c FROM IEC_Event_Release_Log__c WHERE IEC_Event_Release__c = :oEventRelease.Id AND Order__c IN :setOrderId];
+		System.assertEquals(5, lstLog.size(), 'Five errors should be generated based on the document scenarios in the InitializeData function.');
+		
+		Set<Id> setOrdersWithError = new Set<Id>();
+		for (IEC_Event_Release_Log__c oLog : lstLog)
+		{
+			setOrdersWithError.add(oLog.Order__c);
+		}
+		System.assertEquals(5, setOrdersWithError.size(), 'Five orders caused these errors.');
+		System.assertEquals(false, setOrdersWithError.contains(lstOrder[5].Id), 'Order #6 shouldn\'t cause errors.');
+		System.assertEquals(false, setOrdersWithError.contains(lstOrder[6].Id), 'Order #7 shouldn\'t cause errors.');
+
+		IEC_Evt_Renew_SOAP.reprocessError(oEventRelease.Id);
+		
+    }
+
+    @isTest (seeAllData=true)
+    static void test_IEC_Evt_Renew_SOAP() {
+    	
+    	InitializeData();
+
+    	IEC_Event_Release__c eveRelease = [Select id,Product_Number__c,Released__c from IEC_Event_Release__c where id =:oEventRelease.Id];
+		
+		//Cover the Update Release button function on event release object
+		IEC_Evt_Renew_SOAP.eventRegenerateRelease(eveRelease.Id);
+
+		Test.startTest();
+		IEC_Evt_Renew_ProcessPmt_Batch batch = new IEC_Evt_Renew_ProcessPmt_Batch(eveRelease.Id);
+		Database.ExecuteBatch(batch,7);
+		Test.stopTest();
+
+		eveRelease = [Select id,Product_Number__c,Released__c,Last_Version__c,Swapped_Product__c, Customer_Type__c, Product__c, Processing_Status__c
+						 from IEC_Event_Release__c where id =:oEventRelease.Id];
+		System.assertEquals(true, eveRelease.Released__c, 'When the batch process is done, the release would be released');
+
+		//Cover IEC_EventRelease_Svc method generateAutoRenewals
+		IEC_EventRelease_Svc.generateAutoRenewals(new List<IEC_Event_Release__c>{eveRelease}, new Map<Id,IEC_Event_Release__c>(new List<IEC_Event_Release__c>{eveRelease}));
+		IEC_EventRelease_Svc.preventDeletion(new List<IEC_Event_Release__c>{eveRelease});
+
+		System.assertEquals(null, eveRelease.Processing_Status__c);
+    }
+    	
+}

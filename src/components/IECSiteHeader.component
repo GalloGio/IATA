@@ -187,7 +187,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     <apex:actionFunction action="{!refresh}" name="refreshHeaderComponent" rerender="panelCartItems, nbrCartItems, shoppingCartTotalBeforeTax" />
                     <i class="fa fa-shopping-cart"></i>
                     <apex:outputPanel id="panelCartItems" layout="inline">
-                        Order <apex:outputText value=" ({!iNbrCartItems})" rendered="{!iNbrCartItems>0}" />
+                        Order <apex:outputText value=" ({!iNbrCartItems})" rendered="{!AND(iNbrCartItems!=null,iNbrCartItems>0)}" />
                     </apex:outputPanel>
                                     
               </a>

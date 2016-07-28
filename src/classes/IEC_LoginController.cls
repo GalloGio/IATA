@@ -1,0 +1,143 @@
+public with sharing class IEC_LoginController extends IEC_PageController {
+
+    public String username                  { get; set; }
+    public String password                  { get; set; }
+    public String retURL                    { get; set; }
+    public String resetPasswordEmail        { get; set; }
+
+    String paramReturnURL;
+
+    public IEC_LoginController(){}
+
+    public Pagereference onLoadAction()
+    {
+        try {
+            
+            paramReturnURL = System.currentPageReference().getParameters().get(IECConstants.PARAM_RETURN_URL);
+            String paramResetPassword = System.currentPageReference().getParameters().get(IECConstants.PARAM_RESETPASSWORD);
+            
+            //if (paramReturnURL == null || paramReturnURL == '') {
+            //    retURL = null;
+            //}
+            //else {
+            //    retURL = paramReturnURL;
+            //}
+            retURL = (paramReturnURL == null || paramReturnURL == '') ? null : paramReturnURL;
+            
+            if(System.currentPageReference().getParameters().containsKey('doLogin'))
+            {
+                //Read username & password from post data
+                username = ApexPages.currentPage().getParameters().get('username');
+                password = ApexPages.currentPage().getParameters().get('password');
+
+                String retUrl = (System.currentPageReference().getParameters().containsKey('retUrl'))
+                    ? System.currentPageReference().getParameters().get('retUrl')
+                    : 'IEC_Home';
+               
+                if(retUrl == 'null') retUrl = 'iec_Home';
+                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl+'?tt='+DateTime.now().getTime());                
+                return pr ;
+            }
+
+            return null;
+        }
+        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
+    }
+
+
+    /**
+     * Handles the login
+     */
+    public Pagereference login() {
+        try {
+           // throw new transformationException('  isUserLoggedIn ' +  isUserLoggedIn +  '     retUrl  ' +  retURL + '     IECUserManager.login(username, password, retURL'+ IECUserManager.login(username, password, retURL)  );
+            if (username == null || username == '')
+               throw new IECApplicationException('The Username field is required.');
+            if (password == null || password == '')
+                throw new IECApplicationException('The Password field is required.');
+              
+            if (username != null && username != '') {
+               
+                Pagereference pr  = IECUserManager.login(username, password, retURL+'?tt='+DateTime.now().getTime());
+                return pr ;
+            }
+        
+                
+            return null;
+        }
+        catch (Exception ex) {
+            //addErrorMessage(ex.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+    }
+
+    
+
+
+    /**
+     * Resets the password for a given username
+     */
+    public Pagereference resetPassword() {
+        try {
+
+            if (resetPasswordEmail == null || resetPasswordEmail == '') {
+                throw new IECApplicationException('The Username field is required.');   
+            }       
+            
+            list<User> users =  Comm_User_Helper.getUserListByNameOrEmail(resetPasswordEmail );
+            if(users  == null || users.size() == 0 )
+                 throw new IECApplicationException('No eligible user found. Please check you typed the username correctly.');
+                 
+              if (users[0].contactid == null  ) { throw new IECApplicationException('Your password could not be reseted. Please contact support. No contact Found'); }       
+            
+            // reset password
+          //SALVATORE if (IECUserManager.resetPassword(resetPasswordEmail)) {
+            if (Comm_User_Helper.resetPassword(resetPasswordEmail, 'IEC', false) ){
+                //resetPassword = false;
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'A new password has been sent to ' + resetPasswordEmail));
+                resetPasswordEmail = '';
+            }
+            else
+                throw new IECApplicationException('Your password could not be reseted. Please contact support.');
+            
+            return null;
+        }
+        catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+            return null;
+        }
+    }
+
+    /** 
+     * Redirects to the Registration page
+     */
+    public Pagereference register() {
+        try {
+            system.debug('on register ');
+            //Pagereference pr = Page.IECUserRegistration;
+            //MM: I have changed the target registration page to the ISS registration page and added a parameter to identify from which portal customer is coming from: "IEC".
+            /*Pagereference pr = Page.ISSP_Registration;
+            pr.getParameters().put('sRefererCommunity','iec');*/
+
+            String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'iec/IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'iec/IEC_Login';
+            //Pagereference pr = Page.IECUserRegistration;
+            //MM: I have changed the target registration page to the ISS registration page and added a parameter with the name of the initial call.
+            Pagereference pr = Page.ISSP_Registration;
+            pr.getParameters().put('sRefererCommunity', commingFromUrl);
+            pr.getParameters().put('CommunityName','IEC');
+
+
+            // add return URL as parameter if one was provided
+            if (retURL != null && retURL != '') {
+                pr.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(retURL));
+            }
+            
+            pr.setRedirect(true);
+            return pr;
+        }
+        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
+    }
+
+
+}

@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,21 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>Pesan Eror : Negara/ Provinsi penagihan kosong , ikuti langkah-langkah berikut untuk mengisinya di:
+ 
+ 1- Edit kolom &quot;&quot;Kota penagihan&quot;&quot; 
+ 2- Pilih salah satu alamat yang diusulkan oleh sistem</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Mohon divalidasi alamat penagihan dan pengiriman Anda dengan mengklik &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; tombol.</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Mohon validasi alamat penagihan dan pengiriman Anda dengan mengklik tanda centang.</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -883,6 +902,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2666,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>E-mail ini telah terdaftar di toko daring (Online Store). Jika Anda ingin mereset password, silakan kembali ke halaman login dan gunakan fitur&quot;Lupa kata sandi Anda?&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5185,6 +5212,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Silakan klik &quot;Lanjut&quot; untuk melanjutkan</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Karena Anda tidak pernah mengakses portal selama 90 hari terakhir, password baru sudah dikirimkan kembali melalui email</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6207,6 +6238,10 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
     <customLabels>
         <label><!-- ISSP_Registration --></label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda akan diarahkan ke halaman awal dalam 5 detik.</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>Proses pendaftaran</label>

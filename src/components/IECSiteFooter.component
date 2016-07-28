@@ -16,18 +16,18 @@
         <div class="footerRight">
           <p>Products : 
 
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}">Global Systems Solution</a> <span class="sep">|</span> 
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdMDP}">Marketing Data Package</a> <span class="sep">|</span> 
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}">Global Agency Directory</a> <span class="sep">|</span>            
-            <a href="https://{!$Site.Domain}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}">CheckACode</a>  
+            <a href="{!$Site.BaseUrl}{!$Page.IECProductViewer}?ProductCode={!sProdGSS}">Global Systems Solution</a> <span class="sep">|</span> 
+            <a href="{!$Site.BaseUrl}{!$Page.IECProductViewer}?ProductCode={!sProdMDP}">Marketing Data Package</a> <span class="sep">|</span> 
+            <a href="{!$Site.BaseUrl}{!$Page.IECProductViewer}?ProductCode={!sProdGAD}">Global Agency Directory</a> <span class="sep">|</span>            
+            <a href="{!$Site.BaseUrl}{!$Page.IECProductViewer}?ProductCode={!sProdCACPro}">CheckACode</a>  
              
 
 
           </p>
           <p>Info : 
-            <a href="https://{!$Site.Domain}/iec/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
+            <a href="{!$Site.BaseUrl}/IECAboutGDP">About Global Data</a> <span class="sep">|</span>             
             <a href="mailto:{!sContactEmail}?subject={!sContactSubject}" class="header__navigation-link">Contact Us</a><span class="sep">|</span> 
-            <a href="https://{!$Site.Domain}/iec/IECCustomers">Customers</a> <span class="sep">|</span> 
+            <a href="{!$Site.BaseUrl}/IECCustomers">Customers</a> <span class="sep">|</span> 
             <a href="{!$Site.BaseUrl}/IECTerms">Terms of Use</a>       
           </p>
         </div>

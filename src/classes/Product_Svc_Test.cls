@@ -116,16 +116,9 @@ private class Product_Svc_Test
         TestDataGenerator.generateApexSetting();
 
         List<Product2> listProd = new List<Product2>();
-        listProd.add(new Product2(
-                    Name='Test 1', 
-                    Product_Section__c='tst111', 
-                    Division__c='division 1', 
-                    Sales_Channel__c='channel 1',
-                    SAP_Material_Number__c='1245-78',
-                    Effective_To__c = Date.today()
-            ));
-        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Effective_To__c = Date.today()));
-        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Effective_To__c = Date.today()));
+        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1',Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
+        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
+        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
         insert listProd;
         
         

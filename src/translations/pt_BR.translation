@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,21 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>Erro: o campo de Estado esta vazio, por favor seguir os passos abaixo para o preenchimento:
+
+1- Editar a linha da cidade da cobrança 
+2- Selecione um dos endereços propostos pelo sistema.</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Por favor validar seu endereço de cobrança e de entrega clicando no botão &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Por favor validar seu endereço de cobrança e de entrega clicando no botao de seleção.</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -883,6 +902,10 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>País</label>
+        <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
         <label><!-- Generate_Quote --></label>
@@ -2643,6 +2666,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>Este email já está registrado na loja online. Se desejar reiniciar a sua senha, por favor voltar a página de login e usar a função &quot;Esqueceu sua senha?&quot;.</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -5175,6 +5202,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Por favor clique em próximo para avançar.</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Como você não se conectou nos últimos 90 dias, um e-mail com uma nova senha foi enviada.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
@@ -6196,6 +6227,10 @@ Se não tiver o Código IATA, selecione &quot;&quot;Outro&quot;&quot; como &quot
     <customLabels>
         <label>Privacidade</label>
         <name>ISSP_Registration_Privacy</name>
+    </customLabels>
+    <customLabels>
+        <label>Voce será redirecionado a página inicial em 5 segundos.</label>
+        <name>ISSP_Registration_Redirection</name>
     </customLabels>
     <customLabels>
         <label>Processo de nova inscrição</label>

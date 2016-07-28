@@ -1,0 +1,564 @@
+<apex:page controller="IECQuoteList_Ctrl" language="{!language}" action="{!pageLoad}"
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+
+    <!--[if lte IE 8]>
+        <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+		<title>{!$Label.View_quotes} - {!$Label.SiteTitle}</title>
+    </head>
+
+    <body data-media-size="" class="page-dashboard" data-is-modal-open="false">
+        <div id="js-breakpoint-finder">
+            <span class="device-xs screen-xsmall"></span>
+            <span class="device-sm screen-small"></span>
+            <span class="device-md screen-medium"></span>
+            <span class="device-lg screen-large"></span>
+            <span class="device-xl screen-xlarge"></span>
+        </div>
+
+    <div class="app-container" id="js-app-container">
+
+    	<!-- Page Header -->
+        <c:IEC_PageHeader is_dashboard="true" page_name="IEC_ViewQuotes" />
+	
+    	<div class="page-container" id="js-page-container">
+
+    	<apex:form id="viewQuoteForm" forceSSL="true">
+        	
+        	<main class="main-content">
+			    <div class="inner-wrapper">
+			        <h1 class="page-title">{!$Label.View_quotes}</h1>
+			        
+			        <apex:outputPanel id="quotesFormBox">
+						<apex:messages />
+						<apex:outputText value="Your email was successfully send" rendered="{!emailSendSuccessfully}" />
+					</apex:outputPanel>
+
+			        <div class="table-container view-quotes">
+			            <div class="table-heading">
+			                <table class="data-table table-history">
+			                    <tr class="heading">
+	                                <th class="quote-number">{!labels['lblQuoteNo']}</th>
+	                                <th class="request-date">{!labels['lblFrDate']}</th>
+	                                <th class="valid-until">{!labels['lblToDate']}</th>
+	                                <th class="action"></th>
+	                            </tr>
+			                </table>
+			            </div>
+			            <div class="scroll-container history long">
+
+			                <table class="data-table table-history table-togglable">
+			                    <tr class="heading">
+	                                <th class="quote-number">{!labels['lblQuoteNo']}</th>
+	                                <th class="request-date">{!labels['lblFrDate']}</th>
+	                                <th class="valid-until">{!labels['lblToDate']}</th>
+	                                <th class="action"></th>
+	                            </tr>
+
+			                    <apex:repeat value="{!lstQuotes}" var="quote" id="quoteTable" >
+			                    <tr class="listing-item">
+			                        <td class="quote-number" data-label="Quote number">
+			                            <apex:outputText value="{!quote.info.OrderNumber}" />
+			                        </td>
+			                        <td class="request-date" data-label="Request date">
+			                            <apex:outputText value="{0, date, medium}" >
+                                        	<apex:param value="{!quote.info.EffectiveDate}" />
+                                        </apex:outputText>
+			                        </td>
+			                        <td class="valid-until" data-label="Valid until">
+			                            <apex:outputText value="{0, date, medium}" >
+                                            <apex:param value="{!quote.info.EndDate}" />
+                                        </apex:outputText>
+                                        <apex:outputText value="&nbsp;&nbsp;{!labels['lblExpired']}" escape="false" styleClass="warning" rendered="{!quote.isExpired}" />
+			                        </td>
+			                        <td class="action js-toggle-table">
+			                            <a class="js-toggle-switch" href="#">
+			                                <span class="show-details">
+			                                    {!$Label.See_details}
+			                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+			                                </span>
+			                                <span class="hide-details">
+			                                    {!$Label.Hide_details}
+			                                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+			                                </span>
+			                            </a>
+			                        </td>
+			                        <td class="details js-toggle-details is-hidden">
+			                            <div class="quote-details-container">
+			                                <div class="caption">{!$Label.Quote} &nbsp;<apex:outputText value="{!quote.info.OrderNumber}" /></div>
+			                                <div class="dates">
+			                                    <div class="box">
+			                                        <strong>{!labels['lblFrDate']}: </strong>
+			                                        <apex:outputText value="{0, date, medium}" >
+                                                        <apex:param value="{!quote.info.EffectiveDate}" />
+                                                    </apex:outputText>
+			                                    </div>
+			                                    <div class="box">
+			                                        <strong>{!labels['lblToDate']}: </strong>
+			                                        <apex:outputText value="{0, date, medium}" >
+                                                        <apex:param value="{!quote.info.EndDate}" />
+                                                    </apex:outputText>
+                                                    <apex:outputText value="&nbsp;&nbsp;{!labels['lblExpired']}" escape="false" styleClass="warning" rendered="{!quote.isExpired}" />
+			                                    </div>
+			                                </div>
+
+			                                <div class="section-container">
+			                                    <div class="group-container group-billing-shipping row">
+			                                        <div class="columns small-12 medium-6">
+			                                            
+			                                            <!-- Start billing address -->
+														<section class="group-container billing-address">
+														    <h2 class="group-title">{!$Label.Billing_address}</h2>
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Address_Line_1}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!quote.info.BillingStreet}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Postal_code}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!quote.info.BillingPostalCode}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.City}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!quote.info.BillingCity}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Country}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!quote.info.BillingCountry}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.State_Province}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!quote.info.BillingState}" />
+														        </span>
+														    </div>
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.PO_number}</span>
+														        <span class="output-value">
+														        	<apex:outputText value="{!quote.info.PoNumber}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Invoice_text}</span>
+														        <span class="output-value">
+														        	<apex:outputText value="{!quote.info.Invoice_Text__c}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.VAT_number}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!quote.info.BillToContact_VAT_Number__c}" />
+														        </span>
+														    </div>
+														</section>
+			                                            <!-- end billing address section -->
+			                                        </div>
+			                                        <div class="columns small-12 medium-6">
+			                                            
+			                                            <!-- Start shipping address section -->
+														<section class="group-container shipping-address">
+														    <h2 class="group-title">{!$Label.Shipping_address}</h2>
+
+														    <div class="shipping-address-container">
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Address_Line_1}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShippingStreet}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Postal_code}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShippingPostalCode}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.City}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShippingCity}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Country}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShippingCountry}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.State_Province}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShippingState}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.VAT_number}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShipToContact_VAT_Number__c}" />
+														            </span>
+														        </div>
+
+														        <!-- <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Phone}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShipToContact_Phone__c}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Email_address}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!quote.info.ShipToContact_Email__c}" />
+														            </span>
+														        </div> -->
+
+														        <div class="group-container shipping-instructions">
+														            <h3 class="group-title">{!$Label.Shipping_instructions}</h3>
+
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Attention}</span>
+														                <span class="output-value">
+														                	<!-- <apex:outputText value="{!quote.info.IEC_Shipping_Instruction_attention__c}" /> -->
+														                	<apex:outputText value="{!quote.info.ShipToContact_Name__c}" />
+														                </span>
+														            </div>
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Phone}</span>
+														                <span class="output-value">
+														                	<!-- <apex:outputText value="{!quote.info.IEC_Shipping_Instruction_phone__c}" /> -->
+														                	<apex:outputText value="{!quote.info.ShipToContact_Phone__c}" />
+														                </span>
+														            </div>
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Email}</span>
+														                <span class="output-value">
+														                	<!-- <apex:outputText value="{!quote.info.IEC_Shipping_Instruction_email__c}" /> -->
+														                	<apex:outputText value="{!quote.info.ShipToContact_Email__c}" />
+														                </span>
+														            </div>
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Message}</span>
+														                <span class="output-value">
+														                	<apex:outputText value="{!quote.info.Shipping_Instruction__c}" />
+														                </span>
+														            </div>
+														        </div>
+
+														    </div>
+														</section>
+			                                            <!-- End shipping address section -->
+			                                        </div>
+			                                    </div>
+
+			                                    <div class="group-container group-shopping-cart">
+			                                        <div class="table-container your-order">
+			                                            <table class="data-table table-shopping-cart js-adjust-tooltip-placement">
+			                                                
+			                                                <!-- Start cart section -->
+															<tr class="heading">
+															    <th class="product-name">{!$Label.Product_Name}</th>
+															    <th class="product-number">{!$Label.Product_Number}</th>
+															    <th class="quantity">{!$Label.Quantity}</th>
+															    <th class="item-price">{!$Label.Item_Price}</th>
+															    <th class="total-price">{!$Label.Total_Price}</th>
+															</tr>
+															
+															<apex:repeat value="{!quote.info.Orderitems}" var="item">
+															<tr class="item">
+															    <td class="product-name">
+															        <h2 class="item-name">{!item.Product_Name__c}</h2>
+															        <div class="product-number">{!$Label.Product_Number}: {!item.Product_Number__c}</div>
+															        
+															        <apex:outputPanel rendered="{!item.Carrier_Tracking_Number__c != null}">
+															        <div class="tracking-number">
+															        {!$Label.Tracking_Number}: <br />  <apex:outputText value="{!item.Carrier_Tracking_URL__c}" escape="false" />
+															        </div>
+															        <div class="download-invoice">
+															        	<apex:outputPanel rendered="{!quote.info.Payment_Type__c != 'ICH'}">
+															        	<apex:outputLink value="/apex/IECInvoice?invoice={!item.Invoice_Number__c}" id="invoiceLink" target="_blank">{!$Label.Download_Invoice}</apex:outputLink>
+																		</apex:outputPanel>
+																		<apex:outputPanel rendered="{!quote.info.Payment_Type__c == 'ICH'}">
+																		<a class="js-open-modal" data-target-modal="#js-modal-ICH-Customer" href="#">{!$Label.Download_Invoice}</a>
+																		</apex:outputPanel>
+															        </div>
+															        </apex:outputPanel>
+																	
+
+															    </td>
+															    <td class="product-number">
+															        <apex:outputText value="{!item.Product_Number__c}" />
+															    </td>
+
+															    <td class="quantity">
+															        <span class="input-label quantity">{!$Label.Quantity}: </span>
+															        {!item.quantity}
+															    </td>
+															    <td class="price item-price">
+															        {!item.UnitPrice}
+															    </td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!item.quantity * item.UnitPrice}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+															<apex:outputPanel rendered="{!item.Discount__c != null && item.Discount__c > 0}">
+															<tr class="promotion">
+															    <td class="product-name">
+															        <strong>{!$Label.Promotion}</strong>
+															    </td>
+															    <td class="product-number"></td>
+															    <td class="quantity"></td>
+															    <td class="price item-price"></td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!item.Discount__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+															</apex:outputPanel>
+															
+															</apex:repeat>
+															
+															<tr class="total sub-total">
+															    <td class="sub-total" colspan="4">
+															        {!$Label.Subtotal}
+															    </td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!quote.info.SubTotal_Amount__c - quote.info.Discount_Amount__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+															<tr class="tax">
+															    <td class="product-name" colspan="2">
+															        {!$Label.Taxes}
+															    </td>
+															    <td class="quantity">
+															    </td>
+															    <td class="price item-price">
+															    </td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!quote.info.Taxes__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+															<tr class="shipping">
+															    <td class="product-name" colspan="2">
+															        {!$Label.Shipping}
+															    </td>
+															    <td class="quantity">
+															    </td>
+															    <td class="price item-price">
+															    </td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, currency}">
+											                            <apex:param value="{!quote.info.Total_Freight_Charge__c}" />
+											                        </apex:outputText>
+											                        <apex:outputPanel rendered="{!quote.info.Total_Freight_Charge__c == null}" >$0.00
+											                        </apex:outputPanel>
+															    </td>
+															</tr>
+															<tr class="handling">
+															    <td class="product-name" colspan="2">
+															        {!$Label.Handling}
+															    </td>
+															    <td class="quantity">
+															    </td>
+															    <td class="price item-price">
+															    </td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, currency}">
+											                            <apex:param value="{!quote.info.Total_handling_charges__c}" />
+											                        </apex:outputText>
+											                        <apex:outputPanel rendered="{!quote.info.Total_handling_charges__c == null}" >$0.00
+											                        </apex:outputPanel>
+															    </td>
+															</tr>
+															<tr class="total">
+															    <td class="total" colspan="4">
+															        {!$Label.IDCard_Total}
+															    </td>
+															    <td class="price total-price">
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!quote.info.Total_Amount__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+			                                                <!-- End cart section -->
+			                                            </table>
+														
+														<apex:outputPanel id="quotesForm">
+														<apex:outputPanel layout="Block" rendered="{! !showSendEmail}">
+			                                             	<apex:outputPanel styleClass="footer text-right table-actions" rendered="{!!quote.isExpired}">
+			                                                	<ul class="list actions">
+				                                                    <li><a onclick="sendEmail('{!quote.info.OrderNumber}','{!quote.info.ShipToContact_Email__c}');" class="button">{!$Label.PKB2_send_mail}</a></li>
+				                                                    <li><apex:commandLink action="/IECQuotePDF?quote={!quote.info.OrderNumber}" value="{!$Label.ISSP_Download}" id="Download" styleClass="button downloadQuote" target="_blank" /></li>
+				                                                    <li><apex:commandLink action="/IEC_CustomerInformation?id={!quote.info.OrderNumber}" value="{!$Label.Confirm_purchase}" id="ConfirmPurchase" styleClass="button confirmPurchase" /></li>
+				                                                </ul>
+			                                                </apex:outputPanel>
+			                                            </apex:outputPanel>
+
+			                                            <apex:outputPanel layout="Block" rendered="{!showSendEmail}">
+							                                <apex:actionStatus id="runStatus">
+							                                    <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
+							                                </apex:actionStatus>
+
+							                                table
+							                            </apex:outputPanel>
+							                            </apex:outputPanel>
+
+			                                        </div>
+			                                    </div>
+
+			                                </div>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                    
+			                    </apex:repeat>
+			                </table>
+			            </div>
+			        </div>
+			    </div>
+			</main>
+
+        </apex:form>
+
+        
+        <c:IEC_Footer is_dashboard="true" />
+
+    <!-- /END page-container --></div>
+    <!-- /END app-container --></div>
+
+    <div class="modal-container is-hidden" id="js-modal">
+    	<div class="overlay"></div>
+	    <div class="modal-dialog" id="js-modal-dialog">
+	        <section id="js-modal-sendEmail" class="modal-content">
+	        	<apex:form >
+		         	<header class="modal-header">
+				        <h2 class="modal-title">Send Email</h2>
+				        <a href="#" class="icon-close js-close-modal"><span class="reader-only">Close</span><i class="fa fa-times"></i></a>
+				    </header>
+				    
+				    <div class="modal-body">
+						
+						<input type="hidden" id="quoteNumber" name="quoteNumber" />
+
+				    	<div class="field-group inline text">
+				            <label>
+				                <span class="input-label">{!$Label.Email_To}:</span>
+				                <input class="user-input text" id="emailTo" type="text" name="emailTo" />
+				            </label>
+				        </div>
+				        <div class="field-group inline text">
+				            <label>
+				                <span class="input-label">{!$Label.CC}:</span>
+				                <input class="user-input text" type="text" name="emailCC" />
+				            </label>
+				        </div>
+				        <div class="field-group inline text">
+				            <label>
+				                <span class="input-label">{!$Label.BCC}:</span>
+				                <input class="user-input text" type="text" name="emailBCC" />
+				            </label>
+				        </div>
+				        <div class="field-group inline text">
+				            <label>
+				                <span class="input-label">{!$Label.ISSP_Subject}:</span>
+				                <input class="user-input text" type="text" id="emailSubject" name="emailSubject" />
+				            </label>
+				        </div>
+				        <div class="field-group inline textarea">
+				            <label>
+				                <span class="input-label text-top">{!$Label.Body}:</span>
+				                <textarea class="user-input textarea" name="emailBody" rows="10"></textarea>
+				            </label>
+				        </div>
+	                    
+				    </div>
+				    <footer class="modal-footer">
+				    	<ul class="list actions">
+				            <li>
+				                <apex:commandButton value="{!$Label.Cancel}" styleClass="text-link js-close-modal" action="{!cancelSendQuote}" status="runStatus" reRender="quotesFormBox,quotesForm" />
+				            </li>
+				            <li>
+				                <apex:commandButton value="{!$Label.PKB2_Submit}" styleClass="button js-close-modal" action="{!sendQuote}"  status="runStatus" reRender="quotesFormBox,jsPanel,quotesForm"/>
+				            </li>
+				        </ul>
+				    </footer>
+				    <apex:actionFunction name="refreshJs" reRender="jsPanel,quotesFormBox,quotesForm" />
+			    </apex:form>
+	        </section>
+		</div>
+	</div>
+
+
+    
+    <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+	<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+	<style type="text/css">
+		.warning{
+			color:#e5176e;
+		}
+	</style>
+	
+	<apex:outputPanel id="jsPanel">
+		<script type="text/javascript">
+
+			var sendEmail = function(quote,email){
+				console.log('click');
+				openModal(quote,email);
+			};
+
+			var body = $('body');
+
+			var openModal = function(quote,email) {
+				$('#emailTo').val(email);
+				$('#emailSubject').val("{!labelsQuoteDetail['emailSubjectPrefix']}" + quote);
+				$('#quoteNumber').val(quote);
+				$('#js-modal').removeClass('is-hidden');
+				$('#js-modal-change-sendEmail').removeClass('is-hidden');
+				$('#js-modal-sendEmail').removeClass('is-hidden');
+		        body.attr('data-is-modal-open', 'true');
+		    };
+
+		    $('.js-close-modal').on('click', function(){
+		    	refreshJs();
+		    });
+
+
+		</script>
+	</apex:outputPanel>
+    </body>
+	</html>
+</apex:page>

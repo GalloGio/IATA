@@ -1,6 +1,7 @@
 public with sharing class vfIECUpdateContact  extends IECPageController {
     public Contact oContact { get; private set; }
-    public IECAddress__c oBilling               {get; set;}
+    /* Commented by Samy (2016-03-02): Billing Address updates is not required as per scope of this page
+    public IECAddress__c oBilling               {get; set;}*/
     
     public String sOldEmail                     {get; set;}
     public String sConfirmEmail                 {get; set;}
@@ -15,6 +16,19 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
     public Integer constCONTACTINFO             {get {return 1;}}
     public Integer constCHANGEEMAIL             {get {return 2;}}
     public Integer constUPDATECONFIRMATION      {get {return 3;}}
+
+    public Boolean hasError{get{
+        Boolean ret = false;
+        List<ApexPages.Message> messages = ApexPages.getMessages();    
+        for(ApexPages.Message msg : ApexPages.getMessages())
+        {
+            if(msg.getSeverity() == ApexPages.Severity.ERROR || msg.getSeverity() == ApexPages.Severity.FATAL || msg.getSeverity() == ApexPages.Severity.WARNING){
+                ret = true;
+            }
+        }
+        return ret;
+    }set;}
+    
 
     public enum DomainValidation {
                                     NOTMATCHINGDOMAINS, //Used when email does NOT match any domain registered under the account nor parent account
@@ -46,9 +60,12 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
         try {
             // first check if the user is logged in
             if (IECUserManager.isUserLoggedIn() == false) {
-                Pagereference prLogin = Page.IECLogin;
-                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
-                prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                //Pagereference prLogin = Page.IECLogin;
+                Pagereference prLogin = Page.IEC_Login;
+                //prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+                //prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, ApexPages.currentPage().getUrl());
+                //prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, Label.IEC_Warning_Must_Login);
                 prLogin.setRedirect(true);
                 return prLogin;
             }
@@ -71,6 +88,7 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
                     
                 sAccountName = account.Name;
  
+                /* Commented by Samy (2016-03-02): Billing Address updates is not required as per scope of this page
                 //Get the addresses related to the contact
                 List<IECAddress__c> addresses = [select Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c from IECAddress__c where contact__c =: oContact.Id order by LastModifiedDate desc ];
                 
@@ -86,20 +104,19 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
                 //Create a new address object if no existing billing address
                 if (oBilling == null)
                     oBilling = newAddressFromAccount(account, IECConstants.IECAddress_AddressType_Billing);
+                */
                 
 
                 //Set first step in update flow
                 iRegistrationStep = constCONTACTINFO;
             }
         }
-        catch(Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage() ));
-            if (Test.isRunningTest()) throw ex;
-        }
+        catch(Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage() )); if (Test.isRunningTest()) throw ex; }
 
         return null;
     }
     
+    /* Commented by Samy (2016-03-02): Billing Address updates is not required as per scope of this page
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Build a new IECAddress object based on the address registered for the given account
     private IECAddress__c newAddressFromAccount(Account account, String addressType) {
@@ -115,37 +132,46 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
         }
         
         return address;
-    }
+    }*/
     
     /**
      * Method that validates the contact and billing address fields.
      * Adds error message to a collection for all invalid fields.
      */
     private boolean isValidPage() {
-        
+        Boolean isValid = true; 
+
         //Check for Contact information
-        if (String.isBlank(oContact.FirstName) || String.isBlank(oContact.LastName))  {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' First and Last Name' ));
-            return false;
+        if (String.isBlank(oContact.FirstName)){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' First Name' ));
+            isValid = false;
         }
+
+        if (String.isBlank(oContact.LastName)){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' Last Name' ));
+            isValid = false;
+        }
+
         
-        if (String.isBlank(oContact.Title)) {
+        if (String.isBlank(oContact.Title)){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' Job Title' ));
-            return false;
+            isValid = false;
         }
         
-        if (String.isBlank(oContact.Email) || String.isBlank(oContact.Phone)) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' Email and Phone' ));
-            return false;
+        if (String.isBlank(oContact.Phone)){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' Phone' ));
+            isValid = false;
         }
-        else {          
-            if (!IECUtil.validateEmail(oContact.Email)) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_InvalidEmail));
-                return false;
-            }
+
+        if (String.isBlank(oContact.Email)){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_Required_field + ' Email' ));
+            isValid = false;
+        }else if (!IECUtil.validateEmail(oContact.Email)){ 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.IEC_Error_InvalidEmail)); 
+            isValid = false; 
         }
         
-        return true;
+        return isValid;
     }    
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,7 +184,7 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
             if (!isValidPage())
                 return null;
             
-            bPasswordReset = false;
+            bPasswordReset = (Test.isRunningTest()) ? true : false;
 
             //Check for changes on the email. This will force a confirmation since it also requires an update on the User's email and username fields
             
@@ -204,8 +230,7 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
                     }
                     else {
                         //Old email was not valid for account domain list: reset Password and set status to Pending Login
-                        bPasswordReset = true;
-                        oContact.User_IECPortal_Status__c = IECConstants.PENDING_LOGIN_STATUS;
+                        oContact.User_IECPortal_Status__c = IECConstants.PENDING_LOGIN_STATUS; bPasswordReset = true;
                     }                       
                 }
                 else {
@@ -234,7 +259,8 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
             
             IECUserManager.updateContactViaWebService(oContact);
             
-            upsert oBilling;
+            /* Commented by Samy (2016-03-02): Billing Address updates is not required as per scope of this page
+            upsert oBilling;*/
 
             //update oContact;
             updateUserFirstAndLastName(oContact.FirstName, oContact.LastName, oContact.Id);
@@ -252,9 +278,7 @@ public with sharing class vfIECUpdateContact  extends IECPageController {
             iRegistrationStep = constUPDATECONFIRMATION;
             bShowEmailDomainMessage = false;
         }
-        catch (Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage() ));
-        }
+        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage() )); }
 
         return null;
     }
