@@ -3661,6 +3661,14 @@
             <type>owner</type>
         </recipients>
         <recipients>
+            <field>Country_Manager_Backup_2__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>Country_Manager_Backup__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
             <field>Country_Manager__c</field>
             <type>userLookup</type>
         </recipients>
