@@ -28,7 +28,7 @@ global class Order_Ext
     //--- Order & OrderItems 
     public List<OrderItem_DTO> orderProducts{get;set;}
     public List<SAPInvoice_DTO> orderInvoices{get;set;}
-    public transient List<SalesOrderProduct_DTO> availableProducts{get;set;}
+    public List<SalesOrderProduct_DTO> availableProducts{get;set;}
     public List<SalesOrderProduct_DTO> selectedProducts{get;set;}
     public String selectedProductsIdsStr{get;set;}
     public String selectedProductsNumbers{get;set;}
