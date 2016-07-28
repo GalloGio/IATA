@@ -12843,6 +12843,174 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>reCAPTCHA verification Failed</value>
     </labels>
     <labels>
+        <fullName>ISSP_Accept</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Accept</shortDescription>
+        <value>Accept</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Accept_Terms_Warning</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Accept Terms Warning</shortDescription>
+        <value>Please, accept terms and conditions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Statements</shortDescription>
+        <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
+        <value>NOTE: Kindly note that the balances are updated on the portal at least one business day after IATA&apos;s account has been credited</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Title</shortDescription>
+        <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_not_approved</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account not approved</shortDescription>
+        <value>Account is not approved. You cannot see the info.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Agency_Head_Office_code</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agency Head Office code</shortDescription>
+        <value>Agency Head Office code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Consolidated</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Consolidated</shortDescription>
+        <value>Consolidated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Currency_Filter</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Currency Filter</shortDescription>
+        <value>Currency Filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Display_Records_per_page</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Display Records per page</shortDescription>
+        <value>Display _MENU_ records per page</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Excess</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Excess</shortDescription>
+        <value>Excess</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Fullpayment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Fullpayment</shortDescription>
+        <value>Fullpayment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Last_Updated_on</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Last Updated on</shortDescription>
+        <value>Last Updated on</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Last_updated_statement</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Last updated statement</shortDescription>
+        <value>Last updated statement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Location_Filter</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Location Filter</shortDescription>
+        <value>Location filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_No_records_available</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP No records available</shortDescription>
+        <value>No records available</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Nothing_found</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Nothing found</shortDescription>
+        <value>Nothing found</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Past_Periods</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Past Periods</shortDescription>
+        <value>Past Periods</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Pending</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Pending</shortDescription>
+        <value>Pending</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Showing_page</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Showing page</shortDescription>
+        <value>Showing page _PAGE_ of _PAGES_</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_filtered_from_total_records</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP filtered from total records</shortDescription>
+        <value>(filtered from _MAX_ total records)</value>
+    </labels>
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
