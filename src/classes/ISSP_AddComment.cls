@@ -1,4 +1,6 @@
 public class ISSP_AddComment{
+
+  public Boolean showDescription { get; set; }
   public String CaseId ;
   public Case tmpCase {get;set;}
   public Case CaseNumber {get;set;}
@@ -7,12 +9,14 @@ public class ISSP_AddComment{
   
   public ISSP_AddComment() {
       CaseId  = ApexPages.currentPage().getParameters().get('Caseid');
-      List<Case> Case_lst = new List<Case>([select Id , description , subject, CaseNumber, New_interaction__c From Case where Id =: CaseId]);
+      List<Case> Case_lst = new List<Case>([select RecordType.Name, Id , description , subject, CaseNumber, New_interaction__c From Case where Id =: CaseId]);
       
       if(Case_lst != null && Case_lst.size() > 0){
           tmpCase = Case_Lst[0];
           tmpCase.New_interaction__c = 'New Comment';
           tmpCase.New_Comment_From_Connection_User__c = true;
+          showDescription = true;
+          if(tmpCase.RecordType.Name == 'SAAM') showDescription=false;
       }
       
   }
