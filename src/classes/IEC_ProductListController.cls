@@ -1,6 +1,6 @@
 /******************************************************************************************************************
  *  IEC_ProductListController: IEC_ProductList page Controller                                                    *
- *  Author: David Daboué - CGI                                                                                    *        
+ *  Author: David DabouÃ© - CGI                                                                                    *        
  ******************************************************************************************************************/
 public with sharing class IEC_ProductListController extends IEC_PageController
 {
@@ -23,7 +23,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public String selectedCustomerType{get;set;}
 
     //Products available
-    public List<EComProduct_DTO> allProducts;
+    public transient List<EComProduct_DTO> allProducts;
     private String searchCondition;
     public Integer totalNumberOfPages{get;set;}
     public List<Integer> pages{get;set;}
@@ -48,7 +48,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  IEC_ProductListController: Class Constructor                                                              *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public IEC_ProductListController()
     {
@@ -62,7 +62,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  onLoadAction: method calls when page loaded                                                               *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public PageReference onLoadAction()
     {
@@ -80,7 +80,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *   buildQueryConditions: method to set dynamically the products query parameters                            *
-     *   Author: David Daboué                                                                                     *  
+     *   Author: David DabouÃ©                                                                                     *  
      **************************************************************************************************************/
     private void buildQueryConditions()
     {
@@ -118,12 +118,17 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  queryProducts: method to return the list of products that will be displayed in the page                   *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     private void queryProducts()
     {
         //-- Fetch ecom Products
         allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
+
+        for(EComProduct_DTO prod : allProducts)
+        {
+            prod.ProductDesc = '';
+        }
 
          //-- Back to 1st page if product exist 
         if(allProducts.size() > 0) 
@@ -140,7 +145,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  refreshDisplayedProducts: method calls the set the products to be displayed in the current page           *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     private void refreshDisplayedProducts()
     {
@@ -164,7 +169,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  sortProducts: method calls when customer change the sort by value                                         *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public void sortProducts()
     {
@@ -174,7 +179,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  buildRefinementFilters: method used to initialize the refinement filters                                  *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     private void buildRefinementFilters()
     {
@@ -206,7 +211,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  refine: method calls when customer clicks on Refine button                                                *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public void refine()
     {
@@ -251,7 +256,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  gotoNext: method calls when customer clicks on Next button in the pagination section                      *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public void gotoNext()
     {
@@ -261,7 +266,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  gotoPrevious: method calls when customer clicks on Previous button in the pagination section              *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public void gotoPrevious()
     {
@@ -271,7 +276,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
 
     /**************************************************************************************************************
      *  gotoPage: method call when customer clicks on a specific page number in the pagination section            *
-     *  Author: David Daboué                                                                                      *  
+     *  Author: David DabouÃ©                                                                                      *  
      **************************************************************************************************************/
     public void gotoPage()
     {
