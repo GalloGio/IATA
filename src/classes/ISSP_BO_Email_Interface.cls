@@ -9,12 +9,13 @@ global class ISSP_BO_Email_Interface implements Messaging.InboundEmailHandler {
 			system.debug('HAS ATTACHMENTS');
 			
 			//Before creating report, check if one has already been created in the same day
+			/*INC264882
 			Date todayDate = System.Today();
 			List <ISSP_BO_Report__c> reportList = [SELECT Id FROM ISSP_BO_Report__c WHERE Report_Date__c = :todayDate];
 			if (!reportList.isEmpty()){
 				system.debug('ending because there is already a report for this day');
 				return result;
-			}
+			}*/
 			
 			ISSP_BO_Report__c newReport = new ISSP_BO_Report__c(Report_Date__c = System.Today());
 			insert newReport;
