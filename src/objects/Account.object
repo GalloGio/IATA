@@ -7072,13 +7072,13 @@ V - Co-operative</inlineHelpText>
         <fullName>EF_Additional_SAP_Nr__c</fullName>
         <description>E&amp;F CRM Project. Holds E&amp;F additional SAP number, that might not match the SAP number from other departments.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Temporary duplicate bill-to (4xxxx) SAP number</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
-        <precision>18</precision>
+        <length>20</length>
         <required>false</required>
-        <scale>0</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>Number</type>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -7087,12 +7087,11 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>E&amp;F AL_ID number</inlineHelpText>
         <label>E&amp;F Airline ID</label>
-        <precision>18</precision>
+        <length>12</length>
         <required>false</required>
-        <scale>0</scale>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>Number</type>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
