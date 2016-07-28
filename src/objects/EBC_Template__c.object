@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Hold the customer templates used in EBroadcast product</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Audience__c</fullName>
+        <description>Audience will impact the merged field used in the template</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Audience will impact the merged field used in the template</inlineHelpText>
+        <label>Audience</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Billing Account owning the Templates</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Billing Account owning the Templates</inlineHelpText>
+        <label>Billing Account</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>EBC Templates</relationshipLabel>
+        <relationshipName>EBC_Templates</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Is_Reusable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox is checked if the template if only for a particular campaign and is not reusable</description>
+        <externalId>false</externalId>
+        <label>Is Reusable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>No_of_attachments__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>This field will hold the total number of attachments against a template</description>
+        <externalId>false</externalId>
+        <label>No. of attachments</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Template_Name__c</fullName>
+        <description>Name of the saved template</description>
+        <externalId>false</externalId>
+        <label>Template Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Template_Ready__c</fullName>
+        <description>This is the visual representation to say if a template is complete. 1) if attachment count is less than 1 for any template, it indicates a problem. 2) if its a global template and the attachment count is not 2, then that indicates a problem</description>
+        <externalId>false</externalId>
+        <formula>if( No_of_attachments__c &lt; 1, IMAGE(&apos;/img/msg_icons/error24.png&apos;, &apos;A template needs an attachment&apos;),  IF(  RecordType.DeveloperName  == &apos;Global&apos; &amp;&amp; No_of_attachments__c &lt; 2 , IMAGE(&apos;/img/msg_icons/error24.png&apos;, &apos;A global template needs 2 attachments&apos;), IMAGE(&apos;/img/msg_icons/confirm24.png&apos;, &apos;&apos;)))</formula>
+        <label>Template Ready</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TypeOfTemplate__c</fullName>
+        <description>Use this text field to store the type of template i.e Black &amp; white or color templates or HTML content templates. This is needed as we need to know what options/blocks we need to show for the template.</description>
+        <externalId>false</externalId>
+        <label>TypeOfTemplate</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>lastCounter__c</fullName>
+        <description>this is a readonly field which stores what the last id counter value was for a template so that when a user edits an existing template, any new blocks will continue from that id</description>
+        <externalId>false</externalId>
+        <label>lastCounter</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>EBC Template</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Is_Reusable__c</columns>
+        <columns>NAME</columns>
+        <columns>Template_Name__c</columns>
+        <columns>TypeOfTemplate__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>No_of_attachments__c</columns>
+        <columns>Template_Ready__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>EBC Template Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Templates</pluralLabel>
+    <recordTypes>
+        <fullName>Global</fullName>
+        <active>true</active>
+        <description>These are global templates</description>
+        <label>Global</label>
+        <picklistValues>
+            <picklist>Audience__c</picklist>
+            <values>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>User_Templates</fullName>
+        <active>true</active>
+        <description>Use this for user created templates</description>
+        <label>User Templates</label>
+        <picklistValues>
+            <picklist>Audience__c</picklist>
+            <values>
+                <fullName>Agency</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
