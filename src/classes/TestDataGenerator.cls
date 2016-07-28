@@ -1164,7 +1164,7 @@ public with sharing class TestDataGenerator
             Web_Service_Username__c = 'WS_SFORCE'
         ));
 
-        database.insert(lst,false);
+        insert lst;
     }
 
 

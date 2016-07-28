@@ -21,7 +21,7 @@
       <apex:outputText value="Sorry for the inconvenience. Please try again later."/>     
       
    
-    If you have any questions please contact us at <a href="#" onclick="javascript:window.open('mailto:me@example.com', 500, 600);">globaldata@iata.org</a>
+    If you have any questions please contact us at <a href="#" onclick="javascript:window.open('mailto:globaldata@iata.org', 500, 600);">globaldata@iata.org</a>
    </apex:define>
  </center>
 </apex:page>
