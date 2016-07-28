@@ -107,7 +107,7 @@ public class Product_Sel extends Selector
         String query = String.format(
             'SELECT {0} ' +
             'FROM {1} ' + 
-            'WHERE SAP_Material_Number__c != null ', 
+            'WHERE SAP_Material_Number__c != null AND (Display_to_ECommerce__c = true || Display_to_Direct_Sales__c = true) ', 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
