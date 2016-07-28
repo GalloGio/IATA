@@ -394,6 +394,7 @@
             <picklistValues>
                 <fullName>Coding</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Directories</fullName>
@@ -412,7 +413,7 @@
             <picklistValues>
                 <fullName>Exchange-Rates</fullName>
                 <default>false</default>
-                <controllingFieldValues>data-and-statistics</controllingFieldValues>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Finance</fullName>
@@ -432,6 +433,7 @@
             <picklistValues>
                 <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger</fullName>
@@ -451,6 +453,7 @@
             <picklistValues>
                 <fullName>Scheduling</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Security</fullName>
@@ -465,14 +468,17 @@
             <picklistValues>
                 <fullName>Tax-Data</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Travel-Agency-Data</fullName>
                 <default>false</default>
+                <controllingFieldValues>data-and-statistics</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>User-Charges</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
