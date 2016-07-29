@@ -190,22 +190,16 @@
 										</div>
                                        
                                         <!--       
- <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" />    
-                                                
-                                        <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
-                                        <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
-                                        <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="actListOutputPanel" />
-                                        <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
-                                        <apex:commandButton id="testButton" value="testButton" action="{!refreshTable}" rerender="actListOutputPanel" />
-										-->
+ 										-->
 										<div class="tab-pane is-open" id="pane-1-b">
                                             <apex:form id="dataTableForm">
                                              
-                                                <apex:actionFunction name="refreshTableX" action="{!refreshTable}"  />    
-                                                <apex:actionFunction name="refresh" action="{!doNothing}"  />
-                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}"  />
-                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}"  reRender="dataTableForm"/>
-                                                <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}"   />
+                                                <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" />    
+                                                <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
+                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
+                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="dataTableForm" />
+                                                <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
+                                                                        
                                                 <div class="table-container data-table-container">
                                                     
                                                         
@@ -216,12 +210,7 @@
                                                                         <div id="divactivitytypesort">
                                                                         <a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                                                        
-                                                                         <!--
-																		<apex:outputLink value="#" id="activitytypesort" styleClass="js-toggle-type-sort" >Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></apex:outputLink>
-                                                                        
-                                                                        <a class="js-toggle-type-sort" href="#" >Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                                       -->
-                                                                        														
+                                                                                                           														
                                                                         <div class="type-sort" id="actPopUpMenu">
                                                                             
                                                                             <ul class="list">
@@ -332,19 +321,17 @@
          -->													
                                                             </tbody>
                                                         </table>  
-                                                    <script>
-                                                    $j = jQuery.noConflict();
-                                                    //var test=$j("#divactivitytypesort").html();
-                                                    //$j("#divactivitytypesort").html(test.replace("<a>test</a>","<a class='js-toggle-type-sort' id='activitytypesort' >Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i></a>"));   
-                                                    // $j('#activitytypesort').unbind();
-                                                    $j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
-                                                    $j('#activitytypesort').on('click',  function(event) {
-                                                        event.preventDefault();
-                                                        event.stopPropagation();
-                                                        $j(this).toggleClass(className.open).next().toggleClass(className.open);
-                                                     });
-                                                        
-                                                    //alert(test);
+                                                   		 <script>
+                                                            $j = jQuery.noConflict();
+                                                            
+                                                            $j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
+                                                            $j('#activitytypesort').on('click',  function(event) {
+                                                                event.preventDefault();
+                                                                event.stopPropagation();
+                                                                $j(this).toggleClass(className.open).next().toggleClass(className.open);
+                                                             });
+                                                                
+
                                                         </script> 
                                                   
                                                         <div class="pagination">
