@@ -5,6 +5,12 @@
  * as the access to the rate plan, etc.
  **/
 public virtual class vfIECEBC_Controller {
+	
+	// contants for zqu__ProductRatePlan.EBC_SubscriptionType__c
+	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
+	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';
+	
+	
 	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
 	
@@ -88,26 +94,11 @@ public virtual class vfIECEBC_Controller {
 	// assumptions:
 	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
 	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
-	public List<zqu__ProductRatePlanCharge__c> productRatePlanChargeUpgradeList {
+  	public List<zqu__ProductRatePlanCharge__c> productRatePlanChargeUpgradeList {
 		get{
 			if (productRatePlanChargeUpgradeList==null) 
 			{
-				List<Swap_Configuration__c> swapConfigList = [select Id
-						//, Source_Product_Rate_Plan_Information__c
-						//, Target_Product_Rate_Plan_Information__c
-						//, Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
-						, Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
-					from Swap_Configuration__c
-					where Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c = : productRatePlan.Id
-						and Relationship_Type__c = 'Upgrade'
-					order by Target_Product_Rate_Plan_Information__c
-					];
-				
-				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
-				for (Swap_Configuration__c swapConf : swapConfigList)
-				{
-					targetProductRatePlanIdSet.add(swapConf.Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
-				}
+				Set<Id> targetProductRatePlanIdSet = productRatePlanIdUpgradeSet;
 				
 				productRatePlanChargeUpgradeList = [select Id, Name
 						, zqu__Description__c
@@ -130,7 +121,66 @@ public virtual class vfIECEBC_Controller {
 	} // productRatePlanChargeUpgradeList getter/setter.
 	
 	
-/*
+	// =======================================================================-
+	// productRatePlanChargeUpgradeList return the list of zqu__ProductRatePlanCharge__c available as the upgrade destination from the current ProductRatePlan
+	// i.e. to which the current Product Rate Plan can be directly upgraded
+	// assumptions:
+	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
+	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
+	public Set<Id> productRatePlanIdUpgradeSet {
+		get{
+			if (productRatePlanIdUpgradeSet==null) 
+			{
+				List<Swap_Configuration__c> swapConfigList = [select Id
+						//, Source_Product_Rate_Plan_Information__c
+						//, Target_Product_Rate_Plan_Information__c
+						//, Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+						, Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+					from Swap_Configuration__c
+					where Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c = : productRatePlan.Id
+						and Relationship_Type__c = 'Upgrade'
+					order by Target_Product_Rate_Plan_Information__c
+					];
+				
+				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
+				for (Swap_Configuration__c swapConf : swapConfigList)
+				{
+					targetProductRatePlanIdSet.add(swapConf.Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
+				}
+				productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
+			} // end if
+			
+			return productRatePlanIdUpgradeSet;
+		} // end getter
+		private set;
+	} // productRatePlanChargeUpgradeList getter/setter.
+	
+	
+	// ========================================================================
+	// supporting variables for the Payment Confirmation sections in Manage Account
+	// Used in Rate Plan and Add On tabs
+	// ========================================================================
+	public Decimal totalNewPurchaseAmount {get;set;}
+	public List<zqu__ProductRatePlanCharge__c> newPurchasedRatePlanChargeList {get;set;}
+	// recalc newPurchasedRatePlanChargeList and totalNewPurchaseAmount
+	public void updateNewPurchasedRatePlanChargeList( List<zqu__ProductRatePlanCharge__c> prpcList )
+	{
+		newPurchasedRatePlanChargeList = new List<zqu__ProductRatePlanCharge__c>();
+		totalNewPurchaseAmount = 0;
+		if (prpcList != null)
+		{
+			for (zqu__ProductRatePlanCharge__c prpc : prpcList )
+			{
+				newPurchasedRatePlanChargeList.add(prpc);
+				totalNewPurchaseAmount += prpc.zqu__ListPrice__c;
+			}
+		}
+	} // end of updateNewPurchasedRatePlanChargeList
+	
+	
+	
+	
+	/*
 	// ========================================================================
 	// potential additional requirements (these methods were needed before)
 	// the following might be added to vfIECEBC_Controller:

@@ -5,19 +5,24 @@
   * Description:
   *  - For a given Billing Account (Zuora__CustomerAccount)/User display the current EBroadcast Rate Plan options
   *  - Personalized upgrade suggestion
-  *  - Selected plan will be stored in newSubscriptionProductCharge, currently not saved
+  *  - The user interaction will result in selectedProductRatePlan and newPurchasedRatePlanChargeList currently not saved
   *   
   * History: 
-  *  - 20160720-sl: initial working version
+  *  - 20160729-sl: initial working version
   */
 
 
 public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 {
-	
 	// ======================================================================== 
-	// selectedProductRatePlanCharge & newSubscriptionProductCharge will be the result of user interaction
-	public zqu__ProductRatePlanCharge__c selectedProductRatePlanCharge {get;private set;}
+	// zqu_ProductRatePlanCharge__c.zqu__Type__c picklist options
+	private static final String RATE_PLAN_CHARGE_TYPE_ONE_TIME = 'One-Time';
+	private static final String RATE_PLAN_CHARGE_TYPE_RECURRING = 'Recurring';
+	private static final String RATE_PLAN_CHARGE_TYPE_USAGE = 'Usage';
+		
+	// ======================================================================== 
+	// selectedProductRatePlan & newSubscriptionProductCharge will be the result of user interaction
+	public zqu__ProductRatePlan__c selectedProductRatePlan {get;private set;}
 	public Zuora__SubscriptionProductCharge__c newSubscriptionProductCharge {get;private set;}
 	
 	
@@ -25,7 +30,8 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 	// constructor
 	public vfIECEBC_AccountRatePlan()
 	{
-		selectedProductRatePlanCharge = null; // nothing is selected at the beginning 
+		selectedProductRatePlan = null; // nothing is selected at the beginning 
+		updateNewPurchasedRatePlanChargeList(null); // reset newPurchaseRatePlanChargeList and totalNewPurchaseAmount
 		newSubscriptionProductCharge = new Zuora__SubscriptionProductCharge__c( Name ='--none--'
 			, Zuora__EffectiveStartDate__c = Date.today()
 			, Zuora__EffectiveEndDate__c = Date.today().addYears(1)
@@ -35,91 +41,221 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 	} // vfIECEBC_AccountRatePlan constructor
 	
 	
+	// ========================================================================
+	// visualforce display flags below
 	// =======================================================================-
 	// showUpgradeOption flag is used to turn on/off the rate plan upgrade options 
 	public Boolean showUpgradeOption{
 		get {
-			return (productRatePlanChargeUpgradeList.size() > 0 );
+			return (productRatePlanUpgradeList.size() > 0 );
 		}
 	}
 	
 	// =======================================================================-
+	// allowSelectpgrade flag is used to turn on/off 
+	public Boolean allowSelectUpgrade{
+		get {
+			// disable if Product Rate Plan Subscription Type is not Pay-as-you-go
+			return ( productRatePlan.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO ) ;
+		}
+	}
+	
+	// ======================================================================== 
+	// showSubscriptionEnd flag is used to turn on/off the end of subscription info 
+	public Boolean showSubscriptionEnd{
+		get{
+			return (productRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO);
+		}
+	}
+	// =======================================================================-
 	// showPaymentConfirmation flag is used to turn on/off the payment confirmation
 	public Boolean showPaymentConfirmation{
- 		get {
+		get {
 			return (newSubscriptionProductCharge.Product_Rate_Plan_Charge__c != null) ;
+		}
+	}
+	
+	// =======================================================================-
+	// showPurchasedSelection flag is used to turn on/off the payment selection messages
+	public Boolean showPurchasedSelectionMessage{
+		get {
+			return (selectedProductRatePlan == null);
 		}
 	}
 	
 	
 	// ========================================================================
 	// updateRatePlanChargeSelection is done by calling selectRatePlanCharge from VfP
-	public Integer selectedRatePlanChargeIndex {get;set;} // used as parameter for calling selectRatePlanCharge
-	// selectRatePlanCharge updates the RatePlanCharge selection and flags, called from VfP
-	// input parameter: selectedRatePlanChargeIndex
-	// initial model: work by toggling the selected flag pointed by the selectedRatePlanChargeIndex
-	public void selectRatePlanCharge()
+	//public Integer selectedRatePlanChargeIndex {get;set;} // used as parameter for calling selectRatePlanCharge
+	public Integer selectedRatePlanIndex {get;set;} // used as parameter for calling selectRatePlan
+	// selectRatePlan updates the RatePlanCharge selection and flags, called from VfP
+	// input parameter: selectedRatePlanIndex
+	// initial model: work by toggling the selected flag pointed by the selectedRatePlanhargeIndex
+	public void selectRatePlan()
 	{
-		if (productRatePlanChargeWrapperUpgradeList[selectedRatePlanChargeIndex].selected == true)
-		{ // unselect previously selected plan
-			productRatePlanChargeWrapperUpgradeList[selectedRatePlanChargeIndex].selected = false;
-			selectedProductRatePlanCharge = null;
-			newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = null;
-			newSubscriptionProductCharge.Zuora__Price__c = 0;
-		} else { // select that plan
-			productRatePlanChargeWrapperUpgradeList[selectedRatePlanChargeIndex].selected = true;
-			for (Integer i=0;i<productRatePlanChargeWrapperUpgradeList.size();i++)
-			{
-				if (i != selectedRatePlanChargeIndex) {
-					productRatePlanChargeWrapperUpgradeList[i].selected = false;
-				}
-			}
-			selectedProductRatePlanCharge = productRatePlanChargeWrapperUpgradeList[selectedRatePlanChargeIndex].productRatePlanCharge;
-			newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = selectedProductRatePlanCharge.Id;
-			newSubscriptionProductCharge.Zuora__Price__c = selectedProductRatePlanCharge.zqu__ListPrice__c;
-		}
+		List<zqu__ProductRatePlanCharge__c> prpcList = new List<zqu__ProductRatePlanCharge__c>();
+		updateNewPurchasedRatePlanChargeList(null); // reset newPurchaseRatePlanChargeList and totalNewPurchaseAmount
+		selectedProductRatePlan = null; // reset the selection
+		newSubscriptionProductCharge.Zuora__Price__c = 0;
+		newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = null;
 		
-		//System.debug( 'vfIECEBC_AccountRatePlan.selectRatePlanCharge: newSubscriptionProductCharge= '+ newSubscriptionProductCharge + '\n' + showPaymentConfirmation);
-	} // end of selectRatePlanCharge
+		for (ProductRatePlanWrapper prpw : productRatePlanWrapperUpgradeList)
+		{
+			if ( prpw.index==selectedRatePlanIndex
+				 && prpw.selected )
+			{ // select that plan
+				selectedProductRatePlan = prpw.productRatePlan;
+				newSubscriptionProductCharge.Zuora__Price__c = prpw.amountOneTime + prpw.amountRecurring;
+				
+				prpcList = selectedProductRatePlan.zqu__R00N40000001mFVKEA2__r;
+				if ( prpcList != null & prpcList.size()>0)
+				{
+					newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = prpcList[0].Id; // get the first product rate plan charge
+				}
+				updateNewPurchasedRatePlanChargeList(prpcList);
+			} else {
+				// clear other rate plan options' flags
+				prpw.selected = false;
+			}
+		} // end for prpw
+	} // end of selectRatePlan
 	
 	
 	// ========================================================================
-	// productRatePlanUpgradeWrapperList is used to display and select the product rate plan charge
-	public List<ProductRatePlanChargeWrapper> productRatePlanChargeWrapperUpgradeList {
+	// productRatePlanWrapperUpgradeList is used to display and select the product rate plan 
+	public List<ProductRatePlanWrapper> productRatePlanWrapperUpgradeList {
 		get{
-			if (productRatePlanChargeWrapperUpgradeList == null) 
+			if (productRatePlanWrapperUpgradeList == null) 
 			{
-				List<ProductRatePlanChargeWrapper> prpcWrapperList = new List<ProductRatePlanChargeWrapper>();
-				
-				for (zqu__ProductRatePlanCharge__c prpc : productRatePlanChargeUpgradeList)
-				{
-					ProductRatePlanChargeWrapper prpcWrapper = new ProductRatePlanChargeWrapper(prpc);
-					prpcWrapper.selected = false;
-					prpcWrapper.index = prpcWrapperList.size();
-					prpcWrapperList.add(prpcWrapper);
+				List<ProductRatePlanWrapper> prpWrapperList = new List<ProductRatePlanWrapper>();
+				for (zqu__ProductRatePlan__c prp : productRatePlanUpgradeList)
+				{ // this is assumed to be disjoint with the current one
+					ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp);
+					prpWrapper.selected = false;
+					prpWrapper.index = prpWrapperList.size();
+					prpWrapperList.add(prpWrapper);
 				}
-				productRatePlanChargeWrapperUpgradeList = prpcWrapperList;
+				productRatePlanWrapperUpgradeList = prpWrapperList;
 			}
-			return productRatePlanChargeWrapperUpgradeList;
+			return productRatePlanWrapperUpgradeList;
 		}
 		set;
-	} // end of productRatePlanUpgradeWrapperList getter/setter
-	
+	} // end of productRatePlanWrapperUpgradeList getter/setter
 	
 	
 	// ========================================================================
-	// wrapper class for ProductRatePlanCharge
-	// needed checking the selected flag and index.
-	public class ProductRatePlanChargeWrapper{
+	// productRatePlanUpgradeList returns the sorted list of zqu__ProductRatePlan
+	// that are included in productRatePlanIdUpgradeSet and has Product_Rate_Plan_Information
+	private List<zqu__ProductRatePlan__c> productRatePlanUpgradeList {
+		get{
+			if (productRatePlanUpgradeList == null) 
+			{
+				Map<Id,zqu__ProductRatePlan__c> prodRatePlanIdMap = new Map<Id,zqu__ProductRatePlan__c>([select Id, Name
+					, zqu__Description__c
+					, zqu__EffectiveEndDate__c
+					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
+						from zqu__R00N40000001mFVKEA2__r order by Id)
+						//from zqu__ProductRatePlanCharge__r order by Id)
+					, (select Id, Name, Product_Rate_Plan__c, Long_Description__c
+							//, Short_Description__c, Order__c
+						from Product_Rate_Plan_Informations__r order by Order__c, Id)
+					
+					from zqu__ProductRatePlan__c 
+					where  Id in : productRatePlanIdUpgradeSet
+					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
+					limit 100]);
+				
+				// this is for ordering the product rate plan based on Product_Rate_Plan_Information__c.order
+				List<Product_Rate_Plan_Information__c> orderedProdRatePlanInfoList = [select Id
+					, Product_Rate_Plan__c
+					from Product_Rate_Plan_Information__c 
+                    where Product_Rate_Plan__c in : productRatePlanIdUpgradeSet
+					order  by Order__c, Id];
+				List<zqu__ProductRatePlan__c> sortedProductRatePlanList = new List<zqu__ProductRatePlan__c>();
+				Set<Id> includedPrpIdSet = new Set<Id>(); // this to prevent listing Product Rate Plan multiple times
+				for (Product_Rate_Plan_Information__c prpi : orderedProdRatePlanInfoList)
+				{
+					zqu__ProductRatePlan__c prp = prodRatePlanIdMap.get(prpi.Product_Rate_Plan__c);
+					if (prp!=null && !includedPrpIdSet.contains(prp.Id)) 
+					{
+						sortedProductRatePlanList.add(prp);
+						includedPrpIdSet.add(prp.Id);
+					}
+				}
+				
+				productRatePlanUpgradeList =  sortedProductRatePlanList;
+			} // end if null
+			return productRatePlanUpgradeList;
+		}
+		set;
+	} // end of productRatePlanUpgradeList getter/setter
+	
+	
+	// ========================================================================
+	// inner wrapper class definition below
+	// ------------------------------------------------------------------------
+	
+	// ========================================================================
+	// wrapper class for ProductRatePlan and related objects
+	// needed for checking the selected flag and index, and also the descriptions
+	public class ProductRatePlanWrapper{
 		public Integer index {get;set;} // array index
 		public zqu__ProductRatePlanCharge__c productRatePlanCharge {get;private set;}
 		public Boolean selected {get;set;}
+		public String name {get; private set;}
+		// public String description {get; private set;}
+		public List<String> descriptions {get; private set;}
+		public Decimal amount {get; set;} // amount
+		public Decimal amountOneTime  {get;set;}
+		public Decimal amountRecurring {get;set;}
 		
-		public ProductRatePlanChargeWrapper(zqu__ProductRatePlanCharge__c prpc)
+		public Zuora__SubscriptionProductCharge__c subscriptionProductCharge {get; private set;}
+		public zqu__ProductRatePlan__c productRatePlan {get; private set;}
+		//public Date subscriptionEndDate {get;set;}
+		
+		// this constructor is used for the rate plan selection to choose
+		// in case there is more than one zqu__ProductRatePlanCharge__c, the amount will be the sum
+		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp)
 		{
-			productRatePlanCharge = prpc;
+			productRatePlan = prp;
+			
 			selected = false;
-		}
+			name = prp.Name;
+			
+			// set the price amount based on ProductRatePlanCharge
+			amountOneTime = 0;
+			amountRecurring = 0;
+			//for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__ProductRatePlanCharge__r)
+			for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__R00N40000001mFVKEA2__r)
+			{
+				if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_ONE_TIME) {
+					amountOneTime += prpc.zqu__ListPrice__c;
+				} else if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_RECURRING ) {
+					amountRecurring += prpc.zqu__ListPrice__c; 
+				} 
+				//description += '(prpc: ' + prp.zqu__Description__c + ' )';
+				productRatePlanCharge = prpc;
+			}
+			amount = amountOneTime + amountRecurring;
+			
+			// collect the description from Product_Rate_Plan_Information__c
+			descriptions = new List<String>();
+			for (Product_Rate_Plan_Information__c prpi : prp.Product_Rate_Plan_Informations__r)
+			{
+				if (prpi.Long_Description__c != null) { 
+					List<String> descList = prpi.Long_Description__c.split( '<br>');
+					for (String descr : descList)
+					{
+						String cleanDesc = descr.replaceAll('<[^>]+>',' ').trim(); // remove html tagging
+						if (cleanDesc.length() >0) {
+							descriptions.add(cleanDesc);
+						}
+					} // end for descr
+				}
+			} // end for prpi
+		} // ProductRatePlanWrapper
 		
-	} // end class ProductRatePlanChargeWrapper
+		
+	} // end class ProductRatePlanWrapper
+	
 } // end of class vfIECEBC_AccountRatePlan
