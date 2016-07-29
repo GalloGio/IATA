@@ -3312,28 +3312,6 @@ The product will only appear on the Online Store when the date entered in this f
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>GDP_All_Products</fullName>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>IEC_Product_Information__c</columns>
-        <columns>IEC_Parent_Product__c</columns>
-        <columns>IEC_Product_Rate_Plan_Information__c</columns>
-        <columns>SAP_Material_Number__c</columns>
-        <columns>Sell_through_eCommerce__c</columns>
-        <columns>IEC_Cart_Option__c</columns>
-        <columns>Display_to_ECommerce__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>PRODUCT2.FAMILY</field>
-            <operation>equals</operation>
-            <value>GDP</value>
-        </filters>
-        <label>GDP/All Products</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>GDP_All_Products1</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
