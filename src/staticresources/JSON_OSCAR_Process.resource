@@ -997,11 +997,11 @@
           "Actions": [],
           "Automations": [{
             "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_succeeded"
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_succeeded"
           },
           {
             "Status": "Failed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step15_failed"
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_failed"
           }],
           "DisplayFields": [
           "Validation_Status__c",
