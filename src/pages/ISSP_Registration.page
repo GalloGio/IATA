@@ -36,8 +36,21 @@
               if (val == "true") { 
                    setTimeout(function(){
                          var url = document.URL;
-                         var first = url.split(".com/");
-                         var redir = first[0] + ".com/" + '{!urlredirect}'; 
+                         var first;
+                         var domain;
+                         if (url.indexOf(".org/")!=-1) { 
+                            domain = ".org/";
+                         }
+                         else if (url.indexOf(".com/")!=-1) {
+                            domain = ".com/";
+                         }
+                         //alert("domain: " +domain);
+                         
+                         first=url.split(domain);
+                        
+                         var redir = first[0] + domain + '{!urlredirect}'; 
+                         if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                            redir = "IEC_Login";
                          location.href = redir;
                          },
                    5000);
