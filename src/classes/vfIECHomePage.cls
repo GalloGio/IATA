@@ -76,9 +76,10 @@ public with sharing class vfIECHomePage extends IECPageController {
 	}
 	
 	public PageReference NavigateTo() {
-		Pagereference pgRef = new PageReference(sPageName);
+		Pagereference pgRef = new PageReference('https://store.iata.org/' + sPageName);
         pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(sProductCode));
 		pgRef.setRedirect(true);
+		System.Debug('FRANK URL:' + pgRef);
 		return pgRef;
 	}
 }

@@ -4,7 +4,8 @@ global class Attachment_Sch implements Schedulable {
 	//runs every day at 1 AM. '0 0 1 * * ?'
 	global static String scheduleDeleteSAPInvoices(String CRON_EXP) {
         Attachment_Sch attachmentSch = new Attachment_Sch();
-        return System.schedule('SAP Invoices to delete', CRON_EXP, attachmentSch);
+        String jobName = (Test.isRunningTest())? 'Test_'+Datetime.now().time() : 'SAP Invoices to delete';
+        return System.schedule(jobName, CRON_EXP, attachmentSch);
     }
     
 	global void execute(SchedulableContext sc) {

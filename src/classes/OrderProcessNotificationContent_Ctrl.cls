@@ -9,6 +9,7 @@ public class OrderProcessNotificationContent_Ctrl {
 	public String sEmail				{get;set;}
 	public String sOrderNumber			{get;set;}
 	public String paymentTypeMsg		{get;set;}
+	public Order ord{get;set;}
 
 	public List<OrderItem> getOrderItems(){
 		// Order ID is required
@@ -18,6 +19,7 @@ public class OrderProcessNotificationContent_Ctrl {
 		List<Order> lstOrder = Order_Sel.getOrdersById(new Set<Id> { idOrder });
 		
 		if (!lstOrder.isEmpty()) {
+			ord = lstOrder[0];
 			sContactName = lstOrder[0].BillToContact_Name__c;
 			sAccountName = lstOrder[0].BillToAccount_Name__c;
 			sEmail = lstOrder[0].BillToContact_Email__c;

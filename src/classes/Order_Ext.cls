@@ -28,7 +28,7 @@ global class Order_Ext
     //--- Order & OrderItems 
     public List<OrderItem_DTO> orderProducts{get;set;}
     public List<SAPInvoice_DTO> orderInvoices{get;set;}
-    public transient List<SalesOrderProduct_DTO> availableProducts{get;set;}
+    public List<SalesOrderProduct_DTO> availableProducts{get;set;}
     public List<SalesOrderProduct_DTO> selectedProducts{get;set;}
     public String selectedProductsIdsStr{get;set;}
     public String selectedProductsNumbers{get;set;}
@@ -399,6 +399,8 @@ global class Order_Ext
         {
             if(ep.PriceInfo != null)
             {
+                ep.ProductDesc = '';
+                
                 SalesOrderProduct_DTO ap = new SalesOrderProduct_DTO();
                     ap.ecomProduct = ep; 
                     ap.selected = false; //-- De-select by default 
@@ -1944,7 +1946,8 @@ void buildPaymentTypePicklist() {
                         if(iecCustomer != null)
                             customerDto = Customer_DTO.getCustomerByUser(iecCustomer.Id);
 
-                        if (customerDto != null && customerDto.canPayByICH())
+                        //if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
+                        if (customerDto != null)
                         {
                             if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, TotalAmount))
                                 listPaymentType.add(new SelectOption(payType, mapPaymentType.get(payType)));

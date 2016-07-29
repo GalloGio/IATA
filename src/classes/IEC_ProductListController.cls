@@ -23,7 +23,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public String selectedCustomerType{get;set;}
 
     //Products available
-    public transient List<EComProduct_DTO> allProducts;
+    public List<EComProduct_DTO> allProducts; 
+    
+    
     private String searchCondition;
     public Integer totalNumberOfPages{get;set;}
     public List<Integer> pages{get;set;}
@@ -123,7 +125,8 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     private void queryProducts()
     {
         //-- Fetch ecom Products
-        allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
+        if(allProducts == null)
+            allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
 
         for(EComProduct_DTO prod : allProducts)
         {

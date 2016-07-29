@@ -1610,7 +1610,7 @@ public with sharing class TestDataGenerator
         );
 
         if(doInsert)
-            insert eventRelease;
+            Database.insert(eventRelease, false);
 
         return eventRelease;
     }
