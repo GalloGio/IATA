@@ -218,7 +218,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.name = 'COR';
                         changeCode.reasonCode = '91';
                         changeCode.memoText = 'Correction';
-                        changeCode.reasonDesc  = 'ACCREDITED';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
                         changeCode.status  = '9';
 
                         Account acct = new Account(Id = updatedOscar.Account__c);
