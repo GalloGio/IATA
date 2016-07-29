@@ -235,8 +235,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     //Need to apply change of ownership to all the accounts in herarchy
                     Set<Id> allHierarchyAccountIds = new Set<Id>();
 
-                                        //AMS-1671
-                    if(accountHierarchyRelationships.isEmpty()){// it means that the account does not have an hierarchy yet generated.
+
+                    //AMS-1671
+                    if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
                         allHierarchyAccountIds.add(updatedOscar.Account__c);
                     }else{
                         for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
@@ -265,6 +266,22 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
 
         }
+    }
+
+    private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+
+        if(accountHierarchyRelationships.isEmpty())
+            return true;
+
+        if(accountHierarchyRelationships.values().isEmpty())
+            return true;
+
+        for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
+            if(!agency.isEmpty())
+                return false;
+        }
+
+        return true;
     }
 
 
