@@ -1475,6 +1475,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IEC_SAP_Material_Number_Unformatted__c</fullName>
+        <description>IEC - SAP Material Number without leading zeroes</description>
+        <externalId>false</externalId>
+        <formula>IF(ISNUMBER(SAP_Material_Number__c), TEXT(VALUE(SAP_Material_Number__c)), SAP_Material_Number__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Number Unformatted</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IEC_SAP_ProfitCenter__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(IEC_Parent_Product__c), Product_Section__c, IEC_Parent_Product__r.Product_Section__c)</formula>
