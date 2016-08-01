@@ -125,8 +125,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     private void queryProducts()
     {
         //-- Fetch ecom Products
-        if(allProducts == null)
-            allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
+        allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
 
         for(EComProduct_DTO prod : allProducts)
         {
@@ -251,7 +250,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                     searchCondition += ' AND ' + field + ' IN ('+s+') ';
                 }                
             }
-        }   
+        } 
+
+        System.debug('searchCondition::'+searchCondition);  
 
         queryProducts();
         refreshDisplayedProducts();
