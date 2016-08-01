@@ -45,13 +45,11 @@
 					var obsConfig = { attributes: true, attributeOldValue: true};
 					observer.observe($div[0],  obsConfig);
 				}
-            function SetFilter()
-            {
-               
-                
-                //$j("#divactivitytypesort").html("Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i>");    
-                //alert("hello");
-                
+				
+            	function SetFilter()
+				{
+                    //$j("#divactivitytypesort").html("Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i>");    
+                    //alert("hello");
                 }
 			</script>
 			
@@ -79,6 +77,8 @@
 							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
                             <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li> 
+							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
+							</li>
 						</ul>
 						
 						<div class="tab-content">
@@ -91,12 +91,16 @@
 										
 										<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
 										<apex:ActionRegion rendered="{!showSubscriptionEnd}">
-											<p>This cost per email is guaranteed until the end of your subscription <strong>{!subscription.Zuora__SubscriptionEndDate__c}</strong></p>
+											<p>This cost per email is guaranteed until the end of your subscription 
+                                                <strong>
+                                                    <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
+                                                </strong>
+                                            </p>
 										</apex:ActionRegion>
 										<div class="alert default">
 											<apex:ActionRegion rendered="{!showSuggestionMessage}">
 												<p>Lower your cost per email as low as USD $0.05 with our Pre-Paid rate plans.</p>
-												<a href="#">See our rate plans</a>
+												<a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">See our rate plans</a>
 											</apex:ActionRegion>
 										</div>
 									</div>
@@ -189,27 +193,23 @@
 											
 										</div>
                                        
-                                        <!--       
- 										-->
 										<div class="tab-pane is-open" id="pane-1-b">
                                             <apex:form id="dataTableForm">
-                                             
+<!--
                                                 <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" />    
                                                 <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
-                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
-                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="dataTableForm" />
                                                 <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
+                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
+-->
+                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="dataTableForm" />
                                                                         
                                                 <div class="table-container data-table-container">
-                                                    
-                                                        
                                                         <table class="data-table manage-lists">
                                                             <thead>
                                                                 <tr>
                                                                     <th class="activity-type" >
                                                                         <div id="divactivitytypesort">
                                                                         <a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                                       
                                                                                                            														
                                                                         <div class="type-sort" id="actPopUpMenu">
                                                                             
@@ -217,7 +217,6 @@
         
                                                                                 <apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="actSel">
                                                                                     <li class="checkbox-box">
-                                                                                        <!-- -->																					
                                                                                         <div class="custom-user-input checkbox">
                                                                                             <apex:inputCheckbox id="chckActType" value="{!actSel.selected}" styleClass="user-input checkbox"                                                                                                       
                                                                                                 onclick="refreshActivityTable();"
@@ -228,40 +227,6 @@
                                                                                         <label class="input-label" for="{!$Component.chckActType}">{!actSel.activityType}</label>
                                                                                     </li>
                                                                                 </apex:repeat>
-                                                                                
-        
-        <!--
-                                                                                        <div class="custom-user-input checkbox">
-                                                                                            <input class="user-input checkbox" type="checkbox" id="actType{!act.index}" data-target-row="js-sort-type-adjustments" checked="" />
-                                                                                            <label class="custom-checkbox" for="actType{!act.index}"><i class="icon"></i></label>
-                                                                                        </div>
-                                                                                        <label class="input-label" for="actType{!act.index}">{!act.activityType}</label>
-        
-        
-        
-        
-                                                                                <li class="checkbox-box">
-                                                                                    <div class="custom-user-input checkbox">
-                                                                                        <input class="user-input checkbox" type="checkbox" id="type-1" data-target-row="js-sort-type-adjustments" checked="" />
-                                                                                        <label class="custom-checkbox" for="type-1"><i class="icon"></i></label>
-                                                                                    </div>
-                                                                                    <label class="input-label" for="type-1">Adjustments</label>
-                                                                                </li>
-                                                                                <li class="checkbox-box">
-                                                                                    <div class="custom-user-input checkbox">
-                                                                                        <input class="user-input checkbox" type="checkbox" id="type-2" data-target-row="js-sort-type-credits" checked="" />
-                                                                                        <label class="custom-checkbox" for="type-2"><i class="icon"></i></label>
-                                                                                    </div>
-                                                                                    <label class="input-label" for="type-2">Credits</label>
-                                                                                </li>
-                                                                                <li class="checkbox-box">
-                                                                                    <div class="custom-user-input checkbox">
-                                                                                        <input class="user-input checkbox" type="checkbox" id="type-3" data-target-row="js-sort-type-sends" checked="" />
-                                                                                        <label class="custom-checkbox" for="type-3"><i class="icon"></i></label>
-                                                                                    </div>
-                                                                                    <label class="input-label" for="type-3">Sends</label>
-                                                                                </li>
-        -->
                                                                             </ul>
                                                                         </div>
                                                                           </div>
@@ -273,15 +238,6 @@
                                                                     <th class="total-count">Total Count</th>
                                                                 </tr>
                                                                 
-                                                                <!-- 
-                                                                {!NOW()} | <br/>
-                                                                activityTypeWrapperList: {!activityTypeWrapperList} 
-                                                                <br/>
-                                                                activityList: {!activityList}
-                                                                <br/>
-                                                                page: {!page}
-                                                                 -->
-                                                             
                                                              </thead>       
                                                              <tbody>
                                                              <apex:repeat id="actListTable" value="{!activityList}" var="act">
@@ -296,29 +252,6 @@
                                                                     </tr>
                                                                 </apex:repeat>
                                                                 
-        <!--														
-                                                                <tr class="js-sort-type-adjustments">
-                                                                    <td class="activity-type">Adjustments</td>
-                                                                    <td class="name">Campaign 2</td>
-                                                                    <td class="id">C-00000011</td>
-                                                                    <td class="activity-date">01 Mar. 2016</td>
-                                                                    <td class="total-count">5 email(s)</td>
-                                                                </tr>
-                                                                <tr class="js-sort-type-sends">
-                                                                    <td class="activity-type">Sends</td>
-                                                                    <td class="name">Campaign 3</td>
-                                                                    <td class="id">C-00000011</td>
-                                                                    <td class="activity-date">01 Mar. 2016</td>
-                                                                    <td class="total-count">5 email(s)</td>
-                                                                </tr>
-                                                                <tr class="js-sort-type-sends">
-                                                                    <td class="activity-type">Sends</td>
-                                                                    <td class="name">Campaign 4</td>
-                                                                    <td class="id">C-00000011</td>
-                                                                    <td class="activity-date">01 Mar. 2016</td>
-                                                                    <td class="total-count">5 email(s)</td>
-                                                                </tr>
-         -->													
                                                             </tbody>
                                                         </table>  
                                                    		 <script>
@@ -339,11 +272,6 @@
                                                                 Page
                                                                 <div class="custom-user-input select">
                                                                     <i class="icon angle-down"></i>
-                                                                    <!-- 
-                                                                    <select class="user-input select">
-                                                                        <option value="{!page}">{!pageOptions}</option>
-                                                                    </select>
-                                                                     -->
                                                                     
                                                                     <apex:selectList value="{!page}" styleClass="user-input select" size="1">
                                                                         <apex:selectOptions value="{!pageOptions}"/>

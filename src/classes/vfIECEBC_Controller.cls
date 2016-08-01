@@ -175,6 +175,12 @@ public virtual class vfIECEBC_Controller {
 				totalNewPurchaseAmount += prpc.zqu__ListPrice__c;
 			}
 		}
+        
+        // this is a workaround to display the 'please select rate plan', in case there is no selected rate plan, put a dummy one for the message
+        if (newPurchasedRatePlanChargeList.size() == 0) {
+            zqu__ProductRatePlanCharge__c dummyRatePlan = new zqu__ProductRatePlanCharge__c( Id=null, Name='Please select a plan', zqu__ListPrice__c=0);
+            newPurchasedRatePlanChargeList.add(dummyRatePlan);
+        }
 	} // end of updateNewPurchasedRatePlanChargeList
 	
 	

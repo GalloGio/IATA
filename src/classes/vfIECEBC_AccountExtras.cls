@@ -74,7 +74,8 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 	// showPurchasedSelection flag is used to turn on/off the payment confirmation message
 	public Boolean showPurchasedSelectionMessage{
 		get {
-			return (selectedProductRatePlan == null);
+			//return (selectedProductRatePlan == null);
+			return (newPurchasedRatePlanChargeList.size() == 0);
 		}
 	}
 	

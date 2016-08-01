@@ -22,6 +22,8 @@
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
+							</li>
 						</ul>
 						
 						<div class="tab-content">
@@ -56,7 +58,7 @@
 										</apex:form>
 											
 										<apex:form id="addOnSelectionForm" rendered="{!showAddOnSelection}">
-											<apex:actionFunction action="{!selectRatePlanAddon}" name="updateAddonSelection" rerender="paymentConfirmationOutputPanel">
+											<apex:actionFunction action="{!selectRatePlanAddon}" name="updateAddonSelection" rerender="paymentConfirmationForm,paymentConfirmationOutputPanel">
 												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
 											</apex:actionFunction>
 											
@@ -110,15 +112,15 @@
 -->
 											</ul>
 										</apex:form>
-										
+									
 										<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
+
 									</div>
 									
-									<!-- payment confirmation section on the right side-->
-									<div class="columns sub-container payment-confirmation">
-										<apex:form id="paymentConfirmationForm" rendered="{!showAddOnSelection}">
-											<apex:outputPanel id="paymentConfirmationOutputPanel">
-												<div class="is-sticky-confirmation fixed" style="width: 501px;">
+
+										   <!-- payment confirmation section on the right side-->
+									        <div class="columns sub-container payment-confirmation" id="paymentconfirmation">
+                                                <div class="is-sticky-confirmation">
 													<div class="wrapper">
 														<h2 class="section-title">Payment Confirmation</h2>
 														<div class="table-container">
@@ -129,6 +131,10 @@
 																			<th>
 																				<strong>Please select the add on plan!</strong>
 																			</th>
+																			<td class="price">
+																				<strong>
+																				</strong>
+																			</td>
 																		</tr>
 																	</apex:outputPanel>
 																	<apex:repeat id="purchaseItemRepeat" value="{!productRatePlanWrapperAddonNewPurchaseList}" var="purchaseItem">
@@ -157,19 +163,25 @@
 																</tbody>
 															</table>
 														</div>
+                              
+                                                        <apex:form id="paymentConfirmationForm" rendered="{!showAddOnSelection}">
+											            <apex:outputPanel id="paymentConfirmationOutputPanel">
+										 
 														<div class="footer-actions">
 															<ul class="list actions">
 																<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountExtras)}">Cancel</a></li>
 																<li><a class="button" href="#">Submit payment</a></li>
 															</ul>
 														</div>
+                                                        </apex:outputPanel>
+														</apex:form>
 													</div>
 												</div>
-											</apex:outputPanel>
-										</apex:form>
+                                            </div>
+                                            
 									</div>
 									
-								</div>
+								
 							</div>
 							
 						</div>
