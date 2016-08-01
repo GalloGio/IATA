@@ -2165,6 +2165,18 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <fullName>Download</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>C-Data File</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Floating License</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>C-Web Application</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -7224,6 +7236,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>C-Data File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C-Web Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -7261,6 +7281,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Excel Spreadsheet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Floating License</fullName>
                 <default>false</default>
             </values>
             <values>
