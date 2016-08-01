@@ -806,6 +806,8 @@ public without sharing class AMS_Utils {
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
+
+
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
@@ -832,13 +834,45 @@ public without sharing class AMS_Utils {
 
             }
 
+
+
+
+
             if (!accountsToUpdate.isEmpty()) {
                 update accountsToUpdate;
             }
+
             if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
 
+
         }
+
+        ID caseRTComunication = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+
+        List<Case> cases = [SELECT Id, Account.Location_Type__c, Account.Category__c, OSCAR__c, Oscar__r.Id, Type_of_customer__c from CASE where OSCAR__c = :oscars and recordTypeId = :caseRTComunication];
+
+        Set<Case> casesToUpdate = new Set<Case>();
+
+        for(Case oscarCase : cases){
+           
+           System.debug('DNG 001 -> ' + 'Location_type:' + oscarCase.Account.Location_Type__c + ' Category:' + oscarCase.Account.Category__c);
+
+            String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscarCase.Account.Location_Type__c,oscarCase.Account.Category__c);
+
+            if(typeOfCustomer != null && typeOfCustomer != oscarCase.Type_of_customer__c){
+                oscarCase.Type_of_customer__c = typeOfCustomer;
+                casesToUpdate.add(oscarCase);
+            }
+
+
+        }
+
+        if (!casesToUpdate.isEmpty()){
+            List<Case> caseListToUpdate = new List<Case>(casesToUpdate);
+            update caseListToUpdate;
+        }
+
     }
 
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
