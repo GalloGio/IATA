@@ -400,6 +400,10 @@ global class Order_Ext
             if(ep.PriceInfo != null)
             {
                 ep.ProductDesc = '';
+                ep.ImageName = '';
+                ep.Keywords = '';
+                ep.ProductShortDesc = '';
+              
                 
                 SalesOrderProduct_DTO ap = new SalesOrderProduct_DTO();
                     ap.ecomProduct = ep; 
@@ -568,7 +572,7 @@ global class Order_Ext
 
     public void saveProduct()
     {    
-    	system.debug('in saveProduct');
+        system.debug('in saveProduct');
         Boolean refreshItems = false;
         String result = null;
 
@@ -616,9 +620,9 @@ global class Order_Ext
 
     public PageReference saveSelectedProducts()
     {
-    	system.debug('selectedProducts ' + selectedProducts);
-    	system.debug('vfOrder ' + vfOrder);
-    	
+        system.debug('selectedProducts ' + selectedProducts);
+        system.debug('vfOrder ' + vfOrder);
+        
         Order_Svc.addItemsToOrder(selectedProducts, vfOrder);
         initOrderItems();
 
@@ -748,14 +752,20 @@ public static Location__c getLocationById(String locationId){
 
 //Get the billTo location addresses
 public List<SelectOption> getBillToLocations(){
-    List<SelectOption> locations = getLocationItems(vfOrder.BillToContactId,IECConstants.BILLTO);
+    List<SelectOption> locations = new List<SelectOption>();
+    if(vfOrder!= null && vfOrder.BillToContactId != null)
+        locations = getLocationItems(vfOrder.BillToContactId,IECConstants.BILLTO);
+
     if(locations.isEmpty()){ billToLocation = new Location__c(); }
     return locations;
 }
 
 //Get the shipTo location addresses
 public List<SelectOption> getShipToLocations(){
-    List<SelectOption> locations = getLocationItems(vfOrder.ShipToContactId, IECConstants.SHIPTO);
+    List<SelectOption> locations = new List<SelectOption>();
+    if(vfOrder!= null && vfOrder.ShipToContactId != null)
+        locations = getLocationItems(vfOrder.ShipToContactId, IECConstants.SHIPTO);
+
     if(locations.isEmpty()){ shipToLocation = new Location__c(); }
     return locations;
 }
@@ -1016,7 +1026,7 @@ public void saveAddressOrderReadOnly(){
         }
 
     }
-	
+    
     vfOrder.BillToContact_VAT_Number__c = currentVatNumber;
     //Update the current Order
     if(vfOrder.Id != null){
@@ -1526,8 +1536,8 @@ public void changeBillToState() {
         Check if allow payment and prepare for payment
 ****************************************************************************************************/
 public void payOrder_Prepare() {
-	
-	//Validate BillToLocation & ShipToLocation are valid in SAP 
+    
+    //Validate BillToLocation & ShipToLocation are valid in SAP 
     List<Location__c> locations = new Location_Sel().getLocations(new Set<Id>{
         vfOrder.BillTo_Location__c,
         vfOrder.ShipTo_Location__c  
@@ -1537,12 +1547,12 @@ public void payOrder_Prepare() {
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errNoProduct')));
     else if (Order_Svc.needToGetSAP_Freight_Tax(vfOrder.Id))
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('errMissShipTax')));
-	else if(locations == null || locations.size() != 2)
+    else if(locations == null || locations.size() != 2)
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Your Billing or Shipping are not properly set. Please update your customer informations'));
     else if(locations != null && locations.size() > 0)
         for(Location__c loc : locations)
             if(String.isBlank(loc.SAP_Id__c))
-            	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'An error occur when trying to process your payment. Please call the customer service'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'An error occur when trying to process your payment. Please call the customer service'));
     
     else {
         isPaying = true;
@@ -1721,8 +1731,8 @@ public PageReference saveOrder() {
     //get the BillTo Location
     List<Location__c> locations = new Location_Sel().getLocations(new set<Id>{vfOrder.BillTo_Location__c});
     System.debug('vfOrder.BillTo_Location__c::'+vfOrder.BillTo_Location__c);
-	
-	system.debug('locations ' + locations);
+    
+    system.debug('locations ' + locations);
     if(locations != null && locations.size() > 0)
         billToLocation = locations[0];
         
@@ -1780,8 +1790,8 @@ public PageReference saveOrder() {
             newLocation.Active__c   =   true;
             newLocation.Account__c  =   billToLocation.Account__c;
             newLocation.Contact__c  =   billToLocation.Contact__c;
-            newLocation.Phone__c 	= 	billToLocation.Phone__c;
-            newLocation.Email__c 	= 	billToLocation.Email__c;
+            newLocation.Phone__c    =   billToLocation.Phone__c;
+            newLocation.Email__c    =   billToLocation.Email__c;
             newLocation.VAT_Number__c = billToLocation.VAT_Number__c;
 
             //Insert the new Shiping location
@@ -1996,76 +2006,76 @@ void buildPaymentTypePicklist() {
         initOrderItems();
     }
     
-	/****************************************************************************************************
+    /****************************************************************************************************
         Created by CGI, Samy Saied 2016-01-11
             Checks Order for compliance with countries
     ****************************************************************************************************/
     void CheckOrderCompliance() {
          // Determine product compliance with countries
         if (!orderProducts.isEmpty()) {
-        	// Build list of product Ids
-        	List<Id> lstProduct2Id = new List<Id>();
-        	for (OrderItem_DTO oi : orderProducts) {
-        		lstProduct2Id.add(oi.productId);
-        	}
-        	
-        	// Build list of order countries
-        	Set<String> setOrderCountryCode = new Set<String>();
+            // Build list of product Ids
+            List<Id> lstProduct2Id = new List<Id>();
+            for (OrderItem_DTO oi : orderProducts) {
+                lstProduct2Id.add(oi.productId);
+            }
+            
+            // Build list of order countries
+            Set<String> setOrderCountryCode = new Set<String>();
 
-        	if (!String.isBlank(vfOrder.BillingCountryCode__c)) setOrderCountryCode.add(vfOrder.BillingCountryCode__c);
-        	if (!String.isBlank(vfOrder.ShippingCountryCode__c)) setOrderCountryCode.add(vfOrder.ShippingCountryCode__c);
+            if (!String.isBlank(vfOrder.BillingCountryCode__c)) setOrderCountryCode.add(vfOrder.BillingCountryCode__c);
+            if (!String.isBlank(vfOrder.ShippingCountryCode__c)) setOrderCountryCode.add(vfOrder.ShippingCountryCode__c);
 
-        	// Check compliance
-        	mapProduct2Id_Compliance = Product_Svc.IsProductAndCountryCompliant(lstProduct2Id, setOrderCountryCode);
-        	
-        	bAreProductsCompliant = true;
-        	
-	        if (!mapProduct2Id_Compliance.isEmpty()) {
-	        	for (Id idProduct : mapProduct2Id_Compliance.keySet()) {
-	        		// display error message with product name/number
-	        		for (OrderItem_DTO oi : orderProducts) {
-	        			if (idProduct == oi.productId) {
-			        		if (!mapProduct2Id_Compliance.get(idProduct)) {
-			        			bAreProductsCompliant = false;
-								ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, String.format(labels.get('msgWarnProductNotCompliant'), new String[]{oi.productName, oi.productCode})));
-	        				}
-							break;
-	        			}
-	        		}
-	        	}
-			}
+            // Check compliance
+            mapProduct2Id_Compliance = Product_Svc.IsProductAndCountryCompliant(lstProduct2Id, setOrderCountryCode);
+            
+            bAreProductsCompliant = true;
+            
+            if (!mapProduct2Id_Compliance.isEmpty()) {
+                for (Id idProduct : mapProduct2Id_Compliance.keySet()) {
+                    // display error message with product name/number
+                    for (OrderItem_DTO oi : orderProducts) {
+                        if (idProduct == oi.productId) {
+                            if (!mapProduct2Id_Compliance.get(idProduct)) {
+                                bAreProductsCompliant = false;
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, String.format(labels.get('msgWarnProductNotCompliant'), new String[]{oi.productName, oi.productCode})));
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
         }
     } //*** end of "CheckOrderCompliance"
     
     // Allows CSR to resend download link for a specific order item to the customer
     public PageReference resendOrderItemLink()
     {
-    	// Retrieve the OrderItemId to regenerate the link for
+        // Retrieve the OrderItemId to regenerate the link for
         String orderItemId = ApexPages.currentPage().getParameters().get('orderItemId');
 
-		// Create a save point to be able to rollback in case of failure
-    	Savepoint sp = Database.setSavepoint();
+        // Create a save point to be able to rollback in case of failure
+        Savepoint sp = Database.setSavepoint();
 
-    	try {
-	        if (!String.isBlank(orderItemId)) {
-		        // First reset the download counter
-		        update new OrderItem(Id = orderItemId, AWS_download_link__c = null);
-				
-				// Now send the email
-				Mail_DTO clientMail = new Mail_DTO();
-				clientMail.whatId = orderItemId;
-				clientMail.templateId = Utility.getTextSetting('OrderItem sold templateId for client');
-				clientMail.recipients = new list<String> {vfOrder.ShipToContact_Email__c};
-				Utility.sendBulkEmails(new List<Mail_DTO> {clientMail});
+        try {
+            if (!String.isBlank(orderItemId)) {
+                // First reset the download counter
+                update new OrderItem(Id = orderItemId, AWS_download_link__c = null);
+                
+                // Now send the email
+                Mail_DTO clientMail = new Mail_DTO();
+                clientMail.whatId = orderItemId;
+                clientMail.templateId = Utility.getTextSetting('OrderItem sold templateId for client');
+                clientMail.recipients = new list<String> {vfOrder.ShipToContact_Email__c};
+                Utility.sendBulkEmails(new List<Mail_DTO> {clientMail});
 
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, Label.IEC_Confirm_EmailSent));
-			}
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, Label.IEC_Confirm_EmailSent));
+            }
         }
         catch (Exception e) {
-	        ApexPages.addMessages(e);
-	        Database.rollback(sp);
-	        return null;
-    	}
+            ApexPages.addMessages(e);
+            Database.rollback(sp);
+            return null;
+        }
 
         return null;
     }
