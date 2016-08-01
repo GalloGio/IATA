@@ -653,6 +653,66 @@ public with sharing class AMS_OSCAR_Automation
         }
     }
     
+     //OK
+    public class AMS_OSCAR_Step25_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step25_succeeded.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+                    oscar.Dossier_Validation__c = Date.today();
+                    oscar.Validation_result__c = 'Passed';
+                    oscar.Status__c = 'Pending Approval';
+                    res = True;
+                }
+            }catch(Exception e){
+                res = False;
+            }
+            return res;
+        }
+    }
+
+    //OK
+    public class AMS_OSCAR_Step25_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step25_failed.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+                    oscar.Dossier_Validation__c = Date.today();
+                    oscar.Validation_result__c = 'Failed';
+                    oscar.Status__c = 'On Hold_Internal';
+                    res = True;
+                }
+            }catch(Exception e){
+                res = False;
+            }
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step25_notApplicable implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step25_notApplicable.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+                    oscar.Validation_result__c = 'N/A';
+                    res = True;
+                }
+            }catch(Exception e){
+                res = False;
+            }
+            return res;
+        }
+    }
+
     //OK
     public class AMS_OSCAR_Step2_succeeded implements IClassFactory
     {

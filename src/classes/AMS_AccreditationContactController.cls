@@ -142,7 +142,9 @@ public with sharing class AMS_AccreditationContactController {
     
     public void addEmptyCompanyRow()
     {
-        this.accountWrapper.add(new AccountWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = AcCompanyRt, Last_Name__c = '-', Phone__c = '-'), new Account(), '', true));
+        Id rt = this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.AGENCYCHANGES || this.aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR ? AcCurrentCompanyRt : AcCompanyRt;
+        
+        this.accountWrapper.add(new AccountWrapper(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = this.aoa.Id, RecordTypeId = rt, Last_Name__c = '-', Phone__c = '-'), new Account(), '', true));
     }
     
     public PageReference removeFromAcList()
