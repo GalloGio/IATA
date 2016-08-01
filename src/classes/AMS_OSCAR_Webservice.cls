@@ -134,7 +134,7 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 Date currentDate = Date.today();
-                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = oscarCommCase.Reason1__c + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
+                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = oscarCommCase.Reason1__c + ' - ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
                                          Financial_Review_Type__c = 'New applications', IFAP_Financial_Year__c = String.valueOf(currentDate.year()),
                                          Deadline_Date__c = currentDate+5, ContactId = ifapContact[0].Id, OSCAR__c = oscar[0].Id, Financial_Assessment_requested__c = currentDate);
 
