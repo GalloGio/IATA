@@ -76,11 +76,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Mega_Menu__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Available_for_Subscription__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -3329,6 +3324,8 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>Sell_through_eCommerce__c</columns>
         <columns>IEC_Cart_Option__c</columns>
         <columns>Display_to_ECommerce__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -7537,10 +7534,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>PAX</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
