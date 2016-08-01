@@ -393,7 +393,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 if (currentApprovals.size() > 0)
                     AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
             }
-            updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
+            if(updatedOscar.Process__c.equals(AMS_Utils.AGENCYCHANGES))
+                updatedOscar.STEP25__c = updatedOscar.Validation_Status__c;
+            else
+                updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }
 
     }
