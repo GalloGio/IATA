@@ -3993,7 +3993,27 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exchange-Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance-and-Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forecasts-and-Statistic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4009,7 +4029,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Safety-and-Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards-and-Recommended-Practices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel-Agency-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User-Charges</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7939,6 +7983,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Coding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Directories</fullName>
                 <default>false</default>
             </values>
@@ -7947,7 +7995,27 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exchange-Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance-and-Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forecasts-and-Statistic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7963,7 +8031,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Safety-and-Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards-and-Recommended-Practices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel-Agency-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User-Charges</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
