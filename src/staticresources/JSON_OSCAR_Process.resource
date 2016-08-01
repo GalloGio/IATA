@@ -848,6 +848,10 @@
             "FunctionName": "performAML",
             "ActionLabel": "AMS_OSCAR_Action4",
             "args": ["oscarid"]
+          },{
+            "FunctionName": "checkAccountHierarchy",
+            "ActionLabel": "AMS_OSCAR_Action6",
+            "args": ["oscarid"]
           }],
           "Automations": [{
             "Status": "Passed",
