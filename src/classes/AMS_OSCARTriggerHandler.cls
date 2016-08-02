@@ -643,7 +643,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//When performing change of shareholding all active hierarchy agencies must be selected
-		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) {
+		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) {
 			System.debug('Agencies Affected: ' + agenciesToMigrate);
 			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
 			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts))
