@@ -5,6 +5,7 @@ public class AMS_AccountHierarchySelectionController {
 	// ***********************************
 
 	private ApexPages.StandardController stdController;
+	private Account mainAccount;
 
 	private String oscarId{
 		get{
@@ -14,6 +15,7 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
+
 	private Set<String> oscarFields{
 		get{
 			if(oscarFields == null){
@@ -22,6 +24,7 @@ public class AMS_AccountHierarchySelectionController {
 					, 'Type_of_change__c'
 					, 'AMS_Target_Agency__c'
 					, 'Change_of_location_type_behavior__c'
+					, 'STEP6__c'
 				};
 			}
 			return oscarFields;
@@ -59,19 +62,26 @@ public class AMS_AccountHierarchySelectionController {
 			notes = new Set<String>();
 
 			if(oscar.Type_of_Change__c != null){
-				//can't use contains() because 'Location' is found on 'Location type'
-				for(String value : oscar.Type_of_Change__c.split(';')){
-					String v = value.trim();
-					if(v == 'Legal status' || v == 'Name' || v == 'VMFR') notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
-					if(v == 'Location' || v == 'Location with inspection') notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
-					if(v == 'Location type') notes.add('Change of location type support only the selection of the main agency. It will be swapped with its parent or moved to the same level as the parent, according to the behavior selected');
-					if(v == 'Ownership to IATA Agent') notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
-					if(v == 'Ownership to non-IATA Agent') notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
-					if(v == 'Major Shareholding' || v == 'Minor Shareholding') notes.add('Change of shareholding must be applied to all the hierarchy');
-				}
+				
+				if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME) || tocList.contains(AMS_Utils.VFMR)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
+				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
+				if(tocList.contains(AMS_Utils.LOCATION_TYPE)) notes.add('Change of location type support only the selection of the main agency. It will be swapped with its parent or moved to the same level as the parent, according to the behavior selected');
+				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) notes.add('Change of ownership to IATA will move all the agencies selected under the target agency');
+				if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) notes.add('Change of ownership to non IATA will transform the main agency into the new HO. All the other agencies will keep their location type and will be put under the new HO');
+				if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) notes.add('Change of shareholding must be applied to all the hierarchy');
 			}
 
 			return notes;
+		}
+		set;
+	}
+
+	private Map<String, Boolean> errorChecks{
+		get{
+			if(errorChecks == null){
+				errorChecks = new Map<String, Boolean>();
+			}
+			return errorChecks;
 		}
 		set;
 	}
@@ -85,6 +95,25 @@ public class AMS_AccountHierarchySelectionController {
 				}
 			}
 			return processDetails;
+		}
+		set;
+	}
+
+	private Set<String> tocList{
+		get{
+			tocList = new Set<String>();
+
+			if(oscar.Type_of_Change__c != null) tocList.addAll(oscar.Type_of_change__c.split(';'));
+
+			return tocList;
+		}
+		set;
+	}
+
+	private Set<Id> hierarchyAccounts{
+		get{
+			if(hierarchyAccounts == null) hierarchyAccounts = new Set<Id>();
+			return hierarchyAccounts;
 		}
 		set;
 	}
@@ -128,10 +157,8 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			if(oscar.Type_of_Change__c != null){
 
-				//can't use contains() because 'Location' is found on 'Location type'
-				for(String value : oscar.Type_of_Change__c.split(';')){
-					if(value.trim() == 'Location' || value.trim() == 'Ownership to IATA Agent') return true;
-				}
+				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) return true;
+				if(tocList.contains(AMS_Utils.LOCATION) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
 			}
 			
 			oscar.AMS_Target_Agency__c = null;
@@ -144,10 +171,7 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			if(oscar.Type_of_Change__c != null){
 
-				//can't use contains() because 'Location' is found on 'Location type'
-				for(String value : oscar.Type_of_Change__c.split(';')){
-					if(value.trim() == 'Location type') return true;
-				}
+				if(tocList.contains(AMS_Utils.LOCATION_TYPE)) return true;
 			}
 			oscar.Change_of_location_type_behavior__c = null;
 			return false;
@@ -217,9 +241,145 @@ public class AMS_AccountHierarchySelectionController {
 		return result;
 	}
 
-	public Boolean performValidations(){
-		//do something
-		ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.INFO, 'something happened '));
+	private Map<String, String> errorMessages{
+		get{
+			if(errorMessages == null){
+				errorMessages = new Map<String, String>();
+
+				errorMessages.put(
+					AMS_Utils.LOCATION,
+					'For change of location, the field '+Schema.AMS_OSCAR__c.fields.AMS_Target_Agency__c.getDescribe().getLabel()+', if filled, should contain a link to the HO or a BR in the current hierarchy'
+				);
+
+				errorMessages.put(
+					AMS_Utils.LOCATION_TYPE,
+					'For change of location type, only one account can be selected'
+				);
+
+				errorMessages.put(
+					AMS_Utils.OWNERSHIP_IATA,
+					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO which cannot be part of this hierarchy'
+				);
+
+				errorMessages.put(
+					AMS_Utils.MAJ_SHAREHOLDING,
+					'For change of shareholding, all the hierarchy must be selected'
+				);
+
+				errorMessages.put(
+					AMS_Utils.MIN_SHAREHOLDING,
+					'For change of shareholding, all the hierarchy must be selected'
+				);
+
+				errorMessages.put(
+					'Partial Migration With HO',
+					'For change of ownership (to IATA and non IATA), the analyst cannot select HO and only part of the active agencies'
+				);
+			}
+			return errorMessages;
+		}
+		set;
+	}
+
+	private Boolean performValidations(){
+
+		//clear error checks
+		errorChecks = null;
+
+		//loop through all hierarchy checking for errors (or clearing them)
+
+		Boolean ownershipMainHO;
+		Boolean ownershipAgenciesNotSelected;
+
+		if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
+			ownershipMainHO = false;
+			ownershipAgenciesNotSelected = false;
+		}
+
+		if(tocList.contains(AMS_Utils.LOCATION)) errorChecks.put(AMS_Utils.LOCATION, true);
+
+		for(HierarchyItem hi : hierarchy){
+			
+			if(tocList.contains(AMS_Utils.LOCATION_TYPE) && hi.selected){
+				errorChecks.put(AMS_Utils.LOCATION_TYPE, true);
+			}
+
+			if(oscar.AMS_Target_Agency__c == hi.acc.Id){
+				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
+				if(hi.acc.Location_Type__c == AMS_Utils.BR || hi.acc.Location_Type__c == AMS_Utils.HO){
+					errorChecks.put(AMS_Utils.LOCATION, false);
+				}
+			}
+
+			if(tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) && !hi.selected && !hi.main){
+				errorChecks.put(AMS_Utils.MAJ_SHAREHOLDING, true);
+			}
+
+			if(tocList.contains(AMS_Utils.MIN_SHAREHOLDING) && !hi.selected && !hi.main){
+				errorChecks.put(AMS_Utils.MIN_SHAREHOLDING, true);
+			}
+
+			if(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
+				if((hi.main || hi.selected) && hi.acc.Location_Type__c == AMS_Utils.HO) ownershipMainHO = true;
+				if(!hi.selected && !hi.main) ownershipAgenciesNotSelected = true;
+			}
+			
+		}
+
+		if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) && !errorChecks.containsKey(AMS_Utils.OWNERSHIP_IATA)){
+			if(oscar.AMS_Target_Agency__c == null) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
+			else{
+				String targetLocationType = [SELECT Id, Location_Type__c FROM Account WHERE Id = :oscar.AMS_Target_Agency__c].Location_Type__c;
+				if(targetLocationType != AMS_Utils.HO) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
+			}
+		}
+
+		if(
+			(tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_IATA))
+			&& ownershipMainHO && ownershipAgenciesNotSelected
+		){
+			errorChecks.put('Partial Migration With HO', true);
+		}
+
+		//retrieve error messages
+		List<String> errors = new List<String>();
+
+		for(String error : errorChecks.keySet()){
+			if(errorChecks.get(error)) errors.add(errorMessages.get(error));
+		}
+
+		//display error messages and stop execution by short-circuiting the if on the save method
+		if(!errors.isEmpty()){
+			for(String error : errors) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, error));
+			return false;
+		}
+
+		return true;
+	}
+
+	private Boolean updateRelatedRecords() {
+
+		Savepoint sp = Database.setSavepoint();
+
+		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
+		for(HierarchyItem hi : hierarchy){
+			if(hi.selected && !hi.main){
+				newProcessHierarchy.add(new AMS_Process_Detail__c(Oscar__c = oscarId, Account__c = hi.acc.Id));
+			}
+		}
+
+		try{
+
+			if(!processDetails.isEmpty()) delete processDetails.values();
+			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
+			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication'].Id;
+			update new Case(Id = cId, AccountId = oscar.Account__c);
+		}catch(Exception e){
+			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+			Database.rollback(sp);
+
+			return false;
+		}
 
 		return true;
 	}
@@ -231,8 +391,14 @@ public class AMS_AccountHierarchySelectionController {
 
 	public void save(){
 		if(performValidations()){
-			stdController.save();
-			closeTab = true;
+			try {
+				stdController.save();
+
+				//must be after save, to pass validations on the details
+				if(updateRelatedRecords()) closeTab = true;
+			} catch(Exception e) {
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+			}
 		}
 	}
 
@@ -257,23 +423,32 @@ public class AMS_AccountHierarchySelectionController {
 			if(this.main){
 				for(HierarchyItem hi : controller.hierarchy){
 					System.debug(loggingLevel.Debug, '____ [cls AMS_AccountHierarchySelectionController - selectMain] (this == hi) - ' + (this == hi));
-					if(hi != this) hi.main = false;
+					if(hi != this && hi.main){
+						hi.main = false;
+						hi.selected = true;
+					}
 				}
-				this.selected = true;
-				controller.oscar.Account__c = this.acc.Id;
+				this.selected = false;
+				this.controller.mainAccount = this.acc;
+				this.controller.oscar.Account__c = this.acc.Id;
 			}
 		}
 
 		public HierarchyItem(AMS_AccountHierarchySelectionController c, Account a){
+			c.hierarchyAccounts.add(a.Id);
+
 			this.controller = c;
 			this.acc = a;
 
 			this.main = false;
 			this.selected = false;
 
-			if(a.Id == c.oscar.Account__c) this.main = true;
+			if(a.Id == c.oscar.Account__c){
+				this.main = true;
+				c.mainAccount = this.acc;
+			}
 			else if (c.processDetails.containsKey(a.Id)) {
-				this.main = false;
+				this.selected = true;
 			}
 		}
 	}

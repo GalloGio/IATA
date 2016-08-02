@@ -28,16 +28,14 @@
 		};
 	</script>
 	
-	<apex:form>
+	<apex:form styleClass="pos-relative">
 		<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!oscar.Account__r.Name}"/>
-		<apex:pageBlock>
-
-			<apex:pageMessages id="pageMessages"/>
+		<apex:pageBlock mode="edit" tabStyle="AMS_OSCAR__c">
 
 			<apex:panelGrid id="fields" columns="2">
 				<apex:pageBlockSection id="controlField" columns="1">
 					<apex:inputField value="{!oscar.Type_of_Change__c}">
-						<apex:actionSupport event="onchange" reRender="dependentFields, notes"/>
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes"/>
 					</apex:inputField>
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
@@ -52,58 +50,61 @@
 				</apex:dataList>
 			</apex:pageBlockSection>
 
+
 			<apex:pageBlockSection id="table" columns="1" title="Select Accounts" rendered="{!hierarchy.size > 0}">
-				<apex:outputPanel layout="block" styleClass="pos-relative">
-					<apex:pageBlockTable value="{!hierarchy}" var="hi"> 
-						
-						<apex:column headerValue="Main">
-							<apex:inputCheckbox html-data-group="main" value="{!hi.main}">
-								<apex:actionSupport event="onchange" action="{!hi.selectMain}" status="blockTable" reRender="table"/>
+
+				<apex:pageMessages id="pageMessages"/>
+
+				<apex:pageBlockTable value="{!hierarchy}" var="hi"> 
+					
+					<apex:column headerValue="Main">
+						<apex:inputCheckbox html-data-group="main" value="{!hi.main}">
+							<apex:actionSupport event="onchange" action="{!hi.selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+						</apex:inputCheckbox>
+					</apex:column>
+
+					<apex:column>
+						<apex:facet name="header">
+							<apex:inputCheckbox value="{!selectAll}">
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
 							</apex:inputCheckbox>
-						</apex:column>
-
-						<apex:column>
-							<apex:facet name="header">
-								<apex:inputCheckbox value="{!selectAll}">
-									<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockTable" reRender="table"/>
-								</apex:inputCheckbox>
-							</apex:facet>
-
-							<apex:inputCheckbox value="{!hi.selected}"/>
-						</apex:column>
-
-						<apex:repeat value="{!accountFieldList}" var="field">
-							<apex:column value="{!hi.acc[field]}"/>
-						</apex:repeat>
-					</apex:pageBlockTable>
-
-					<style>
-						.pos-relative{ position: relative; }
-						.loading-backdrop{ 
-							position: absolute; 
-							top: 0; 
-							bottom: 0; 
-							right: 0; 
-							left: 0; 
-							background: #FFF; 
-							opacity: 0.5; 
-						}
-						.loading-img{
-							position: absolute;
-							top: 50%;
-							left: 50%;
-							margin-top: -16px;
-							margin-left: -16px;
-		 				}
-					</style>
-					<apex:actionStatus id="blockTable">
-						<apex:facet name="start">								
-							<apex:outputPanel layout="block" styleClass="loading-backdrop">
-								<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
-							</apex:outputPanel>
 						</apex:facet>
-					</apex:actionStatus>
-				</apex:outputPanel>
+
+						<apex:inputCheckbox value="{!hi.selected}"/>
+					</apex:column>
+
+					<apex:repeat value="{!accountFieldList}" var="field">
+						<apex:column value="{!hi.acc[field]}"/>
+					</apex:repeat>
+				</apex:pageBlockTable>
+
+				<style>
+					.pos-relative{ position: relative; }
+					.loading-backdrop{ 
+						position: absolute; 
+						top: 0; 
+						bottom: 0; 
+						right: 0; 
+						left: 0; 
+						background: #FFF; 
+						opacity: 0.5; 
+					}
+					.loading-img{
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						margin-top: -16px;
+						margin-left: -16px;
+	 				}
+				</style>
+				<apex:actionStatus id="blockEditing">
+					<apex:facet name="start">
+						<apex:outputPanel layout="none">
+							<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+							<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom">
@@ -117,8 +118,8 @@
 					
 					<apex:facet name="stop">
 						<apex:outputPanel layout="none">
-							<apex:commandButton action="{!save}" oncomplete="logCLose({!closeTab}); {!IF(closeTab, 'closeTab();', '')}" status="blockButtons" value="{!$Label.Site.Save}" reRender="pageMessages"/>
-							<apex:commandButton action="{!cancel}" oncomplete="closeTab();" status="blocButtons" value="{!$Label.Site.Cancel}" immediate="true"/>
+							<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.Site.Save}" reRender="pageMessages"/>
+							<apex:commandButton onclick="closeTab();" status="blockEditing" value="{!$Label.Site.Cancel}" immediate="true"/>
 						</apex:outputPanel>
 					</apex:facet>
 				</apex:actionStatus>
