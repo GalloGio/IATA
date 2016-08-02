@@ -56,26 +56,26 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Billed_Account__c</fullName>
+        <fullName>Airline__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Billed Account</label>
+        <label>Airline</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Relationships (Billed Account)</relationshipLabel>
-        <relationshipName>EF_Relationships_Billed_Account</relationshipName>
+        <relationshipLabel>E&amp;F Relationships (Airline)</relationshipLabel>
+        <relationshipName>EF_Relationships_Airline</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Billing_Account__c</fullName>
+        <fullName>Client__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Billing Account</label>
+        <label>Client</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Relationships</relationshipLabel>
-        <relationshipName>EF_Relationships_Billing_Account</relationshipName>
+        <relationshipLabel>E&amp;F Relationships (Client)</relationshipLabel>
+        <relationshipName>EF_Relationships_Client</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -93,20 +93,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>EF_SIS_Location_ID__c</fullName>
-        <description>E&amp;F Project. Location ID to track locations from SIS. Text field can accpet values Main, and numbers from 1 to 99. 
-Val. Rule to check format.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>SIS Location ID just accepts values Main, and numbers from 1 to 99</inlineHelpText>
-        <label>E&amp;F SIS Location ID</label>
-        <length>4</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Invoice_Distribution_Method__c</fullName>
@@ -129,10 +115,79 @@ Val. Rule to check format.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Payment_Method_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+	ISPICKVAL(Payment_Method__c, &apos;Credit Card&apos;), &apos;1&apos;,
+	IF(
+		ISPICKVAL(Payment_Method__c, &apos;SPCR / SPDR&apos;), &apos;A&apos;,
+		IF(
+			ISPICKVAL(Payment_Method__c, &apos;ICH&apos;), &apos;I&apos;,
+			IF(
+				ISPICKVAL(Payment_Method__c, &apos;Bank transfer&apos;), &apos;T&apos;,
+				IF(
+					ISPICKVAL(Payment_Method__c, &apos;Virtual Account Payment&apos;), &apos;V&apos;,
+					IF(
+						ISPICKVAL(Payment_Method__c, &apos;ICCS payments&apos;), &apos;Y&apos;,
+						&apos;&apos;
+					)
+				)
+			)
+		)
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Method Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Payment_Method__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Terms_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+	ISPICKVAL(Payment_Terms__c, &apos;Payable immediately due net&apos;), &apos;0001&apos;,
+	IF(
+		ISPICKVAL(Payment_Terms__c, &apos;30 days after invoice date&apos;), &apos;0011&apos;,
+		IF(
+			ISPICKVAL(Payment_Terms__c, &apos;10 days after invoice date&apos;), &apos;0012&apos;,
+			IF(
+				ISPICKVAL(Payment_Terms__c, &apos;15 days after invoice date&apos;), &apos;0013&apos;,
+				IF(
+					ISPICKVAL(Payment_Terms__c, &apos;20 days after invoice date&apos;), &apos;0018&apos;,
+					IF(
+						ISPICKVAL(Payment_Terms__c, &apos;07 days after invoice date&apos;), &apos;Z007&apos;,
+						&apos;&apos;
+					)
+				)
+			)
+		)
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Terms Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Terms__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Payment_Terms</globalPicklist>
+        <label>Payment Terms</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>

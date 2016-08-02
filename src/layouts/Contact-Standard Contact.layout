@@ -679,6 +679,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>EF_Relationship__c</fields>
         <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
