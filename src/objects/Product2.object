@@ -138,7 +138,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Allow Email Renewal Notice</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -168,7 +168,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Available for Subscription</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -285,7 +285,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Applicable for shippable products only.</inlineHelpText>
         <label>Charge Shipping</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -1046,7 +1046,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -1744,7 +1744,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>IsNewRelease</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -2203,7 +2203,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
     </fields>
     <fields>
         <fullName>Name</fullName>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>Name_of_SME__c</fullName>
@@ -2296,7 +2296,7 @@ The product will only appear on the Online Store when the date entered in this f
         <externalId>false</externalId>
         <label>Post to Ecommerce Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -2793,7 +2793,7 @@ The product will only appear on the Online Store when the date entered in this f
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Recommended</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -2935,7 +2935,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>

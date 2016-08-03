@@ -275,7 +275,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 				
 				String urlParamMsg = (sibblingInCart) ? 'siblingInCart' : 'subscriptionAlreadyExist';
 
-				PageReference pageRef = new Pagereference('/iec/IEC_ShoppingCart?msg=' + urlParamMsg);
+				PageReference pageRef = new Pagereference('/IEC_ShoppingCart?msg=' + urlParamMsg);
 				pageRef.setRedirect(true);
 				return pageRef;
 

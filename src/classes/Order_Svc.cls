@@ -1505,8 +1505,8 @@ public without sharing class Order_Svc
                     subsRequestLists.add(subsRequest);
                     
                     //-- Wait 1 s 
-                    Integer start = System.Now().millisecond();
-                    while(System.Now().millisecond()< start+3000){}
+                    //Integer start = System.Now().millisecond();
+                    //while(System.Now().millisecond()< start+3000){}
                 }
             }
         }

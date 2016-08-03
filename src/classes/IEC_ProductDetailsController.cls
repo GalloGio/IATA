@@ -133,7 +133,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	        }
 	        else 
 	        {
-	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/iec/IEC_ShoppingCart');	        	
+	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');	        	
 	        }
 		}	
 		catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
