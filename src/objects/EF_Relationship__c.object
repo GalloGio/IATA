@@ -44,7 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
-    <allowInChatterGroups>true</allowInChatterGroups>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>InDevelopment</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -52,7 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -95,28 +95,26 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Invoice_Distribution_Method_Code__c</fullName>
+        <fullName>EF_Location_ID__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <formula>IF(
-	ISPICKVAL(Invoice_Distribution_Method__c, &apos;Electronic Via Platform&apos;), &apos;XBS4&apos;,
-	IF(
-		ISPICKVAL(Invoice_Distribution_Method__c, &apos;Electronic Via Email&apos;), &apos;XBE4&apos;,
-		IF(
-			ISPICKVAL(Invoice_Distribution_Method__c, &apos;Paper&apos;), &apos;XBP4&apos;,
-			IF(
-				ISPICKVAL(Invoice_Distribution_Method__c, &apos;No Invoice&apos;), &apos;XBN4&apos;,
-				&apos;&apos;
-			)
-		)
-	)
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Invoice Distribution Method Code</label>
+        <label>E&amp;F Location ID</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>EF_Related_Records__c.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Location</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>EF_Related_Records__c</referenceTo>
+        <relationshipLabel>E&amp;F Relationships</relationshipLabel>
+        <relationshipName>EF_LocationRelationships</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Invoice_Distribution_Method__c</fullName>
@@ -129,6 +127,7 @@
     </fields>
     <fields>
         <fullName>Location_Code__c</fullName>
+        <description>LDC. for me this field should be deleted</description>
         <externalId>false</externalId>
         <label>Location Code</label>
         <length>255</length>
