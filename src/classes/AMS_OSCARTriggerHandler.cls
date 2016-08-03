@@ -84,7 +84,7 @@ public class AMS_OSCARTriggerHandler {
 
 			if (oscar.Type_of_change__c <> oldMap.get(oscar.Id).Type_of_change__c || oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 				AMS_Utils.AgChangesConfig config = AMS_AgencyChangesConfigHelper.getSelectedTypeOfChangeCombinationConfig(oscar, configs);
-				if (config != null) {
+				if (config != null && config.config != null) {
 					List<String> notApplicableSteps = AMS_AgencyChangesConfigHelper.getNotApplicableSteps(config.config);
 					if (notApplicableSteps != null)
 						AMS_AgencyChangesConfigHelper.setNotApplicableSteps(notApplicableSteps, oscarStepsApiName, oscar);
@@ -643,7 +643,7 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//When performing change of shareholding all active hierarchy agencies must be selected
-		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING)) {
+		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) {
 			System.debug('Agencies Affected: ' + agenciesToMigrate);
 			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
 			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts))
