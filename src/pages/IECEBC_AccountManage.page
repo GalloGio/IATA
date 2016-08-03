@@ -17,7 +17,8 @@
 				$j = jQuery.noConflict();
 				
 				$j( document ).ready(function( $ ) {
-					//startObservingClassMutation();					
+					//startObservingClassMutation();	
+                    SetFilter();
 				});
 
 				// =========================================================================================
@@ -44,6 +45,14 @@
 					var obsConfig = { attributes: true, attributeOldValue: true};
 					observer.observe($div[0],  obsConfig);
 				}
+            function SetFilter()
+            {
+               
+                
+                //$j("#divactivitytypesort").html("Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i>");    
+                //alert("hello");
+                
+                }
 			</script>
 			
 		</apex:define>
@@ -68,7 +77,8 @@
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
-							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li> 
 						</ul>
 						
 						<div class="tab-content">
@@ -178,41 +188,55 @@
 											</div>
 											
 										</div>
+                                       
+                                        <!--       
+ <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" />    
+                                                
+                                        <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
+                                        <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
+                                        <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="actListOutputPanel" />
+                                        <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
+                                        <apex:commandButton id="testButton" value="testButton" action="{!refreshTable}" rerender="actListOutputPanel" />
+										-->
 										<div class="tab-pane is-open" id="pane-1-b">
                                             <apex:form id="dataTableForm">
-                                                <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" >
-                                                </apex:actionFunction>
-                                                
-                                                <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
-                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
-                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="actListOutputPanel" />
-                                                <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
-                                                
-                                                <apex:commandButton id="testButton" value="testButton" action="{!refreshTable}" rerender="actListOutputPanel" />
-                                                    
+                                             
+                                                <apex:actionFunction name="refreshTableX" action="{!refreshTable}"  />    
+                                                <apex:actionFunction name="refresh" action="{!doNothing}"  />
+                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}"  />
+                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}"  reRender="dataTableForm"/>
+                                                <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}"   />
                                                 <div class="table-container data-table-container">
-                                                    <apex:outputPanel id="actListOutputPanel" >
+                                                    
                                                         
                                                         <table class="data-table manage-lists">
-                                                            <tbody>
+                                                            <thead>
                                                                 <tr>
-                                                                    <th class="activity-type">
-                                                                    
-                                                                        <a class="js-toggle-type-sort" href="#">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                                                    <th class="activity-type" >
+                                                                        <div id="divactivitytypesort">
+                                                                        <a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                                                       
+                                                                         <!--
+																		<apex:outputLink value="#" id="activitytypesort" styleClass="js-toggle-type-sort" >Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></apex:outputLink>
+                                                                        
+                                                                        <a class="js-toggle-type-sort" href="#" >Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                                                       -->
+                                                                        														
                                                                         <div class="type-sort" id="actPopUpMenu">
+                                                                            
                                                                             <ul class="list">
         
-                                                                                <apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="act">
+                                                                                <apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="actSel">
                                                                                     <li class="checkbox-box">
                                                                                         <!-- -->																					
                                                                                         <div class="custom-user-input checkbox">
-                                                                                            <apex:inputCheckbox id="chckActType" value="{!act.selected}" styleClass="user-input checkbox" 
-                                                                                                                html-data-target-row="js-sort-type-adjustments" 
-                                                                                                                onclick="refreshActivityTable();"
-                                                                                                                />
+                                                                                            <apex:inputCheckbox id="chckActType" value="{!actSel.selected}" styleClass="user-input checkbox"                                                                                                       
+                                                                                                onclick="refreshActivityTable();"
+                                                                                                                
+                                                                                                 />
                                                                                             <label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
                                                                                         </div>
-                                                                                        <label class="input-label" for="{!$Component.chckActType}">{!act.activityType}</label>
+                                                                                        <label class="input-label" for="{!$Component.chckActType}">{!actSel.activityType}</label>
                                                                                     </li>
                                                                                 </apex:repeat>
                                                                                 
@@ -251,6 +275,7 @@
         -->
                                                                             </ul>
                                                                         </div>
+                                                                          </div>
                                                                     </th>
                                                                     
                                                                     <th class="activity-date">Activity Date/Time</th>
@@ -267,8 +292,10 @@
                                                                 <br/>
                                                                 page: {!page}
                                                                  -->
-                                                                    
-                                                                <apex:repeat id="actListTable" value="{!activityList}" var="act">
+                                                             
+                                                             </thead>       
+                                                             <tbody>
+                                                             <apex:repeat id="actListTable" value="{!activityList}" var="act">
                                                                     <tr class="js-sort-type-credits">
                                                                         <td class="activity-type">{!act.Activity_Type__c}</td>
                                                                         <td class="activity-date">
@@ -303,7 +330,23 @@
                                                                     <td class="total-count">5 email(s)</td>
                                                                 </tr>
          -->													
-                                                            </tbody></table>  
+                                                            </tbody>
+                                                        </table>  
+                                                    <script>
+                                                    $j = jQuery.noConflict();
+                                                    //var test=$j("#divactivitytypesort").html();
+                                                    //$j("#divactivitytypesort").html(test.replace("<a>test</a>","<a class='js-toggle-type-sort' id='activitytypesort' >Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i></a>"));   
+                                                    // $j('#activitytypesort').unbind();
+                                                    $j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
+                                                    $j('#activitytypesort').on('click',  function(event) {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        $j(this).toggleClass(className.open).next().toggleClass(className.open);
+                                                     });
+                                                        
+                                                    //alert(test);
+                                                        </script> 
+                                                  
                                                         <div class="pagination">
                                                             <div class="page-number">
                                                                 Page
@@ -317,14 +360,14 @@
                                                                     
                                                                     <apex:selectList value="{!page}" styleClass="user-input select" size="1">
                                                                         <apex:selectOptions value="{!pageOptions}"/>
-                                                                        <apex:actionSupport event="onchange" action="{!doNothing}" reRender="actListOutputPanel" />
+                                                                        <apex:actionSupport event="onchange" action="{!doNothing}" reRender="dataTableForm" />
                                                                     </apex:selectList> 
                                                                     
                                                                 </div>
                                                                 of {!maxPage}
                                                             </div>
                                                         </div>
-                                                    </apex:outputPanel>
+                                                    
                                                 </div>
 											</apex:form>
 										</div>

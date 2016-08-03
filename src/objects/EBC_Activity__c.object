@@ -83,10 +83,6 @@
                 <fullName>Adjustment</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Initial E-mail Balance</fullName>
-                <default>false</default>
-            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
