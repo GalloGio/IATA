@@ -848,30 +848,6 @@ public without sharing class AMS_Utils {
 
         }
 
-        ID caseRTComunication = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-
-        List<Case> cases = [SELECT Id, Account.Location_Type__c, Account.Category__c, OSCAR__c, Oscar__r.Id, Type_of_customer__c from CASE where OSCAR__c = :oscars and recordTypeId = :caseRTComunication];
-
-        Set<Case> casesToUpdate = new Set<Case>();
-
-        for(Case oscarCase : cases){
-           
-           System.debug('DNG 001 -> ' + 'Location_type:' + oscarCase.Account.Location_Type__c + ' Category:' + oscarCase.Account.Category__c);
-
-            String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscarCase.Account.Location_Type__c,oscarCase.Account.Category__c);
-
-            if(typeOfCustomer != null && typeOfCustomer != oscarCase.Type_of_customer__c){
-                oscarCase.Type_of_customer__c = typeOfCustomer;
-                casesToUpdate.add(oscarCase);
-            }
-
-
-        }
-
-        if (!casesToUpdate.isEmpty()){
-            List<Case> caseListToUpdate = new List<Case>(casesToUpdate);
-            update caseListToUpdate;
-        }
 
     }
 
