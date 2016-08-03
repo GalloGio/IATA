@@ -40,13 +40,6 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
-	private List<String> oscarFieldList{
-		get{
-			return new List<String>(oscarFields);
-		}
-		set;
-	}
-
 	private Set<String> accountFields{
 		//DO NOT include Id on this Set
 		get{
@@ -80,6 +73,48 @@ public class AMS_AccountHierarchySelectionController {
 			}
 
 			return notes;
+		}
+		set;
+	}
+
+
+
+	private Map<String, String> errorMessages{
+		get{
+			if(errorMessages == null){
+				errorMessages = new Map<String, String>();
+
+				errorMessages.put(
+					AMS_Utils.LOCATION,
+					'For change of location, the field '+Schema.AMS_OSCAR__c.fields.AMS_Target_Agency__c.getDescribe().getLabel()+', if filled, should contain a link to the HO or a BR in the current hierarchy'
+				);
+
+				errorMessages.put(
+					AMS_Utils.LOCATION_TYPE,
+					'For change of location type, only one account can be selected'
+				);
+
+				errorMessages.put(
+					AMS_Utils.OWNERSHIP_IATA,
+					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO which cannot be part of this hierarchy'
+				);
+
+				errorMessages.put(
+					AMS_Utils.MAJ_SHAREHOLDING,
+					'For change of shareholding, all the hierarchy must be selected'
+				);
+
+				errorMessages.put(
+					AMS_Utils.MIN_SHAREHOLDING,
+					'For change of shareholding, all the hierarchy must be selected'
+				);
+
+				errorMessages.put(
+					'Partial Migration With HO',
+					'For change of ownership (to IATA and non IATA), the analyst cannot select HO and only part of the active agencies'
+				);
+			}
+			return errorMessages;
 		}
 		set;
 	}
@@ -138,14 +173,6 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
-	public Boolean hasError{
-		get{
-			if(hasError == null) hasError = false;
-			return hasError;
-		}
-		set;
-	}
-
 	public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
@@ -195,6 +222,14 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
+	//its public so it can be tested
+	public List<String> oscarFieldList{
+		get{
+			return new List<String>(oscarFields);
+		}
+		set;
+	}
+
 	public List<String> accountFieldList{
 		get{
 			return new List<String>(accountFields);
@@ -223,10 +258,8 @@ public class AMS_AccountHierarchySelectionController {
 	// ********** constructor ************
 	// ***********************************
 	public AMS_AccountHierarchySelectionController(ApexPages.StandardController stdController){
-		//hasError = true;
-		//ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Page in maintenance. Come back later '));
 		this.stdController = stdController;
-		this.stdController.addFields(new List<String>(oscarFields));
+		if(!Test.isRunningTest()) this.stdController.addFields(new List<String>(oscarFields));
 
 		oscarId = this.stdController.getId();
 		oscar = (AMS_OSCAR__c)this.stdController.getRecord();
@@ -245,7 +278,8 @@ public class AMS_AccountHierarchySelectionController {
 
 	private List<HierarchyItem> fetchHierarchy(){
 		Set<Id> accountIds = new Set<Id>();
-		for(AMS_Agencies_relationhip__c r : AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}).get(oscar.Account__c)){
+		Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+		for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 			accountIds.add(r.Child_Account__c);
 			accountIds.add(r.Parent_Account__c);
 		}
@@ -255,46 +289,6 @@ public class AMS_AccountHierarchySelectionController {
 			result.add(new HierarchyItem(this, a));
 		}
 		return result;
-	}
-
-	private Map<String, String> errorMessages{
-		get{
-			if(errorMessages == null){
-				errorMessages = new Map<String, String>();
-
-				errorMessages.put(
-					AMS_Utils.LOCATION,
-					'For change of location, the field '+Schema.AMS_OSCAR__c.fields.AMS_Target_Agency__c.getDescribe().getLabel()+', if filled, should contain a link to the HO or a BR in the current hierarchy'
-				);
-
-				errorMessages.put(
-					AMS_Utils.LOCATION_TYPE,
-					'For change of location type, only one account can be selected'
-				);
-
-				errorMessages.put(
-					AMS_Utils.OWNERSHIP_IATA,
-					'For change of ownership to IATA, a target agency must be filled. It must contain an agency with location type HO which cannot be part of this hierarchy'
-				);
-
-				errorMessages.put(
-					AMS_Utils.MAJ_SHAREHOLDING,
-					'For change of shareholding, all the hierarchy must be selected'
-				);
-
-				errorMessages.put(
-					AMS_Utils.MIN_SHAREHOLDING,
-					'For change of shareholding, all the hierarchy must be selected'
-				);
-
-				errorMessages.put(
-					'Partial Migration With HO',
-					'For change of ownership (to IATA and non IATA), the analyst cannot select HO and only part of the active agencies'
-				);
-			}
-			return errorMessages;
-		}
-		set;
 	}
 
 	private Boolean performValidations(){
@@ -375,8 +369,6 @@ public class AMS_AccountHierarchySelectionController {
 
 	private Boolean updateRelatedRecords() {
 
-		Savepoint sp = Database.setSavepoint();
-
 		List<AMS_Process_Detail__c> newProcessHierarchy = new List<AMS_Process_Detail__c>();
 		for(HierarchyItem hi : hierarchy){
 			if(hi.selected && !hi.main){
@@ -392,8 +384,6 @@ public class AMS_AccountHierarchySelectionController {
 			update new Case(Id = cId, AccountId = oscar.Account__c);
 		}catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
-			Database.rollback(sp);
-
 			return false;
 		}
 
@@ -407,19 +397,18 @@ public class AMS_AccountHierarchySelectionController {
 
 	public void save(){
 		if(performValidations()){
+
+			Savepoint sp = Database.setSavepoint();
 			try {
 				stdController.save();
 
 				//must be after save, to pass validations on the details
 				if(updateRelatedRecords()) closeTab = true;
 			} catch(Exception e) {
+				Database.rollback(sp);
 				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
 			}
 		}
-	}
-
-	public void cancel(){
-		closeTab = true;
 	}
 
 	// ***********************************
