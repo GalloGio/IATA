@@ -37,19 +37,53 @@
 											{!productRatePlan.zqu__Description__c}
 										</p>
 										-->
-										<apex:outputPanel id="currentSubscriptionPanel" rendered="{!showSubscriptionEnd}">
+										<apex:form id="currentSubscriptionPanel" rendered="{!showSubscriptionEnd}">
 											<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
 											<p>This cost per email is guaranteed until the end of your subscription 
-                                                <strong>
-                                                    <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
-                                                </strong>
-                                            </p>
-										</apex:outputPanel>
+												<strong>
+													<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
+												</strong>
+											</p>
+											
+                                            <apex:outputPanel id="alertBestValuePlan" rendered="{!!showUpgradeOption}">
+												<div class="alert warning">
+													<p>You currently have the best value plan.</p>
+												</div>
+											</apex:outputPanel>
+                                            
+											<ul class="list plan-list">
+												<li class="list-item is-selected">
+													<div class="plan-box">
+														<div class="box plan-name">
+															{!currentProductRatePlanWrapper.name}
+														</div>
+														<div class="box plan-price">
+															<div class="price">
+																<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!currentProductRatePlanWrapper.amountRecurring}" /></apex:outputText>
+															</div>
+															<span class="currency-per-year">USD</span>
+															<span class="billed-annually">({!currentProductRatePlanWrapper.billingPeriod})</span>
+														</div>
+														<div class="box plan-description">
+															<ul class="list check-circle-list">
+																<!--
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
+																	<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
+																-->
+															<apex:repeat id="selectionDescriptionRepeat" value="{!currentProductRatePlanWrapper.descriptions}" var="cDescriptionLine">
+																<li class="icon check-circle">{!cDescriptionLine}</li>
+															</apex:repeat>
+															</ul>
+														</div>
+													</div>
+												</li>
+											</ul>
+										</apex:form>
 										
 										<apex:outputPanel id="upgradeOptionMessage" rendered="{!IF((showUpgradeOption),true,false)}">
 											<h2 class="heading-2 strong">Change your plan</h2>
 											<h2 class="heading-3 flat">Prepaid</h2>
-											<p class="description light small">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+											<p class="description light small">The following are available prepaid rate plans</p>
 										</apex:outputPanel>
 										
 										<apex:form id="productRatePlanForm" >   										
@@ -57,12 +91,10 @@
 												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
 											</apex:actionFunction>
 											
-											<ul class="list plan-list js-checkbox-list">
+                                            <ul class="list plan-list js-checkbox-list">
 												<apex:repeat id="productRatePlanRepeat" value="{!productRatePlanWrapperUpgradeList}" var="prpw">
-													<li class="list-item">
-														
-														
-														<apex:outputPanel id="upgradeSelectablePanel" rendered="{!allowSelectUpgrade}" > 
+                                                    <li class="list-item" >
+                                                        <apex:outputPanel id="upgradeSelectablePanel" rendered="{!allowSelectUpgrade}" > 
 															<div class="checkbox-box">
 																<div class="custom-user-input checkbox" >
 																	<apex:inputCheckbox id="upgradeCheck" value="{!prpw.selected}" styleClass="user-input checkbox" 
@@ -75,8 +107,9 @@
 																<label class="input-label" for="{!$Component.upgradeCheck}">Get this plan</label>
 															</div>
 														</apex:outputPanel>
-														<apex:outputPanel id="callToUpgradePanel" rendered="{!!allowSelectUpgrade}">
-                                                            <a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>																
+
+                                                        <apex:outputPanel id="callToUpgradePanel" rendered="{!!allowSelectUpgrade}">
+															<a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>																
  														</apex:outputPanel>
 														<div class="plan-box">
 															<div class="box plan-name">
@@ -86,8 +119,8 @@
 																<div class="price">
 																	<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpw.amountRecurring}" /></apex:outputText>
 																</div>
-																<span class="currency-per-year">USD/year</span>
-																<span class="billed-annually">(billed annually)</span>
+																<span class="currency-per-year">USD</span>
+																<span class="billed-annually">({!prpw.billingPeriod})</span>
 															</div>
 															<div class="box plan-description">
 																<ul class="list check-circle-list">
@@ -103,35 +136,6 @@
 														</div>
 													</li>
 												</apex:repeat>
-												
-												<!-- 
-												<li class="list-item">
-													<div class="checkbox-box">
-														<div class="custom-user-input checkbox">
-															<input class="user-input checkbox" type="checkbox" id="get-this-plan-1"/>
-															<label class="custom-checkbox" for="get-this-plan-1"><i class="icon"></i></label>
-														</div>
-														<label class="input-label" for="get-this-plan-1">Get this plan</label>
-													</div>
-													<div class="plan-box">
-														<div class="box plan-name">
-															Starter edition											</div>
-														<div class="box plan-price">
-															<div class="price">$1,500.00</div>
-															<span class="currency-per-year">USD/year</span>
-															<span class="billed-annually">(billed annually)</span>
-														</div>
-														<div class="box plan-description">
-															<ul class="list check-circle-list">
-																<li class="icon check-circle">Nulla vitae elit libero, a pharetra augue.</li>
-																<li class="icon check-circle">Curabitur blandit tempus porttitor.</li>
-																<li class="icon check-circle">Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-																<li class="icon check-circle">Donec ullamcorper nulla non metus auctor fringilla.</li>
-															</ul>
-														</div>
-													</div>
-												</li>
-												 -->
 											</ul>
 										</apex:form>
 										
@@ -174,41 +178,6 @@
 																			</strong>
 																		</td>
 																	</tr>
-																	<!-- alternate version: show the detail individual amount of product rate plan charge -->
-																	<!--
-																	<apex:outputPanel id="purchaseSelectionMessagePanel" rendered="{!showPurchasedSelectionMessage}"> 
-																		<tr class="item">
-                                                                        	<th>
-																				<strong>Please select the upgrade plan!</strong>
-																			</th>
-																			<td class="price top">
-																				<strong>
-																					<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!newSubscriptionProductCharge.Zuora__Price__c}" /></apex:outputText>
-																				</strong>
-																			</td>
-																		</tr>
-																	</apex:outputPanel>
-																	<apex:repeat id="purchaseItemRepeat" value="{!newPurchasedRatePlanChargeList}" var="purchaseItem"  rendered="{!!showPurchasedSelectionMessage}">
-																		<tr class="item">
-																			<th>
-																			<strong>{!selectedProductRatePlan.Name}</strong> 
-																			<div class="start-end-date">
-																				<strong>Start date:</strong>
-																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveStartDate__c}" /></apex:outputText>
-																				<br/>
-																				<strong>End date:</strong>
-																				<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionProductCharge.Zuora__EffectiveEndDate__c}" /></apex:outputText>
-																			</div>
-																			</th>
-																			<td class="price top">
-																				<strong>
-																					<apex:outputText value="${0, number,###,###,##0.00}"><apex:param value="{!purchaseItem.zqu__ListPrice__c}" /></apex:outputText>
-																				</strong>
-																			</td>
-																		</tr>
-																	</apex:repeat>
-																	-->
-																	
 																	
 																	<tr class="total">
 																		<th>Total</th>

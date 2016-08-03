@@ -10,6 +10,8 @@ public virtual class vfIECEBC_Controller {
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';
 	
+	// Zuora__CustomerAccount__c.ClientType__c picklist value
+	private static final String BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE = 'Member Airline'; 
 	
 	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
@@ -64,7 +66,15 @@ public virtual class vfIECEBC_Controller {
 		return null;
 	}
 	
-	// =======================================================================-
+	// return true if this community user is a member 
+    public Boolean isMember {
+        get{
+            // return ( billingAccount.ClientType__c == BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE );
+			return (billingAccount.Contact__c != null & billingAccount.Contact__r.IATA_Code__c != null);
+        }
+    }
+	
+    // =======================================================================-
 	// current Product Rate Plan Charge based on given ProductRatePlan
 	// assumptions:
 	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
@@ -87,73 +97,6 @@ public virtual class vfIECEBC_Controller {
 		}
 		set;
 	} // end of productRatePlanCharge getter/setter
-	
-	// =======================================================================-
-	// productRatePlanChargeUpgradeList return the list of zqu__ProductRatePlanCharge__c available as the upgrade destination from the current ProductRatePlan
-	// i.e. to which the current Product Rate Plan can be directly upgraded
-	// assumptions:
-	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
-	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
-  	public List<zqu__ProductRatePlanCharge__c> productRatePlanChargeUpgradeList {
-		get{
-			if (productRatePlanChargeUpgradeList==null) 
-			{
-				Set<Id> targetProductRatePlanIdSet = productRatePlanIdUpgradeSet;
-				
-				productRatePlanChargeUpgradeList = [select Id, Name
-						, zqu__Description__c
-						, zqu__ListPrice__c
-						, zqu__ProductRatePlan__c
-						, zqu__ProductRatePlan__r.Id
-						, zqu__ProductRatePlan__r.Name
-						, zqu__ProductRatePlan__r.zqu__Description__c
-					from zqu__ProductRatePlanCharge__c
-					where zqu__ProductRatePlan__c  in : targetProductRatePlanIdSet
-						and zqu__Deleted__c = false
-					order by zqu__ListPrice__c asc
-					];	
-				
-			} // end if
-			
-			return productRatePlanChargeUpgradeList;
-		} // end getter
-		private set;
-	} // productRatePlanChargeUpgradeList getter/setter.
-	
-	
-	// =======================================================================-
-	// productRatePlanChargeUpgradeList return the list of zqu__ProductRatePlanCharge__c available as the upgrade destination from the current ProductRatePlan
-	// i.e. to which the current Product Rate Plan can be directly upgraded
-	// assumptions:
-	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
-	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
-	public Set<Id> productRatePlanIdUpgradeSet {
-		get{
-			if (productRatePlanIdUpgradeSet==null) 
-			{
-				List<Swap_Configuration__c> swapConfigList = [select Id
-						//, Source_Product_Rate_Plan_Information__c
-						//, Target_Product_Rate_Plan_Information__c
-						//, Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
-						, Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
-					from Swap_Configuration__c
-					where Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c = : productRatePlan.Id
-						and Relationship_Type__c = 'Upgrade'
-					order by Target_Product_Rate_Plan_Information__c
-					];
-				
-				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
-				for (Swap_Configuration__c swapConf : swapConfigList)
-				{
-					targetProductRatePlanIdSet.add(swapConf.Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
-				}
-				productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
-			} // end if
-			
-			return productRatePlanIdUpgradeSet;
-		} // end getter
-		private set;
-	} // productRatePlanChargeUpgradeList getter/setter.
 	
 	
 	// ========================================================================
@@ -185,6 +128,121 @@ public virtual class vfIECEBC_Controller {
 	
 	
 	
+	// =======================================================================-
+	// productRatePlanIdUpgradeSet return set of zqu__ProductRatePlan__.Id available as the upgrade destination from the current ProductRatePlan
+	// i.e. to which the current Product Rate Plan can be directly upgraded
+	// assumptions:
+	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
+	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
+	//  THIS IS THE OLD MODEL of productRatePlanIdUpgradeSet using Swap_Configuration object.
+	/*
+	private Set<Id> productRatePlanIdUpgradeSet {
+		get{
+			if (productRatePlanIdUpgradeSet==null) 
+			{
+				List<Swap_Configuration__c> swapConfigList = [select Id
+						//, Source_Product_Rate_Plan_Information__c
+						//, Target_Product_Rate_Plan_Information__c
+						//, Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+						, Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
+					from Swap_Configuration__c
+					where Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c = : productRatePlan.Id
+						and Relationship_Type__c = 'Upgrade'
+					order by Target_Product_Rate_Plan_Information__c
+					];
+				
+				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
+				for (Swap_Configuration__c swapConf : swapConfigList)
+				{
+					targetProductRatePlanIdSet.add(swapConf.Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
+				}
+				productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
+			} // end if
+			
+			return productRatePlanIdUpgradeSet;
+		} // end getter
+		private set;
+	} // productRatePlanChargeUpgradeList getter/setter.
+	*/
+	
+	
+	// =======================================================================-
+	// productRatePlanIdUpgradeSet return set of zqu__ProductRatePlan__.Id available as the upgrade destination from the current ProductRatePlan
+	// new version as defined in the architecture design: use EBC_Setting record fields defining available ProductRatePlan 
+	// should we need to add more EBC Rate Plan, we might need to change the code and add more field in EBC_Setting
+	// this is used by AccountManage and AccountRatePlan classes
+	public Set<Id> productRatePlanIdUpgradeSet {
+		get{
+			if (productRatePlanIdUpgradeSet==null) 
+			{
+                Set<Id> targetProductRatePlanIdSet = new Set<Id>();
+                targetProductRatePlanIdSet.addAll(productRatePlanIdUpgradeList);
+                productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
+            }
+            return productRatePlanIdUpgradeSet;
+        }
+        set;
+    }
+    
+	// =======================================================================-
+	// productRatePlanIdUpgradeList return set of zqu__ProductRatePlan__.Id available as the listed destination from the current ProductRatePlan
+	// this list is also used in providing a sorted list of upgrade product rate plan
+    public List<Id> productRatePlanIdUpgradeList {
+		get{
+			if (productRatePlanIdUpgradeList==null) 
+			{
+				List<EBC_Setup__c> ebcSetupList = [select Id
+								, Member_Prepaid_Product_Rate_Plan_01__c
+								, Member_Prepaid_Product_Rate_Plan_02__c
+								, Member_Prepaid_Product_Rate_Plan_03__c
+								, Member_Prepaid_Product_Rate_Plan_04__c
+
+								, Non_Member_Prepaid_Product_Rate_Plan_01__c
+								, Non_Member_Prepaid_Product_Rate_Plan_02__c
+								, Non_Member_Prepaid_Product_Rate_Plan_03__c
+								, Non_Member_Prepaid_Product_Rate_Plan_04__c
+							from EBC_Setup__c
+							order by CreatedDate
+							limit 1];
+				List<Id> nonMemberRatePlanIdList = new List<Id>();
+				List<Id> memberRatePlanIdList = new List<Id>();
+                if (ebcSetupList.size()==1) {
+					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_01__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_01__c);
+					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_02__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_02__c);
+					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_03__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_03__c);
+					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_04__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_04__c);
+					
+					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_01__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_01__c);
+					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_02__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_02__c);
+					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_03__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_03__c);
+					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_04__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_04__c);
+                } 
+				
+                // check if the upgrade options are in rate plan for member
+                // scan the list based on membership
+                // baseRatePlanList is the applicable ebc rate plan options based on the user membership type
+                List<Id> baseRatePlanList =  (isMember) ? memberRatePlanIdList : nonMemberRatePlanIdList;
+				List<Id> targetProductRatePlanIdList = new List<Id>();
+				
+				Integer idx = baseRatePlanList.size()-1;
+                while ( idx >= 0
+                       && ( baseRatePlanList[idx] != productRatePlan.Id ))
+                { 
+					List<Id> updatedList = new List<ID> {baseRatePlanList[idx]};
+					updatedList.addAll(targetProductRatePlanIdList); // note that we need also to maintain the list ordering
+					targetProductRatePlanIdList = updatedList;
+                    idx--;
+                }
+                //Integer currentRatePlanIndex = (idx < baseRatePlanList.size()) ? idx : null;
+                
+				productRatePlanIdUpgradeList = targetProductRatePlanIdList;
+			} // end if
+			
+			return productRatePlanIdUpgradeList;
+		} // end getter
+		private set;
+	} // productRatePlanUpgradeList getter/setter.
+    
 	
 	/*
 	// ========================================================================

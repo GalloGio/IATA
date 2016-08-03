@@ -46,7 +46,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
     // showSuggestionMessage flag is used to turn on/off upgrade suggestion message 
     public Boolean showSuggestionMessage{
         get{
-            return (productRatePlanChargeUpgradeList.size() > 0);
+            return (productRatePlanIdUpgradeSet != null && productRatePlanIdUpgradeSet.size() > 0);
         }
     }
     
@@ -108,26 +108,26 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
     } // end of totalSends
     
     // ========================================================================
-    // totalCredits is the currnet total number of Credit purchased or received
+    // totalCredits is the currnet total number of Adjustment email occurs
     // this excludes the initial balance given on new subscription
-    public Integer totalCredits
+    public Integer totalAdjustments
     {
         get{
-            if (totalCredits == null)
+            if (totalAdjustments == null)
             {
                 List<AggregateResult> aggrList = [select sum(Total_Count__c) sumTotalCount
                     from EBC_Activity__c
                     where Related_Billing_Account__c = :billingAccount.Id
-                        and Activity_Type__c = 'Credit'
+                        and Activity_Type__c = 'Adjustment'
                     ];
                 
                 Object iTot =  (aggrList == null || aggrList.size() == 0) ? 0 : aggrList[0].get('sumTotalCount');
-                totalCredits =  (iTot == null ) ? 0 : Integer.valueOf(iTot);
+                totalAdjustments =  (iTot == null ) ? 0 : Integer.valueOf(iTot);
             }
-            return totalCredits;
+            return totalAdjustments;
         }
         private set;
-    } // end of totalCredits
+    } // end of totalAdjustments
     
     
     // ========================================================================
@@ -153,7 +153,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
             fields.add('CreatedDate');
             fields.add('LastModifiedDate'); 
         }
-        resetNewQuery();
+        resetPaging();
         String query = 'Select ' + String.join(fields, ',') 
             + ' FROM EBC_Activity__c '
             + ' Where  Related_Billing_Account__c = \'' + billingAccount.Id + '\' '

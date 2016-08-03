@@ -90,19 +90,19 @@
 										<h2 class="heading-2">Current plan: <strong>{!productRatePlan.Name}</strong></h2>
 										
 										<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
-										<apex:ActionRegion rendered="{!showSubscriptionEnd}">
+										<apex:outputPanel rendered="{!showSubscriptionEnd}">
 											<p>This cost per email is guaranteed until the end of your subscription 
                                                 <strong>
                                                     <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
                                                 </strong>
                                             </p>
-										</apex:ActionRegion>
-										<div class="alert default">
-											<apex:ActionRegion rendered="{!showSuggestionMessage}">
+										</apex:outputPanel>
+										<apex:outputPanel rendered="{!showSuggestionMessage}">
+											<div class="alert default">
 												<p>Lower your cost per email as low as USD $0.05 with our Pre-Paid rate plans.</p>
 												<a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">See our rate plans</a>
-											</apex:ActionRegion>
-										</div>
+											</div>
+										</apex:outputPanel>
 									</div>
 									<div class="columns medium-4">
 										<section class="group-container">
@@ -150,9 +150,9 @@
 										<li>
 											<div class="account-box">
 												<strong class="number">
-													<apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!totalCredits}" /></apex:outputText>
+													<apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!totalAdjustments}" /></apex:outputText>
 												</strong>
-												<span class="label">Total credits</span>
+												<span class="label">Total Adjustments</span>
 												<div class="icon">
 													<i class="fa fa-database" aria-hidden="true"></i>
 												</div>

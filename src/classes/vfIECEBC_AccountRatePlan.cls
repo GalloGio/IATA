@@ -144,29 +144,35 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 	
 	
 	// ========================================================================
+	// currentProductRatePlanWrapper is used to display current product rate plan 
+	public ProductRatePlanWrapper currentProductRatePlanWrapper {
+		get{
+			if (currentProductRatePlanWrapper == null) 
+			{
+                // prp is taken from displayedProductRatePlanIdToObjectMap to provide more details on related list
+				zqu__ProductRatePlan__c prp = displayedProductRatePlanIdToObjectMap.get(productRatePlan.Id);
+				ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp);
+                
+				currentProductRatePlanWrapper = prpWrapper;
+			}
+			return currentProductRatePlanWrapper;
+		}
+		set;
+	} // end of currentProductRatePlanWrapper getter/setter
+	
+	
+	// ========================================================================
 	// productRatePlanUpgradeList returns the sorted list of zqu__ProductRatePlan
 	// that are included in productRatePlanIdUpgradeSet and has Product_Rate_Plan_Information
 	private List<zqu__ProductRatePlan__c> productRatePlanUpgradeList {
 		get{
 			if (productRatePlanUpgradeList == null) 
 			{
-				Map<Id,zqu__ProductRatePlan__c> prodRatePlanIdMap = new Map<Id,zqu__ProductRatePlan__c>([select Id, Name
-					, zqu__Description__c
-					, zqu__EffectiveEndDate__c
-					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
-						from zqu__R00N40000001mFVKEA2__r order by Id)
-						//from zqu__ProductRatePlanCharge__r order by Id)
-					, (select Id, Name, Product_Rate_Plan__c, Long_Description__c
-							//, Short_Description__c, Order__c
-						from Product_Rate_Plan_Informations__r order by Order__c, Id)
-					
-					from zqu__ProductRatePlan__c 
-					where  Id in : productRatePlanIdUpgradeSet
-					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
-					limit 100]);
-				
+				Map<Id,zqu__ProductRatePlan__c> prodRatePlanIdMap = displayedProductRatePlanIdToObjectMap;
+				/*
+				// OLD VERSION, using Proudct_Rate_Plan_Information__c.Order as the ordering element
 				// this is for ordering the product rate plan based on Product_Rate_Plan_Information__c.order
-				List<Product_Rate_Plan_Information__c> orderedProdRatePlanInfoList = [select Id
+                List<Product_Rate_Plan_Information__c> orderedProdRatePlanInfoList = [select Id
 					, Product_Rate_Plan__c
 					from Product_Rate_Plan_Information__c 
                     where Product_Rate_Plan__c in : productRatePlanIdUpgradeSet
@@ -182,6 +188,19 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 						includedPrpIdSet.add(prp.Id);
 					}
 				}
+				*/
+				
+				List<zqu__ProductRatePlan__c> sortedProductRatePlanList = new List<zqu__ProductRatePlan__c>();
+				Set<Id> includedPrpIdSet = new Set<Id>(); // this to prevent listing Product Rate Plan multiple times
+				for (Id prpId : productRatePlanIdUpgradeList)
+				{
+					zqu__ProductRatePlan__c prp = prodRatePlanIdMap.get(prpId);
+					if (prp!=null && !includedPrpIdSet.contains(prpId)) 
+					{
+						sortedProductRatePlanList.add(prp);
+						includedPrpIdSet.add(prp.Id);
+					}
+				}
 				
 				productRatePlanUpgradeList =  sortedProductRatePlanList;
 			} // end if null
@@ -190,6 +209,46 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 		set;
 	} // end of productRatePlanUpgradeList getter/setter
 	
+	
+
+	// ========================================================================
+	// productRatePlan records to be displayed, along with related lists
+	// this includes the current product rate plan and the upgrade selections
+    private Map<Id,zqu__ProductRatePlan__c> displayedProductRatePlanIdToObjectMap
+    {
+		get{
+            if (displayedProductRatePlanIdToObjectMap == null)
+            {
+    			Set<Id> relevantProductRatePlanIdSet = new Set<Id>();
+                //System.debug( 'xxxxx productRatePlanIdUpgradeList'+ productRatePlanIdUpgradeList);
+				relevantProductRatePlanIdSet.addAll(productRatePlanIdUpgradeList);
+                relevantProductRatePlanIdSet.add(productRatePlan.Id); // include the current one as well.
+        
+				Map<Id,zqu__ProductRatePlan__c> prodRatePlanIdMap = new Map<Id,zqu__ProductRatePlan__c>([select Id, Name
+					, zqu__Description__c
+					, zqu__EffectiveEndDate__c
+					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
+                       		, zqu__RecurringPeriod__c
+						from zqu__R00N40000001mFVKEA2__r order by Id)
+						//from zqu__ProductRatePlanCharge__r order by Id)
+					, (select Id, Name, Product_Rate_Plan__c, Long_Description__c
+							//, Short_Description__c, Order__c
+						from Product_Rate_Plan_Informations__r order by Order__c, Id)
+					
+					from zqu__ProductRatePlan__c 
+					where  Id in : relevantProductRatePlanIdSet
+					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
+					limit 100]);
+			
+				displayedProductRatePlanIdToObjectMap = prodRatePlanIdMap;
+			}
+				
+			return displayedProductRatePlanIdToObjectMap;
+        }
+        private set;
+    } // end of displayedProductRatePlanIdToObjectMap
+    
+    
 	
 	// ========================================================================
 	// inner wrapper class definition below
@@ -205,13 +264,14 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 		public String name {get; private set;}
 		// public String description {get; private set;}
 		public List<String> descriptions {get; private set;}
+        public String billingPeriod {get;set;} // based on ProductRatePlanCharge recurring period (zqu__RecurringPeriod__c)
+		
 		public Decimal amount {get; set;} // amount
 		public Decimal amountOneTime  {get;set;}
 		public Decimal amountRecurring {get;set;}
-		
+		        
 		public Zuora__SubscriptionProductCharge__c subscriptionProductCharge {get; private set;}
 		public zqu__ProductRatePlan__c productRatePlan {get; private set;}
-		//public Date subscriptionEndDate {get;set;}
 		
 		// this constructor is used for the rate plan selection to choose
 		// in case there is more than one zqu__ProductRatePlanCharge__c, the amount will be the sum
@@ -221,7 +281,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 			
 			selected = false;
 			name = prp.Name;
-			
+			billingPeriod = ''; // this will be overwritten
 			// set the price amount based on ProductRatePlanCharge
 			amountOneTime = 0;
 			amountRecurring = 0;
@@ -232,6 +292,9 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 					amountOneTime += prpc.zqu__ListPrice__c;
 				} else if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_RECURRING ) {
 					amountRecurring += prpc.zqu__ListPrice__c; 
+                    if (prpc.zqu__RecurringPeriod__c != null) {
+                    	billingPeriod = prpc.zqu__RecurringPeriod__c;
+                    }
 				} 
 				//description += '(prpc: ' + prp.zqu__Description__c + ' )';
 				productRatePlanCharge = prpc;
