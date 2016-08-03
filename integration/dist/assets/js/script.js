@@ -12764,7 +12764,8 @@ jQuery(document).ready(function($) {
     /*  Match Height                            */
     /* ---------------------------------------- */
     $('.js-match-height .group-container').matchHeight();
-
+    $('.list.addon-list .list-item').matchHeight();
+    
     /* ---------------------------------------- */
     /*  Payment Method                            */
     /* ---------------------------------------- */

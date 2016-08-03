@@ -486,11 +486,13 @@ $pagination-color: $link-color;
 
 .addon-list {
     .list-item {
+        vertical-align: top;
         padding: 20px;
         border: 1px solid #2ca4b1;
         display: inline-block;
         width: 45%;
         margin-right: 4%;
+        margin-bottom: 4%;
 
         &.is-selected {
             background: #2ca4b1;
