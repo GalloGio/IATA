@@ -56,6 +56,7 @@ public without sharing class ISSP_APProcess {
     public string strGSSAName {get;set;}
     public string strGSSAAddress {get;set;}
     public string gssaCountryISOCode {get;set;}
+    public string category {get;set;}
     
     public List <AP_Country_specs__c> urlList {get; set;}
     public transient Blob fileBody {get;set;}
@@ -102,7 +103,7 @@ public without sharing class ISSP_APProcess {
         if(vAccountConcernedId==null) {
             //Case has not been created at this stage, so need to get AL Account (can be HQ or BR) for logged in user
             popContact();
-            
+
             newForm.Contact_Resp_Job_Title__c = con.Title;
             newForm.Contact_Resp_F_Name__c = con.FirstName;
             newForm.Contact_Resp_L_Name__c = con.LastName;
@@ -111,6 +112,7 @@ public without sharing class ISSP_APProcess {
         
         if(isGSSAUser) {
             vGSSAAccountId = con.AccountId;
+            category = con.Account.Category__c;
         } else if (con.Account.Top_Parent__c == null) { //User is from HQ  Account
             vHQAccountId = con.AccountId;
         } else { 
@@ -797,7 +799,7 @@ public without sharing class ISSP_APProcess {
         SYSTEM.DEBUG('LoB: ' + strLoB);
         
         if(strAreaType=='Airline Joining') {
-        	if(strLoB=='CASS' || isGSSAUser) {
+        	if(strLoB=='CASS' || (isGSSAUser & category <> 'IBCS consolidator')) {
          		isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
                 				WHERE Line_of_business__c = 'CASS' ORDER by Name];   
         	} else {
@@ -878,9 +880,15 @@ public without sharing class ISSP_APProcess {
         if(!isGSSAUser) { //GSSA cannot create BSP cases
             options.add(new SelectOption('BSP','BSP'));    
         }
+
+        if(category == 'IBCS consolidator'){
+            options.add(new SelectOption('BSP','BSP'));   
+        }
         
+        if(category <> 'IBCS consolidator'){
         options.add(new SelectOption('CASS Export','CASS Export'));
         options.add(new SelectOption('CASS Import','CASS Import'));
+        }
         
         /**
         if(strParentMembershipStatus=='IATA member') {
