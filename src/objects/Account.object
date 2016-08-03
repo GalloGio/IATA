@@ -4577,6 +4577,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Airline Supplier</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Civil Aviation Authority</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Consultancy Firm</fullName>
                 <default>false</default>
                 <controllingFieldValues>Airline Supplier</controllingFieldValues>
@@ -4611,6 +4615,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <fullName>Fuel Supplier</fullName>
                 <default>false</default>
                 <controllingFieldValues>Airline Supplier</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Aviation</fullName>
+                <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Global Distribution System</fullName>
@@ -4717,6 +4726,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <fullName>Maintenance, Repair, Overhaul</fullName>
                 <default>false</default>
                 <controllingFieldValues>Airline Supplier</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Military</fullName>
+                <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ministry</fullName>
+                <default>false</default>
+                <controllingFieldValues>Governmental Institution</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>MSO Member Sales Office</fullName>
@@ -4829,6 +4848,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <fullName>TIDS Agent</fullName>
                 <default>false</default>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tourism Authority</fullName>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Tour Operator</fullName>
@@ -10418,6 +10441,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
             </picklistValues>
             <picklistValues>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -23890,6 +23917,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Sector__c</picklist>
+            <values>
+                <fullName>IATA Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -25581,6 +25615,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Civil Aviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Consultancy Firm</fullName>
                 <default>false</default>
             </values>
@@ -25614,6 +25652,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Aviation</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25689,6 +25731,14 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Military</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ministry</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Museum</fullName>
                 <default>false</default>
             </values>
@@ -25758,6 +25808,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tourism Authority</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26361,6 +26415,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -28577,6 +28635,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31093,6 +31155,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -37070,6 +37136,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
@@ -40788,6 +40858,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Sector__c</picklist>
+            <values>
+                <fullName>IATA Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -43169,6 +43246,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -47245,6 +47326,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>General Sales Agent</fullName>
                 <default>true</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -51434,6 +51519,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Infrastructure Partner</fullName>
                 <default>false</default>
             </values>
@@ -53640,6 +53729,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Sector__c</picklist>
+            <values>
+                <fullName>IATA Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -55817,6 +55913,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sector__c</picklist>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58096,6 +58199,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60789,6 +60896,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64730,6 +64841,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Supplier</fullName>
                 <default>false</default>
             </values>
             <values>
