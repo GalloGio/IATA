@@ -4,8 +4,16 @@ public class AMS_AccountHierarchySelectionController {
 	// ******* private variables *********
 	// ***********************************
 
+	private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
 	private ApexPages.StandardController stdController;
-	private Account mainAccount;
+
+	private Account mainAccount{
+		get{
+			if(mainAccount == null) System.debug(loggingLevel.Info, '____ [cls AMS_AccountHierarchySelectionController - getMainAccount] hierarchy ready? - ' + (hierarchy.size() > 0));
+			return mainAccount;
+		}
+		set;
+	}
 
 	private String oscarId{
 		get{
@@ -153,6 +161,14 @@ public class AMS_AccountHierarchySelectionController {
 		}
 		set;
 	}
+
+	public Boolean editable {
+		get{
+			return (UserInfo.getProfileId() != ANALYST_PROFILE_ID || oscar.STEP6__c != AMS_Utils.PASSED);
+		}
+		set;
+	}
+
 	public Boolean showTargetAgency{
 		get{
 			if(oscar.Type_of_Change__c != null){
@@ -431,6 +447,9 @@ public class AMS_AccountHierarchySelectionController {
 				this.selected = false;
 				this.controller.mainAccount = this.acc;
 				this.controller.oscar.Account__c = this.acc.Id;
+			}else{
+				this.main = true;
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Main account mus always be selected'));
 			}
 		}
 
