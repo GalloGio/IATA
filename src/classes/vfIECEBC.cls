@@ -8,6 +8,7 @@ public class vfIECEBC {
             if (billingAccount == null) {
                 billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  
 									, ClientType__c
+									, Contact__r.IATA_Code__c
 									from Zuora__CustomerAccount__c 
 									where Contact__c = :usr.ContactId LIMIT 1];
             }
