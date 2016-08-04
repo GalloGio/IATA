@@ -1,5 +1,6 @@
 public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     public static final Integer DEFAULT_ITEMS_PER_PAGE = 5;
+   
     
     public static Integer itemsPerPage {
         get{
@@ -38,8 +39,8 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     
     public Integer page {
         get {
-            if (page == null) page = 1;
-            
+            if (page == null || page == 0) page = 1;
+            if (page > maxPage) page = MaxPage;
             return page;
         }
         set {
@@ -54,6 +55,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     public Integer maxPage {
         get {
             if (maxPage == null) maxPage = Integer.valueOf(Math.ceil(Double.valueOf(itemsCount) / Double.valueOf(itemsPerPage)));
+            if (maxPage == 0) maxPage = 1;
             return maxPage;
         }
         private set;
@@ -85,14 +87,16 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
             items = null;
         }
     }
-    
+    private virtual Boolean getIsFirstTimeLoadPage() { return true; }
     public virtual List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
+        if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
         options.add(new SelectOption('CreatedDate DESC','Creation Date'));
         options.add(new SelectOption('LastModifiedDate DESC','Last Edited'));
         options.add(new SelectOption('Name ASC','Name'));
-        
+
         return options;
+       
     }
 
     public Integer offset {
@@ -129,6 +133,12 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     public void resetQuery() {
         clear();
         page = 1;
+    }
+    public void resetPaging() {
+        itemsCount = null;
+        items = null;
+        maxPage = null;
+        //page = 1;
     }
     private void clear() {
         itemsCount = null;

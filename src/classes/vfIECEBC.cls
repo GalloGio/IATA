@@ -1,9 +1,16 @@
 public class vfIECEBC {
+    
+	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
+    
     public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
     public static Zuora__CustomerAccount__c billingAccount {
         get {
             if (billingAccount == null) {
-                billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  from Zuora__CustomerAccount__c where Contact__c = :usr.ContactId LIMIT 1];
+                billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  
+									, ClientType__c
+									, Contact__r.IATA_Code__c
+									from Zuora__CustomerAccount__c 
+									where Contact__c = :usr.ContactId LIMIT 1];
             }
             
             return billingAccount;
@@ -50,6 +57,7 @@ public class vfIECEBC {
                                                              AND (
                                                                  (Zuora__SubscriptionEndDate__c >=  TODAY) 
                                                                  OR (Zuora__SubscriptionEndDate__c = NULL)
+                                                                 OR (Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c = : EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO)
                                                              )
                                                              AND (Zuora__SubscriptionStartDate__c <=  TODAY) 
                                                              AND (Zuora__Status__c = 'Active')
@@ -66,7 +74,7 @@ public class vfIECEBC {
             
             return subscription;
         }
-        set;
+        private set;
     }
     
     /*
