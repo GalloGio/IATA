@@ -201,13 +201,13 @@ margin-top:50px;
        <h5 class="blueback">{!$Label.IDCard_CaseDetails}</h5>
        
            <p>
-              {!$Label.ISSP_Subject} :
+              <apex:outputText value="{!$Label.ISSP_Subject}: " /> 
               <apex:outputField value="{!tmpCase.subject}"  id="Subject"/>
         
     </p>
-         <p>
-              {!$Label.IDCard_Description} :
-              <apex:outputField value="{!tmpCase.Description}" id="Description"/>
+         <p >
+              <apex:outputText value="{!$Label.IDCard_Description}: " rendered="{!showDescription}" />
+              <apex:outputField value="{!tmpCase.Description}" id="Description" rendered="{!showDescription}"/>
            </p>
        
         </div>
