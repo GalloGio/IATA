@@ -4,8 +4,8 @@
 
     <p>Dear {!contactName},</p>
     
-    <p>Your item(s) has been shipped</p>
-	<p>
+    <p>Your item(s) has been shipped.</p>
+    <p>
         Here is the tracking Number: 
         <apex:outputPanel rendered="{!showUrl}">
             <apex:outputText escape="false" value=" {!trackingURL}" />
@@ -17,21 +17,21 @@
         
     
 
-	<table border = "0" cellspacing = "5">
-        <tr>
-            <td>Product Name</td>
-            <td>Product number</td>                
+    <table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
+        <tr style="background-color:#0391d3;">
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
+            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product number</th>                
         </tr>
         <apex:repeat value="{!orderItems}" var="oi">
         <tr>
-            <td>{!oi.Product_Name__c}</td>
-            <td>{!oi.SAP_Product_Number__c}</td>              
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>              
         </tr>
         </apex:repeat>        
     </table>
 
     <p>Best regards,<br />
-    eCommerce Support Team
+    IATA Online Store Support Team
     </p>
 
 </apex:component>

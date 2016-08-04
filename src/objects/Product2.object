@@ -76,11 +76,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Mega_Menu__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Available_for_Subscription__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -143,7 +138,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Allow Email Renewal Notice</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -173,7 +168,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Available for Subscription</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -290,7 +285,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Applicable for shippable products only.</inlineHelpText>
         <label>Charge Shipping</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -394,6 +389,7 @@
             <picklistValues>
                 <fullName>Coding</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Directories</fullName>
@@ -412,7 +408,7 @@
             <picklistValues>
                 <fullName>Exchange-Rates</fullName>
                 <default>false</default>
-                <controllingFieldValues>data-and-statistics</controllingFieldValues>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Finance</fullName>
@@ -432,6 +428,7 @@
             <picklistValues>
                 <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger</fullName>
@@ -451,6 +448,7 @@
             <picklistValues>
                 <fullName>Scheduling</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Security</fullName>
@@ -465,14 +463,17 @@
             <picklistValues>
                 <fullName>Tax-Data</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Travel-Agency-Data</fullName>
                 <default>false</default>
+                <controllingFieldValues>data-and-statistics</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>User-Charges</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -1045,7 +1046,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -1469,6 +1470,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IEC_SAP_Material_Number_Unformatted__c</fullName>
+        <description>IEC - SAP Material Number without leading zeroes</description>
+        <externalId>false</externalId>
+        <formula>IF(ISNUMBER(SAP_Material_Number__c), TEXT(VALUE(SAP_Material_Number__c)), SAP_Material_Number__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Number Unformatted</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IEC_SAP_ProfitCenter__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(IEC_Parent_Product__c), Product_Section__c, IEC_Parent_Product__r.Product_Section__c)</formula>
@@ -1731,7 +1744,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>IsNewRelease</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -2152,6 +2165,18 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <fullName>Download</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>C-Data File</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Floating License</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>C-Web Application</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -2178,7 +2203,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
     </fields>
     <fields>
         <fullName>Name</fullName>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>Name_of_SME__c</fullName>
@@ -2271,7 +2296,7 @@ The product will only appear on the Online Store when the date entered in this f
         <externalId>false</externalId>
         <label>Post to Ecommerce Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -2768,7 +2793,7 @@ The product will only appear on the Online Store when the date entered in this f
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Recommended</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -2802,10 +2827,6 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <picklistValues>
                 <fullName>French</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chinese</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2914,7 +2935,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
     </fields>
@@ -3306,7 +3327,31 @@ The product will only appear on the Online Store when the date entered in this f
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>GDP_All_Products</fullName>
+        <fullName>GDP_All_Products1</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Sell_through_eCommerce__c</columns>
+        <columns>IEC_Cart_Option__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
+        <columns>Effective_To__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <label>GDP/All Products</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_All_Products2</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
@@ -3321,7 +3366,12 @@ The product will only appear on the Online Store when the date entered in this f
             <operation>equals</operation>
             <value>GDP</value>
         </filters>
-        <label>GDP/All Products</label>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>equals</operation>
+            <value>Cargo Agency List</value>
+        </filters>
+        <label>GDP/EPUB/Cargo Agency List</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -3422,6 +3472,83 @@ The product will only appear on the Online Store when the date entered in this f
             <value>CheckACode Webservice for Member Airlines</value>
         </filters>
         <label>GDP/CAC WEB for Member Airlines</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_EPUB_MSO_GSA_List</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Sell_through_eCommerce__c</columns>
+        <columns>IEC_Cart_Option__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>equals</operation>
+            <value>MSO &amp; GSA List</value>
+        </filters>
+        <label>GDP/EPUB/MSO &amp; GSA List</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_GAD_for_Members</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>equals</operation>
+            <value>GAD for IATA Member Airlines</value>
+        </filters>
+        <label>GDP/GAD for Members</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_GAD_for_Non_Members</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>equals</operation>
+            <value>GAD Single License for Non-Members</value>
+        </filters>
+        <label>GDP/GAD for Non Members</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -3597,6 +3724,33 @@ The product will only appear on the Online Store when the date entered in this f
             <value>MDP for IATA Member Airlines</value>
         </filters>
         <label>GDP/MDP for IATA Member Airlines</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_Passenger_Agency_List</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Sell_through_eCommerce__c</columns>
+        <columns>IEC_Cart_Option__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <filters>
+            <field>PRODUCT2.NAME</field>
+            <operation>equals</operation>
+            <value>Passenger Agency List</value>
+        </filters>
+        <label>GDP/EPUB/Passenger Agency List</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -3898,7 +4052,27 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exchange-Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance-and-Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forecasts-and-Statistic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3914,7 +4088,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Safety-and-Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards-and-Recommended-Practices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel-Agency-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User-Charges</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5543,10 +5741,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
             <values>
-                <fullName>Chinese</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>English</fullName>
                 <default>false</default>
             </values>
@@ -5861,6 +6055,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Coding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Directories</fullName>
                 <default>false</default>
             </values>
@@ -5870,6 +6068,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exchange-Rates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5914,6 +6116,18 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Standards-and-Recommended-Practices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel-Agency-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User-Charges</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7022,6 +7236,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>C-Data File</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C-Web Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -7059,6 +7281,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Excel Spreadsheet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Floating License</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7384,10 +7610,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>PAX</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Product_Type__c</picklist>
@@ -7553,10 +7775,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
-            <values>
-                <fullName>Chinese</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>English</fullName>
                 <default>false</default>
@@ -7832,6 +8050,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Coding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Directories</fullName>
                 <default>false</default>
             </values>
@@ -7840,7 +8062,27 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exchange-Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance-and-Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forecasts-and-Statistic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7856,7 +8098,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Safety-and-Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduling</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards-and-Recommended-Practices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel-Agency-Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User-Charges</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9480,10 +9746,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
-            <values>
-                <fullName>Chinese</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>English</fullName>
                 <default>false</default>

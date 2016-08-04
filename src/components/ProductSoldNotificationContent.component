@@ -5,7 +5,7 @@
 	<p>Dear {!sContactName},</p>
 	
 	<p>
-		Thank-you for ordering from IATA. <apex:outputText value="{!paymentTypeMsg}"/> <br /> 
+		Thank you for ordering from IATA. <apex:outputText value="{!paymentTypeMsg}"/> <br /> 
 	</p>
 	
 	<!-- Contains Downloadable products -->
@@ -24,21 +24,21 @@
 		
 		<p>Order Number: {!sOrderNumber}</p>
 	
-		<table border="0" cellspacing="10">
+		<table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
 	        <tr>
-	            <td style="font-weight: bold">Product Name</td>
-	            <td style="font-weight: bold">Description</td>
-	            <td style="font-weight: bold">Quantity</td>
-	            <td style="font-weight: bold">Product Manager</td>
-	            <td style="font-weight: bold">Download Link</td>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Description</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Quantity</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Manager</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Download Link</th>
 	        </tr>
 	        <apex:repeat value="{!orderItems}" var="oi">
 		        <tr>
-					<td style="text-align: center">{!oi.SAP_Product_Number__c}</td>
-					<td>{!oi.Product_Name__c}</td>
-					<td style="text-align: center"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
-					<td>{!oi.Product_Manager__c}</td>
-					<td style="text-align: center"><apex:outputLink value="{!sBaseUrl}/iecWebDownload?itemNumber={!oi.OrderItemNumber}" rendered="{!oi.Is_Web_Download__c}">Download</apex:outputLink><apex:outputText value="N/A" rendered="{!NOT(oi.Is_Web_Download__c)}" /></td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Manager__c}</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputLink value="{!sBaseUrl}/iecWebDownload?itemNumber={!oi.OrderItemNumber}" rendered="{!oi.Is_Web_Download__c}">Download</apex:outputLink><apex:outputText value="N/A" rendered="{!NOT(oi.Is_Web_Download__c)}" /></td>
 		        </tr>
 	        </apex:repeat>        
 	    </table>
@@ -48,19 +48,29 @@
     <apex:outputPanel rendered="{!!containsWebDownload}">
 		<p>	Your order {!sOrderNumber} is in progress. </p>
 		
-		<table border="0" cellspacing="10">
+		<table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
 	        <tr>
-	            <td style="font-weight: bold">Product Name</td>
-	            <td style="font-weight: bold">Description</td>
-	            <td style="font-weight: bold">Quantity</td>
-	            <td style="font-weight: bold">Product Manager</td>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Description</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Quantity</th>
+	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Item_Price}</th>
+            	<th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Total_Price}</th>
 	        </tr>
 	        <apex:repeat value="{!orderItems}" var="oi">
 		        <tr>
-					<td style="text-align: center">{!oi.SAP_Product_Number__c}</td>
-					<td>{!oi.Product_Name__c}</td>
-					<td style="text-align: center"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
-					<td>{!oi.Product_Manager__c}</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+					<apex:outputText value="{0, Number, Currency}" >
+                        <apex:param value="{!oi.UnitPrice}" />
+                    </apex:outputText>
+					</td>
+					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+						<apex:outputText value="{0, Number, Currency}" >
+	                        <apex:param value="{!oi.quantity * oi.UnitPrice}" />
+	                    </apex:outputText>
+					</td>
 		        </tr>
 	        </apex:repeat>        
 	    </table>
@@ -73,6 +83,6 @@
     </apex:outputPanel>
 
     <p>Best regards,<br />
-    eCommerce Support Team
+    IATA Online Store Support Team
     </p>
 </apex:component>

@@ -12,6 +12,8 @@ private class IEC_PageControllerTest
 		System.runAs(usr)
 		{
 			Test.setCurrentPage(Page.IEC_ProductList);
+
+
 			
 			//-- Add products to cookie 
 			for(Product2 p : products)
@@ -19,6 +21,10 @@ private class IEC_PageControllerTest
 
 
 			IEC_PageController ctrl = new IEC_PageController();
+
+
+			//-- Cart Content 
+			System.assertNotEquals(null, ctrl.cartContent);
 			
 			//-- Page language 
 			String language = ctrl.language; 
@@ -26,7 +32,10 @@ private class IEC_PageControllerTest
 
 			//-- mega menu topics
 			Map<String, List<SelectOption>> subCategories = ctrl.subCategories; 
+			List<SelectOption> categories = ctrl.categories; 
 			Map<String, String> mega_menus = ctrl.mega_menus;
+			ctrl.selected_mega_menu = 'publications';
+			ctrl.selectedCategory = categories[0];
 
 			//-- Page custom links 
 			Map<String, List<Ecommerce_Site_Link__c>> customLinks = ctrl.customLinks;
@@ -41,10 +50,26 @@ private class IEC_PageControllerTest
 			List<String> customerTypes = ctrl.customerTypes;
 			System.assertEquals(customerTypes, Utility.getPicklistValues('Product2', 'Display_Ecom_Customer_Type__c'));
 
+			String currentPageName = ctrl.currentPageName;
 
+			//Log message to the page 
+			ctrl.addErrorMessage('Error occur');
+			System.assertEquals(true, ctrl.hasError);
+
+			ctrl.addConfirmMessage('Well done');
+			System.assertEquals(true, ctrl.hasConfirm);
+
+			//Access My Service link 
+			Test.startTest();
+			try{Boolean bHasAnyProdAccess = ctrl.bHasAnyProdAccess;}
+			catch(Exception ex){}
+			Test.stopTest();
 
 			//-- Logout 
 			ctrl.logout();
+
+			//Mini Register
+			ctrl.miniRegister();
 		}
 	}
 	

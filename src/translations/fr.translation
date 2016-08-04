@@ -736,6 +736,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -942,6 +950,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -4264,6 +4276,10 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -5242,6 +5258,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -8146,6 +8166,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8492,6 +8516,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

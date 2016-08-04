@@ -126,6 +126,7 @@ private class Order_Ext_Test
         //*** create new order
         Test.setCurrentPageReference(new PageReference('/apex/Order?retURL=' + Order.SObjectType.getDescribe().getKeyPrefix() + '&save_new=1&contactID=' + sfContacts[0].Id));
         ext = new Order_Ext(new ApexPages.StandardController(new Order()));
+Test.startTest();        
         ext.pageLoad();
         system.assert(ext.allowEditSave, 'Wrong allowEditSave: ' + ext.allowEditSave);
 
@@ -148,7 +149,7 @@ private class Order_Ext_Test
 
         //Cover save billing address
         ext.saveAddressOrderReadOnly();
-Test.startTest();
+
         //Cover add shipTo address
         ext.addShpAddressOrder();
 

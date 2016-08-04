@@ -20,6 +20,8 @@ public class trgHndlrIECInvoice_tst {
 	private static Zuora__ZInvoice__c oInvoice;
 	private static SAP_Account__c oSAPAccount;
 	private static IEC_Subscription_History__c oSubHistory;
+    public static boolean stopCallout {get;set;}
+
 
 	public static List<Zuora.zObject> getSampleInvoiceItems() {
 		Zuora.zObject zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
@@ -155,6 +157,7 @@ public class trgHndlrIECInvoice_tst {
 	}
 	
     static testMethod void TestInvoice() {
+        trgHndlrIECInvoice_tst.stopCallout = true;
     	System.debug('Unit Test: Start: TestInvoice');
 		List<Zuora__CustomerAccount__c> lstBillingAccount;
 		IECCustomer loggedCustomer;

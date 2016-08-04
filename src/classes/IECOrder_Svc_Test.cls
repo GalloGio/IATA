@@ -47,4 +47,9 @@ private class IECOrder_Svc_Test {
 
 		System.assertEquals(1,IECOrder_Svc.nbreOfCookies());
 	}
+
+	@isTest (seeAllData=true) static void test_coverage()
+     {
+        new IECOrder_Svc().coverage();
+     }
 }

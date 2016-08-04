@@ -79,8 +79,7 @@ public class Product_Sel extends Selector
             Product2.IEC_OrderBy__c,
             Product2.IEC_Page_Areas_of_Activity__c,
             Product2.IEC_Page_Content_Types__c,
-            Product2.IEC_Use_on_IATA_org__c,
-            Product2.Use_Contract_when_ordered__c
+            Product2.IEC_Use_on_IATA_org__c
         };
     }
 
@@ -107,7 +106,7 @@ public class Product_Sel extends Selector
         String query = String.format(
             'SELECT {0} ' +
             'FROM {1} ' + 
-            'WHERE SAP_Material_Number__c != null ', 
+            'WHERE SAP_Material_Number__c != null AND (Display_to_Direct_Sales__c = true OR Display_to_ECommerce__c = true) ', 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
@@ -125,7 +124,7 @@ public class Product_Sel extends Selector
     {
 
         String query = String.format(
-            'SELECT {0},  Product_Manager_lookup__r.Email, Product_Manager_lookup__r.EmployeeNumber, Alternate_Product_Manager__r.Email,Sales_Notification__c  ' +
+            'SELECT {0}, Use_Contract_when_ordered__c,  Product_Manager_lookup__r.Email, Product_Manager_lookup__r.EmployeeNumber, Alternate_Product_Manager__r.Email,Sales_Notification__c  ' +
             '   , (select IATA_ISO_Country__r.Name from Non_Compliance_Countries__r) ' +
             'FROM {1} ' + 
             'WHERE Id  in :productIds ' , 
@@ -148,7 +147,7 @@ public class Product_Sel extends Selector
         if(queryLimit != null && queryOffset != null)
         {
             query = String.format(
-                'SELECT {0}, IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
+                'SELECT {0}, Refinement_Language__c,  IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
 				'	, IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 
@@ -262,6 +261,12 @@ public class Product_Sel extends Selector
         
         if(product.Description != null)
             ret.setValue('Description', product.Description);
+            
+        //The Zuora ProductAudience__c and ProductCategory__c are required fields, for new product add default value for those fields
+        if(product.Formula_Zuora_Id__c == null && product.Zuora_Id__c == null){
+            ret.setValue('ProductAudience__c', 'DO NOT DISPLAY');
+            ret.setValue('ProductCategory__c', 'DO NOT DISPLAY');
+        }
         
         if(product.SAP_Material_Number__c != null)
             ret.setValue('SAPProductMaterialNo__c', product.SAP_Material_Number__c);

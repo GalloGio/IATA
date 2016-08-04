@@ -7,7 +7,8 @@ global class RenewalNotificationCleanUp_Scheduler implements Schedulable
 	// Initialize a schedule task to cleanup the renewal notification
 	global static String doSchedule(String CRON_EXP)
 	{
-		return System.Schedule('Renewal Notifications cleanup', CRON_EXP, new RenewalNotificationCleanUp_Scheduler());
+		String jobName = (Test.isRunningTest())? 'Test_'+Datetime.now().time() : 'Renewal Notifications cleanup';
+		return System.Schedule(jobName, CRON_EXP, new RenewalNotificationCleanUp_Scheduler());
 	}
 
 	// On execution, run a batch job that is responsible of cleaning up old renewal notifications

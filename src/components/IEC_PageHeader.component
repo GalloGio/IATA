@@ -295,7 +295,7 @@
                         <dt class="accordion-title {!IF(OR(page_name=='IEC_ViewQuotes', page_name=='IEC_ZQuotes',page_name=='IEC_MyRenewalNotices'), ' is-open ', '')}">{!$Label.View_quotes}</dt>
                         <dd class="accordion-panel {!IF(OR(page_name=='IEC_ViewQuotes', page_name=='IEC_ZQuotes',page_name=='IEC_MyRenewalNotices'), ' is-open ', '')}">
                             <ul class="nav">
-                                <li class="{!IF(page_name=='IEC_ViewQuotes', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_ViewQuotes">{!$Label.View_quotes}</a></li>
+                                <li class="{!IF(page_name=='IEC_ViewQuotes', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_ViewQuotes">{!$Label.PublicationQuotes}</a></li>
                                 <li class="{!IF(page_name=='IEC_ZQuotes', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_ZQuotes">{!$Label.ZQuotes}</a></li>
                                 <li class="{!IF(page_name=='IEC_MyRenewalNotices', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_MyRenewalNotices">{!$Label.My_Renewals}</a></li>
                             </ul>
@@ -305,8 +305,8 @@
                         <dd class="accordion-panel {!IF(OR(page_name=='IEC_MyServices', page_name=='IEC_DataStatisticsSubscriptions',page_name=='IEC_DataStatisticsHistory', page_name='IEC_PublicationsSubscriptions'), ' is-open ', '')}">
                             <ul class="nav">
                                 <li class="{!IF(page_name=='IEC_MyServices', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_MyServices">Access to My Services</a></li>
-                                <li class="{!IF(page_name=='IEC_DataStatisticsSubscriptions', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_DataStatisticsSubscriptions">Data Statistics Subscriptions</a></li>
-                                <li class="{!IF(page_name=='IEC_DataStatisticsHistory', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_DataStatisticsHistory">Data Statistics History</a></li>
+                                <li class="{!IF(page_name=='IEC_DataStatisticsSubscriptions', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_DataStatisticsSubscriptions">{!$Label.Data_Statistics_Subscriptions}</a></li>
+                                <li class="{!IF(page_name=='IEC_DataStatisticsHistory', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_DataStatisticsHistory">{!$Label.Data_Statistics_History}</a></li>
                                 <li class="{!IF(page_name=='IEC_PublicationsSubscriptions', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_PublicationsSubscriptions">{!$Label.Publications_subscriptions}</a></li>
                             </ul>
                         </dd>

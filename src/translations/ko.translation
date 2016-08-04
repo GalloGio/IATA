@@ -736,6 +736,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -942,6 +950,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -4238,6 +4250,10 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -5214,6 +5230,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -8116,6 +8136,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8462,6 +8486,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

@@ -801,7 +801,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Button Pre Order</shortDescription>
-        <value>Pre Order</value>
+        <value>Pre-order</value>
     </labels>
     <labels>
         <fullName>Button_Previous</fullName>
@@ -1343,6 +1343,22 @@ Case description: {!Case.Description}
         <value>Data &amp; statistics</value>
     </labels>
     <labels>
+        <fullName>Data_Statistics_History</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Data Statistics History</shortDescription>
+        <value>History &gt; Data &amp; Stats</value>
+    </labels>
+    <labels>
+        <fullName>Data_Statistics_Subscriptions</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Data Statistics Subscriptions</shortDescription>
+        <value>Subscriptions &gt; Data &amp; Stats</value>
+    </labels>
+    <labels>
         <fullName>Date</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1680,7 +1696,8 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
-        <value>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores molestiae ipsam inventore quisquam minus maxime, explicabo voluptatum alias ipsum commodi sequi aliquid porro necessitatibus quis enim dicta rem nisi doloremque?</value>
+        <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
+You may retrieve the Quote details from the Account Information section.</value>
     </labels>
     <labels>
         <fullName>Go</fullName>
@@ -1732,6 +1749,15 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>Home</shortDescription>
         <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>Home_Page_New_Release_Msg</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Home Page New Release Msg.</shortDescription>
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more. 
+Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
     </labels>
     <labels>
         <fullName>IATA_Alpha</fullName>
@@ -7871,6 +7897,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Account Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statements</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Statements</shortDescription>
+        <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Activate</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -9802,6 +9836,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Frozen_User_Message</shortDescription>
         <value>Your user is currently inactive because you haven&apos;t logged in for over 90 days.&lt;br/&gt;Do you want to reactivate your user?&lt;br/&gt;You will receive an email with a new password.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Fullpayment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Fullpayment</shortDescription>
+        <value>Fullpayment</value>
     </labels>
     <labels>
         <fullName>ISSP_GSA_Airline_Country</fullName>
@@ -12843,174 +12885,6 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>reCAPTCHA verification Failed</value>
     </labels>
     <labels>
-        <fullName>ISSP_Accept</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Accept</shortDescription>
-        <value>Accept</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Accept_Terms_Warning</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Accept Terms Warning</shortDescription>
-        <value>Please, accept terms and conditions</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Account_Statements</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Account Statements</shortDescription>
-        <value>ICE - IATA Customer E-Statement</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Account_Statements_Disclaimer</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that the balances are updated on the portal at least one business day after IATA&apos;s account has been credited</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Account_Statements_Title</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Account Statements Title</shortDescription>
-        <value>ICE - IATA Customer E-Statement</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Account_not_approved</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Account not approved</shortDescription>
-        <value>Account is not approved. You cannot see the info.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Agency_Head_Office_code</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Agency Head Office code</shortDescription>
-        <value>Agency Head Office code</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Consolidated</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Consolidated</shortDescription>
-        <value>Consolidated</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Currency_Filter</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Currency Filter</shortDescription>
-        <value>Currency Filter</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Display_Records_per_page</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Display Records per page</shortDescription>
-        <value>Display _MENU_ records per page</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Excess</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Excess</shortDescription>
-        <value>Excess</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Fullpayment</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Fullpayment</shortDescription>
-        <value>Fullpayment</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Last_Updated_on</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Last Updated on</shortDescription>
-        <value>Last Updated on</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Last_updated_statement</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Last updated statement</shortDescription>
-        <value>Last updated statement</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Location_Filter</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Location Filter</shortDescription>
-        <value>Location filter</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_No_records_available</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP No records available</shortDescription>
-        <value>No records available</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Nothing_found</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Nothing found</shortDescription>
-        <value>Nothing found</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Past_Periods</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Past Periods</shortDescription>
-        <value>Past Periods</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Pending</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Pending</shortDescription>
-        <value>Pending</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Showing_page</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Showing page</shortDescription>
-        <value>Showing page _PAGE_ of _PAGES_</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_filtered_from_total_records</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP filtered from total records</shortDescription>
-        <value>(filtered from _MAX_ total records)</value>
-    </labels>
-    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13954,10 +13828,11 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
     </labels>
     <labels>
         <fullName>My_Renewals</fullName>
+        <categories>Ecommerce</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>My_Renewals</shortDescription>
-        <value>My Renewals</value>
+        <value>Renewals &gt; Publications</value>
     </labels>
     <labels>
         <fullName>New</fullName>
@@ -15232,7 +15107,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PageTitleMyInvoices</shortDescription>
-        <value>View invoices</value>
+        <value>Invoices &gt; Data &amp; Stats</value>
     </labels>
     <labels>
         <fullName>PageTitleMyPaymentMethods</fullName>
@@ -15425,7 +15300,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PreOrderAddToCart</shortDescription>
-        <value>Pre order</value>
+        <value>Pre-order</value>
     </labels>
     <labels>
         <fullName>Pricing_model_Charges</fullName>
@@ -15579,6 +15454,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Public</value>
     </labels>
     <labels>
+        <fullName>PublicationQuotes</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PublicationQuotes</shortDescription>
+        <value>Quotes  &gt; Publications</value>
+    </labels>
+    <labels>
         <fullName>Publications</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -15588,10 +15471,11 @@ Also, the package has changed the setting to prevent the creation of Contacts an
     </labels>
     <labels>
         <fullName>Publications_subscriptions</fullName>
+        <categories>Ecommerce</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Publications subscriptions</shortDescription>
-        <value>Publications Subscriptions</value>
+        <value>Subscriptions &gt; Publications</value>
     </labels>
     <labels>
         <fullName>PurchaseAsAutoRenew</fullName>
@@ -16019,7 +15903,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ShoppingCartFooterMsg</shortDescription>
-        <value>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt velit, aliquam dolorem voluptatum cumque quaerat error, quia quasi architecto quos maxime, deserunt eos illo illum dolor odit perferendis quidem magnam.</value>
+        <value>&amp;nbsp;</value>
     </labels>
     <labels>
         <fullName>ShoppingCartQtyMsg</fullName>
@@ -16110,7 +15994,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>StayInformedMessage</shortDescription>
-        <value>Stay Up-to-date on the latest industry trends and developments.</value>
+        <value>Stay up-to-date on the latest industry trends and developments.</value>
     </labels>
     <labels>
         <fullName>Stay_Informed</fullName>
@@ -16246,6 +16130,14 @@ title,Title,Name</value>
         <value>User name</value>
     </labels>
     <labels>
+        <fullName>VAT_Tax_Msg</fullName>
+        <categories>ECommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VAT Tax Msg</shortDescription>
+        <value>Please enter VAT#, if applicable</value>
+    </labels>
+    <labels>
         <fullName>VAT_number</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -16304,7 +16196,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>View quotes</shortDescription>
-        <value>View quotes</value>
+        <value>View Quotes</value>
     </labels>
     <labels>
         <fullName>Warning_Empty_Cart</fullName>
@@ -16384,11 +16276,11 @@ title,Title,Name</value>
     </labels>
     <labels>
         <fullName>Welcome_Message</fullName>
-        <categories>Content</categories>
+        <categories>eCommerce Content</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Welcome Message</shortDescription>
-        <value>&lt;span class=&quot;text&quot;&gt;Welcome to &lt;/span&gt; &lt;span class=&quot;text&quot;&gt;Lorem ipsum dolor&lt;/span&gt;</value>
+        <value>&amp;nbsp;</value>
     </labels>
     <labels>
         <fullName>Welcome_Message1</fullName>
@@ -16433,7 +16325,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ZQuotes</shortDescription>
-        <value>ZQuotes</value>
+        <value>Quotes &gt; Data &amp; Stats</value>
     </labels>
     <labels>
         <fullName>Zip_code_cannot_be_empty</fullName>
