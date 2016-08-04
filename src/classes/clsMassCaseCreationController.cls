@@ -403,7 +403,7 @@ public with sharing class clsMassCaseCreationController {
       // construct link to report (no need to pass the hardcoded parameter, only the dynamic ones)
       //openCasesReportURL = '/00OR0000000k0QE?';   //'/00OR0000000k06s?';  // ID of the report
 
-      soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+      soql += ' and (Account.Reinstated_Date__c=null OR Account.Reinstated_Date__c < :sixMonthsAgo) ';
       system.debug(LoggingLevel.ERROR, 'QUERY: ' + soql);
 
       List<Report> r = [SELECT Id FROM Report where DeveloperName = 'IFAP_Agents_with_Open_Closed_cases' limit 1];

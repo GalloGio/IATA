@@ -204,11 +204,8 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
             AMS_Utils.copyDataToAccount(oscar);
             return 'OK';
-        }catch (Exception ex) {
-            if (ex.getMessage().contains('ISSP_ContactUpdaetPortalUser'))
-                return Label.AMS_Duplicate_Username;
-            else
-                return ex.getMessage();
+        }catch(Exception ex){
+            return ex.getMessage();
         }
     }
 
