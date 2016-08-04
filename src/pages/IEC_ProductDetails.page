@@ -212,7 +212,7 @@
                                     <apex:outputPanel layout="block" styleClass="product-quantity-container" rendered="{! bIsDirectSales}">
                                         <div class="contact-info">
                                             <span class="icon phone-square">{!$Label.ContactDirectSalesMessage}</span>
-                                            <a class="phone-link" href="tel:1-408-555-5555">1 800 555-5555</a>
+                                            <a class="phone-link" href="tel:1-800-716-6326">1 800 716 6326</a>
                                         </div>
                                     </apex:outputPanel>
 
