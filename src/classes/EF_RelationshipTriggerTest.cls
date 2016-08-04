@@ -1,6 +1,6 @@
 @isTest
 private class EF_RelationshipTriggerTest {
-
+/*
 	@testSetup 
     static void setup() {
 
@@ -42,7 +42,7 @@ private class EF_RelationshipTriggerTest {
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Client',
-            //EF_Status__c = 'Active',
+            EF_Status__c = 'Active',
             EF_Effective_Date__c = Date.today(),
             IATA_ISO_Country__c = iso_country.Id,
             Reason_for_creation__c = 'new client needed'
@@ -57,7 +57,7 @@ private class EF_RelationshipTriggerTest {
             Sector__c = 'IATA Supplier',
             Category__c = 'ANSP',
             EF_type__c = 'E&F Operator',
-            //EF_Status__c = 'Active',
+            EF_Status__c = 'Active',
             EF_Effective_Date__c = Date.today(),
             IATA_ISO_Country__c = iso_country.Id,
             Reason_for_creation__c = 'new customer needed'
@@ -223,5 +223,5 @@ private class EF_RelationshipTriggerTest {
 	}
 
 
-	
+*/	
 }

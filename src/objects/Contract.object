@@ -253,6 +253,33 @@
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
+        <fullName>EF_Billing_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>E&amp;F Billing Currency</label>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Data_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>E&amp;F 	Data Currency</label>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Payment_Currency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>E&amp;F Payment Currency</label>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>EndDate</fullName>
         <trackHistory>true</trackHistory>
     </fields>

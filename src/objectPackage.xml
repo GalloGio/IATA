@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>*</members>
+        <members>EF_Currency</members>
+        <members>EF_Invoice_Distribution</members>
+        <members>EF_Payment_Method</members>
+        <members>EF_Payment_Terms</members>
         <name>GlobalPicklist</name>
     </types>
     <types>
@@ -49,5 +52,5 @@
         <members>*</members>
         <name>Queue</name>
     </types>
-    <version>36.0</version>
+    <version>37.0</version>
 </Package>
