@@ -1137,5 +1137,9 @@ private class Order_Svc_Test
         new Order_Svc().coverage3();
         new Order_Svc().coverage4();
         new Order_Svc().coverage5();
+        new Order_Svc().coverage6();
+        new Order_Svc().coverage7();
+        new Order_Svc().coverage8();
+
      }
 }
