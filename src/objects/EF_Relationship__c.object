@@ -92,16 +92,17 @@
     </fields>
     <fields>
         <fullName>Contract__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
         <relationshipLabel>E&amp;F Relationships</relationshipLabel>
         <relationshipName>EF_Relationships</relationshipName>
-        <required>false</required>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Data_Currency__c</fullName>
@@ -280,5 +281,5 @@
     </nameField>
     <pluralLabel>E&amp;F Relationships</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>
