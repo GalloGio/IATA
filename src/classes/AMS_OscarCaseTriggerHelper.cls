@@ -321,6 +321,12 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c : oscarCases){
             c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
             c.Status = oscars.get(c.Oscar__c).Status__c;
+
+            String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(c.Account.Location_Type__c,c.Account.Category__c);
+
+            if(typeOfCustomer != null && typeOfCustomer != c.Type_of_customer__c)
+                c.Type_of_customer__c = typeOfCustomer;
+
         }
     }
 }
