@@ -806,6 +806,8 @@ public without sharing class AMS_Utils {
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
+
+
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
@@ -832,13 +834,21 @@ public without sharing class AMS_Utils {
 
             }
 
+
+
+
+
             if (!accountsToUpdate.isEmpty()) {
                 update accountsToUpdate;
             }
+
             if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
 
+
         }
+
+
     }
 
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
