@@ -23389,6 +23389,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Type__c</picklist>
             <values>
                 <fullName>E%26F Client</fullName>
@@ -25711,6 +25757,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28084,6 +28176,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Type__c</picklist>
             <values>
                 <fullName>E%26F Client</fullName>
@@ -30350,6 +30488,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33512,6 +33696,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Type__c</picklist>
             <values>
                 <fullName>E%26F Client</fullName>
@@ -36303,6 +36533,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40190,6 +40466,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Type__c</picklist>
             <values>
                 <fullName>E%26F Client</fullName>
@@ -42354,6 +42676,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46404,6 +46772,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50479,6 +50893,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Type__c</picklist>
             <values>
                 <fullName>E%26F Client</fullName>
@@ -52689,6 +53149,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Type__c</picklist>
             <values>
                 <fullName>E%26F Client</fullName>
@@ -54827,6 +55333,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57076,6 +57628,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59648,6 +60246,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63429,6 +64073,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_SubStatus__c</picklist>
+            <values>
+                <fullName>Bankrupt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ceased Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
