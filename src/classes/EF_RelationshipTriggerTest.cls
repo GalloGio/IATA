@@ -1,6 +1,6 @@
 @isTest
 private class EF_RelationshipTriggerTest {
-/*
+
 	@testSetup 
     static void setup() {
 
@@ -223,5 +223,5 @@ private class EF_RelationshipTriggerTest {
 	}
 
 
-*/	
+
 }
