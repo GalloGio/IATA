@@ -401,7 +401,7 @@ public class AMS_AccountHierarchySelectionController {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
-				stdController.save();
+				update oscar;
 
 				//must be after save, to pass validations on the details
 				if(updateRelatedRecords()) closeTab = true;
