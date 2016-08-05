@@ -536,8 +536,9 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        insert pricebookEntries;
-    
+        Database.insert(pricebookEntries, false);
+        //insert pricebookEntries;
+        
         for(Integer i = 0; i < nb; i++)
         {
             orderItems.add(new OrderItem(
@@ -789,7 +790,7 @@ public with sharing class TestDataGenerator
             Product2 prod = products[x]; 
             zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
         }
-        insert zProducts;
+        database.insert( zProducts,false);
         
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
@@ -807,7 +808,7 @@ public with sharing class TestDataGenerator
             prod.ZProduct__c = zprod.Id;
         }
 
-        insert zRatePlans;
+        database.insert(zRatePlans,false) ;
         
         //Create Unit Price Charge & Discount for each Plan 
         for(zqu__ProductRatePlan__c rp : zRatePlans)
@@ -820,8 +821,8 @@ public with sharing class TestDataGenerator
             charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
             zCharges.addAll(charges);
         }
+        database.insert(zCharges,false) ;
 
-        insert zCharges;
         
         //-- Generate Tiers for Volume Prices 
         List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
@@ -838,8 +839,8 @@ public with sharing class TestDataGenerator
         }
         insert zTiers;
         System.debug('zTiers::'+zTiers);
-        
-        insert products;
+                database.insert(products,false) ;
+
         
         //-- Create PriceBookEntries for each product       
         for(Product2 p : products)
@@ -850,7 +851,8 @@ public with sharing class TestDataGenerator
                 UnitPrice = 20
             ));
         }
-        insert lst_pbe;
+                        database.insert(lst_pbe,false) ;
+
         return products;
     }
 
@@ -1309,16 +1311,16 @@ public with sharing class TestDataGenerator
         
         try
         {
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='Ontario', ISO_Code__c='CA-ON'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='ON', ISO_Code__c='ON'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='Quebec', ISO_Code__c='CA-QC'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[0].Id, Name='QC', ISO_Code__c='QC'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='Alaska', ISO_Code__c='US-AK'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='AK', ISO_Code__c='AK'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='California', ISO_Code__c='US-CA'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='CA', ISO_Code__c='CA'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='Florida', ISO_Code__c='US-FL'));
-            listState.add(new IATA_ISO_State__c(IATA_ISO_Country__c=listCountry[3].Id, Name='FL', ISO_Code__c='FL'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='Ontario', ISO_Code__c='CA-ON'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='ON', ISO_Code__c='ON'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='Quebec', ISO_Code__c='CA-QC'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[0].Id, Name='QC', ISO_Code__c='QC'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='Alaska', ISO_Code__c='US-AK'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='AK', ISO_Code__c='AK'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='California', ISO_Code__c='US-CA'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='CA', ISO_Code__c='CA'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='Florida', ISO_Code__c='US-FL'));
+            listState.add(new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=listCountry[3].Id, Name='FL', ISO_Code__c='FL'));
             Database.upsert(listState, IATA_ISO_State__c.ISO_Code__c, false);
         }
         catch (Exception e) {}
@@ -1525,7 +1527,8 @@ public with sharing class TestDataGenerator
         }else{
             isoState = new IATA_ISO_State__c(
                 Name = 'QC',
-                ISO_Code__c = 'QC'
+                ISO_Code__c = 'QC',
+                IATA_ISO_Country__c = isoCountry.Id
             );
             insert isoState;
         }
@@ -1536,6 +1539,7 @@ public with sharing class TestDataGenerator
                 Street__c = i + ' street',
                 City__c = 'Montreal',
                 ZipCode__c = 'H0H 0H0',
+                Address_Type__c = Utility.generateRandomString(8) + i, 
                 //ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'QC'),
                 //ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
                 ISO_Country__c = isoCountry.Id,
@@ -1607,7 +1611,7 @@ public with sharing class TestDataGenerator
         );
 
         if(doInsert)
-            insert eventRelease;
+            Database.insert(eventRelease, false);
 
         return eventRelease;
     }

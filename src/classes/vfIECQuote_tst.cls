@@ -70,8 +70,10 @@ private class vfIECQuote_tst {
 		
 		oContact = IECUserManager.getContactById(usr.ContactId);
 		
-		oBillingAddress = IECTestUtil.CreateSampleIECAddress(oContact, IECConstants.IECAddress_AddressType_Billing);
-		insert oBillingAddress;
+		oBillingAddress = TestDataGenerator.generateAddresses(1, true)[0];
+		
+		// Add the location record required to link all Account/Contact/Address records
+		TestDataGenerator.generateLocations(IECConstants.IECAddress_AddressType_Billing, oBillingAddress.Id, oContact.AccountId, oContact.Id);
 		
     	System.runAs(usr) {
     		
@@ -130,9 +132,10 @@ private class vfIECQuote_tst {
 			pgCont.closePopup();
 			pgCont.toggleBilling();
 			pgCont.toggleAutoRenew();
+			pgCont.cancelQuote();
 			List<SelectOption> lstTemp = pgCont.lstISOCountries;
-			lstTemp = pgCont.lstCanadaProvinces;
-			lstTemp = pgCont.lstUSAStates;
+			lstTemp = pgCont.lstStateProvince;
+			Account testAccount = pgCont.oAccount;
 			
 			// Test #3 - generate the quote and opportunity
 			try {

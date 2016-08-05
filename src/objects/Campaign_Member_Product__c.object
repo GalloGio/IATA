@@ -47,6 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>IEC - products ordered by customer for a given Campaign</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -57,6 +58,7 @@
     <enableStreamingApi>false</enableStreamingApi>
     <fields>
         <fullName>Campaign__c</fullName>
+        <description>IEC - parent campaign</description>
         <externalId>false</externalId>
         <label>Campaign</label>
         <referenceTo>Campaign</referenceTo>
@@ -70,6 +72,7 @@
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
+        <description>IEC - Customer to generate renewal notice</description>
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
@@ -83,6 +86,7 @@
     </fields>
     <fields>
         <fullName>Invoice_Date__c</fullName>
+        <description>IEC - Technical field helping to get the latest quantity ordered</description>
         <externalId>false</externalId>
         <label>Invoice Date</label>
         <required>false</required>
@@ -101,6 +105,7 @@
     </fields>
     <fields>
         <fullName>Key__c</fullName>
+        <description>IEC - technical field to avoid duplicates</description>
         <externalId>false</externalId>
         <label>Key</label>
         <length>60</length>
@@ -112,6 +117,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Product to include in renewal notice</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>
@@ -123,6 +129,7 @@
     </fields>
     <fields>
         <fullName>Quantity__c</fullName>
+        <description>IEC - Quantity to order for renewal notice</description>
         <externalId>false</externalId>
         <label>Quantity</label>
         <precision>18</precision>

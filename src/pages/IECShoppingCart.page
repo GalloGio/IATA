@@ -654,14 +654,14 @@ padding-right: 15px;
                                                         <td colspan="2" class="checkout-info__billingdetails-value">
                                                             {!oBillingAddress.City__c}
                                                             <span style="display:{!IF(NOT(oBillingAddress.City__c == ''), '', 'none')}">,&nbsp;</span>
-                                                            {!oBillingAddress.State__c}
+                                                            {!oBillingAddress.ISO_State_Name__c}
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2" class="checkout-info__billingdetails-value">
                                                             {!oBillingAddress.ZipCode__c}
                                                             <span style="display:{!IF(NOT(oBillingAddress.ZipCode__c == ''), '', 'none')}">-&nbsp;</span>
-                                                            {!oBillingAddress.Country__c}
+                                                            {!oBillingAddress.ISO_Country_Name__c}
                                                         </td>
                                                     </tr>
                                                     <apex:outputPanel id="panelVATReadOnly" layout="none" rendered="{!vatConfig <> NULL}">
@@ -748,9 +748,9 @@ padding-right: 15px;
                                                         <td class="checkout-info__billingdetails-label">Country<span class="required">*</span></td>
                                                         -->
                                                         <td>
-                                                            <apex:selectList style="color: {!IF(oBillingAddress.Country__c != null, '#000', '#aaa')}" value="{!oBillingAddress.Country__c}" size="1"  styleClass="login__input -required" title="Country" >
+                                                            <apex:selectList style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}" value="{!oBillingAddress.ISO_Country__c}" size="1"  styleClass="login__input -required" title="Country" >
                                                                 <apex:selectOptions value="{!lstISOCountries}"/>
-                                                                <apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelEditContactInfo, panelVATEdit" />
+                                                                <apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelEditContactInfo, panelVATEdit, panelBillingStatesProvince" />
                                                             </apex:selectList>
                                                         </td>
                                                     </tr>
@@ -759,14 +759,10 @@ padding-right: 15px;
                                                         <td class="checkout-info__billingdetails-label">State/Province<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
                                                         -->
                                                         <td>
-                                                            <apex:outputPanel id="panelBillingStatesProvince" layout="inline">
-                                                                <apex:inputText value="{!oBillingAddress.State__c}"  styleClass="login__input" html-placeholder="State/Province" title="State/Province" rendered="{!oBillingAddress.Country__c != 'Canada' && oBillingAddress.Country__c != 'United States'}" />
-                                                                <apex:selectList onchange="changeTextColor(this);" style="color: {!IF(oBillingAddress.State__c != null, '#000', '#aaa')}" title="Province" value="{!oBillingAddress.State__c}" size="1"  rendered="{!oBillingAddress.Country__c == 'Canada'}"  styleClass="login__input -required">
-                                                                    <apex:selectOptions value="{!lstCanadaProvinces}" />
+                                                            <apex:outputPanel id="panelBillingStatesProvince" layout="inline" rendered="{!bStateAvailable}">
+                                                                <apex:selectList onchange="changeTextColor(this);" style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}" title="State/Province" value="{!oBillingAddress.ISO_State__c}" size="1"  styleClass="login__input -required">
+                                                                    <apex:selectOptions value="{!lstStateProvince}" />
                                                                 </apex:selectList>  
-                                                                <apex:selectList onchange="changeTextColor(this);" style="color: {!IF(oBillingAddress.State__c != null, '#000', '#aaa')}" title="State" value="{!oBillingAddress.State__c}" size="1"  rendered="{!oBillingAddress.Country__c == 'United States'}"  styleClass="login__input -required">
-                                                                    <apex:selectOptions value="{!lstUSAStates}" />
-                                                                </apex:selectList>
                                                             </apex:outputPanel>
                                                         </td>
                                                     </tr>
