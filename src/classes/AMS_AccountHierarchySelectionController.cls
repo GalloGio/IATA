@@ -5,7 +5,6 @@ public class AMS_AccountHierarchySelectionController {
 	// ***********************************
 
 	private final Id ANALYST_PROFILE_ID = [SELECT Id, Name FROM Profile WHERE Name = 'FDS Hub Analyst ARM'].Id;
-	private ApexPages.StandardController stdController;
 
 	private Account mainAccount{
 		get{
@@ -259,11 +258,10 @@ public class AMS_AccountHierarchySelectionController {
 	// ********** constructor ************
 	// ***********************************
 	public AMS_AccountHierarchySelectionController(ApexPages.StandardController stdController){
-		this.stdController = stdController;
-		if(!Test.isRunningTest()) this.stdController.addFields(new List<String>(oscarFields));
+		if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
 
-		oscarId = this.stdController.getId();
-		oscar = (AMS_OSCAR__c)this.stdController.getRecord();
+		oscarId = stdController.getId();
+		oscar = (AMS_OSCAR__c)stdController.getRecord();
 	}
 
 
@@ -439,7 +437,7 @@ public class AMS_AccountHierarchySelectionController {
 				this.controller.oscar.Account__c = this.acc.Id;
 			}else{
 				this.main = true;
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Main account mus always be selected'));
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Main account must always be selected'));
 			}
 		}
 
