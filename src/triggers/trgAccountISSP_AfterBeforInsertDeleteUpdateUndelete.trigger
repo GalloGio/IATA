@@ -55,6 +55,8 @@ after update, before delete, before insert, before update) {
             }
         }
         
+        if(accIdSet.isEmpty()) return;
+        
         set<Id> userIdSet = new set<Id>();
         for(AccountTeamMember atm : [select Id,UserId from AccountTeamMember where AccountId in:accIdSet and TeamMemberRole =:'Portal Administrator']){
             userIdSet.add(atm.UserId);
