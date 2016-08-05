@@ -257,6 +257,22 @@ var dyn_functions = {
 
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
            
+           },
+           checkAccountHierarchy:function (arg) {
+                var changeTab = function(result){
+                    /*if(result.success == true){
+                        alert('Tab opened sucessfully');
+                    }*/
+                };
+
+                // Use the results primary tab id and open a new subtab
+               var openSubtab = function(result)
+               {            
+                    sforce.console.openSubtab(result.id, '/apex/AMS_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
+               };
+
+               sforce.console.getEnclosingPrimaryTabId(openSubtab);
+           
            }
 
 };

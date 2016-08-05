@@ -62,6 +62,9 @@ public without sharing class AMS_Utils {
     public static final String OWNERSHIP_NON_IATA = 'Ownership to non-IATA Agent';
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
+    public static final String NAME = 'Name';
+    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String VFMR = 'VFMR';
 
 
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
@@ -103,9 +106,10 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
-    
+     
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
+    public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
 

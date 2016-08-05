@@ -29,11 +29,12 @@ public class AMS_OSCARTriggerHandler {
 	//*************************************
 
 	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
+		prepopulateValues();
 		handleChangesProcess(oscars);
 	}
 
 	public static void handleBeforeInsert() {
-
+		prepopulateValues();
 	}
 
 	public static void handleAfterInsert() {
@@ -49,6 +50,28 @@ public class AMS_OSCARTriggerHandler {
 	//*************************************
 	//********** helper methods ***********
 	//*************************************
+	private static void prepopulateValues() {
+		//AMS-1674 - [Agency changes] when "Type of change" include "Location type" the "Change of location type behavior" shoule be pre-populated
+
+		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
+
+		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New){
+			if(
+				oscar.Process__c == AMS_Utils.AGENCYCHANGES
+				&& oscar.Type_of_change__c != null
+				&& oscar.Change_of_location_type_behavior__c == null
+				//&& (Trigger.isInsert || oscar.Type_of_change__c != oldMap.get(oscar.Id).Type_of_change__c)
+			){
+			    Set<String> tocList = new Set<String>();
+			    tocList.addAll(oscar.Type_of_change__c.split(';'));
+
+		        if(tocList.contains(AMS_Utils.LOCATION_TYPE)){
+		            oscar.Change_of_location_type_behavior__c = AMS_Utils.CHLOCTYPEBEHAVIOR_STANDARD;
+		        }
+
+			}
+		}
+	}
 
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
 
