@@ -212,9 +212,10 @@ public class AMS_AccountHierarchySelectionController {
 	
 	public Boolean showLocationTypeBehavior{
 		get{
-			if(oscar.Type_of_Change__c != null){
+			if(oscar.Type_of_Change__c != null && tocList.contains(AMS_Utils.LOCATION_TYPE)){
 
-				if(tocList.contains(AMS_Utils.LOCATION_TYPE)) return true;
+				if(oscar.Change_of_location_type_behavior__c == null) oscar.Change_of_location_type_behavior__c = AMS_Utils.CHLOCTYPEBEHAVIOR_STANDARD;
+				return true;
 			}
 			oscar.Change_of_location_type_behavior__c = null;
 			return false;
