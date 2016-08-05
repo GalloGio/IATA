@@ -120,6 +120,13 @@
         <value>Create Correction Case</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action6</shortDescription>
+        <value>Edit the accounts involved</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
