@@ -9936,8 +9936,8 @@ Can you please confirm which country you&apos;ve previously received support for
     <labels>
         <fullName>ISSP_Last_updated_statement</fullName>
         <categories>ISSP</categories>
-        <languag-e>en_US</language>
-        <protect-ed>false</protected>
+        <language>en_US</language>
+        <protected>false</protected>
         <shortDescription>ISSP Last updated statement</shortDescription>
         <value>Last updated statement</value>
     </labels>
