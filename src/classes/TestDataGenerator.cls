@@ -790,7 +790,7 @@ public with sharing class TestDataGenerator
             Product2 prod = products[x]; 
             zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
         }
-        insert zProducts;
+        database.insert( zProducts,false);
         
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
@@ -808,7 +808,7 @@ public with sharing class TestDataGenerator
             prod.ZProduct__c = zprod.Id;
         }
 
-        insert zRatePlans;
+        database.insert(zRatePlans,false) ;
         
         //Create Unit Price Charge & Discount for each Plan 
         for(zqu__ProductRatePlan__c rp : zRatePlans)
@@ -821,8 +821,8 @@ public with sharing class TestDataGenerator
             charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
             zCharges.addAll(charges);
         }
+        database.insert(zCharges,false) ;
 
-        insert zCharges;
         
         //-- Generate Tiers for Volume Prices 
         List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
@@ -839,8 +839,8 @@ public with sharing class TestDataGenerator
         }
         insert zTiers;
         System.debug('zTiers::'+zTiers);
-        
-        insert products;
+                database.insert(products,false) ;
+
         
         //-- Create PriceBookEntries for each product       
         for(Product2 p : products)
@@ -851,7 +851,8 @@ public with sharing class TestDataGenerator
                 UnitPrice = 20
             ));
         }
-        insert lst_pbe;
+                        database.insert(lst_pbe,false) ;
+
         return products;
     }
 
