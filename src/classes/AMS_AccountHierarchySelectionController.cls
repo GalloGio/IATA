@@ -437,7 +437,7 @@ public class AMS_AccountHierarchySelectionController {
 				this.controller.oscar.Account__c = this.acc.Id;
 			}else{
 				this.main = true;
-				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Main account mus always be selected'));
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, 'Main account must always be selected'));
 			}
 		}
 
