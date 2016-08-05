@@ -78,7 +78,7 @@
 								<section class="group-container refine-by">
 									<apex:form id="frmFilters" styleClass="frmFilters">
 										<h2 class="group-title">{!$Label.Refine_by}:</h2>
-										<div class="accordion-container select-deselect">
+										<div class="accordion-container js-select-deselect">
 	                    					<dl class="list refine-by">
 						                        <apex:variable value="{!1}" var="index1" />
 						                        <apex:repeat value="{!filters}" var="filter">

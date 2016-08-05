@@ -3,10 +3,5 @@
     <apiVersion>34.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ISSP_AMS_Cargo_Form</label>
-    <packageVersions>
-        <majorNumber>6</majorNumber>
-        <minorNumber>36</minorNumber>
-        <namespace>DSE</namespace>
-    </packageVersions>
+    <label>ISSP_AccountStatements</label>
 </ApexPage>
