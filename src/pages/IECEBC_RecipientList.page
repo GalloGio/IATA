@@ -38,6 +38,9 @@
                         case 'rename':
                             renameItem(item.Id);
                             break;
+                        case 'edit':
+                            editItem(item.Id);
+                            break;
                         default:
                             alert('The action ' + $(this).val() + ' has not been defined yet.');
                             e.preventDefault();
@@ -59,6 +62,9 @@
                             <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
                         </apex:actionFunction>
                         <apex:actionFunction name="renameItem" rerender="js-modal-rename-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="editItem" rerender="js-modal-edit-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
                             <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
                         </apex:actionFunction>
                     </apex:form>
@@ -144,14 +150,15 @@
             <!-- Start of Page Content -->
             <main class="main-content">
                 <div class="inner-wrapper">
+                    
                     <h1 class="page-title">Manage your lists</h1>
                     <div class="sort-by">
-                        <apex:form >
+                        <apex:form id="Sortselection">
                             <div class="custom-user-input select">
                                 <i class="icon angle-down"></i>
                                 <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
-                                    <apex:selectOptions value="{!sortByOptions}"/>
-                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                                    <apex:selectOptions value="{!sortByOptions}"  />
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList,Sortselection" />
                                 </apex:selectList> 
                             </div>
                         </apex:form>
@@ -162,7 +169,7 @@
                                 <tr>
                                     <th class="name">List name</th>
                                     <th class="type">List type</th>
-                                    <th class="date created-on">Created on</th>
+                                    <th class="date created-on">Creation Date</th>
                                     <th class="date last-edited">Last edited</th>
                                     <th class="actions"><a class="button" href="#">Create new list</a></th>
                                 </tr>
@@ -208,6 +215,21 @@
                     </apex:outputPanel>
                 </div>
             </main>
+            
+            
+            <apex:form >
+                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                    Page
+                    <div class="custom-user-input select">
+                        <i class="icon angle-down"></i>
+                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                            <apex:selectOptions value="{!pageOptions}"/>
+                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                        </apex:selectList> 
+                    </div>
+                    of {!maxPage}
+                </apex:outputPanel>
+            </apex:form>
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>

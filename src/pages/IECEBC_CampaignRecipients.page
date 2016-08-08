@@ -27,6 +27,11 @@
                 <apex:actionFunction name="updateRecipientCount" action="{!doNothing}" reRender="">
                     <apex:param name="firstParam" assignTo="{!newFilter.Number_of_Recipients__c}" value="" />
                 </apex:actionFunction>
+                
+                <apex:actionFunction name="displayConfirmationStep3" action="{!validateNewFilter}" rerender="modal" oncomplete="jQuery('body').css('cursor', 'auto');">
+                    <apex:param assignTo="{!newFilter.Number_of_Recipients__c}" name="firstParam" value="" />
+                    <apex:param assignTo="{!newListStepNumber}" name="secondParam" value="4" />
+                </apex:actionFunction>
             </apex:form>
             <script type="text/javascript">
             var newFilterJSON = '';
@@ -44,7 +49,7 @@
             }
             
             function refreshExistingListCount(filterId) { 
-                jQuery('.existingListRecipientCount,.existingListProvisionalCost,.existingListNewBalance').html('<img src="/img/loading.gif" />');
+                jQuery('.existingListRecipientCount,.existingListRecipientCount2,.existingListProvisionalCost,.existingListNewBalance').html('<img src="/img/loading.gif" />');
                 
                 jQuery('input', document.getElementById('{!$Component.existingListForm}')).attr('disabled', 'disabled');
                 jQuery('.button').addClass('disabled');
@@ -53,8 +58,21 @@
                     if (event.statusCode != 200) results = 0; 
                     
                     jQuery('.existingListRecipientCount').text((results).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                    jQuery('.existingListProvisionalCost').text((results * {!productRatePlan.EBC_Currency_Cost_Per_Email__c}).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    
                     newBalance = {!billingAccount.eBroadcast_Email_Balance__c} - results;
+                    jQuery('.existingListRecipientCount2').text((newBalance > 0 ? 0 : Math.abs(newBalance)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    
+                    cost = 0.001;
+                    if (newBalance < 0) {
+                        cost = (Math.abs(newBalance) * {!productRatePlan.EBC_Currency_Cost_Per_Email__c});
+                        newBalance = 0;
+                    	if (cost > 0) jQuery('.existingListRecipientCount3').show();
+                    } else {
+                        jQuery('.existingListRecipientCount3').hide();
+                    }
+                    
+                    jQuery('.existingListProvisionalCost').text(cost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    
                     jQuery('.existingListNewBalance').text((newBalance.toString()).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     
                     jQuery('.no-provisional-cost').removeClass('no-provisional-cost');
@@ -74,8 +92,6 @@
                 <div class="inner-wrapper">
                     <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
                     <h1 class="page-title">Select the list you want to use</h1>
-                    
-                    <apex:pageMessages />
 
                     <apex:form id="existingListForm" >
                         <apex:inputHidden value="{!campaign.EBC_Master_Filter__c}" id="selectedFilter" />
@@ -142,21 +158,23 @@
                                                     <td>
                                                         <div class="item-value">
                                                             <strong class="existingListRecipientCount">n/a</strong>
-                                                            <span class="unit"> emails</span>
+                                                            <span class="unit"> email(s)</span>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr> 
-                                                    <th>
-                                                        <div class="item-name">Available balance</div>
-                                                    </th>
-                                                    <td>
-                                                        <div class="item-value text-green">
-                                                            <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
-                                                            <span class="unit"> emails</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
+                                                    <tr> 
+                                                        <th>
+                                                            <div class="item-name">Available balance</div>
+                                                        </th>
+                                                        <td>
+                                                            <div class="item-value text-green">
+                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
+                                                                <span class="unit"> email(s)</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputText>
                                                 <tr class="hide-no-count">
                                                     <th>
                                                         <div class="item-name">Provisional cost</div>
@@ -164,21 +182,23 @@
                                                     <td>
                                                         <div class="item-value">
                                                             <strong class="text-orange">USD $<span class="existingListProvisionalCost">n/a</span></strong>
-                                                            <p>for <span class="existingListRecipientCount">n/a</span> emails at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> cost/email</p>
+                                                            <p class="existingListRecipientCount3" style="display: none;">for <span class="existingListRecipientCount2">n/a</span> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="hide-no-count">
-                                                    <th>
-                                                        <div class="item-name">Your new account balance will be</div> 
-                                                    </th>
-                                                    <td>
-                                                        <div class="item-value">
-                                                            <strong class="existingListNewBalance">n/a</strong>
-                                                            <span class="unit"> email(s)</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
+                                                    <tr class="hide-no-count">
+                                                        <th>
+                                                            <div class="item-name">Your new account balance will be</div> 
+                                                        </th>
+                                                        <td>
+                                                            <div class="item-value">
+                                                                <strong class="existingListNewBalance">n/a</strong>
+                                                                <span class="unit"> email(s)</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputText>
                                             </tbody>
                                         </table>
                                     </div>
@@ -191,10 +211,10 @@
 	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary{!IF(campaign.EBC_Master_Filter__c == null, ' disabled', '')}" value="Save and Return to Dashboard" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step2_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Continue" /></li>
+	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button{!IF(campaign.EBC_Master_Filter__c == null, ' disabled', '')}" value="Continue" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!NOT(campaign.Is_Step2_Writable__c)}">
 	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>
@@ -210,7 +230,6 @@
             
 			
             <apex:outputPanel id="modal">
-                <apex:pageMessages />
                 <script type="text/javascript">
                 	newFilterJSON = '{!newFilterEscapedJSON}';
                 </script>
@@ -222,6 +241,7 @@
                                 <section id="js-modal-new-list-audience" class="modal-content wide">
                                     
                                     <apex:form >
+                                        <apex:actionFunction name="displayConfirmationCustomCodes" reRender="newFilterJSON" action="{!doNothing}" oncomplete="displayConfirmationStep2();" />
                                         
                                         <header class="modal-header">
                                             <h2 class="modal-title">Create a new list</h2>
@@ -338,7 +358,7 @@
                                                         <div class="field-group textarea">
                                                             <label>
                                                                 <span class="input-label">Paste your list of IATA numeric codes in the box below:</span>
-                                                                <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" />
+                                                                <apex:inputField value="{!newFilter.IATA_Codes__c}" styleClass="user-input textarea" style="font-family: tahoma, open sans-serif;" />
                                                             </label>
                                                             <p class="input-description">Each IATA code needs to be entered seperated by a semicolon with a max of <strong>5,000 codes</strong>.</p>
                                                         </div>
@@ -360,9 +380,12 @@
                                                         <apex:outputText rendered="{!ISBLANK(newFilter.Audience__c)}">
                                                             <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
                                                         </apex:outputText>
-                                                        <apex:commandLink rendered="{!NOT(ISBLANK(newFilter.Audience__c))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewFilter}" styleClass="button" value="Continue" rerender="modal" oncomplete="jQuery('body').css('cursor', 'auto');">
-                                                            <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="{!IF(newFilter.Audience__c != 'Custom', 2, 4)}" />
+                                                        <apex:commandLink rendered="{!NOT(ISBLANK(newFilter.Audience__c)) && newFilter.Audience__c != 'Custom'}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewFilter}" styleClass="button" value="Continue" rerender="modal" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                            <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="2" />
                                                         </apex:commandLink>
+                                                        <apex:outputText rendered="{!newFilter.Audience__c == 'Custom'}">
+	                                                        <a href="#" onclick="jQuery('body').css('cursor', 'wait'); displayConfirmationCustomCodes(); return false;" class="button">Continue</a>
+                                                        </apex:outputText>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -447,7 +470,6 @@
                                                             </div>
                                                             <label class="input-label" for="{!globalGeoFilterId}">
                                                                 {!geoFilterPresets[globalGeoFilterId].Name}
-                                                                <span class="number-of-recipients">(90,000 recipients)</span>
                                                             </label>
                                                         </div>
                                                     </li>
@@ -481,13 +503,16 @@
                                                                 newFilterJSON = '{!newFilterEscapedJSON}';
                                                                 </script>
                                                                 <apex:actionFunction name="refreshGeoFilter" action="{!doNothing}" rerender="geoFilters" />
+                                                                <apex:actionFunction name="refreshGeoFilterReset" action="{!resetGeoFilter}" rerender="geoFilters">
+                                                                    <apex:param assignTo="{!resetFilterIndex}" name="firstParam" value="" />
+                                                                </apex:actionFunction>
                                                                 <apex:variable value="-1" var="ind" />
                                                                 <apex:repeat value="{!geoFilters}" var="f">
                                                                     <apex:variable var="ind" value="{!TEXT(VALUE(ind) + 1)}" />
                                                                     <apex:outputPanel layout="block" styleClass="field-group select default">
                                                                         <div class="custom-user-input select">
                                                                             <i class="icon angle-down"></i>
-                                                                            <apex:selectList onchange="refreshGeoFilter();" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
+                                                                            <apex:selectList onchange="refreshGeoFilterReset('{!ind}');" value="{!f.EBC_Application_Filter__c}" styleClass="user-input select" size="1">
                                                                                 <apex:selectOption itemLabel="Please Select" itemValue="" />
                                                                                 <apex:selectOptions value="{!availableGeoApplicationFilterOptions}" />
                                                                             </apex:selectList> 
@@ -713,10 +738,6 @@
                                             <div class="footer-actions text-right">
                                                 <ul>
                                                     <li>
-                                                        <apex:actionFunction name="displayConfirmationStep3" action="{!validateNewFilter}" rerender="modal" oncomplete="jQuery('body').css('cursor', 'auto');">
-                                                            <apex:param assignTo="{!newFilter.Number_of_Recipients__c}" name="firstParam" value="" />
-                                                            <apex:param assignTo="{!newListStepNumber}" name="secondParam" value="4" />
-                                                        </apex:actionFunction>
                                                         <a href="#" onclick="jQuery('body').css('cursor', 'wait'); displayConfirmation(); return false;" class="button">Continue</a>
                                                     </li>
                                                 </ul>
@@ -778,6 +799,11 @@
                                                 
                                                 <div class="row">
                                                     <div class="main-container columns small-12 medium-8">
+                                                        
+                    									<apex:outputPanel id="confirmationPageMessages">
+                                                        	<apex:pageMessages />
+                                                        </apex:outputPanel>
+                                                        
                                                         <table class="data-table new-campaign">
                                                             <tr>
                                                                 <th>Audience:</th>
@@ -785,28 +811,30 @@
                                                                     IATA Travel Agencies
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <th>Geo Selection:</th>
-                                                                <td>
-                                                                    <apex:outputText rendered="{!geoFilterPreset == 'custom-filter'}">
-                                                                    	<span class="label">Custom</span>
-                                                                    </apex:outputText>
-                                                                    <apex:outputText rendered="{!geoFilterPreset != 'custom-filter'}">
-                                                                    	<span class="label">{!geoFilterPresets[geoFilterPreset].Name}</span>
-                                                                    </apex:outputText>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Refinement:</th>
-                                                                <td>
-                                                                    {!uniqueRefinementFiltersName}
-                                                                </td>
-                                                            </tr>
+                                                            <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
+                                                                <tr>
+                                                                    <th>Geo Selection:</th>
+                                                                    <td>
+                                                                        <apex:outputText rendered="{!geoFilterPreset == 'custom-filter'}">
+                                                                            <span class="label">Custom</span>
+                                                                        </apex:outputText>
+                                                                        <apex:outputText rendered="{!geoFilterPreset != 'custom-filter'}">
+                                                                            <span class="label">{!geoFilterPresets[geoFilterPreset].Name}</span>
+                                                                        </apex:outputText>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Refinement:</th>
+                                                                    <td>
+                                                                        {!IF(uniqueRefinementFiltersName != null && !ISBLANK(uniqueRefinementFiltersName), uniqueRefinementFiltersName, 'None')}
+                                                                    </td>
+                                                                </tr>
+                                                            </apex:outputText>
                                                         </table>
                                                         <apex:outputPanel id="newFilterNameField" layout="block" styleClass="field-group text list-name">
                                                             <label>
                                                                 <span class="input-label">Please provide a list name</span>
-                                                                <apex:inputField type="text" required="true" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
+                                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
                                                             </label>
                                                             <div class="input-remaining">
                                                                 <span class="js-remaining-count" data-id="list-name">{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}</span>
@@ -819,6 +847,7 @@
                                                             </apex:outputText>
                                                         </apex:outputPanel>
                                                     </div>
+                                                    
                                                     <div class="sub-container columns small-12 medium-4">
                                                         <div class="summary-box">
                                                             <div class="box-body fit">
@@ -831,43 +860,51 @@
                                                                         <td>
                                                                             <div class="item-value">
                                                                                 <strong><span class="newFilterCount"><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!newFilter.Number_of_Recipients__c}"/></apex:outputText></span></strong>
-                                                                                <span class="unit"> emails</span>
+                                                                                <span class="unit"> email(s)</span>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr> 
-                                                                        <th>
-                                                                            <div class="item-name">Available balance</div>
-                                                                        </th>
-                                                                        <td>
-                                                                            <div class="item-value text-green">
-                                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
-                                                                                <span class="unit"> emails</span>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
+                                                                    <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
+                                                                        <tr> 
+                                                                            <th>
+                                                                                <div class="item-name">Available balance</div>
+                                                                            </th>
+                                                                            <td>
+                                                                                <div class="item-value text-green">
+                                                                                    <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText></strong>
+                                                                                    <span class="unit"> email(s)</span>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </apex:outputText>
                                                                     <tr>
                                                                         <th>
                                                                             <div class="item-name">Provisional cost</div>
                                                                         </th>
                                                                         <td>
                                                                             <div class="item-value">
-                                                                                <strong class="text-orange">USD $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * newFilter.Number_of_Recipients__c}"/></apex:outputText></strong>
-                                                                                <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!newFilter.Number_of_Recipients__c}"/></apex:outputText> emails at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> cost/email</p>
+                                                                                <apex:variable var="cost" value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}" />
+                                                                                <strong class="text-orange">USD $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!cost}"/></apex:outputText></strong>
+                                                                                <apex:outputText rendered="{!cost > 0}">
+                                                                                    <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
+                                                                                </apex:outputText>
                                                                             </div>
                                                                         </td> 
                                                                     </tr>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <div class="item-name">Your new account balance will be</div> 
-                                                                        </th>
-                                                                        <td>
-                                                                            <div class="item-value">
-                                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c}"/></apex:outputText></strong>
-                                                                                <span class="unit"> email(s)</span>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
+                                                                    <apex:outputText rendered="{!campaign.Status__c == 'DRAFT'}">
+                                                                        <tr>
+                                                                            <th>
+                                                                                <div class="item-name">Your new account balance will be</div> 
+                                                                            </th>
+                                                                            <td>
+                                                                                <div class="item-value">
+                                                                                    <apex:variable var="newBalance" value="{!billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c}" />
+                                                                                    <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF(newBalance < 0, 0, newBalance)}"/></apex:outputText></strong>
+                                                                                    <span class="unit"> email(s)</span>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </apex:outputText>
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -879,37 +916,12 @@
                                                 <div class="footer-actions text-right">
                                                     <ul class="list actions">
                                                         <li>
-                                                            <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!createNewFilterAndUse}" styleClass="button wide" value="Save and use in campaign" oncomplete="jQuery('body').css('cursor', 'auto');" rerender="newFilterNameField" /> 
+                                                            <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!createNewFilterAndUse}" styleClass="button wide" value="Save and use in campaign" oncomplete="jQuery('body').css('cursor', 'auto');" rerender="newFilterNameField,confirmationPageMessages" /> 
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </footer>
                                         </apex:outputPanel>
-                                    </apex:form>
-                                </section>
-                            </apex:outputText>
-                            <apex:outputText rendered="{!newListStepNumber == 5}">
-                                <section id="js-modal-confirmation" class="modal-content">
-                                    
-                                    <apex:form >
-                                        <header class="modal-header">
-                                            <h2 class="modal-title">Confirmation</h2>
-                                            <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
-                                        </header>
-                                        <div class="modal-body">
-                                            <h3 class="title">Check against account balance</h3>
-                                            <p><strong>15,000</strong> emails will be sent against your 50,000 emails account balance.</p>
-                                        </div>
-                                        <footer class="modal-footer">
-                                            <ul class="list actions">
-                                                <li>
-                                                    <button class="text-link js-close-modal">Cancel</button>
-                                                </li>
-                                                <li>
-                                                    <a class="button wide" href="?page=template">Continue to template</a>
-                                                </li>
-                                            </ul>
-                                        </footer>
                                     </apex:form>
                                 </section>
                             </apex:outputText>

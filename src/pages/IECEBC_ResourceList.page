@@ -1,4 +1,4 @@
-<apex:page controller="vfIECEBC_TemplateList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+<apex:page controller="vfIECEBC_ResourceList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -151,11 +151,11 @@
             <!-- Start of Page Content -->
             <main class="main-content manage-resources">
                 <div class="inner-wrapper">
-           	      <h1 class="page-title">Manage <span class="tab-pane is-open pane-1">templates</span><span class="tab-pane pane-2">Resources</span></h1>
+           	      <h1 class="page-title">Manage <span class="tab-pane is-open pane-1">resources</span></h1>
                   <div class="tab-container">
                      <ul class="nav tabs"> 
-                       <li class="active"><a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates</a></li>
-                       <li><a href="{!URLFOR($Page.IECEBC_ResourceList)}">Resources</a></li>
+                       <li><a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates</a></li>
+                       <li class="active"><a href="{!URLFOR($Page.IECEBC_ResourceList)}">Resources</a></li>
                      </ul>
                    
                     <div class="sort-by">
@@ -170,21 +170,32 @@
                         </apex:form>
                     </div>
                     <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
+                        <div class="gage-container">
+                            <div class="clearfix">
+                                <span class="title">Image Gallery Storage</span>
+                                <span class="light">2mb of 10mb</span>
+                            </div>
+                            <div class="gage">
+                                <div class="gage-meter" style="width: 40%;">
+    
+                                </div>
+                            </div>
+                            <a class="button secondary" href="#">Get more storage</a>
+                        </div>
                         <table class="data-table manage-lists">
                             <tbody>
                                 <tr>
-                                    <th class="template">Template</th>
-                                    <th class="name">Name</th>
-                                    <th class="type">Audience</th>
+                                    <th class="type">Preview</th>
+                                    <th class="name">List name</th>
                                     <th class="date created-on">Creation Date</th>
                                     <th class="date last-edited">Last edited</th>
-                                    <th class="actions"><a class="button" href="#">Create Template</a></th>
+                                    <th class="actions"><a class="button wide js-open-modal" data-target-modal="#js-modal-upload-resources" href="#"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a></th>
                                 </tr>
                                 
                                 <apex:repeat value="{!filters}" var="i">
                                     <tr>
                                         <td class="type">
-                                            <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/components/templates/template-1.png')}" alt="Template 1" width="50px"/>
+                                            <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/components/icons/cat.png')}" alt="Resource" width="50px"/>
                                         </td>
                                         <td class="name">
                                             {!i.Name}
@@ -199,22 +210,11 @@
                                             </apex:outputPanel>
 											-->
                                         </td>
-                                        <td class="type">{!i.Audience__c}</td>
+                                        
                                         <td class="date created-on">{!i.CreatedDate}</td>
                                         <td class="date last-edited">{!i.LastModifiedDate}</td>
-                                        <td class="actions">
-                                            
-                                            <div class="custom-user-input select">
-                                                <i class="icon angle-down"></i>
-                                                <select data-target-item-id="{!i.Id}" class="user-input select js-champaign-actions" name="item-action">
-                                                    <option value="default">Select action</option>
-                                                    <option value="edit">Edit</option>
-                                                    <option value="duplicate">Duplicate</option>
-                                                    <option value="rename">Rename</option>
-                                                    <option value="delete">Delete</option>
-                                                </select>
-                                            </div>
-                                            
+                                        <td class="actions">                                     
+                                    		<a href="#"><i class="fa fa-trash fa-4" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                 </apex:repeat>
@@ -224,7 +224,40 @@
                    </div>
                 </div>
             </main>
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog">
+                    <section id="js-modal-upload-resources" class="modal-content">
+                        <header class="modal-header">
+                            <h2 class="modal-title">Upload resources</h2>
+                            <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                        </header>
             
+                        <div class="modal-body">
+                            <div class="field-group text">
+                                <label>
+                                    <span class="input-label">Lorem ipsum dolor sit amet, consectetur.</span>
+                                    <span class="custom-user-input file">
+                                        <span class="button">Browse</span>
+                                        <input type="file" class="user-input file js-input-file" />
+                                        <input type="text" class="user-input text file-disabled" disabled=""/>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <footer class="modal-footer">
+                            <ul class="list actions">
+                                <li>
+                                    <button class="text-link js-close-modal">Cancel</button>
+                                </li>
+                                <li>
+                                    <button class="button wide">Upload</button>
+                                </li>
+                            </ul>
+                        </footer>
+            		</section>
+            	</div>
+            </div>
             
             <apex:form >
                 <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">

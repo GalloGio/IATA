@@ -1,4 +1,6 @@
 public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
+    public static Integer ITEMS_PER_PAGE = 2;
+    private boolean firsttimepageload=true;
     public vfIECEBC_RecipientList() {
     }
     
@@ -25,7 +27,9 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     public EBC_Master_Filter__c getSelectedFilter() {
         return (EBC_Master_Filter__c)selectedItem; 
     }
-        
+    private Boolean getIsFirstTimeLoadPage() { 
+        if (firsttimepageload) {firsttimepageload=false; return true;}
+        return false;}
     /*
     public List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
