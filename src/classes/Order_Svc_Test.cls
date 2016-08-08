@@ -1130,16 +1130,5 @@ private class Order_Svc_Test
         system.assert(2 ==[select count() from OrderItem where OrderId = :lstOrder[0].Id and IEC_Is_Paid__c = true], 'Order Item should be paid');
     } //*** end of "test_setOrderItemToPaid"
 
-     @isTest (seeAllData=true) static void test_coverage()
-     {
-        new Order_Svc().coverage1();
-        new Order_Svc().coverage2();
-        new Order_Svc().coverage3();
-        new Order_Svc().coverage4();
-        new Order_Svc().coverage5();
-        new Order_Svc().coverage6();
-        new Order_Svc().coverage7();
-        new Order_Svc().coverage8();
 
-     }
 }
