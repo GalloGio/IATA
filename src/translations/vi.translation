@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,20 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>Lỗi: Thông tin về Tiểu Bang/Tỉnh còn thiếu, vui lòng làm theo các bước sau để điền thông tin:  
+1- Ấn sửa mục &apos;Thành Phố mà Hóa Đơn Được gửi Đến&apos;
+2- Chọn một địa chỉ mà hệ thống thể hiện</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng xác nhận địa chỉ nhận hóa đơn của bạn bằng cách ấn vào ô &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng xác nhận địa chỉ nhận hóa đơn của bạn bằng cách nhấn vào ký hiệu tick</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -717,6 +735,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -885,6 +911,10 @@
         <name>FooterLeadMessage</name>
     </customLabels>
     <customLabels>
+        <label>Quốc Gia</label>
+        <name>GeneralPublicLocation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -919,6 +949,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -2645,6 +2679,10 @@ and
         <name>IEC_Recaptcha_SiteKey</name>
     </customLabels>
     <customLabels>
+        <label>Đia chỉ email này đã đăng ký trên Online Store. Nếu bạn muốn thay đổi mật khẩu, vui lòng vào lại trang đăng nhập và chọn &apos;Forgot your password?&apos;</label>
+        <name>IEC_Registration_UserExist</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
         <name>IEC_Trial_RequestFail</name>
     </customLabels>
@@ -4181,6 +4219,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>Chấp nhận với ngày có hiệu lực trong tương lai</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4209,6 +4255,22 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4231,6 +4293,10 @@ and
     <customLabels>
         <label>Quản trị viên</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>Đại lý Đã được Công nhận</label>
@@ -4575,6 +4641,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>Liên hệ</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4687,6 +4757,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Currency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
+    </customLabels>
+    <customLabels>
         <label>Mật khẩu Hiện tại</label>
         <name>ISSP_CurrentPassword</name>
     </customLabels>
@@ -4733,6 +4807,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Mã chữ ký tự</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>Văn bản</label>
@@ -5059,6 +5137,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
+    </customLabels>
+    <customLabels>
         <label>Các Liên Kết Bên Ngoài</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -5175,12 +5257,20 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Nhấn &apos;next&apos; để tiếp tục</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Vì tài khoản không được đăng nhập trong 90 ngày qua, một email với một mật khẩu mới đã được gửi cho bạn.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -5539,6 +5629,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5553,6 +5651,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Địa điểm</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>Ghi một Trường Hợp</label>
@@ -5787,12 +5889,20 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>Nếu không tìm thấy tài khoản của mình, xin vui lòng nhấn vào BACK (QUAY LẠI) để tiếp tục quá trình đăng ký như là Người dùng Công cộng hoặc sửa đổi tiêu chí tìm kiếm của bạn và thử lại</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>Một thông báo mới đã được đăng lên tài khoản tại cổng thông tin IATA của bạn.</label>
@@ -5931,10 +6041,18 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>Payment Link có thể được sử dụng để trả hóa đơn IATA bằng thẻ Credit Card&lt;br/&gt;
 &lt;b&gt;Cảnh báo!&lt;/b&gt;&lt;br/&gt;
 Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều được thu thông qua BPS / CASS. Bạn nên kiểm tra các chi tiết trong hóa đơn để đảm bảo hoá đơn chưa được thanh toán trước khi bạn tiến hành trả bằng thẻ tín dụng.</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>Các phê duyệt đang chờ xử lý (bấm Chỉnh sửa để quản lý)</label>
@@ -6198,6 +6316,10 @@ Nếu bạn không có Mã IATA, xin vui lòng quay lại và chọn ‘Other Co
         <name>ISSP_Registration_Privacy</name>
     </customLabels>
     <customLabels>
+        <label>Bạn sẽ được chuyển tới trang chủ trong 5 giây tiếp theo</label>
+        <name>ISSP_Registration_Redirection</name>
+    </customLabels>
+    <customLabels>
         <label>Quá trình đăng ký</label>
         <name>ISSP_Registration_RegistrationProcess</name>
     </customLabels>
@@ -6426,6 +6548,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Nên bắt buộc</label>
         <name>ISSP_Should_be_mandatory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
@@ -6695,6 +6821,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label>Xin vui lòng điền vào các trường yêu cầu theo định dạng đúng</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>Không thể hoàn tất quá trình đăng ký của bạn. Xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
@@ -8082,6 +8212,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8428,6 +8562,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

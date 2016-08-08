@@ -29,14 +29,14 @@ public with sharing class IECSAPHelper {
 		
 		iataComXiSalesforceOtcWid5600Sales3.Header_element oHeader = new iataComXiSalesforceOtcWid5600Sales3.Header_element();
 		
-		oHeader.DocType = oSAPInvoice.Doc_Type__c;
+		/* Commented as part of ECOM-495: DEV- Modify contract interface for sales area
 		oHeader.SalesOrg = oSAPInvoice.Sales_Org__c;
 		oHeader.DistChan = oSAPInvoice.Dist_Chan__c;
 		oHeader.Division = oSAPInvoice.Division__c;
-		oHeader.SalesOffice = oSAPInvoice.Sales_Office__c;
+		*/
+		oHeader.SalesOffice = oSAPInvoice.Account__r.Sales_Office__c;
 		oHeader.ContractNumber = EMPTY;
 		oHeader.BillTo = oSAPInvoice.Bill_To__c;
-		oHeader.EmpResp = oSAPInvoice.Employee_Responsible__c;
 		oHeader.ContactPerson = EMPTY;
 		oHeader.ZuoraInv = oSAPInvoice.Zuora_Invoice_Number__c;
 		oHeader.PODate = oSAPInvoice.PO_Date__c;
@@ -44,14 +44,29 @@ public with sharing class IECSAPHelper {
 		// SAP integration test
 		//oHeader.Name = EMPTY;
 		oHeader.CustomerPO = oSAPInvoice.Customer_PO__c;
-		oHeader.OrderReason = oSAPInvoice.Order_Reason__c;
 		oHeader.ContractStart = oSAPInvoice.Contract_Start__c;
 		oHeader.ContractEnd = oSAPInvoice.Contract_End__c;
 		oHeader.DocCurr = oSAPInvoice.Doc_Currency__c;
 		oHeader.PayMethod = oSAPInvoice.Payment_Method_Code__c;
-		oHeader.PayTerms = oSAPInvoice.Pay_Terms__c;
+		oHeader.PayTerms = oSAPInvoice.Account__r.Payment_Term__c;
 		oHeader.TextPrint = oSAPInvoice.Text_Print__c;
 		
+		if (!oSAPInvoice.IEC_SAP_Invoice_Items__r.isEmpty())
+		{
+			// Assumption is there will always be one invoice item under the any single invoice
+			IEC_SAP_Invoice_Item__c oSAPInvoiceItem = oSAPInvoice.IEC_SAP_Invoice_Items__r[0];
+			
+			oHeader.DocType = oSAPInvoiceItem.Product__r.IEC_SAP_DocType__c;
+			oHeader.EmpResp = oSAPInvoiceItem.Product__r.Product_Manager_lookup__r.EmployeeNumber;
+			oHeader.OrderReason = oSAPInvoiceItem.Product__r.SAP_Contract_OrderReason__c;
+		}
+		else
+		{
+			oHeader.DocType = EMPTY;
+			oHeader.EmpResp = EMPTY;
+			oHeader.OrderReason = EMPTY;
+		}
+
 		return oHeader;
 	}
 	

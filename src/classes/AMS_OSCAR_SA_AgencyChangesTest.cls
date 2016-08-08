@@ -64,7 +64,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-        return [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
+        return [SELECT Id, Account__c, Type_of_change__c FROM AMS_OSCAR__c LIMIT 1];
 
     }
 
@@ -1656,4 +1656,54 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
     }
 
+
+
+    //using page to create Process Details
+    @isTest static void accountHierarchySelectionPage() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Ownership to IATA Agent', null, null);
+
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+
+        insert pds;
+
+        PageReference pg = Page.AMS_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar.Id);
+
+        Test.startTest();
+
+        AMS_AccountHierarchySelectionController con = new AMS_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+        System.assert(con.editable);
+        System.assertEquals(7,con.hierarchy.size());
+
+        con.hierarchy[2].main = true;
+        con.hierarchy[2].selectMain(); //simulates page actionSupport
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
+
+        con.hierarchy[2].main = false;
+        con.hierarchy[2].selectMain(); //simulates page actionSupport
+        System.assert(con.hierarchy[2].main);
+
+        System.assert(!con.oscarFieldList.isEmpty());
+        System.assert(con.showTargetAgency);
+        System.assert(!con.showLocationTypeBehavior);
+
+        con.oscar.AMS_Target_Agency__c = HO1.Id;
+        con.save();
+        System.assert(!con.closeTab);
+
+        con.selectAll = true;
+        con.doSelectAll(); //simulates page actionSupport
+
+        con.oscar.AMS_Target_Agency__c = HO2.Id;
+        con.save();
+
+        Test.stopTest();
+
+    }
 }

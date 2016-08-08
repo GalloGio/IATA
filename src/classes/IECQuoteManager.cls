@@ -6,7 +6,7 @@ public with sharing class IECQuoteManager {
     /**
      * Creates an opportunity and a quote for a specific customer and rate plan
      */
-    public static zqu__Quote__c submitQuote(IECCustomer oCustomer, Product_Rate_Plan_Information__c oRatePlanInfo, Boolean bAutoRenew, Decimal dQuoteAmount, String sComments) {
+    public static zqu__Quote__c submitQuote(IECCustomer oCustomer, Product_Rate_Plan_Information__c oRatePlanInfo, Boolean bAutoRenew, Decimal dQuoteAmount, String sComments, Decimal dTax, Decimal dShipping) {
         
         // Create a savepoint
         Savepoint sp = Database.setSavepoint();
@@ -54,6 +54,8 @@ public with sharing class IECQuoteManager {
             oQuote.zqu__PaymentTerm__c = 'Net 30';
             oQuote.zqu__InitialTerm__c = 12;
             oQuote.zqu__RenewalTerm__c = 12;
+            // Specify the source to SFDC to avoid re-calculating the Tax & Shipping
+            oQuote.Source__c = 'Salesforce';
 
             // Determine whether the quote is confirmed or requires validation
             if (oRatePlanInfo.Related_Product_Information__r.Related_Product_Category__r.Show_price_on_eCommerce__c == null
@@ -74,12 +76,56 @@ public with sharing class IECQuoteManager {
             
             // link the product rate plan to the quote (if not in test)
             if (!Test.isRunningTest()) {
+            	List<zqu.zChargeGroup> lstZChrgGrp = new List<zqu.zChargeGroup>();
 
                 // Load the product rate plans into memory and associate them to the quote.
                 zqu.zChargeGroup chargeGroup = zqu.zQuoteUtil.getChargeGroup(oQuote.Id, oRatePlanInfo.Product_Rate_Plan__r.Id);
+                
+                if (chargeGroup != null)
+                	lstZChrgGrp.add(chargeGroup);
+                
+                // Add tax product
+	            if (dTax != null)
+	            {
+	            	List<zqu__ProductRatePlan__c> lstProdRatePlan_Tax = IECProductManager.getZuoraRatePlansFromIDs(new Set<String> {Utility.getTextSetting('Zuora tax Plan id')});
+	            	
+	            	if (!lstProdRatePlan_Tax.isEmpty())
+	                {
+	                	// Load the Tax product rate plans into memory and associate them to the quote.
+		                zqu.zChargeGroup chargeGroup_Tax = zqu.zQuoteUtil.getChargeGroup(oQuote.Id, lstProdRatePlan_Tax[0].Id);
+	                	
+	                	List<zqu.zCharge> lstCharge = chargeGroup_Tax.zCharges;
+	                	
+	                	// Update Effective Price and force recalculation
+	                	lstCharge[0].EFFECTIVE_PRICE = String.valueOf(dTax);
+	                	chargeGroup_Tax.zCharges = zqu.zQuoteUtil.calculateChargesOnEffectivePriceChange(lstCharge);
+	                	
+	                	lstZChrgGrp.add(chargeGroup_Tax);
+	                }
+	            }
+	            
+	            // Add shipping product
+	            if (dShipping != null && dShipping > 0)
+	            {
+	                List<zqu__ProductRatePlan__c> lstProdRatePlan_Ship = IECProductManager.getZuoraRatePlansFromIDs(new Set<String> {Utility.getTextSetting('Zuora tax Plan id')});
+	            	
+	            	if (!lstProdRatePlan_Ship.isEmpty())
+	                {
+	                	// Load the Shipping product rate plans into memory and associate them to the quote.
+		                zqu.zChargeGroup chargeGroup_Ship = zqu.zQuoteUtil.getChargeGroup(oQuote.Id, lstProdRatePlan_Ship[0].Id);
+		                
+		                List<zqu.zCharge> lstCharge = chargeGroup_Ship.zCharges;
+	                	
+	                	// Update Effective Price and force recalculation
+	                	lstCharge[0].EFFECTIVE_PRICE = String.valueOf(dShipping);
+	                	chargeGroup_Ship.zCharges = zqu.zQuoteUtil.calculateChargesOnEffectivePriceChange(lstCharge);
+	                	
+	                	lstZChrgGrp.add(chargeGroup_Ship);
+	                }
+	            }
 
                 // Now add these charge groups into the quote and persist.
-                zqu.zQuoteUtil.addChargeGroups(new List<zqu.zChargeGroup>{chargeGroup});
+                zqu.zQuoteUtil.addChargeGroups(lstZChrgGrp);
             }
             
             assignQuoteToOpportunity(oQuote.Id);

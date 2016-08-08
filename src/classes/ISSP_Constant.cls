@@ -124,13 +124,13 @@ Constant Class
     {
         'Airline' => 'Standard_Account',
             //'Airline' => 'IATA_Airline',
-            'GloballSalesAgent' => 'IATA_GSA',
+            'GloballSalesAgent' => 'Standard_Account',
             'Agency' => 'IATA_Agency',
             'NonIATAAgent' => 'Standard_Account',
             //'NonIATAAgent' => 'Others',
             //'OtherCompany' => 'Others',
             'OtherCompany' => 'Standard_Account',
-            'TIESS' => 'Others',
+            //'TIESS' => 'Others',
             'GeneralPublic' => 'Standard_Account'
             };
                                                     

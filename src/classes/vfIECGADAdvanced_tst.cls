@@ -108,7 +108,7 @@ private class vfIECGADAdvanced_tst {
 		
 		System.debug('Unit Test: Finish: Init');
 	}
-    
+	
     static testMethod void TestGADAdvanced() {
     	System.debug('Unit Test: Start: TestGADAdvanced');
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;

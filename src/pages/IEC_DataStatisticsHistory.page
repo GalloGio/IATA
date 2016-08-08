@@ -1,0 +1,255 @@
+<apex:page controller="IEC_DataStatisticsHistoriesController" action="{!pageLoad}" language="{!language}" 
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+
+    <!--[if lte IE 8]>
+        <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+		<title>Data &amp; Statistics History - {!$Label.SiteTitle}</title>
+    </head>
+
+    <body data-media-size="" class="page-dashboard" data-is-modal-open="false">
+        <div id="js-breakpoint-finder">
+            <span class="device-xs screen-xsmall"></span>
+            <span class="device-sm screen-small"></span>
+            <span class="device-md screen-medium"></span>
+            <span class="device-lg screen-large"></span>
+            <span class="device-xl screen-xlarge"></span>
+        </div>
+
+    <div class="app-container" id="js-app-container">
+
+    	<!-- Page Header -->
+        <c:IEC_PageHeader is_dashboard="true" page_name="IEC_DataStatisticsHistory" />
+	
+    	<div class="page-container" id="js-page-container">
+
+    	<apex:form id="contactInformationForm" forceSSL="true">
+        	
+        	<main class="main-content">
+			    <div class="inner-wrapper">
+			        <h1 class="page-title">Data &amp; Statistics History</h1>
+			        
+			        <apex:outputPanel id="errorMessage">
+                        <div class="errorPanel">
+                            <apex:pageMessages escape="no"/>
+                        </div>
+                     </apex:outputPanel>
+
+			        <div class="table-container data-statistics-subscriptions">
+			            <div class="table-heading">
+			                <table class="data-table table-history table-togglable">
+			                    <tr class="heading">
+	                                <th class="order-number">Order number</th>
+	                                <th class="order-type">&nbsp;</th>
+	                                <th class="product">Product</th>
+	                                <th class="start-date">Start date</th>
+	                                <th class="end-date">End date</th>
+	                                <th class="action"></th>
+	                            </tr>
+			                </table>
+			            </div>
+			            <div class="scroll-container history">
+
+			                <table class="data-table table-history table-togglable">
+			                    <!-- <?= $table_header ?>
+			                    <?php for ($i=0; $i < 20; $i++) { ?> -->
+			                    <apex:repeat value="{!lstInactiveSubscriptions}" var="subscription" id="subscriptionTable" rendered="{!lstInactiveSubscriptions != null && lstInactiveSubscriptions.size > 0}">
+			                    <tr class="listing-item">
+			                        <td class="order-number" data-label="Order number">
+			                            <apex:outputText value="{!subscription.zSubscription.Name}" />
+			                        </td>
+			                        <td class="order-type" data-label="Order type">
+			                            &nbsp;
+			                        </td>
+			                        <td class="product" data-label="Product">
+			                        	<apex:repeat var="prod" value="{!subscription.zSubscription.Zuora__Subscription_Product_Charges__r}"  rows="1">
+				                            <apex:outputText value="{!prod.Zuora__ProductName__c}" style="display:block;"/>
+	                                        <apex:outputText value="{!prod.Zuora__RatePlanName__c}" style="display:block;"/>
+                                        </apex:repeat>
+			                        </td>
+			                        <td class="start-date" data-label="Start date">
+			                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                            <apex:param value="{!subscription.zSubscription.Zuora__SubscriptionStartDate__c}" /> 
+                                        </apex:outputText>
+			                        </td>
+			                        <td class="end-date" data-label="End date">
+			                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                            <apex:param value="{!subscription.zSubscription.Zuora__SubscriptionEndDate__c}" /> 
+                                        </apex:outputText>
+			                        </td>
+			                        <td class="action js-toggle-table">
+			                            <a class="js-toggle-switch" href="#">
+			                                <div class="show-details">
+			                                    {!$Label.See_details}
+			                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+			                                </div>
+			                                <div class="hide-details">
+			                                    {!$Label.Hide_details}
+			                                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+			                                </div>
+			                            </a>
+			                        </td>
+			                        <td class="details js-toggle-details is-hidden">
+			                            <div class="order-details-container">
+			                                <div class="caption"><apex:outputText value="{!subscription.zSubscription.Name}" /></div>
+			                                <div class="row">
+			                                    <div class="columns small-6">
+			                                        <div class="group-container group-summary">
+			                                            <div class="group-title">Summary</div>
+			                                            <div class="box">
+			                                                <div class="label">
+			                                                	Product name: <apex:repeat var="prod" value="{!subscription.zSubscription.Zuora__Subscription_Product_Charges__r}"  rows="1">
+													                            <apex:outputText value="{!prod.Zuora__ProductName__c}" style="display:block;"/>
+									                                        </apex:repeat>
+			                                                </div>
+			                                            </div>
+			                                            <div class="box">
+			                                                <div class="label">
+			                                                	Option name: <apex:repeat var="prod" value="{!subscription.zSubscription.Zuora__Subscription_Product_Charges__r}"  rows="1">
+									                                        <apex:outputText value="{!prod.Zuora__RatePlanName__c}" style="display:block;"/>
+								                                        </apex:repeat>
+			                                               	</div>
+			                                            </div>
+			                                        </div>
+			                                        <div class="group-container group-services-dates">
+			                                            <div class="group-title">Services dates</div>
+			                                            <div class="box">
+			                                                <div class="label">Start date:</div>
+			                                                <div class="value">
+			                                                    <strong>
+			                                                    	<apex:outputText value="{0,date,dd MMM yyyy}">
+		                                                                <apex:param value="{!subscription.zSubscription.Zuora__SubscriptionStartDate__c}" /> 
+		                                                            </apex:outputText>
+			                                                    </strong>
+			                                                </div>
+			                                            </div>
+			                                            <div class="box">
+			                                                <div class="label">End date:</div>
+			                                                <div class="value">
+			                                                    <strong>
+			                                                    	<apex:outputText value="{0,date,dd MMM yyyy}">
+		                                                                <apex:param value="{!subscription.zSubscription.Zuora__SubscriptionEndDate__c}" /> 
+		                                                            </apex:outputText>
+			                                                    </strong>
+			                                                </div>
+			                                                <div class="remaining-days">{!subscription.iSubscriptionDaysLeft} days left</div>
+			                                            </div>
+			                                        </div>
+			                                        <div class="group-container group-usage-tracking">
+			                                            <div class="group-title">Usage tracking</div>
+			                                            <div class="box">
+			                                                <div class="label">Units purchased:</div>
+			                                                <div class="value">
+			                                                    <!-- <strong> -->
+			                                                    	<apex:outputText rendered="{!subscription.bShowUsage}" value="{!subscription.dUnitsPurchased}"/>
+                                                                    <apex:outputText rendered="{!NOT(subscription.bShowUsage)}" value="N/A"/>
+			                                                    <!-- </strong> -->&nbsp; &nbsp;
+			                                                    <apex:outputText rendered="{!subscription.bShowUsage}" value="{!subscription.dUnitsLeft}" />
+                                                                <apex:outputText rendered="{!subscription.bShowUsage}" value=" Units left" />
+                                                                <apex:outputText rendered="{!NOT(subscription.bShowUsage)}" value=" " />
+			                                                </div>
+			                                            </div>
+			                                            <div class="box">
+			                                                <div class="label">Units consumed:</div>
+			                                                <div class="value">
+			                                                    <strong>
+			                                                    	<apex:outputText rendered="{!subscription.bShowUsage}" value="{!subscription.dUnitsConsumed}"/>
+                                                                    <apex:outputText rendered="{!NOT(subscription.bShowUsage)}" value="N/A"/>
+			                                                    </strong>
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+
+												<apex:outputPanel id="autoRenewal">
+			                                    <div class="columns small-6">
+			                                        
+			                                        <div class="group-container group-terms-of-use">
+			                                            <div class="group-title">Terms of use</div>
+			                                            <div class="box">
+			                                                <div class="label">Acceptance date:</div>
+			                                                <div class="value">
+			                                                    <apex:outputText value="{0,date,dd MMM yyyy}">
+                                                                    <apex:param value="{!subscription.zSubscription.Zuora__ContractAcceptanceDate__c}" /> 
+                                                                </apex:outputText> &nbsp;
+                                                                <apex:outputLink rendered="{!subscription.sAttachTermsId != ''}" value="{!URLFOR($Action.Attachment.Download, subscription.sAttachTermsId)}" target="_blank" styleClass="button">View Terms of Use</apex:outputlink>
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                        <div class="group-container group-related-invoice">
+			                                            <div class="group-title">Related invoice</div>
+			                                            Invoice number: &nbsp;
+			                                            <!-- <a href="#">INV000012334</a> -->
+                                                        <apex:outputLink rendered="{!subscription.invoice.Name != null}" value="{!$Page.IEC_MyInvoices}">
+															<apex:outputText value="{!subscription.invoice.Name}" />
+														</apex:outputLink>
+                                                        <apex:outputText value="No InvoiceItem found" rendered="{!subscription.invoice.Name == null}" />
+			                                        </div>
+			                                        <div class="group-container">
+			                                            <div class="group-title">Related payment</div>
+			                                            <div class="box">
+			                                                <div class="label">Payment number:</div>
+			                                                <div class="value">
+				                                                <apex:outputLink rendered="{!subscription.payment.Name != null}" value="{!$Page.IEC_PaymentHistory}">
+																	<apex:outputText value="{!subscription.payment.Name}" />
+																</apex:outputLink>
+																<apex:outputText value="No payment found" rendered="{!subscription.payment.Name == null}" />
+			                                                </div>
+			                                            </div>
+			                                            
+			                                        </div>
+			                                    </div>
+			                                    </apex:outputPanel>
+
+
+			                                </div>
+			                                <div class="footer-action text-right">
+			                                    <!-- <a class="button" href="#">Upgrade</a> -->
+			                                    <apex:commandLink value="New" rendered="{!subscription.bDisplayNewBtn}" action="{!addToCart}" rerender="errorMessage" styleClass="button" >
+			                                    	<apex:param name="firstParam" assignTo="{!idSelectedRatePlanInfo}" value="{!subscription.idSelectedRatePlanInfo}" />
+			                                    </apex:commandLink> &nbsp;&nbsp;
+			                                    <!-- <apex:commandLink styleClass="button" value="Similar Products" action="{!navigateSimilarProducts}" rendered="{!subscription.bDisplaySimProdBtn}" rerender="errorMessage" >
+			                                    	<apex:param name="firstParam" assignTo="{!similarProdSubscriptionId}" value="{!subscription.zSubscription.Id}" />
+			                                    </apex:commandLink> -->
+			                                </div>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                    <!-- <?php } ?> -->
+			                    </apex:repeat>
+			                </table>
+			            </div>
+			        </div>
+			    </div>
+			</main>
+			
+
+        </apex:form>
+        
+        <c:IEC_Footer is_dashboard="true" />
+
+    <!-- /END page-container --></div>
+    <!-- /END app-container --></div>
+    <div class="modal-container is-hidden" id="js-modal">
+    	<div class="overlay"></div>
+	    <div class="modal-dialog" id="js-modal-dialog">
+		</div>
+	</div>
+
+    
+    <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+	<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+	
+    </body>
+	</html>
+</apex:page>
