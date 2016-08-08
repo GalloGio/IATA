@@ -36441,7 +36441,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>ACCA_Service_Request__c.Airline_Merchant_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36532,7 +36531,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>AMS_Accreditation_Requirement__c.Travel_Agent</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36788,7 +36786,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.MACSSalesAccount</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36809,7 +36806,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account_Category__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36820,7 +36816,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Accreditation__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36831,7 +36826,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Adjacent_Airport__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36852,7 +36846,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Agency_Owner__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37108,7 +37101,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37194,7 +37186,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.IATAStandardContact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37255,7 +37246,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37276,7 +37266,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>EmailTemplate__c.IFAP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37287,7 +37276,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Address__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37298,7 +37286,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Agency_Profile_Specialization__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37309,13 +37296,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Phone__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Products_Account_View__c.GDP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37326,13 +37311,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDS__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>ICCS_Checklist__c.ICCS_Restricted</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37358,7 +37341,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>ID_Card__c.AIMS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37409,7 +37391,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>LocalGovernance__c.Local_Groups</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37420,7 +37401,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Local_Bank_Mandate_Checklist__c.LBM_Standard</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37456,7 +37436,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.GDP_Opportunities</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37532,7 +37511,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Quality__c.Major_EXE_to_SOP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37578,13 +37556,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Release_Task__c.Implementation_Task</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>SIDRA_eDefault__c.Non_payment</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37600,7 +37576,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Solution.IDFS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37631,7 +37606,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>eTSP_Certification__c.New_eTSP_Certification</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

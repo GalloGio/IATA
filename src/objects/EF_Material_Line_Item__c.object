@@ -86,7 +86,7 @@
         <fullName>EF_Relationship__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>E&amp;F Relationship</label>
+        <label>E&amp;F Airline Billing Agreement</label>
         <referenceTo>EF_Relationship__c</referenceTo>
         <relationshipLabel>E&amp;F Material Line Items</relationshipLabel>
         <relationshipName>EF_Material_Line_Items</relationshipName>

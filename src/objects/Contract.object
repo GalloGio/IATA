@@ -311,7 +311,8 @@
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Billing_Currency__c</fullName>
@@ -406,7 +407,8 @@
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Payment_Currency__c</fullName>

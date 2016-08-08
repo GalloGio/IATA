@@ -34638,7 +34638,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Standard_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -34944,7 +34943,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -35090,7 +35088,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -35406,7 +35403,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>SIDRA_eDefault__c.Non_payment</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
