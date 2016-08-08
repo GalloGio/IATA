@@ -47,7 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Contain subscriptions auto-renew in event fashion i.e. subscriptions auto-renew by business action</description>
+    <description>IEC - Contain subscriptions auto-renew in event fashion i.e. subscriptions auto-renew by business action</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -59,7 +59,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>true</defaultValue>
-        <description>Indicate if subscription is active for auto-renew</description>
+        <description>IEC - Indicate if subscription is active for auto-renew</description>
         <externalId>false</externalId>
         <label>Active</label>
         <trackTrending>false</trackTrending>
@@ -67,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Customer_Type__c</fullName>
+        <description>IEC - Type of customer of subscriber</description>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(Subscriber__r.Account.ParentId), TEXT(Subscriber__r.Account.Customer_Type__c), TEXT(Subscriber__r.Account.Parent.Customer_Type__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -78,6 +79,7 @@
     </fields>
     <fields>
         <fullName>Default_Payment_Type__c</fullName>
+        <description>IEC - Default payment method assigned to customer</description>
         <externalId>false</externalId>
         <formula>TEXT(Subscriber__r.Account.Default_Payment_Type__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -89,6 +91,7 @@
     </fields>
     <fields>
         <fullName>Material_Number__c</fullName>
+        <description>IEC - Activity code of subscribed product</description>
         <externalId>false</externalId>
         <formula>Left( Product__r.SAP_Material_Number__c,4 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -100,6 +103,7 @@
     </fields>
     <fields>
         <fullName>Product_Number__c</fullName>
+        <description>IEC - SAP material number of subscribed product</description>
         <externalId>false</externalId>
         <formula>Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -112,7 +116,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>Product subscribed to auto-renew</description>
+        <description>IEC - Product subscribed to auto-renew</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>
@@ -124,7 +128,7 @@
     </fields>
     <fields>
         <fullName>Quantity__c</fullName>
-        <description>Quantity to auto-renew</description>
+        <description>IEC - Quantity to auto-renew</description>
         <externalId>false</externalId>
         <label>Quantity</label>
         <precision>6</precision>
@@ -136,7 +140,7 @@
     </fields>
     <fields>
         <fullName>Start_Date__c</fullName>
-        <description>Start date of subscription</description>
+        <description>IEC - Start date of subscription</description>
         <externalId>false</externalId>
         <label>Start Date</label>
         <required>true</required>
@@ -146,6 +150,7 @@
     <fields>
         <fullName>Subscriber__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Subscriber of auto-renew</description>
         <externalId>false</externalId>
         <label>Subscriber</label>
         <referenceTo>Contact</referenceTo>

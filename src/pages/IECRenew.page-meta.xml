@@ -5,48 +5,8 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>IECRenew</label>
     <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>48</minorNumber>
-        <namespace>ActOn</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>3</majorNumber>
-        <minorNumber>8</minorNumber>
-        <namespace>CRMfusionDBR101</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>4</majorNumber>
-        <minorNumber>26</minorNumber>
-        <namespace>E2CP</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>5</minorNumber>
-        <namespace>ENZ</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>2</minorNumber>
-        <namespace>Field_Trip</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>2</minorNumber>
-        <namespace>SFGA</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>4</minorNumber>
-        <namespace>ZMG</namespace>
-    </packageVersions>
-    <packageVersions>
         <majorNumber>2</majorNumber>
         <minorNumber>70</minorNumber>
         <namespace>Zuora</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>6</majorNumber>
-        <minorNumber>0</minorNumber>
-        <namespace>zqu</namespace>
     </packageVersions>
 </ApexPage>

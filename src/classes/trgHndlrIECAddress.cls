@@ -9,6 +9,7 @@ public with sharing class trgHndlrIECAddress {
     /**
      * Business rule logic after an IECAddress has been inserted
      */
+    /* Commented by Samy Saied (2016-02-29) for using the new Location model instead of only iecaddress
     public static void OnBeforeInsert(List<IECAddress__c> newRecords) {
         Set<Id> setContactId = new Set<Id>();
         List<Contact> ContactstoUpdate = new List<Contact>();
@@ -45,18 +46,15 @@ public with sharing class trgHndlrIECAddress {
             if (mapResults.containsKey(address.Contact__c + ':' + address.Address_Type__c))
                 address.Address_Type__c.addError(Label.IEC_Error_OnlyOneAddressPerType);
         }
-        
-        
-        
-        
-               
     }
+    */
 
     /**
      * Business rule logic after an IECAddress has been updated
      */
-    public static void OnAfterUpdate(List<IECAddress__c> newRecords, Map<Id, IECAddress__c> newRecordsMap) {
-        
+    public static void OnAfterUpdate(List<IECAddress__c> newRecords, Map<Id, IECAddress__c> newRecordsMap)
+    {
+/* Commented by Samy Saied for using the new Location model instead of only iecaddress
         List<String> lstAddressIds = new List<String>();
         List<Contact> ContactstoUpdate = new List<Contact>();
         
@@ -67,9 +65,7 @@ public with sharing class trgHndlrIECAddress {
             Zuora__CustomerAccount__c oBillingAccount = IECZuoraHelper.getBillingAccountByContactId(oAddress.Contact__c);
             if (oBillingAccount != null)
                 lstAddressIds.add(oAddress.Id);
-                
-                
-                
+
             if(oAddress.Address_Type__c  == 'Billing')
              {
                  Contact temp = new Contact();
@@ -80,15 +76,18 @@ public with sharing class trgHndlrIECAddress {
              }   
         }
         
-        
         //try catch added to fix issue on ecommerce community user access restriction.
         try{ Update ContactstoUpdate;}
         catch(exception e){ }
-              
-        
-        
+
         // sync (future method)
         if (!lstAddressIds.isEmpty())
             IECZuoraHelper.syncAddressInformationWithZuora(lstAddressIds);
+		*/
+		// Make a future call to Zuora to update the related contacts that share the same address record
+		IECAddress_Svc.syncIECAddressWithZuora(newRecordsMap.keySet());
+		
+		// Make a future call to SAP to update the related contacts that share the same address record
+		IECAddress_Svc.syncIECAddressWithSAP(newRecordsMap.keySet());
     }
 }

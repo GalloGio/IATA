@@ -6,6 +6,7 @@
   */
 public with sharing class trgHndlrIECInvoiceItem {
 	public static void OnAfterInsert(List<Invoice_Item__c> newRecords, Map<Id, Invoice_Item__c> newRecordsMap) {
+		/* Commented: Samy: 2016-05-12: Replaced by creating Sales Order directly in Salesforce
 		Set<String> setZInvoiceItemNumber = new Set<String>();
 		List<Invoice_Item__c> lstNonZeroInvoiceItems = new List<Invoice_Item__c>();
 
@@ -20,6 +21,8 @@ public with sharing class trgHndlrIECInvoiceItem {
 
 		if (lstNonZeroInvoiceItems.size() > 0)
 			CreateSAPInvoiceItems(setZInvoiceItemNumber, lstNonZeroInvoiceItems);
+		*/
+		IEC_Invoice_Item_Svc.CreateSalesOrder(newRecordsMap.keySet());
 	}
 	
 	/**
@@ -27,6 +30,7 @@ public with sharing class trgHndlrIECInvoiceItem {
 	 * @ param setZInvoiceItemNumber Set of Zuora of Invoice Item Numbers
 	 * @ param InvoiceItems Zuora Invoice Item Records
  	 **/
+ 	 /* Commented: Samy: 2016-05-12: Replaced by creating Sales Order directly in Salesforce
  	 private static void CreateSAPInvoiceItems(Set<String> setZInvoiceItemNumber, List<Invoice_Item__c> InvoiceItems) {
 		Set<String> setSAPInvoiceItemNumber = new Set<String>();
 		
@@ -57,11 +61,30 @@ public with sharing class trgHndlrIECInvoiceItem {
 			[SELECT Id, SAPProductMaterialNo__c
 			FROM zqu__ZProduct__c
 			WHERE Id IN :setProductId]);
+			
+		// Related: Product2
+		
+		// First get list of SAP Material numbers
+		Set<String> setSAPMaterialNo = new Set<String>();
+		for (zqu__ZProduct__c zProd : mapZProduct.values())
+		{
+			setSAPMaterialNo.add(zProd.SAPProductMaterialNo__c);
+		}
+		
+		Map<String, Product2> mapSAPMaterialToProduct2 = new Map<String, Product2>();
+		for (Product2 prod :
+			[SELECT Id, SAP_Material_Number__c, Use_Contract_when_ordered__c
+				, IEC_SAP_DocType__c, IEC_SAP_EmpResp__c, SAP_Contract_OrderReason__c, IEC_SAP_ProfitCenter__c
+			FROM Product2
+			WHERE SAP_Material_Number__c IN :setSAPMaterialNo]) {
+			
+			mapSAPMaterialToProduct2.put(prod.SAP_Material_Number__c, prod);
+		}
 		
 		// Related: Subscription
 		Map<String, Zuora__Subscription__c> mapZIdToSubscription = new Map<String, Zuora__Subscription__c>();
 		for (Zuora__Subscription__c subscription :
-			[SELECT PurchaseOrder__c, Name
+			[SELECT PurchaseOrder__c, Name, Zuora__Version__c, OrderId__c
 			FROM Zuora__Subscription__c
 			WHERE Name IN :setSubscriptionNumber]) {
 			
@@ -106,7 +129,7 @@ public with sharing class trgHndlrIECInvoiceItem {
 		// Related: ISO Country
 		Map<String, IATA_ISO_Country__c> mapCountryToIATACountry = new Map<String, IATA_ISO_Country__c>();
 		for (IATA_ISO_Country__c isoCountry :
-			[SELECT Name, Profit_Center__c, ISO_Code__c
+			[SELECT Name, ISO_Code__c
 			FROM IATA_ISO_Country__c
 			WHERE Name IN :setCountry]) {
 			
@@ -115,6 +138,8 @@ public with sharing class trgHndlrIECInvoiceItem {
 		
 		List<IEC_SAP_Invoice_Item__c> lstNewSAPInvoiceItem = new List<IEC_SAP_Invoice_Item__c>();
 		Map<String, IEC_SAP_Invoice__c> mapSAPInvoice = new Map<String, IEC_SAP_Invoice__c>();
+		
+		String sDocType, sEmpResp, sOrderReason;
 		
 		// Create the SAP Invoice Item records
 		for (Invoice_Item__c item : lstInvoicesToSAP) {
@@ -126,8 +151,25 @@ public with sharing class trgHndlrIECInvoiceItem {
 
 			IEC_SAP_Invoice_Item__c SAPItem = new IEC_SAP_Invoice_Item__c();
 			
+			sDocType = sEmpResp = sOrderReason = null;
+			
 			if (mapZProduct.containsKey(item.Product__c))
+			{
 				SAPItem.Material__c = mapZProduct.get(item.Product__c).SAPProductMaterialNo__c;
+			
+				if (mapSAPMaterialToProduct2.containsKey(SAPItem.Material__c))
+				{
+					Product2 prod = mapSAPMaterialToProduct2.get(SAPItem.Material__c);
+					SAPItem.Use_Contract__c = prod.Use_Contract_when_ordered__c;
+					SAPItem.Product__c = prod.Id;
+					SAPItem.Profit_Center__c = prod.IEC_SAP_ProfitCenter__c;
+					
+					// Retrieve Product information that will be used later to update the SAP Invoice
+					sDocType = prod.IEC_SAP_DocType__c;
+					sEmpResp = prod.IEC_SAP_EmpResp__c;
+					sOrderReason = prod.SAP_Contract_OrderReason__c;
+				}
+			}
 			
 			if (ZInv != null) {
 				if (mapInvNumToSAPInv.containsKey(ZInv.Name)) {
@@ -135,7 +177,9 @@ public with sharing class trgHndlrIECInvoiceItem {
 				
 					if (mapCountryToIATACountry.containsKey(SAPInv.Billing_Country__c)) {
 						country = mapCountryToIATACountry.get(SAPInv.Billing_Country__c);
+						/* Commented by Samy (2016-03-30) Replaced by profit center from the product instead of the country object
 						SAPItem.Profit_Center__c = country.Profit_Center__c;
+						* /
 					}
 				}
 			}
@@ -163,6 +207,11 @@ public with sharing class trgHndlrIECInvoiceItem {
 									//set new fields: card type and reference number
 									, Credit_Card_Type__c = cardType
 									, Payment_Reference_ID__c = ZPmt.Zuora__SecondPaymentReferenceId__c
+									, Subscription_Order_Id__c = subscription.OrderId__c
+									// Use previously assigned values to update the SAP fields on the Invoice
+									, Employee_Responsible__c = sEmpResp
+									, Order_Reason__c = sOrderReason
+									, Doc_Type__c = sDocType
 								)
 							);
 						}
@@ -173,6 +222,11 @@ public with sharing class trgHndlrIECInvoiceItem {
 									, Customer_PO__c = subscription.PurchaseOrder__c
 									, Pay_Method__c = ZPmt.Payment_Method__c
 									, Billing_Country_ISO_Code__c = (country == null) ? null : country.ISO_Code__c
+									, Subscription_Order_Id__c = subscription.OrderId__c
+									// Use previously assigned values to update the SAP fields on the Invoice
+									, Employee_Responsible__c = sEmpResp
+									, Order_Reason__c = sOrderReason
+									, Doc_Type__c = sDocType
 								)
 							);
 						}
@@ -183,6 +237,11 @@ public with sharing class trgHndlrIECInvoiceItem {
 								Zuora_Invoice_Number__c = ZInv.Name
 								, Customer_PO__c = subscription.PurchaseOrder__c
 								, Billing_Country_ISO_Code__c = (country == null) ? null : country.ISO_Code__c
+								, Subscription_Order_Id__c = subscription.OrderId__c
+								// Use previously assigned values to update the SAP fields on the Invoice
+								, Employee_Responsible__c = sEmpResp
+								, Order_Reason__c = sOrderReason
+								, Doc_Type__c = sDocType
 							)
 						);
 					}
@@ -212,4 +271,5 @@ public with sharing class trgHndlrIECInvoiceItem {
 			upsert mapSAPInvoice.values() Zuora_Invoice_Number__c;
 		}
 	}
+	*/
 }
