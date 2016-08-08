@@ -1,4 +1,5 @@
 public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
+    public static Integer ITEMS_PER_PAGE = 2;
     public vfIECEBC_RecipientList() {
     }
     

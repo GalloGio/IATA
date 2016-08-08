@@ -68,7 +68,8 @@
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
-							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li> 
 						</ul>
 						
 						<div class="tab-content">

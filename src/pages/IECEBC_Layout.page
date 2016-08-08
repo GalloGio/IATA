@@ -1,4 +1,4 @@
-<apex:page controller="vfIECEBC" extensions="VfIECSiteHeaderComponent" action="{!pageLoad}" language="en" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false">
+<apex:page controller="vfIECEBC_Layout" action="{!pageLoad}" language="en" docType="html-5.0" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false">
 <!--[if lte IE 8]>
     <html lang="en" class="ie lte-ie8 no-svg">
 <![endif]-->
@@ -23,7 +23,7 @@
             </script>
             <apex:insert name="pageHeadAdditions" />
         </head>
-        <body data-is-modal-open="false">
+        <body data-is-modal-open="false" id="page-top">
             <div class="app-container">
                 <header class="page-header">
                     <div class="inner-wrapper">
@@ -49,10 +49,85 @@
                                         <div class="sub-nav tab-container js-tabs">
                                             <ul class="nav tabs">
                                                 <li class="active" data-target="#sub-nav-pane-1">
+                                                    <a href="#">Service Details</a>
+                                                </li>
+                                                <li data-target="#sub-nav-pane-2">
+                                                    <a href="#">Manage Services</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane is-open" id="sub-nav-pane-1">
+                                                    <div class="title">Service Details</div>
+                                                    <table class="table-service-details">
+
+                                                    
+                                                    Service Upgrade: Please contact support<br />
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        <tr>
+                                                            <th>Subscription ID:</th>
+                                                            <td>{!subscription.Name}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Rate Plan:</th>
+                                                            <td>{!productRatePlan.EBC_SubscriptionType__c}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Cost per e-mail:</th>
+                                                            <td>
+                                                                <apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
+                                                                <a href="#">Lower your cost per email</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Account Balance:</th>
+                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> e-mails</td>
+                                                        </tr>
+                                                        <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__SubscriptionEndDate__c >= TODAY()}">
+                                                            <tr>
+                                                                <th>Rate Plan End Date:</th>
+                                                                <td>
+                                                                    <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText><br />
+                                                                    <a href="#">Renew Now</a>
+                                                                </td>
+                                                            </tr>
+                                                        </apex:outputText>
+                                                        
+                                                    </table>
+                                                    <a href="#" class="button block dark">Contact Support</a>
+                                                </div>
+                                                <div class="tab-pane" id="sub-nav-pane-2">
+                                                    <div class="title">Manage Services</div>
+                                                    <ul class="list">
+                                                        <li>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Campaign}">Create campaign</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_CampaignList}">View all campaigns</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_TemplateList}">Manage templates</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_RecipientList}">Manage lists</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Reports}">View reports</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--
+                                        <div class="sub-nav tab-container js-tabs">
+                                            <ul class="nav tabs">
+                                                <li class="active" data-target="#sub-nav-pane-1">
                                                     <a href="#">Manage Services</a>
                                                 </li>
                                                 <li data-target="#sub-nav-pane-2">
-                                                    <a href="#">Account Summary</a>
+                                                    <a href="#">Service Details</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
@@ -77,10 +152,22 @@
                                                     </ul>
                                                 </div>
                                                 <div class="tab-pane" id="sub-nav-pane-2">
-                                                    <div class="title">Account Summary</div>
+                                                    <div class="title">Service Details</div>
+                                                    Subscription ID: {!subscription.Name}<br />
+                                                    Type: {!productRatePlan.EBC_SubscriptionType__c}<br />
+                                                    
+                                                    Account Balance: <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText><br />
+                                                    
+                                                    <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__SubscriptionEndDate__c >= TODAY()}">
+                                                        Service End Date: <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText> ({!subscription.Zuora__SubscriptionEndDate__c - TODAY()} DAYS)<br />
+                                                        Service Renewal: <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__NextRenewalDate__c}" /></apex:outputText><br />
+                                                    </apex:outputText>
+                                                    
+                                                    Service Upgrade: Please contact support<br />
+                                                    
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </li>
                                 </ul>
                             </nav>

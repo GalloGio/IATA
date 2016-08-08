@@ -27,7 +27,7 @@
                         <div class="alert-message icon check-circle">
                             <h2 class="title">Recipients</h2>
                             <p>
-                                Your message will be delivered using the <strong>{!campaign.EBC_Master_Filter__r.Name}</strong> list additionally filtered using the <strong>IP segment</strong>.<br />
+                                Your message will be delivered using the <strong>{!campaign.EBC_Master_Filter__r.Name}</strong> list.<br />
                                 Total of <strong><apex:outputText value="{0, number, ###,##0}"><apex:param value="{!campaign.EBC_Master_Filter__r.Number_of_Recipients__c}"/></apex:outputText> recipients</strong>
                             </p>
                         </div>
