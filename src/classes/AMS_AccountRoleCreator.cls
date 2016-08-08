@@ -37,6 +37,7 @@ public with sharing class AMS_AccountRoleCreator
     	
 	public static void runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList, boolean isCorrection)
     {
+    	System.debug(LoggingLevel.ERROR, '[LF] runRoleCreatorForOnlineAccreditations() '+aoaList);
     	set<id> setAddedRoles = new set<id>();
     	AMS_AccountRoleCreator.aoaIdSet = new Set<String>();
     	for(AMS_Pax_Accreditation_Form__c aoa : aoaList)
@@ -70,6 +71,8 @@ public with sharing class AMS_AccountRoleCreator
         query = query + '(' + recordTypesPerson + ')';
 
         List<AMS_Accreditation_Contact__c> acList = retrieveACsDynamically(query, 'aoaIdSet');
+
+        System.debug(LoggingLevel.ERROR, '[LF] retrieveACsDynamically() '+acList);
 		
         if(acList.size() > 0)
         {
@@ -116,9 +119,9 @@ public with sharing class AMS_AccountRoleCreator
         List<AMS_Accreditation_Contact__c> acNoLink = getNoPersonNorContactLing(acList);
         Map<AMS_Accreditation_Contact__c, List<AMS_Account_Role__c>> acRoleMap = new Map<AMS_Accreditation_Contact__c, List<AMS_Account_Role__c>>();
 		
-		System.debug('*********** acPersons: '+acPersons);
-		System.debug('*********** acContacts: '+acContacts);
-		System.debug('*********** acNoLinks: '+acNoLink);
+		System.debug(LoggingLevel.ERROR, '[LF] *********** acPersons: '+acPersons);
+		System.debug(LoggingLevel.ERROR, '[LF] *********** acContacts: '+acContacts);
+		System.debug(LoggingLevel.ERROR, '[LF] *********** acNoLinks: '+acNoLink);
 		
         // PERSON__C LINKING EXISTS => Create Contacts and update the existing Roles to link to the Contact, delete Person records
         if(acPersons.size() > 0)
@@ -132,6 +135,8 @@ public with sharing class AMS_AccountRoleCreator
 	        if(newContactsToInsert.size() > 0 && !isCorrection)
 	   		{
 	   			List<Contact> conListToInsert = verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+	   			System.debug(LoggingLevel.ERROR, '[LF] insert 1 : '+conListToInsert);
+
 	   			insert conListToInsert;
 	   		}
 	        
@@ -300,6 +305,7 @@ public with sharing class AMS_AccountRoleCreator
         // NO LINKING TO PERSON NOR CONTACT
         if(acNoLink.size() > 0)
         {
+        	newContactsToInsert.clear();
         	for(AMS_Accreditation_Contact__c ac : acNoLink)
             {
                 Contact temp = AMS_AccreditationContactHelper.populateNewContactFields(new Contact(), ac);
@@ -309,6 +315,7 @@ public with sharing class AMS_AccountRoleCreator
             if(newContactsToInsert.size() > 0 && !isCorrection)
 	   		{
 	   			List<Contact> conListToInsert = verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+	   			System.debug(LoggingLevel.ERROR, '[LF] insert 2 : '+conListToInsert);
 	   			insert conListToInsert;
 	   		}
             Set<Id> roleIdsToLoad = new Set<Id>();
@@ -500,7 +507,9 @@ public with sharing class AMS_AccountRoleCreator
     			
     	Set<Id> accsWithExistingIFAPcontact = new Set<Id>();
     	Set<Id> accsWithNotAllowedLocationClass = new Set<Id>();
-    	List<Contact> accountContacts = [select Name, Financial_Assessment_Contact__c, AccountId, Account.Location_Class__c from Contact where AccountId in :accountIds /*and Id not in :contactIds*/];
+    	List<Contact> accountContacts = [select Name, Financial_Assessment_Contact__c, AccountId, Account.Location_Class__c 
+    	from Contact 
+    	where AccountId in :accountIds /*and Id not in :contactIds*/];
     	for(Contact otherCon : accountContacts)
     	{
     		system.debug('verifyNoDuplicateIFAPcontactExists() --> otherCon = '+otherCon);

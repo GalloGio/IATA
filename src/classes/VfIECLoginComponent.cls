@@ -89,13 +89,17 @@ public with sharing class VfIECLoginComponent {
      */
     public Pagereference register() {
         try {
-            Pagereference pr = Page.IECUserRegistration;
-            
+            //Pagereference pr = Page.IECUserRegistration;
+            //MM: I have changed the target registration page to the ISS registration page and added a parameter to identify from which portal customer is coming from: "IEC".
+            Pagereference pr = Page.ISSP_Registration;
+	     	pr.getParameters().put('sRefererCommunity','iec'); 
+	     	
+
             // add return URL as parameter if one was provided
             if (retURL != null && retURL != '') {
                 pr.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(retURL));
             }
-            
+            pr.getParameters().put('CommunityName','IEC');
             pr.setRedirect(true);
             return pr;
         }
@@ -162,7 +166,7 @@ public with sharing class VfIECLoginComponent {
             
             // reset password
           //SALVATORE if (IECUserManager.resetPassword(resetPasswordEmail)) {
-            if (Comm_User_Helper.resetPassword(resetPasswordEmail, 'IEC', false) ){
+            if (Comm_User_Helper.resetPassword(resetPasswordEmail, 'iec', false) ){
                 resetPassword = false;
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'A new password has been sent to ' + resetPasswordEmail));
             }

@@ -35,6 +35,8 @@ public class VfIECShoppingCart extends IECPageController {
     public Boolean inEditContactInfo { get; private set; }
     public Boolean isCountryFilled { get; private set; }
     public IECAddress__c oBillingAddress { get; set; }
+    public IECAddress__c oOriginalBillingAddress { get; set; }
+    public Location__c oBillingLocation { get; set; }
     public IECVATUtil.VATConfiguration vatConfig { get; set; }
     public String sPurchaseOrder { get; set; }
     public Decimal dICHMinAmount {get; private set;}
@@ -199,7 +201,7 @@ public class VfIECShoppingCart extends IECPageController {
     public String defaultPaymentMethodId { get; private set; }
     public Boolean defaultPaymentMethodIsICH {
         get {
-            return defaultPaymentMethodId == IECConstants.PaymentMethod_Other_ZuoraID;
+            return defaultPaymentMethodId == IECConstants.PaymentMethod_ICH_ZuoraID;
         }
         private set;
     }
@@ -217,16 +219,28 @@ public class VfIECShoppingCart extends IECPageController {
         }
         private set;
     }
-    public List<SelectOption> lstISOCountries {
-        get {
-            List<SelectOption> options = new List<SelectOption>();
-            options.add(new SelectOption('','-Select a Country-'));
-            for(IATA_ISO_Country__c iso : [select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
-                options.add(new SelectOption(iso.Name, iso.Name));
-            }
-            return options;
+    
+    List<ISO_Country_State_DTO> lstCountryState;
+    
+	public List<SelectOption> lstISOCountries {
+		get {
+            return ISO_Country_State_Helper.getPicklistISOCountry(lstCountryState);
         }
     }
+    
+    public List<SelectOption> lstStateProvince {
+        get {
+            return ISO_Country_State_Helper.getPicklistISOState(lstCountryState, oBillingAddress.ISO_Country__c);
+        }
+    }
+    
+    public Boolean bStateAvailable
+	{
+		get
+		{
+			return lstStateProvince.size() > 1;
+		}
+	}
     
     ///////////////////////////////////////////////////////
     // properties for HPM (Hosted Payment Method) of Zuora
@@ -382,7 +396,9 @@ public class VfIECShoppingCart extends IECPageController {
             
             listProductInformationIDs = new String[]{};
             listSubscriptionResultToDisplay = new List<IECZuoraHelper.SubscriptionResult>();
-
+            
+            // Preload list of Countries/States
+            lstCountryState = ISO_Country_State_Helper.getCountry_State();
         }
         catch (Exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
@@ -411,21 +427,30 @@ public class VfIECShoppingCart extends IECPageController {
                     
                 // check if the customer needs to fill his contact information
                 if (IECUserManager.hasAddress(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)) {
+                	// Retrieve existing billing location for this contact
+                	oBillingLocation = Location_Sel.getLocationByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)[0];
+                	
                     List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
                     if (lstAddresses.size() > 0) {
                         oBillingAddress = lstAddresses.get(0);
-                        isCountryFilled = String.isNotBlank(oBillingAddress.Country__c);
-                        vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+						// Clone the record to check later whether it is changed when saving
+                		oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
+                        isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
+                        vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
                     }
 
                     needToFillContactInfo = !IECUserManager.isBillingAddressFilled(loggedCustomer.RelatedContact.Id)
                         || !IECUserManager.isContactMandatoryFieldsFilled(loggedCustomer.RelatedContact, vatConfig);
                 }
                 else {
-                    // customer does not have a billing address, so create a new one
+                    // customer does not have a billing address, so create a new one, and also create a new Location
+                    oBillingLocation = new Location__c(
+                    	Active__c = true
+                    	, Account__c = loggedCustomer.RelatedAccount.Id
+                    	, Contact__c = loggedCustomer.RelatedContact.Id
+                    	, Type__c = IECConstants.IECAddress_AddressType_Billing
+                    );
                     oBillingAddress = new IECAddress__c();
-                    oBillingAddress.Contact__c = loggedCustomer.RelatedContact.Id;
-                    oBillingAddress.Address_Type__c = IECConstants.IECAddress_AddressType_Billing;
                     needToFillContactInfo = true;
                     isCountryFilled = false;
                     vatConfig = null;
@@ -652,7 +677,7 @@ public class VfIECShoppingCart extends IECPageController {
             if(ePmType == IECConstants.PaymentType.BANK_TRANSFER) 
                 defaultPaymentMethodId = IECConstants.PaymentMethod_BankTransfer_ZuoraID;
             else if(ePmType == IECConstants.PaymentType.ICH) 
-                defaultPaymentMethodId = IECConstants.PaymentMethod_Other_ZuoraID;
+                defaultPaymentMethodId = IECConstants.PaymentMethod_ICH_ZuoraID;
             else if (ePmType != null && selectedCreditCardPaymentId != '') 
                 defaultPaymentMethodId = selectedCreditCardPaymentId;
 
@@ -884,13 +909,12 @@ public class VfIECShoppingCart extends IECPageController {
      * Called when the user changes the Billing Country
      */
     public void onChangeBillingCountry() {      
-        // clear the state/province field
-        oBillingAddress.State__c = null;
+        oBillingAddress.ISO_State__c = null; // Changed by Samy (2016-03-01) from State__c
 
         if (vatConfig == null
-            || vatConfig.Country != oBillingAddress.Country__c) {
+            || vatConfig.CountryId != oBillingAddress.ISO_Country__c) { // Changed by Samy (2016-03-01) from Country__c
                 
-            vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+            vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
             oContact.Tax_1_ID__c = null;
             oContact.Tax_2_ID__c = null;
         }
@@ -899,7 +923,8 @@ public class VfIECShoppingCart extends IECPageController {
     /**
      * Updates the Contact Info of the customer
      */
-    public void updateContactInfo() {       
+    public void updateContactInfo() {
+    	Savepoint sp = Database.setSavepoint();
         try {
             
             List<String> lstErrorMessages = new List<String>();
@@ -921,12 +946,12 @@ public class VfIECShoppingCart extends IECPageController {
             if (String.isBlank(oBillingAddress.City__c))
                 lstErrorMessages.add(Label.IEC_Error_Required_field + ' City');
 
-            if (String.isBlank(oBillingAddress.Country__c)) {
+            if (String.isBlank(oBillingAddress.ISO_Country__c)) { // Changed by Samy (2016-03-01) from Country__c
                 lstErrorMessages.add(Label.IEC_Error_Required_field + ' Country');
                 vatConfig = null;
             }
             else {
-                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
 
                 if (vatConfig != null && vatConfig.TaxIDMandatory) {
                     if (vatConfig.ShowTax1) {
@@ -967,22 +992,44 @@ public class VfIECShoppingCart extends IECPageController {
                     }
                 }
 
-                if (oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States') {
-                    if (String.isBlank(oBillingAddress.State__c))
-                        lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
-                    /*
-                    if (String.isBlank(oBillingAddress.ZipCode__c))
-                        lstErrorMessages.add(Label.IEC_Error_Required_field + ' Zip/Postal code');
-                    */
+                
+                if (bStateAvailable && String.isBlank(oBillingAddress.ISO_State__c)) // Changed by Samy (2016-03-01) from State__c
+                {
+                    lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
                 }
+                /*
+                if (String.isBlank(oBillingAddress.ZipCode__c))
+                    lstErrorMessages.add(Label.IEC_Error_Required_field + ' Zip/Postal code');
+                */
             }
             
             if (lstErrorMessages.isEmpty()) {
                 oContact.VAT_Country_Code__c = (vatConfig.VATValidationRequired) ? vatConfig.CountryCode : null;
                 update oContact;
-                upsert oBillingAddress;
+                
+                // First check if the address has been changed before trying to save, otherwise just ignore
+                if (IECAddress_Svc.isAddressChanged(oBillingAddress, oOriginalBillingAddress))
+                {
+	                // First insert a new Billing Address
+	                // TODO: Provide autocomplete feature in the page to avoid having alot of orphaned Addresses
+	                oBillingAddress.Id = null; // Reset the ID to be able to insert a new IEC Address record
+	                insert oBillingAddress;
+	                
+	                // Then copy the ID into the location record
+	                oBillingLocation.Address__c = oBillingAddress.Id;
+	                upsert oBillingLocation;
+	                
+	                // re-query the Billing Address to refresh formula fields on the record
+		            List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
+		            if (lstAddresses.size() > 0) {
+		                oBillingAddress = lstAddresses.get(0);
+						// Clone the record to check later whether it is changed when saving
+                		oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
+		            }
+                }
+                
                 inEditContactInfo = false;
-                isCountryFilled = String.isNotBlank(oBillingAddress.Country__c);
+                isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country__c);
                 
                 // revalidate if the Billing Address is complete
                 needToFillContactInfo = !IECUserManager.isBillingAddressFilled(loggedCustomer.RelatedContact.Id)
@@ -1009,8 +1056,8 @@ public class VfIECShoppingCart extends IECPageController {
             List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
             if (lstAddresses.size() > 0) {
                 oBillingAddress = lstAddresses.get(0);
-                isCountryFilled = String.isNotBlank(oBillingAddress.Country__c);
-                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+                isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
+                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
             }
         }
         catch (Exception ex) {

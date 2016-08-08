@@ -11,11 +11,17 @@ public with sharing class vfIECHistPayments extends IECPageController {
 	public Zuora__Payment__c oSelectedPayment { get; private set; }
 	public String sSortDirection { get; set; }
 	public String sSortByColumn { get; set; }
+	public DateTime legacyInvoiceDate {get;set;}
 
 	/**
 	 * Constructor
 	 */
 	public vfIECHistPayments() {
+
+		Date dt = Date.valueOf(Utility.getTextSetting('Legacy Invoice Cutoff Date'));
+		if(dt != null)
+			legacyInvoiceDate = DateTime.newInstance(dt.year(), dt.month(), dt.day());
+			
 		try {
 
 			// check if a Payment ID was passed as a parameter
@@ -38,9 +44,11 @@ public with sharing class vfIECHistPayments extends IECPageController {
 			
 			// first check if the user is logged in
 			if (IECUserManager.isUserLoggedIn() == false) {
-				Pagereference prLogin = Page.IECLogin;
-				prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
-				prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+				//Pagereference prLogin = Page.IECLogin;
+				//prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+				//prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+				Pagereference prLogin = Page.IEC_Login;
+				prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, ApexPages.currentPage().getUrl());
 				prLogin.setRedirect(true);
 				return prLogin;
 			}

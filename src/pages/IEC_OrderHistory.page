@@ -1,0 +1,555 @@
+<apex:page controller="IEC_MyOrdersController" action="{!onLoadAction}" language="{!language}" 
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+
+    <!--[if lte IE 8]>
+        <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+		<title>{!$Label.Order_history} - {!$Label.SiteTitle}</title>
+    </head>
+
+    <body data-media-size="" class="page-dashboard" data-is-modal-open="false">
+        <div id="js-breakpoint-finder">
+            <span class="device-xs screen-xsmall"></span>
+            <span class="device-sm screen-small"></span>
+            <span class="device-md screen-medium"></span>
+            <span class="device-lg screen-large"></span>
+            <span class="device-xl screen-xlarge"></span>
+        </div>
+
+    <div class="app-container" id="js-app-container">
+
+    	<!-- Page Header -->
+        <c:IEC_PageHeader is_dashboard="true" page_name="IEC_OrderHistory" />
+	
+    	<div class="page-container" id="js-page-container">
+
+    	<apex:form id="contactInformationForm" forceSSL="true">
+        	
+        	<main class="main-content">
+			    <div class="inner-wrapper">
+			        <h1 class="page-title">{!$Label.Orders}</h1>
+
+			        <!-- <div class="field-group checkbox">
+			            <div class="checkbox-box">
+			                <div class="custom-user-input checkbox">
+			                    <input class="user-input checkbox" type="checkbox" id="active-subscriptions" />
+			                    <label class="custom-checkbox" for="active-subscriptions"><i class="icon"></i></label>
+			                </div>
+			                <label class="input-label" for="active-subscriptions">Show only active subscriptions</label>
+			            </div>
+			        </div> -->
+			        
+			        <!-- <?php 
+			            $table_header = '<tr class="heading">
+			                                <th class="order-number">Order number</th>
+			                                <th class="date">Date</th>
+			                                <th class="action"></th>
+			                            </tr>';
+			        ?> -->
+
+			        <div class="table-container orders">
+			            <div class="table-heading">
+			                <table class="data-table table-history">
+			                    <!-- <?= $table_header ?> -->
+			                    <tr class="heading">
+	                                <th class="order-number">{!$Label.Order_number}</th>
+	                                <th class="date">{!$Label.Date}</th>
+	                                <th class="action"></th>
+	                            </tr>
+			                </table>
+			            </div>
+			            <div class="scroll-container history long">
+
+			                <table class="data-table table-history table-togglable">
+			                    <!-- <?= $table_header ?> -->
+			                    <tr class="heading">
+	                                <th class="order-number">{!$Label.Order_number}</th>
+	                                <th class="date">{!$Label.Date}</th>
+	                                <th class="action"></th>
+	                            </tr>
+
+			                    <!-- <?php for ($i=0; $i < 20; $i++) { ?> -->
+			                    <apex:repeat value="{!myOrders}" var="ord">
+			                    <tr class="listing-item">
+			                        <td class="order-number" data-label="Order number">
+			                            <apex:outputText value="{!ord.OrderNumber}" />
+			                        </td>
+			                        <td class="date" data-label="Date">
+			                            <apex:outputText value="{0, date, medium}" >
+				                            <apex:param value="{!ord.EffectiveDate}" />
+				                        </apex:outputText>
+			                        </td>
+			                        <td class="action js-toggle-table">
+			                            <a class="js-toggle-switch" href="#">
+			                                <span class="show-details">
+			                                    {!$Label.See_details}
+			                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+			                                </span>
+			                                <span class="hide-details">
+			                                    {!$Label.Hide_details}
+			                                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+			                                </span>
+			                            </a>
+			                        </td>
+			                        <td class="details js-toggle-details is-hidden">
+			                            <div class="quote-details-container">
+			                                <div class="caption"><apex:outputText value="{!ord.OrderNumber}" /></div>
+			                                <div class="dates">
+			                                    <div class="box">
+			                                        <strong>{!$Label.Date}: </strong>
+			                                        <apex:outputText value="{0, date, medium}" >
+							                            <apex:param value="{!ord.EffectiveDate}" />
+							                        </apex:outputText>
+			                                    </div>
+			                                </div>
+
+			                                <div class="section-container">
+			                                    <div class="group-container group-billing-shipping row">
+			                                        <div class="columns small-12 medium-6">
+			                                            <!-- <?php include 'includes/components/output/billing-address.php'; ?> -->
+			                                            <!-- Start billing address -->
+														<section class="group-container billing-address">
+														    <h2 class="group-title">{!$Label.Billing_address}</h2>
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Address_Line_1}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!ord.BillingStreet}" />
+														        </span>
+														    </div>
+
+														    <!-- <div class="field-group output inline">
+														        <span class="input-label">Address 2</span>
+														        <span class="output-value">
+														        </span>
+														    </div> -->
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Postal_code}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!ord.BillingPostalCode}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.City}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!ord.BillingCity}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Country}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!ord.BillingCountry}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.State_Province}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!ord.BillingState}" />
+														        </span>
+														    </div>
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.PO_number}</span>
+														        <span class="output-value">
+														        	<apex:outputText value="{!ord.PoNumber}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.Invoice_text}</span>
+														        <span class="output-value">
+														        	<apex:outputText value="{!ord.Invoice_Text__c}" />
+														        </span>
+														    </div>
+
+														    <div class="field-group output inline">
+														        <span class="input-label">{!$Label.VAT_number}</span>
+														        <span class="output-value">
+														            <apex:outputText value="{!ord.BillToContact_VAT_Number__c}" />
+														        </span>
+														    </div>
+														</section>
+			                                            <!-- end billing address section -->
+			                                        </div>
+			                                        <div class="columns small-12 medium-6">
+			                                            <!-- <?php include 'includes/components/output/shipping-address.php'; ?> -->
+			                                            <!-- Start shipping address section -->
+														<section class="group-container shipping-address">
+														    <h2 class="group-title">{!$Label.Shipping_address}</h2>
+
+														    <div class="shipping-address-container">
+
+														        <!-- <div class="field-group output inline">
+														            <span class="input-label">Address nickname</span>
+														            <span class="output-value">
+														                Work
+														            </span>
+														        </div> -->
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Address_Line_1}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShippingStreet}" />
+														            </span>
+														        </div>
+
+														        <!-- <div class="field-group output inline">
+														            <span class="input-label">Address 2</span>
+														            <span class="output-value">
+														            </span>
+														        </div> -->
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Postal_code}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShippingPostalCode}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.City}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShippingCity}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Country}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShippingCountry}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.State_Province}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShippingState}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.VAT_number}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShipToContact_VAT_Number__c}" />
+														            </span>
+														        </div>
+
+														        <!-- <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Phone}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShipToContact_Phone__c}" />
+														            </span>
+														        </div>
+
+														        <div class="field-group output inline">
+														            <span class="input-label">{!$Label.Email_address}</span>
+														            <span class="output-value">
+														                <apex:outputText value="{!ord.ShipToContact_Email__c}" />
+														            </span>
+														        </div> -->
+
+														        <div class="group-container shipping-instructions">
+														            <h3 class="group-title">{!$Label.Shipping_instructions}</h3>
+
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Attention}</span>
+														                <span class="output-value">
+														                	<!-- <apex:outputText value="{!ord.IEC_Shipping_Instruction_attention__c}" /> -->
+														                	<apex:outputText value="{!ord.ShipToContact_Name__c}" />
+														                </span>
+														            </div>
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Phone}</span>
+														                <span class="output-value">
+														                	<!-- <apex:outputText value="{!ord.IEC_Shipping_Instruction_phone__c}" /> -->
+														                	<apex:outputText value="{!ord.ShipToContact_Phone__c}" />
+														                </span>
+														            </div>
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Email}</span>
+														                <span class="output-value">
+														                	<!-- <apex:outputText value="{!ord.IEC_Shipping_Instruction_email__c}" /> -->
+														                	<apex:outputText value="{!ord.ShipToContact_Email__c}" />
+														                </span>
+														            </div>
+														            <div class="field-group output inline">
+														                <span class="input-label">{!$Label.Message}</span>
+														                <span class="output-value">
+														                	<apex:outputText value="{!ord.Shipping_Instruction__c}" />
+														                </span>
+														            </div>
+														        </div>
+
+														    </div>
+														</section>
+			                                            <!-- End shipping address section -->
+			                                        </div>
+			                                    </div>
+
+			                                    <div class="group-container group-shopping-cart">
+			                                        <div class="table-container your-order">
+			                                            <table class="data-table table-shopping-cart js-adjust-tooltip-placement">
+			                                                <!-- <?php 
+			                                                $shopping_cart = $your_order;
+			                                                include 'includes/components/data-table/cart.php'; 
+			                                                ?> -->
+			                                                <!-- Start cart section -->
+															<tr class="heading">
+															    <th class="product-name">{!$Label.Product_Name}</th>
+															    <th class="product-number">{!$Label.Product_Number}</th>
+															    <!-- <?php if ($page != 'view_quotes') { ?> -->
+															    <th class="promotion-code">{!$Label.Promo_code}</th>
+															    <!-- <?php } ?> -->
+															    <th class="quantity">{!$Label.Quantity}</th>
+															    <th class="item-price">{!$Label.Item_Price}</th>
+															    <th class="total-price">{!$Label.Total_Price}</th>
+															</tr>
+															<!-- <?php
+															$cart_quantity = 0;
+															$cart_total = 0;
+															$index = 1;
+															foreach ($shopping_cart as $product): 
+															    ?> -->
+															<apex:repeat value="{!ord.Orderitems}" var="item">
+															<tr class="item">
+															    <td class="product-name">
+															        <h2 class="item-name"><!-- <?= $product['name'] ?> -->{!item.Product_Name__c}</h2>
+															        <div class="product-number">{!$Label.Product_Number}: <!-- <?= $product['sku'] ?> -->{!item.Product_Number__c}</div>
+															        
+															        <!-- <?php if ($page == 'order_history') { ?> -->
+															        <apex:outputPanel rendered="{!item.Carrier_Tracking_URL__c != null}">
+															        <div class="tracking-number">
+															        {!$Label.Tracking_Number}: <br /> <!-- <a href="#">{!item.Carrier_Tracking_Number__c}</a> --> <apex:outputText value="{!item.Carrier_Tracking_URL__c}" escape="false" />
+															        </div>
+															        </apex:outputPanel>
+															        <div class="download-invoice">
+															        	<!-- <a href="#">Download Invoice</a> -->
+															        	<apex:outputPanel rendered="{!ord.Payment_Type__c != 'ICH' && item.Invoice_Number__c != null}">
+															        	<apex:outputLink value="/apex/IECInvoice?invoice={!item.Invoice_Number__c}" id="invoiceLink" target="_blank">{!$Label.Download_Invoice}</apex:outputLink>
+																		</apex:outputPanel>
+																		<apex:outputPanel rendered="{!ord.Payment_Type__c == 'ICH'}">
+																		<a class="js-open-modal" data-target-modal="#js-modal-ICH-Customer" href="#">{!$Label.Download_Invoice}</a>
+																		</apex:outputPanel>
+															        </div>
+															        <!-- </apex:outputPanel> -->
+																	
+
+															    </td>
+															    <td class="product-number">
+															        <!-- <?= $product['sku'] ?> -->
+															        <apex:outputText value="{!item.Product_Number__c}" />
+															    </td>
+
+															    <!-- <?php if ($page != 'view_quotes') { ?> -->
+															    <td class="promotion-code">
+															    </td>
+															    <!-- <?php } ?> -->
+
+															    <td class="quantity">
+															        <span class="input-label quantity">{!$Label.Quantity}: </span>
+															        <!-- <?= $product['quantity'] ?> -->
+															        {!item.quantity}
+															        <!-- <?php
+															        $cart_quantity = $cart_quantity + $product['quantity'];
+															        $product_total = $product['price'] * $product['quantity'];
+															        $cart_total = $cart_total + $product_total;
+															        ?> -->
+															    </td>
+															    <td class="price item-price">
+															        <!-- $<?= number_format($product['price'], 2, '.', '') ?> -->
+															        {!item.UnitPrice}
+															    </td>
+															    <td class="price total-price">
+															        <!-- $<?= number_format($product_total, 2, '.', '') ?> -->
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!item.quantity * item.UnitPrice}" />
+											                        </apex:outputText>
+											                        
+															    </td>
+															</tr>
+															<!-- <?php 
+															$index++;
+															endforeach; 
+															?> -->
+															<apex:outputPanel rendered="{!item.Discount__c != null && item.Discount__c > 0}">
+															<tr class="promotion">
+															    <td class="product-name">
+															        <strong>{!$Label.Promotion}</strong>
+															    </td>
+															    <td class="product-number"></td>
+															    <!-- <?php if ($page != 'view_quotes') { ?> -->
+															    <td class="promotion-code"></td>
+															    <!-- <?php } ?> -->
+															    <td class="quantity"></td>
+															    <td class="price item-price"></td>
+															    <td class="price total-price">
+															        (<apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!item.Discount__c}" />
+											                        </apex:outputText>)
+															    </td>
+															</tr>
+															</apex:outputPanel>
+															</apex:repeat>
+															
+															<tr class="total sub-total">
+															    
+
+															    <!-- <td class="sub-total" colspan="<?= $colspan ?>"> -->
+															    <td class="sub-total" colspan="5">
+															        {!$Label.Subtotal}
+															    </td>
+															    <td class="price total-price">
+															        <!-- $<?= number_format($cart_total, 2, '.', '') ?> -->
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!ord.SubTotal_Amount__c - ord.Discount_Amount__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+															<tr class="tax">
+															    
+															    <th colspan="6">
+															        {!$Label.Taxes}
+															    </th>
+															</tr>
+															<tr class="tax">
+															    
+															    <!-- <td class="product-name" colspan="<?= $colspan ?>"> -->
+															    <td class="product-name" colspan="3">
+															        {!$Label.Taxes}
+															    </td>
+															    <td class="quantity">
+															    </td>
+															    <td class="price item-price">
+															    </td>
+															    <td class="price total-price">
+															        
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!ord.Taxes__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+															<tr class="shipping handling">
+															    
+															    <!-- <th colspan="<?= $colspan ?>"> -->
+															    <th colspan="6">
+															        {!$Label.Shipping_and_handling}
+															    </th>
+															</tr>
+															<tr class="shipping">
+															    
+															    <!-- <td class="product-name" colspan="<?= $colspan ?>"> -->
+															    <td class="product-name" colspan="3">
+															        {!$Label.Shipping}
+															    </td>
+															    <td class="quantity">
+															    </td>
+															    <td class="price item-price">
+															    </td>
+															    <td class="price total-price">
+															        
+															        <apex:outputText value="{0, Number, Currency}" rendered="{!ord.Total_Freight_Charge__c != null && ord.Total_Freight_Charge__c > 0}" >
+											                            <apex:param value="{!ord.Total_Freight_Charge__c}" />
+											                        </apex:outputText>
+											                        <apex:outputPanel rendered="{!ord.Total_Freight_Charge__c == null}" >$0.00
+											                        </apex:outputPanel>
+															    </td>
+															</tr>
+															<tr class="handling">
+															    <!-- <td class="product-name" colspan="<?= $colspan ?>"> -->
+															    <td class="product-name" colspan="3">
+															        {!$Label.Handling}
+															    </td>
+															    <td class="quantity">
+															    </td>
+															    <td class="price item-price">
+															    </td>
+															    <td class="price total-price">
+															        
+															        <apex:outputText value="{0, Number, Currency}" rendered="{!ord.Total_handling_charges__c != null && ord.Total_handling_charges__c > 0}" >
+											                            <apex:param value="{!ord.Total_handling_charges__c}" />
+											                        </apex:outputText>
+											                        <apex:outputPanel rendered="{!ord.Total_handling_charges__c == null}" >$0.00
+											                        </apex:outputPanel>
+															    </td>
+															</tr>
+															<tr class="total">
+															    
+															    <!-- <td class="total" colspan="<?= $colspan ?>"> -->
+															    <td class="total" colspan="5">
+															        {!$Label.IDCard_Total}
+															    </td>
+															    <td class="price total-price">
+															        <!-- $<?= number_format($cart_total, 2, '.', '') ?> -->
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!ord.Total_Amount__c}" />
+											                        </apex:outputText>
+															    </td>
+															</tr>
+			                                                <!-- End cart section -->
+			                                            </table>
+			                                            
+
+			                                            <div class="footer text-right table-actions">
+			                                            	<apex:commandLink rendered="{!ord.Status == 'New'}" action="/IEC_CustomerInformation?id={!ord.OrderNumber}" value="Pay Now" id="ConfirmPurchase" styleClass="button confirmPurchase" />
+			                                            </div>
+
+
+			                                        </div>
+			                                    </div>
+
+			                                </div>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                    <!-- <?php } ?> -->
+			                    </apex:repeat>
+			                </table>
+			            </div>
+			        </div>
+			    </div>
+			</main>
+
+        </apex:form>
+
+		
+
+        
+        <c:IEC_Footer is_dashboard="true" />
+
+    <!-- /END page-container --></div>
+    <!-- /END app-container --></div>
+    <div class="modal-container is-hidden" id="js-modal">
+        <div class="overlay"></div>
+        <div class="modal-dialog" id="js-modal-dialog">
+        	<section class="modal-content is-hidden" id="js-modal-ICH-Customer">
+			    <header class="modal-header">
+	               <h2 class="modal-title">&nbsp;</h2>
+	                <a href="#" class="icon-close js-close-modal"><span class="reader-only">Close</span><i class="fa fa-times"></i></a>
+	            </header>
+	            <div class="modal-body">
+	                <p>{!$Label.ICH_customer_invoice_message}</p>
+	            </div>
+	            
+			</section>
+        </div>
+    </div>
+
+    
+    <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+	<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+	
+    </body>
+	</html>
+</apex:page>

@@ -6,6 +6,9 @@ public with sharing class iecWebDownload_Ctrl_Test {
 
 		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
 		
+		iecWebDownload_Ctrl iecWebDownloadNot = new iecWebDownload_Ctrl();
+		iecWebDownloadNot.pageLoad();
+
 		System.runAs(usr){
 			// Create Orders 
 			TestDataGenerator.generateApexSetting();
@@ -17,9 +20,24 @@ public with sharing class iecWebDownload_Ctrl_Test {
 			set<Id> oiIds = new set<Id>();
 			for(OrderItem oi : orderItems){
 				oiIds.add(oi.Id);
-			} 
+			}
 
 			orderItems = [SELECT id, OrderItemNumber, Product__c from OrderItem where id in :oiIds ];
+
+			PageReference pageRef = Page.iecWebDownload;
+			Test.setCurrentPage(pageRef);
+			ApexPages.currentPage().getParameters().put('itemNumber',orderItems[0].OrderItemNumber);
+
+			iecWebDownload_Ctrl iecWebDownload = new iecWebDownload_Ctrl();
+			iecWebDownload.pageLoad();
+			iecWebDownload.accessKeyId = 'accessKeyId';
+			iecWebDownload.secretAccessKey = 'secretAccessKey';
+
+			iecWebDownload_Ctrl.updateOrderItemDownloadNumber(orderItems[0].OrderItemNumber, 'OneTimeWebDownload/9648-53/Visio-Quote_Business_Process.pdf');
+
+			System.assertEquals(1*24*60*60,iecWebDownload.expires);
+			System.assertEquals(1,orders.size());
+			System.assertEquals(3,orderItems.size());
 
 			//Cover the File upload to Amazon
 			List<Product2> products = [SELECT id,SAP_Material_Number__c from Product2 where id =:orderItems[0].Product__c];

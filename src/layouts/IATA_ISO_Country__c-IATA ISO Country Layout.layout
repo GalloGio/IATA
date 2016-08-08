@@ -229,6 +229,10 @@
                 <behavior>Edit</behavior>
                 <field>VAT_Validation_Required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IEC_Zip_Postal_Code_required__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

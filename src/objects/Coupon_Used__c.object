@@ -47,6 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>IEC - track coupon used in purchases</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -57,6 +58,7 @@
     <enableStreamingApi>false</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>IEC - Account (sold to) used the coupon during purchase</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -70,6 +72,7 @@
     </fields>
     <fields>
         <fullName>Coupon__c</fullName>
+        <description>IEC - coupon</description>
         <externalId>false</externalId>
         <label>Coupon</label>
         <length>20</length>
@@ -81,6 +84,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Related product for coupon</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>

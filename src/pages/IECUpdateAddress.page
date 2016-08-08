@@ -84,57 +84,49 @@ font-size: 13px;
                          <!-- Billing Street  -->
                          <div class="customInputLabelIn">
                             <label for="{!$Component.address}"><span class="alert">*</span>Address</label>
-                            <apex:inputText id="address" value="{!oBilling.Street__c}"  style="padding-left: 115px; width: 600px;"/>
+                            <apex:inputText id="address" value="{!oBillingAddress.Street__c}"  style="padding-left: 115px; width: 600px;"/>
                         </div>
                                                
                          <!-- Billing City  -->
                          <div class="customInputLabelIn">
                             <label for="{!$Component.city}"><span class="alert">*</span>City</label>
-                            <apex:inputText id="city" value="{!oBilling.City__c}"  style="padding-left: 115px; width: 600px;"/>
+                            <apex:inputText id="city" value="{!oBillingAddress.City__c}"  style="padding-left: 115px; width: 600px;"/>
                         </div>
                     
                         <!-- Billing Country  -->
                         <div class="customSelect" style="width:99%;">
                         <i class="fa fa-caret-down"></i>
                         <span class="alert select">*<span style="color: #969696;">Country</span></span>
-                            <apex:selectList value="{!oBilling.Country__c}" size="1" onchange="AJAXBillingCountryChange();" styleClass="billing-selectList -required" >
+                            <apex:selectList value="{!oBillingAddress.ISO_Country__c}" size="1" onchange="AJAXBillingCountryChange();" styleClass="billing-selectList -required" >
                                 <apex:selectOptions value="{!Countries}"/>
                             </apex:selectList> 
                        </div>      
                  
                         <!-- Billing States/Province  -->
-                        <div class="customSelect" style="width:99%;">
-                        <i class="fa fa-caret-down"></i>
-                        <span class="alert select">
-                        <apex:outputText rendered="{!oBilling.Country__c == 'Canada' || oBilling.Country__c == 'United States'}"> * </apex:outputText>
-                        <span style="color: #969696;">
-                            <apex:outputText rendered="{!oBilling.Country__c != 'Canada' && oBilling.Country__c != 'United States'}" value="State/Province" />
-                            <apex:outputText rendered="{!oBilling.Country__c == 'Canada'}" value="Province" />
-                            <apex:outputText rendered="{!oBilling.Country__c == 'United States'}" value="State" />
-                        </span>
-                        </span>
-                                                      
-                        <apex:inputText value="{!oBilling.State__c}" rendered="{!oBilling.Country__c != 'Canada' && oBilling.Country__c != 'United States'}" style="height: 31px; width: 80%; border: none;   padding-left: 22px;"/>
-                    
-                        <apex:selectList value="{!oBilling.State__c}" size="1"  rendered="{!oBilling.Country__c == 'Canada'}"  >
-                            <apex:selectOptions value="{!CanadaProvinces}"/>
-                        </apex:selectList>  
-                        <apex:selectList value="{!oBilling.State__c}" size="1"  rendered="{!oBilling.Country__c == 'United States'}" style="  padding-left: 22px;"  >
-                            <apex:selectOptions value="{!USAStates}"/>
-                        </apex:selectList>      
-                                                      
-                       </div>      
+                        <apex:outputPanel id="panelStateProvince" layout="none" rendered="{!bStateAvailable}">
+	                        <div class="customSelect" style="width:99%;">
+	                        <i class="fa fa-caret-down"></i>
+	                        <span class="alert select">
+	                        <apex:outputText rendered="{!bStateAvailable}"> * </apex:outputText>
+	                        <span style="color: #969696;">
+	                            <apex:outputText value="State/Province" />
+	                        </span>
+	                        </span>
+	
+	                        <apex:selectList value="{!oBillingAddress.ISO_State__c}" size="1">
+	                            <apex:selectOptions value="{!StateProvince}"/>
+	                        </apex:selectList>
+	                       </div>
+                       </apex:outputPanel>
                    
            
                         <!-- Billing Zip  -->
                          <div class="customInputLabelIn">
                             <label for="{!$Component.zip}">
-                            <apex:outputText rendered="{!oBilling.Country__c == 'Canada' || oBilling.Country__c == 'United States'}" > <span class="alert">*</span>  </apex:outputText>                     
-                            <apex:outputText rendered="{!oBilling.Country__c != 'Canada' && oBilling.Country__c != 'United States'}" value="Zip/Postal Code" />
-                            <apex:outputText rendered="{!oBilling.Country__c == 'Canada'}" value="Postal Code" />
-                            <apex:outputText rendered="{!oBilling.Country__c == 'United States'}" value="Zip Code" />
+                            <apex:outputText rendered="{!bCountryRequireZipCode}" > <span class="alert">*</span>  </apex:outputText>                     
+                            <apex:outputText value="Zip/Postal Code" />
                             </label>
-                            <apex:inputText id="zip" value="{!oBilling.ZipCode__c}"  style="padding-left: 115px; width: 600px;" />                      
+                            <apex:inputText id="zip" value="{!oBillingAddress.ZipCode__c}"  style="padding-left: 115px; width: 600px;" />                      
                         </div>
                                        
 
