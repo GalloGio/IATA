@@ -55,6 +55,7 @@
                     jQuery('.existingListRecipientCount').text((results).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     jQuery('.existingListProvisionalCost').text((results * {!productRatePlan.EBC_Currency_Cost_Per_Email__c}).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                     newBalance = {!billingAccount.eBroadcast_Email_Balance__c} - results;
+                    if (newBalance<0) newBalance=0;
                     jQuery('.existingListNewBalance').text((newBalance.toString()).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     
                     jQuery('.no-provisional-cost').removeClass('no-provisional-cost');
@@ -88,7 +89,7 @@
                         </script>
                         
                         <div class="row">
-                            <div class="main-container columns small-12 medium-8">
+                            <div class="main-container columns small-12 large-7">
                                 <ul id="existingLists" class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-template">
                                     <apex:repeat value="{!masterFilters}" var="f">
                                         <li class="{!IF(f.Disabled, ' disabled', '')}{!IF(campaign.EBC_Master_Filter__c == f.Value, ' is-selected', '')}">
@@ -129,7 +130,7 @@
                                 </apex:outputPanel>
                             </div>
                             
-                            <div class="sub-container columns small-12 medium-4">
+                            <div class="sub-container columns small-12 large-5">
                                 <div class="summary-box">
                                     <div class="box-body fit">
                                         <table class="data-table zibra cost">
@@ -219,13 +220,22 @@
                         <div class="overlay"></div>
                         <div class="modal-dialog" id="js-modal-dialog">
                             <apex:outputText rendered="{!newListStepNumber == 1}">
+                                <apex:form id="js-modal-create-audience-wrapper">
                                 <section id="js-modal-new-list-audience" class="modal-content wide">
-                                    
-                                    <apex:form >
-                                        
                                         <header class="modal-header">
                                             <h2 class="modal-title">Create a new list</h2>
-                                            <a href="#" class="icon-close js-close-modal js-clear-form"><i class="fa fa-times"></i></a>
+                                                                                     
+                                            <a href="#" id="js-modal" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                                            <script>
+                                            $j = jQuery.noConflict();
+                                                            
+                                            $j('#js-modal').on('click', '.js-close-modal', function(event) {
+                                                event.preventDefault();
+                                                 $j('#js-modal').addClass(className.hidden);
+                                                 body.attr('data-is-modal-open', 'false');
+                                                 $j('.js-champaign-actions').val('default');
+                                            });
+                                            </script> 
                                         </header>
                                         
                                         <div class="modal-body">
@@ -252,7 +262,7 @@
                                                     </apex:outputText>
                                                     <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
                                                         <li class="step step-3 {!IF(newListStepNumber == 3, ' active', '')} {!IF(newListStepNumber < 3, ' disabled', '')}">
-                                                            <apex:commandLink rendered="{!NOT(newListStepNumber <= 3)}" action="{!doNothing}" reRender="modal" value="Refinement">
+                                                            <apex:commandLink rendered="{!NOT(newListStepNumber <= 3)}" action="{!doNothing}" reRender="modal" value="Refinement" immediate="true" html-formnovalidate="formnovalidate" >
                                                                 <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="3" />
                                                             </apex:commandLink>
                                                             <apex:outputText rendered="{!newListStepNumber <= 3}">
@@ -367,8 +377,8 @@
                                                 </ul>
                                             </div>
                                         </footer>
-                                    </apex:form>
                                 </section>
+                                </apex:form>
                             </apex:outputText>
                             <apex:outputText rendered="{!newListStepNumber == 2}">
                                 <section id="js-modal-new-list-geo-selection" class="modal-content wide">
@@ -412,7 +422,7 @@
                                                     </apex:outputText>
                                                     <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
                                                         <li class="step step-3 {!IF(newListStepNumber == 3, ' active', '')} {!IF(newListStepNumber < 3, ' disabled', '')}">
-                                                            <apex:commandLink rendered="{!NOT(newListStepNumber <= 3)}" action="{!doNothing}" reRender="modal" value="Refinement">
+                                                            <apex:commandLink rendered="{!NOT(newListStepNumber <= 3)}" action="{!doNothing}" reRender="modal" value="Refinement" immediate="true" html-formnovalidate="formnovalidate">
                                                                 <apex:param assignTo="{!newListStepNumber}" name="firstParam" value="3" />
                                                             </apex:commandLink>
                                                             <apex:outputText rendered="{!newListStepNumber <= 3}">
@@ -777,7 +787,7 @@
                                                 <h3 class="step-title">Confirmation</h3>
                                                 
                                                 <div class="row">
-                                                    <div class="main-container columns small-12 medium-8">
+                                                    <div class="main-container columns small-12 large-5">
                                                         <table class="data-table new-campaign">
                                                             <tr>
                                                                 <th>Audience:</th>
@@ -806,7 +816,7 @@
                                                         <apex:outputPanel id="newFilterNameField" layout="block" styleClass="field-group text list-name">
                                                             <label>
                                                                 <span class="input-label">Please provide a list name</span>
-                                                                <apex:inputField type="text" required="true" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
+                                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newFilter.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="list-name" html-data-max-length="{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}" />
                                                             </label>
                                                             <div class="input-remaining">
                                                                 <span class="js-remaining-count" data-id="list-name">{!$ObjectType.EBC_Master_Filter__c.fields.Name.length}</span>
@@ -819,7 +829,7 @@
                                                             </apex:outputText>
                                                         </apex:outputPanel>
                                                     </div>
-                                                    <div class="sub-container columns small-12 medium-4">
+                                                    <div class="sub-container columns small-10 large-7">
                                                         <div class="summary-box">
                                                             <div class="box-body fit">
                                                                 <table class="data-table zibra cost"> 
@@ -863,7 +873,7 @@
                                                                         </th>
                                                                         <td>
                                                                             <div class="item-value">
-                                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c}"/></apex:outputText></strong>
+                                                                                <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c<0,0,billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c)}"/></apex:outputText></strong>
                                                                                 <span class="unit"> email(s)</span>
                                                                             </div>
                                                                         </td>
