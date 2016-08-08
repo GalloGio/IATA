@@ -12951,7 +12951,7 @@ jQuery(document).ready(function($) {
         closeModal();
     });
 
-    $('#js-modal').on('click', '.js-close-modal', function(event) {
+    $(document).on('click', '.js-close-modal', function(event) {
         event.preventDefault();
         closeModal();
     });
