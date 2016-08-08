@@ -41,7 +41,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Billing_Currency__c</field>
             </layoutItems>
             <layoutItems>
@@ -58,12 +58,12 @@
         <label>Details</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Payment_Method__c</field>
+                <behavior>Required</behavior>
+                <field>EF_Location_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Location_Code__c</field>
+                <field>Payment_Method__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -147,7 +147,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000FK2u</masterLabel>
+        <masterLabel>00h26000000GByI</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

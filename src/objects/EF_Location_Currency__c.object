@@ -72,6 +72,15 @@ It contains a currency to make the correspondance between contract + location + 
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>EF_Billing_Currency__c</fullName>
+        <description>E&amp;F Billing Currency</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Currency</globalPicklist>
+        <label>Billing Currency</label>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Location_ID__c</fullName>
         <description>E&amp;F Project. Master Detail Relationship to look locations present under Record Type Location, on the E&amp;F Related Records object.</description>
         <externalId>false</externalId>
