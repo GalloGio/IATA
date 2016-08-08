@@ -22,8 +22,8 @@ public class EF_RelationshipHandler
                 contractIdSet.add(r.Contract__c);
             }
 
-            Map <Id, Contract> contractMap = new Map <Id, Contract>([Select Id, (Select Id, Location_ID__c, Location_ID__r.Name, Contract__c, CurrencyISOCode from EF_Locations_Currencies__r),
-            (select Id, EF_Location_ID__c, EF_Location_ID__r.Name, Contract__c from EF_Relationships__r) from Contract where Id in: contractIdSet]);
+            Map <Id, Contract> contractMap = new Map <Id, Contract>([Select Id, (Select Id, Location_ID__c, Location_ID__r.Name, Contract__c, EF_Billing_Currency__c from EF_Locations_Currencies__r),
+            (select Id, EF_Location_ID__c, EF_Location_ID__r.Name, Contract__c, Billing_Currency__c from EF_Relationships__r) from Contract where Id in: contractIdSet]);
 			
             //create a map in which we store all the locations present in contract
             Map <Id, EF_Location_Currency__c> mapLocationsInLocationCurrency = new Map <Id, EF_Location_Currency__c> ();
@@ -61,7 +61,7 @@ public class EF_RelationshipHandler
                                     System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
                                      if(r.EF_Location_ID__c== lc.Location_ID__c){
                                         // set currency in relationship as the one defined on the locationCurrency
-                                        r.CurrencyISOCode = lc.CurrencyISOCode;
+                                        r.Billing_Currency__c = lc.EF_Billing_Currency__c;
                                     }
                             }
                             
