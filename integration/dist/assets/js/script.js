@@ -12689,6 +12689,15 @@ jQuery(document).ready(function($) {
 
     var stickyElementContainerWidth,
         stickyElementPositionTop;
+	// Start:Add-on Abdellah to solve Sticky Section Issue
+        if ($('.sub-container.payment-confirmation').length) {
+            var targetStickyElement = $(document).find('#paymentconfirmation');
+            stickyElementContainerWidth = targetStickyElement.width();
+            stickyElementPositionTop = targetStickyElement.offset().top;
+ 
+        }
+    // End:Add-on Abdellah to solve Sticky Section Issue
+    
     $('.js-tabs').on('click', '.tabs a', function(event) {
         event.preventDefault();
         var self = $(this),
