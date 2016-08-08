@@ -145,7 +145,7 @@
         <label>Address Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
@@ -305,6 +305,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Remittance_frequency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CCG_IRR_Distribution_list__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CCG_Participant__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

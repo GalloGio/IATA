@@ -2,7 +2,8 @@ global class QuoteCleanUp_Scheduler implements Schedulable
 {
 	global static String doSchedule(String CRON_EXP)
 	{
-		return System.Schedule('Quotes older than 3 months cleanup', CRON_EXP, new QuoteCleanUp_Scheduler());
+		String jobName = (Test.isRunningTest())? 'Test_'+Datetime.now().time() : 'Quotes older than 3 months cleanup';
+		return System.Schedule(jobName, CRON_EXP, new QuoteCleanUp_Scheduler());
 	}
 
 	global void execute(SchedulableContext sc) 

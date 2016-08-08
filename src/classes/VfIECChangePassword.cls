@@ -45,7 +45,7 @@ public without sharing class VfIECChangePassword extends IEC_PageController {
                 hasError = true;
                 if(pageRef != null){
                     if(paramReturnURL != null && !paramReturnURL.contains('null')){
-                    	String redirectUrl = (paramReturnURL.startsWith('/')) ? '/iec' + paramReturnURL : '/iec/' + paramReturnURL;
+                    	String redirectUrl = (paramReturnURL.startsWith('/')) ?  paramReturnURL : '/' + paramReturnURL;
                         pageRef = new PageReference(redirectUrl);
                     }
                     hasError = false;
@@ -64,4 +64,6 @@ public without sharing class VfIECChangePassword extends IEC_PageController {
             return null;
         }
     }
+
+
 }

@@ -23,7 +23,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public String selectedCustomerType{get;set;}
 
     //Products available
-    public transient List<EComProduct_DTO> allProducts;
+    public List<EComProduct_DTO> allProducts; 
+    
+    
     private String searchCondition;
     public Integer totalNumberOfPages{get;set;}
     public List<Integer> pages{get;set;}
@@ -248,7 +250,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                     searchCondition += ' AND ' + field + ' IN ('+s+') ';
                 }                
             }
-        }   
+        } 
+
+        System.debug('searchCondition::'+searchCondition);  
 
         queryProducts();
         refreshDisplayedProducts();

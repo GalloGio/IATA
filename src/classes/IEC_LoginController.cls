@@ -120,7 +120,7 @@ public with sharing class IEC_LoginController extends IEC_PageController {
             /*Pagereference pr = Page.ISSP_Registration;
             pr.getParameters().put('sRefererCommunity','iec');*/
 
-            String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'iec/IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'iec/IEC_Login';
+            String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'IEC_Login';
             //Pagereference pr = Page.IECUserRegistration;
             //MM: I have changed the target registration page to the ISS registration page and added a parameter with the name of the initial call.
             Pagereference pr = Page.ISSP_Registration;
@@ -138,6 +138,4 @@ public with sharing class IEC_LoginController extends IEC_PageController {
         }
         catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
     }
-
-
 }

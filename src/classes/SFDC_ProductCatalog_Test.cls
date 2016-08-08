@@ -2,7 +2,7 @@
 private class SFDC_ProductCatalog_Test 
 {
 	
-	@isTest (SeeAllData=true)
+	@isTest /*(SeeAllData=true)*/
 	static void test_GET() 
 	{
 		//-- Generate Products with Prices 
