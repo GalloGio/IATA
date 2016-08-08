@@ -585,13 +585,27 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Serving the T and T Customer - EN</fullName>
+                <fullName>Serving the Travel Customer - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Social Media for T and T Industry - EN</fullName>
                 <default>false</default>
             </picklistValues>
+
+            <picklistValues>
+                <fullName>Fundamentals Journey Pricing - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Repricing, Exchange and Reissue - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency Fees - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+
             <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -638,11 +652,23 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Serving the T and T Customer - EN</fullName>
+                <fullName>Serving the Travel Customer - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Social Media for T and T Industry - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fundamentals Journey Pricing - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Repricing, Exchange and Reissue - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Travel Agency Fees - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>

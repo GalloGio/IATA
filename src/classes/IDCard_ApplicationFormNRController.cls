@@ -44,6 +44,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description {get; set;}
   public String socialMediaForTheTravelIndustry_Description {get; set;}
 
+  public String fundamentalsJourneyPricing_Description {get; set;}
+  public String repricingExchangeReissue_Description {get; set;}
+  public String travelAgencyFees_Description {get; set;}
+
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
   private ID_Card__c associatedIDCard {get; set;}
