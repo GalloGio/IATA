@@ -189,10 +189,10 @@
 																			
 																			<div class="package-credits">
 																				<span class="line-stroke">
-																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.standardEmailCredits}" /></apex:outputText>
 																				</span>
 																				<span class="text-orange">
-																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.standardEmailCredits}" /></apex:outputText>
+																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
 																				</span>
 																				<br/>
 																				emails
