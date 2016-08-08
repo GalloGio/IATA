@@ -30,7 +30,7 @@ public without sharing class ISSP_APProcess {
     public boolean countryRequirementFound {get;set;}
     public boolean dupeDraftExists{get;set;}
     public string BankMandateUrl {get;set;}
-	public string strOperationType { get; set; } //BSP, CASS Import or CASS Export (from Step 1 selection)
+  public string strOperationType { get; set; } //BSP, CASS Import or CASS Export (from Step 1 selection)
     public string strAreaType{ get; set; } //AP Joining or Change
     public string strChangeType{ get; set; } //AP Joining or Change
     public string strLoB { get; set; } //Line of Business, BSP or CASS
@@ -56,6 +56,7 @@ public without sharing class ISSP_APProcess {
     public string strGSSAName {get;set;}
     public string strGSSAAddress {get;set;}
     public string gssaCountryISOCode {get;set;}
+    public string category {get;set;}
     
     public List <AP_Country_specs__c> urlList {get; set;}
     public transient Blob fileBody {get;set;}
@@ -102,7 +103,7 @@ public without sharing class ISSP_APProcess {
         if(vAccountConcernedId==null) {
             //Case has not been created at this stage, so need to get AL Account (can be HQ or BR) for logged in user
             popContact();
-            
+
             newForm.Contact_Resp_Job_Title__c = con.Title;
             newForm.Contact_Resp_F_Name__c = con.FirstName;
             newForm.Contact_Resp_L_Name__c = con.LastName;
@@ -111,6 +112,7 @@ public without sharing class ISSP_APProcess {
         
         if(isGSSAUser) {
             vGSSAAccountId = con.AccountId;
+            category = con.Account.Category__c;
         } else if (con.Account.Top_Parent__c == null) { //User is from HQ  Account
             vHQAccountId = con.AccountId;
         } else { 
@@ -127,11 +129,11 @@ public without sharing class ISSP_APProcess {
         }
         
         if(ApexPages.currentPage().getParameters().containsKey('step'))
-        	stepNumber = ApexPages.currentPage().getParameters().get('step');
+          stepNumber = ApexPages.currentPage().getParameters().get('step');
             
         if(stepNumber == '1' || stepNumber == null){
                 isStep1= true;
-      	}
+        }
         
         if(ApexPages.currentPage().getParameters().containsKey('proc')) {
             APprocess = ApexPages.currentPage().getParameters().get('proc');
@@ -164,7 +166,7 @@ public without sharing class ISSP_APProcess {
             newCase = retrieveCase(vCaseId);
             
             if(newCase==null)
-            	redirectToCasesList();
+              redirectToCasesList();
             
             //if(newCase.Status != 'Draft'){
             //    redirectToCasesList();
@@ -185,7 +187,7 @@ public without sharing class ISSP_APProcess {
                 vHQAccountId = newCase.Account_Concerned__r.Top_Parent__c;
             }
             
-          	retrieveHQAccountDetails(vHQAccountId);
+            retrieveHQAccountDetails(vHQAccountId);
             
             if (isGSSAUser){  //For GSSA display Airline details
                 strGSSAName = newCase.Account.Name;
@@ -199,7 +201,7 @@ public without sharing class ISSP_APProcess {
             SYSTEM.DEBUG('INIT - Country ISO Code: ' + apcountryisocode);
             
             retrieveCountryRequirements(apcountryisocode, strLoB );
-            apCountry = countryRequirement.Name;	//Used for country display on Country Reqs pages
+            apCountry = countryRequirement.Name;  //Used for country display on Country Reqs pages
             
             if(apcountryisocode == 'CN') {
                 bspLinkContact='ASD';
@@ -225,13 +227,13 @@ public without sharing class ISSP_APProcess {
                 newForm.Submitted_to_IATA__c = FALSE;
                 
                 // TF - Type of Change Requested
-				typeOfChangeRequested = new List<String>();
-				if (newForm.Type_of_Change_Requested__c != null){
-					for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
-						typeOfChangeRequested.add(thisValue);
-					}
-				}
-				
+        typeOfChangeRequested = new List<String>();
+        if (newForm.Type_of_Change_Requested__c != null){
+          for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
+            typeOfChangeRequested.add(thisValue);
+          }
+        }
+        
             }else if(stepNumber == '4'){
                 system.debug('STEP 4 - 1');
                 isStep4 = true;
@@ -240,12 +242,12 @@ public without sharing class ISSP_APProcess {
                 newForm.Submitted_to_IATA__c = FALSE;
                 
                  // TF - Type of Change Requested
-				typeOfChangeRequested = new List<String>();
-				if (newForm.Type_of_Change_Requested__c != null){
-					for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
-						typeOfChangeRequested.add(thisValue);
-					}
-				}
+        typeOfChangeRequested = new List<String>();
+        if (newForm.Type_of_Change_Requested__c != null){
+          for (String thisValue : newForm.Type_of_Change_Requested__c.split(';')){
+            typeOfChangeRequested.add(thisValue);
+          }
+        }
                 
                 //TF
                 String nameString = apcountryisocode + '-' + strLOB + '%';
@@ -298,11 +300,11 @@ public without sharing class ISSP_APProcess {
                 } else if(strAreaType=='Airline Change' && strChangeType=='Minor database changes') {
                     if(newForm.Type_of_Change_Requested__c != null) {
                         if(newForm.Type_of_Change_Requested__c.contains('Master')) { //Need to include MasterTable mandatory fields
-                        	Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
-                        		for(String tmp : masterTableMandatoryFields.keySet()) {
-                            		ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
-                        		}
-                        	}
+                          Map<String, String> masterTableMandatoryFields = ISSP_AP_FieldLists.changeMasterTableMandatoryFields;
+                            for(String tmp : masterTableMandatoryFields.keySet()) {
+                                ISSP_AP_fieldLists.changeMandatoryFields.put(tmp, masterTableMandatoryFields.get(tmp));
+                            }
+                          }
                     }
                     for (String fldLabel : ISSP_AP_fieldLists.changeMandatoryFields.keySet()) {
                         System.Debug('Change FldLabel: '+ fldLabel);
@@ -312,7 +314,7 @@ public without sharing class ISSP_APProcess {
                         }
                     }
                 } else if(strAreaType=='Airline Change' && strChangeType=='Bank Account Instructions') {
-                	 for (String fldLabel : ISSP_AP_fieldLists.changeBankMandatoryFields.keySet()) {
+                   for (String fldLabel : ISSP_AP_fieldLists.changeBankMandatoryFields.keySet()) {
                         System.Debug('Change FldLabel: '+ fldLabel);
                         if (newForm.get(fldLabel)==null) {
                             allfieldsfilled = false;
@@ -443,27 +445,27 @@ public without sharing class ISSP_APProcess {
             AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Joining'];
         
         if(dupeDraft.size()>0) {
-            	dupeDraftExists = true;
-            	return true;
+              dupeDraftExists = true;
+              return true;
         } else {
             //No Joining Process, so check for ongoing Minor DB or Bank details Change
             if(changeType=='Minor database changes') {
                 dupeDraft = [
-            		SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
-            		FROM Case 
-            		WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
-            		AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Change' AND Case.Reason1__c = 'Minor database changes'];  
+                SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
+                FROM Case 
+                WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
+                AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Change' AND Case.Reason1__c = 'Minor database changes'];  
             } else {
                 dupeDraft = [
-            		SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
-            		FROM Case 
-            		WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
-            		AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Change' AND Case.Reason1__c = 'Bank Account Instructions']; 
+                SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c
+                FROM Case 
+                WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID AND Case.Account_Concerned__c = :vAccountConcerned
+                AND Case.Verification__c = : joiningType AND Case.CaseArea__c = 'Airline Change' AND Case.Reason1__c = 'Bank Account Instructions']; 
             }
             
              if(dupeDraft.size()>0) {
-            	dupeDraftExists = true;
-            	return true;
+              dupeDraftExists = true;
+              return true;
              }
         }
         dupeDraftExists = false;
@@ -473,15 +475,15 @@ public without sharing class ISSP_APProcess {
     public boolean isSameAPCase() {
             List<Case> dupeCases = [
                 SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-            			Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c
-                		FROM Case WHERE RecordType.DeveloperName = 'IDFS_Airline_Participation_Process' AND Id = :vCaseId
+                  Account.Billing_Address_formated__c, Verification__c,IFAP_Country_ISO__c
+                    FROM Case WHERE RecordType.DeveloperName = 'IDFS_Airline_Participation_Process' AND Id = :vCaseId
             ];
             if(dupeCases.size()>0) {
                 isNewCase=false;
                 newCase = dupeCases[0];
                 return true;
             } else {
-            	return false;          
+              return false;          
             }
         }
     
@@ -490,8 +492,8 @@ public without sharing class ISSP_APProcess {
         
          if(isGSSAUser) {
              if(strOperationType=='Airline Joining') {
-             	vGSSAAccountId = con.AccountId;
-            	vHQAccountId = cassairlineid; //For Joining selected AL in list is a HQ Account Id    
+               vGSSAAccountId = con.AccountId;
+              vHQAccountId = cassairlineid; //For Joining selected AL in list is a HQ Account Id    
              } else { //whereas for Chhanges (Services Rendered) selected Account Id may well be a BR account
                 List <Account> airlineList = [SELECT Id, Name, IATACode__c, Airline_designator__c, Airline_Prefix__c, Top_Parent__c FROM Account WHERE Id = :cassairlineid];
                 if (!airlineList.isEmpty()){
@@ -514,7 +516,7 @@ public without sharing class ISSP_APProcess {
         description = newCase.Description;
         SYSTEM.DEBUG('HQ Account Id: ' + vHQAccountId);
         retrieveHQAccountDetails(vHQAccountId);  //Especially to get AL Membershhip status at this stage for initial case creation
-		
+    
         if(strOperationType.startsWith('BSP')) {
             strLoB = 'BSP';
         } else {
@@ -524,7 +526,7 @@ public without sharing class ISSP_APProcess {
         SYSTEM.DEBUG('SAVE - LOB: ' + strLoB);
         SYSTEM.DEBUG('SAVE - Country ISO Code: ' + apcountryisocode);
             
-       	retrieveCountryRequirements(apcountryisocode, strLoB); 
+         retrieveCountryRequirements(apcountryisocode, strLoB); 
         Boolean sameCase = isSameAPCase();
         //If we have retrieved same case going from STEP 1 back to STEP 2 then need to reset these 2 submitted fields
         newCase.IFAP_Country_ISO__c = apcountryisocode;
@@ -559,7 +561,7 @@ public without sharing class ISSP_APProcess {
         newCase.CaseArea__c = strAreaType;
         
         if(strAreaType=='Airline Joining') {
-        	newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
+          newCase.Reason1__c = caseReason(strOperationType, strParentMembershipstatus);
             newCase.Subject='Airline Participation - '+ strOperationType + ' Joining Process - ' + newCase.Country_concerned_by_the_query__c;
         } else {
             newCase.Reason1__c = strChangeType;
@@ -567,7 +569,7 @@ public without sharing class ISSP_APProcess {
         }
        
         newCase.Verification__c = strOperationType;  //Store the type of Joining application, for later use in indentifying Duplicate application for same AL + Country 
-      	newCase.Type_of_customer__c = con.Account.Category__c;
+        newCase.Type_of_customer__c = con.Account.Category__c;
         
         SYSTEM.DEBUG('Case ID: ' + vCaseId);
         SYSTEM.DEBUG('Is Dupe Draft: ' + isDupeDraft(newCase.Account_Concerned__c, strOperationType, strChangeType));
@@ -575,12 +577,12 @@ public without sharing class ISSP_APProcess {
         if(isDupeDraft(newCase.Account_Concerned__c, strOperationType, strChangeType) && !sameCase) { //Has GSSA or AL applied for same joining type for this Account
             return redirectToCasesListForDupe();
         } else if(!sameCase) {
-        	newCase.Status = 'Draft';
+          newCase.Status = 'Draft';
         }
               
             try {
-            	upsert newCase;
-              	return goToStep2();
+              upsert newCase;
+                return goToStep2();
             } catch(DmlException ex) {
                 ApexPages.addMessages(ex);
             }
@@ -593,7 +595,7 @@ public without sharing class ISSP_APProcess {
         // TF - Type of Change Requested
         String typeOfChangeRequestedString = '';
         for (String thisValue : typeOfChangeRequested){
-        	typeOfChangeRequestedString = typeOfChangeRequestedString + thisValue + ';';
+          typeOfChangeRequestedString = typeOfChangeRequestedString + thisValue + ';';
         }
         newForm.Type_of_Change_Requested__c = typeOfChangeRequestedString;
         
@@ -635,7 +637,7 @@ public without sharing class ISSP_APProcess {
           
             if(strAreaType == 'Airline Joining') {
                 SYSTEM.DEBUG('Record Type Name: ' + strLoB + ' Joining');
-            	newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;    
+              newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;    
             } else {
                 newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
             }
@@ -659,7 +661,7 @@ public without sharing class ISSP_APProcess {
     
     public Pagereference saveBSPFormAndGoBack(){
         try {
-        	saveBSPForm();
+          saveBSPForm();
             return goToStep2();
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
@@ -670,7 +672,7 @@ public without sharing class ISSP_APProcess {
     public Pagereference saveBSPFormAndLeave(){
         try {
             saveBSPForm();
-        	return redirectToCasesList();    
+          return redirectToCasesList();    
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
         }
@@ -797,30 +799,30 @@ public without sharing class ISSP_APProcess {
         SYSTEM.DEBUG('LoB: ' + strLoB);
         
         if(strAreaType=='Airline Joining') {
-        	if(strLoB=='CASS' || isGSSAUser) {
-         		isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
-                				WHERE Line_of_business__c = 'CASS' ORDER by Name];   
-        	} else {
-         		isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
-                            	WHERE Line_of_business__c = 'BSP' ORDER by Name];   
-        	}
+          if(strLoB=='CASS' || (isGSSAUser & category <> 'IBCS consolidator')) {
+             isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
+                        WHERE Line_of_business__c = 'CASS' ORDER by Name];   
+          } else {
+             isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
+                              WHERE Line_of_business__c = 'BSP' ORDER by Name];   
+          }
         } else {  //AP Change process, so based country list on Services Rendered
             if(!isGSSAUser) {
-            	if(strLoB=='CASS') {
-         			isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                          	WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='CASS Participation' AND Services_Rendered_Status__c='Active'
-                           	ORDER BY ISO_Country_formula__c];   
-        		} else {
-         			isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                          	WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
-                           	ORDER BY ISO_Country_formula__c];	
-        		}   
+              if(strLoB=='CASS') {
+               isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+                            WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='CASS Participation' AND Services_Rendered_Status__c='Active'
+                             ORDER BY ISO_Country_formula__c];   
+            } else {
+               isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+                            WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
+                             ORDER BY ISO_Country_formula__c];  
+            }   
             } else {
                 System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
                 
-				isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                          	WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
-                           	ORDER BY ISO_Country_formula__c];                   
+        isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
+                             ORDER BY ISO_Country_formula__c];                   
             }    
         }
         
@@ -828,21 +830,21 @@ public without sharing class ISSP_APProcess {
         Set<String> sISOCode = New Set<String>();
         
         options.add(new SelectOption('', '--None--'));
-       	if(strAreaType=='Airline Joining') {
-        		for(AP_Country_Requierment__c iso : isoListJoining){
+         if(strAreaType=='Airline Joining') {
+            for(AP_Country_Requierment__c iso : isoListJoining){
                     if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){
-                    	sISOCode.add(iso.Country__r.ISO_Code__c);
+                      sISOCode.add(iso.Country__r.ISO_Code__c);
                         options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
                     }
-        		}
+            }
             } else {
-            	for(Services_Rendered__c iso : isoListChange){
-                	if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
-                   		sISOCode.add(iso.ISO_Country_Code__c);
-            			options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));   
-                   	}
-        		}
-        	}
+              for(Services_Rendered__c iso : isoListChange){
+                  if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
+                       sISOCode.add(iso.ISO_Country_Code__c);
+                  options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));   
+                     }
+            }
+          }
         
         return options;
     }
@@ -861,12 +863,12 @@ public without sharing class ISSP_APProcess {
                         AND Case_BSP_Country__c!=''
                         ORDER BY Name];
             
-        	options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
-        	for(IATA_ISO_Country__c iso : isoList){
-        		options.add(new SelectOption(iso.Name,iso.Name));
-        	}
+          options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
+          for(IATA_ISO_Country__c iso : isoList){
+            options.add(new SelectOption(iso.Name,iso.Name));
+          }
             
-        	return options;
+          return options;
         }
         set;
     }
@@ -878,9 +880,15 @@ public without sharing class ISSP_APProcess {
         if(!isGSSAUser) { //GSSA cannot create BSP cases
             options.add(new SelectOption('BSP','BSP'));    
         }
+
+        if(category == 'IBCS consolidator'){
+            options.add(new SelectOption('BSP','BSP'));   
+        }
         
+        if(category <> 'IBCS consolidator'){
         options.add(new SelectOption('CASS Export','CASS Export'));
         options.add(new SelectOption('CASS Import','CASS Import'));
+        }
         
         /**
         if(strParentMembershipStatus=='IATA member') {
@@ -902,7 +910,7 @@ public without sharing class ISSP_APProcess {
                 options.add(new SelectOption('CASS Import via GHA - Non-Member','CASS Import'));
             }
         }
-		**/
+    **/
         
         return options;
     }
@@ -915,21 +923,21 @@ public without sharing class ISSP_APProcess {
         SYSTEM.DEBUG ('GSSA Country code: ' + gssaCountryISOCode);
         
         if(strAreaType=='Airline Joining') { //Get list of all Cargo Airlines when GSSA wants to craete new joining 
-       		casshq = [SELECT Id, Name, Airline_Prefix__c, Airline_designator__c
-            			FROM Account
-            			WHERE RecordType.DeveloperName IN ('IATA_Airline') AND Airline_Prefix__c != null AND Airline_designator__c != null AND ACLI_Status__c != 'Inactive Company'
-            			ORDER BY Name];
+           casshq = [SELECT Id, Name, Airline_Prefix__c, Airline_designator__c
+                  FROM Account
+                  WHERE RecordType.DeveloperName IN ('IATA_Airline') AND Airline_Prefix__c != null AND Airline_designator__c != null AND ACLI_Status__c != 'Inactive Company'
+                  ORDER BY Name];
         } else { //Or else get list of existing Airlines where this GSSA renders the CASS service, for selected country, for changes
             if(gssaCountryISOCode != null) {
-            	existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
-                          	FROM Services_Rendered__c
-                          	WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode 
-                           	ORDER BY Services_Rendered_to_Airline__r.Name];    
+              existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
+                            FROM Services_Rendered__c
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active' AND ISO_Country_Code__c = :gssaCountryISOCode 
+                             ORDER BY Services_Rendered_to_Airline__r.Name];    
             } else {
                 existingCASS = [SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.Name, Services_Rendered_to_Airline__r.Airline_designator__c, Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c
-                          	FROM Services_Rendered__c
-                          	WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
-                           	ORDER BY Services_Rendered_to_Airline__r.Name];
+                            FROM Services_Rendered__c
+                            WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS via GSSA' AND Services_Rendered_Status__c='Active'
+                             ORDER BY Services_Rendered_to_Airline__r.Name];
             }
                        
         }
@@ -938,13 +946,13 @@ public without sharing class ISSP_APProcess {
         cass_airlines.add(new SelectOption('','--None--'));
         
         if(strAreaType=='Airline Joining') {
-        	for(Account als : casshq){
-            	cass_airlines.add(new SelectOption(als.id, als.Name + ' (' + als.Airline_designator__c + ' ' + als.Airline_Prefix__c + ')'));
-        	}    
+          for(Account als : casshq){
+              cass_airlines.add(new SelectOption(als.id, als.Name + ' (' + als.Airline_designator__c + ' ' + als.Airline_Prefix__c + ')'));
+          }    
         } else {
-        	for(Services_Rendered__c als : existingCASS){
-            	cass_airlines.add(new SelectOption(als.Services_Rendered_to_Airline__c, als.Services_Rendered_to_Airline__r.Name + ' (' + als.Services_Rendered_to_Airline__r.Airline_designator__c+ ' ' + als.Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c +')'));
-        	}   
+          for(Services_Rendered__c als : existingCASS){
+              cass_airlines.add(new SelectOption(als.Services_Rendered_to_Airline__c, als.Services_Rendered_to_Airline__r.Name + ' (' + als.Services_Rendered_to_Airline__r.Airline_designator__c+ ' ' + als.Services_Rendered_to_Airline__r.Parent.Airline_Prefix__c +')'));
+          }   
         }
         
         return cass_airlines;
@@ -1184,12 +1192,12 @@ public without sharing class ISSP_APProcess {
     public List <String> typeOfChangeRequested {get; set;}
     
     private void getLob(String strLine) {
-   	//Verify if it's a BSP or a CASS Form
-    	if(strLine.startsWith('BSP')) {
-        	isBSP = true;
+     //Verify if it's a BSP or a CASS Form
+      if(strLine.startsWith('BSP')) {
+          isBSP = true;
             strLoB = 'BSP';
         }else{
-        	isCASS = true;
+          isCASS = true;
             strLoB = 'CASS';
         }
     }
@@ -1236,8 +1244,8 @@ public without sharing class ISSP_APProcess {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setTemplateID(et.Id);
         if ( owea.size() > 0 ) {
-    		mail.setOrgWideEmailAddressId(owea[0].Id);
-		}
+        mail.setOrgWideEmailAddressId(owea[0].Id);
+    }
         //mail.setSenderDisplayName(fromaddress);
         mail.setTargetObjectId(newCase.ContactId);
         mail.setWhatId(newCase.Id);

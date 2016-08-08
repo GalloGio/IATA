@@ -12,14 +12,17 @@ private class vfIECPaymentMethods_tst {
     	PageReference pgRef = Page.IECPaymentMethods;
     	Test.setCurrentPage(pgRef);
 
+    	vfIECPaymentMethods pgCont;
+    	IECPageController baseCont;
+
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
     	System.runAs(usr) {
 	    	//Instantiate Controller
-	    	IECPageController baseCont = new IECPageController();
+	    	baseCont = new IECPageController();
 	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
 	
 	    	//Instantiate Controller
-	        vfIECPaymentMethods pgCont = new vfIECPaymentMethods();
+	        pgCont = new vfIECPaymentMethods();
 	        pgCont.pageLoad();
 	        
 	        // Test 001: Make sure payment methods loaded successfully
@@ -27,10 +30,14 @@ private class vfIECPaymentMethods_tst {
 	        system.assert(pgCont.DefaultPaymentMethodsItems.size() > 1);
 	        system.assert(!String.isEmpty(pgCont.customerDefaultPaymentMethodId));
 	        
-	        // Test 002: Update default payment method
-	        // Set it to a credit card that has a future expiry date
-	        pgCont.customerDefaultPaymentMethodId = '333';
+	        // Test 002: Update default payment type
+	        // Set it to a credit card
+	        pgCont.customerDefaultPaymentType = 'Credit Card';
+    	}
+			// Run outside the usr scope to avoid the "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY, insufficient access rights on cross-reference id: []" exception
 	        pgCont.updateDefaultPaymentMethod();
+
+        System.runAs(usr) {
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Confirm_DefaultPaymentUpdate));
 	        
 	        // Test 003: Modify existing card
@@ -74,17 +81,19 @@ private class vfIECPaymentMethods_tst {
 	    	pgCont = new vfIECPaymentMethods();
 	        pgCont.pageLoad();
     	
-	        // Test 002: Update default payment method
+	        // Test 002: Update default payment type
 	        // Set it to none
-	        pgCont.customerDefaultPaymentMethodId = '';
+	        pgCont.customerDefaultPaymentType = '';
 	        pgCont.updateDefaultPaymentMethod();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_DefaultPaymentEmpty));
 	        
+	        /* Commented by Samy (2016-03-04) Replaced with new code to save the default payment type instead of method on the SF Account level
 	        // Test 003: Update default payment method
 	        // Set it to a credit card that has an expired date
 	        pgCont.customerDefaultPaymentMethodId = '111';
 	        pgCont.updateDefaultPaymentMethod();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_DefaultPaymentExpired));
+	        */
 	        
 	        // Test 004: Delete existing card
 	        pgCont.creditCardToDelete = pgCont.customerDefaultPaymentMethodId;

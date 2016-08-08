@@ -47,6 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>IEC - products to include in campaign</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -57,6 +58,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Campaign__c</fullName>
+        <description>IEC - Parent campaign</description>
         <externalId>false</externalId>
         <label>Campaign</label>
         <referenceTo>Campaign</referenceTo>
@@ -71,6 +73,7 @@
     </fields>
     <fields>
         <fullName>Last_Version_Number__c</fullName>
+        <description>IEC - SAP material number of the latest version of product purchased by customer</description>
         <externalId>false</externalId>
         <formula>Product_Last_Version__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -84,6 +87,7 @@
     <fields>
         <fullName>Product_Last_Version__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Latest version of product purchased by customer</description>
         <externalId>false</externalId>
         <label>Product Last Version</label>
         <referenceTo>Product2</referenceTo>
@@ -96,6 +100,7 @@
     </fields>
     <fields>
         <fullName>Product_Number__c</fullName>
+        <description>IEC - SAP material number of the product purchased by customer</description>
         <externalId>false</externalId>
         <formula>Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -109,6 +114,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - product purchased by customer</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>
@@ -121,6 +127,7 @@
     </fields>
     <fields>
         <fullName>Swapping_Number__c</fullName>
+        <description>IEC - SAP material number of the replacement product</description>
         <externalId>false</externalId>
         <formula>Swapping_Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -134,6 +141,7 @@
     <fields>
         <fullName>Swapping_Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Product that replaces the product purchased by customer</description>
         <externalId>false</externalId>
         <label>Swapping Product</label>
         <referenceTo>Product2</referenceTo>

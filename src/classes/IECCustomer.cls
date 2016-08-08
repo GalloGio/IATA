@@ -138,8 +138,9 @@ public without sharing class IECCustomer {
     
     /**
      * Private constructor
+     * 2015-11-09 Thai: make public in order to allow CSR initiate customer for different actions
      */
-    private IECCustomer(Id ContactId) {
+    public IECCustomer(Id ContactId) {
         try {
             RelatedContact = IECUserManager.getContactById(ContactId);
             RelatedAccount = IECUserManager.getAccountById(RelatedContact.AccountId);
@@ -283,7 +284,7 @@ public without sharing class IECCustomer {
         if (defaultPMFound == false) {
             if ((String)RelatedZuoraAccount.getValue('DefaultPaymentMethodId') == IECConstants.PaymentMethod_BankTransfer_ZuoraID)
                 m_DefaultPaymentMethod = IECUtil.PaymentMethodType.BANK_TRANSFER;
-            else if ((String)RelatedZuoraAccount.getValue('DefaultPaymentMethodId') == IECConstants.PaymentMethod_Other_ZuoraID)
+            else if ((String)RelatedZuoraAccount.getValue('DefaultPaymentMethodId') == IECConstants.PaymentMethod_ICH_ZuoraID)
                 m_DefaultPaymentMethod = IECUtil.PaymentMethodType.ICH;
         }
 
@@ -292,9 +293,16 @@ public without sharing class IECCustomer {
     
     private String determineClientType() {
     	try {
+    		// 2016-04-26: Samy: Replace logic for determining Client Type by using logic from Phase 3A
+            //String sCustomerType = User_Sel.getCustomerType(UserInfo.getUserId());
+    		String sCustomerType = User_Sel.getCustomerType((UserInfo.getUserType() == 'PowerPartner') ? UserInfo.getUserId() : RelatedContact.Id);
 
-			// get User
-			User oUser = IECUserManager.getUser(UserInfo.getUserId());
+    		return (sCustomerType == 'Member Airline') ? IECConstants.Account_ClientType_MemberAirline : IECConstants.Account_ClientType_ThirdParty;
+
+			/*// get User
+            //*** 2015-11-09 Thai: change the way to get user to allow CSR performs things for customer
+            //User oUser = IECUserManager.getUser(UserInfo.getUserId());
+            User oUser = (IECUserManager.isUserLoggedIn() ? IECUserManager.getUser(UserInfo.getUserId()) : RelatedUser);
 
 			////////////////////////////////////////////////////
 			// Contact validation
@@ -370,6 +378,7 @@ public without sharing class IECCustomer {
 			}
 			
 			return IECConstants.Account_ClientType_ThirdParty;
+			*/
 		}
 		catch (Exception ex) {
 			throw new IECApplicationException('Error while determining client type: ' + ex.getMessage());

@@ -29,6 +29,14 @@ private class vfIECRenew_tst {
     	oProductRatePlan.zqu__Deleted__c = false;
     	insert oProductRatePlan;
     	
+    	zqu__ProductRatePlanCharge__c oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 42);
+    	oProductRatePlanCharge.zqu__Deleted__c = false;
+    	insert oProductRatePlanCharge;
+    	
+    	insert new List<zqu__ProductRatePlanChargeTier__c> {
+    		TestDataGenerator.generateZTiers(oProductRatePlanCharge.Id, 1, false)[0]
+    	};
+    	
     	// create dummy product category
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_TEST, true);
         oProductCategory.Active__c = true;
@@ -45,11 +53,18 @@ private class vfIECRenew_tst {
         oProductRatePlanInfo.Order__c = 1;
         insert oProductRatePlanInfo;
         
+        List<Product2> lstProduct = TestDataGenerator.generateProducts(2, true);
+		lstProduct[0].SAP_Material_Number__c = 'TESTPRODCODE';
+		
+		lstProduct[1].IEC_Parent_Product__c = lstProduct[0].Id;
+		lstProduct[1].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
+		
+		update lstProduct;        
+        
 		IECCustomer currentCustomer = IECCustomer.getCurrentIECCustomer();
-		Account billingAccount = currentCustomer.RelatedAccount;
         
         // create dummy subscription
-        subscription = IECTestUtil.createSampleSubscription(billingAccount.Id, 'Subs 01', Date.today().addMonths(6));
+        subscription = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 01', Date.today().addMonths(6));
         insert subscription;
         
         // create dummy subscription charge
@@ -90,7 +105,7 @@ private class vfIECRenew_tst {
 	    	IECPageController baseCont = new IECPageController();
 	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer(); 
 			IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(baseCont.loggedCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-			insert oBillingAddress;
+			//insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
 			
 	        vfIECRenew pgCont = new vfIECRenew();
 	        pgCont.pageLoad();
@@ -154,7 +169,7 @@ private class vfIECRenew_tst {
 	    	baseCont = new IECPageController();
 	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer(); 
 			IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(baseCont.loggedCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-			insert oBillingAddress;
+			//insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
     	
 	    	//Instantiate Controller
 	        pgCont = new vfIECRenew();
@@ -237,8 +252,7 @@ private class vfIECRenew_tst {
 	        Contact oContact = pgCont.oContact;
 	        Account oAccount = pgCont.oAccount;
 	        List<SelectOption> lstOptions = pgCont.lstISOCountries;
-	        lstOptions = pgCont.lstCanadaProvinces;
-	        lstOptions = pgCont.lstUSAStates;
+	        lstOptions = pgCont.lstStateProvince;
 	        pgCont.hasAcceptedAllTnCs = true;
 	        
 	        // Click on cancel
@@ -284,10 +298,13 @@ private class vfIECRenew_tst {
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Phone'));
 	        pgCont.oContact.Phone = '4169494949';
 
-			pgCont.oBillingAddress = new IECAddress__c(
-				Contact__c = pgCont.oContact.Id
-	            , Address_Type__c = IECConstants.IECAddress_AddressType_Billing
+			pgCont.oBillingLocation = new Location__c(
+            	Active__c = true
+            	, Account__c = pgCont.oAccount.Id
+            	, Contact__c = pgCont.oContact.Id
+            	, Type__c = IECConstants.IECAddress_AddressType_Billing
 			);
+			pgCont.oBillingAddress = new IECAddress__c();
 			
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Address'));
@@ -297,7 +314,6 @@ private class vfIECRenew_tst {
 	        pgCont.oBillingAddress.City__c = 'City';
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Country'));
-	        pgCont.oBillingAddress.Country__c = 'Test';
 	        
 	        // Setup a VAT Configuration
 	        IATA_ISO_Country__c country = IECTestUtil.CreateSampleIATAISOCountry();
@@ -306,6 +322,8 @@ private class vfIECRenew_tst {
 	        country.Tax_1_Label__c = 'Tax 1 ID';
         	country.Tax_2_Label__c = 'Tax 2 ID';
 	        insert country;
+
+	        pgCont.oBillingAddress.ISO_Country__c = country.Id;
 	        
 	        pgCont.updateContactInfo();
 	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 1 ID'));
@@ -316,10 +334,10 @@ private class vfIECRenew_tst {
 	        pgCont.updateContactInfo();
 	        
 	        // Misc Coverage
-	        pgCont.oBillingAddress.Country__c = 'Teesstt';
+	        pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
 	        pgCont.onChangeBillingCountry();
 	        
-	        pgCont.cancelUpdateContactInfo();
+	        pgCont.cancelUpdateContactInfo(); 
 	        pgCont.closePopup();
 	        pgCont.showPopUp();
 	        pgCont.toggleBilling();
