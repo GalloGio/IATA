@@ -104,7 +104,7 @@
                         </script>
                         
                         <div class="row">
-                            <div class="main-container columns small-12 medium-8">
+                            <div class="main-container columns small-12 large-7">
                                 <ul id="existingLists" class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-template">
                                     <apex:repeat value="{!masterFilters}" var="f">
                                         <li class="{!IF(f.Disabled, ' disabled', '')}{!IF(campaign.EBC_Master_Filter__c == f.Value, ' is-selected', '')}">
@@ -145,7 +145,7 @@
                                 </apex:outputPanel>
                             </div>
                             
-                            <div class="sub-container columns small-12 medium-4">
+                            <div class="sub-container columns small-12 large-5">
                                 <div class="summary-box">
                                     <div class="box-body fit">
                                         <table class="data-table zibra cost">
@@ -798,7 +798,7 @@
                                                 <h3 class="step-title">Confirmation</h3>
                                                 
                                                 <div class="row">
-                                                    <div class="main-container columns small-12 medium-8">
+                                                    <div class="main-container columns small-12 large-5">
                                                         
                     									<apex:outputPanel id="confirmationPageMessages">
                                                         	<apex:pageMessages />
@@ -848,7 +848,7 @@
                                                         </apex:outputPanel>
                                                     </div>
                                                     
-                                                    <div class="sub-container columns small-12 medium-4">
+                                                    <div class="sub-container columns small-10 large-7">
                                                         <div class="summary-box">
                                                             <div class="box-body fit">
                                                                 <table class="data-table zibra cost"> 
