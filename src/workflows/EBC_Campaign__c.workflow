@@ -2,6 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EBC_Approval_Email</fullName>
+        <ccEmails>richardcs@iata.org</ccEmails>
         <description>Email client to notice of approval</description>
         <protected>false</protected>
         <recipients>
