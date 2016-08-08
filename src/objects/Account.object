@@ -7294,11 +7294,13 @@ Controlled picklist of E&amp;FStatus</description>
             <picklistValues>
                 <fullName>Chapter 11</fullName>
                 <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Chapter 7</fullName>
                 <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
                 <controllingFieldValues>Inactive</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -7320,6 +7322,11 @@ Controlled picklist of E&amp;FStatus</description>
                 <fullName>Sanctioned</fullName>
                 <default>false</default>
                 <controllingFieldValues>Inactive</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -25877,6 +25884,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>No Longer Client</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
                 <default>false</default>
             </values>
             <values>
