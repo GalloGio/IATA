@@ -14,6 +14,12 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
         
         return null;
     }
+    public PageReference resetGeoFilter() {
+        geoFilters[resetFilterIndex].Field_Operator__c = null;
+        geoFilters[resetFilterIndex].Field_Value__c = null;
+        
+        return null;
+    }
     
     public List<SelectOption> getMasterFilters() {
         List<EBC_Master_Filter__c> filters = [Select Id, Name, Number_of_Recipients__c, Audience__c From EBC_Master_Filter__c Where Billing_Account__c = :vfIECEBC.billingAccount.Id AND Is_Global_Filter__c = false]; 
@@ -31,7 +37,7 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
     
     @Readonly @Remoteaction
     public static Integer getExistingFilterCnt(String filterId) {
-        return Database.countQuery(IECEBC_Utility.getSOQLFromMasterFilter(null, filterId));
+        return Integer.valueOf(Database.query(IECEBC_Utility.getSOQLFromMasterFilter(null, filterId))[0].get('expr0'));
     }
     
     // Create List Wizard
@@ -85,7 +91,7 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
         
         String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, nf);
         System.debug(cntQuery);
-    	return Database.countQuery(cntQuery);
+    	return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
     }
     
     public String getNewFilterEscapedJSON() {
@@ -108,6 +114,11 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
     }
     
     public PageReference createNewFilterAndUse() {
+        if (String.isBlank(newFilter.Name)) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please provide a campaign name.'));
+            
+            return null;
+        }
         insert newFilter;
         this.campaign.EBC_Master_Filter__c = newFilter.Id;
         update this.campaign;
@@ -157,7 +168,7 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
                     if (af.Data_Type__c != 'Picklist') continue;
                     if (af.Data_Source_Object__c == null || af.Data_Source_Value_Field__c == null) continue;
                     
-                    String soql = 'SELECT ' + (af.Data_Source_Value_Field__c.toLowerCase() != 'id' ? 'Id, ' : '') + af.Data_Source_Value_Field__c + (af.Data_Source_Value_Field__c != af.Data_Source_Label_Field__c ? ', '+ af.Data_Source_Label_Field__c : '') + ' FROM ' + af.Data_Source_Object__c + (af.Data_Source_Where_Clause__c != null ? ' WHERE ' + af.Data_Source_Where_Clause__c : '');
+                    String soql = 'SELECT ' + (af.Data_Source_Value_Field__c.toLowerCase() != 'id' ? 'Id, ' : '') + af.Data_Source_Value_Field__c + (af.Data_Source_Value_Field__c != af.Data_Source_Label_Field__c ? ', '+ af.Data_Source_Label_Field__c : '') + ' FROM ' + af.Data_Source_Object__c + (af.Data_Source_Where_Clause__c != null ? ' WHERE ' + af.Data_Source_Where_Clause__c : '') + ' ORDER BY ' + af.Data_Source_Label_Field__c + ' ASC';
                     List<sObject> results = Database.query(soql);
                     
                     List<SelectOption> options = new List<SelectOption>();
@@ -187,7 +198,7 @@ public class vfIECEBC_CampaignRecipient extends vfIECEBC_Controller {
                     	Refinement_Condition__c,
                     	(Select Id, Field_Name__c, EBC_Application_Filter__r.Search_Level__c, EBC_Application_Filter__c, EBC_Application_Filter__r.Filter_RelatedList__c, EBC_Application_Filter__r.Filter_Field__c, Field_Operator__c, Field_Value__c From EBC_Customer_Filters__r)
                     From EBC_Master_Filter__c
-                    Where Is_Global_Filter__c = true
+                    Where Is_Global_Filter__c = true AND Audience__c = :newFilter.Audience__c
                 ]);
             }
             

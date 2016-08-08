@@ -14,12 +14,13 @@
                 <div class="inner-wrapper">
                     <h1 class="page-title">Account Details</h1>
                     
-                    <div class="tab-container js-tabs">
+                    <div class="tab-container">
                         <ul class="nav tabs">
-                            <li><a href="#">Overview</a></li>
-                            <li><a href="#">Rate plan</a></li>
-                            <li><a href="#">Extras</a></li>
-                            <li class="active"><a href="#">Settings</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+                            <li class="active"><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
                         </ul>
                         
                         <div class="tab-content">

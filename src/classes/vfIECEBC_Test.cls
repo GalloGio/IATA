@@ -1,5 +1,6 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test {
+    /*
 	public static testMethod void testPageLoadUnauthorized() {
         vfIECEBC_TestSuite.testPageLoadUnauthorized();
     }
@@ -27,6 +28,10 @@ public class vfIECEBC_Test {
 	public static testMethod void testCampaignApprovalRejected() {
         vfIECEBC_TestSuite.testCampaignApprovalRejected();
     }
+	public static testMethod void testCampaignRecipientsExistingList() {
+        vfIECEBC_TestSuite.testCampaignRecipientsExistingList();
+    }*/
+    
 	public static testMethod void testPageLoadAccountSettings() {
         vfIECEBC_TestSuite.testPageLoadAccountSettings();
     }
