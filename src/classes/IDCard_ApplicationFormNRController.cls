@@ -43,7 +43,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String introduccionAlSistemaBSPyLenguajeBSP_Description {get; set;}
   public String losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description {get; set;}
   public String socialMediaForTheTravelIndustry_Description {get; set;}
-
+ 
   public String fundamentalsJourneyPricing_Description {get; set;}
   public String repricingExchangeReissue_Description {get; set;}
   public String travelAgencyFees_Description {get; set;}
