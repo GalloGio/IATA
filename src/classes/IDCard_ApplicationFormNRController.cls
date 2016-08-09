@@ -65,6 +65,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
    */
   public IDCard_ApplicationFormNRController() {
 
+
+
     DocUploaded = false;
     IsCroppingToolDisplayed = false;
     IsViewerDisplayed = false;
@@ -84,6 +86,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
     socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
+
+    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing;
+    repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
+    travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
 
     initialize();
 
@@ -645,6 +651,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
           //upgrade for payment: according to record type will redirect to payment or not.
           String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+
+          
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
             Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
             checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));
@@ -652,6 +660,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
             return checkoutPage;
 
           }
+          
         }
 
         confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionThree));

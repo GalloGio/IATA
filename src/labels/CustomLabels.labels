@@ -2484,6 +2484,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Description</value>
     </labels>
     <labels>
+        <fullName>IDCard_DestinationGeography_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_DestinationGeography_Description</shortDescription>
+        <value>Learn where Machu Pichu is, or what famous mountains attract adventure travelers. Understand why the climate in coastal England is mild and temperate. This course highlights country destinations which receive the most visitors and their attractions. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/destination-geography-tttg82.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Details</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2622,7 +2629,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard Fraudulence and Security</shortDescription>
         <value>&lt;b&gt;Important&lt;/b&gt;: For fraudulence and security reason, your ID Card will be sent to the following address upon approval of the application (unless you are applying for change of agency):</value>
-    </labels>   
+    </labels>
+    <labels>
+        <fullName>IDCard_FundamentalsJourneyPricing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Geography in Travel Planning</shortDescription>
+        <value>Interpreting fare rules and e-ticket data elements is key to satisfying and retaining customers. This course teaches the language of fare construction and fare rules so you provide your customers with the best advice and the lowest fare for their air itinerary. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg14.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
     <labels>
         <fullName>IDCard_FundamentalsJourneyPricing_Description</fullName>
         <language>en_US</language>
@@ -2631,11 +2645,11 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Interpreting fare rules and e-ticket data elements is key to satisfying and retaining customers. This course teaches the language of fare construction and fare rules so you provide your customers with the best advice and the lowest fare for their air itinerary. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg14.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
-        <fullName>IDCard_DestinationGeography_Description</fullName>
+        <fullName>IDCard_GeographyinTravelPlanning_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>IDCard_DestinationGeography_Description</shortDescription>
-        <value>Learn where Machu Pichu is, or what famous mountains attract adventure travelers. Understand why the climate in coastal England is mild and temperate. This course highlights country destinations which receive the most visitors and their attractions. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/destination-geography-tttg82.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <shortDescription>IDCard_GeographyinTravelPlanning_Description</shortDescription>
+        <value>Travel professionals and their customers know how challenging travel planning can be. Itineraries can be complex and time zones confusing. This course appeals to those with a passion for travel. An engaging Avatar teaches you the richness of the world&apos;s geography. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/geography-travel-planning-tttg53.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_GoBackLoginPage</fullName>
@@ -2740,14 +2754,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlBSPlink_Description</shortDescription>
-        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</shortDescription>
-        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroductiontoBSPLink_Description</fullName>
@@ -2977,7 +2991,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description</shortDescription>
-        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Match_IsNotTheAgent</fullName>
@@ -3569,6 +3583,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_Total</shortDescription>
         <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Travel_Agency_Fees_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card Travel Agency Fees</shortDescription>
+        <value>A fee-based business model is essential for travel agencies and significantly enhances their profitability. In this course you will learn the general trends and best practices in the implementation or setting of agency fees, the various types of fees collected by travel agencies, and the best way to communicate them to customers. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travel-agency-fees-tttg13.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_TrxDate</fullName>
@@ -4338,13 +4359,6 @@ and
         <protected>false</protected>
         <shortDescription>ID Card To Agency</shortDescription>
         <value>To agency:</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_Travel_Agency_Fees_Description</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ID Card Travel Agency Fees</shortDescription>
-        <value>A fee-based business model is essential for travel agencies and significantly enhances their profitability. In this course you will learn the general trends and best practices in the implementation or setting of agency fees, the various types of fees collected by travel agencies, and the best way to communicate them to customers. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travel-agency-fees-tttg13.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Upload_Proof</fullName>

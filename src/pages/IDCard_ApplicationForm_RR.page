@@ -155,7 +155,7 @@
         
         var popupStatus = 0;
         
-        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#RepricingExchangeReissue-EN,#TravelAgencyFees-EN").click(function() {
+       $("#SocialMediafortheTravelIndustry-EN,#ServingtheTravelCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntroductiontoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroducciónalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN").click(function() {
             
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
@@ -173,13 +173,13 @@
             if ($(this).is("#InformesyprocedimientosdefacturacionBSP-ES")) {
                 $("#popup_Content").html("{!losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description}");
             }
-            if ($(this).is("#IntroalBSPlink-ES")) {
+            if ($(this).is("#IntroducciónalBSPlink-ES")) {
                 $("#popup_Content").html("{!introduccionAlBSPlink_Description}");
             }
             if ($(this).is("#IntroalSistemayLenguajeBSP-ES")) {
                 $("#popup_Content").html("{!introduccionAlSistemaBSPyLenguajeBSP_Description}");
             }
-            if ($(this).is("#IntrotoBSPLink-EN")) {
+            if ($(this).is("#IntroductiontoBSPLink-EN")) {
                 $("#popup_Content").html("{!introductiontoBSPLink_Description}");
             }
             if ($(this).is("#Leserviceauclientvoyageur-FR")) {
@@ -188,22 +188,22 @@
             if ($(this).is("#SellingIntlRailTransportation-EN")) {
                 $("#popup_Content").html("{!sellingInternationalRailTransportation_Description}");
             }                     
-            if ($(this).is("#ServingtheTandTCustomer-EN")) {
+            if ($(this).is("#ServingtheTravelCustomer-EN")) {
                 $("#popup_Content").html("{!servingtheTravelTourismCustomer_Description}");
             }    
-            if ($(this).is("#SocialMediaforTandTIndustry-EN")) {
+            if ($(this).is("#SocialMediafortheTravelIndustry-EN")) {
                 $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");
-            } 
-            
+            }     
+
             if ($(this).is("#FundamentalsJourneyPricing-EN")) {
                 $("#popup_Content").html("{!fundamentalsJourneyPricing_Description}");
             }
-            if ($(this).is("#RepricingExchangeReissue-EN")) {
+            if ($(this).is("#Repricing\\,ExchangeandReissue-EN")) {
                 $("#popup_Content").html("{!repricingExchangeReissue_Description}");
             }
             if ($(this).is("#TravelAgencyFees-EN")) {
                 $("#popup_Content").html("{!travelAgencyFees_Description}");
-            }       
+            }           
             
             //centering
             $("#popupLogin").css({
