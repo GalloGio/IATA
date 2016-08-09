@@ -467,6 +467,26 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Terms_Acceptance_Date__c</fullName>
+        <description>When the user accepted terms and conditions</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Terms_Acceptance__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if terms and conditions have been accepted</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>allowAssignFinContactFlowChange__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Validation rule pevents Agency Portal Admins from directly changing the Rights for IFAP acccess. The Assign Financial Asssessment Flow can however set this flag to &quot;override&quot; the validation rule.</description>

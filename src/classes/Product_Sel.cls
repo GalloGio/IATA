@@ -165,7 +165,7 @@ public class Product_Sel extends Selector
         else
         {
             query = String.format(
-                'SELECT {0}, IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
+                'SELECT {0}, Refinement_Language__c,  IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c ' +
 				'	, IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c ' + 
                 'FROM {1} ' + 
                 'WHERE {2} ' + 

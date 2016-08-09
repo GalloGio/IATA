@@ -921,7 +921,31 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>A4A-IATA Reservations Interline Procedures (AIRIMP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aircraft Reliability</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Coding Directory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Industry Freight Forecast</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airport Development Reference Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airport Handling Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -929,15 +953,31 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Baggage ID</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Cargo Claims &amp; Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Services Conference Resolution</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -950,6 +990,14 @@
             </picklistValues>
             <picklistValues>
                 <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Compliance Kits - Combos</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Data eList Products</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -969,11 +1017,23 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DGR Training Books</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Emergency Response Handbook</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Essential Documents on International Air Carrier Liability</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -993,11 +1053,47 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Consolidated Exchange Rates</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IATA Exchange Rates</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Ground Operations Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Operational Safety Audit (IOSA)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Integrated Risk Management Guidance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Lithium Battery Guidelines Chinese</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lithium Battery Shipping Guidelines</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1009,6 +1105,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1017,11 +1117,31 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Multilateral Interline Traffic Agreements</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Online Library</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other DGR Products</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Passenger Fare Construction Toolkit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Passenger Services Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Passenger Standards</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1030,6 +1150,34 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Passenger Tariffs e-resolution Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reservations Services Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Security Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard Computerized Airplane Performance (SCAP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard Schedules Information</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Temperature Control Regulations</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1044,9 +1192,21 @@
                 <fullName>Ticketing Handbook</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Time temperature labels</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULD Regulations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>World Air Transport Statistics</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>true</sorted>
         </picklist>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -4393,7 +4553,23 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Industry Freight Forecast</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4401,15 +4577,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage ID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims %26 Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Services Conference Resolution</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4418,6 +4610,18 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Data eList Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4437,11 +4641,23 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DGR Training Books</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Emergency Response Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Essential Documents on International Air Carrier Liability</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4457,6 +4673,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
                 <default>false</default>
             </values>
@@ -4465,7 +4685,39 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Exchange Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Ground Operations Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Risk Management Guidance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Lithium Battery Guidelines Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithium Battery Shipping Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4477,7 +4729,27 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Monthly Traffic Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multilateral Interline Traffic Agreements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Online Library</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other DGR Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4485,7 +4757,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Fare Construction Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Services Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Standards</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4497,11 +4777,55 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations Services Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Schedules Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>The Combined Cargo Conference Manual</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Ticketed Point Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Time temperature labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>World Air Transport Statistics</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6408,7 +6732,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Reliability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Coding Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Industry Freight Forecast</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6416,15 +6764,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage ID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims %26 Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Services Conference Resolution</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6437,6 +6801,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Data eList Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6456,11 +6828,23 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DGR Training Books</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Emergency Response Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Essential Documents on International Air Carrier Liability</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6476,6 +6860,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
                 <default>false</default>
             </values>
@@ -6484,7 +6872,39 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Exchange Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Ground Operations Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Risk Management Guidance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Lithium Battery Guidelines Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithium Battery Shipping Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6496,6 +6916,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </values>
@@ -6504,11 +6928,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Multilateral Interline Traffic Agreements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Online Library</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other DGR Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Fare Construction Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Services Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Standards</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6517,6 +6961,34 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Passenger Tariffs e-resolution Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations Services Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Schedules Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6529,6 +7001,18 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Time temperature labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>World Air Transport Statistics</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8403,7 +8887,23 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Industry Freight Forecast</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airline Operational Cost Management Guidelines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Handling Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8411,15 +8911,31 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Aviation Cyber Security Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage ID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage Reference Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo Agency Conference Resolution Manual</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Claims %26 Loss Prevention handbook</fullName>
+                <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Cargo Interchange Message Procedures %28Cargo-IMP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Services Conference Resolution</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8428,6 +8944,18 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo-XML Tookit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>City Code Directory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Compliance Kits - Combos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Data eList Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8447,11 +8975,23 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>DGR Print Manuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DGR Software</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DGR Training Books</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Emergency Response Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Essential Documents on International Air Carrier Liability</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8467,6 +9007,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Guide to Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Guidelines for Maintenance Training</fullName>
                 <default>false</default>
             </values>
@@ -8475,7 +9019,39 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Exchange Rates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Ground Operations Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Operational Safety Audit %28IOSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Rates of Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Risk Management Guidance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International Aircraft Financing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>List of Ticket and Airport Taxes and Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Lithium Battery Guidelines Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithium Battery Shipping Guidelines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8487,7 +9063,27 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Monthly Traffic Statistics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multilateral Interline Traffic Agreements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Online Library</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other DGR Products</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8495,7 +9091,15 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Fare Construction Toolkit</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Services Conference Resolutions Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Standards</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8507,11 +9111,55 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations Services Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Computerized Airplane Performance %28SCAP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Schedules Information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature Control Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>The Combined Cargo Conference Manual</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Ticketed Point Mileage Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Ticketing Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Time temperature labels</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>World Air Transport Statistics</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

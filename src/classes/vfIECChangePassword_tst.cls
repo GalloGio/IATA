@@ -23,11 +23,6 @@ private class vfIECChangePassword_tst {
           pgCont.changePassword();
 
 
-          pgCont.coverage1();
-          pgCont.coverage2();
-          pgCont.coverage3();
-          pgCont.coverage4();
-          pgCont.coverage5();
       }
       Test.stopTest();
     }
