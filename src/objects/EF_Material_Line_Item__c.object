@@ -103,6 +103,17 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Material Line Items</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Contract_Line_Item</fullName>
+        <active>true</active>
+        <label>Contract Line Item</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Relationship_Line_Item</fullName>
+        <active>true</active>
+        <label>Relationship Line Item</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
