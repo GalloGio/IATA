@@ -4454,7 +4454,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <defaultValue>false</defaultValue>
         <description>tracking the CCG participants HO and AO (IDFS cargo)</description>
         <externalId>false</externalId>
-        <label>CCG Participant / KAM</label>
+        <label>CCG Participant</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
