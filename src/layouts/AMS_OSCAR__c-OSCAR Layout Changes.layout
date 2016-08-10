@@ -30,17 +30,17 @@
                 <field>Validation_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>AMS_Target_Agency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Change_of_location_type_behavior__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Type_of_change__c</field>
             </layoutItems>
             <layoutItems>
@@ -446,7 +446,7 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
+        <customButtons>Add_all_hierarchy</customButtons>
         <fields>Account__c</fields>
         <fields>AMS_IATAcode__c</fields>
         <relatedList>AMS_Process_Detail__c.OSCAR__c</relatedList>
