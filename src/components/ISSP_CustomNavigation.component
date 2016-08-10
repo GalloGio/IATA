@@ -85,7 +85,7 @@ window.onload = function HighlightBar() {
         var thisURL = window.location.href;
 
         var formsCollection = document.getElementsByTagName("form");
-        var skipredirect = false;
+        var skipredirect = false; 
 
         //Skip redirect if exception page
         if (formsCollection!= null && formsCollection.length > 0) {
