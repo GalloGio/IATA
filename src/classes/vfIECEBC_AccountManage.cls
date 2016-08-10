@@ -162,7 +162,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			+ ' FROM EBC_Activity__c '
 			+ ' Where  Related_Billing_Account__c = \'' + billingAccount.Id + '\' '
 			+ selectedActivityTypeClause;
-		System.debug( 'getQuery: ' + query);
+		//System.debug( 'getQuery: ' + query);
 		currentQuery = query;
 		return query;
 	} // getQuery
@@ -170,8 +170,6 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	// ========================================================================
 	public List<EBC_Activity__c> activityList {
 		get{
-			system.debug ('vfIECEBC_ManageAccount getActivityList:' + items.size() );
-		
 			return (List<EBC_Activity__c>)items; 
 		}
 	} // activityList getter
@@ -187,7 +185,6 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	// it adds the filtering based on selected activity types 
 	public String selectedActivityTypeClause {
 		get{
-			System.debug( 'selectedActivityTypeClause getter starts');
 			String activitySetString = ''; // include '' as the default search
 			String activityNotSetString = '';
 			boolean ArraySelected=false;
@@ -195,7 +192,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			for (ActivityTypeWrapper atw : activityTypeWrapperList)
 			{
 				if (atw.activityType=='') continue;
-				System.debug( 'atw:' + atw);
+				
 				if (atw.selected) {
 					ArraySelected=true;
 					activitySetString += ((activitySetString == '') ? '' : ', ') + '\'' + atw.activityType + '\'';
@@ -206,11 +203,11 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 				}
 			}
 			
-			//if (activitySetString != '') {
+			
 			if (ArraySelected) activitySetString = ' and  Activity_Type__c in (' + activitySetString + ')';
 			if (ArrayNotSelected) activityNotSetString = ' and  Activity_Type__c Not in (' + activityNotSetString + ')';
-			//}
-			System.debug( 'selectedActivityTypeClause getter returns: [' + activitySetString +']');
+			
+			//System.debug( 'selectedActivityTypeClause getter returns: [' + activitySetString +']');
 			return activitySetString+activityNotSetString;
 		}
 		private set;
@@ -248,8 +245,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 		resetQuery(); // redefine the query with new filter
 		getQuery(false);
 		//ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.info, 'refresh table'));
-		System.debug( 'vfIECEBC_ManageAccount.refreshTable ends, activityList:' + activityList.size() + activityList);
-	}
+	} // end refreshTable
 	
 	
 	// ========================================================================
