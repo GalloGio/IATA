@@ -3,26 +3,20 @@
   * Initial Author: Sonny Leman
   * 
   * Description:
-  *  - Each user can purchase a block of email credits, which are defined in the ProductRatePlan and Zuora__Product 
+  *  - Each user can purchase a block of email credits, which are defined in the ProductRatePlan based on Zuora__Product defined in EBC_Setup
   *  - During one interaction, a user can only purchase of of the options, not combination of them.
   *  - The user interaction will result in selectedProductRatePlan and selectedProductRatePlanWrapper currently not saved
   *  - This class needs to be global for the ProductratePlanWrapper to be sortable.
   *  - Displayed productRatePlanWrapperOptionList is sorted based on currentEmailCredits  
+  *  - Note that we do not use zqu__ZProduct__r.ProductCategory__c as the base for selecting the Product Rate Plan here.
   *  
   * History: 
-  *  - 20160808-sl: initial workable version
+  *  - 20160809-sl: initial workable version.
   *
   */
 
-
 global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controller 
 {
-	// related value for zqu__ZProduct__c.zqu__Category
-	private static final String ZPRODUCT_CATEGORY_EMAIL_BLOCK_FOR_MEMBER =  'eBroadcast E-mail Blocks for Members';
-	private static final String ZPRODUCT_CATEGORY_EMAIL_BLOCK_FOR_NON_MEMBER =  'eBroadcast E-mail Blocks for Members';
-	
-	private static final String ZPRODUCT_NAME_EMAIL_BLOCK_FOR_MEMBER =  'eBroadcast E-mail Blocks for Members';
-	
 	// ======================================================================== 
 	// selectedProductRatePlan will be the result of user interaction
 	public zqu__ProductRatePlan__c selectedProductRatePlan {get;private set;}
@@ -48,6 +42,16 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 		}
 	}
 	
+	// =======================================================================-
+	// zqu__ZProduct__c.Id related for the Email Block Product Rate Plan
+	// this is based on what defined in EBC_Setup and whether the user is a member
+	private Id emailBlockProductId {
+		get{
+			Id prodId = (isMember) ? vfIECEBC.ebcSetup.Member_Email_Block_Product__c : vfIECEBC.ebcSetup.Non_Member_Email_Block_Product__c;
+			return prodId;
+		}
+	}
+	
 	
 	// ========================================================================
 	// visualforce display flags below
@@ -60,7 +64,7 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 		}
 	}
 	
-   
+	
 	// ========================================================================
 	// Product Rate Plan Add On selection web interface
 	public Integer selectedRatePlanIndex {get;set;} // used as parameter for calling selectRatePlanAddon
@@ -99,8 +103,6 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 		get{
 			if (productRatePlanOptionList == null) 
 			{
-				String productCategory = (isMember==true) ? ZPRODUCT_CATEGORY_EMAIL_BLOCK_FOR_MEMBER : ZPRODUCT_CATEGORY_EMAIL_BLOCK_FOR_NON_MEMBER;
-				
 				Map<Id, zqu__ProductRatePlan__c> prodRatePlanMap = new Map<Id,zqu__ProductRatePlan__c> ([select Id, Name
 					, EBC_Currency_Cost_Per_Email__c
 					, EBC_Email_Credit_Standard__c
@@ -116,10 +118,7 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 						from Product_Rate_Plan_Informations__r order by Order__c, Id)
 					
 					from zqu__ProductRatePlan__c 
-					where zqu__ZProduct__r.Name = : ZPRODUCT_NAME_EMAIL_BLOCK_FOR_MEMBER
-  					//where  zqu__ZProduct__r.ProductCategory__c = : productCategory
-  							//and Id in : productRatePlanIdOptionList
-							//and zqu__ZProduct__r.zqu__Active__c = true
+					where zqu__ZProduct__r.Id = : emailBlockProductId
 							and zqu__Deleted__c != true
 							and zqu__EffectiveStartDate__c <= TODAY
 							and zqu__EffectiveEndDate__c >= TODAY
