@@ -232,12 +232,11 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
       itdiCourses.add(s);
     }
     return itdiCourses;
-  }
+  } 
 
   public IDCard_ApplicationFormRRController() {
     initialize();
     system.debug('[IDCard_ApplicationFormRRController] Controller started')  ;
-
     detailledFees = new Map<String, decimal>();
     DocUploaded = false;
     selectedITDICourses = new String[] {};
@@ -253,7 +252,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
     socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
 
-    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing;
+    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
     repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
     travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
 

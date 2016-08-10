@@ -74,7 +74,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
-    selectedITDICourses = new String[] {};
+    selectedITDICourses = new String[] {}; 
 
     geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
     destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
@@ -87,7 +87,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
     socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
 
-    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing;
+    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
     repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
     travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
 
