@@ -11,8 +11,8 @@
     <property file="${basedir}/build/build.properties"/>
     <property environment="env"/>
 
-	
-	
+  
+  
  
     <target name="deployRetrieveToQA">
       <echo level="info">Testing the deploy</echo>
@@ -24,9 +24,9 @@
           deployRoot="${basedir}/retrieve"
           pollWaitMillis="${sfdc.pollWaitMillis}"
           maxPoll="${sfdc.maxPoll}" 
-				/>
+        />
     </target>
-    	
+      
 
 <target name="retrieveToDeploy">
       <echo level="info">Retrieving the server's version of code</echo>
@@ -96,15 +96,14 @@
  <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
 
       
-      <antcallback target="deployCodeLocal" />
-       <antcallback target="deployCodeObjects" />
+      <antcallback target="deployLabelFolder" />
   
   </target> 
 
 
 <target name="deployCodeProd"> 
 
-       <antcallback target="deployCodeObjects" />
+      <antcallback target="deployLabelFolder" />
   
   </target> 
 
@@ -134,11 +133,37 @@
 
       
       <antcallback target="deployCodeLocal" />
-       <antcallback target="deployLabelFolder" />
+      <antcallback target="deployCodeLocalFolder" />
   
   </target> 
 
+<target name="deployLabelsOnly"> 
+  <echo level="info">creating new label folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${labelsTranslation.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
 
+     <echo level="info">moving files</echo>
+      
+      <for list="${labelsTranslation.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/labelPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
+  </target>
 
 <target name="deployLabelFolder"> 
   <echo level="info">creating new label folder</echo>
@@ -166,7 +191,7 @@
 
       
       <antcallback target="deployCodeLocal" />
-      <antcallback target="deployCodeLocalFolder" />
+       <antcallback target="deployCodeObjects" />
   </target> 
 
 

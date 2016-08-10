@@ -4222,6 +4222,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>향후 날짜로 수락됨</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4254,6 +4262,18 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4276,6 +4296,10 @@ and
     <customLabels>
         <label>관리자</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>대리점 승인 완료</label>
@@ -4620,6 +4644,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>연락처</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4732,6 +4760,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Currency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
+    </customLabels>
+    <customLabels>
         <label>현재 비밀번호</label>
         <name>ISSP_CurrentPassword</name>
     </customLabels>
@@ -4778,6 +4810,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>두 자리 알파코드</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>파일</label>
@@ -5102,6 +5138,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>오류:</label>
         <name>ISSP_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
     </customLabels>
     <customLabels>
         <label>외부 링크</label>
@@ -5592,6 +5632,14 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5606,6 +5654,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>소재지</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>케이스 기록</label>
@@ -5840,12 +5892,20 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>귀하의 계정을 찾지 못하시는 경우 “뒤로가기(Back)”를 눌러 제너럴 퍼블릭(General Public)으로 등록 과정을 계속 진행하시거나, 검색 기준을 변경하여 다시 시도해 주시기 바랍니다.</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>귀하의 IATA 포털 계정에 새로운 공지 사항이 게시되었습니다.</label>
@@ -5984,10 +6044,18 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>Payment Link를 통해, IATA인보이스 비용을 신용카드로 지불하실 수 있습니다.&lt;br/&gt;
 &lt;b&gt;경고&lt;/b&gt;&lt;br/&gt;
 대부분의 IATA에서 발행하는 인보이스는 BSP/CASS 빌링을 통하여 청구됩니다. 신용카드로 결제하시기 전에 반드시. 해당 인보이스가 귀사의 빌링에 반영되지 않았는지 확인하신 후에 결제를 진행하여 주시기 바랍니다.</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>승인 보류 (관리하려면 수정(Edit) 클릭)</label>
@@ -6485,6 +6553,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -6750,6 +6822,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>정확한 형식으로 필요한 영역에 기재해주십시오.</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>귀하의 등록 처리를 완료할 수 없습니다. 다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터에 연락해주십시오. http://www.iata.org/customer-portal/Pages/contactus.aspx</label>

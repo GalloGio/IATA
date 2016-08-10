@@ -4221,6 +4221,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>将来の日付で受領</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4253,6 +4261,18 @@ and
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4275,6 +4295,10 @@ and
     <customLabels>
         <label>管理者</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>公認代理店</label>
@@ -4619,6 +4643,10 @@ and
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>連絡先</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4731,6 +4759,10 @@ and
         <name>ISSP_Currency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
+    </customLabels>
+    <customLabels>
         <label>現在のパスワード</label>
         <name>ISSP_CurrentPassword</name>
     </customLabels>
@@ -4777,6 +4809,10 @@ and
     <customLabels>
         <label>デジグネーターコード</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>ドキュメント</label>
@@ -5101,6 +5137,10 @@ and
     <customLabels>
         <label>エラー：</label>
         <name>ISSP_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
     </customLabels>
     <customLabels>
         <label>外部リンク</label>
@@ -5591,6 +5631,14 @@ and
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5605,6 +5653,10 @@ and
     <customLabels>
         <label>ロケーション</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>ケースを記録する</label>
@@ -5839,12 +5891,20 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>あなたのアカウントが見つからない場合は、「戻る」をクリックして一般利用者として登録手続を続けるか、検索条件を変更してもう一度検索して下さい。</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>IATAポータルアカウントに新しい通知が掲載されました。</label>
@@ -5983,10 +6043,18 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>Payment LinkとはIATAの請求書をクレジットカードでお支払いされる際に使用されます&lt;br/&gt;
 &lt;b&gt;警告&lt;/b&gt;&lt;br/&gt;
 IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収します。クレジットカードでのお支払いをされる前に請求書が既に作成されていないか請求書の詳細のご確認下さい。</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>承認を保留（[編集]をクリックして管理）</label>
@@ -6483,6 +6551,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -6750,6 +6822,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>必要な欄に正しい形式で記入してください。</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>登録プロセスを完了することができません。http://www.iata.org/customer-portal/Pages/contactus.aspx からお問い合わせフォームに記入し、IATAカスタマーサービスポータルにご連絡ください。</label>
