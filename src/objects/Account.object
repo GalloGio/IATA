@@ -4454,7 +4454,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <defaultValue>false</defaultValue>
         <description>tracking the CCG participants HO and AO (IDFS cargo)</description>
         <externalId>false</externalId>
-        <label>CCG Participant / KAM</label>
+        <label>CCG Participant</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -66734,6 +66734,13 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
 )</errorConditionFormula>
         <errorDisplayField>Field_Head_Office__c</errorDisplayField>
         <errorMessage>The Field/Head Office is mandatory for airlines</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>General_Public_Admin_only</fullName>
+        <active>true</active>
+        <description>Only administrators can edit General Public accounts</description>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) ||  CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>IATACode_IsMandatory</fullName>
