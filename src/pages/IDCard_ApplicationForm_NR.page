@@ -173,7 +173,7 @@
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
             var popupHeight = $("#popupLogin").height();
-            var popupWidth = $("#popupLogin").width();
+            var popupWidth = $("#popupLogin").width(); 
             
             // change the popupLogin content
             if ($(this).is("#DestinationGeography-EN")) {

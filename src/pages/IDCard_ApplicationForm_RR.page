@@ -178,7 +178,7 @@
             }
             if ($(this).is("#IntroalSistemayLenguajeBSP-ES")) {
                 $("#popup_Content").html("{!introduccionAlSistemaBSPyLenguajeBSP_Description}");
-            }
+            } 
             if ($(this).is("#IntrotoBSPLink-EN")) {
                 $("#popup_Content").html("{!introductiontoBSPLink_Description}");
             }

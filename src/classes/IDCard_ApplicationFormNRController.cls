@@ -60,12 +60,12 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String attachmentID {get; set;}
 
 
-  /**
+  /** 
    * Constructor
    */
   public IDCard_ApplicationFormNRController() {
 
-
+ 
 
     DocUploaded = false;
     IsCroppingToolDisplayed = false;

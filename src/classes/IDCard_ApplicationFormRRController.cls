@@ -35,7 +35,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
 
   public String fundamentalsJourneyPricing_Description {get; set;}
   public String repricingExchangeReissue_Description {get; set;}
-  public String travelAgencyFees_Description {get; set;}
+  public String travelAgencyFees_Description {get; set;} 
 
   private String IATA_Code;
   private Account theAccount;

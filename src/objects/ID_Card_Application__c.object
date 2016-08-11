@@ -44,7 +44,6 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
-    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Object that holds information on the application of a new/renew/reissue/replacement ID Card</description>
@@ -53,7 +52,6 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -561,11 +559,11 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Serving the Travel Customer - EN</fullName>
+                <fullName>Serving the T and T Customer - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Introduction to BSPLink - EN</fullName>
+                <fullName>Intro to BSPLink - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -577,7 +575,7 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Introducción al BSPlink - ES</fullName>
+                <fullName>Intro al BSPlink - ES</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -589,7 +587,7 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Social Media for the Travel Industry - EN</fullName>
+                <fullName>Social Media for T and T Industry - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -626,11 +624,11 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Serving the Travel Customer - EN</fullName>
+                <fullName>Serving the T and T Customer - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Introduction to BSPLink - EN</fullName>
+                <fullName>Intro to BSPLink - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -642,7 +640,7 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Introducción al BSPlink - ES</fullName>
+                <fullName>Intro al BSPlink - ES</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -654,7 +652,7 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Social Media for the Travel Industry - EN</fullName>
+                <fullName>Social Media for T and T Industry - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
