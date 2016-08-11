@@ -8,6 +8,7 @@ trigger EF_LocationCurrencyTrigger on EF_Location_Currency__c (
 	after undelete) {
 
 		if (Trigger.isBefore && Trigger.isInsert) {
+			
 			// checks if location chosen has been set in Contract Location Currency.
 	    	EF_LocationCurrencyHandler.manageNewLocationCurrency(Trigger.new, 'insert');
 	    

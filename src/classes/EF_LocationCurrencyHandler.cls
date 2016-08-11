@@ -18,7 +18,7 @@ public class EF_LocationCurrencyHandler {
 			for(EF_Location_Currency__c lc: c.EF_Locations_Currencies__r){
 				locationContractMap.put(lc.Location_ID__c, lc);
 			}
-
+ 
 		}
 
 		
