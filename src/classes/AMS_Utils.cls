@@ -573,6 +573,12 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
+        if( aacNEW.Change_Code__c == 'FIN' ){
+            
+            oscarAgency.Is_AIMS_Account__c = true;
+            toReturn = oscarAgency;
+        }
+		
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
 
