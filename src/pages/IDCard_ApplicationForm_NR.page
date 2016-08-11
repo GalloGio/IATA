@@ -883,7 +883,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     </h1>
                 </p>
                 
-                <apex:outputPanel id="panelIDCardFees" >
+                <apex:outputPanel id="panelIDCardFees" rendered="{!DisplayFees}">
                     
                     <apex:pageBlockSection columns="2" collapsible="false" rendered="{!IsExpediteAvailable}" >
                         

@@ -2631,13 +2631,6 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>&lt;b&gt;Important&lt;/b&gt;: For fraudulence and security reason, your ID Card will be sent to the following address upon approval of the application (unless you are applying for change of agency):</value>
     </labels>
     <labels>
-        <fullName>IDCard_FundamentalsJourneyPricing</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard Geography in Travel Planning</shortDescription>
-        <value>Interpreting fare rules and e-ticket data elements is key to satisfying and retaining customers. This course teaches the language of fare construction and fare rules so you provide your customers with the best advice and the lowest fare for their air itinerary. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg14.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
-    </labels>
-    <labels>
         <fullName>IDCard_FundamentalsJourneyPricing_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
