@@ -953,6 +953,8 @@ public with sharing class AMS_AccountRoleCreator
     	system.debug('DTULLO 826 --> aoMap.keyset() : ' + aoMap.keyset());
         String rolequery = '';
 
+		Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons = new Set<AMS_AccountRoleCreator.RoleBundle>();
+
         List<AMS_Accreditation_Contact__c> acsInAos = database.query(query);
         for(AMS_Accreditation_Contact__c ac :acsInAos){
 
@@ -970,19 +972,26 @@ public with sharing class AMS_AccountRoleCreator
         	if(aoMap.get(aoId)!=null){
  	        	for(Id accId : aoMap.get(aoId)){
  	        		
- 	        		system.debug('DTULLO 840 --> ' + ac.RecordType.DeveloperName + ';accId: ' + accId + ';ac.Contact__c: ' + ac.Contact__c + ';ac.Person_AMS__c ' + ac.Person_AMS__c + ';ac.Company__c ' + ac.Company__c);
- 	        		//DTULLO: Improvement: using recordtType DEVELOPERNAME rather then NAME...
-	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
-	        			system.debug('DTULLO XX1 --> Adding as person, contact not null');
+ 	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Contact__c = \''+ac.Contact__c+'\' AND Account__c = \''+accId+'\')';
+						
+						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Contact__c, 'C'));
+
 	        		}
 	        		else if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Person_AMS__c != null){
-	        			system.debug('DTULLO XX2 --> Adding as person, person not null');
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Person__c = \''+ac.Person_AMS__c+'\' AND Account__c = \''+accId+'\')';
+
+	        			contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Person_AMS__c, 'P'));
+
 	        		}
 	        		else if(companyDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Company__c != null){
-	        			system.debug('DTULLO XX3 --> Adding as company, company not null');
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Owner_Account__c = \''+ac.Company__c+'\' AND Account__c = \''+accId+'\')';
+
+						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Company__c, 'A'));
+
 	        		}
 	        	}
 			}
@@ -1006,10 +1015,13 @@ public with sharing class AMS_AccountRoleCreator
 
     	if(rolequery != '')
     		rolequery = '('+rolequery+') AND ';
-    	system.debug('runRoleCreatorForOnlineAccreditations() -> role query condition '+rolequery);
-    	for(AMS_Account_Role__c r : database.query('SELECT recordtype.DeveloperName, id, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c '+
-											  		'FROM AMS_Account_Role__c '+
-											  		'WHERE '+rolequery+' Termination_Date__c = NULL AND RecordType.DeveloperName = \'Ownership\'')){
+    	
+
+		List<AMS_Account_Role__c> rolesToQuery = new List<AMS_Account_Role__c>();
+
+    	rolesToQuery = fetchAccountRolesToQuery(aoIds,contactsAndPersons);
+
+    	for(AMS_Account_Role__c r : rolesToQuery){
     		
     		system.debug('CORRECTION PROCESS ROLE START: '+ r);
 
@@ -1274,5 +1286,63 @@ public with sharing class AMS_AccountRoleCreator
 
     }
 
+    private static List<AMS_Account_Role__c> fetchAccountRolesToQuery(Set<Id> accountsToSearch, Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons){
 
+		List<AMS_Account_Role__c> rolesToReturn = new List<AMS_Account_Role__c>();
+
+    	List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
+
+
+    	roles = [SELECT Id, recordtype.DeveloperName, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, 
+    						Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c
+							FROM AMS_Account_Role__c WHERE Account__c in :accountsToSearch and Termination_Date__c = NULL AND RecordType.DeveloperName = 'Ownership'];
+
+
+		List<AMS_AccountRoleCreator.RoleBundle> contactsAndPersonsLst= new List<AMS_AccountRoleCreator.RoleBundle>(contactsAndPersons);
+
+		for(AMS_Account_Role__c role : roles){
+
+			for(AMS_AccountRoleCreator.RoleBundle bundle : contactsAndPersonsLst){
+
+				if(bundle.type == 'C' && role.Account__c == bundle.accountId && role.Contact__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+
+				if(bundle.type == 'P' && role.Account__c == bundle.accountId && role.Person__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+
+				if(bundle.type == 'A' && role.Account__c == bundle.accountId && role.Owner_Account__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+			}
+
+		}
+
+		return rolesToReturn;
+    }
+
+    public class RoleBundle {
+
+    	private Id accountId{get;set;}
+
+    	private Id contactOrPersonOrAccount{get;set;}
+
+    	private String type{get;set;}
+
+    	public RoleBundle(Id accountId, Id contactOrPersonOrAccount, String type){
+
+
+
+    		this.accountId = accountId;
+    		this.contactOrPersonOrAccount = contactOrPersonOrAccount;
+    		this.type = type;
+
+
+
+
+    	}
+
+    }
+    
 }
