@@ -43,6 +43,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String introduccionAlSistemaBSPyLenguajeBSP_Description {get; set;}
   public String losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description {get; set;}
   public String socialMediaForTheTravelIndustry_Description {get; set;}
+ 
+  public String fundamentalsJourneyPricing_Description {get; set;}
+  public String repricingExchangeReissue_Description {get; set;}
+  public String travelAgencyFees_Description {get; set;}
 
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
@@ -56,10 +60,12 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String attachmentID {get; set;}
 
 
-  /**
+  /** 
    * Constructor
    */
   public IDCard_ApplicationFormNRController() {
+
+ 
 
     DocUploaded = false;
     IsCroppingToolDisplayed = false;
@@ -68,7 +74,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
-    selectedITDICourses = new String[] {};
+    selectedITDICourses = new String[] {}; 
 
     geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
     destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
@@ -80,6 +86,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
     socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
+
+    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
+    repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
+    travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
 
     initialize();
 
@@ -641,6 +651,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
           //upgrade for payment: according to record type will redirect to payment or not.
           String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+
+          
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
             Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
             checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));
@@ -648,6 +660,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
             return checkoutPage;
 
           }
+          
         }
 
         confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionThree));

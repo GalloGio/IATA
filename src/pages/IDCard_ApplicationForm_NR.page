@@ -167,13 +167,13 @@
         }
         var popupStatus = 0;
         
-        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN").click(function() {
+        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN").click(function() {
             
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
             var popupHeight = $("#popupLogin").height();
-            var popupWidth = $("#popupLogin").width();
+            var popupWidth = $("#popupLogin").width(); 
             
             // change the popupLogin content
             if ($(this).is("#DestinationGeography-EN")) {
@@ -204,8 +204,17 @@
                 $("#popup_Content").html("{!servingtheTravelTourismCustomer_Description}");
             }    
             if ($(this).is("#SocialMediaforTandTIndustry-EN")) {
-                $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");
-            }                        
+                $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");     
+            }
+            if ($(this).is("#FundamentalsJourneyPricing-EN")) {
+                $("#popup_Content").html("{!fundamentalsJourneyPricing_Description}");
+            }
+            if ($(this).is("#Repricing\\,ExchangeandReissue-EN")) {
+                $("#popup_Content").html("{!repricingExchangeReissue_Description}");
+            }
+            if ($(this).is("#TravelAgencyFees-EN")) {
+                $("#popup_Content").html("{!travelAgencyFees_Description}");
+            }                    
             
             //centering
             $("#popupLogin").css({
