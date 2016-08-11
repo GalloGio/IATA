@@ -190,6 +190,22 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
+    <classAccesses>
+        <apexClass>EF_MaterialLineItemHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_MaterialLineItemHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_RelationshipHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_RelationshipTriggerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
@@ -16347,79 +16363,89 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Admin_Fee__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>Contract.EF_BSP_Periods__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.EF_Billing_Currency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Billing_Frequency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.EF_Client_SIS_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_DT_Specialist__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Data_Currency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Group_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_IA_Specialist__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>Contract.EF_ICH_Period__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.EF_Payment_Currency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.EF_Payment_Terms_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Payment_Terms__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Reporting_Frequency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Reporting_Level__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_SIS_Aggregator__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contract.EF_Trading_Partner__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -32643,6 +32669,10 @@
         <recordType>Contract.MACS_General</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contract-E%26F Contract Layout</layout>
+        <recordType>Contract.EF_Client_Agreement</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Contract-RCRM Contract Layout</layout>
         <recordType>Contract.RCRM_Contract</recordType>
     </layoutAssignments>
@@ -32683,7 +32713,15 @@
         <layout>EF_Location_Currency__c-E%26F Location Currency Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Material_Line_Item__c-E%26F Material Line Item Layout</layout>
+        <layout>EF_Material_Line_Item__c-E%26F Material Line Item for Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Material_Line_Item__c-E%26F Material Line Item for Contract Layout</layout>
+        <recordType>EF_Material_Line_Item__c.Contract_Line_Item</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EF_Material_Line_Item__c-E%26F Material Line Item for Relationship Layout</layout>
+        <recordType>EF_Material_Line_Item__c.Relationship_Line_Item</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Material__c-E%26F Material Layout</layout>
@@ -36427,7 +36465,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>ACCA_Service_Request__c.Airline_Merchant_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36518,7 +36555,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>AMS_Accreditation_Requirement__c.Travel_Agent</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36774,7 +36810,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.MACSSalesAccount</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36795,7 +36830,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account_Category__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36806,7 +36840,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Accreditation__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36817,7 +36850,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Adjacent_Airport__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -36838,7 +36870,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Agency_Owner__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37094,7 +37125,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37180,7 +37210,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.IATAStandardContact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37225,6 +37254,11 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Contract.EF_Client_Agreement</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Contract.MACS_General</recordType>
         <visible>false</visible>
@@ -37236,7 +37270,16 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <recordType>EF_Material_Line_Item__c.Contract_Line_Item</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>EF_Material_Line_Item__c.Relationship_Line_Item</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37257,7 +37300,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>EmailTemplate__c.IFAP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37268,7 +37310,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Address__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37279,7 +37320,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Agency_Profile_Specialization__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37290,13 +37330,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Phone__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDP_Products_Account_View__c.GDP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37307,13 +37345,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>GDS__c.Live</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>ICCS_Checklist__c.ICCS_Restricted</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37339,7 +37375,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>ID_Card__c.AIMS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37390,7 +37425,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>LocalGovernance__c.Local_Groups</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37401,7 +37435,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Local_Bank_Mandate_Checklist__c.LBM_Standard</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37437,7 +37470,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.GDP_Opportunities</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37513,7 +37545,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Quality__c.Major_EXE_to_SOP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37559,13 +37590,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Release_Task__c.Implementation_Task</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>SIDRA_eDefault__c.Non_payment</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37581,7 +37610,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Solution.IDFS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37612,7 +37640,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>eTSP_Certification__c.New_eTSP_Certification</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -37819,7 +37846,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>EF_Relationship__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>E_F_Asset__c</tab>

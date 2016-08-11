@@ -46,7 +46,7 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -61,7 +61,6 @@
         <externalId>false</externalId>
         <label>Airline</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Relationships (Airline)</relationshipLabel>
         <relationshipName>EF_Relationships_Airline</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -83,7 +82,6 @@
         <externalId>false</externalId>
         <label>Client</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Relationships (Client)</relationshipLabel>
         <relationshipName>EF_Relationships_Client</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -95,7 +93,6 @@
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
-        <relationshipLabel>E&amp;F Relationships</relationshipLabel>
         <relationshipName>EF_Relationships</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -128,7 +125,6 @@
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>EF_Related_Records__c</referenceTo>
-        <relationshipLabel>E&amp;F Relationships</relationshipLabel>
         <relationshipName>EF_LocationRelationships</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -267,19 +263,19 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
-    <label>E&amp;F Relationship</label>
+    <label>E&amp;F Airline Billing Agreement</label>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
     <nameField>
-        <displayFormat>E&amp;F R-{0000}{MM}{YY}</displayFormat>
-        <label>E&amp;F Relationship Number</label>
+        <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
+        <label>E&amp;F Airline Billing Agreement Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>E&amp;F Relationships</pluralLabel>
+    <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

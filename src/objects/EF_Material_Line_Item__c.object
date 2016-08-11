@@ -62,7 +62,7 @@
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
         <relationshipLabel>E&amp;F Material Line Items</relationshipLabel>
-        <relationshipName>E_F_Material_Line_Items</relationshipName>
+        <relationshipName>EF_Material_Line_Items</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -86,7 +86,7 @@
         <fullName>EF_Relationship__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>E&amp;F Relationship</label>
+        <label>E&amp;F Airline Billing Agreement</label>
         <referenceTo>EF_Relationship__c</referenceTo>
         <relationshipLabel>E&amp;F Material Line Items</relationshipLabel>
         <relationshipName>EF_Material_Line_Items</relationshipName>
@@ -103,6 +103,17 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>E&amp;F Material Line Items</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Contract_Line_Item</fullName>
+        <active>true</active>
+        <label>Contract Line Item</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Relationship_Line_Item</fullName>
+        <active>true</active>
+        <label>Relationship Line Item</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>

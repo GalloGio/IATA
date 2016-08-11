@@ -224,4 +224,9 @@ private class EF_RelationshipTriggerTest {
 
 
 */
+	
+	@isTest static void checkCurrencyFromContractTest() {
+		
+		
+	}
 }

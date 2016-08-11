@@ -311,7 +311,8 @@
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Billing_Currency__c</fullName>
@@ -406,7 +407,8 @@
             <sorted>false</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Payment_Currency__c</fullName>
@@ -1085,6 +1087,278 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>Net 90 Days</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Activated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Approval Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party__c</picklist>
+            <values>
+                <fullName>Accomodations Plus International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports Council International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Berlitz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Scape</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Expense</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>EF_Client_Agreement</fullName>
+        <active>true</active>
+        <label>E&amp;F Client Agreement</label>
+        <picklistValues>
+            <picklist>Contract_Renewal__c</picklist>
+            <values>
+                <fullName>Auto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_BSP_Periods__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Currency</picklist>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Frequency</picklist>
+            <values>
+                <fullName>4x%2FMonth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_ICH_Period__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Payment_Method</picklist>
+            <values>
+                <fullName>Bank transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS payments</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPCR %2F SPDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Virtual Account Payment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Payment_Terms</picklist>
+            <values>
+                <fullName>07 days after invoice date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10 days after invoice date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15 days after invoice date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20 days after invoice date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30 days after invoice date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payable immediately due net</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Reporting_Level__c</picklist>
+            <values>
+                <fullName>Account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sub Account</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Terms__c</picklist>
+            <values>
+                <fullName>Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Immediate Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 30 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 60 Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Net 90 Days</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Renewal_Status__c</picklist>
+            <values>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not renewed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewal process started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renewed as-is</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Replaced by a new contract</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Replaces a previous contract</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

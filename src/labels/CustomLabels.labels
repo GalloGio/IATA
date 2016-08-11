@@ -1366,6 +1366,20 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EF_Currency_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Currency Not In Contract Error</shortDescription>
+        <value>The currency select needs to be present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>EF_Line_Item_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
+        <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
         <language>en_US</language>
         <protected>false</protected>
