@@ -19,7 +19,7 @@ public class EF_LocationCurrencyHandler {
 				locationContractMap.put(lc.Location_ID__c, lc);
 			}
  
-		}
+		} 
 
 		
 		//the contract contains already some location currencies added
