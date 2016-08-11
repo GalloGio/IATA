@@ -13,14 +13,21 @@
 		<apex:define name="pageScriptAdditions">
 			<!-- If any page specific .js, add them here -->
 			
+            <!-- include highcharts.com library -->
+            <script src="{!URLFOR($Resource.eBroadcastAssets, 'highcharts/js/highcharts.js')}"> </script>
+            <script src="{!URLFOR($Resource.eBroadcastAssets, 'highcharts/js/modules/exporting.js')}"> </script>
+            
 			<script type="text/javascript">
 				$j = jQuery.noConflict();
 				
 				$j( document ).ready(function( $ ) {
 					//startObservingClassMutation();	
-                    SetFilter();
+					SetFilter();
 				});
 
+				renderYayActivityGraph();
+				renderYtdActivityGraph();
+			
 				// =========================================================================================
 				// startObservingClassMutation is used if we want to detect the chage of class of a component
 				function startObservingClassMutation() 
@@ -46,25 +53,124 @@
 					observer.observe($div[0],  obsConfig);
 				}
 				
-            	function SetFilter()
+				function SetFilter()
 				{
-                    //$j("#divactivitytypesort").html("Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i>");    
-                    //alert("hello");
-                }
+					//$j("#divactivitytypesort").html("Activity Type <i class='fa fa-caret-down' aria-hidden='true'></i>");	
+					//alert("hello");
+				}
+				
+				
+				// ============================================================
+				// define the Year After Year Activity Graph
+				function renderYayActivityGraph() {
+					$j('#yearAfterYearActivityGraph').highcharts({
+						chart: {
+							type: 'column'
+						},
+						title: {
+							text: 'Year After Year Credit Activities'
+						},
+						subtitle: {
+							text: ''
+						},
+						xAxis: {
+							categories: {!monthYayList}
+							, crosshair: true
+						},
+						yAxis: {
+							min: 0,
+							title: {
+								text: 'Email Credits'
+							}
+						},
+						tooltip: {
+							headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+							pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								'<td style="padding:0"><b>{point.y:.1f} email(s)</b></td></tr>',
+							footerFormat: '</table>',
+							shared: true,
+							useHTML: true
+						},
+						plotOptions: {
+							column: {
+								pointPadding: 0.2,
+								borderWidth: 0
+							}
+						},
+						series: [{ name: 'Adjustment'
+									, data: {!adjustmentYayData}
+								}, { name: 'Credit'
+									, data: {!creditYayData}
+								}, { name: 'Send'
+									, data: {!sendYayData}
+								}
+							]
+					});
+				}
+				
+				// ============================================================
+				// define the Year To Date Activity Graph
+				function renderYtdActivityGraph() {
+					$j('#yearToDateActivityGraph').highcharts({
+						chart: {
+							type: 'column'
+						},
+						title: {
+							text: 'Year To Date Credit Activities'
+						},
+						subtitle: {
+							text: ''
+						},
+						xAxis: {
+							categories: {!monthYtdList}
+							, crosshair: true
+						},
+						yAxis: {
+							min: 0,
+							title: {
+								text: 'Email Credits'
+							}
+						},
+						tooltip: {
+							headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+							pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+								'<td style="padding:0"><b>{point.y:.1f} emails</b></td></tr>',
+							footerFormat: '</table>',
+							shared: true,
+							useHTML: true
+						},
+						plotOptions: {
+							column: {
+								pointPadding: 0.2,
+								borderWidth: 0
+							}
+						},
+						series: [{ name: 'Adjustment'
+									, data: {!adjustmentYtdData}
+								}, { name: 'Credit'
+									, data: {!creditYtdData}
+								}, { name: 'Send'
+									, data: {!sendYtdData}
+								}
+							]
+					});
+				} // end of renderYtdActivityGraph
+			
+			
 			</script>
 			
 		</apex:define>
 		<apex:define name="pageContent">
 		
 			<script type="text/javascript">
-				function rerenderDataTableForm() {
-					console.log( 'rerenderDataTableForm' );
-					//rerenderDataTableFormX();
+			
+				function rerenderActivityTable) {
+					console.log( 'rerenderActivityTable' );
 					refreshActivityTable();
 					return false;
-				 }
+				}
 			</script>
-			  
+			
 			<!-- Start of Page Content -->
 			<main class="main-content manage-account">
 				<div class="inner-wrapper">
@@ -75,13 +181,13 @@
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
-                            <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li> 
 							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
 							</li>
 						</ul>
 						
-						<div class="tab-content">
+						<div class="tab-content js-tabs">
 							<div class="tab-pane is-open" id="pane-1">
 								
 								
@@ -92,10 +198,10 @@
 										<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
 										<apex:outputPanel rendered="{!showSubscriptionEnd}">
 											<p>This cost per email is guaranteed until the end of your subscription 
-                                                <strong>
-                                                    <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
-                                                </strong>
-                                            </p>
+												<strong>
+													<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
+												</strong>
+											</p>
 										</apex:outputPanel>
 										<apex:outputPanel rendered="{!showSuggestionMessage}">
 											<div class="alert default">
@@ -163,127 +269,117 @@
 								
 							<div class="tab-container">
 								<ul class="nav tabs">
-										<li class="" data-target="#pane-1-a"><a href="#">Timeline view</a></li>
-										<li data-target="#pane-1-b" class="active"><a href="#">Data table</a></li>
-									</ul>
-									<div class="tab-content">
-										<div class="tab-pane" id="pane-1-a">
-											<ul class="nav tabs secondary">
-												<li data-target="#pane-1-a-day"><a href="#">Day</a></li>
-												<li data-target="#pane-1-a-week"><a href="#">Week</a></li>
-												<li data-target="#pane-1-a-month" class="active"><a href="#">Month</a></li>
-											</ul>
-											<div class="tab-content">
-												<div class="tab-pane" id="pane-1-a-day">
-													<div style="border: 1px solid #ccc; padding: 10px;">
-														Day graph plugin here
-													</div>
-												</div>
-												<div class="tab-pane" id="pane-1-a-week">
-													<div style="border: 1px solid #ccc; padding: 10px;">
-														Week graph plugin here
-													</div>
-												</div>
-												<div class="tab-pane is-open" id="pane-1-a-month">
-													<div style="border: 1px solid #ccc; padding: 10px;">
-														Month graph plugin here
-													</div>
-												</div>
-											</div>
-											
-										</div>
-                                       
-										<div class="tab-pane is-open" id="pane-1-b">
-                                            <apex:form id="dataTableForm">
-<!--
-                                                <apex:actionFunction name="refreshTableX" action="{!refreshTable}" rerender="actListOutputPanel,actListTable" />    
-                                                <apex:actionFunction name="refresh" action="{!doNothing}" rerender="actListOutputPanel" />
-                                                <apex:actionFunction name="rerenderActListTable" action="{!refreshTable}" rerender="actListTable" />
-                                                <apex:actionFunction name="rerenderDataTableForm" action="{!doNothing}" rerender="dataTableForm" />
--->
-                                                <apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="dataTableForm" />
-                                                                        
-                                                <div class="table-container data-table-container">
-                                                        <table class="data-table manage-lists">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="activity-type" >
-                                                                        <div id="divactivitytypesort">
-                                                                        <a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                                                                           														
-                                                                        <div class="type-sort" id="actPopUpMenu">
-                                                                            
-                                                                            <ul class="list">
-        
-                                                                                <apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="actSel">
-                                                                                    <li class="checkbox-box">
-                                                                                        <div class="custom-user-input checkbox">
-                                                                                            <apex:inputCheckbox id="chckActType" value="{!actSel.selected}" styleClass="user-input checkbox"                                                                                                       
-                                                                                                onclick="refreshActivityTable();"
-                                                                                                                
-                                                                                                 />
-                                                                                            <label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
-                                                                                        </div>
-                                                                                        <label class="input-label" for="{!$Component.chckActType}">{!actSel.activityType}</label>
-                                                                                    </li>
-                                                                                </apex:repeat>
-                                                                            </ul>
-                                                                        </div>
-                                                                          </div>
-                                                                    </th>
-                                                                    
-                                                                    <th class="activity-date">Activity Date/Time</th>
-                                                                    <th class="name">Activity Name</th>
-                                                                    <th class="id">Campaign ID</th>
-                                                                    <th class="total-count">Total Count</th>
-                                                                </tr>
-                                                                
-                                                             </thead>       
-                                                             <tbody>
-                                                             <apex:repeat id="actListTable" value="{!activityList}" var="act">
-                                                                    <tr class="js-sort-type-credits">
-                                                                        <td class="activity-type">{!act.Activity_Type__c}</td>
-                                                                        <td class="activity-date">
-                                                                               <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
-                                                                        </td>																
-                                                                        <td class="name">{!act.Name}</td>
-                                                                        <td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
-                                                                        <td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
-                                                                    </tr>
-                                                                </apex:repeat>
-                                                                
-                                                            </tbody>
-                                                        </table>  
-                                                   		 <script>
-                                                            $j = jQuery.noConflict();
-                                                            
-                                                            $j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
-                                                            $j('#activitytypesort').on('click',  function(event) {
-                                                                event.preventDefault();
-                                                                event.stopPropagation();
-                                                                $j(this).toggleClass(className.open).next().toggleClass(className.open);
-                                                             });
-                                                                
-
-                                                        </script> 
-                                                  
-                                                        <div class="pagination">
-                                                            <div class="page-number">
-                                                                Page
-                                                                <div class="custom-user-input select">
-                                                                    <i class="icon angle-down"></i>
-                                                                    
-                                                                    <apex:selectList value="{!page}" styleClass="user-input select" size="1">
-                                                                        <apex:selectOptions value="{!pageOptions}"/>
-                                                                        <apex:actionSupport event="onchange" action="{!doNothing}" reRender="dataTableForm" />
-                                                                    </apex:selectList> 
-                                                                    
-                                                                </div>
-                                                                of {!maxPage}
-                                                            </div>
-                                                        </div>
-                                                    
+									<li data-target="#pane-1-a" class="active"><a href="#">Timeline view</a></li>
+									<li data-target="#pane-1-b" class=""><a href="#">Data table</a></li>
+								</ul>
+								<div class="tab-content">
+                                        <div class="tab-pane is-open" id="pane-1-a">
+                                            <ul class="nav tabs secondary">
+                                                <li data-target="#pane-1-a-year-to-date"><a href="#">Year To Date</a></li>
+                                                <li data-target="#pane-1-a-year-after-year" class="active"><a href="#">Year Over Year</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane" id="pane-1-a-year-to-date">
+                                                    <div style="border: 1px solid #ccc; padding: 10px;" >
+                                                        Monthly activity graph showing year to date email credit transactions
+                                                        <div id="yearToDateActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+                                                    </div>
                                                 </div>
+                                                <div class="tab-pane is-open" id="pane-1-a-year-after-year">
+                                                    <div style="border: 1px solid #ccc; padding: 10px;">
+                                                        Monthly activity graph showing year over year email credit transactions
+                                                        <div id="yearAfterYearActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+										<div class="tab-pane" id="pane-1-b">
+											<apex:form id="dataTableForm">
+												<apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="dataTableForm" />
+																		
+												<div class="table-container data-table-container">
+														<table class="data-table manage-lists">
+															<thead>
+																<tr>
+																	<th class="activity-type" >
+																		<div id="divactivitytypesort">
+																		<a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+																		
+																		<div class="type-sort" id="actPopUpMenu">
+																			
+																			<ul class="list">
+																				
+																				<apex:repeat id="typeSelectionRepeat" value="{!activityTypeWrapperList}" var="actSel">
+																					<li class="checkbox-box">
+																						<div class="custom-user-input checkbox">
+																							<apex:inputCheckbox id="chckActType" value="{!actSel.selected}" styleClass="user-input checkbox"																									   
+																								onclick="refreshActivityTable();"
+																								
+																								/>
+																							<label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
+																						</div>
+																						<label class="input-label" for="{!$Component.chckActType}">{!actSel.activityType}</label>
+																					</li>
+																				</apex:repeat>
+																			</ul>
+																		</div>
+																		  </div>
+																	</th>
+																	
+																	<th class="activity-date">Activity Date/Time</th>
+																	<th class="name">Activity Name</th>
+																	<th class="id">Campaign ID</th>
+																	<th class="total-count">Total Count</th>
+																</tr>
+																
+															 </thead>	   
+															 <tbody>
+															 <apex:repeat id="actListTable" value="{!activityList}" var="act">
+																	<tr class="js-sort-type-credits">
+																		<td class="activity-type">{!act.Activity_Type__c}</td>
+																		<td class="activity-date">
+																			   <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
+																		</td>																
+																		<td class="name">{!act.Name}</td>
+																		<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
+																		<td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
+																	</tr>
+																</apex:repeat>
+																
+															</tbody>
+														</table>  
+														<script>
+															$j = jQuery.noConflict();
+															
+															$j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
+															$j('#activitytypesort').on('click',  function(event) {
+																event.preventDefault();
+																event.stopPropagation();
+																$j(this).toggleClass(className.open).next().toggleClass(className.open);
+															});
+																
+															
+														</script> 
+														
+														<div class="pagination">
+															<div class="page-number">
+																Page
+																<div class="custom-user-input select">
+																	<i class="icon angle-down"></i>
+																	
+																	<apex:selectList value="{!page}" styleClass="user-input select" size="1">
+																		<apex:selectOptions value="{!pageOptions}"/>
+																		<apex:actionSupport event="onchange" action="{!doNothing}" reRender="dataTableForm" />
+																	</apex:selectList> 
+																	
+																</div>
+																of {!maxPage}
+															</div>
+														</div>
+													
+												</div>
 											</apex:form>
 										</div>
 									</div>

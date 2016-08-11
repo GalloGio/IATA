@@ -3,6 +3,10 @@
  * 
  * It contains various usefull method and properties that can be reused such as
  * as the access to the rate plan, etc.
+ *
+ * Change log:
+ *   20160809-sl: modify productRatePlanIdUpgradeList
+ *
  **/
 public virtual class vfIECEBC_Controller {
 	
@@ -67,14 +71,14 @@ public virtual class vfIECEBC_Controller {
 	}
 	
 	// return true if this community user is a member 
-    public Boolean isMember {
-        get{
-            // return ( billingAccount.ClientType__c == BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE );
+	public Boolean isMember {
+		get{
+			// return ( billingAccount.ClientType__c == BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE );
 			return (billingAccount.Contact__c != null & billingAccount.Contact__r.IATA_Code__c != null);
-        }
-    }
+		}
+	}
 	
-    // =======================================================================-
+	// =======================================================================-
 	// current Product Rate Plan Charge based on given ProductRatePlan
 	// assumptions:
 	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
@@ -118,12 +122,12 @@ public virtual class vfIECEBC_Controller {
 				totalNewPurchaseAmount += prpc.zqu__ListPrice__c;
 			}
 		}
-        
-        // this is a workaround to display the 'please select rate plan', in case there is no selected rate plan, put a dummy one for the message
-        if (newPurchasedRatePlanChargeList.size() == 0) {
-            zqu__ProductRatePlanCharge__c dummyRatePlan = new zqu__ProductRatePlanCharge__c( Id=null, Name='Please select a plan', zqu__ListPrice__c=0);
-            newPurchasedRatePlanChargeList.add(dummyRatePlan);
-        }
+		
+		// this is a workaround to display the 'please select rate plan', in case there is no selected rate plan, put a dummy one for the message
+		if (newPurchasedRatePlanChargeList.size() == 0) {
+			zqu__ProductRatePlanCharge__c dummyRatePlan = new zqu__ProductRatePlanCharge__c( Id=null, Name='Please select a plan', zqu__ListPrice__c=0);
+			newPurchasedRatePlanChargeList.add(dummyRatePlan);
+		}
 	} // end of updateNewPurchasedRatePlanChargeList
 	
 	
@@ -175,66 +179,53 @@ public virtual class vfIECEBC_Controller {
 		get{
 			if (productRatePlanIdUpgradeSet==null) 
 			{
-                Set<Id> targetProductRatePlanIdSet = new Set<Id>();
-                targetProductRatePlanIdSet.addAll(productRatePlanIdUpgradeList);
-                productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
-            }
-            return productRatePlanIdUpgradeSet;
-        }
-        set;
-    }
-    
+				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
+				targetProductRatePlanIdSet.addAll(productRatePlanIdUpgradeList);
+				productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
+			}
+			return productRatePlanIdUpgradeSet;
+		}
+		set;
+	}
+	
 	// =======================================================================-
 	// productRatePlanIdUpgradeList return set of zqu__ProductRatePlan__.Id available as the listed destination from the current ProductRatePlan
 	// this list is also used in providing a sorted list of upgrade product rate plan
-    public List<Id> productRatePlanIdUpgradeList {
+	public List<Id> productRatePlanIdUpgradeList {
 		get{
 			if (productRatePlanIdUpgradeList==null) 
 			{
-				List<EBC_Setup__c> ebcSetupList = [select Id
-								, Member_Prepaid_Product_Rate_Plan_01__c
-								, Member_Prepaid_Product_Rate_Plan_02__c
-								, Member_Prepaid_Product_Rate_Plan_03__c
-								, Member_Prepaid_Product_Rate_Plan_04__c
-
-								, Non_Member_Prepaid_Product_Rate_Plan_01__c
-								, Non_Member_Prepaid_Product_Rate_Plan_02__c
-								, Non_Member_Prepaid_Product_Rate_Plan_03__c
-								, Non_Member_Prepaid_Product_Rate_Plan_04__c
-							from EBC_Setup__c
-							order by CreatedDate
-							limit 1];
 				List<Id> nonMemberRatePlanIdList = new List<Id>();
 				List<Id> memberRatePlanIdList = new List<Id>();
-                if (ebcSetupList.size()==1) {
-					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_01__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_01__c);
-					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_02__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_02__c);
-					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_03__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_03__c);
-					if (ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_04__c != null)  memberRatePlanIdList.add(ebcSetupList[0].Member_Prepaid_Product_Rate_Plan_04__c);
-					
-					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_01__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_01__c);
-					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_02__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_02__c);
-					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_03__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_03__c);
-					if (ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_04__c != null)  nonMemberRatePlanIdList.add(ebcSetupList[0].Non_Member_Prepaid_Product_Rate_Plan_04__c);
-                } 
 				
-                // check if the upgrade options are in rate plan for member
-                // scan the list based on membership
-                // baseRatePlanList is the applicable ebc rate plan options based on the user membership type
-                List<Id> baseRatePlanList =  (isMember) ? memberRatePlanIdList : nonMemberRatePlanIdList;
+				EBC_Setup__c ebcSetup = vfIECEBC.ebcSetup;
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c);
+				
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c);
+				
+				// check if the upgrade options are in rate plan for member
+				// scan the list based on membership
+				// baseRatePlanList is the applicable ebc rate plan options based on the user membership type
+				List<Id> baseRatePlanList =  (isMember) ? memberRatePlanIdList : nonMemberRatePlanIdList;
 				List<Id> targetProductRatePlanIdList = new List<Id>();
 				
 				Integer idx = baseRatePlanList.size()-1;
-                while ( idx >= 0
-                       && ( baseRatePlanList[idx] != productRatePlan.Id ))
-                { 
+				while ( idx >= 0
+					   && ( baseRatePlanList[idx] != productRatePlan.Id ))
+				{ 
 					List<Id> updatedList = new List<ID> {baseRatePlanList[idx]};
 					updatedList.addAll(targetProductRatePlanIdList); // note that we need also to maintain the list ordering
 					targetProductRatePlanIdList = updatedList;
-                    idx--;
-                }
-                //Integer currentRatePlanIndex = (idx < baseRatePlanList.size()) ? idx : null;
-                
+					idx--;
+				}
+				//Integer currentRatePlanIndex = (idx < baseRatePlanList.size()) ? idx : null;
+				
 				productRatePlanIdUpgradeList = targetProductRatePlanIdList;
 			} // end if
 			
@@ -242,7 +233,7 @@ public virtual class vfIECEBC_Controller {
 		} // end getter
 		private set;
 	} // productRatePlanUpgradeList getter/setter.
-    
+	
 	
 	/*
 	// ========================================================================
