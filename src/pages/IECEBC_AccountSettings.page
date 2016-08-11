@@ -21,6 +21,7 @@
                             <li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
                             <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
                             <li class="active"><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a></li>
                         </ul>
                         
                         <div class="tab-content">
@@ -30,8 +31,8 @@
                                             <p class="description light small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, natus, vel laboriosam id excepturi repellat tempore sint quos, ut doloribus maxime ipsam temporibus hic molestias cumque obcaecati velit libero commodi.</p>
                                             <div class="accordion-container js-accordion">
                                                 <dl class="list">
-                                                    <dt class="accordion-title">Campaign settings</dt>
-                                                    <dd class="accordion-panel">
+                                                    <dt class="accordion-title is-open">Campaign settings</dt>
+                                                    <dd class="accordion-panel is-open">
                                                         <apex:form id="campaignSettings">
                                                             <h3 class="group-title">Default Campaign Settings</h3>
                                                             <div class="field-group text">
@@ -55,40 +56,61 @@
                                                     </dd>
                                                     <dt class="accordion-title" id="primaryContactTitle">Primary Contact</dt>
                                                     <dd class="accordion-panel">
-                                                        <apex:form id="primaryContact">
-                                                            <h3 class="group-title">Primary account contact</h3>
-                                                            <p>You can provide an alternate contact. This person will receive notifications such as campaign send notifications, account status notifications and campaign test  emails.</p>
-                                                            <table class="data-table table-contact-info">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th>Contact name</th>
-                                                                        <td><apex:inputField value="{!preferences.PrimaryContact_Name__c}" styleClass="user-input text" /></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Job Title</th>
-                                                                        <td><apex:inputField value="{!preferences.PrimaryContact_Job_Title__c}" styleClass="user-input text" /></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Company/Organization</th>
-                                                                        <td><apex:inputField value="{!preferences.PrimaryContact_Company__c}" styleClass="user-input text" /></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Address</th>
-                                                                        <td><apex:inputField value="{!preferences.PrimaryContact_Address__c}" styleClass="user-input text" /></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Phone</th>
-                                                                        <td><apex:inputField value="{!preferences.PrimaryContact_Phone__c}" styleClass="user-input text" /></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Email</th>
-                                                                        <td><apex:inputField value="{!preferences.PrimaryContact_Email__c}" styleClass="user-input text" /></td>
-                                                                    </tr>
-                                                                </tbody></table>
-                                                            <div class="footer-actions">
-                                                                <apex:commandLink onclick="jQuery(this).addClass('disabled');" action="{!save}" styleClass="button" value="Save" rerender="primaryContact" />
-                                                            </div>
-                                                        </apex:form>
+                                                            <apex:form id="primaryContact">
+                                                                <h3 class="group-title">Primary account contact</h3>
+                                                                <p>You can provide an alternate contact. This person will receive notifications such as campaign send notifications, account status notifications and campaign test  emails.</p>
+                                                                <table class="data-table table-contact-info">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th>Contact name</th>
+                                                                            <td>
+                                                                                <apex:inputField rendered="{!primaryContactMode != 'readonly'}" value="{!preferences.PrimaryContact_Name__c}" styleClass="user-input text" />
+                                                                                <apex:outputField rendered="{!primaryContactMode == 'readonly'}" value="{!preferences.PrimaryContact_Name__c}" styleClass="user-input text" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Job Title</th>
+                                                                            <td>
+                                                                                <apex:inputField rendered="{!primaryContactMode != 'readonly'}" value="{!preferences.PrimaryContact_Job_Title__c}" styleClass="user-input text" />
+                                                                                <apex:outputField rendered="{!primaryContactMode == 'readonly'}" value="{!preferences.PrimaryContact_Job_Title__c}" styleClass="user-input text" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Company/Organization</th>
+                                                                            <td>
+                                                                                <apex:inputField rendered="{!primaryContactMode != 'readonly'}" value="{!preferences.PrimaryContact_Company__c}" styleClass="user-input text" />
+                                                                                <apex:outputField rendered="{!primaryContactMode == 'readonly'}" value="{!preferences.PrimaryContact_Company__c}" styleClass="user-input text" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Address</th>
+                                                                            <td>
+                                                                                <apex:inputField rendered="{!primaryContactMode != 'readonly'}" value="{!preferences.PrimaryContact_Address__c}" styleClass="user-input text" />
+                                                                                <apex:outputField rendered="{!primaryContactMode == 'readonly'}" value="{!preferences.PrimaryContact_Address__c}" styleClass="user-input text" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Phone</th>
+                                                                            <td>
+                                                                                <apex:inputField rendered="{!primaryContactMode != 'readonly'}" value="{!preferences.PrimaryContact_Phone__c}" styleClass="user-input text" />
+                                                                                <apex:outputField rendered="{!primaryContactMode == 'readonly'}" value="{!preferences.PrimaryContact_Phone__c}" styleClass="user-input text" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Email</th>
+                                                                            <td>
+                                                                                <apex:inputField rendered="{!primaryContactMode != 'readonly'}" value="{!preferences.PrimaryContact_Email__c}" styleClass="user-input text" />
+                                                                                <apex:outputField rendered="{!primaryContactMode == 'readonly'}" value="{!preferences.PrimaryContact_Email__c}" styleClass="user-input text" />
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody></table>
+                                                                <div class="footer-actions">
+                                                                    <apex:commandLink rendered="{!primaryContactMode != 'readonly'}" onclick="jQuery(this).addClass('disabled');" action="{!save}" styleClass="button" value="Save" rerender="primaryContact" />
+                                                                    <apex:commandLink rendered="{!primaryContactMode == 'readonly'}" action="{!doNothing}" styleClass="button" value="Edit" rerender="primaryContact">
+                                                                        <apex:param assignTo="{!primaryContactMode}" value="edit" name="firstParam" />
+                                                                    </apex:commandLink>
+                                                                </div> 
+                                                            </apex:form>
                                                     </dd>
                                                     <dt class="accordion-title">Notifications</dt>
                                                     <dd class="accordion-panel">
