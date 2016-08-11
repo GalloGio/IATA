@@ -60,6 +60,31 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Account_ISO_Country_Code__c</fullName>
+        <description>Formula field created to be shown on conga file.
+E&amp;F CRM Project</description>
+        <externalId>false</externalId>
+        <formula>Account.IATA_ISO_Country__r.ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_ISO_Country_Name__c</fullName>
+        <description>E&amp;F CRM Project. To be used in a conga file</description>
+        <externalId>false</externalId>
+        <formula>Account.IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account ISO Country Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ActivatedById</fullName>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>

@@ -68,6 +68,32 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Billed_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Billed Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>E&amp;F Relationships (Billed Account)</relationshipLabel>
+        <relationshipName>EF_Relationships_Billed_Account</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Billing Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>E&amp;F Relationships</relationshipLabel>
+        <relationshipName>EF_Relationships_Billing_Account</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Billing_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
@@ -100,6 +126,19 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Currency_Read_Only__c</fullName>
+        <description>E&amp;F Project. Currency field is just visible on edit mode, so a formula that shows it on detail mode is needed.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(CurrencyIsoCode)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Data_Currency__c</fullName>
@@ -163,18 +202,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Location_Code__c</fullName>
-        <description>LDC. for me this field should be deleted</description>
-        <externalId>false</externalId>
-        <label>Location Code</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Payment_Currency__c</fullName>

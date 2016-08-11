@@ -1,6 +1,6 @@
 @isTest
 private class EF_RelationshipTriggerTest {
-/*
+
 	@testSetup 
     static void setup() {
 
@@ -81,7 +81,7 @@ private class EF_RelationshipTriggerTest {
         EF_Location_Currency__c locCurrency = new EF_Location_Currency__c (
         	Contract__c = contract.Id,
         	Location_ID__c = [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id,
-        	currencyIsoCode='QAR'
+        	EF_Billing_Currency__c='QAR'
         	);
         insert locCurrency;
                
@@ -108,9 +108,9 @@ private class EF_RelationshipTriggerTest {
 		Test.stopTest();
 
 		//check update of currency was made
-		EF_Relationship__c relationshipAfter =[ select id, CurrencyISOCode from EF_Relationship__c where id =: rel.Id limit 1];
+		EF_Relationship__c relationshipAfter =[ select id, Billing_Currency__c from EF_Relationship__c where id =: rel.Id limit 1];
 
-		System.assertEquals(relationshipAfter.CurrencyIsoCode, 'QAR');
+		System.assertEquals(relationshipAfter.Billing_Currency__c, 'QAR');
 		
 	}
 
@@ -222,9 +222,6 @@ private class EF_RelationshipTriggerTest {
 		
 	}
 
-
-*/
-	
 	@isTest static void checkCurrencyFromContractTest() {
 		
 		
