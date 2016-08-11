@@ -70,6 +70,10 @@ Dedicated to the eBroadcast application.</description>
                 <fullName>Agent</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Custom</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackTrending>false</trackTrending>

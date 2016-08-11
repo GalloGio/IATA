@@ -4,6 +4,48 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     public vfIECEBC_RecipientList() {
     }
     
+    public PageReference duplicate() {
+        EBC_Master_Filter__c f = [Select Id,
+                     Billing_Account__c,
+                     Refinement_Condition__c,
+                     Geo_Condition__c,
+                     Audience__c,
+                     IATA_Codes__c,
+                     Number_of_Recipients__c,
+                     Name
+                     From EBC_Master_Filter__c
+                     where Id = :selectedItem.Id];
+        
+        EBC_Master_Filter__c cloned = (EBC_Master_Filter__c)f.clone(false, true, false, false);
+        EBC_Master_Filter__c castedSelectedItem = (EBC_Master_Filter__c)selectedItem;
+        cloned.Name = castedSelectedItem.Name; 
+        
+        insert cloned;
+        
+        List<EBC_Customer_Filter__c> customerFilters = [
+            Select Id,
+            Name,
+            API_Name__c ,
+            EBC_Application_Filter__c ,
+            Field_Name__c ,
+            Field_Operator__c ,
+            Field_Value__c 
+            From EBC_Customer_Filter__c
+            Where EBC_Master_Filter__c = :selectedItem.Id
+        ];
+        
+        for(EBC_Customer_Filter__c cf : customerFilters) {
+            cf.Id = null;
+            cf.EBC_Master_Filter__c = cloned.Id;
+        }
+        
+        insert customerFilters;
+        
+        clear();
+        
+        return null;
+    }
+
     
     private String getQuery(Boolean isCountOnly) {
         List<String> fields = new List<String>();
@@ -29,15 +71,18 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
     }
     private Boolean getIsFirstTimeLoadPage() { 
         if (firsttimepageload) {firsttimepageload=false; return true;}
-        return false;}
-    /*
-    public List<SelectOption> getSortByOptions() {
+        return false;
+    }
+    
+    
+    public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('CreatedDate DESC ','Sort By', true)); 
         options.add(new SelectOption('CreatedDate DESC','Creation Date'));
         options.add(new SelectOption('LastModifiedDate DESC','Last Edited'));
-        options.add(new SelectOption('Name ASC','Name'));
-        options.add(new SelectOption('Audience__c ASC', 'Type'));
-        
+        options.add(new SelectOption('Name ASC','Name')); 
+        options.add(new SelectOption('Audience__c ASC', 'Audience'));
+
         return options;
-    }*/
+    }
 }

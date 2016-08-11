@@ -44,7 +44,7 @@
                                                         <strong><apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText></strong>
                                                         <span class="per-unit">/email</span>
                                                     </div>
-                                                    <apex:outputLink value="#" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower you cost per email</apex:outputLink>
+                                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
                                                 </td>
                                             </tr>
                                             <apex:outputText rendered="{!subscription.Zuora__AutoRenew__c}">
@@ -68,7 +68,7 @@
                                                     <div class="item-value">
                                                         <strong><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> email(s)</strong>
                                                     </div>
-                                                    <apex:outputLink value="" rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">Purchase credits</apex:outputLink>
+                                                    <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}" rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">Purchase credits</apex:outputLink>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -76,10 +76,12 @@
                                                     <div class="item-name">Purchased Add Ons</div>
                                                 </th>
                                                 <td>
+                                                    <!--
                                                     <div class="item-value">
                                                         <strong>Enhanced Reporting</strong>
                                                     </div>
-                                                    <a href="#">View Add Ons Options</a>
+-->
+                                                    <a href="{!URLFOR($Page.IECEBC_AccountExtras)}">View Add Ons Options</a>
                                                 </td>
                                             </tr>
                                         </tbody>
