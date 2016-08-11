@@ -325,7 +325,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 		for (AggregateResult aggr : aggrList)
 		{
 			targetList = typeToListMap.get( (String) aggr.get('Activity_Type__c'));
-			Integer idx = (Integer) aggr.get('month');
+			Integer idx = (Integer) aggr.get('month')-1;
 			targetList[idx] = Math.abs((Decimal) aggr.get('sumTotalCount'));
 		}
 	} // prepareGraphDataYearToDate
