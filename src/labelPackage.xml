@@ -8,5 +8,16 @@
         <members>*</members>
         <name>Translations</name>
     </types>
+
+ <types>
+        <members>*</members>
+        <name>Group</name>
+    </types>
+     <types>
+        <members>*</members>
+        <name>StaticResource</name>
+    </types>
+
+
     <version>34.0</version>
 </Package>
