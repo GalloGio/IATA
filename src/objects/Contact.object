@@ -2972,7 +2972,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
     <fields>
         <fullName>BillTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
-        <description>IEC - Reference to “Locations” object to default billing information in order</description>
+        <description>IEC - Reference to â€œLocationsâ€ object to default billing information in order</description>
         <externalId>false</externalId>
         <label>BillTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -3548,7 +3548,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Curaçao</fullName>
+                <fullName>CuraÃ§ao</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7801,7 +7801,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Curaçao</fullName>
+                <fullName>CuraÃ§ao</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7813,7 +7813,7 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Côte d&apos;Ivoire</fullName>
+                <fullName>CÃ´te d&apos;Ivoire</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -8297,11 +8297,11 @@ TotalRows-Successes-Errors</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Réunion</fullName>
+                <fullName>RÃ©union</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Saint Barthélemy</fullName>
+                <fullName>Saint BarthÃ©lemy</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -8750,7 +8750,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     <fields>
         <fullName>ShipTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
-        <description>IEC - Reference to “Locations” object to default shipping information in order</description>
+        <description>IEC - Reference to â€œLocationsâ€ object to default shipping information in order</description>
         <externalId>false</externalId>
         <label>ShipTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -19524,7 +19524,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Curaçao</fullName>
+                <fullName>CuraÃ§ao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21884,7 +21884,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Curaçao</fullName>
+                <fullName>CuraÃ§ao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -24370,7 +24370,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Curaçao</fullName>
+                <fullName>CuraÃ§ao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26483,7 +26483,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
-        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
         <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
         <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
@@ -26909,7 +26908,7 @@ myuser={!User.Id}</url>
     <webLinks>
         <fullName>Contact_exception_report</fullName>
         <availability>online</availability>
-        <description>Contacts that doesn’t have any cases since 2006</description>
+        <description>Contacts that doesnâ€™t have any cases since 2006</description>
         <displayType>link</displayType>
         <hasMenubar>false</hasMenubar>
         <hasScrollbars>true</hasScrollbars>
