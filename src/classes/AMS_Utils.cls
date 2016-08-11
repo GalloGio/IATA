@@ -1410,4 +1410,66 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 }
 
+    public static Set<Integer> weekendDays{
+        get{
+            if(weekendDays == null) weekendDays = new Set<Integer>();
+            return weekendDays;
+        }
+        set;
+    }
+
+    public static void addWeekend(Integer weekDay){
+        //0 is sunday, 6 is saturday
+        weekendDays.add(weekDay);
+    }
+
+    public static Boolean IsWeekendDay(Datetime dateParam){
+       Integer dayOfWeek  = dateParam.day() - dateParam.date().toStartOfWeek().day();
+
+       //return dayOfWeek == 0 || dayOfWeek == 6 ? true : false;
+       return weekendDays.contains(dayOfWeek);
+    }
+
+    //helper class to manipulate business days
+    public class BusinessDate{
+
+        private DateTime d;
+
+        public BusinessDate(Date d){
+            this.d = Datetime.newInstance(d, Time.newInstance(0, 0, 0, 0));
+        }
+
+        public BusinessDate(DateTime d){
+            this.d = d;
+        }
+
+        public DateTime get(){
+            return d;
+        } 
+
+        public Date date(){
+            return d.date();
+        }
+
+
+        public Boolean isWeekendDay(){
+            return isWeekendDay(d);
+        }         
+
+        public Datetime AddBusinessDays(Integer BusinessDaysToAdd){
+
+            Datetime finalDate = d;
+
+            //Add or decrease in BusinessDaysToAdd days 
+            Integer direction = BusinessDaysToAdd < 0 ? -1 : 1;
+
+            while(BusinessDaysToAdd != 0){
+                finalDate = finalDate.AddDays(direction);
+                if (!isWeekendDay(finalDate)) BusinessDaysToAdd -= direction;
+            }
+
+            return finalDate;
+        } 
+    }
+
 }

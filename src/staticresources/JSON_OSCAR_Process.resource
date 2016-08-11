@@ -862,6 +862,77 @@
           "STEP6__c"],
           "IsDependent": false
         }]
+      },{
+        "Name": "AMS_OSCAR_PENALTY",
+        "Steps": [{
+          "Name": "STEP26",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "createSIDRALite",
+            "ActionLabel": "AMS_OSCAR_Action7",
+            "args": ["oscarid"]
+          },{
+            "FunctionName": "createCommissionerCase",
+            "ActionLabel": "AMS_OSCAR_Action8",
+            "args": ["oscarid"]
+          }],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step26_succeeded"
+          }],
+          "DisplayFields": [
+            "Suspend_Agency__c",
+            "Remove_STD__c",
+            "Notify_Agent_Suspension__c",
+            "Terminate_Agency__c",
+            "Notify_Agent_Termination__c",
+            "STEP26__c"
+          ],
+          "IsDependent": false
+        },{
+          "Name": "STEP27",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step27_succeeded"
+          }],
+          "DisplayFields": [
+            "NOC_Received__c",
+            "Notify_Agent__c",
+            "Reinstate_STDs__c",
+            "STEP27__c"
+          ],
+          "IsDependent": false
+        },{
+          "Name": "STEP28",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step28_succeeded"
+          }],
+          "DisplayFields": [
+            "Notify_Agent__c",
+            "Reactivate_Ticketing_Authority__c",
+            "Reinstate_STDs__c",
+            "STEP28__c"
+          ],
+          "IsDependent": false
+        },{
+          "Name": "STEP29",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded"
+          }],
+          "DisplayFields": [
+            "Apply_Penalty_Fee__c",
+            "STEP29__c"
+          ],
+          "IsDependent": false
+        }]
       },
       {
         "Name": "AMS_OSCAR_AGENCYFEES",
