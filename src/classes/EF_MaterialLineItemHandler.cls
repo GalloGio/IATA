@@ -46,7 +46,7 @@ public class EF_MaterialLineItemHandler {
                 
                 if (found == false) {
                     
-                    mli.addError('Cant select E&F Material not present in the related Contract');
+                    mli.addError(Label.EF_Line_Item_Not_In_Contract_Error);
                 }
             }
         }

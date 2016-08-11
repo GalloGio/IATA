@@ -71,7 +71,7 @@ public class EF_RelationshipHandler
     //checks if currencues chosen has been set in Contract Currencies.
     public static void checkCurrencyFromContract (List<EF_Relationship__c> relationshipList, Map<Id,EF_Relationship__c> relationshipOldMap){
 		
-		String errorMessage = 'The currency select needs to be present in the related Contract';
+		String errorMessage = Label.EF_Currency_Not_In_Contract_Error;
         List<EF_Relationship__c> workdata = new List<EF_Relationship__c>();
         Set<Id> contractIdSet = new Set<Id>();
 
