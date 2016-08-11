@@ -54,7 +54,7 @@ public class EF_RelationshipHandler
                     }else{
                         if(mapRelationshipsInContract.containsKey(r.EF_Location_ID__c)){
 
-                           //Not necessary r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
+                           //Not necessary r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship'); 
 
                         }else{
                             for(EF_Location_Currency__c lc: contractMap.get(r.Contract__c).EF_Locations_Currencies__r){
