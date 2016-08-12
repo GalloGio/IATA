@@ -131,7 +131,8 @@ public with sharing class AMS_AccreditationContactHelper
 			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
 			
 			// This is actually not needed for person owners
-            if(ac.RecordTypeId == AMS_Utils.AccreditationContactCompanyRT)
+            //if(ac.RecordTypeId == AMS_Utils.AccreditationContactCompanyRT)
+            if(AMS_AccountRoleCreator.companyDeveloperName.containsKey(ac.RecordType.DeveloperName))
                  role.Owner_Account__c = ac.Company__c;
 		}
 		//TD: Removed Employee from Role. Keep them on Contact object only
