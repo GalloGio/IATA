@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -70,10 +70,26 @@ Dedicated to the eBroadcast application.</description>
                 <fullName>Agent</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Custom</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Data_Source_Label_Field__c</fullName>
+        <description>The field contains the value that is displayed on UI for picklists.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The field contains the value that is displayed on UI for picklists.</inlineHelpText>
+        <label>Data Source Label Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Data_Source_Object__c</fullName>
@@ -187,18 +203,6 @@ Dedicated to the eBroadcast application.</description>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Filter_Value__c</fullName>
-        <description>This field will record the value that the eBroadcast application will use the retrieve the end-user selectable values.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>This field will record the value that the eBroadcast application will use the retrieve the end-user selectable values.</inlineHelpText>
-        <label>Filter Value</label>
-        <length>50</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Search_Level__c</fullName>
         <description>This field will separate filters by Geo-Selection and Refinement.</description>
         <externalId>false</externalId>
@@ -221,18 +225,18 @@ Dedicated to the eBroadcast application.</description>
     <label>EBC Application Filter</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
         <columns>Audience__c</columns>
         <columns>Search_Level__c</columns>
         <columns>Filter_Description__c</columns>
         <columns>Data_Type__c</columns>
         <columns>Data_Source_Object__c</columns>
         <columns>Data_Source_Where_Clause__c</columns>
+        <columns>Data_Source_Label_Field__c</columns>
+        <columns>Data_Source_Value_Field__c</columns>
         <columns>Filter_RelatedList__c</columns>
         <columns>Filter_RelatedList_Field__c</columns>
-        <columns>Filter_Value__c</columns>
         <columns>Filter_Field__c</columns>
-        <columns>Data_Source_Value_Field__c</columns>
-        <columns>Developer_Name__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -249,7 +253,7 @@ Dedicated to the eBroadcast application.</description>
         <customTabListAdditionalFields>Filter_Description__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Data_Type__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Data_Source_Object__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Filter_Value__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields xsi:nil="true"/>
         <customTabListAdditionalFields>Filter_Field__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
     </searchLayouts>
