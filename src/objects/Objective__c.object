@@ -2752,10 +2752,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger and Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Passenger only</fullName>
                 <default>false</default>
             </values>
