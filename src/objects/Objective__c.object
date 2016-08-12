@@ -2748,7 +2748,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
