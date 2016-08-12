@@ -2,6 +2,9 @@
 	standardStylesheets="false" language="en" docType="html-5.0">
 	
 	<apex:message id="msg" />
+	<style>
+		.highcharts-container{width:100% !important; height:100% !important;}
+	</style>
 	
 	<apex:composition template="IECEBC_Layout">
 		<apex:define name="pageHeadAdditions">
@@ -13,20 +16,28 @@
 		<apex:define name="pageScriptAdditions">
 			<!-- If any page specific .js, add them here -->
 			
-            <!-- include highcharts.com library -->
-            <script src="{!URLFOR($Resource.eBroadcastAssets, 'highcharts/js/highcharts.js')}"> </script>
-            <script src="{!URLFOR($Resource.eBroadcastAssets, 'highcharts/js/modules/exporting.js')}"> </script>
-            
+			<!-- include highcharts.com library -->
+			<script src="{!URLFOR($Resource.Highcharts, 'js/highcharts.js')}"> </script>
+			<script src="{!URLFOR($Resource.Highcharts, 'js/modules/exporting.js')}"> </script>
+			
 			<script type="text/javascript">
 				$j = jQuery.noConflict();
 				
 				$j( document ).ready(function( $ ) {
 					//startObservingClassMutation();	
 					SetFilter();
+					
+					renderYayActivityGraph();
+					renderYtdActivityGraph();
+ 				});
+				
+				$j('#pane-1-a-year-to-date-tab').on('click',  function(event) {
+					renderYtdActivityGraph();
 				});
-
-				renderYayActivityGraph();
-				renderYtdActivityGraph();
+				$j('#pane-1-a-year-after-year-tab').on('click',  function(event) {
+					renderYayActivityGraph();
+				});
+					
 			
 				// =========================================================================================
 				// startObservingClassMutation is used if we want to detect the chage of class of a component
@@ -61,68 +72,53 @@
 				
 				
 				// ============================================================
-				// define the Year After Year Activity Graph
-				function renderYayActivityGraph() {
-					$j('#yearAfterYearActivityGraph').highcharts({
-						chart: {
-							type: 'column'
-						},
-						title: {
-							text: 'Year After Year Credit Activities'
-						},
-						subtitle: {
-							text: ''
-						},
-						xAxis: {
-							categories: {!monthYayList}
-							, crosshair: true
-						},
-						yAxis: {
-							min: 0,
-							title: {
-								text: 'Email Credits'
-							}
-						},
-						tooltip: {
-							headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-							pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-								'<td style="padding:0"><b>{point.y:.1f} email(s)</b></td></tr>',
-							footerFormat: '</table>',
-							shared: true,
-							useHTML: true
-						},
-						plotOptions: {
-							column: {
-								pointPadding: 0.2,
-								borderWidth: 0
-							}
-						},
-						series: [{ name: 'Adjustment'
-									, data: {!adjustmentYayData}
-								}, { name: 'Credit'
-									, data: {!creditYayData}
-								}, { name: 'Send'
-									, data: {!sendYayData}
-								}
-							]
-					});
-				}
+				// activity graph definition
+                var chart1;
+            	var chart2;
 				
 				// ============================================================
+				// define the Year After Year Activity Graph
+				function renderYayActivityGraph()
+				{
+					chart1=renderActivityGraph(chart1
+                                        , '#yearAfterYearActivityGraph'
+										, 'Year After Year Credit Activities'
+										, {!monthYayList}
+										, {!adjustmentYayData}, {!creditYayData}, {!sendYayData});
+				}
+			
+				// ============================================================
 				// define the Year To Date Activity Graph
-				function renderYtdActivityGraph() {
-					$j('#yearToDateActivityGraph').highcharts({
+				function renderYtdActivityGraph()
+				{
+					chart2=renderActivityGraph(chart2
+                                        , '#yearToDateActivityGraph'
+										, 'Year To Date Credit Activities'
+										, {!monthYtdList}
+										, {!adjustmentYtdData}, {!creditYtdData}, {!sendYtdData});
+				}
+			    
+				// ============================================================
+				// define the Activity Graph
+				function renderActivityGraph( chart, graphId
+											 , graphLabel
+											 , timeList
+											 , adjustmentData, creditData, sendData) 
+				{
+                    
+                    
+					chart=$j(graphId).highcharts({
 						chart: {
 							type: 'column'
 						},
 						title: {
-							text: 'Year To Date Credit Activities'
+							text: graphLabel
 						},
 						subtitle: {
 							text: ''
 						},
 						xAxis: {
-							categories: {!monthYtdList}
+							categories: timeList
 							, crosshair: true
 						},
 						yAxis: {
@@ -146,31 +142,33 @@
 							}
 						},
 						series: [{ name: 'Adjustment'
-									, data: {!adjustmentYtdData}
+									, data: adjustmentData
 								}, { name: 'Credit'
-									, data: {!creditYtdData}
+									, data: creditData
 								}, { name: 'Send'
-									, data: {!sendYtdData}
+									, data: sendData
 								}
 							]
 					});
+                    $j(window).resize();
+                    return chart;
 				} // end of renderYtdActivityGraph
-			
 			
 			</script>
 			
 		</apex:define>
 		<apex:define name="pageContent">
-		
+			<!--
 			<script type="text/javascript">
-			
-				function rerenderActivityTable) {
+				/*
+				function rerenderActivityTable() {
 					console.log( 'rerenderActivityTable' );
 					refreshActivityTable();
 					return false;
 				}
+				*/
 			</script>
-			
+			-->
 			<!-- Start of Page Content -->
 			<main class="main-content manage-account">
 				<div class="inner-wrapper">
@@ -267,44 +265,50 @@
 									</ul>
 								</section>
 								
-							<div class="tab-container">
-								<ul class="nav tabs">
-									<li data-target="#pane-1-a" class="active"><a href="#">Timeline view</a></li>
-									<li data-target="#pane-1-b" class=""><a href="#">Data table</a></li>
-								</ul>
-								<div class="tab-content">
-                                        <div class="tab-pane is-open" id="pane-1-a">
-                                            <ul class="nav tabs secondary">
-                                                <li data-target="#pane-1-a-year-to-date"><a href="#">Year To Date</a></li>
-                                                <li data-target="#pane-1-a-year-after-year" class="active"><a href="#">Year Over Year</a></li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div class="tab-pane" id="pane-1-a-year-to-date">
-                                                    <div style="border: 1px solid #ccc; padding: 10px;" >
-                                                        Monthly activity graph showing year to date email credit transactions
-                                                        <div id="yearToDateActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane is-open" id="pane-1-a-year-after-year">
-                                                    <div style="border: 1px solid #ccc; padding: 10px;">
-                                                        Monthly activity graph showing year over year email credit transactions
-                                                        <div id="yearAfterYearActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-
+								<div class="tab-container">
+									<ul class="nav tabs">
+										<li data-target="#pane-1-a" class="active"><a href="#">Timeline view</a></li>
+										<li data-target="#pane-1-b" class=""><a href="#">Data table</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane is-open" id="pane-1-a">
+											<apex:form id="dataGraphForm">
+												<ul class="nav tabs secondary">
+													<li id="pane-1-a-year-to-date-tab" data-target="#pane-1-a-year-to-date"><a href="#">Year To Date</a></li>
+													<li id="pane-1-a-year-after-year-tab"  data-target="#pane-1-a-year-after-year" class="active"><a href="#">Year After Year</a></li>
+												</ul>
+												<div class="tab-content">
+													<div class="tab-pane" id="pane-1-a-year-to-date">
+														<apex:outputPanel id="ytdGraphOutputPanel">
+														<div style="border: 1px solid #ccc; padding: 10px; width:100%;" >
+															<!--
+															Monthly activity graph showing year to date email credit transactions
+															-->
+															<div id="yearToDateActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+														</div>
+														</apex:outputPanel>
+													</div>
+													<div class="tab-pane is-open" id="pane-1-a-year-after-year">
+														<apex:outputPanel id="yayGraphOutputPanel">
+														<div style="border: 1px solid #ccc; padding: 10px; width:100%;">
+															<div id="yearAfterYearActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+														</div>
+														</apex:outputPanel>
+													</div>
+												</div>
+											</apex:form>
+										</div>
+										
 										<div class="tab-pane" id="pane-1-b">
 											<apex:form id="dataTableForm">
 												<apex:actionFunction name="refreshActivityTable" action="{!refreshTable}" rerender="dataTableForm" />
-																		
+												
 												<div class="table-container data-table-container">
-														<table class="data-table manage-lists">
-															<thead>
-																<tr>
-																	<th class="activity-type" >
-																		<div id="divactivitytypesort">
+													<table class="data-table manage-lists">
+														<thead>
+															<tr>
+																<th class="activity-type" >
+																	<div id="divactivitytypesort">
 																		<a class="pcjs-toggle-type-sort" href="#" id="activitytypesort">Activity Type <i class="fa fa-caret-down" aria-hidden="true"></i></a>
 																		
 																		<div class="type-sort" id="actPopUpMenu">
@@ -325,59 +329,59 @@
 																				</apex:repeat>
 																			</ul>
 																		</div>
-																		  </div>
-																	</th>
-																	
-																	<th class="activity-date">Activity Date/Time</th>
-																	<th class="name">Activity Name</th>
-																	<th class="id">Campaign ID</th>
-																	<th class="total-count">Total Count</th>
+																	</div>
+																</th>
+																
+																<th class="activity-date">Activity Date/Time</th>
+																<th class="name">Activity Name</th>
+																<th class="id">Campaign ID</th>
+																<th class="total-count">Total Count</th>
+															</tr>
+															
+														</thead>
+														<tbody>
+															<apex:repeat id="actListTable" value="{!activityList}" var="act">
+																<tr class="js-sort-type-credits">
+																	<td class="activity-type">{!act.Activity_Type__c}</td>
+																	<td class="activity-date">
+																		   <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
+																	</td>																
+																	<td class="name">{!act.Name}</td>
+																	<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
+																	<td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
 																</tr>
-																
-															 </thead>	   
-															 <tbody>
-															 <apex:repeat id="actListTable" value="{!activityList}" var="act">
-																	<tr class="js-sort-type-credits">
-																		<td class="activity-type">{!act.Activity_Type__c}</td>
-																		<td class="activity-date">
-																			   <apex:outputText value="{0, date, d MMMM yyyy HH:mm} GMT"><apex:param value="{!act.Activity_Date_Time__c}" /></apex:outputText>																
-																		</td>																
-																		<td class="name">{!act.Name}</td>
-																		<td class="id">{!act.EBC_Campaign__r.Campaign_ID__c}</td>
-																		<td class="total-count">{!act.Total_Count__c} {!IF((act.Total_Count__c < -1 || act.Total_Count__c>1  ),"emails", "email")}</td>
-																	</tr>
-																</apex:repeat>
-																
-															</tbody>
-														</table>  
-														<script>
-															$j = jQuery.noConflict();
+															</apex:repeat>
 															
-															$j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
-															$j('#activitytypesort').on('click',  function(event) {
-																event.preventDefault();
-																event.stopPropagation();
-																$j(this).toggleClass(className.open).next().toggleClass(className.open);
-															});
-																
-															
-														</script> 
+														</tbody>
+													</table>
+													<script>
+														$j = jQuery.noConflict();
 														
-														<div class="pagination">
-															<div class="page-number">
-																Page
-																<div class="custom-user-input select">
-																	<i class="icon angle-down"></i>
+														$j('#activitytypesort').removeClass(className.open).next().removeClass(className.open);
+														$j('#activitytypesort').on('click',  function(event) {
+															event.preventDefault();
+															event.stopPropagation();
+															$j(this).toggleClass(className.open).next().toggleClass(className.open);
+														});
+																
+															
+													</script> 
+														
+													<div class="pagination">
+														<div class="page-number">
+															Page
+															<div class="custom-user-input select">
+																<i class="icon angle-down"></i>
 																	
-																	<apex:selectList value="{!page}" styleClass="user-input select" size="1">
-																		<apex:selectOptions value="{!pageOptions}"/>
-																		<apex:actionSupport event="onchange" action="{!doNothing}" reRender="dataTableForm" />
-																	</apex:selectList> 
+																<apex:selectList value="{!page}" styleClass="user-input select" size="1">
+																	<apex:selectOptions value="{!pageOptions}"/>
+																	<apex:actionSupport event="onchange" action="{!doNothing}" reRender="dataTableForm" />
+																</apex:selectList> 
 																	
-																</div>
-																of {!maxPage}
 															</div>
+															of {!maxPage}
 														</div>
+													</div>
 													
 												</div>
 											</apex:form>
