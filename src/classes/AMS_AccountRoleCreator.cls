@@ -1200,7 +1200,7 @@ public with sharing class AMS_AccountRoleCreator
 	    		if(ac.AMS_Ownership_Role__c != null){
 	    			
 		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' ---> CASE A');
-		    			
+		    		system.debug('CHECKPOINT: Accreditation Contact HAS a link to an existing account role-> ' + ac);
 		    		for(AMS_Account_Role__c role : acToRoles.get(acId)){
 		    			Id oldAccountId = role.Account__c;
 		    			role = AMS_AccreditationContactHelper.updateAmsAccountRole(role, ac);
@@ -1215,6 +1215,7 @@ public with sharing class AMS_AccountRoleCreator
 		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac has account owner = '+ac.Company__c+' ---> CASE B');
 		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) acToRoles.get('+acId+') '+acToRoles.get(acId));
 
+		    		system.debug('CHECKPOINT: Accreditation Contact has no link to an existing account role-> ' + ac);
 
 		    		if(ac.Agency_owner__c == true){
 	    				for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
@@ -1222,7 +1223,7 @@ public with sharing class AMS_AccountRoleCreator
 		    				AMS_Account_Role__c newRole = AMS_AccreditationContactHelper.createAmsAccountRole(ac);
 		    				newRole.Account__c = accountId;
 		    				System.debug('runRoleCreatorForOnlineAccreditations() new role: ' + newRole);
-		    				rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c+'-'+newRole.Owner_Account__c,newRole);
+		    				rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c/*+'-'+newRole.Owner_Account__c*/,newRole);
 		    				System.debug('runRoleCreatorForOnlineAccreditations() roles to insert list: ' + rolesToInsert);
 		    				accountIdsToDeactivateRoles.add(accountId);
 		    			}
@@ -1252,11 +1253,15 @@ public with sharing class AMS_AccountRoleCreator
     	for(Id acId : acToRoles.keySet()){
     		AMS_Accreditation_Contact__c ac = idToAc.get(acId);
     		if(ac.AMS_Ownership_Role__c == null){
-    			AMS_Account_Role__c mainRole = rolesToInsert.get(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c+'-'+ac.Company__c);
-    			if(mainRole!=null)
+    			system.debug('CHECKPOINT: Searching key -> ' + ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c/*+'-'+ac.Company__c*/);
+    			AMS_Account_Role__c mainRole = rolesToInsert.get(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c/*+'-'+ac.Company__c*/);
+    			system.debug('CHECKPOINT: Found role-> ' + mainRole);
+    			if(mainRole!=null){
     				ac.AMS_Ownership_Role__c = mainRole.Id;
+    				system.debug('CHECKPOINT: Asssigning link to Account role-> ' + ac);
+    			}
     			else
-    				system.debug('runRoleCreatorForOnlineAccreditations() --> for some strange reason cannot update ac '+ac.First_name__c +' '+ac.Last_name__c+' ID = '+ac.Id+' with the role stored with key '+ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c);
+    				system.debug('runRoleCreatorForOnlineAccreditations() --> for some strange reason cannot update ac '+ac.First_name__c +' '+ac.Last_name__c+' ID = '+ac.Id+' with the role stored with key '+ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c/*+'-'+ac.Contact__c*/);
     		}
     	}
 
