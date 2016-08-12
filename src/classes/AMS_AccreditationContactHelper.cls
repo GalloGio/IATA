@@ -154,7 +154,7 @@ public with sharing class AMS_AccreditationContactHelper
             toReturn = firstName;
 
         if(lastName != null && lastName.trim() != '')
-            toReturn+= ' - ' + lastName;
+            toReturn+= ' ' + lastName;
 
 
         return toReturn;
