@@ -87,42 +87,24 @@
 														</p>
 														<div class="addon-price">
 															<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.productRatePlanCharge.zqu__ListPrice__c}" /></apex:outputText>
-														</div>
+															({!prpOption.billingPeriod})
+                                                        </div>
 													</li>
 												</apex:repeat>
-<!--
-												<li class="list-item">
-													
-													<div class="checkbox-box">
-														<div class="custom-user-input checkbox">
-															<input class="user-input checkbox" type="checkbox" id="get-this-addon-1" />
-															<label class="custom-checkbox" for="get-this-addon-1"><i class="icon"></i></label>
-														</div>
-														<label class="input-label" for="get-this-addon-1">
-															<span class="input-state unselected">Select</span>
-															<span class="input-state selected">Selected</span>
-														</label>
-													</div>
-													<div class="addon-name">
-														Sollicitusdin Mattis </div>
-													<p class="addon-description light small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur commodi iste fugiat saepe cum quae reiciendis, eum? Deleniti, itaque possimus pariatur, enim, autem quam facilis animi aliquid consequatur vitae repellat.</p>
-													<div class="addon-price">
-														$100.00 </div>
-												</li>
--->
 											</ul>
 										</apex:form>
 									
-										<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
-
+										<c:IECEBC_PaymentInformation id="paymentInformationComponent" rendered="{!showAddOnSelection}"/>
+										
 									</div>
 									
-
-										   <!-- payment confirmation section on the right side-->
-									        <div class="columns sub-container payment-confirmation" id="paymentconfirmation">
-                                                <div class="is-sticky-confirmation">
-													<div class="wrapper">
-														<h2 class="section-title">Payment Confirmation</h2>
+									<!-- payment confirmation section on the right side-->
+									<div class="columns sub-container payment-confirmation" id="paymentconfirmation">
+										<div class="is-sticky-confirmation">
+											<div class="wrapper">
+												<apex:form id="paymentConfirmationForm" rendered="{!showAddOnSelection}">
+													<h2 class="section-title">Payment Confirmation</h2>
+													<apex:outputPanel id="paymentConfirmationOutputPanel">
 														<div class="table-container">
 															<table class="data-table table-payment table-confirmation">
 																<tbody>
@@ -163,25 +145,19 @@
 																</tbody>
 															</table>
 														</div>
-                              
-                                                        <apex:form id="paymentConfirmationForm" rendered="{!showAddOnSelection}">
-											            <apex:outputPanel id="paymentConfirmationOutputPanel">
-										 
+														
 														<div class="footer-actions">
 															<ul class="list actions">
 																<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountExtras)}">Cancel</a></li>
 																<li><a class="button" href="#">Submit payment</a></li>
 															</ul>
 														</div>
-                                                        </apex:outputPanel>
-														</apex:form>
-													</div>
-												</div>
-                                            </div>
-                                            
+    												</apex:outputPanel>
+												</apex:form>
+											</div>
+										</div>
 									</div>
-									
-								
+								</div>
 							</div>
 							
 						</div>
