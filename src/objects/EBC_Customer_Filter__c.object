@@ -133,8 +133,17 @@
     <label>EBC Customer Filter</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>EBC_Application_Filter__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Field_Name__c</columns>
+        <columns>Field_Operator__c</columns>
+        <columns>Field_Value__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>FT-{YYYY}-{00000}</displayFormat>

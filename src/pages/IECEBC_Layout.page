@@ -58,14 +58,7 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane is-open" id="sub-nav-pane-1">
                                                     <div class="title">Service Details</div>
-                                                    <table class="table-service-details">
-<!--
-                                                    
-                                                    Service Upgrade: Please contact support<br />
-                                                        
-                                                        
-                                                        
--->                                                     <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
+                                                    <table class="table-service-details">                                                 <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
                                                         <tr>
                                                             <th>Subscription ID:</th>
                                                             <td>{!subscription.Name}</td>
@@ -79,12 +72,12 @@
                                                             <th>Cost per e-mail:</th>
                                                             <td>
                                                                 <apex:outputText value="${0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText><br />
-                                                                <a href="#">Lower your cost per email</a>
+                                                                <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th>Account Balance:</th>
-                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> e-mails</td>
+                                                            <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> e-mail(s)</td>
                                                         </tr>
                                                         <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__SubscriptionEndDate__c >= TODAY()}">
                                                             <tr>
@@ -97,7 +90,7 @@
                                                         </apex:outputText>
                                                         
                                                     </table>
-                                                    <a href="#" class="button block dark">Contact Support</a>
+                                                    <a href="mailto:globaldata@iata.org?subject=eBroadcast upgrade" class="button block dark">Contact Support</a>
                                                 </div>
                                                 <div class="tab-pane" id="sub-nav-pane-2">
                                                     <div class="title">Manage Services</div>

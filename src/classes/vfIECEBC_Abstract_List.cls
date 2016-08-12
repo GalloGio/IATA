@@ -76,7 +76,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     public String sortBy {
         get {
             if (sortBy == null) {
-                sortBy = 'CreatedDate ASC';
+                sortBy = 'CreatedDate DESC ';
             }
             
             return sortBy;
@@ -90,7 +90,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     private virtual Boolean getIsFirstTimeLoadPage() { return true; }
     public virtual List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
+        if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC ','Sort by', true));
         options.add(new SelectOption('CreatedDate DESC','Creation Date'));
         options.add(new SelectOption('LastModifiedDate DESC','Last Edited'));
         options.add(new SelectOption('Name ASC','Name'));
@@ -140,7 +140,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
         maxPage = null;
         //page = 1;
     }
-    private void clear() {
+    public void clear() {
         itemsCount = null;
         items = null;
         maxPage = null;
