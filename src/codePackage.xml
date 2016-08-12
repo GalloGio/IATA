@@ -22,10 +22,6 @@
     </types>
     <types>
         <members>*</members>
-        <name>RemoteSiteSetting</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>StaticResource</name>
     </types>
     <types>

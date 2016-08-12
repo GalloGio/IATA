@@ -283,8 +283,9 @@ public class AMS_AccountHierarchySelectionController {
 			accountIds.add(r.Parent_Account__c);
 		}
 
+		String terminatedStatus = AMS_Utils.ACC_S0_TERMINATED;
 		List<HierarchyItem> result = new List<HierarchyItem>();
-		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds')){
+		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != :terminatedStatus')){
 			result.add(new HierarchyItem(this, a));
 		}
 		return result;

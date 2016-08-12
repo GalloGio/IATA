@@ -10,6 +10,7 @@
     function showModal()
     {
       var showmodal =  {!ShowModal};
+      
       if( showmodal == true){
         //$('#ModalShowSurvey').modal({show:true})
            window.open('{!SurveyLink}', "mywindow", "location=1,status=1,scrollbars=1,height=350,width=400");
@@ -82,15 +83,28 @@ window.onload = function HighlightBar() {
         var changePassword = {!toChangePassword};
         var acceptTC = {!toAcceptTC};
         var thisURL = window.location.href;
-        if (thisURL.indexOf("ISSP_TC_Accept") == -1){
-            if (acceptTC){
-                checkRedirectTC_Accept();
-            }
-            else if (thisURL.indexOf("ISSP_ChangePassword") == -1){
-                if (changePassword){
-                    checkRedirectChangePassword();
-                }
-            }
+
+        var formsCollection = document.getElementsByTagName("form");
+        var skipredirect = false; 
+
+        //Skip redirect if exception page
+        if (formsCollection!= null && formsCollection.length > 0) {
+            if (formsCollection[0].action != null && formsCollection[0].action.indexOf("/Exception")!=-1) {
+                skipredirect = true;
+              }
+        }
+
+        if (skipredirect != true) {
+          if (thisURL.indexOf("ISSP_TC_Accept") == -1){
+              if (acceptTC){
+                  checkRedirectTC_Accept();
+              }
+              else if (thisURL.indexOf("ISSP_ChangePassword") == -1){
+                  if (changePassword){
+                      checkRedirectChangePassword();
+                  }
+              }
+          }
         }
         /*
         if (thisURL.indexOf("ISSP_ChangePassword") == -1){
@@ -107,7 +121,7 @@ window.onload = function HighlightBar() {
        
         var mainvar = getUrlParameter('MainNav');
         var mid = getUrlParameter('mid');
-         var subvar = getUrlParameter('subNav');
+        var subvar = getUrlParameter('subNav');
         var menuid=mid.substr(0,2)
 
      $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
@@ -145,6 +159,7 @@ window.onload = function HighlightBar() {
         }        
     
 $(".topmenu").hover(function(){
+
    var menuid = $(this).find("a").attr("mid");
     $("#result").text(menuid);
    
