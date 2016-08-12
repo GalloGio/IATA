@@ -21,8 +21,8 @@ public with sharing class AMS_AccountRoleCreator
 	private static final String recordTypesPerson = createContactRecordTypes(new List<String>{'Person','Current_Owner'});
 	private static final String recordTypesCompany = createContactRecordTypes(new List<String>{'Company','Current_Company_Owner'});
 	
-	private static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
-	private static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
+	public static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
+	public static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
 	
 	// This funny looking method is a workaround to be able to use a variable (Set<Id>) in a dynamic query
 	public static List<AMS_Accreditation_Contact__c> retrieveACsDynamically(String soqlString, String setName)
