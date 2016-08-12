@@ -17049,11 +17049,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Relationship__c.Location_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Relationship__c.Payment_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
