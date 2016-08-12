@@ -1,0 +1,4 @@
+<apex:page >
+<br/><apex:outputText value="{!$Site.BaseUrl}{!$Page.IECBrowseProducts}" />
+<br/><apex:outputText value="{!$Site.BaseUrl}/IECBrowseProducts" />
+</apex:page>
