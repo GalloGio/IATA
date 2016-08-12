@@ -1,0 +1,43 @@
+<aura:component controller="AMP_Groups_ParticipationController">
+  <aura:attribute name="accountId" type="String" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:attribute name="ParticipantWrappers" type="Object" access="private"/>
+
+  <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
+  <ltng:require scripts="{!join(',',
+    $Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />
+
+  <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+     <thead>
+       <tr class="headerRow" >
+         <th style="width: 17%;"><span>IATA Group Name</span></th>
+         <th style="width: 12%;"><span>IATA Group Owner</span></th>
+         <th style="width: 30%;"><span>Mission of IATA Group</span></th>
+         <th style="width: 11%;"><span>Role Within Group</span></th>
+         <th style="width: 5%;"><span>Salutation</span></th>
+         <th style="width: 8%;"><span>First Name</span></th>
+         <th style="width: 8%;"><span>Last Name</span></th>
+         <th style="width: 9%;"><span>Title</span></th>
+       </tr>
+     </thead>
+
+     <tbody>
+       <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
+          <tr>
+            <aura:if isTrue="{!participant.Rowspan>0}">
+              <td rowspan="{!participant.Rowspan}"><ui:outputText value="{!participant.GroupName}" /></td>
+              <td rowspan="{!participant.Rowspan}"><ui:outputText value="{!participant.GroupOwner}" /></td>
+              <td rowspan="{!participant.Rowspan}" class="longText"><ui:outputText value="{!participant.Mission}" /></td>
+            </aura:if>
+            <td class="{!participant.Rowspan==0 ? 'dontIndent':''}"><ui:outputText value="{!participant.Role}" /></td>
+            <td><ui:outputText value="{!participant.Salutation}" /></td>
+            <td><ui:outputText value="{!participant.FirstName}" /></td>
+            <td><ui:outputText value="{!participant.LastName}" /></td>
+            <td><ui:outputText value="{!participant.Title}" /></td>
+          </tr>
+       </aura:iteration>
+     </tbody>
+   </table>
+
+
+</aura:component>

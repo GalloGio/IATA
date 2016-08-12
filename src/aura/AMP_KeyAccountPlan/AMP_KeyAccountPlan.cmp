@@ -1,0 +1,29 @@
+<aura:component controller="AMP_KeyAccountPlanExtension">
+  <aura:attribute name="accountId" type="String" />
+  <aura:attribute name="activities" type="Objective__c[]" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <div class="slds-card">
+
+
+
+  <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+    <thead>
+        <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Actions</span></th>
+          <th scope="col" class="column-10p"><span class="slds-truncate">Name of Activity</span></th>
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
+          <th scope="col" class="wideColumn"><span class="slds-truncate">Benefits to the Account</span></th>
+          <th scope="col" class="wideColumn"><span class="slds-truncate">Deadline</span></th>
+        </tr>
+    </thead>
+
+    <tbody>
+      <aura:iteration items="{!v.activities}" var="activity" indexVar="index">
+        <c:AMP_Activity activity="{!activity}" index="{!index}"/>
+      </aura:iteration>
+    </tbody>
+  </table>
+  </div>
+</aura:component>

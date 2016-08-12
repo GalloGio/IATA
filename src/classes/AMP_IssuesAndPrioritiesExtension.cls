@@ -1,0 +1,231 @@
+public with sharing class AMP_IssuesAndPrioritiesExtension {
+
+    private final Account myAccount;
+    public Boolean showAllItems {get;set;}
+    public Boolean isEditMode {get; set;}
+    public Boolean isNewLine {get; set;}
+    public Id IdConcerned {get; set;}
+    public List<Objective__c> lsIssuesAndPriorities {get; set;}
+    public String sortOrder {get;set;}
+    private final Id objectiveRecordTypeId ;
+
+    // The extension constructor initializes the private member
+    // variable myAccount by using the getRecord method from the standard
+    // controller.
+    public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
+        this.myAccount = (Account)stdController.getRecord();
+        this.objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+        showAllItems = false;
+        isEditMode = false;
+        isNewLine = false;
+        lsIssuesAndPriorities = new List<Objective__c>();
+        lsIssuesAndPriorities = getIssuesAndPriorities();
+        System.debug(this.objectiveRecordTypeId);
+    }
+
+    public String getJSONIssuesAndPriorities() {
+        lsIssuesAndPriorities = new List<Objective__c>();
+        lsIssuesAndPriorities = getIssuesAndPriorities();
+        String s = JSON.serialize(lsIssuesAndPriorities);
+        return s;
+    }
+
+    public void sortByName() {
+        if(this.sortOrder == ' Name DESC') this.sortOrder = ' Name ASC';
+        else this.sortOrder = ' Name DESC';
+    }
+    public void sortBySource() {
+        if(this.sortOrder == ' AM_Source_Text__c DESC') this.sortOrder = ' AM_Source_Text__c ASC';
+        else this.sortOrder = ' AM_Source_Text__c DESC';
+    }
+    public void sortByDescription() {
+        if(this.sortOrder == ' Description__c DESC') this.sortOrder = ' Description__c ASC';
+        else this.sortOrder = ' Description__c DESC';
+    }
+    public void sortByDetails() {
+        if(this.sortOrder == ' Details__c DESC') this.sortOrder = ' Details__c ASC';
+        else this.sortOrder = ' Details__c DESC';
+    }
+    public void sortByPublic() {
+        if(this.sortOrder == ' AM_Public__c DESC') this.sortOrder = ' AM_Public__c ASC';
+        else this.sortOrder = ' AM_Public__c DESC';
+    }
+    public void sortByLocal() {
+        if(this.sortOrder == ' AM_Local__c DESC') this.sortOrder = ' AM_Local__c ASC';
+        else this.sortOrder = ' AM_Local__c DESC';
+    }
+    public void sortByRegional() {
+        if(this.sortOrder == ' AM_Regional__c DESC') this.sortOrder = ' AM_Regional__c ASC';
+        else this.sortOrder = ' AM_Regional__c DESC';
+    }
+    public void sortByGlobal() {
+        if(this.sortOrder == ' AM_Global__c DESC') this.sortOrder = ' AM_Global__c ASC';
+        else this.sortOrder = ' AM_Global__c DESC';
+    }
+    public void sortByIssueWithIATA() {
+        if(this.sortOrder == ' AM_Issue_with_IATA__c DESC') this.sortOrder = ' AM_Issue_with_IATA__c ASC';
+        else this.sortOrder = ' AM_Issue_with_IATA__c DESC';
+    }
+    public void sortByCanIATASupport() {
+        if(this.sortOrder == ' AMP_Can_IATA_support_the_airline__c DESC') this.sortOrder = ' AMP_Can_IATA_support_the_airline__c ASC';
+        else this.sortOrder = ' AMP_Can_IATA_support_the_airline__c DESC';
+    }
+    public void sortByStatus() {
+        if(this.sortOrder == ' Status__c DESC') this.sortOrder = ' Status__c ASC';
+        else this.sortOrder = ' Status__c DESC';
+    }
+    public void sortByLevelOfImportance() {
+        if(this.sortOrder == ' AM_Level_of_importance__c DESC') this.sortOrder = ' AM_Level_of_importance__c ASC';
+        else this.sortOrder = ' AM_Level_of_importance__c DESC';
+    }
+
+
+    public  List<Objective__c> getIssuesAndPriorities() {
+        lsIssuesAndPriorities = new List<Objective__c>();
+        // lsIssuesAndPriorities =
+        //  [SELECT Id, Name, Global__c, Regional__c, Local__c, Issue_with_IATA__c,
+        //                  Public__c, Level_of_importance__c, Status__c
+        //  FROM Objective__c WHERE Account__c = :accountId];
+        String queryString = 'SELECT Id, Name, Description__c, AM_Can_IATA_support_the_airline__c, AM_Global__c, AM_Regional__c, AM_Local__c, AM_Issue_with_IATA__c, '+
+                    'AM_Public__c, AM_Level_of_importance__c, Status__c, Details__c, AM_Source_Text__c '+
+                    'FROM Objective__c WHERE Account__c =\'' + this.myAccount.Id + '\''+
+                    ' AND RecordTypeId = \'' + this.objectiveRecordTypeId+ '\'';
+        if(!showAllItems) queryString += ' AND Status__c =  \'Open\'  ';
+        if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
+        System.debug(queryString);
+        List<SObject> lsSObjects = Database.query(queryString);
+        for(SObject s : lsSObjects) {
+            lsIssuesAndPriorities.add((Objective__c) s);
+        }
+
+        return lsIssuesAndPriorities;
+    }
+
+    public PageReference filterIssuesAndPriorities() {
+      lsIssuesAndPriorities = getIssuesAndPriorities();
+      System.debug(lsIssuesAndPriorities);
+      return null;
+    }
+
+    @AuraEnabled
+    public static List<Objective__c> getIssuesAndPriorities(Id accountId) {
+      Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+        List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
+        // lsIssuesAndPriorities =
+        //  [SELECT Id, Name, Global__c, Regional__c, Local__c, Issue_with_IATA__c,
+        //                  Public__c, Level_of_importance__c, Status__c
+        //  FROM Objective__c WHERE Account__c =  accountId];
+        String queryString = 'SELECT Id, Name, Description__c, AM_Can_IATA_support_the_airline__c, AM_Global__c, AM_Regional__c, AM_Local__c, AM_Issue_with_IATA__c, '+
+                    'AM_Public__c, AM_Level_of_importance__c, Status__c, Details__c, AM_Source_Text__c '+
+                    'FROM Objective__c WHERE Account__c =\'' + accountId + '\'' +
+                    ' AND RecordTypeId = \'' + objectiveRecordTypeId+ '\'';
+        // if(!showAllItems) queryString += ' AND Status__c =  \'Active\'';
+        // if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
+        System.debug(queryString);
+        List<SObject> lsSObjects = Database.query(queryString);
+        for(SObject s : lsSObjects) {
+            lsIssuesAndPriorities.add((Objective__c) s);
+        }
+
+        return lsIssuesAndPriorities;
+    }
+
+    @AuraEnabled
+    public static Objective__c upsertIssue(Objective__c issue) {
+      upsert issue;
+      return issue;
+    }
+
+    @AuraEnabled
+    public static Objective__c deleteIssue(Objective__c issue) {
+      delete issue;
+      return issue;
+    }
+
+    public void newLine() {
+        try {
+            Objective__c newIssue = new Objective__c();
+            newIssue.Account__c = this.myAccount.Id;
+            newIssue.RecordTypeId = this.objectiveRecordTypeId;
+            //newIssue.Name = 'new issue or priority';
+            //insert newIssue;
+            lsIssuesAndPriorities.add(newIssue);
+
+            isEditMode = true;
+            isNewLine = true;
+            IdConcerned = newIssue.Id;
+            sortOrder = ' CreatedDate ASC ';
+            //lsIssuesAndPriorities = getIssuesAndPriorities();
+
+        } catch(Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+        }
+
+    }
+
+    public void EditLine() {
+        isEditMode = true;
+    }
+
+
+    public void SaveLine() {
+        try {
+                upsert lsIssuesAndPriorities;
+                isEditMode = false;
+        } catch (DMLException e) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+        }
+    }
+
+    public void DeleteLine() {
+        try {
+            Objective__c newLine = new Objective__c(Id = IdConcerned);
+            delete newLine;
+            lsIssuesAndPriorities = getIssuesAndPriorities();
+        } catch (DMLException e) {
+            System.debug(e);
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
+        }
+    }
+
+
+    public void CancelEdit() {
+        try {
+            if(isNewLine) {
+                //Objective__c newLine = new Objective__c(Id = IdConcerned);
+                //delete newLine;
+                lsIssuesAndPriorities = getIssuesAndPriorities();
+                isNewLine = false;
+            }
+
+            isEditMode = false;
+            IdConcerned = null;
+
+        } catch (DMLException e) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
+        }
+    }
+
+    public PageReference saveList() {
+        try {
+            // for(Objective__c o : lsIssuesAndPriorities) {
+            //  if(!o.Can_IATA_support_the_airline__c) o.Status__c = 'Out of Scope';
+            // }
+            upsert lsIssuesAndPriorities;
+        } catch(Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+        }
+
+        return null;
+    }
+
+    public String getRecordName() {
+        return [SELECT Id, Name FROM Account WHERE Id = :this.myAccount.Id].Name;
+    }
+
+    public String getRecordId() {
+        return this.myAccount.Id;
+    }
+
+
+}

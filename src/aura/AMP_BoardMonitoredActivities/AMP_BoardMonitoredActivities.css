@@ -1,0 +1,15 @@
+.THIS .narrowColumn{
+  width: 80px;
+}
+.THIS .mediumColumn{
+  width: 120px;
+}
+.THIS .wideColumn{
+  width: 30%;
+}
+.THIS .column-10p{
+  width: 10%;
+}
+.THIS .column-30p{
+  width: 30%;
+}

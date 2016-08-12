@@ -1,0 +1,56 @@
+public with sharing class AMP_KeyContactsController {
+
+	private final Account myAccount;
+	private final Id parentAccountId;
+
+	public List<Contact> lsKeyContacts {get;set;}
+
+
+    // The extension constructor initializes the private member
+    // variable myAccount by using the getRecord method from the standard
+    // controller.
+    public AMP_KeyContactsController(ApexPages.StandardController stdController) {
+        this.myAccount = (Account)stdController.getRecord();
+				this.parentAccountId = [SELECT Id, ParentId FROM Account WHERE Id = :myAccount.Id].ParentId;
+
+
+                lsKeyContacts = getKeyContacs();
+    }
+
+    public String getRecordId() {
+        return (Id)myAccount.get('Id');
+    }
+
+        public List<Contact> getKeyContacs() {
+            List<Contact> lsKeyContacts = getKeyContacs(myAccount.Id);//, parentAccountId);
+            return lsKeyContacts;
+        }
+
+        // @AuraEnabled
+        // public static List<Contact> getKeyContacs(Id AccountId, Id parentAccountId) {
+        //     List<Contact> lsKeyContacts =
+        //         [SELECT Id, Name, Airline_Contact_Type__c, Title, Phone,
+        //                 MobilePhone, Email, Membership_Function__c,
+        //                 AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c
+        //         FROM Contact
+        //         // WHERE (AccountId = :accountId OR AccountId = :parentAccountId)
+        //         // AND Account_Management_Key_Contact__c = true
+        //         ];
+        //
+        //     return lsKeyContacts;
+        // }
+
+        @AuraEnabled
+        public static List<Contact> getKeyContacs(Id AccountId) {
+            List<Contact> lsKeyContacts =
+                [SELECT Id, Name, Airline_Contact_Type__c, Title, Phone,
+                        MobilePhone, Email, Membership_Function__c, Function__c, 
+                        AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c
+                FROM Contact
+                WHERE (AccountId = :accountId OR Account.ParentId = :accountId )
+                AND Account_Management_Key_Contact__c = true
+                ];
+
+            return lsKeyContacts;
+        }
+}

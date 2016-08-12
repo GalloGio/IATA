@@ -1,0 +1,218 @@
+<aura:component controller="AMP_IssuesAndPrioritiesExtension">
+  <aura:attribute name="accountId" type="String" />
+  <!-- 'sobjectType': 'Objective__c',-->
+  <aura:attribute name="issues" type="Objective__c[]" access="private"/>
+  <aura:attribute name="issuesBackup" type="Objective__c[]" access="private"/>
+  <aura:attribute name="newIssue" type="Objective__c"
+     default="{     'sobjectType' : 'Objective__c',
+                    'RecordTypeId' : '0128E0000004auu',
+                    'Account__c' : 'accountId',
+                    'Name': '',
+                    'AM_Source_Text__c': '',
+                    'Details__c': '',
+                    'AM_Level_of_importance__c': 'medium',
+                    'AM_Can_IATA_support_the_airline__c': false,
+                    'Status__c': 'not started',
+                    'AM_Global__c': false,
+                    'AM_Regional__c': false,
+                    'AM_Local__c': false,
+                    'AM_Issue_with_IATA__c': false,
+                    'AM_Public__c': false}"/>
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />
+  <aura:handler name="updateIssue" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateIssue" />
+
+  <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
+  <ltng:require scripts="{!join(',',
+    $Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />
+  <div class="slds-card">
+
+   <header class="slds-card__header">
+     <div class="slds-media slds-media--center">
+
+       <div class="slds-media__body">
+         <h3 class="slds-text-heading--small">Issues and Priorities</h3>
+       </div>
+     </div>
+   </header>
+
+  <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+     <thead>
+       <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+
+          <th scope="col" class=""><span class="slds-truncate">Actions</span></th>
+          <th scope="col">
+            <!-- <span class="slds-truncate">Name</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="Name">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Name</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='Name'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='Namedesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+        </a>
+        <div class="slds-resizable">
+          <label class="slds-assistive-text" for="cell-resize-handle-1">click and drag to resize</label>
+          <input class="slds-resizable__input slds-assistive-text" type="range" min="20" max="1000" id="cell-resize-handle-1" />
+          <span class="slds-resizable__handle">
+            <span class="slds-resizable__divider"></span>
+          </span>
+        </div>
+          </th>
+          <th scope="col">
+            <!-- <span class="slds-truncate">Source</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="Source__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Source</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Source_Tect__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Source_Tect__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+        </a>
+          </th>
+          <th scope="col" class="wideColumn-30">
+            <!-- <span class="slds-truncate">Description</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="Details__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Description</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='Details__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='Details__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+            </a>
+          </th>
+          <th scope="col">
+            <!-- <span class="slds-truncate">Level of Importance</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="AM_Level_of_importance__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Level of Importance</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Level_of_importance__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Level_of_importance__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+              </a>
+          </th>
+
+          <th scope="col">
+            <!-- <span class="slds-truncate">Status</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="Status__c">
+              <span class="slds-assistive-text">Sort Column</span>
+              <span class="slds-truncate" title="Opportunity Name">Status</span>
+              <div class="slds-icon_container" title="Sort Column">
+                <aura:renderIf isTrue="{!v.sortOrder=='Status__c'}">
+                  <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.sortOrder=='Status__cdesc'}">
+                  <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                </aura:renderIf>
+              </div>
+            </a>
+          </th>
+          <th scope="col" class="narrowColumn">
+            <!-- <span class="slds-truncate">Global</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="AM_Global__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Global</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Global__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Global__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+        </a>
+          </th>
+          <th scope="col" class="narrowColumn">
+            <!-- <span class="slds-truncate">Regional</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="AM_Regional__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Regional</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Regional__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Regional__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+          </a>
+          </th>
+          <th scope="col" class="narrowColumn">
+            <!-- <span class="slds-truncate">Local</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="AM_Local__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Local</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Local__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Local__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+          </a>
+          </th>
+          <th scope="col" class="narrowColumn">
+            <!-- <span class="slds-truncate">Issue with IATA</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="AM_Issue_with_IATA__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Issue with IATA</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Issue_with_IATA__cdesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+          </a>
+          </th>
+          <th scope="col" class="narrowColumn">
+            <!-- <span class="slds-truncate">Visible to all IATA</span> -->
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" data-fieldname="AM_Public__c">
+            <span class="slds-assistive-text">Sort Column</span>
+            <span class="slds-truncate" title="Opportunity Name">Visible to all IATA</span>
+            <div class="slds-icon_container" title="Sort Column">
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__c'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+              <aura:renderIf isTrue="{!v.sortOrder=='AM_Public__cesc'}">
+                <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+              </aura:renderIf>
+            </div>
+          </a>
+          </th>
+       </tr>
+     </thead>
+     <tbody>
+       <aura:iteration items="{!v.issues}" var="issue" indexVar="index">
+          <tr>
+            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}"/>
+          </tr>
+       </aura:iteration>
+     </tbody>
+  </table>
+  <ui:button label="New" press="{!c.addIssue}"/>
+
+  <ui:inputCheckbox label="Show All" aura:id="showAllCheckBox" change="{!c.refreshIssues}"/>
+
+
+</div>
+</aura:component>
