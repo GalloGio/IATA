@@ -1,0 +1,50 @@
+<aura:component controller="AMP_KeyAccountPlanExtension">
+  <aura:attribute name="accountId" type="String" />
+  <aura:attribute name="activityName" type="String" />
+  <aura:attribute name="activityId" type="String" />
+  <aura:attribute name="activity" type="Objective__c" />
+  <aura:attribute name="milestones" type="Task[]" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:handler name="deleteMilestone" event="c:AMP_UpdateOrDeleteTask" action="c.handleDeleteMilestone" />
+  <aura:handler name="updateMilestone" event="c:AMP_UpdateOrDeleteTask" action="c.handleUpdateMilestone" />
+  <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
+
+
+  <aura:attribute name="newMilestone" type="Task"
+     default="{     'sobjectType' : 'Task',
+                    'RecordTypeId' : '0128E0000004auu',
+                    'Subject': '',
+                    'Status': ''
+
+                  }"/>
+
+  <div class="slds-card">
+    <h1>Milestones for activity: {!v.activityName}</h1>
+    {!v.body}
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+      <thead>
+        <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">Actions</span></th>
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">Milestone</span></th>
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Responsible</span></th>
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Involved</span></th>
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Support Required From Account</span></th>
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">Milestone Status</span></th>
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Comments</span></th>
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">End Date</span></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <aura:iteration items="{!v.milestones}" var="milestone" indexVar="index">
+          <tr>
+            <c:AMP_Milestone milestone="{!milestone}" index="{!index}"/>
+          </tr>
+        </aura:iteration>
+      </tbody>
+    </table>
+    <ui:button label="New" press="{!c.addMilestone}" />
+
+  </div>
+</aura:component>

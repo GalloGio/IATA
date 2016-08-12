@@ -4,3 +4,6 @@
 .THIS .dontIndent {
   padding-left: 0.5em !important;
 }
+.THIS .underGroup {
+    background-color: rgb(244, 246, 249);
+}

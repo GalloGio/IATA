@@ -15,12 +15,12 @@
 
       <aura:if isTrue="{!v.isEditMode}">
         <td>
-          <button class="slds-button slds-button--icon-border slds-button--icon-x-small" onclick="{!c.cancelEditMode}">
+          <button class="slds-button slds-button--icon-border slds-button--icon-medium" onclick="{!c.cancelEditMode}">
               <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
               <span class="slds-assistive-text">Cancel</span>
           </button>
 
-          <button class="slds-button slds-button--icon-border slds-button--icon-x-small" onclick="{!c.clickSaveComment}">
+          <button class="slds-button slds-button--icon-border slds-button--icon-medium" onclick="{!c.clickSaveComment}">
               <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
               <span class="slds-assistive-text">Save</span>
           </button>
@@ -36,7 +36,7 @@
             <ui:inputSelectOption value="On Hold" text="On Hold"/>
           </ui:inputSelect>
         </td>
-        <td><ui:inputTextArea value="{!v.bma.Comments__r[0].Detail__c}"/></td>
+        <td><ui:inputTextArea value="{!v.bma.Comments__r[0].Detail__c}" rows="5"/></td>
 
         <aura:set attribute="else">
           <aura:renderIf isTrue="{!v.displayType=='Division'}">
@@ -45,16 +45,20 @@
           <td><ui:outputText value="{!v.bma.Name}"/></td>
           <aura:renderIf isTrue="{!v.displayType=='Account'}">
             <td>
-              <ui:outputRichText value="{!v.bma.Details__c}" class="slds-truncate" aura:id="details"/>
-              <ui:button aura:id="show-more-button" label="show more" press="{!c.showMore}"/>
-              <ui:button aura:id="show-less-button" label="show less" press="{!c.showLess}" class="hidden"/>
+              <ui:outputRichText value="{!v.bma.Details__c}" class="slds-truncate" aura:id="target"/>
+              <ui:button aura:id="show-more-target-button" label="show more" press="{!c.showMoreTarget}"/>
+              <ui:button aura:id="show-less-target-button" label="show less" press="{!c.showLessTarget}" class="hidden"/>
             </td>
           </aura:renderIf>
           <td><ui:outputText value="{!v.bma.Type__c}"/></td>
           <aura:renderIf isTrue="{!v.displayType=='Division'}">
             <td><ui:outputText value="{!v.bma.Comments__r[0].Status__c}"/></td>
           </aura:renderIf>
-          <td><ui:outputText value="{!v.bma.Comments__r[0].Detail__c}"/></td>
+          <td>
+            <ui:outputRichText value="{!v.bma.Comments__r[0].Detail__c}" class="slds-truncate" aura:id="details"/>
+            <ui:button aura:id="show-more-button" label="show more" press="{!c.showMore}"/>
+            <ui:button aura:id="show-less-button" label="show less" press="{!c.showLess}" class="hidden"/>
+          </td>
 
         </aura:set>
       </aura:if>

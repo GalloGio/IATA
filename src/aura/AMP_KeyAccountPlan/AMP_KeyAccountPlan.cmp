@@ -1,29 +1,66 @@
 <aura:component controller="AMP_KeyAccountPlanExtension">
   <aura:attribute name="accountId" type="String" />
+  <aura:attribute name="activity" type="Objective__c" />
+  <aura:attribute name="activityId" type="String" default=""/>
+  <aura:attribute name="activityName" type="String" default=""/>
+  <aura:attribute name="isActivityMode" type="Boolean" default="true"/>
+  <aura:attribute name="filterView" type="String" default="current"/>
   <aura:attribute name="activities" type="Objective__c[]" />
+  <aura:attribute name="milestonesBackup" type="Task[]" />
+  <aura:attribute name="milestones" type="Task[]" />
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
+  <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleDeleteActivity" />
+  <aura:handler name="updateActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateActivity" />
+  <aura:handler name="showMilestones" event="c:AMP_UpdateIssueOrPriority" action="c.handleShowMilestones" />
+
+  <aura:attribute name="newActivity" type="Objective__c"
+     default="{     'sobjectType' : 'Objective__c',
+                    'Name': '',
+                    'Details__c': '',
+                    'Status__c': '',
+                    'Account_Issue_or_Priority__c': '',
+                    'Benefits_to_Account__c': '',
+                    'Deadline__c': '',
+                    'Account__c': 'accountId'
+                    }"/>
+
   <div class="slds-card">
+    <aura:if isTrue="{!v.isActivityMode}">
 
-
+  <ui:button label="History" press="{!c.showHistory}" />
+  <ui:button label="Current" press="{!c.showCurrent}" />
 
   <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
     <thead>
         <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-          <th scope="col" class="mediumColumn"><span class="slds-truncate">Actions</span></th>
-          <th scope="col" class="column-10p"><span class="slds-truncate">Name of Activity</span></th>
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">Actions</span></th>
+          <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
+          <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
           <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
           <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
           <th scope="col" class="wideColumn"><span class="slds-truncate">Benefits to the Account</span></th>
-          <th scope="col" class="wideColumn"><span class="slds-truncate">Deadline</span></th>
+          <th scope="col" class="narrowColumn"><span class="slds-truncate">Deadline</span></th>
         </tr>
     </thead>
 
     <tbody>
       <aura:iteration items="{!v.activities}" var="activity" indexVar="index">
-        <c:AMP_Activity activity="{!activity}" index="{!index}"/>
+        <tr>
+          <c:AMP_Activity activity="{!activity}" index="{!index}"/>
+        </tr>
       </aura:iteration>
     </tbody>
   </table>
-  </div>
+
+    <ui:button label="New" press="{!c.addActivity}" />
+
+  <aura:set attribute="else">
+    <ui:button label="Back to Activities" press="{!c.setMM}" />
+
+    <c:AMP_Milestones accountId="{!v.accountId}" activity="{!v.activity}" activityId="{!v.activityId}" activityName="{!v.activityName}" milestones="{!v.milestones}"/>
+  </aura:set>
+</aura:if>
+
+</div>
 </aura:component>

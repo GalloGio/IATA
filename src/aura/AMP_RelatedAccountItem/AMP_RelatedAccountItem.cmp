@@ -1,16 +1,20 @@
 <aura:component >
     <!-- Owner / Subsidiary item to display -->
-	<aura:attribute name="relatedAccount" type="AMS_Account_Role__c" default="{ 'sobjectType': 'AMS_Account_Role__c', Account__c : 'accountId', Owner_Account__c: 'accountId'}" />
+	<aura:attribute name="relatedAccount" type="AMS_Account_Role__c" default="{ 'sobjectType': 'AMS_Account_Role__c', Account__c : '', Owner_Account__c: ''}" />
     <aura:attribute name="displayType" type="String" default="Owners"/><!-- Variable that controlls what is displayed: Owners or Subsidiaries -->
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+    <aura:attribute name="isError" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="errorMessage" type="String"/>
+	
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="accountId" type="String" />
+    
+    
+    <aura:registerEvent name="updateAccount" type="c:AMP_updateAccount"/>
+    <aura:registerEvent name="deleteAccount" type="c:AMP_deleteAccount"/>
 
-		<aura:attribute name="index" type="Integer" />
-		<aura:attribute name="accountId" type="String" />
-
-		<aura:registerEvent name="updateAccount" type="c:AMP_updateAccount"/>
-		<aura:registerEvent name="deleteAccount" type="c:AMP_deleteAccount"/>
-
+    
     <!-- The id od the related account - used for the Lookup component
     <aura:attribute name="relatedAccountId" type="Id" value="{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__c : v.relatedAccount.Account__c}" /> -->
     <!-- Event handlers -->
@@ -19,22 +23,43 @@
 
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
+    
+    <aura:handler event="c:AMP_OwnershipError" action="{!c.switchToErrorMode}"/>
 
+    
+    
+    
     <aura:if isTrue="{!v.isEditMode}">
 
             <!-- <tr> -->
                 <td>
 
                     <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.cancelEditMode}">
-                        <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
+                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                         <span class="slds-assistive-text">Cancel</span>
                     </button>
 
-                    <button class="slds-button slds-button--icon-border slds-button--icon-small"  onclick="{!c.clickSaveAccount}">
-                        <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
+                    <button class="slds-button slds-button--icon-border slds-button--icon-small" aura:id="saveButton" onclick="{!c.clickSaveAccount}">
+                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
                         <span class="slds-assistive-text">Save</span>
                     </button>
-
+                    
+                    
+                    <aura:if isTrue="{!v.isError}">
+                        
+                        <a href="javascript:void(0);" class="slds-button" >
+                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#warning'}" class="slds-icon slds-icon-text-error slds-icon--small" />
+                            
+                            <span class="slds-assistive-text">Review the Following Errors</span>
+                        </a>
+                        <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite" style="position:absolute;top:55px;left:75px;white-space:normal;">
+                            <div class="slds-popover__body slds-text-longform">
+                                {!v.errorMessage}
+                            </div>
+                        </div>
+                        
+                    </aura:if>
+                    
                 </td>
                 <td><c:LookupSObject aura:id="accountLookup" preselectedSearchString="{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Name : v.relatedAccount.Account__r.Name}" label="Account" pluralLabel="Accounts" sObjectAPIName="Account" listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#account" listIconClass="slds-icon-standard-account" /></td>
                 <td>{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Membership_status__c : v.relatedAccount.Account__r.Membership_status__c}</td>

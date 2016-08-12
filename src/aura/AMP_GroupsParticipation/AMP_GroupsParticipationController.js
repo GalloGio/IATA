@@ -14,6 +14,7 @@
 				 var ParticipantWrappers = new Array();
 				 if (component.isValid() && state === "SUCCESS") {
 					 var previousName = '';
+                     var previousUnder = '';
 					 for(var i = 0; i < participants.length; i++) {
 						 var rowspan = 1;
 						 if(i+1 < participants.length) {
@@ -35,9 +36,10 @@
 						// 	 if(i>0 && participants[i+1].Local_Governance__r.Name == participants[i].Local_Governance__r.Name) {
 						//
 						// 	 }
-
+						var currentUnder = participants[i].Local_Governance__r.AM_Under__r.Name;
 						 var pWrapper = {
 							 Rowspan : rowspan,
+                             Under : previousUnder != currentUnder ? currentUnder : '',
 							 GroupName : participants[i].Local_Governance__r.Name,
 							 GroupOwner : participants[i].Local_Governance__r.Group_Owner__r.Name,
 							 Mission : participants[i].Local_Governance__r.Mission__c,
@@ -48,6 +50,7 @@
 							 Title : participants[i].Contact__r.Title
 						 };
 						 ParticipantWrappers.push(pWrapper);
+                         previousUnder = currentUnder;
 					 }
 
 						component.set("v.participants", participants);

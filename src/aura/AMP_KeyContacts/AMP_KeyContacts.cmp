@@ -7,7 +7,7 @@
     <div class="slds-card__header slds-grid">
       <div class="slds-media slds-media--center">
         <div class="slds-media__figure">
-            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#contact'}" class="slds-icon slds-icon-standard-contact slds-icon--small" />
+            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#contact'}" class="slds-icon slds-icon-standard-contact slds-icon--medium" />
         </div>
         <div class="slds-media__body">
           <h3 class="slds-text-heading--small">Key Contacts</h3>
@@ -15,7 +15,7 @@
       </div>
     </div>
 <div class="slds-card__body">
-   <table class="slds-table slds-table--bordered slds-table--striped">
+   <table class="slds-table slds-table--bordered">
       <thead>
         <tr>
 			<!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->

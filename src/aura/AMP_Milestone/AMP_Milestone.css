@@ -1,0 +1,22 @@
+.THIS .hidden{
+  display: none;
+}
+.THIS .popup, .THIS .popup-button {
+  position: relative;;
+  z-index: 10;
+}
+.THIS .popup {
+  width: 900px;
+  border: 2px solid black;
+  background: white;
+  white-space: normal;
+}
+.THIS textarea {
+  width: 90%;
+}
+.THIS td {
+  vertical-align: top;
+}
+.THIS .slds-truncate {
+  white-space: normal;
+}
