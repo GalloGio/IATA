@@ -6,7 +6,6 @@
  *
  * Change log:
  *   20160809-sl: modify productRatePlanIdUpgradeList
- *   20160811-sl: add currentAddon
  *
  **/
 public virtual class vfIECEBC_Controller {
@@ -297,180 +296,30 @@ public virtual class vfIECEBC_Controller {
 
 	
 	
-	
+/*
 	// ========================================================================
-	// Supporting methods for EBC AddOns
-	// this will be used in the IECEBC Dashboard and IECEBC AccountExtras(?)
-	// ------------------------------------------------------------------------
-	
-	// zqu__ProductRatePlan__c.zqu__ZProduct__c.ProductCategory__c accepted values
-	public static final String EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL = 'Account-Level Add-On';
-	public static final String EBC_ADD_ON_CATEGORY_SERVICE_LEVEL = 'Service-Level Add-On';
-	private static final Set<String> ebcAddOnProductCategoryAllAvailableSet = new Set<String> {EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL, EBC_ADD_ON_CATEGORY_SERVICE_LEVEL};
-	
-	// ========================================================================
-	// ebcAddOnProductCategoryAllowedSet list the Add On category allowed for 
-	// the current user, based on the current eBroadcast Product Rate Plan.
-	private Set<String> ebcAddOnProductCategoryAllowedSet {
+	// EBC ProductRatePlanInfo of this BillingAccount.
+	// this is used to get the upgrade options
+	// assumptions: 
+	//  - Relationship between Product_Rate_Plan_Information__c and ProductRatePlan is 1 to 1
+	public Product_Rate_Plan_Information__c productRatePlanInfo {
 		get{
-			if (ebcAddOnProductCategoryAllowedSet == null)
+			if (productRatePlanInfo == null)
 			{
-				Set<String> allowedSet = new Set<String>();
-				if ( productRatePlan.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID ) 
-				{
-					allowedSet = new Set<String> {EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL, EBC_ADD_ON_CATEGORY_SERVICE_LEVEL};
-				} else {
-					allowedSet = new Set<String> {EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL};
-				}
-				ebcAddOnProductCategoryAllowedSet = allowedSet;
+				List<Product_Rate_Plan_Information__c> productRatePlanInfoList = [select Id
+						 
+					from Product_Rate_Plan_Information__c 
+					where Related_Product_Information__r.Related_Product_Category__r.Name = : IECConstants.ProductCategory_SF_EBROADCAST
+					order by Id];
+					productRatePlanInfo = productRatePlanInfoList[0];
 			}
-			return ebcAddOnProductCategoryAllowedSet;
+			return productRatePlanInfo;
 		}
-		private set;
-	} // end ebcAddOnProductCategoryAllowedSet getter/setter
-	
-	
-	// ========================================================================
-	// return the list of all available eBroadcastProduct Rate Plan Add On
-	// was productRatePlanAddonList
-	public List<zqu__ProductRatePlan__c> allowableEbcAddOnProductRatePlanList {
-		get{
-			if (allowableEbcAddOnProductRatePlanList == null) 
-			{
-				List<zqu__ProductRatePlan__c> prodRatePlanList = [select Id, Name
-					, zqu__Description__c
-					, zqu__EffectiveEndDate__c
-					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
-					   		, zqu__RecurringPeriod__c
-						from zqu__R00N40000001mFVKEA2__r 
-						where zqu__Deleted__c != true
-						order by Id)
-						//from zqu__ProductRatePlanCharge__r order by Id)
-					, (select Id, Name, Product_Rate_Plan__c, Short_Description__c, Long_Description__c, Order__c
-						from Product_Rate_Plan_Informations__r order by Order__c, Id)
-					
-					from zqu__ProductRatePlan__c 
-  					where  zqu__ZProduct__r.ProductCategory__c in : ebcAddOnProductCategoryAllowedSet
-							//and zqu__ZProduct__r.zqu__Active__c = true
-							and zqu__Deleted__c != true
-							and zqu__EffectiveStartDate__c <= TODAY
-							and zqu__EffectiveEndDate__c >= TODAY
-					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
-					limit 100];
-				
-				allowableEbcAddOnProductRatePlanList = prodRatePlanList;
-			}
-			return allowableEbcAddOnProductRatePlanList;
-		}
-		private set;
-	} // end of allowableEbcAddOnProductRatePlanList getter/setter
-	
-	// =========================================================================
-	// collection of all ProductRatePlan Id that can be subscribed by this user
-	// that also includes those that are already subscribed
-	private Set<Id> allowableEbcAddOnProductRatePlanIdSet{
-		get{
-			if (allowableEbcAddOnProductRatePlanIdSet == null) {
-				Set<Id> prpIdSet = new Set<Id>();
-				List<zqu__ProductRatePlan__c> prpList = allowableEbcAddOnProductRatePlanList;
-				for (zqu__ProductRatePlan__c prp: prpList) 
-				{
-					prpIdSet.add(prp.Id);
-				}
-				allowableEbcAddOnProductRatePlanIdSet = prpIdSet;
-			}
-			return allowableEbcAddOnProductRatePlanIdSet;
-		}
-		private set;
-	} // end of allowableEbcAddOnProductRatePlanIdSet getter/setter
-	
-	// =========================================================================
-	// showLinkToProductAddOn is true if all allowableEbcAddOnProductRatePlanIdSet already subscribed
-	public Boolean showLinkToProductAddOn {
-		get {
-			Boolean hasNoMoreAvailableOptions = ! currentEbcAddOnProductRatePlanIdToSubscriptionMap.keyset().containsAll(allowableEbcAddOnProductRatePlanIdSet);
-			return hasNoMoreAvailableOptions;
-		}
-		private set;
+		set;
+		
 	}
-	// =========================================================================
-	// currentEbcAddOnProductRatePlanList return currently subscribed ProductRatePlan for EBC Add Ons
-	// note that selecting on EBC Add On category is based on ProductCategory__c from zqu__ZProduct not Zuora__Product.
-	public List<zqu__ProductRatePlan__c> currentEbcAddOnProductRatePlanList
-	{
-		get{
-			if ( currentEbcAddOnProductRatePlanList == null )
-			{ 
-				Set<Id> purchasedProductRatePlanSet = currentEbcAddOnProductRatePlanIdToSubscriptionMap.keySet();
-				
-				// query ProductRatePlan independently in order to get the Product_Rate_Plan_Information__c.Long_Description__c
-				List<zqu__ProductRatePlan__c> prodRatePlanList = [select Id, Name
-					, zqu__Description__c
-					, zqu__EffectiveEndDate__c
-					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
-							, zqu__RecurringPeriod__c
-						from zqu__R00N40000001mFVKEA2__r 
-						where zqu__Deleted__c != true
-						order by Id)
-					, (select Id, Name, Product_Rate_Plan__c, Short_Description__c, Long_Description__c, Order__c
-						from Product_Rate_Plan_Informations__r order by Order__c, Id)
-					from zqu__ProductRatePlan__c 
-						where  Id in : purchasedProductRatePlanSet
-						order by Name, Id
-						limit 100];
-				
-				currentEbcAddOnProductRatePlanList = prodRatePlanList;
-			}
-			return currentEbcAddOnProductRatePlanList;
-		}
-		private set;
-	} // end of currentEbcAddOnProductRatePlanList getter/setter
+*/	
 	
-	// =========================================================================
-	// currentEbcAddOnProductRatePlanIdToSubscriptionMap is used to get the Subscription details
-	// and also to get unique set of productRatePlanId
-	public Map<Id, Zuora__Subscription__c> currentEbcAddOnProductRatePlanIdToSubscriptionMap{
-		get{
-			if (currentEbcAddOnProductRatePlanIdToSubscriptionMap==null)
-			{
-				Map<Id, Zuora__Subscription__c> prpIdToSubMap = new Map<Id, Zuora__Subscription__c>();
-				for (Zuora__SubscriptionProductCharge__c  spc : currentEbcAddOnSubscriptionProductChargeList)
-				{
-					prpIdToSubMap.put(spc.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c, spc.Zuora__Subscription__r);
-				}
-				currentEbcAddOnProductRatePlanIdToSubscriptionMap = prpIdToSubMap;
-			}
-			return currentEbcAddOnProductRatePlanIdToSubscriptionMap;
-		}
-		private set;
-	} // currentEbcAddOnProductRatePlanIdToSubscriptionMap getter/setter
-	 
 	
-	// ========================================================================
-	// currentEbcAddOnSubscriptionProductChargeList return currently subscribed ProductRatePlan for Add On
-	// input: current user (billing account)
-	// assumption:
-	//   - relationship between Subscription and SubscriptionProductCharge is 1:n 
-	//   - selecting on EBC Add On category is based on ProductCategory__c from zqu__ZProduct not Zuora__Product.
-	// 
-	private List<Zuora__SubscriptionProductCharge__c> currentEbcAddOnSubscriptionProductChargeList{
-		get{
-			if (currentEbcAddOnSubscriptionProductChargeList==null)
-			{
-				List<Zuora__SubscriptionProductCharge__c> subsProductChargeList = [select Id
-						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
-						, Zuora__Subscription__r.Zuora__TermEndDate__c
-					from Zuora__SubscriptionProductCharge__c 
-					where Zuora__Subscription__r.Zuora__CustomerAccount__c = : billingAccount.Id
-						and Zuora__Subscription__r.Zuora__TermEndDate__c >= TODAY
-						and ( Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c in : ebcAddOnProductCategoryAllAvailableSet )
-					order by Zuora__Subscription__r.Zuora__Status__c DESC, Zuora__Subscription__r.LastModifiedDate
-				];
-				currentEbcAddOnSubscriptionProductChargeList = subsProductChargeList;
-			}
-			return currentEbcAddOnSubscriptionProductChargeList;
-		}
-		private set;
-	} // currentEbcAddOnSubscriptionProductChargeList getter/setter
 	
 }
