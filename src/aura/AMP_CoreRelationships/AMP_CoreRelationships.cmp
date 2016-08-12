@@ -8,62 +8,109 @@
 
   <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
 
-  <div class="slds-grid slds-wrap slds-grid--pull-padded">
-    <div class="slds-col--padded slds-size--1-of-2">
-      IATA Membership Status:
-      <ui:outputText value="{!v.account.Membership_status__c}"/>
+	<h3 class="slds-section__title">Core Relationship with IATA</h3>
+    
+    <div class="slds-grid slds-wrap">
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">IATA Membership Status</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Membership_status__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Admission Date</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Admission_Date__c}" />
+                </div>
+            </div>            
+        </div>  
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">IATA Membership History</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.IATA_Membership_History__c}" />
+                </div>
+            </div>            
+        </div>
+
+  	</div>
+
+    
+    
+	<h3 class="slds-section__title">Industry Settlement Systems</h3>
+    
+    <div class="slds-grid slds-wrap">
+        
+        <div class="slds-col--padded slds-size--1-of-3  slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total BSP Participations</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.BSP_Participant_value__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total CASS Participations</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.CASS_Participant_value__c}" />
+                </div>
+            </div>            
+        </div>
+        
     </div>
-    <div class="slds-col--padded slds-size--1-of-2">
-      Admission Date:
-      <ui:outputText value="{!v.account.Admission_Date__c}"/>
+    
+    
+    
+    <div class="slds-card">
+
+        <div class="slds-card__header slds-grid">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#environment_hub'}" class="slds-icon slds-icon-standard-account slds-icon--medium" />
+                </div>
+                <div class="slds-media__body slds-truncate">
+                    <span class="slds-text-heading--small">Membership on Main IATA Industry Groups</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-card__body">
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+                <thead>
+                    <tr class="headerRow" >
+                        <th style="width: 17%;"><span>IATA Group Name</span></th>
+                        <th style="width: 11%;"><span>Role Within Group</span></th>
+                        <th style="width: 5%;"><span>Salutation</span></th>
+                        <th style="width: 8%;"><span>First Name</span></th>
+                        <th style="width: 8%;"><span>Last Name</span></th>
+                        <th style="width: 9%;"><span>Title</span></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
+                        <tr>
+                            <td><ui:outputText value="{!participant.GroupName}" /></td>
+                            <td><ui:outputText value="{!participant.Role}" /></td>
+                            <td><ui:outputText value="{!participant.Salutation}" /></td>
+                            <td><ui:outputText value="{!participant.FirstName}" /></td>
+                            <td><ui:outputText value="{!participant.LastName}" /></td>
+                            <td><ui:outputText value="{!participant.Title}" /></td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+        
     </div>
-    <div class="slds-col--padded slds-size--1-of-1">
-      IATA Membership History:
-      <ui:outputTextArea value="{!v.account.IATA_Membership_History__c}"/>
-    </div>
-
-  </div>
-
-
-  <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
-     <thead>
-       <tr class="headerRow" >
-         <th style="width: 17%;"><span>IATA Group Name</span></th>
-         <th style="width: 11%;"><span>Role Within Group</span></th>
-         <th style="width: 5%;"><span>Salutation</span></th>
-         <th style="width: 8%;"><span>First Name</span></th>
-         <th style="width: 8%;"><span>Last Name</span></th>
-         <th style="width: 9%;"><span>Title</span></th>
-       </tr>
-     </thead>
-
-     <tbody>
-       <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
-          <tr>
-            <td><ui:outputText value="{!participant.GroupName}" /></td>
-            <td><ui:outputText value="{!participant.Role}" /></td>
-            <td><ui:outputText value="{!participant.Salutation}" /></td>
-            <td><ui:outputText value="{!participant.FirstName}" /></td>
-            <td><ui:outputText value="{!participant.LastName}" /></td>
-            <td><ui:outputText value="{!participant.Title}" /></td>
-          </tr>
-       </aura:iteration>
-     </tbody>
-   </table>
-
-   <h3 class="slds-section__title">Industry Groups Participation</h3>
-   <div class="slds-grid slds-wrap slds-grid--pull-padded">
-     <div class="slds-col--padded slds-size--1-of-2">
-       Total BSP Participations:
-       <ui:outputText value="{!v.account.BSP_Participant_value__c}"/>
-     </div>
-     <div class="slds-col--padded slds-size--1-of-2">
-       Total CASS Participations:
-       <ui:outputText value="{!v.account.CASS_Participant_value__c}"/>
-     </div>
-
-
-   </div>
 
 
 </aura:component>

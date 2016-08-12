@@ -5,8 +5,8 @@
     <ui:menu >
         
         <ui:menuTriggerLink aura:id="trigger">
-        	<button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true" >
-                    <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#down'}" class="slds-button__icon" />
+        	<button class="slds-button slds-button--icon-border-filled slds-button--icon-small" aria-haspopup="true" >
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#down'}" class="slds-button__icon" />
                     <span class="slds-assistive-text">Show More</span>
             </button>
         </ui:menuTriggerLink>

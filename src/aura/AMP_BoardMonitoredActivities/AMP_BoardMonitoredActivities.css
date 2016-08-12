@@ -1,8 +1,8 @@
 .THIS .narrowColumn{
-  width: 80px;
+  width: 3%;
 }
 .THIS .mediumColumn{
-  width: 120px;
+  width: 5%;
 }
 .THIS .wideColumn{
   width: 30%;
@@ -12,4 +12,15 @@
 }
 .THIS .column-30p{
   width: 30%;
+}
+.THIS .slds-truncate {
+  white-space: normal !important;
+  max-width: 100% !important;
+  max-height: 3em;
+}
+.THIS td {
+  vertical-align: top;
+}
+.THIS textarea {
+  width: 90%;
 }

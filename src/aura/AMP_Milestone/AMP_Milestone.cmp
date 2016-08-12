@@ -1,0 +1,67 @@
+<aura:component >
+  <aura:attribute name="milestone" type="Task" />
+  <aura:attribute name="index" type="Integer" />
+
+  <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
+  <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
+
+
+  <aura:registerEvent name="updateMilestone" type="c:AMP_UpdateOrDeleteTask"/>
+  <aura:registerEvent name="deleteMilestone" type="c:AMP_UpdateOrDeleteTask"/>
+
+  <!-- <tr> -->
+    <aura:if isTrue="{!v.isEditMode}">
+      <td>
+        <button class="slds-button slds-button--icon-border slds-button--icon-x-small" onclick="{!c.cancelEditMode}">
+            <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
+            <span class="slds-assistive-text">Cancel</span>
+        </button>
+
+        <button class="slds-button slds-button--icon-border slds-button--icon-x-small" onclick="{!c.clickSaveMilestone}">
+            <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
+            <span class="slds-assistive-text">Save</span>
+        </button>
+      </td>
+      <td><ui:inputText value="{!v.milestone.Subject}" /></td>
+      <td><ui:inputTextArea value="{!v.milestone.AM_Responsible__c}" class="longTextArea" rows="5"/></td>
+      <td><ui:inputTextArea value="{!v.milestone.AM_Involved__c}" class="longTextArea" rows="5"/></td>
+      <td><ui:inputTextArea value="{!v.milestone.AM_Support_Required_from_Account__c}" class="longTextArea" rows="5"/></td>
+      <td>
+        <ui:inputSelect aura:id="status">
+          <ui:inputSelectOption value="On Track" text="On Track"/>
+          <ui:inputSelectOption value="On Hold" text="On Hold"/>
+          <ui:inputSelectOption value="Delayed" text="Delayed"/>
+          <ui:inputSelectOption value="Delivered" text="Delivered"/>
+          <ui:inputSelectOption value="Cancelled" text="Cancelled"/>
+        </ui:inputSelect>
+      </td>
+      <td><ui:inputTextArea value="{!v.milestone.Description}" class="longTextArea" rows="5"/></td>
+      <td><ui:inputDate value="{!v.milestone.ActivityDate}" /></td>
+
+      <aura:set attribute="else">
+      <td>
+        <c:AMP_EditSaveMenu />
+      </td>
+      <td><ui:outputText value="{!v.milestone.Subject}" class="slds-truncate"/></td>
+      <td>
+        <ui:outputRichText value="{!v.milestone.AM_Responsible__c}" class="slds-truncate"/>
+      </td>
+      <td>
+        <ui:outputRichText value="{!v.milestone.AM_Involved__c}" class="slds-truncate"/>
+      </td>
+      <td>
+        <ui:outputRichText value="{!v.milestone.AM_Support_Required_from_Account__c}" class="slds-truncate"/>
+      </td>
+      <td><ui:outputText value="{!v.milestone.Status}" /></td>
+      <td>
+        <ui:outputRichText value="{!v.milestone.Description}" class="slds-truncate" aura:id="comments"/>
+        <ui:button aura:id="show-more-button" label="show more" press="{!c.showMore}"/>
+        <ui:button aura:id="show-less-button" label="show less" press="{!c.showLess}" class="hidden"/>
+      </td>
+      <td><ui:outputDate value="{!v.milestone.ActivityDate}" /></td>
+    </aura:set>
+  </aura:if>
+  <!-- </tr> -->
+</aura:component>

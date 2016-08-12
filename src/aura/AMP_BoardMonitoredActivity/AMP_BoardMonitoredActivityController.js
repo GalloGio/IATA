@@ -57,4 +57,26 @@
 		$A.util.addClass(showLess, 'hidden');
 		$A.util.removeClass(showLess, 'popup-button');
 	},
+	showMoreTarget : function(component, event, helper) {
+		var details = component.find("target");
+		$A.util.removeClass(details, 'slds-truncate');
+		$A.util.addClass(details, 'popup');
+
+		var showMore = component.find("show-more-target-button");
+		$A.util.addClass(showMore, 'hidden');
+		var showLess = component.find("show-less-target-button");
+		$A.util.removeClass(showLess, 'hidden');
+		$A.util.addClass(showLess, 'popup-button');
+	},
+	showLessTarget : function(component, event, helper) {
+		var details = component.find("target");
+		$A.util.addClass(details, 'slds-truncate');
+		$A.util.removeClass(details, 'popup');
+
+		var showMore = component.find("show-more-target-button");
+		$A.util.removeClass(showMore, 'hidden');
+		var showLess = component.find("show-less-target-button");
+		$A.util.addClass(showLess, 'hidden');
+		$A.util.removeClass(showLess, 'popup-button');
+	}
 })

@@ -8,6 +8,9 @@
 .THIS th.narrowColumn {
   width: 80px;
 }
+.THIS th.actionColumn {
+  width: 100px;
+}
 .THIS th.wideColumn-30 {
   width: 30%;
 }

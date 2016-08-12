@@ -13,6 +13,17 @@
 		component.set("v.isEditMode", true);
         console.log('going into edit mode...');
 	},
+    switchToErrorMode : function(component, event, helper) {
+        var componentIndex = event.getParam("index");
+        console.log('component ' + component.get("v.index") + ' analyzing OwnershipErrorEvent with index ' + componentIndex);
+        if (componentIndex == component.get("v.index")) {
+            console.log('Index ' + component.get("v.index") + ' going into error mode... ');
+            
+            component.set("v.isEditMode", true);
+            component.set("v.isError", true);
+            component.set("v.errorMessage", event.getParam("errorMessage"));
+        }
+	},
     cancelEditMode : function(component, event, helper) {
 			var relatedAccount = component.get("v.relatedAccount");
 			if(relatedAccount.Id === undefined) {
@@ -29,12 +40,12 @@
 		// Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list
 
         console.log('delete clicked...');
-				var relatedAccount = component.get("v.relatedAccount");
-
-				var deleteAccountEvent = component.getEvent("deleteAccount");
-				deleteAccountEvent.setParams({'accountRole' : relatedAccount});
-				deleteAccountEvent.fire();
-				component.set("v.isEditMode", false);
+        var relatedAccount = component.get("v.relatedAccount");
+        
+        var deleteAccountEvent = component.getEvent("deleteAccount");
+        deleteAccountEvent.setParams({'accountRole' : relatedAccount});
+        deleteAccountEvent.fire();
+        component.set("v.isEditMode", false);
 	},
 	clickSaveAccount : function(component, event, helper) {
 
@@ -55,14 +66,14 @@
         // Get the Id from the Event
         var accountId = cmp.get("v.accountId");
         var ownerAccountId = event.getParam("sObjectId");
-
+        
         var account = cmp.get("v.relatedAccount");
         if (cmp.get("v.displayType") == 'Owners') {
-						account.Account__c = accountId;
+            account.Account__c = accountId;
             account.Owner_Account__c = ownerAccountId;
         } else {
             account.Account__c = ownerAccountId;
-						account.Owner_Account__c = accountId;
+            account.Owner_Account__c = accountId;
         }
         // Set the Id bound to the View
         cmp.set("v.relatedAccount", account);
