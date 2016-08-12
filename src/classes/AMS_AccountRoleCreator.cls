@@ -756,7 +756,6 @@ public with sharing class AMS_AccountRoleCreator
     	}
     	return returnList;
     }
-
     
     // For all the current Accreditation Contacts, assume the email uniqueness will provide either
     // one or zero AMS Account Role records.
@@ -929,10 +928,14 @@ public with sharing class AMS_AccountRoleCreator
     // This is a clone of the method runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList)
     // This version will apply an online accreditation to several accounts
     public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
+
+
+    	Set<Id> acContactIdSet = new Set<Id>();
     	
     	// STEP 1) I have to build a map: accreditation online -> acs
     	Map<Id,List<AMS_Accreditation_Contact__c>> aoToAcList = new Map<Id,List<AMS_Accreditation_Contact__c>>();
     	Map<Id,AMS_Accreditation_Contact__c> idToAc = new Map<Id,AMS_Accreditation_Contact__c>();
+    	Map<Id, Contact> contactsToUpdate = new Map<Id, Contact>();
 
     	Set<Id> aoIds = aoMap.keyset();
     	system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 1) aoMap '+aoMap);
@@ -950,8 +953,14 @@ public with sharing class AMS_AccountRoleCreator
     	system.debug('DTULLO 826 --> aoMap.keyset() : ' + aoMap.keyset());
         String rolequery = '';
 
+		Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons = new Set<AMS_AccountRoleCreator.RoleBundle>();
+
         List<AMS_Accreditation_Contact__c> acsInAos = database.query(query);
         for(AMS_Accreditation_Contact__c ac :acsInAos){
+
+        	if(ac.Contact__c!=null)
+        		acContactIdSet.add(ac.Contact__c);
+
         	idToAc.put(ac.Id,ac);
 
         	if(!aoToAcList.containsKey(ac.AMS_Pax_Accreditation_Form__c))
@@ -963,24 +972,35 @@ public with sharing class AMS_AccountRoleCreator
         	if(aoMap.get(aoId)!=null){
  	        	for(Id accId : aoMap.get(aoId)){
  	        		
- 	        		system.debug('DTULLO 840 --> ' + ac.RecordType.DeveloperName + ';accId: ' + accId + ';ac.Contact__c: ' + ac.Contact__c + ';ac.Person_AMS__c ' + ac.Person_AMS__c + ';ac.Company__c ' + ac.Company__c);
- 	        		//DTULLO: Improvement: using recordtType DEVELOPERNAME rather then NAME...
-	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
-	        			system.debug('DTULLO XX1 --> Adding as person, contact not null');
+ 	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Contact__c = \''+ac.Contact__c+'\' AND Account__c = \''+accId+'\')';
+						
+						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Contact__c, 'C'));
+
 	        		}
 	        		else if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Person_AMS__c != null){
-	        			system.debug('DTULLO XX2 --> Adding as person, person not null');
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Person__c = \''+ac.Person_AMS__c+'\' AND Account__c = \''+accId+'\')';
+
+	        			contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Person_AMS__c, 'P'));
+
 	        		}
 	        		else if(companyDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Company__c != null){
-	        			system.debug('DTULLO XX3 --> Adding as company, company not null');
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Owner_Account__c = \''+ac.Company__c+'\' AND Account__c = \''+accId+'\')';
+
+						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Company__c, 'A'));
+
 	        		}
 	        	}
 			}
 
         }
+
+        Map<String, Contact> emailContactMap = new Map<String, Contact>();
+        for(Contact c : [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c FROM Contact WHERE Id IN :acContactIdSet])
+        	emailContactMap.put(c.id, c);
 
         system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 1) aoToAcList '+aoToAcList);
 
@@ -995,20 +1015,23 @@ public with sharing class AMS_AccountRoleCreator
 
     	if(rolequery != '')
     		rolequery = '('+rolequery+') AND ';
-    	system.debug('runRoleCreatorForOnlineAccreditations() -> role query condition '+rolequery);
-    	for(AMS_Account_Role__c r : database.query('SELECT recordtype.DeveloperName, id, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c '+
-											  		'FROM AMS_Account_Role__c '+
-											  		'WHERE '+rolequery+' Termination_Date__c = NULL AND RecordType.DeveloperName = \'Ownership\'')){
+    	
+
+		List<AMS_Account_Role__c> rolesToQuery = new List<AMS_Account_Role__c>();
+
+    	rolesToQuery = fetchAccountRolesToQuery(aoIds,contactsAndPersons);
+
+    	for(AMS_Account_Role__c r : rolesToQuery){
     		
-    		system.debug('MACDEBUG: CORRECTION PROCESS ROLE START: '+ r);
+    		system.debug('CORRECTION PROCESS ROLE START: '+ r);
 
     		for(AMS_Accreditation_Contact__c ac : idToAc.values()){
 
     			Set<Id> myAccounts = aoMap.get(ac.AMS_Pax_Accreditation_Form__c);
-    			system.debug('MACDEBUG: CORRECTION PROCESS ACCOUNT TO PROCESS: ' + myAccounts);
-    			system.debug('MACDEBUG: ROLE DEBUG AC: ' + ac);
+    			system.debug('CORRECTION PROCESS ACCOUNT TO PROCESS: ' + myAccounts);
+    			system.debug('ROLE DEBUG AC: ' + ac);
     			if(myAccounts.contains(r.Account__c)){
-    				system.debug('MACDEBUG: ROLE DEBUG ROLE: ' + r);
+    				system.debug('ROLE DEBUG ROLE: ' + r);
 	    			if((personDeveloperName.containsKey(ac.RecordType.DeveloperName) && r.Contact__c==ac.Contact__c && r.Person__c==ac.Person_AMS__c ) || 
 	    				(companyDeveloperName.containsKey(ac.RecordType.DeveloperName)  && r.Owner_Account__c==ac.Company__c)){
 		    			if(acToRoles.get(ac.Id)==null)
@@ -1018,8 +1041,8 @@ public with sharing class AMS_AccountRoleCreator
 	    		}
 
 	    		if(isCorrectionProcess){
-					system.debug('MACDEBUG: CORRECTION PROCESS  FILL ROLES PER ACCOUNT MAP');
-					system.debug('MACDEBUG: CORRECTION PROCESSING ROLE: ' + r);
+					system.debug('CORRECTION PROCESS  FILL ROLES PER ACCOUNT MAP');
+					system.debug('CORRECTION PROCESSING ROLE: ' + r);
 			    	
 			    	if(rolesPerAccount.get(r.Account__c)==null)
 			    		rolesPerAccount.put(r.Account__c, new Set<AMS_Account_Role__c>());
@@ -1027,7 +1050,7 @@ public with sharing class AMS_AccountRoleCreator
 		    	}	
     		}	    				
 
-    		system.debug('MACDEBUG: CORRECTION PROCESS  ROLES PER ACCOUNT MAP: ' + rolesPerAccount);
+    		system.debug('CORRECTION PROCESS  ROLES PER ACCOUNT MAP: ' + rolesPerAccount);
 
     	}
     	
@@ -1066,7 +1089,13 @@ public with sharing class AMS_AccountRoleCreator
 	        	
 	        		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 3) ac '+ac.First_name__c+' '+ ac.Last_name__c +'--> Will update existing contact');
 
-		        	existingContactIds.add(ac.Person_AMS__c==null ? ac.Contact__c : ac.Person_AMS__r.Contact__c);
+	        		Id existingContactId = ac.Person_AMS__c==null ? ac.Contact__c : ac.Person_AMS__r.Contact__c;
+
+		        	existingContactIds.add(existingContactId);
+
+		        	contactsToUpdate.put(existingContactId, AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac));
+
+		        	system.debug('MACDEBUG: Contacts to update '+ contactsToUpdate);
 		        }
 	        
     		}
@@ -1111,18 +1140,18 @@ public with sharing class AMS_AccountRoleCreator
      				//process contact owners only
      				if(ac.Agency_owner__c == true && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')){
 			    		if(ac.AMS_Ownership_Role__c != null){
-				    		system.debug('MACDEBUG COR ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c+')---> CASE B');
-						 	system.debug('MACDEBUG COR ac has account owner = '+ac.Company__c+' ---> CASE B');
+				    		system.debug('COR ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c+')---> CASE B');
+						 	system.debug('COR ac has account owner = '+ac.Company__c+' ---> CASE B');
 
 						    //if(ac.Agency_owner__c == true && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') && ac.RecordTypeId != AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner')){
 						    	//find matching roles in all hierarchy accounts and update them
 						    	for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
-						    		System.debug('MACDEBUG COR sweeping accounts... current id: ' + accountId);
+						    		System.debug('COR sweeping accounts... current id: ' + accountId);
 						    		//find matching role in account
 						    		Set<AMS_Account_Role__c> rolesToSearch = rolesPerAccount.get(accountId);
 						    		if(rolesToSearch != null){
 
-						    			System.debug('MACDEBUG COR ROLES TO SEARCH: ' +  rolesToSearch);
+						    			System.debug('COR ROLES TO SEARCH: ' +  rolesToSearch);
 							    		for(AMS_Account_Role__c compareRole: rolesToSearch){
 							    					
 							    			/*if(compareRole.Duty__c 		== ac.AMS_Ownership_Role__r.Duty__c &&
@@ -1132,13 +1161,13 @@ public with sharing class AMS_AccountRoleCreator
 											compareRole.Position__c 	== ac.AMS_Ownership_Role__r.Position__c &&
 											compareRole.Owner_Account__c 	== null){*/
 											if(compareRole.Contact__c == ac.Contact__c){
-												System.debug('MACDEBUG COR FOUND A MATCHING ROLE!!!');
+												System.debug('COR FOUND A MATCHING ROLE!!!');
 												Id oldAccountId = compareRole.Account__c;
 												compareRole = AMS_AccreditationContactHelper.updateAmsAccountRole(compareRole, ac);
 												compareRole.Account__c = oldAccountId;
-												System.debug('MACDEBUG COR ADDING ROLE TO LIST ' + compareRole);
-												System.debug('MACDEBUG COR ADDING ROLE TO LIST ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c);
-												System.debug('MACDEBUG COR ADDING ROLE TO LIST account ' + accountId);
+												System.debug('COR ADDING ROLE TO LIST ' + compareRole);
+												System.debug('COR ADDING ROLE TO LIST ac '+ac.First_name__c+' '+ac.Last_name__c+' (Owner ? '+ac.Agency_owner__c);
+												System.debug('COR ADDING ROLE TO LIST account ' + accountId);
 												rolesToUpdate.add(compareRole);
 											}
 							    		}
@@ -1246,7 +1275,74 @@ public with sharing class AMS_AccountRoleCreator
 	    }
     	system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) FINISH insertAccountOwnershipsForAccreditationOnline()');
 
+    	// Because Contact's might have validation rules that prevent Contact updates, and the business requirement
+    	// is to push everything that can be pushed, we should update the Contacts last.
+    	
+    	if(contactsToUpdate!=null && contactsToUpdate.size() > 0)
+   		{
+   			List<Contact> conListToUpdate = verifyNoDuplicateIFAPcontactExists(contactsToUpdate.values());
+   			update conListToUpdate;
+   		}
+
     }
 
+    private static List<AMS_Account_Role__c> fetchAccountRolesToQuery(Set<Id> accountsToSearch, Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons){
 
+		List<AMS_Account_Role__c> rolesToReturn = new List<AMS_Account_Role__c>();
+
+    	List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
+
+
+    	roles = [SELECT Id, recordtype.DeveloperName, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, 
+    						Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c
+							FROM AMS_Account_Role__c WHERE Account__c in :accountsToSearch and Termination_Date__c = NULL AND RecordType.DeveloperName = 'Ownership'];
+
+
+		List<AMS_AccountRoleCreator.RoleBundle> contactsAndPersonsLst= new List<AMS_AccountRoleCreator.RoleBundle>(contactsAndPersons);
+
+		for(AMS_Account_Role__c role : roles){
+
+			for(AMS_AccountRoleCreator.RoleBundle bundle : contactsAndPersonsLst){
+
+				if(bundle.type == 'C' && role.Account__c == bundle.accountId && role.Contact__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+
+				if(bundle.type == 'P' && role.Account__c == bundle.accountId && role.Person__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+
+				if(bundle.type == 'A' && role.Account__c == bundle.accountId && role.Owner_Account__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+			}
+
+		}
+
+		return rolesToReturn;
+    }
+
+    public class RoleBundle {
+
+    	private Id accountId{get;set;}
+
+    	private Id contactOrPersonOrAccount{get;set;}
+
+    	private String type{get;set;}
+
+    	public RoleBundle(Id accountId, Id contactOrPersonOrAccount, String type){
+
+
+
+    		this.accountId = accountId;
+    		this.contactOrPersonOrAccount = contactOrPersonOrAccount;
+    		this.type = type;
+
+
+
+
+    	}
+
+    }
+    
 }
