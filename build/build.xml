@@ -102,11 +102,6 @@
   </target> 
 
 
-<target name="deployCodeProd"> 
-
-       <antcallback target="deployCodeObjects" />
-  
-  </target> 
 
 <target name="deployCodeObjects"> 
   <echo level="info">creating new folder</echo>
