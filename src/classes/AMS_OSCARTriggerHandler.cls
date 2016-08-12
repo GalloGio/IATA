@@ -437,7 +437,7 @@ public class AMS_OSCARTriggerHandler {
 				}
 
 				//create change codes
-				AMS_Utils.createAAChangeCodes(changeCodes, theoscars, accts, true);
+				AMS_ChangeCodes_Utils.createAAChangeCodes(changeCodes, theoscars, accts, true);
 			}
 
 			if (accountsToUpdate.size() > 0) {

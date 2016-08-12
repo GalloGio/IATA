@@ -84,7 +84,25 @@ public with sharing class AMS_ChangeCodes_Utils {
 		return objChangesStructList;
 	}
 
+	public static List<ObjectChangesStruct> convertAccountToObjectChanges(List<AMS_RecordCreatorWebservice.AccountChanges> accountChange)
+	{
+		
+		List<ObjectChangesStruct> objChangesStructList = new List<ObjectChangesStruct>();
 
+		List <ObjectChange> ObjectChangeList = new List <ObjectChange> ();
+
+		for(AMS_RecordCreatorWebservice.AccountChanges changes : accountChange){
+
+			ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
+			ObjectChangeList.add(objChange);
+
+		}
+
+		objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
+
+		
+		return objChangesStructList;
+	}
 
 
     /** 
@@ -170,6 +188,51 @@ public with sharing class AMS_ChangeCodes_Utils {
         }
     }
 
+    public static void createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
+
+        Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
+
+        Integer index = 0;
+
+        Set<Account> accountsToUpdate = new Set<Account>();
+
+        List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
+
+        for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
+
+            Boolean isActive = false;
+
+            if (!accountsChecker.containsKey(oscarAgencies.get(index))) {
+                accountsChecker.put(oscarAgencies.get(index), false);
+                isActive = true;
+            }
+
+            ChangeCodeStruct changeCodeResult = createAAChangeCode(cc, oscars.get(index), oscarAgencies.get(index), isActive);
+
+            aaccToInsert.add(changeCodeResult.changeCode);
+
+            if (changeCodeResult.acct != null && !accountsToUpdate.contains(changeCodeResult.acct))
+                accountsToUpdate.add(changeCodeResult.acct);
+
+            index++;
+
+        }
+
+        if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
+            System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
+            update new List<Account>(accountsToUpdate);
+        }
+
+        if (!aaccToInsert.isEmpty()) {
+
+            System.debug('The list of Change Codes to add is ' + aaccToInsert.size());
+
+            insert aaccToInsert;
+        }
+
+    }
+
+
     /** 
 	 Add Change Code to be Created
 	*/
@@ -231,4 +294,42 @@ public with sharing class AMS_ChangeCodes_Utils {
 
         return new ChangeCodeStruct(aacNEW, toReturn,changeCodeFielsHistory);
     }
+
+     //Change Code Utils
+    private static ChangeCodeStruct createAAChangeCode(AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
+
+        Account toReturn = null;
+
+        Id oscarId = null;
+
+        if (oscar != null)
+            oscarId = oscar.Id;
+
+        System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
+
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
+                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
+                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+
+        //insert aacNEW;
+
+
+        //update Agency Status
+        String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
+
+
+        System.debug('Change code status is ' + changeCode.status);
+        System.debug('Account status is ' + oscarAgency.Status__c);
+        System.debug('New val is ' + newVal);
+
+
+        if (newVal <> oscarAgency.Status__c && newVal != null) {
+
+            oscarAgency.Status__c = newVal;
+            toReturn = oscarAgency;
+        }
+
+        return new ChangeCodeStruct(aacNEW, toReturn,null);
+    }
+    
 }
