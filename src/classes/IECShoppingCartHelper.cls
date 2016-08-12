@@ -3,6 +3,8 @@
   * Author: Alexandre McGraw
   * Version: 1.0
   * History: 
+  *   - 20160705-Sonny Leman: change getCartItems() for supporting eBroadcast special handling
+  *
   */
 public with sharing class IECShoppingCartHelper {
 
@@ -204,7 +206,8 @@ public with sharing class IECShoppingCartHelper {
 											Related_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product__r.zqu__SKU__c,
 											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.zqu__ZuoraId__c,
 											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.Name,
-											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.IsTriable__c
+											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.IsTriable__c,
+											Related_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c
 											FROM IEC_Cart_Item__c
 											WHERE Related_Shopping_Cart__c = :shoppingCart.Id
 											ORDER BY CreatedDate];

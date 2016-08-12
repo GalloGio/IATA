@@ -1,0 +1,39 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>eBroadcast Manager Account</title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            <!-- If any page specific .js, add them here -->
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content manage-account">
+                <div class="inner-wrapper">
+                    <h1 class="page-title">Account Details</h1>
+                     
+                    <div class="tab-container js-tabs">
+                        <ul class="nav tabs">
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Overview</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
+                            <li class="active"><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
+                            <li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
+                        </ul>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane is-open" id="pane-3">
+                                ...
+                            </div>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </main>
+            <!-- End of Page Content -->
+        </apex:define>
+    </apex:composition>
+</apex:page>
