@@ -98,6 +98,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Campaign_ID__c</fullName>
+        <description>The unique campaign ID</description>
+        <displayFormat>C-{0000000}</displayFormat>
+        <externalId>false</externalId>
+        <inlineHelpText>The unique campaign ID</inlineHelpText>
+        <label>Campaign ID</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>EBC_Design__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Template used by the campaign to perform the email blast (Matches the Wizard Step 4)</description>
@@ -523,8 +534,19 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
     </listViews>
     <listViews>
         <fullName>EBC_Approvers_EBC_Campaign</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
+        <columns>EBC_Design__c</columns>
+        <columns>EBC_Selected_Template__c</columns>
         <filterScope>Queue</filterScope>
         <label>eBroadcast Approvers</label>
+        <language>en_US</language>
         <queue>EBC_Approvers</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -536,7 +558,22 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Campaigns</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Campaign_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Audience__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Billing_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>EBC_Master_Filter__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Scheduled_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Exact_Target_Campaign_Id__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Campaign_ID__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Audience__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>EBC_Master_Filter__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Scheduled_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Exact_Target_Campaign_Id__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Design_vs_Status</fullName>
