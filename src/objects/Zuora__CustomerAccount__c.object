@@ -44,4 +44,6 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <label>Billing Account</label>
+    <pluralLabel>Billing Accounts</pluralLabel>
 </CustomObject>
