@@ -1,0 +1,13 @@
+<aura:component >
+  <aura:attribute name="activity" type="Objective__c"  />
+  <aura:attribute name="index" type="Integer"  />
+
+  <tr>
+    <td><ui:outputText value="{!v.activity.Name}" /></td>
+    <td><ui:outputText value="{!v.activity.Details__c}" /></td>
+    <td><ui:outputText value="{!v.activity.Status__c}" /></td>
+    <td><ui:outputText value="{!v.activity.Account_Issue_or_Priority__c}" /></td>
+    <td><ui:outputText value="{!v.activity.Benefits_to_Account__c}" /></td>
+    <td><ui:outputText value="{!v.activity.Deadline__c}" /></td>
+  </tr>
+</aura:component>

@@ -1,0 +1,140 @@
+<aura:component >
+	<aura:attribute name="account" type="Account" />
+    
+    <div class="slds-grid slds-wrap">
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Legal Name</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Legal_name__c}" />
+                </div>
+            </div>            
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Name on AOC</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Name_on_AOC__c}" />
+                </div>
+            </div>            
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >Trade Name</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.TradeName__c}" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">IATA Designator</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.Airline_designator__c}" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">IATA Code</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.IATACode__c}" />
+                </div>
+            </div>   
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >Airline Prefix</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.Airline_Prefix__c}" />
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >ICAO Designator</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.ICAO_designator__c}" />
+                </div>
+            </div>   
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >Sector</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Sector__c}" />
+                </div>
+            </div>            
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Category</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Category__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Website</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.Website}" />
+                </div>
+            </div>   
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >Training Website</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.IATATrainingUrl__c}" />
+                </div>
+            </div>   
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >ISO Country</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.IATA_ISO_Country__r.Name}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >Region</label>
+                <div class="slds-form-element__control">
+                    <force:outputField value="{!v.account.Region_formula__c}" />
+                </div>
+            </div>   
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+        	<div class="slds-form-element">
+                <label class="slds-form-element__label" >Verified</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.Quality__c}" />
+                </div>
+            </div>
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" >Ownership Type</label>
+                <div class="slds-form-element__control">
+                	<force:outputField value="{!v.account.AM_Ownership_Type__c}" />
+                </div>
+            </div>            
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,6 @@
+.THIS td.longText{
+  white-space: normal !important;
+}
+.THIS .dontIndent {
+  padding-left: 0.5em !important;
+}
