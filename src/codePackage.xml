@@ -6,7 +6,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>ApexComponent</name>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
         <members>*</members>
