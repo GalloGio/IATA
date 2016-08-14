@@ -532,26 +532,6 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    <listViews>
-        <fullName>EBC_Approvers_EBC_Campaign</fullName>
-        <columns>NAME</columns>
-        <columns>Campaign_ID__c</columns>
-        <columns>Status__c</columns>
-        <columns>Audience__c</columns>
-        <columns>Billing_Account__c</columns>
-        <columns>EBC_Master_Filter__c</columns>
-        <columns>Scheduled_Date__c</columns>
-        <columns>Exact_Target_Campaign_Id__c</columns>
-        <columns>EBC_Design__c</columns>
-        <columns>EBC_Selected_Template__c</columns>
-        <filterScope>Queue</filterScope>
-        <label>eBroadcast Approvers</label>
-        <language>en_US</language>
-        <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
     <nameField>
         <label>eBroadcast Campaign Name</label>
         <trackHistory>false</trackHistory>
