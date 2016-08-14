@@ -2,6 +2,7 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <description>Zuora Billing Account object.  An account is a customer account that collects all of the critical information about the customer, such as contact information, payment terms, and payment methods. You can use a customer account to track subscriptions, amendments, and transactions, such as invoices and payments.</description>
     <fields>
         <fullName>eBroadcast_Add_On_Access__c</fullName>
@@ -69,4 +70,5 @@ Only applicable for those subscribing to eBroadcast product category.</inlineHel
         <searchResultsAdditionalFields>Zuora__LastInvoiceDate__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Zuora__SalesRepName__c</searchResultsAdditionalFields>
     </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

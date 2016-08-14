@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <fields>
         <fullName>EBC_Cost_Per_Email__c</fullName>
         <description>Numeric value representing the the cost per e-mail in eBroadcast,, i.e. $0.20 / e-mail</description>
