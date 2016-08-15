@@ -2,6 +2,6 @@ trigger EF_MaterialLineItemTrigger on EF_Material_Line_Item__c (after delete, af
     
 	if (Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)) {
 
-    	EF_MaterialLineItemHandler.checkRelationshipContractItems(Trigger.new, Trigger.oldMap);
+    	EF_MaterialLineItemHandler.checkBillingAgreementContractItems(Trigger.new, Trigger.oldMap);
 	}
 }
