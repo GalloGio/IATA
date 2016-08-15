@@ -1,9 +1,9 @@
 <apex:page standardController="Case" 
-	extensions="ISSP_AmazonS3_Ctrl" >
+    extensions="ISSP_AmazonS3_Ctrl" >
     <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
-	<apex:includeScript value="{!$Resource.ajaxform}"/>
+    <apex:includeScript value="{!$Resource.ajaxform}"/>
     
-	<script>
+    <script>
     function addParam( form, name, value ) {
             var input = $("#"+name.replace("-",""));
             if($(input).size()==0)
@@ -44,20 +44,20 @@
             try{
             //if ( obj.files.length > 0 ) {
             if ( obj.value != null ) {
-            	// INTERNET EXPLORER
-				if ('XDomainRequest' in window && window.XDomainRequest !== null) {
-					var allpath = obj.value 
-					var extension = allpath.substring(allpath.lastIndexOf('.')+1);
-					filename = allpath.indexOf('\\')==-1 ?  allpath : allpath .substring(allpath.lastIndexOf('\\')+1);
-					filetype = extension == "pdf" ? "application/pdf" : extension;
-					filesize = 0;
-				// NORMAL BROWSERS
+                // INTERNET EXPLORER
+                if ('XDomainRequest' in window && window.XDomainRequest !== null) {
+                    var allpath = obj.value 
+                    var extension = allpath.substring(allpath.lastIndexOf('.')+1);
+                    filename = allpath.indexOf('\\')==-1 ?  allpath : allpath .substring(allpath.lastIndexOf('\\')+1);
+                    filetype = extension == "pdf" ? "application/pdf" : extension;
+                    filesize = 0;
+                // NORMAL BROWSERS
                 }else{
-					var file = obj.files[0];
+                    var file = obj.files[0];
                     filename = file.name;
                     filetype = file.type;
                     filesize = file.size;
-				}
+                }
                 //alert(file.name);
                 ISSP_AmazonS3_Ctrl.createUploadFile("{!id}",filename,filetype,reqType,filesize, function(result, event){
                     if(result["isSuccess"]==false){
@@ -84,8 +84,8 @@
                     callToCreateAmazonFileObject(result["filenameupload"], filesize);
                     
                     //TF new submit method because of IE10 
-            		form.submit();
-            		refreshListDoc();
+                    form.submit();
+                    refreshListDoc();
                     //TF new
                     
                     /* commented because ajaxsubmit does not work with IE10
@@ -147,26 +147,26 @@
            },500);
         }
     
-	function getFileLink(fileName) {
-		// alert(''+fileName);
-		setTimeout(function(){
-		try{
-			ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
-				var result2= result.replace("&amp;","&"); 
-				var newWin = window.open(result2);
-				if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
-					alert('Please check the pop-up settings of your browser!');
-				}
-			},{escape:false});
-		}catch(err){alert( err.message);}
-		},500);
-	}
-	
-	function callToCreateAmazonFileObject(key, filesize) {
-			ISSP_AmazonS3_Ctrl.createAmazonFileObject(key, filesize,"{!id}", function(result, event){
-			});
+    function getFileLink(fileName) {
+        // alert(''+fileName);
+        setTimeout(function(){
+        try{
+            ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+                var result2= result.replace("&amp;","&"); 
+                var newWin = window.open(result2);
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                    alert('Please check the pop-up settings of your browser!');
+                }
+            },{escape:false});
+        }catch(err){alert( err.message);}
+        },500);
+    }
+    
+    function callToCreateAmazonFileObject(key, filesize) {
+            ISSP_AmazonS3_Ctrl.createAmazonFileObject(key, filesize,"{!id}", function(result, event){
+            });
         }
-	</script>
+    </script>
     
     <apex:outputPanel id="AmazonS3Form">
     <div style="display:none;">
@@ -185,29 +185,29 @@
                </table>
               </form>
         </apex:outputPanel>
-		<apex:form >
+        <apex:form >
         <apex:pageblock id="fileList" mode="maindetail" title="{!$Label.ISSP_Attachments}" >
-        <apex:actionFunction name="refreshListDoc" action="{!refreshListDoc}" rerender="fileList,AmazonS3Form"/>
-        	<div id="loading" style="display:none">
-	            <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" >
-	            </div>
-	            <div style="border:1px solid black; background:white; text-align:center;
-					display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
-	                position: absolute; top:40%; left:45%; z-index:10;" >
-	               	<apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
-	            </div>
-	        </div>
+       <!-- <apex:actionFunction name="refreshListDoc" action="{!refreshListDoc}" rerender="fileList,AmazonS3Form"/> -->
+            <div id="loading" style="display:none">
+                <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" >
+                </div>
+                <div style="border:1px solid black; background:white; text-align:center;
+                    display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+                    position: absolute; top:40%; left:45%; z-index:10;" >
+                    <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
+                </div>
+            </div>
             
             <apex:pageBlockTable id="tablefileones"  value="{!listfile}" var="fileone" Title="{!$Label.Financial_Documents}">
                 <apex:column headerValue="Action" width="{!if(canUploadAndDelete,'120','60')}"   >
                   <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!fileone.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >View</a>
                   {!if(true,' | ','')}
                    <apex:commandLink value="Delete" action="{!deleteThisFile}"  
-                   					onclick=" if(!confirm('Are you sure you want to delete the selected file?'))return false;$('#loading').show();"
-                                 	style="color:#015ba7; cursor: pointer;" onComplete="refreshListDoc();"
-                              		>
-					<apex:param value="{!fileone.FullName}" name="currentFileName" assignTo="{!currentFileName}" />
-					</apex:commandLink>  
+                                    onclick=" if(!confirm('Are you sure you want to delete the selected file?'))return false;$('#loading').show();"
+                                    style="color:#015ba7; cursor: pointer;" onComplete="refreshListDoc();"
+                                    >
+                    <apex:param value="{!fileone.FullName}" name="currentFileName" assignTo="{!currentFileName}" />
+                    </apex:commandLink>  
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.IFAP_name}">
