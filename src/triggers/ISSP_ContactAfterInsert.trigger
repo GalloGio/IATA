@@ -1,7 +1,7 @@
 trigger ISSP_ContactAfterInsert on Contact (after insert,after update) {
     
-    if(TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete)
-        return;
+    //if(ISSP_UserTriggerHandler.preventOtherTrigger)
+      //  return;
     
     list<Contact> contactsFromMigrationList = new list<Contact>();
     list<Contact> contactsWithStatusEqualToInactivList = new list<Contact>();
