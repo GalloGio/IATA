@@ -4823,13 +4823,6 @@ and
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
-        <fullName>IEC_Registration_UserExist</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IEC Registration UserExist</shortDescription>
-        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
-    </labels>
-    <labels>
         <fullName>IEC_Trial_RequestFail</fullName>
         <language>en_US</language>
         <protected>false</protected>
