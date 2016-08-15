@@ -16,10 +16,10 @@
         <members>*</members>
         <name>ApexTrigger</name>
     </types>
-    <types>
+   <!-- <types>
         <members>*</members>
         <name>AuraDefinitionBundle</name>
-    </types>
+    </types> -->
   
     <version>36.0</version>
 </Package>
