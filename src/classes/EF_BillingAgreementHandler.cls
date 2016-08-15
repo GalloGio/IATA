@@ -1,13 +1,13 @@
-public class EF_RelationshipHandler 
+public class EF_BillingAgreementHandler 
 {
-
+    
     //checks if location chosen has been set in Contract Location Currency.
-    public static void checkLocationCurrency (List<EF_Relationship__c> relationshipList){
+    public static void checkLocationCurrency (List<EF_Billing_Agreement__c> relationshipList){
 
         //check if relationship records have location.
-        List <EF_Relationship__c> relWithLocation = new List <EF_Relationship__c>();
+        List <EF_Billing_Agreement__c> relWithLocation = new List <EF_Billing_Agreement__c>();
 
-        for(EF_Relationship__c rel: relationshipList){
+        for(EF_Billing_Agreement__c rel: relationshipList){
             if(rel.EF_Location_ID__c!=null){
                 relWithLocation.add(rel);
             }
@@ -17,7 +17,7 @@ public class EF_RelationshipHandler
 
         if(!relWithLocation.isEmpty()){
 
-            for(EF_Relationship__c r: relWithLocation){
+            for(EF_Billing_Agreement__c r: relWithLocation){
                 contractIdSet.add(r.Contract__c);
             }
 
@@ -33,16 +33,16 @@ public class EF_RelationshipHandler
                 }
             }
 
-            //create a map in which we store all the relationships already present in contract
-            Map <Id, EF_Relationship__c> mapRelationshipsInContract = new Map <Id, EF_Relationship__c> ();
+            //create a map in which we store all the billing agreements already present in contract
+            Map <Id, EF_Billing_Agreement__c> mapRelationshipsInContract = new Map <Id, EF_Billing_Agreement__c> ();
             for(Contract c: contractMap.values()){
-                for(EF_Relationship__c r: c.EF_Relationships__r){
+                for(EF_Billing_Agreement__c r: c.EF_Relationships__r){
                     mapRelationshipsInContract.put(r.EF_Location_ID__c, r);
                 }
             }
            
             //check if location chosen in relationship is present in Contract Location Currencies
-            for(EF_Relationship__c r: relWithLocation){
+            for(EF_Billing_Agreement__c r: relWithLocation){
                 
                 if(mapLocationsInLocationCurrency.isEmpty() && r.EF_Location_ID__c!=null){
                    r.EF_Location_ID__c.addError('Please set before location currencies on contract.');
@@ -52,7 +52,7 @@ public class EF_RelationshipHandler
                     }else{
                         if(mapRelationshipsInContract.containsKey(r.EF_Location_ID__c)){
 
-                            //LDC Removed file r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
+                            r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
                             
                         }else{
                             for(EF_Location_Currency__c lc: contractMap.get(r.Contract__c).EF_Locations_Currencies__r){
@@ -70,13 +70,13 @@ public class EF_RelationshipHandler
     }
     
     //checks if currencues chosen has been set in Contract Currencies.
-    public static void checkCurrencyFromContract (List<EF_Relationship__c> relationshipList, Map<Id,EF_Relationship__c> relationshipOldMap){
+    public static void checkCurrencyFromContract (List<EF_Billing_Agreement__c> relationshipList, Map<Id,EF_Billing_Agreement__c> relationshipOldMap){
         
         String errorMessage = Label.EF_Currency_Not_In_Contract_Error;
-        List<EF_Relationship__c> workdata = new List<EF_Relationship__c>();
+        List<EF_Billing_Agreement__c> workdata = new List<EF_Billing_Agreement__c>();
         Set<Id> contractIdSet = new Set<Id>();
 
-        for (EF_Relationship__c rel: relationshipList) {
+        for (EF_Billing_Agreement__c rel: relationshipList) {
             if ((rel.Data_Currency__c != null && relationshipOldMap!= null && relationshipOldMap.containsKey(rel.Id) && rel.Data_Currency__c != relationshipOldMap.get(rel.Id).Data_Currency__c) ||
                 (rel.Payment_Currency__c != null && relationshipOldMap != null && relationshipOldMap.containsKey(rel.Id) && rel.Payment_Currency__c != relationshipOldMap.get(rel.Id).Payment_Currency__c)) {
                 
@@ -91,7 +91,7 @@ public class EF_RelationshipHandler
             Contract cont;
             Set<String> values;
             
-            for (EF_Relationship__c rel : workdata) {
+            for (EF_Billing_Agreement__c rel : workdata) {
                 
                 cont = contractMap.get(rel.Contract__c);
                 
@@ -127,4 +127,5 @@ public class EF_RelationshipHandler
             }
         }
     }
+    
 }

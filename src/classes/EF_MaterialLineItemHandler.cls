@@ -1,16 +1,16 @@
 public class EF_MaterialLineItemHandler {
     
-    public static void checkRelationshipContractItems (List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap) {
+    public static void checkBillingAgreementContractItems (List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap) {
     
         List<EF_Material_Line_Item__c> workdata = new List<EF_Material_Line_Item__c>();
-        Set<Id> relationshipIdSet = new Set<Id>();
+        Set<Id> baIdSet = new Set<Id>();
     
         for (EF_Material_Line_Item__c mli : materialLineItemList) {
             
             if (mli.EF_Relationship__c != null && materialLineItemOldMap == null || materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Relationship__c != materialLineItemOldMap.get(mli.Id).EF_Relationship__c) {
                 
                 workdata.add(mli);
-                relationshipIdSet.add(mli.EF_Relationship__c);
+                baIdSet.add(mli.EF_Relationship__c);
             }
         }
         

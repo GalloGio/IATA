@@ -1,6 +1,6 @@
 @isTest
-private class EF_RelationshipTriggerTest {
-
+private class EF_BillingAgreementTriggerTest {
+	
 	@testSetup 
     static void setup() {
 
@@ -87,7 +87,7 @@ private class EF_RelationshipTriggerTest {
                
     }
 	
-	@isTest static void EF_RelationshipTriggger_LocationInContract() {
+	@isTest static void EF_BillingAgreementTriggger_LocationInContract() {
 		
 		// query for test data
 		
@@ -95,9 +95,9 @@ private class EF_RelationshipTriggerTest {
 		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
 		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
-		// create relationship
+		// create billing agreement
 		// location ID chosen exist in Location Currency in contract
-		EF_Relationship__c rel = new EF_Relationship__c();
+		EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
 		rel.Billed_Account__c= client.Id;
 		rel.Billing_Account__c = customer.Id;
 		rel.Contract__c = contract.Id;
@@ -108,13 +108,13 @@ private class EF_RelationshipTriggerTest {
 		Test.stopTest();
 
 		//check update of currency was made
-		EF_Relationship__c relationshipAfter =[ select id, Billing_Currency__c from EF_Relationship__c where id =: rel.Id limit 1];
+		EF_Billing_Agreement__c baAfter =[ select id, Billing_Currency__c from EF_Billing_Agreement__c where id =: rel.Id limit 1];
 
-		System.assertEquals(relationshipAfter.Billing_Currency__c, 'QAR');
+		System.assertEquals(baAfter.Billing_Currency__c, 'QAR');
 		
 	}
 
-	@isTest static void EF_RelationshipTriggger_LocationContractDuplicated() {
+	@isTest static void EF_BillingAgreementTrigger_LocationContractDuplicated() {
 		
 		// query for test data
 		
@@ -122,16 +122,16 @@ private class EF_RelationshipTriggerTest {
 		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
 		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
-		// create relationship
+		// create billing agreement
 		// location ID chosen exist in Location Currency in contract
-		EF_Relationship__c rel = new EF_Relationship__c();
+		EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
 		rel.Billed_Account__c= client.Id;
 		rel.Billing_Account__c = customer.Id;
 		rel.Contract__c = contract.Id;
 		rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
 		insert rel;
 
-		EF_Relationship__c relDuplicated = new EF_Relationship__c();
+		EF_Billing_Agreement__c relDuplicated = new EF_Billing_Agreement__c();
 		relDuplicated.Billed_Account__c= client.Id;
 		relDuplicated.Billing_Account__c = customer.Id;
 		relDuplicated.Contract__c = contract.Id;
@@ -151,7 +151,7 @@ private class EF_RelationshipTriggerTest {
 		
 	}
 	
-	@isTest static void EF_RelationshipTriggger_LocationNOTInContract() {
+	@isTest static void EF_BillingAgreementTrigger_LocationNOTInContract() {
 
 		// query for test data
 		
@@ -159,9 +159,9 @@ private class EF_RelationshipTriggerTest {
 		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
 		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
-		// create relationship
+		// create billing agreement
 		// location ID chosen exist in Location Currency in contract
-		EF_Relationship__c rel = new EF_Relationship__c();
+		EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
 		rel.Billed_Account__c= client.Id;
 		rel.Billing_Account__c = customer.Id;
 		rel.Contract__c = contract.Id;
@@ -181,7 +181,7 @@ private class EF_RelationshipTriggerTest {
 		
 	}
 
-	@isTest static void EF_RelationshipTriggger_ContractWithNoLocCurrencies() {
+	@isTest static void EF_BillingAgreementTrigger_ContractWithNoLocCurrencies() {
 
 		// query for test data
 		
@@ -200,9 +200,9 @@ private class EF_RelationshipTriggerTest {
         	);
         insert contract2;
 		
-		// create relationship
+		// create billing agreement
 		// location ID chosen exist in Location Currency in contract
-		EF_Relationship__c rel = new EF_Relationship__c();
+		EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
 		rel.Billed_Account__c= client.Id;
 		rel.Billing_Account__c = customer.Id;
 		rel.Contract__c = contract2.Id;
