@@ -18,19 +18,8 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomLabel</name>
+        <name>AuraDefinitionBundle</name>
     </types>
-    <types>
-        <members>*</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Translations</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Workflow</name>
-    </types>
+  
     <version>36.0</version>
 </Package>
