@@ -18,11 +18,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomLabel</name>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
         <members>*</members>
-        <name>RemoteSiteSetting</name>
+        <name>CustomLabel</name>
     </types>
     <types>
         <members>*</members>
