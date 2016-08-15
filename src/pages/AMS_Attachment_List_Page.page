@@ -187,7 +187,7 @@
         </apex:outputPanel>
         <apex:form >
         <apex:pageblock id="fileList" mode="maindetail" title="{!$Label.ISSP_Attachments}" >
-       <!-- <apex:actionFunction name="refreshListDoc" action="{!refreshListDoc}" rerender="fileList,AmazonS3Form"/> -->
+        <apex:actionFunction name="refreshListDoc" action="{!refreshListDoc}" rerender="fileList,AmazonS3Form"/>
             <div id="loading" style="display:none">
                 <div style="height:100%;width:100%;z-index:5; position:absolute;background:black;opacity:0.5;" >
                 </div>
