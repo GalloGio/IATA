@@ -1,0 +1,13 @@
+<messaging:emailTemplate subject="Your Campaign {!relatedTo.Name} has been approved" recipientType="User" relatedToType="EBC_Campaign__c">
+<messaging:plainTextEmailBody >
+Congratulations!
+
+Email Content
+The notification sent to the user when vetting is favorable will include the following elements:
+-          Static Confirmation/thank you message (text TBD) with Primary Contact First and Last Name (dynamic) {!relatedTo.Owner.Name} 
+-          Campaign Name: {!relatedTo.Name}
+-          Campaign ID: {!relatedTo.Id}
+-          Campaign Scheduled Date: {!relatedTo.Scheduled_Date__c}
+-          Additional static info to include a contact us (phone and/or email)
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>
