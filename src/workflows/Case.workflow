@@ -12735,7 +12735,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND (      SIDRA_exchange_rate_updated__c,         TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,         OR(             RecordType.DeveloperName = &apos;SIDRA&apos;,                   RecordType.DeveloperName = &apos;SIDRA_BR&apos;         ),          CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),       Short_Payment_Amount_USD__c &gt; 1,             ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50 )</formula>
+        <formula>AND ( 		SIDRA_exchange_rate_updated__c,    		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		OR(  			RecordType.DeveloperName = &apos;SIDRA&apos;,         			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		),  		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		Short_Payment_Amount_USD__c &gt; 1,      		ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50 )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14119,7 +14119,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>System sends notification to the Case Owner as soon as the IFAP Case Status is changed to &quot;Assessment Performed&quot; for all Financial Review Type cases</description>
-        <formula>AND(       $RecordType.Name == &apos;IATA Financial Review&apos;,      AND (ISCHANGED(Status),                 OR(                     ISPICKVAL(Status,&apos;Assessment Performed&apos;),                     ISPICKVAL(Status,&apos;Action Needed&apos;),                    ISPICKVAL(Status,&apos;Sanity Check Failure&apos;)                  )           )       )</formula>
+        <formula>AND( 		$RecordType.Name == &apos;IATA Financial Review&apos;, 		AND (ISCHANGED(Status), 				OR( 					ISPICKVAL(Status,&apos;Assessment Performed&apos;), 					ISPICKVAL(Status,&apos;Action Needed&apos;), 					ISPICKVAL(Status,&apos;Sanity Check Failure&apos;) 					) 			)  		)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
