@@ -6,7 +6,7 @@
     <tab>standard-Case</tab>
     <tab>standard-Contact</tab>
     <tab>standard-Contract</tab>
-    <tab>EF_Relationship__c</tab>
+    <tab>EF_Billing_Agreement__c</tab>
     <tab>EF_Related_Records__c</tab>
     <tab>standard-Dashboard</tab>
     <tab>standard-report</tab>
