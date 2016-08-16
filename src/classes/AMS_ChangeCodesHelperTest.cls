@@ -1,5 +1,5 @@
 @isTest
-private class AMS_ChangeCodes_Utils_Test {
+private class AMS_ChangeCodesHelperTest {
 	
 	@testSetup 
 	static void setup(){

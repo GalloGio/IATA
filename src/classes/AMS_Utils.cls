@@ -871,16 +871,21 @@ public without sharing class AMS_Utils {
 
     }
 
+
     //Map data from staging area (AMS Online Accreditation) to account
-    public static List<Account> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        List<Account> accountsToUpdate = new List<Account>();
+        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
+
         //DT: Reindented and added 3 fields for addresses
+        // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -947,13 +952,39 @@ public without sharing class AMS_Utils {
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
+
+
                 for(Id accId: accountsAffected){
+
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
                     Account acc = accounts.get(accId);
 
                     for(String accFieldApiName: accountFieldNewValue.keySet())
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    {
+                        
+                        Schema.SObjectField field = Schema.SObjectType.Account.fields.getMap().get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                        system.debug('Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('Field Type to migrate to account: ' + fldType);
 
-                    accountsToUpdate.add(acc);
+                     
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+                           
+                        String oldValue = String.valueOf(acc.get(accFieldApiName));
+                        String newValue =  String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue));
+                            
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    }
+
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+ 
+                    accountsToUpdate.put(acc,acctChangesStruct);
                 }
 
         }
