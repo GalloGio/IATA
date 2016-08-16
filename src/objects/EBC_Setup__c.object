@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object holds the common information, default values of eBroadcast product that are necessary to operate.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Default_Cost_per_E_mail__c</fullName>
+        <description>The field designates the default value that will be used when there are no pre-paid plans active.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The field designates the default value that will be used when there are no pre-paid plans (subscriptions) active.</inlineHelpText>
+        <label>Default Cost per E-mail</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Storage_Capacity__c</fullName>
+        <description>Default Storage Capacity in MegaBytes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Default Storage Capacity in MegaBytes</inlineHelpText>
+        <label>Default Storage Capacity (Mg)</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enhanced_Reporting_Product_Rate_Plan__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Rate plan containing the default information for Enhanced Reporting Add-On.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Rate plan containing the default information for Enhanced Reporting Add-On.</inlineHelpText>
+        <label>Enhanced Reporting Product Rate Plan</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Enhanced Reporting Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for member</inlineHelpText>
+        <label>Member Email Block Product</label>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
+        <relationshipName>Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Member_Prepaid_Product_Rate_Plan_01__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for member</inlineHelpText>
+        <label>Member Prepaid Product Rate Plan 1</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Member Enterprise Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups4</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Member_Prepaid_Product_Rate_Plan_02__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for member</inlineHelpText>
+        <label>Member Prepaid Product Rate Plan 2</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Member Premium Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups5</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Member_Prepaid_Product_Rate_Plan_03__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for member</inlineHelpText>
+        <label>Member Prepaid Product Rate Plan 3</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Member Pro Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups3</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Member_Prepaid_Product_Rate_Plan_04__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 4 is the most sophisticated option available for member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 4 is the most sophisticated option available for member</inlineHelpText>
+        <label>Member Prepaid Product Rate Plan 4</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Member Starter Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups2</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Email_Block_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the product that will be the base of the Rate Plans for the Email Blocks, for non member</inlineHelpText>
+        <label>Non Member Email Block Product</label>
+        <referenceTo>zqu__ZProduct__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non Member Member Email Block Product)</relationshipLabel>
+        <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Prepaid_Product_Rate_Plan_01__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for non member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for non member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for non member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for non member</inlineHelpText>
+        <label>Non-Member Prepaid Product_Rate Plan 1</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non-Member Enterprise Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups8</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Prepaid_Product_Rate_Plan_02__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for non member,</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for non member,</inlineHelpText>
+        <label>Non-Member Prepaid Product_Rate Plan 2</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non-Member Premium Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups9</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Prepaid_Product_Rate_Plan_03__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for non-member.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for non-member.</inlineHelpText>
+        <label>Non-Member Prepaid Product_Rate Plan 3</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non-Member Pro Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups7</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Non_Member_Prepaid_Product_Rate_Plan_04__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 4 is the most sophisticated option available for non-member</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 4 is the most sophisticated option available for non-member</inlineHelpText>
+        <label>Non-Member Prepaid Product Rate Plan 4</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non-Member Starter Product Rate Plan)</relationshipLabel>
+        <relationshipName>EBC_Setups6</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Storage_Product_Rate_Plan__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Rate plan containing the default information for Additional Storage Add-On.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Rate plan containing the default information for Additional Storage Add-On.</inlineHelpText>
+        <label>Storage Product Rate Plan</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups</relationshipLabel>
+        <relationshipName>EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>EBC Setup</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Default_Cost_per_E_mail__c</columns>
+        <columns>Storage_Product_Rate_Plan__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>EBC Setup Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Setups</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
