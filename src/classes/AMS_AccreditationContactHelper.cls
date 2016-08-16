@@ -186,7 +186,7 @@ public with sharing class AMS_AccreditationContactHelper
 			// role.Owner_Account__c 	= ac.Company__c;
 			//role.Owner_Name__c 		= ac.First_Name__c + ' ' + ac.Last_Name__c;
 			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
-            role.Owner_Name__c      = ac.First_Name__c + ' ' + ac.Last_Name__c;
+            role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
 		}
 		//TD: Removed Employee from Role. Keep them on Contact object only
 		/*

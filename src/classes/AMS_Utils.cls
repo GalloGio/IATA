@@ -818,10 +818,14 @@ public without sharing class AMS_Utils {
 
 
 
+
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
+
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
+
+            Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
             if (acc != null && onlineAcc != null) {
 
@@ -846,19 +850,57 @@ public without sharing class AMS_Utils {
 
 
 
+            // THen move the owners
+            Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
 
+            
 
             if (!accountsToUpdate.isEmpty()) {
                 update accountsToUpdate;
             }
 
-            if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/)
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
+
+            //AMS-1671
+
+            //Need to apply change of ownership to all the accounts in herarchy
+            Set<Id> allHierarchyAccountIds = new Set<Id>();
+
+            if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
+                allHierarchyAccountIds.add(oscar.Account__c);
+            }else{
+                for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(oscar.Account__c)){
+                    allHierarchyAccountIds.add(rel.Parent_Account__c);
+                    allHierarchyAccountIds.add(rel.Child_Account__c);
+                }
+            }
+
+            stagingToAccounts.put(onlineAcc.Id, allHierarchyAccountIds);
+
+            if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/){
+                // old code !! AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+            }
 
 
         }
 
 
+    }
+
+    private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+
+        if(accountHierarchyRelationships.isEmpty())
+            return true;
+
+        if(accountHierarchyRelationships.values().isEmpty())
+            return true;
+
+        for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
+            if(!agency.isEmpty())
+                return false;
+        }
+
+        return true;
     }
 
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
