@@ -75,6 +75,7 @@
 				<apex:outputLabel for="totalUsersUsed" value="Users that never used MIR" />
 				<apex:outputText id="totalUsersUsed" value="{!totalContactsUsed} ({!totalContactsUsedPercent}%)" />
 			</apex:pageBlockSectionItem>
+			<!--
 			<apex:pageBlockSection columns="1" id="totalUsersUsedList" rendered="{!userListNeverUsed.size > 0}" >
 				<font color="#ff0000">
 					<apex:facet name="header">
@@ -83,17 +84,21 @@
 	   			</font>
 				<script>twistSection(document.getElementById("{!$Component.totalUsersUsedList}").childNodes[0].childNodes[0]);</script>
 				<apex:pageBlockTable value="{!userListNeverUsed}" var="item" >
+				-->
 					<!-- <apex:column value="{!item.Id}" /> -->
+					<!--
 					<apex:column value="{!item.Contact.Name}" />
 					<apex:column value="{!item.Email}" />
 					<apex:column value="{!item.Contact.IATA_Code__c}" />
 					<apex:column value="{!item.Contact.Account.Name}" />
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
+			-->
 			<apex:pageBlockSectionItem >
 				<apex:outputLabel for="totalUsersAll" value="Users checking MIR every week" />
 				<apex:outputText id="totalUsersAll" value="{!totalContactsSeenAll} ({!totalContactsSeenAllPercent}%)" />
 			</apex:pageBlockSectionItem>
+			<!--
 			<apex:pageBlockSection columns="1" id="totalUsersAllList" rendered="{!userListAlwaysUsed.size > 0}" >
 				<font color="#ff0000">
 					<apex:facet name="header">
@@ -102,17 +107,21 @@
 	   			</font>
 				<script>twistSection(document.getElementById("{!$Component.totalUsersAllList}").childNodes[0].childNodes[0]);</script>
 				<apex:pageBlockTable value="{!userListAlwaysUsed}" var="item" >
+				-->
 					<!-- <apex:column value="{!item.Id}" /> -->
+					<!--
 					<apex:column value="{!item.Contact.Name}" />
 					<apex:column value="{!item.Email}" />
 					<apex:column value="{!item.Contact.IATA_Code__c}" />
 					<apex:column value="{!item.Contact.Account.Name}" />
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
+			-->
 			<apex:pageBlockSectionItem >
 				<apex:outputLabel for="totalUsersOnce" value="Users that checked MIR at least once" />
 				<apex:outputText id="totalUsersOnce" value="{!totalContactsSeenOnce} ({!totalContactsSeenOncePercent}%)" />
 			</apex:pageBlockSectionItem>
+			<!--
 			<apex:pageBlockSection columns="1" id="totalUsersOnceList" rendered="{!userListUsedOnce.size > 0}" >
 				<font color="#ff0000">
 					<apex:facet name="header">
@@ -120,14 +129,17 @@
 	   				</apex:facet>
 	   			</font>
 				<script>twistSection(document.getElementById("{!$Component.totalUsersOnceList}").childNodes[0].childNodes[0]);</script>
-				<apex:pageBlockTable value="{!userListUsedOnce}" var="item" >
+				<apex:pageBlockTable value="{!userListUsedOnce}" var="item" > 
+				-->
 					<!-- <apex:column value="{!item.Id}" /> -->
+					<!--
 					<apex:column value="{!item.Contact.Name}" />
 					<apex:column value="{!item.Email}" />
 					<apex:column value="{!item.Contact.IATA_Code__c}" />
 					<apex:column value="{!item.Contact.Account.Name}" />
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
+			-->
 		</apex:pageBlockSection>
 	</apex:pageBlock>
 	
