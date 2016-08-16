@@ -1111,8 +1111,12 @@ public without sharing class ISSP_APProcess {
         //Get handle for Account (HQ or BR AL Office) for the country of joining application
         Id accountConcernedId;
         String airlinesite_BR;
-        
-        airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+
+        airlinesite_BR = (IATACode = null && hq.Airline_Prefix__c != null)? 
+                            DesignatorCode + ' ' + hq.Airline_Prefix__c + ' ' + CountryCode; : 
+                            DesignatorCode + ' ' + IATACode + ' ' + CountryCode;;
+
+        //airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
         System.debug('AL BR Site:' + airlinesite_BR);
         
         List <Account> concernedAccount = [
