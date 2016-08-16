@@ -170,6 +170,8 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
 
+		boolean isSanityCheck = false;
+
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		//map that will be used to verify ownership consistency between a list of agencies
@@ -296,6 +298,8 @@ public class AMS_OSCARTriggerHandler {
 				tocList.addAll(oscar.Type_of_change__c.split(';'));
 
 				if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
+
+					isSanityCheck = true;
 
 					performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships);
 
@@ -471,7 +475,8 @@ public class AMS_OSCARTriggerHandler {
 			//Migrate Ownership
 			if (!accountsAffectedPerOnlineAccreditation.isEmpty()) {
 				system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
-				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation);
+
+				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
 
 				//verify ownership alignment
 				if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
