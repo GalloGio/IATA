@@ -45,10 +45,10 @@ public with sharing class AMS_AccreditationContactController {
             //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
-                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
+                            Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
-            String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
+            String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
             acList = Database.query(query);
             if(acList.size() > 0)
             {
@@ -104,8 +104,13 @@ public with sharing class AMS_AccreditationContactController {
 
         forDeletion = new List<AMS_Accreditation_Contact__c>();
 
-        blockOwnershipEdit = aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES;
+        Boolean typeOfChangeContainsOwnershipToIATA = false;
+
+        if(aoa.SAAM_Case__r.OSCAR__r.Type_of_change__c != null && aoa.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA))
+            typeOfChangeContainsOwnershipToIATA = true;
+
+        blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
+                             aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES) || typeOfChangeContainsOwnershipToIATA;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
     }
@@ -642,10 +647,11 @@ public with sharing class AMS_AccreditationContactController {
             //edit on owner contacts is to be blocked when the account concerned is not an HO.
             //although when the associated process is a CORRECTION edit should be allowed
             get{
-                return ac.Agency_Owner__c &&
-                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
+                return ac.Agency_Owner__c && 
+                       (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c!=null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c.contains(AMS_Utils.OWNERSHIP_IATA) ||
+                       (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
-                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES;
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
 
                 }
             set;
