@@ -37,6 +37,10 @@ public with sharing class AMS_AccountRoleCreator
     	
 	public static void runRoleCreatorForOnlineAccreditations(List<AMS_Pax_Accreditation_Form__c> aoaList, boolean isCorrection)
     {
+
+
+ 		throw new AMS_ApplicationException('This is not to be used !');
+
     	System.debug(LoggingLevel.ERROR, '[LF] runRoleCreatorForOnlineAccreditations() '+aoaList);
     	set<id> setAddedRoles = new set<id>();
     	AMS_AccountRoleCreator.aoaIdSet = new Set<String>();
@@ -929,6 +933,15 @@ public with sharing class AMS_AccountRoleCreator
     // This version will apply an online accreditation to several accounts
     public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
 
+    	if(true){
+    		System.debug('DNG: here goes nothing...');
+
+    		//throw new AMS_ApplicationException('entering with isCorrection:' + isCorrectionProcess);
+
+    		runRoleCreatorForOnlineAccreditationsDNG(aoMap,isCorrectionProcess);
+    		System.debug('DNG: all done...');
+    		return;
+    	}
 
     	Set<Id> acContactIdSet = new Set<Id>();
     	
@@ -968,27 +981,21 @@ public with sharing class AMS_AccountRoleCreator
         	aoToAcList.get(ac.AMS_Pax_Accreditation_Form__c).add(ac);
 
         	Id aoId = ac.AMS_Pax_Accreditation_Form__c;
-    		system.debug('DTULLO 837 --> ' + aoId);
+
         	if(aoMap.get(aoId)!=null){
  	        	for(Id accId : aoMap.get(aoId)){
  	        		
  	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
-
-	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Contact__c = \''+ac.Contact__c+'\' AND Account__c = \''+accId+'\')';
 						
 						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Contact__c, 'C'));
 
 	        		}
 	        		else if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Person_AMS__c != null){
 
-	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Person__c = \''+ac.Person_AMS__c+'\' AND Account__c = \''+accId+'\')';
-
 	        			contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Person_AMS__c, 'P'));
 
 	        		}
 	        		else if(companyDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Company__c != null){
-
-	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Owner_Account__c = \''+ac.Company__c+'\' AND Account__c = \''+accId+'\')';
 
 						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Company__c, 'A'));
 
@@ -1012,10 +1019,6 @@ public with sharing class AMS_AccountRoleCreator
     	for(AMS_Accreditation_Contact__c ac : idToAc.values()){
     		acToRoles.put(ac.Id, new List<AMS_Account_Role__c>());
     	}
-
-    	if(rolequery != '')
-    		rolequery = '('+rolequery+') AND ';
-    	
 
 		List<AMS_Account_Role__c> rolesToQuery = new List<AMS_Account_Role__c>();
 
@@ -1065,7 +1068,7 @@ public with sharing class AMS_AccountRoleCreator
 
 
     	Map<String, Contact> newContactsToInsert = new Map<String, Contact>();
-    	Set<Id> existingContactIds = new Set<Id>();
+
     	Map<Id, String> personsToContactEmail = new Map<Id, String>();
 
     	for(Id aoId : aoToAcList.keySet()){
@@ -1090,8 +1093,6 @@ public with sharing class AMS_AccountRoleCreator
 	        		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 3) ac '+ac.First_name__c+' '+ ac.Last_name__c +'--> Will update existing contact');
 
 	        		Id existingContactId = ac.Person_AMS__c==null ? ac.Contact__c : ac.Person_AMS__r.Contact__c;
-
-		        	existingContactIds.add(existingContactId);
 
 		        	contactsToUpdate.put(existingContactId, AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac));
 
@@ -1291,6 +1292,541 @@ public with sharing class AMS_AccountRoleCreator
 
     }
 
+
+    /**
+    This method processes the staging area owners and contacts into the AMS Account roles in the affected agencies.
+    If an Accreditation Contact has a direct link to the AMS_Account_role, it tries to update.
+    If an Accreditation Contact does not have a direct link, it will deactivate the AMS Account Role and creates a new one.
+
+    The aoMap parameter has a map between the Accreditation Area and the Agencies (accounts) involved in the process.
+    */
+    public static void runRoleCreatorForOnlineAccreditationsDNG(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
+
+    	// First, lets get all the data we need from Accreditation Contacts and AMS Account Roles
+
+    	Set<Id> accreditationAreaIds = aoMap.keyset();
+    	List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
+
+    	List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
+
+    	Map<Id,String> accreditationAndOscars = new Map<Id,String>();
+
+    	Id accountId; 	// this is a hack to get the Account from the Oscar. As we are supposed to only work one
+    					// OSCAR at a time, let's "assume" that there is only one Account involved.
+    	for(AMS_Oscar__c oscar: oscars){
+    		accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
+    		accountId = oscar.Account__c;
+    	}
+
+
+    	for(Id accreditationId : accreditationAreaIdsLst){
+
+	    	Set<Id> accounts = aoMap.get(accreditationId);
+
+	    	String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
+
+	    	String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c';
+	        query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId AND (RecordTypeId in ';
+	        query = query + '(' + recordTypesPerson +' ) ';
+	        query = query + ' OR RecordTypeId in ';
+	        query = query + '(' + recordTypesCompany+' ) ' + ')';
+
+	        List<AMS_Accreditation_Contact__c> accreditationContactsToProcess = database.query(query);
+
+	        // need to get all the contacts in case I need later on to update them...
+	        Map<String, Contact> emailContactMap = new Map<String, Contact>();
+        	Set<Id> acContactIdSet = new Set<Id>();
+        	for(AMS_Accreditation_Contact__c ac : accreditationContactsToProcess)
+        		acContactIdSet.add(ac.Contact__c);
+
+        	List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c FROM Contact WHERE Id IN :acContactIdSet];
+
+        	for(Contact c :allContactsFromAccreditation)
+        		emailContactMap.put(c.id, c);
+
+
+	        //get all the roles
+	        List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
+	        allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
+
+	        // just to further ahead in the process have a way to link Accreditation Contacts and AMS Account Roles
+	        Map<Id,AMS_Account_Role__c> rolesMap = new Map<Id,AMS_Account_Role__c>();
+
+			for(AMS_Account_Role__c role : allAccountRoles){
+				rolesMap.put(role.Id,role);
+			}
+
+	        Set<Id> rolesToDeactivateSet = new Set<Id>();
+
+	        List<AMS_Account_Role__c> rolestoDeactivate = new List<AMS_Account_Role__c>();
+	        List<AMS_Account_Role__c> rolestoUpdate = new List<AMS_Account_Role__c>();
+	        List<AMS_Account_Role__c> rolestoInsert = new List<AMS_Account_Role__c>();
+	        List<AMS_Accreditation_Contact__c>  accreditationContactsToUpdate = new List<AMS_Accreditation_Contact__c>();
+	        List<AMS_Accreditation_Contact__c>  accreditationContactsToInsert = new List<AMS_Accreditation_Contact__c>();
+	        List<AMS_Accreditation_Contact__c> accreditationContactsToInsertOnlyContacts = new List<AMS_Accreditation_Contact__c>();
+
+	        // let's find out which AMS_Account_roles are to deactivate.
+
+	        for(AMS_Accreditation_Contact__c aContact :accreditationContactsToProcess){
+
+	        	//does is have a link to an AMS_Account_role ? If so, let's deactivate the Role and add it to the list of new Accreditation to Create.
+	        	if(aContact.AMS_Ownership_Role__c != null && !isCorrectionProcess){
+	        		accreditationContactsToInsert.add(aContact);
+	        		continue;
+	        	}
+	        	
+	        	//does is have a link to an AMS_Account_role and is a correction or is
+	        	// second time this process runs for an Accreditation Contact ? let's mark for update.
+	        	if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess){
+	        		accreditationContactsToUpdate.add(aContact);
+	        		continue;
+	        	}
+
+	        	// does not have any Account role linked (is new) - it does not matter if it's a correction or not.
+				if(aContact.AMS_Ownership_Role__c == null && aContact.Agency_owner__c){
+	        		accreditationContactsToInsert.add(aContact);
+	        		continue;
+	        	}else{
+	        		accreditationContactsToInsertOnlyContacts.add(aContact);
+	        		continue;
+	        	}
+
+	
+	        }
+
+
+
+
+	        // to change all the AMS Account Roles in all hierarchies, we have to create a map from a single Accreditation contact
+	        // to all AMS Acccount Roles that will be updated.
+	        // for that, we search the AMS Account Role from the Accreditation Contact and try to find it's sinblings.
+
+	        Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles = syncAccreditationsWithRoles(accreditationContactsToProcess,allAccountRoles); 
+
+	        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
+			
+			for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
+
+				if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
+					
+					for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
+		        		
+		        		role.Termination_Date__c = Date.Today();
+		        		rolestoDeactivate.add(role);
+		        		
+		        	}
+
+
+				}
+
+			}
+
+
+	        if(aContactsAndRoles == null) // opps
+		        throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !');
+
+			// now for the new Acreditation Contact, we have to create new AMS Account roles based on the accreditationContactsToInsert list !
+			System.debug('Accreditation contacts to insert:'+accreditationContactsToInsert);
+			AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW',accountId);
+			
+			// for accreditation contacts that only have contact connectd (not owners), let's update the data
+			System.debug('Single contacts to insert:'+accreditationContactsToInsertOnlyContacts);
+			AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket2 = insertOrUpdateContactsAlone(accreditationContactsToInsertOnlyContacts,emailContactMap);
+
+
+	        // now that the old Roles are deactivated, we have to update the ones on the accreditationContactsToUpdate list !
+	        System.debug('Accreditation Contacts to update:'+accreditationContactsToUpdate);	        
+	        AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket3 = updateAMSAccountRoles(accreditationContactsToUpdate,emailContactMap,rolesMap,aContactsAndRoles);
+
+
+			List<AMS_Account_Role__c> amsRolesToInsert = bucket1.rolesToInsert;
+			amsRolesToInsert.addAll(bucket2.rolesToInsert);
+			amsRolesToInsert.addAll(bucket3.rolesToInsert);
+			amsRolesToInsert.addAll(rolestoDeactivate);
+
+			upsert amsRolesToInsert;
+		
+			List<Contact> contactsToUpdate = bucket1.contactsToUpdate.values();
+			contactsToUpdate.addAll(bucket2.contactsToUpdate.values());
+			contactsToUpdate.addAll(bucket3.contactsToUpdate.values());
+
+			update contactsToUpdate;
+
+			List<AMS_Accreditation_Contact__c> aContactsToUpdate = new List<AMS_Accreditation_Contact__c>();
+			aContactsToUpdate.addAll(bucket1.accreditationsToUpdate.keySet());
+
+			for(AMS_Accreditation_Contact__c ac : aContactsToUpdate){
+
+				if(bucket1.accreditationsToUpdate.get(ac) != null)
+					ac.AMS_Ownership_Role__c = bucket1.accreditationsToUpdate.get(ac).Id;
+
+			}
+
+			aContactsToUpdate.addAll(bucket2.accreditationsToUpdate.keySet());
+			aContactsToUpdate.addAll(bucket3.accreditationsToUpdate.keySet());
+
+			update aContactsToUpdate;
+
+
+        }
+
+    }
+
+    public static Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> syncAccreditationsWithRoles(List<AMS_Accreditation_Contact__c> accreditationContactsToProcess, List<AMS_Account_Role__c> allAccountRoles){
+
+    	Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> toReturn = new Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>>();
+
+    	for(AMS_Accreditation_Contact__c ac: accreditationContactsToProcess){
+
+    		if(ac.AMS_Ownership_Role__c == null) // it's new ...
+    			continue;
+
+    		List<AMS_Account_Role__c> rolesToAdd = new List<AMS_Account_Role__c>();
+
+			AMS_Account_Role__c orginal = null;
+    		
+    		for(AMS_Account_Role__c role: allAccountRoles){
+    			if(ac.AMS_Ownership_Role__c == role.Id){
+    				orginal = role;
+    				break;
+    			}
+    		}
+
+    		if(orginal == null)
+    			return null; // ooppss....
+    	
+    		// now let's find his siblings 
+    		for(AMS_Account_Role__c role: allAccountRoles){
+
+    			if(role.RecordTypeId == orginal.RecordTypeId && role.Percentage__c == orginal.Percentage__c && 
+    			  (role.Contact__c == orginal.Contact__c && role.Person__c == orginal.Person__c && role.Owner_Account__c == orginal.Owner_Account__c && role.Legacy_External_ID__c == orginal.Legacy_External_ID__c))
+    			rolesToAdd.add(role);
+    		}
+
+    		toReturn.put(ac, rolesToAdd);
+    	}
+
+    	return toReturn;
+
+    }
+
+
+
+
+
+    public static AMS_AccountRoleCreator.RoleCreatorEntitiesBucket updateAMSAccountRoles(List<AMS_Accreditation_Contact__c> contacts,Map<String, Contact> emailContactMap,Map<Id,AMS_Account_Role__c> rolesMap,Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles){
+
+    	Map<String, Contact> newContactsToInsert = new Map<String, Contact>();
+    	Map<String,Contact> contactsToUpdate = new Map<String,Contact>();
+		List<AMS_Account_Role__c> rolesToUpdate = new List<AMS_Account_Role__c>();
+
+		Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c> accreditationsToUpdate = new Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c>();
+
+    	for(AMS_Accreditation_Contact__c ac: contacts){
+
+    		List<AMS_Account_Role__c> roles = aContactsAndRoles.get(ac);
+
+    		if(roles == null){
+    			System.debug('Could not find any roles...');
+    			continue;
+    		}
+
+    		for(AMS_Account_Role__c role: roles){
+
+	    		AMS_Account_Role__c roleToUpdate = updateAmsAccountRole(role, ac);
+	    		rolesToUpdate.add(roleToUpdate);
+
+	    		if(ac.Contact__c != null && rolesMap.get(ac.AMS_Ownership_Role__c).Id == role.Id){ // has a contact, let's update the contact as well
+	    		
+	    			Contact contactToUpdate = AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
+					contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+
+				}else{
+
+					if(ac.Contact__c == null && roleToUpdate.Contact__c != null && rolesMap.get(ac.AMS_Ownership_Role__c).Id == role.Id){
+						ac.Contact__c = roleToUpdate.Contact__c;
+						accreditationsToUpdate.put(ac,null);
+					}
+
+					if(ac.Contact__c == null && (ac.Email__c != null || (ac.Phone__c != null && ac.Phone__c != '-')) && roleToUpdate.Contact__c == null && rolesMap.get(ac.AMS_Ownership_Role__c).Id == role.Id){
+
+						if(newContactsToInsert.get(ac.email__c) == null){ // this is only for new created contacts, not updates.
+
+							Contact con = new Contact();
+
+							con = AMS_AccreditationContactHelper.populateNewContactFields(con, ac);
+			    			newContactsToInsert.put(con.Email, con);
+						}
+
+					}
+				}
+
+			}
+
+    	}
+
+    	if(!newContactsToInsert.isEmpty()){
+   			insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+   		}
+
+		for(AMS_Accreditation_Contact__c ac: contacts){
+
+			Contact newContact = newContactsToInsert.get(ac.Email__c);
+			
+			if(newContact != null){
+
+				List<AMS_Account_Role__c> roles = aContactsAndRoles.get(ac);
+
+				for(AMS_Account_Role__c role: roles){
+
+					if(role.Contact__c == null){
+
+						role.Contact__c = newContact.Id;
+						rolesToUpdate = updateRoleList(role,rolesToUpdate);
+
+					}
+				}
+
+				ac.Contact__c = newContact.Id;
+				
+				accreditationsToUpdate.put(ac,null);
+			
+			}
+		}
+
+		return new AMS_AccountRoleCreator.RoleCreatorEntitiesBucket(accreditationsToUpdate, rolesToUpdate,contactsToUpdate);
+    }
+
+    private static List<AMS_Account_Role__c> updateRoleList(AMS_Account_role__c role, List<AMS_Account_role__c> roles){
+    	Integer i = 0;
+
+    	for(AMS_Account_Role__c elem:roles){
+    		if(elem.Id == role.Id){
+    			roles.remove(i);
+    			roles.add(role);
+    			return roles;
+    		}
+    	
+			i++;
+    	
+    	}
+
+    	return roles;
+    }
+
+    public static AMS_Account_Role__c updateAmsAccountRole(AMS_Account_role__c role, AMS_Accreditation_Contact__c ac)
+    {
+    	if(ac.Contact__c != null)
+        {
+			role.Contact__c = ac.Contact__c;
+        }
+        else if(ac.Person_AMS__c != null)
+        {
+        	role.Person__c = ac.Person_AMS__c;
+        }
+       
+        
+		role.Duty__c 			= ac.Job_Title__c;
+		role.Hours__c 			= String.valueOf(ac.Time_devoted_to_Agency_business__c);
+		role.IsManager__c 		= ac.Agency_role__c;
+		role.Percentage__c 		= ac.Financial_Interest__c;
+		role.Position__c 		= ac.Job_title__c;
+		role.Legacy_External_Id__c = ac.Legacy_External_Id__c;
+
+		if(ac.Agency_owner__c)
+		{
+			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
+		}
+		
+		return role;
+    }
+
+    public static AMS_AccountRoleCreator.RoleCreatorEntitiesBucket insertOrUpdateContactsAlone(List<AMS_Accreditation_Contact__c> contacts,Map<String, Contact> emailContactMap){
+
+		Map<String, Contact> newContactsToInsert = new Map<String, Contact>();
+		Map<String,Contact> contactsToUpdate = new Map<String,Contact>();
+		Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c> accreditationsToUpdate = new Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c>();
+
+    	for(AMS_Accreditation_Contact__c ac: contacts){
+    		
+    		// has the user changed anything on the contact ? well, let's update them.
+			if(ac.Contact__c != null && emailContactMap.get(ac.Contact__c) != null) {
+			
+				Contact contactToUpdate = AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
+
+				contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+			}else{
+
+
+
+	    		if(newContactsToInsert.get(ac.email__c) == null && (ac.Email__c != null || (ac.Phone__c != null && ac.Phone__c != '-'))){ // this is only for new created contacts, not updates.
+
+					Contact con = new Contact();
+
+					con = AMS_AccreditationContactHelper.populateNewContactFields(con, ac);
+			    	newContactsToInsert.put(con.Email, con);
+
+				}
+			}
+				
+		}
+
+
+		if(!newContactsToInsert.isEmpty()){
+   			insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+   		}
+
+		for(AMS_Accreditation_Contact__c ac: contacts){
+
+			if(newContactsToInsert.get(ac.Email__c) != null){
+
+				ac.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
+				accreditationsToUpdate.put(ac,null);
+			
+			}
+		}
+   				    	
+		return new AMS_AccountRoleCreator.RoleCreatorEntitiesBucket(accreditationsToUpdate, new List<AMS_Account_Role__c>(),contactsToUpdate);
+    }
+
+
+    public static AMS_AccountRoleCreator.RoleCreatorEntitiesBucket insertAMSAccountRoles(List<AMS_Accreditation_Contact__c> acList,Map<String, Contact> emailContactMap, Set<Id> accounts, Boolean isNewProcess, Id singleAccount)
+    {
+
+    	// here we have to create a AMS Account Role based on the Accreditation Contact
+    	// we can have a link to a Contact, a link to a person or a link to an Account
+    	// if we have any of the above link, we have to link it to the AMS Account Role
+    	// if no link is provided, we have to create a Contact at least (no person needs to be created and the Account has to already been created.)
+
+    	List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_Role__c>();
+
+		List<AMS_Accreditation_Contact__c> migrateEntities = new List<AMS_Accreditation_Contact__c>();
+		List<AMS_Accreditation_Contact__c> toCreateEntities = new List<AMS_Accreditation_Contact__c>();
+
+		Map<String,Contact> contactsToUpdate = new Map<String,Contact>();
+
+    	for(AMS_Accreditation_Contact__c ac: acList){
+
+	        if(ac.Contact__c != null || (ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null) || (ac.Company__c != null && ac.Company__c != ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c))
+	        {
+	        	System.debug('Adding a new AC to migrate as it already has something:'+ ac);
+	        	migrateEntities.add(ac); // we just have to prepopulate the new AMS Account Role
+	        }
+	        else{
+	        	System.debug('Adding a new AC to create as it has nothing to update:'+ ac);
+	        	toCreateEntities.add(ac);  // we need to create at least a new contact before prepopulate the new AMS Account Role
+	        }
+		
+		}
+
+		Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c> accreditationsToUpdate = new Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c>();
+
+		if(isNewProcess){ // if it's a New HO, BR, GSA, etc, we don't want broacast the changes, only for the main Account involved.
+			accounts.clear();
+			accounts.add(singleAccount);
+		}
+
+		for(Id accountId: accounts) {
+
+			for(AMS_Accreditation_Contact__c ac: migrateEntities){
+
+		    	AMS_Account_Role__c role = new AMS_Account_Role__c();
+
+				role.RecordTypeId 		= AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+
+	        	role.Account__c         = accountId;
+				role.Duty__c 			= ac.Job_Title__c;
+				role.Employee_Name__c 	= ac.First_Name__c + ' ' + ac.Last_Name__c;
+				role.Hours__c 			= String.valueOf(ac.Time_devoted_to_Agency_business__c);
+				role.IsManager__c 		= ac.Agency_role__c;
+				role.Percentage__c 		= ac.Financial_Interest__c;
+				role.Position__c 		= ac.Job_title__c;
+				role.Owner_Name__c 		= (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
+				role.Legacy_External_Id__c = ac.Legacy_External_Id__c;
+
+				if(ac.Contact__c == null && (ac.Person_AMS__c == null || (ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null))) // meaning it's a company.
+					role.Owner_Account__c = ac.Company__c;
+				else
+					role.Contact__c = ac.Contact__c == null ? ac.Person_AMS__r.Contact__c : ac.Contact__c;
+
+
+				// has the user changed anything on the contact ? well, let's update them.
+				if(emailContactMap.get(ac.Contact__c) != null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId) {
+
+					Contact contactToUpdate = AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
+
+					contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+				}
+
+				rolesToInsert.add(role);
+
+				if(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId)
+					accreditationsToUpdate.put(ac,role); // adding now to update the Accreditation Contact with the new ID from the AMS Account Role.
+
+			}
+		}
+
+		Map<String, Contact> newContactsToInsert = new Map<String, Contact>();
+
+		// for bulk reasons, we need to first create all contacts and then create the AMS Account Roles with the Id from the contacts created.
+		for(AMS_Accreditation_Contact__c ac: toCreateEntities){ 
+
+			if(newContactsToInsert.get(ac.email__c) == null && (ac.Email__c != null ||(ac.Phone__c != null && ac.Phone__c != '-'))){
+
+				Contact con = new Contact();
+
+				con = AMS_AccreditationContactHelper.populateNewContactFields(con, ac);
+		    	newContactsToInsert.put(con.Email, con);
+
+			}
+
+		}
+
+		if(!newContactsToInsert.isEmpty()){
+   			insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+   		}
+
+   		// now that we have the contacts inserted, let's create the roles with this contacts.
+
+		for(Id accountId: accounts) {
+
+	   		for(AMS_Accreditation_Contact__c ac: toCreateEntities){
+
+	   			AMS_Account_Role__c role;
+
+		    	role = new AMS_Account_Role__c();
+
+				role.RecordTypeId 		= AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+				role.Account__c 		= accountId;
+				role.Duty__c 			= ac.Job_Title__c;
+				role.Employee_Name__c 	= ac.First_Name__c + ' ' + ac.Last_Name__c;
+				role.Hours__c 			= String.valueOf(ac.Time_devoted_to_Agency_business__c);
+				role.IsManager__c 		= ac.Agency_role__c;
+				role.Percentage__c 		= ac.Financial_Interest__c;
+				role.Position__c 		= ac.Job_title__c;
+				role.Owner_Name__c 		= (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
+				role.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
+				role.Legacy_External_Id__c = ac.Legacy_External_Id__c;
+				rolesToInsert.add(role);
+
+				if(newContactsToInsert.get(ac.Email__c) != null  && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId)
+					ac.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
+				
+				if(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId)
+					accreditationsToUpdate.put(ac,role); // adding now to update the Accreditation Contact with the new ID from the AMS Account Role.
+
+
+	   		}
+		}
+
+   		// contactsToUpdate having all the contacts to update
+   		// rolesToInsert having all the new roles to insert
+   		// accreditationsToUpdate having all the new mappings from Accreditation to AMS Account Roles
+
+		return new AMS_AccountRoleCreator.RoleCreatorEntitiesBucket(accreditationsToUpdate,rolesToInsert,contactsToUpdate);
+    }
+
     private static List<AMS_Account_Role__c> fetchAccountRolesToQuery(Set<Id> accountsToSearch, Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons){
 
 		List<AMS_Account_Role__c> rolesToReturn = new List<AMS_Account_Role__c>();
@@ -1345,6 +1881,24 @@ public with sharing class AMS_AccountRoleCreator
 
 
 
+
+    	}
+
+    }
+
+    public class RoleCreatorEntitiesBucket {
+
+		private Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c> accreditationsToUpdate {get;set;}
+		
+		private List<AMS_Account_Role__c> rolesToInsert {get;set;}
+		
+		private Map<String,Contact> contactsToUpdate {get;set;}
+
+    	public RoleCreatorEntitiesBucket(Map<AMS_Accreditation_Contact__c,AMS_Account_Role__c> accreditationsToUpdate,List<AMS_Account_Role__c> rolesToInsert,Map<String,Contact> contactsToUpdate){
+
+    		this.accreditationsToUpdate = accreditationsToUpdate;
+    		this.rolesToInsert = rolesToInsert;
+    		this.contactsToUpdate = contactsToUpdate;
 
     	}
 
