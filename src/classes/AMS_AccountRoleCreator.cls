@@ -1403,24 +1403,37 @@ public with sharing class AMS_AccountRoleCreator
 
 	        Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles = syncAccreditationsWithRoles(accreditationContactsToProcess,allAccountRoles); 
 
-	        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
-			
-			for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
+	        if(aContactsAndRoles.isEmpty()){
 
-				if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
-					
-					for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
-		        		
-		        		role.Termination_Date__c = Date.Today();
-		        		rolestoDeactivate.add(role);
-		        		
-		        	}
+	        	for(AMS_Account_Role__c role : allAccountRoles){
 
+					role.Termination_Date__c = Date.Today();
+			        rolestoDeactivate.add(role);
+
+	        	}
+
+	        }else{
+
+		        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
+				
+				for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
+
+					if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
+						
+						System.debug('Performing deactivation of structure:'+aContactsAndRoles);
+
+						for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
+			        		
+			        		role.Termination_Date__c = Date.Today();
+			        		rolestoDeactivate.add(role);
+			        		
+			        	}
+
+
+					}
 
 				}
-
 			}
-
 
 	        if(aContactsAndRoles == null) // opps
 		        throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !');
