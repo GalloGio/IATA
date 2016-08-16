@@ -79,6 +79,14 @@ public virtual class vfIECEBC_Controller {
 		}
 	}
 	
+	// ======================================================================== 
+	// isEbcPrepaid flag is true is the EBC is Prepaid
+	public Boolean isEbcPrepaid{
+		get{
+			return (productRatePlan.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID);
+		}
+	}
+    
 	// =======================================================================-
 	// current Product Rate Plan Charge based on given ProductRatePlan
 	// assumptions:
@@ -113,6 +121,7 @@ public virtual class vfIECEBC_Controller {
 	// recalc newPurchasedRatePlanChargeList and totalNewPurchaseAmount
 	public void updateNewPurchasedRatePlanChargeList( List<zqu__ProductRatePlanCharge__c> prpcList )
 	{
+        System.debug( 'xxxx updateNewPurchasedRatePlanChargeList.prpcList:' + prpcList);
 		newPurchasedRatePlanChargeList = new List<zqu__ProductRatePlanCharge__c>();
 		totalNewPurchaseAmount = 0;
 		if (prpcList != null)
@@ -129,6 +138,8 @@ public virtual class vfIECEBC_Controller {
 			zqu__ProductRatePlanCharge__c dummyRatePlan = new zqu__ProductRatePlanCharge__c( Id=null, Name='Please select a plan', zqu__ListPrice__c=0);
 			newPurchasedRatePlanChargeList.add(dummyRatePlan);
 		}
+        System.debug( 'xxxx updateNewPurchasedRatePlanChargeList.totalNewPurchaseAmount:' + totalNewPurchaseAmount);
+        System.debug( 'xxxx updateNewPurchasedRatePlanChargeList.newPurchasedRatePlanChargeList:' + newPurchasedRatePlanChargeList);
 	} // end of updateNewPurchasedRatePlanChargeList
 	
 	

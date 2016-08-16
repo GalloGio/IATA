@@ -6,10 +6,10 @@
   *  - For a given Billing Account (Zuora__CustomerAccount)/User display the EBC related user guide
   *   
   * History: 
-  *  - 20160801-sl: initial version
+  *  - 20160816-sl: initial version, based on vfIECEBC_Controller
   */
 	
-public class vfIECEBC_AccountUserGuide {
+public with sharing class vfIECEBC_AccountUserGuide extends vfIECEBC_Controller {
 	
 	
 	// ======================================================================== 

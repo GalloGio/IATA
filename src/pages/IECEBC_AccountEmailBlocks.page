@@ -83,7 +83,7 @@
 								<div class="row row-payment">
 									
 									<div class="columns main-container campaign-cost">
-										<apex:form id="emailBlockSelectionForm" >
+										<apex:form id="emailBlockSelectionForm" rendered="{!isEbcPrepaid}">
 											<apex:actionFunction action="{!selectRatePlanEmaiLBlock}" name="updateEmailBlockSelection" rerender="emailBlockSelectionForm,paymentConfirmationForm">
 												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
 											</apex:actionFunction>
@@ -211,7 +211,6 @@
 												</ul>
 											</div>
 										</apex:form>
-										<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
 									</div>
 									
 									
@@ -219,7 +218,7 @@
 									<div class="columns sub-container payment-confirmation" id="paymentconfirmation">
 										<div class="is-sticky-confirmation">
 											<div class="wrapper">
-												<apex:form id="paymentConfirmationForm" >
+												<apex:form id="paymentConfirmationForm" rendered="{!isEbcPrepaid}">
 													<h2 class="section-title">Payment Confirmation</h2>
 													<div class="table-container">
 														<table class="data-table table-payment table-confirmation">

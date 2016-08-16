@@ -1,4 +1,5 @@
-<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_Cart" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_Cart,vfIECEBC_CampaignConfirm"
+           applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
     <apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -12,12 +13,18 @@
             <!-- Start of Page Content -->
             <main class="main-content">
                 <div class="inner-wrapper">
-                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!EBC_Campaign__c}" />
+                    <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!ebcCampaign}" />
                     
                     <h1 class="page-title">Confirm</h1>
                     
                     <div class="row row-payment">
                         <section class="columns main-container campaign-cost">
+							<apex:form id="campaignCostForm" >
+                                <apex:actionFunction action="{!clickPayWithEmailPackage}" name="clickPayWithEmailPackage" rerender="paymentConfirmationForm,totalPurchaseOutputText">
+                                </apex:actionFunction>
+                                <apex:actionFunction action="{!clickPayWithExactAmount}" name="clickPayWithExactAmount" rerender="paymentConfirmationForm,totalPurchaseOutputText">
+                                </apex:actionFunction>
+                                
                             <h2 class="section-title">Campaign Cost</h2>
                             <div class="table-container">
                                 <table class="data-table table-payment table-campaign-cost">
@@ -25,10 +32,12 @@
                                         <th>
                                             Total recipients for this campaign
                                         </th>
-                                        <td>
+                                        <td style="text-align:right;">
                                             <div class="item-value">
-                                                <strong>15,000</strong>
-                                                <span class="unit"> emails</span>
+                                                <strong>
+													<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!ebcCampaign.Number_of_Recipients__c}" /></apex:outputText>
+                                                </strong>
+                                                <span class="unit"> {!IF(ebcCampaign.Number_of_Recipients__c>1,'emails',' email')}</span>
                                             </div>
                                         </td>
                                         </tr>
@@ -36,44 +45,89 @@
                                             <th>
                                                 Available balance
                                             </th>
-                                            <td>
+                                            <td style="text-align:right;">
                                                 <div class="item-value text-green">
-                                                    <strong>10,000</strong>
-                                                    <span class="unit"> emails</span>
+                                                    <strong>
+														<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}" /></apex:outputText>
+                                                    </strong>
+                                                    <span class="unit"> {!IF(billingAccount.eBroadcast_Email_Balance__c>1,'emails',' email')}</span>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr class="new-balance">
                                             <th>
-                                                New balance
+                                                {!newBalanceLabel}
                                             </th>
-                                            <td>
+                                            <td style="text-align:right;">
                                                 <div class="item-value">
-                                                    <strong>0</strong>
-                                                    <span class="unit"> email</span>
+                                                    <strong>
+														<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!newEmailBalance}" /></apex:outputText>
+                                                    </strong>
+                                                    <span class="unit"> {!IF(newEmailBalance<-1||newEmailBalance>1,'emails',' email')}</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                    </tbody></table>
+                                    </tbody>
+                                </table>
                             </div>
                             
                             <div class="group-container plan">
                                 <h3 class="group-title"><span class="light">Current plan:</span> Starter edition</h3>
-                                
+                                <!-- ul class list js-radio-list showing the options begins -->
                                 <ul class="list js-radio-list">
                                     <li class="is-selected">
+                                        <!--
                                         <div class="field-group radio">
                                             <div class="radio-box">
                                                 <div class="custom-user-input radio">
-                                                    <input class="user-input radio" type="radio" name="radio1" id="radio1-option1" checked="" />
-                                                    <label class="custom-radio" for="radio1-option1"><i class="icon"></i></label>
+                                                    <input class="user-input radio" type="radio" name="radio1" id="radio1-option2" />
+                                                    <label class="custom-radio" for="radio1-option2"><i class="icon"></i></label>
                                                 </div>
-                                                <label class="input-label" for="radio1-option1">Get an email package</label>
+                                                <label class="input-label" for="radio1-option2">Pay exact amount</label>
                                                 <p class="input-description">Nulla vitae elit libero, a pharetra augue. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
                                             </div>
                                         </div>
+										-->
+                                        <div class="field-group radio">
+                                            <div class="radio-box">
+                                                <div class="custom-user-input radio">
+                                                    <input class="user-input radio" value="{!payWithExactAmount}" type="radio" name="radio1" id="radio1-option2" checked="1"
+                                                           onClick="clickPayWithExactAmount();"
+                                                           />
+                                                    <label class="custom-radio" for="radio1-option2"><i class="icon"></i></label>
+                                                </div>
+                                                <label class="input-label" for="radio1-option2">Pay exact amount</label>
+                                                <p class="input-description">Pay as much as you need to add now.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="field-group radio">
+                                            <div class="radio-box">
+                                                <div class="custom-user-input radio">
+                                                    <!--
+                                                    <input class="user-input radio" type="radio" name="radio1" id="radio1-option1" checked="" />
+                                                    <apex:inputCheckBox id="radio1-option1" styleClass="user-input radio" html-type="radio"/>
+                                                    <apex:inputCheckBox id="radio1-option1" value="{!payWithEmailPackage}" styleClass="user-input radio" html-type="radio" html-checked=""/>
+													-->
+                                                    <input class="user-input radio" value="{!payWithEmailPackage}" type="radio" name="radio1" id="radio1-option1" checked="" 
+                                                           onClick="clickPayWithEmailPackage();"
+                                                           />
+                                                    <label class="custom-radio" for="radio1-option1"><i class="icon"></i></label>
+                                                </div>
+                                                <label class="input-label" for="radio1-option1">Get an email package</label>
+                                                <p class="input-description">Select one of the email blocks offered, you'll keep the email credit left for future campaign.</p>
+                                            </div>
+                                        </div>
                                         <div class="toggle-container show-hide-toggle">
+                                <!-- ul class list package-list js-checkbox-list showing the options inner part begins -->
+											<apex:outputPanel id="emailBlockOptionForm">
+                                                <apex:actionFunction action="{!selectRatePlanEmaiLBlock}" name="updateEmailBlockSelection" rerender="emailBlockSelectionForm,paymentConfirmationForm">
+                                                    <apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
+                                                </apex:actionFunction>
+                                                
                                             <ul class="list package-list js-checkbox-list">
+                                                <!-- SAMPLE BOXES BEGIN -----------------------------------------------------------
                                                 <li class="list-item disabled">
                                                     <div class="checkbox-box">
                                                         <div class="custom-user-input checkbox">
@@ -140,276 +194,199 @@
                                                     </div>
                                                     <div class="package-price">$60.00</div>
                                                 </li>
-                                                <li class="list-item">
-                                                    <div class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="package-4" />
-                                                            <label class="custom-checkbox" for="package-4"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="package-4">
-                                                            <span class="input-state unselected">Select</span>
-                                                            <span class="input-state selected">Selected</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="package-credits">
-                                                        7,500                                                                                         credits
-                                                    </div>
-                                                    <div class="package-price">$150.00</div>
-                                                </li>
-                                                <li class="list-item">
-                                                    <div class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="package-5" />
-                                                            <label class="custom-checkbox" for="package-5"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="package-5">
-                                                            <span class="input-state unselected">Select</span>
-                                                            <span class="input-state selected">Selected</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="package-credits">
-                                                        10,000                                                                                         credits
-                                                    </div>
-                                                    <div class="package-price">$200.00</div>
-                                                </li>
-                                                <li class="list-item">
-                                                    <div class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="package-6" />
-                                                            <label class="custom-checkbox" for="package-6"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="package-6">
-                                                            <span class="input-state unselected">Select</span>
-                                                            <span class="input-state selected">Selected</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="package-credits">
-                                                        25,000                                                                                         credits
-                                                    </div>
-                                                    <div class="package-price">$250.00</div>
-                                                </li>
-                                                <li class="list-item">
-                                                    <div class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="package-7" />
-                                                            <label class="custom-checkbox" for="package-7"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="package-7">
-                                                            <span class="input-state unselected">Select</span>
-                                                            <span class="input-state selected">Selected</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="package-credits">
-                                                        75,000                                                                                         credits
-                                                    </div>
-                                                    <div class="package-price">$750.00</div>
-                                                </li>
-                                                <li class="list-item has-promotion">
-                                                    <div class="promotion-label">
-                                                        get 10% <br />more
-                                                    </div>
-                                                    <div class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="package-8" />
-                                                            <label class="custom-checkbox" for="package-8"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="package-8">
-                                                            <span class="input-state unselected">Select</span>
-                                                            <span class="input-state selected">Selected</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="package-credits">
-                                                        <span class="line-stroke">200,000</span>
-                                                        <span class="text-orange">220,000</span>
-                                                        <br />
-                                                        credits
-                                                    </div>
-                                                    <div class="package-price">$1,000.00</div>
-                                                </li>
-                                                <li class="list-item">
-                                                    <div class="checkbox-box">
-                                                        <div class="custom-user-input checkbox">
-                                                            <input class="user-input checkbox" type="checkbox" id="package-9" />
-                                                            <label class="custom-checkbox" for="package-9"><i class="icon"></i></label>
-                                                        </div>
-                                                        <label class="input-label" for="package-9">
-                                                            <span class="input-state unselected">Select</span>
-                                                            <span class="input-state selected">Selected</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="package-credits">
-                                                        375,000                                                                                         credits
-                                                    </div>
-                                                    <div class="package-price">$1,875.00</div>
-                                                </li>
+                                                <!-- SAMPLE BOXES END ----------------------------------------------------------->
+													<apex:repeat id="emailBlockRepeat" value="{!productRatePlanWrapperOptionList}" var="prpOption" >
+																	<li class="list-item {!prpOption.classStringDisabled} {!prpOption.classStringPromo}">
+																		<apex:outputPanel id="disabledItemOutputPanel" rendered="{!prpOption.isDisabled}">
+																			<div class="checkbox-box">
+																				<div class="custom-user-input checkbox">
+																					<span class="disabled-user-input checkbox"></span>		  
+																					
+																					<apex:inputCheckbox id="chckActTypeDisabled" value="{!prpOption.selected}" styleClass="custom-user-input checkbox" 
+																							onclick="updateEmailBlockSelection({!prpOption.index})"
+																							rendered="{!!prpOption.isDisabled}"
+																						/>
+																					<label class="custom-checkbox"><i class="icon"></i></label>
+																				</div>
+																				<label class="input-label" for="{!$Component.chckActTypeDisabled}">
+																					<span class="input-state unselected">Select</span>
+																					<span class="input-state selected">Selected</span>
+																				</label>
+																				
+																				<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+																				<div class="tooltip-container">
+																					<div class="tooltip-description">
+																						<p>{!prpOption.tooltipDescription}</p>
+																					</div>
+																				</div>
+																			</div>
+																			
+																			<div class="package-credits">
+																				<apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+																			</div>
+																			<div class="package-price">
+																				<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+																			</div>
+	  																	</apex:outputPanel>
+																		
+																		<apex:outputPanel id="normalItemOutputPanel" rendered="{!!prpOption.isDisabled && !prpOption.isPromo}" >
+																			<div class="checkbox-box">
+																				<div class="custom-user-input checkbox">
+																					<apex:inputCheckbox id="chckActType" value="{!prpOption.selected}" styleClass="user-input checkbox" 
+																						onclick="updateEmailBlockSelection({!prpOption.index})"
+																					/>
+																					<label class="custom-checkbox" for="{!$Component.chckActType}"><i class="icon"></i></label>
+																				</div>
+																				<label class="input-label" for="{!$Component.chckActType}">
+																					<span class="input-state unselected">Select</span>
+																					<span class="input-state selected">Selected</span>
+																				</label>
+																				
+																				<apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+																					<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+																					<div class="tooltip-container">
+																						<div class="tooltip-description">
+																							<p>{!prpOption.tooltipDescription}</p>
+																						</div>
+																					</div>
+																				</apex:outputPanel>
+																			</div>
+																			
+																			<div class="package-credits">
+																				<apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+																			</div>
+																			<div class="package-price">
+																				<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+																			</div>
+																		</apex:outputPanel>
+																		
+																		<apex:outputPanel id="promoItemOutputPanel" rendered="{!!prpOption.isDisabled && prpOption.isPromo}" >
+																			<div class="promotion-label">
+																				{!promoLabel}
+																			</div>
+																			<div class="checkbox-box">
+																				<div class="custom-user-input checkbox">
+																					<apex:inputCheckbox id="chckActTypePromo" value="{!prpOption.selected}" styleClass="user-input checkbox" 
+																						onclick="updateEmailBlockSelection({!prpOption.index})"
+																					/>
+																					<label class="custom-checkbox" for="{!$Component.chckActTypePromo}"><i class="icon"></i></label>
+																				</div>
+																				<label class="input-label" for="{!$Component.chckActType}">
+																					<span class="input-state unselected">Select</span>
+																					<span class="input-state selected">Selected</span>
+																				</label>
+																					
+																				<apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+																					<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+																					<div class="tooltip-container">
+																						<div class="tooltip-description">
+																							<p>{!prpOption.tooltipDescription}</p>
+																						</div>
+																					</div>
+																				</apex:outputPanel>
+																			</div>
+																			
+																			<div class="package-credits">
+																				<span class="line-stroke">
+																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.standardEmailCredits}" /></apex:outputText>
+																				</span>
+																				<span class="text-orange">
+																					<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+																				</span>
+																				<br/>
+																				emails
+																			</div>
+																			<div class="package-price">
+																				<apex:outputText value="${0,number,###,###,##0}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
+																			</div>
+																		</apex:outputPanel>
+																	</li>
+																	
+																</apex:repeat>
+																
+
+
                                             </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="field-group radio">
-                                            <div class="radio-box">
-                                                <div class="custom-user-input radio">
-                                                    <input class="user-input radio" type="radio" name="radio1" id="radio1-option2" />
-                                                    <label class="custom-radio" for="radio1-option2"><i class="icon"></i></label>
-                                                </div>
-                                                <label class="input-label" for="radio1-option2">Pay exact amount</label>
-                                                <p class="input-description">Nulla vitae elit libero, a pharetra augue. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
-                                            </div>
+											</apex:outputPanel>	
+                                <!-- ul class list package-list js-checkbox-list showing the options inner part ends -->
                                         </div>
                                     </li>
                                 </ul>
+
+
+                                <!-- ul class list js-radio-list showing the options ends -->
+
                             </div>
+                            </apex:form>
                             
+                            <!--
                             <div class="group-container payment-info">
-                                <h3 class="group-title">Payment information</h3>
-                                <div class="box box-payment-type js-payment-method">
-                                    <div class="field-group radio inline">
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="" id="" value="creditCard" checked="" />
-                                                <label class="custom-radio" for=""><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="">Credit card</label>
-                                        </div>
-                                        <div class="radio-box">
-                                            <div class="custom-user-input radio">
-                                                <input class="user-input radio" type="radio" name="" id="" value="ich" />
-                                                <label class="custom-radio" for=""><i class="icon"></i></label>
-                                            </div>
-                                            <label class="input-label" for="">ICH</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="payment-method-container">
-                                    
-                                    <table class="data-table table-saved-cards js-card-data-table">
-                                        <tbody><tr class="heading">
-                                            <th class="card">Saved cards</th>
-                                            <th class="name">Name printed on card</th>
-                                            <th class="date" colspan="2">Expires</th>
-                                            </tr>
-                                            <tr class="item is-selected">
-                                                <td class="card">
-                                                    <div class="field-group radio">
-                                                        <div class="radio-box">
-                                                            <div class="custom-user-input radio">
-                                                                <input class="user-input radio" type="radio" name="-card-type" id="-saved-card-1" checked="" />
-                                                                <label class="custom-radio" for="-saved-card-1"><i class="icon"></i></label>
-                                                            </div>
-                                                            <label class="input-label" for="-saved-card-1">
-                                                                <span class="card-image">
-                                                                    <img src="assets/img/components/icons/credit-card/Visa.png" alt="VISA" />
-                                                                </span>
-                                                                <span class="card-name">
-                                                                    <strong>VISA</strong>
-                                                                    <span class="ending-number">ending in 1234</span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="name">
-                                                    Jonathan Doelipsum
-                                                </td>
-                                                <td class="date">
-                                                    04/18
-                                                </td>
-                                                <td class="action">
-                                                    <a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
-                                                </td>
-                                            </tr>
-                                            <tr class="item">
-                                                <td class="card">
-                                                    <div class="field-group radio">
-                                                        <div class="radio-box">
-                                                            <div class="custom-user-input radio">
-                                                                <input class="user-input radio" type="radio" name="-card-type" id="-saved-card-2" />
-                                                                <label class="custom-radio" for="-saved-card-2"><i class="icon"></i></label>
-                                                            </div>
-                                                            <label class="input-label" for="-saved-card-2">
-                                                                <span class="card-image">
-                                                                    <img src="assets/img/components/icons/credit-card/MasterCard.png" alt="MASTERCARD" />
-                                                                </span>
-                                                                <span class="card-name">
-                                                                    <strong>MASTERCARD</strong>
-                                                                    <span class="ending-number">ending in 5148</span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="name">
-                                                    Milli Max
-                                                </td>
-                                                <td class="date">
-                                                    03/17
-                                                </td>
-                                                <td class="action">
-                                                    <a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
-                                                </td>
-                                            </tr>
-                                            <tr class="item">
-                                                <td class="card">
-                                                    <div class="field-group radio">
-                                                        <div class="radio-box">
-                                                            <div class="custom-user-input radio">
-                                                                <input class="user-input radio" type="radio" name="-card-type" id="-saved-card-3" />
-                                                                <label class="custom-radio" for="-saved-card-3"><i class="icon"></i></label>
-                                                            </div>
-                                                            <label class="input-label" for="-saved-card-3">
-                                                                <span class="card-image">
-                                                                    <img src="assets/img/components/icons/credit-card/AmericanExpress.png" alt="AMEX" />
-                                                                </span>
-                                                                <span class="card-name">
-                                                                    <strong>AMEX</strong>
-                                                                    <span class="ending-number">ending in 8957 <i class="text-error">(expired)</i></span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="name">
-                                                    Jonathan Doelipsum
-                                                </td>
-                                                <td class="date">
-                                                    04/18
-                                                </td>
-                                                <td class="action">
-                                                    <a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
-                                                </td>
-                                            </tr>
-                                        </tbody></table>
-                                    
-                                    <div class="footer table-actions">
-                                        <a class="icon plus js-open-modal" data-target-modal="#js-modal-add-credit-card" href="#">Add card</a>
-                                    </div>
-                                </div>
+								<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
                             </div>                                
+							-->
                         </section>
                         
-                        <section class="columns sub-container payment-confirmation">
+                        <section class="columns sub-container payment-confirmation" id="paymentconfirmation">
                             <div class="is-sticky-confirmation" style="">
                                 <h2 class="section-title">Payment Confirmation</h2>
                                 <div class="table-container">
-                                    <table class="data-table table-payment table-confirmation">
-                                        <tbody><tr class="item">
-                                            <th>
-                                                <strong>7,500</strong> email credits                                </th>
-                                            <td class="price">
-                                                <strong>$150.00</strong>
-                                            </td>
-                                            </tr>
-                                            <tr class="total">
-                                                <th>
-                                                    Total
-                                                </th>
-                                                <td class="price">
-                                                    $150.00 USD
-                                                </td>
-                                            </tr>
-                                        </tbody></table>
+						<!-- payment confirmation section: the detail and total begin -->
+									<apex:form id="paymentConfirmationForm" >
+                                        payWithEmailPackage: {!payWithEmailPackage}
+                                        <br/>
+                                        payWithExactAmount: {!payWithExactAmount}
+                                        <table class="data-table table-payment table-confirmation">
+															<tbody>
+																<tr class="item">
+																	<th>
+                                                                            <!--
+																			<apex:outputText value="Please made the selection!" rendered="{!showPurchasedSelectionMessage}"/>
+																			<apex:outputText value="{!selectedProductRatePlanWrapper.name}" rendered="{!!showPurchasedSelectionMessage}"/>
+																			-->
+    	                                                                    <apex:outputPanel id="paymentItemDescriptionPanel1" rendered="{!showPaymentItem1}">
+	                                                                                <strong>
+                                                                                <apex:outputText value="{!paymentItemDescription}" rendered="{!showPaymentItem1}"/>
+                                                                                </strong>
+                                                                            </apex:outputPanel>
+                                                                            
+                                                                            <apex:outputPanel id="paymentItemDescriptionPanel2" rendered="{!showPaymentItem3}">
+                                                                                <strong>
+                                                                                <apex:outputText value="{0,number,###,###,##0}">
+                                                                                    <apex:param value="{!emailCreditPurchased}"/>
+                                                                                </apex:outputText>
+                                                                                </strong>
+                                                                                email credits.
+                                                                                <br/>
+                                                                                <apex:outputText value="At a unit cost of ${0,number,###,###,##0.00}/email">
+                                                                                    <apex:param value="{!emailUnitCost}"/>
+                                                                                </apex:outputText>
+                                                                            </apex:outputPanel>
+                                                                                
+																	</th>
+																	<td class="price">
+																		<strong>
+																			<apex:outputText value="${0, number,###,###,##0.00}" rendered="true">
+                                                                                <apex:param value="{!paymentItemAmount}"/>
+                                                                            </apex:outputText>
+																		</strong>
+																	</td>
+																</tr>
+																<tr class="total">
+																	<th>
+																		Total in USD:
+																	</th>
+																	<td class="price">
+																		<apex:outputText id="totalPurchaseOutputText" value="${0, number,###,###,##0.00}"><apex:param value="{!totalPurchaseAmount}" /></apex:outputText>
+																	</td>
+																</tr>
+															</tbody>
+                                        </table>
+									</apex:form>
+									<!-- payment confirmation section: the detail and total begin -->
                                 </div>
+                                
+                                
+                                
                                 <div class="footer-actions">
                                     
                                     <apex:form >

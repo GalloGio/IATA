@@ -20,7 +20,9 @@
 							<li><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
-							<li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+                            <apex:outputPanel rendered="{!isEbcPrepaid}">
+    	                        <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+	                        </apex:outputPanel>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
 							</li>
@@ -94,8 +96,6 @@
 											</ul>
 										</apex:form>
 									
-										<c:IECEBC_PaymentInformation id="paymentInformationComponent" rendered="{!showAddOnSelection}"/>
-										
 									</div>
 									
 									<!-- payment confirmation section on the right side-->

@@ -12,10 +12,10 @@
   *  
   * History: 
   *  - 20160809-sl: initial workable version.
-  *
+  *  - 20160815-sl: change wrapper to have disable flag
   */
 
-global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controller 
+global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controller 
 {
 	// ======================================================================== 
 	// selectedProductRatePlan will be the result of user interaction
@@ -52,7 +52,17 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 		}
 	}
 	
-	
+    // minimumEmailBlockPurchaseSize is used to define whether a rate plan is disabled or not
+    public Integer minimumEmailBlockPurchaseSize{
+        get {
+            if (minimumEmailBlockPurchaseSize==null) {
+                return 0;
+            }
+            return minimumEmailBlockPurchaseSize;
+        }
+        set;
+    }
+    
 	// ========================================================================
 	// visualforce display flags below
 	// ------------------------------------------------------------------------
@@ -144,7 +154,7 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 				List<zqu__ProductRatePlan__c> availableProductRatePlanOptionList = productRatePlanOptionList;
 				for (zqu__ProductRatePlan__c prp : availableProductRatePlanOptionList)
 				{
-					ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp);
+					ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp, minimumEmailBlockPurchaseSize);
 					prpWrapper.selected = false;
 					prpWrapper.index = prpWrapperList.size();
 					prpWrapperList.add(prpWrapper);
@@ -173,13 +183,21 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 		public Boolean selected {get;set;}
 		public String name {get; private set;}
 		public String description {get; private set;}
-		public String tooltipDescription {get;set;} // this tooltipDescription will be used for disabled option
 		
 		public Integer standardEmailCredits {get; private set;}
 		public Integer currentEmailCredits {get; private set;}
 		
 		public Decimal amount {get; set;} // price amount
 		
+         // this tooltipDescription will be used for disabled option
+		public String tooltipDescription {
+            get{
+                String returnValue = (isDisabled) ? 'You can only select email packages above the balance owing.' : '';
+                return returnValue;
+            }
+            set;
+        }
+        
 		// --------------------------------------------------------------------
 		// this isPromo and classStringPromoflag are set based on EBC_Email_Credit_Current_Offering__c and EBC_Email_Credit_Standard__c 
 		// values from zqu__ProductRatePlan__c   
@@ -219,6 +237,16 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 		// this constructor is used for the rate plan selection to choose
 		// in case there is more than one zqu__ProductRatePlanCharge__c, the amount will be the sum
 		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp)
+        {
+            initializeProductRatePlanWrapper(prp, 0);
+        }
+        
+		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp, Integer minimumEmailBlockSize)
+        {
+            initializeProductRatePlanWrapper(prp, minimumEmailBlockSize);
+        }
+        
+        private void initializeProductRatePlanWrapper(zqu__ProductRatePlan__c prp, Integer minEmailBlockSize)
 		{
 			productRatePlan = prp;
 			selected = false;
@@ -234,8 +262,12 @@ global with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controlle
 			
 			// set the price amount based on ProductRatePlanCharge
 			amount = 0;
-			setOptionEnable();
-			
+            if (currentEmailCredits >= minEmailBlockSize)
+            {
+				setOptionEnable();
+            } else {
+                setOptionDisable();
+            }
 			//for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__ProductRatePlanCharge__r)
 			for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__R00N40000001mFVKEA2__r)
 			{
