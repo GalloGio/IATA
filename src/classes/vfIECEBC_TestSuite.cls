@@ -7,27 +7,37 @@ public class vfIECEBC_TestSuite {
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
     private static Zuora__Subscription__c subscription;
     private static Zuora__SubscriptionProductCharge__c subscriptionCharge;
+    private static Zuora__CustomerAccount__c oBillingAccount;
+    private static EBC_Preference__c oPref;
     
     private static IECCustomer currentCustomer;
+    
+    static void setup(Boolean grantEBCAccess) {
+	    oBillingAccount = [Select Id From Zuora__CustomerAccount__c Where Zuora__Account__c  = :IECTestUtil.PortalUserAccountId];        
+        if (grantEBCAccess) {
+            oBillingAccount.eBroadcast_Product_Access__c = true;
+            update oBillingAccount;
+        }
+    }
 
     static void init() {
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_EBROADCAST, true);
         insert oProductCategory;
         
-        oProduct = IECTestUtil.CreateSampleProduct('PTST');
+        oProduct = IECTestUtil.CreateSampleProduct('eBroadcast for Non-Members');
         insert oProduct;
         
-        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo = IECTestUtil.CreateSampleProductInfo('eBroadcast for IATA Non Member Airlines', oProductCategory, oProduct);
         oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
         insert oProductInfo;
         
-        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Enterprise Edition', false, oProduct);
         insert oProductRatePlan;
         
         oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 1);
         insert oProductRatePlanCharge;
         
-        oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
+        oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('Starter Edition', false, oProductRatePlan, oProductInfo);
         insert oProductRatePlanInfo;
         
         currentCustomer = IECCustomer.getCurrentIECCustomer();
@@ -40,6 +50,11 @@ public class vfIECEBC_TestSuite {
         // create dummy subscription charge
         subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert subscriptionCharge;
+        
+        oPref = new EBC_Preference__c(Billing_Account__c = oBillingAccount.Id, PrimaryContact_Email__c = 'hello@world.com', Default_From_Name__c = 'w00t', PrimaryContact_Name__c = 'w00t');
+        
+        System.debug(UserInfo.getProfileId());
+        insert oPref;        
         
         System.debug('Unit Test: Finish: Init');
     }
@@ -64,6 +79,7 @@ public class vfIECEBC_TestSuite {
         Test.setCurrentPage(pageRef);
         
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        
         System.runAs(usr) {
         	vfIECEBC layoutController = new vfIECEBC();
             
@@ -157,7 +173,7 @@ public class vfIECEBC_TestSuite {
     public static void testCampaignSetup() {
 		PageReference pageRef = Page.IECEBC_Campaign;
         Test.setCurrentPage(pageRef);
-        
+
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         System.runAs(usr) {
             init();
@@ -177,6 +193,14 @@ public class vfIECEBC_TestSuite {
             camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
             
             PageReference pr = campaignExtCon.saveAndContinue();
+            
+            
+            List<ApexPages.Message> messages = ApexPages.getMessages();
+            String stringMessages = '';
+            for(ApexPages.Message m : messages) {
+                stringMessages += m.getSummary() + '\n';
+            }
+            System.assertEquals('Apex Messages: ', stringMessages);
             
             System.assertNotEquals(null, campaignExtCon.con.getId());
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
@@ -244,8 +268,59 @@ public class vfIECEBC_TestSuite {
             
             PageReference pr = campaignExtCon.saveAndContinue();
             
+            System.assertEquals(null, JSON.serialize(ApexPages.getMessages()));
+            
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
+        }
+    }
+    public static void testCampaignRecipientsExistingList() {
+		PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        Test.setCurrentPage(pageRef);
+        
+        
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        
+        List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id),
+            new EBC_Master_Filter__c(Audience__c = 'Agency'), // assign to a different account
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id) // Make sure the count result in 1 result as per described in the assertion
+        };
+        insert existingFilters;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Account__c = IECTestUtil.PortalUserAccountId;
+        insert camp;
+        
+        System.runAs(usr) {
+            Test.startTest();
+            
+            init();
+            
+            // Layout PageLoad
+        	vfIECEBC layoutController = new vfIECEBC();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            vfIECEBC_CampaignRecipient scheduleExtCon = new vfIECEBC_CampaignRecipient(sc);
+            
+            System.assertEquals(existingFilters.size() - 1, scheduleExtCon.getMasterFilters().size());
+            
+            scheduleExtCon.campaign.EBC_Master_Filter__c = existingFilters[2].Id;
+            Integer lastFilterRecipientCount = vfIECEBC_CampaignRecipient.getExistingFilterCnt(existingFilters[2].Id);
+            System.assertEquals(1, lastFilterRecipientCount);
+            
+            PageReference pr = campaignExtCon.saveAndContinue();
+            System.assertEquals(null, JSON.serialize(ApexPages.getMessages()));
+            
+            System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
+            System.assertEquals(campaignExtCon.getPRByStepNumber(3, true).getUrl(), pr.getUrl());
         }
     }
     public static void testCampaignPreview() {
@@ -409,5 +484,39 @@ public class vfIECEBC_TestSuite {
         campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
         
         System.assertEquals('REJECTED', campResult.Status__c);
+    }
+    
+    public static void testPageLoadAccountSettings() {
+		PageReference pageRef = Page.IECEBC_AccountSettings;
+        Test.setCurrentPage(pageRef);
+
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        setup(true);
+        
+        System.runAs(usr) {
+            init();
+            
+            // Layout PageLoad
+        	vfIECEBC layoutController = new vfIECEBC();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            EBC_Campaign__c camp = new EBC_Campaign__c();
+            vfIECEBC_AccountSettings accountSettingsController = new vfIECEBC_AccountSettings();
+            
+            accountSettingsController.getPreference().Default_From_Name__c = 'helloRandomName';
+            
+            PageReference pr = accountSettingsController.save();
+            
+            /*
+            List<ApexPages.Message> messages = ApexPages.getMessages();
+            String stringMessages = '';
+            for(ApexPages.Message m : messages) {
+                stringMessages += m.getSummary() + '\n';
+            }
+            System.assertEquals('Apex Messages: ', stringMessages);
+*/
+            
+            System.assertEquals(null, pr);
+        }
     }
 }
