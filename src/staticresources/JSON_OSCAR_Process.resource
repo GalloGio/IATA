@@ -881,6 +881,7 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step26_succeeded"
           }],
           "DisplayFields": [
+            "Change_effective_as_of__c",
             "Suspend_Agency__c",
             "Remove_STD__c",
             "Notify_Agent_Suspension__c",
@@ -925,7 +926,14 @@
           "Actions": [],
           "Automations": [{
             "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded"
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded",
+            "ChangeCode": {
+              "Name": "LNF",
+              "ReasonCode": "03",
+              "MemoText": "Penalty fee applied",
+              "ReasonDesc": "PENALTY FEE APPLIED",
+              "Status": "0"
+            }
           }],
           "DisplayFields": [
             "Apply_Penalty_Fee__c",

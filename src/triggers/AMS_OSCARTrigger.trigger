@@ -146,6 +146,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 if (updatedOSCAR.get(step + '__c') <> oldOSCAR.get(step + '__c')) {
 
+                    //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
+                    if(step == 'STEP29' && updatedOSCAR.STEP29__c == AMS_Utils.PASSED && !validateStep29(updatedOSCAR)) break;
+
 
                     if (helper == null) {
                         helper = new AMS_OSCAR_JSONHelper();
@@ -318,7 +321,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
-            'Issue_billing_document__c'                 => 'Process_Start_Date__c'
+            'Issue_billing_document__c'                 => 'Process_Start_Date__c',
+            'Suspend_Agency__c'                         => 'NOC_Requested__c',
+            'NOC_Received__c'                           => 'NOC_Received_Date__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -399,6 +404,26 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }
 
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
+            updatedOSCAR.STEP29__c = AMS_Utils.PASSED;
+        }
+
+        if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
+            updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
+        }
+
+        if (oldOSCAR.Suspend_Agency__c == false && updatedOscar.Suspend_Agency__c == true) {
+            updatedOSCAR.NOC_Deadline__c = AMS_Utils.AddBusinessDays(System.today(), 5, 'Late NOC - '+updatedOSCAR.Region__c);
+        }
+
+        if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
+            updatedOSCAR.Termination_Date__c = AMS_Utils.lastDayOfMonth(System.today().addMonths(1));
+
+            if (AMS_Utils.IsWeekendDay(updatedOSCAR.Termination_Date__c, 'Late NOC - '+updatedOSCAR.Region__c)) {
+                updatedOSCAR.Termination_Date__c = AMS_Utils.AddBusinessDays(updatedOSCAR.Termination_Date__c, 1, 'Late NOC - '+updatedOSCAR.Region__c);
+            }
+        }
+
     }
 
     private void processFieldsTracking(AMS_OSCAR__c oldOscar, AMS_OSCAR__c updatedOSCAR) {
@@ -444,5 +469,24 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     }
 
+    private Boolean validateStep29(AMS_OSCAR__c updatedOscar) {
+        
+        Set<String> tocList = new Set<String>();
+        if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
+
+        if(
+            !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
+            && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
+            && !tocList.contains(AMS_Utils.MAJ_SHAREHOLDING)
+            && !tocList.contains(AMS_Utils.NAME)
+            && !tocList.contains(AMS_Utils.LEGAL_STATUS)
+            && !tocList.contains(AMS_Utils.LOCATION)
+        ){
+            updatedOSCAR.STEP29__c = AMS_Utils.FAILED;
+            updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
+            return false;
+        }
+        return true;
+    }
 
 }
