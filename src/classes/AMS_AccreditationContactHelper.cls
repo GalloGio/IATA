@@ -131,8 +131,12 @@ public with sharing class AMS_AccreditationContactHelper
 			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
 			
 			// This is actually not needed for person owners
-            if(ac.RecordTypeId == AMS_Utils.AccreditationContactCompanyRT)
-                 role.Owner_Account__c = ac.Company__c;
+            //if(ac.RecordTypeId == AMS_Utils.AccreditationContactCompanyRT)
+            if(AMS_AccountRoleCreator.companyDeveloperName.containsKey(ac.RecordType.DeveloperName)){
+                role.Owner_Name__c = createCompanyName(ac.First_Name__c,ac.Last_Name__c);
+                role.Owner_Account__c = ac.Company__c;
+
+            }
 		}
 		//TD: Removed Employee from Role. Keep them on Contact object only
 		/* else
@@ -141,6 +145,19 @@ public with sharing class AMS_AccreditationContactHelper
 			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
 		}*/
 		return role;
+    }
+
+    private static String createCompanyName(String firstName, String lastName){
+        String toReturn = '';
+
+        if(firstName != null && firstName.trim() != '')
+            toReturn = firstName;
+
+        if(lastName != null && lastName.trim() != '')
+            toReturn+= ' ' + lastName;
+
+
+        return toReturn;
     }
     
     public static AMS_Account_Role__c updateAmsAccountRole(AMS_Account_role__c role, AMS_Accreditation_Contact__c ac)

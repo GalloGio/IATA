@@ -21,8 +21,8 @@ public with sharing class AMS_AccountRoleCreator
 	private static final String recordTypesPerson = createContactRecordTypes(new List<String>{'Person','Current_Owner'});
 	private static final String recordTypesCompany = createContactRecordTypes(new List<String>{'Company','Current_Company_Owner'});
 	
-	private static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
-	private static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
+	public static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
+	public static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
 	
 	// This funny looking method is a workaround to be able to use a variable (Set<Id>) in a dynamic query
 	public static List<AMS_Accreditation_Contact__c> retrieveACsDynamically(String soqlString, String setName)
@@ -953,6 +953,8 @@ public with sharing class AMS_AccountRoleCreator
     	system.debug('DTULLO 826 --> aoMap.keyset() : ' + aoMap.keyset());
         String rolequery = '';
 
+		Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons = new Set<AMS_AccountRoleCreator.RoleBundle>();
+
         List<AMS_Accreditation_Contact__c> acsInAos = database.query(query);
         for(AMS_Accreditation_Contact__c ac :acsInAos){
 
@@ -970,19 +972,26 @@ public with sharing class AMS_AccountRoleCreator
         	if(aoMap.get(aoId)!=null){
  	        	for(Id accId : aoMap.get(aoId)){
  	        		
- 	        		system.debug('DTULLO 840 --> ' + ac.RecordType.DeveloperName + ';accId: ' + accId + ';ac.Contact__c: ' + ac.Contact__c + ';ac.Person_AMS__c ' + ac.Person_AMS__c + ';ac.Company__c ' + ac.Company__c);
- 	        		//DTULLO: Improvement: using recordtType DEVELOPERNAME rather then NAME...
-	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
-	        			system.debug('DTULLO XX1 --> Adding as person, contact not null');
+ 	        		if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Contact__c != null){
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Contact__c = \''+ac.Contact__c+'\' AND Account__c = \''+accId+'\')';
+						
+						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Contact__c, 'C'));
+
 	        		}
 	        		else if(personDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Person_AMS__c != null){
-	        			system.debug('DTULLO XX2 --> Adding as person, person not null');
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Person__c = \''+ac.Person_AMS__c+'\' AND Account__c = \''+accId+'\')';
+
+	        			contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Person_AMS__c, 'P'));
+
 	        		}
 	        		else if(companyDeveloperName.containsKey(ac.RecordType.DeveloperName) && ac.Company__c != null){
-	        			system.debug('DTULLO XX3 --> Adding as company, company not null');
+
 	        			rolequery += (rolequery=='' ? '' : ' OR ') + '(Owner_Account__c = \''+ac.Company__c+'\' AND Account__c = \''+accId+'\')';
+
+						contactsAndPersons.add(new AMS_AccountRoleCreator.RoleBundle(accId, ac.Company__c, 'A'));
+
 	        		}
 	        	}
 			}
@@ -1006,10 +1015,13 @@ public with sharing class AMS_AccountRoleCreator
 
     	if(rolequery != '')
     		rolequery = '('+rolequery+') AND ';
-    	system.debug('runRoleCreatorForOnlineAccreditations() -> role query condition '+rolequery);
-    	for(AMS_Account_Role__c r : database.query('SELECT recordtype.DeveloperName, id, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c '+
-											  		'FROM AMS_Account_Role__c '+
-											  		'WHERE '+rolequery+' Termination_Date__c = NULL AND RecordType.DeveloperName = \'Ownership\'')){
+    	
+
+		List<AMS_Account_Role__c> rolesToQuery = new List<AMS_Account_Role__c>();
+
+    	rolesToQuery = fetchAccountRolesToQuery(aoIds,contactsAndPersons);
+
+    	for(AMS_Account_Role__c r : rolesToQuery){
     		
     		system.debug('CORRECTION PROCESS ROLE START: '+ r);
 
@@ -1188,7 +1200,7 @@ public with sharing class AMS_AccountRoleCreator
 	    		if(ac.AMS_Ownership_Role__c != null){
 	    			
 		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac '+ac.First_name__c+' '+ac.Last_name__c+' ---> CASE A');
-		    			
+		    		system.debug('CHECKPOINT: Accreditation Contact HAS a link to an existing account role-> ' + ac);
 		    		for(AMS_Account_Role__c role : acToRoles.get(acId)){
 		    			Id oldAccountId = role.Account__c;
 		    			role = AMS_AccreditationContactHelper.updateAmsAccountRole(role, ac);
@@ -1203,6 +1215,7 @@ public with sharing class AMS_AccountRoleCreator
 		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) ac has account owner = '+ac.Company__c+' ---> CASE B');
 		    		system.debug('runRoleCreatorForOnlineAccreditations() -> STEP 4) acToRoles.get('+acId+') '+acToRoles.get(acId));
 
+		    		system.debug('CHECKPOINT: Accreditation Contact has no link to an existing account role-> ' + ac);
 
 		    		if(ac.Agency_owner__c == true){
 	    				for(Id accountId : aoMap.get(ac.AMS_Pax_Accreditation_Form__c)){
@@ -1210,7 +1223,7 @@ public with sharing class AMS_AccountRoleCreator
 		    				AMS_Account_Role__c newRole = AMS_AccreditationContactHelper.createAmsAccountRole(ac);
 		    				newRole.Account__c = accountId;
 		    				System.debug('runRoleCreatorForOnlineAccreditations() new role: ' + newRole);
-		    				rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c+'-'+newRole.Owner_Account__c,newRole);
+		    				rolesToInsert.put(newRole.Account__c+'-'+newRole.Contact__c/*+'-'+newRole.Owner_Account__c*/,newRole);
 		    				System.debug('runRoleCreatorForOnlineAccreditations() roles to insert list: ' + rolesToInsert);
 		    				accountIdsToDeactivateRoles.add(accountId);
 		    			}
@@ -1240,11 +1253,15 @@ public with sharing class AMS_AccountRoleCreator
     	for(Id acId : acToRoles.keySet()){
     		AMS_Accreditation_Contact__c ac = idToAc.get(acId);
     		if(ac.AMS_Ownership_Role__c == null){
-    			AMS_Account_Role__c mainRole = rolesToInsert.get(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c+'-'+ac.Company__c);
-    			if(mainRole!=null)
+    			system.debug('CHECKPOINT: Searching key -> ' + ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c/*+'-'+ac.Company__c*/);
+    			AMS_Account_Role__c mainRole = rolesToInsert.get(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c/*+'-'+ac.Company__c*/);
+    			system.debug('CHECKPOINT: Found role-> ' + mainRole);
+    			if(mainRole!=null){
     				ac.AMS_Ownership_Role__c = mainRole.Id;
+    				system.debug('CHECKPOINT: Asssigning link to Account role-> ' + ac);
+    			}
     			else
-    				system.debug('runRoleCreatorForOnlineAccreditations() --> for some strange reason cannot update ac '+ac.First_name__c +' '+ac.Last_name__c+' ID = '+ac.Id+' with the role stored with key '+ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c+'-'+ac.Contact__c);
+    				system.debug('runRoleCreatorForOnlineAccreditations() --> for some strange reason cannot update ac '+ac.First_name__c +' '+ac.Last_name__c+' ID = '+ac.Id+' with the role stored with key '+ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c/*+'-'+ac.Contact__c*/);
     		}
     	}
 
@@ -1274,5 +1291,63 @@ public with sharing class AMS_AccountRoleCreator
 
     }
 
+    private static List<AMS_Account_Role__c> fetchAccountRolesToQuery(Set<Id> accountsToSearch, Set<AMS_AccountRoleCreator.RoleBundle> contactsAndPersons){
 
+		List<AMS_Account_Role__c> rolesToReturn = new List<AMS_Account_Role__c>();
+
+    	List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
+
+
+    	roles = [SELECT Id, recordtype.DeveloperName, Account__c, Termination_Date__c, Person__c, Contact__c, Contact__r.Name, Person__r.Name, Owner_Account__c, 
+    						Owner_Account__r.Name, Duty__c,Hours__c,IsManager__c,Percentage__c,Position__c
+							FROM AMS_Account_Role__c WHERE Account__c in :accountsToSearch and Termination_Date__c = NULL AND RecordType.DeveloperName = 'Ownership'];
+
+
+		List<AMS_AccountRoleCreator.RoleBundle> contactsAndPersonsLst= new List<AMS_AccountRoleCreator.RoleBundle>(contactsAndPersons);
+
+		for(AMS_Account_Role__c role : roles){
+
+			for(AMS_AccountRoleCreator.RoleBundle bundle : contactsAndPersonsLst){
+
+				if(bundle.type == 'C' && role.Account__c == bundle.accountId && role.Contact__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+
+				if(bundle.type == 'P' && role.Account__c == bundle.accountId && role.Person__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+
+				if(bundle.type == 'A' && role.Account__c == bundle.accountId && role.Owner_Account__c == bundle.contactOrPersonOrAccount){
+					rolesToReturn.add(role);
+				}
+			}
+
+		}
+
+		return rolesToReturn;
+    }
+
+    public class RoleBundle {
+
+    	private Id accountId{get;set;}
+
+    	private Id contactOrPersonOrAccount{get;set;}
+
+    	private String type{get;set;}
+
+    	public RoleBundle(Id accountId, Id contactOrPersonOrAccount, String type){
+
+
+
+    		this.accountId = accountId;
+    		this.contactOrPersonOrAccount = contactOrPersonOrAccount;
+    		this.type = type;
+
+
+
+
+    	}
+
+    }
+    
 }
