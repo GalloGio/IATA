@@ -925,7 +925,7 @@ public without sharing class ISSP_APProcess {
         if(strAreaType=='Airline Joining') { //Get list of all Cargo Airlines when GSSA wants to craete new joining 
            casshq = [SELECT Id, Name, Airline_Prefix__c, Airline_designator__c
                   FROM Account
-                  WHERE RecordType.DeveloperName IN ('IATA_Airline') AND Airline_Prefix__c != null AND Airline_designator__c != null AND ACLI_Status__c != 'Inactive Company'
+                  WHERE RecordType.DeveloperName IN ('IATA_Airline') AND (Airline_Prefix__c != null OR IATAcode__c != null) AND Airline_designator__c != null AND ACLI_Status__c != 'Inactive Company'
                   ORDER BY Name];
         } else { //Or else get list of existing Airlines where this GSSA renders the CASS service, for selected country, for changes
             if(gssaCountryISOCode != null) {
@@ -1111,8 +1111,12 @@ public without sharing class ISSP_APProcess {
         //Get handle for Account (HQ or BR AL Office) for the country of joining application
         Id accountConcernedId;
         String airlinesite_BR;
-        
-        airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+
+        airlinesite_BR = (IATACode = null && hq.Airline_Prefix__c != null)? 
+                            DesignatorCode + ' ' + hq.Airline_Prefix__c + ' ' + CountryCode; : 
+                            DesignatorCode + ' ' + IATACode + ' ' + CountryCode;;
+
+        //airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
         System.debug('AL BR Site:' + airlinesite_BR);
         
         List <Account> concernedAccount = [
