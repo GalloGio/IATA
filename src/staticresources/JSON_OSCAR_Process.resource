@@ -876,10 +876,7 @@
             "ActionLabel": "AMS_OSCAR_Action8",
             "args": ["oscarid"]
           }],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step26_succeeded"
-          }],
+          "Automations": [],
           "DisplayFields": [
             "Change_effective_as_of__c",
             "Suspend_Agency__c",
@@ -894,10 +891,7 @@
           "Name": "STEP27",
           "Required": [],
           "Actions": [],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step27_succeeded"
-          }],
+          "Automations": [],
           "DisplayFields": [
             "NOC_Received__c",
             "Notify_Agent__c",
@@ -909,10 +903,7 @@
           "Name": "STEP28",
           "Required": [],
           "Actions": [],
-          "Automations": [{
-            "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step28_succeeded"
-          }],
+          "Automations": [],
           "DisplayFields": [
             "Notify_Agent__c",
             "Reactivate_Ticketing_Authority__c",

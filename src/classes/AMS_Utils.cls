@@ -63,7 +63,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VFMR';
 
 
@@ -1416,6 +1416,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
 }
 
+
+    public static final Date knownSunday = date.newInstance(2012, 7, 1);
     
     private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
         get{
@@ -1468,11 +1470,18 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     }
 
     public static Boolean IsWeekendDay(Datetime dateParam, String businessHours){
-       Integer dayOfWeek  = dateParam.day() - dateParam.date().toStartOfWeek().day();
+       //Integer dayOfWeek  = Integer.valueOf(dateParam.format('u'));
+       //Integer dayOfWeek = dateParam.date().toStartOfWeek().daysBetween(dateParam.date());
+       Integer dayOfWeek = Math.mod(knownSunday.daysBetween(dateParam.date()), 7);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] dateParam - ' + dateParam);
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] dayOfWeek - ' + dayOfWeek);
 
        Set<Integer> weekendDays = new Set<Integer>();
        if(weekendDaysPerBusinessHours.containsKey(businessHours)) weekendDays = weekendDaysPerBusinessHours.get(businessHours);
        else weekendDays = addBusinessHours(businessHours);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] weekendDays - ' + weekendDays);
 
        return weekendDays.contains(dayOfWeek);
     }
@@ -1482,6 +1491,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     }
 
     public static Datetime AddBusinessDays(Datetime d, Integer businessDaysToAdd, String businessHours){
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] d - ' + d);
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] businessHours - ' + businessHours);
 
         Datetime finalDate = d;
 
@@ -1493,6 +1504,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
             if (!isWeekendDay(finalDate, businessHours)) businessDaysToAdd -= direction;
         }
 
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
         return finalDate;
     } 
 
