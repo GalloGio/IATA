@@ -119,6 +119,7 @@ public without sharing class AMS_Utils {
     public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+    public static final Id AccountRoleOwnershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
@@ -853,7 +854,7 @@ public without sharing class AMS_Utils {
             // THen move the owners
             Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
 
-            
+
 
             if (!accountsToUpdate.isEmpty()) {
                 update accountsToUpdate;
@@ -885,7 +886,7 @@ public without sharing class AMS_Utils {
         }
 
 
-    }
+        }
 
     private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
 
@@ -1126,7 +1127,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
         Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString) + searchString.length() + 2;
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
-        errorString = errorString.substringBefore(':');
+        errorString = errorString.substringBefore(': [');
     }
     return 'ERROR: ' + errorString;
 }

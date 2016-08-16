@@ -1806,7 +1806,8 @@ public with sharing class AMS_AccountRoleCreator
 				role.Percentage__c 		= ac.Financial_Interest__c;
 				role.Position__c 		= ac.Job_title__c;
 				role.Owner_Name__c 		= (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
-				role.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
+				if(newContactsToInsert.get(ac.Email__c) != null)
+					role.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
 				role.Legacy_External_Id__c = ac.Legacy_External_Id__c;
 				rolesToInsert.add(role);
 
