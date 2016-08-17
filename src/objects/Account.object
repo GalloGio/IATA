@@ -4513,7 +4513,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <description>tracking the CCG participants HO and AO (IDFS cargo)</description>
         <externalId>false</externalId>
         <label>CCG Participant</label>
-        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -41007,17 +41006,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
-            </values>
-            <values>
-				<fullName>Governmental Aviation</fullName>
-                <default>false</default>
-            </values>
+            </values>03
             <values>
                 <fullName>Military</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46042,7 +46037,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-	<picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -46179,17 +46174,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>E%26F Supplier</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Field_Head_Office__c</picklist>
-            <values>
-                <fullName>Branch</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Headquarter</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48505,15 +48489,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Governmental Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Military</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
