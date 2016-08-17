@@ -46132,7 +46132,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-			<picklist>EF_SubStatus__c</picklist>
+            <picklist>EF_SubStatus__c</picklist>
             <values>
                 <fullName>Bankrupt</fullName>
                 <default>false</default>
