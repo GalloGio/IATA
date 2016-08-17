@@ -1395,44 +1395,48 @@ public with sharing class AMS_AccountRoleCreator
 	        }
 
 
-
-
 	        // to change all the AMS Account Roles in all hierarchies, we have to create a map from a single Accreditation contact
 	        // to all AMS Acccount Roles that will be updated.
 	        // for that, we search the AMS Account Role from the Accreditation Contact and try to find it's sinblings.
 
 	        Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles = syncAccreditationsWithRoles(accreditationContactsToProcess,allAccountRoles); 
 
-	        if(aContactsAndRoles.isEmpty()){
+	        
+	        // In theory, when you remove an Accreditation Contact from the page Manage Owners, that Role has to be deactivated.
+	        // To find those lost roles, lets subtract the ones fonund by the syncAccreditationsWithRoles from the original list and deactivate them.
+	        List<AMS_Account_Role__c> lostRoles = findDeletedRoles(aContactsAndRoles,allAccountRoles);
 
-	        	for(AMS_Account_Role__c role : allAccountRoles){
+	        if(!lostRoles.isEmpty()){
 
-					role.Termination_Date__c = Date.Today();
-			        rolestoDeactivate.add(role);
+	        	for(AMS_Account_Role__c role : lostRoles){
 
+	        		if(role.Termination_Date__c == null){
+	        			
+						role.Termination_Date__c = Date.Today();
+				        rolestoDeactivate.add(role);
+				    }
 	        	}
 
-	        }else{
+	        }
 
-		        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
-				
-				for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
+	        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
+			
+			for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
 
-					if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
-						
-						System.debug('Performing deactivation of structure:'+aContactsAndRoles);
+				if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
 
-						for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
-			        		
-			        		role.Termination_Date__c = Date.Today();
-			        		rolestoDeactivate.add(role);
-			        		
-			        	}
+					for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
+		        		
+		        		if(role.Termination_Date__c == null){
+		        			role.Termination_Date__c = Date.Today();
+		        			rolestoDeactivate.add(role);
+		        		}
+		        		
+		        	}
 
-
-					}
 
 				}
+
 			}
 
 	        if(aContactsAndRoles == null) // opps
@@ -1482,6 +1486,34 @@ public with sharing class AMS_AccountRoleCreator
 
 
         }
+
+    }
+
+    public static List<AMS_Account_Role__c> findDeletedRoles(Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> accreditationsAndRoles, List<AMS_Account_Role__c> allRoles){
+		
+		List<AMS_Account_Role__c> toDeleteRoles = new List<AMS_Account_Role__c>();
+		Set<AMS_Accreditation_Contact__c> contactsToDeactivate = accreditationsAndRoles.keySet();
+
+		Set<Id> rolesInMap = new Set<Id>();
+
+		for(AMS_Accreditation_Contact__c aCon : contactsToDeactivate){
+
+			List<AMS_Account_Role__c> tmp = accreditationsAndRoles.get(aCon);
+
+			for(AMS_Account_Role__c role : tmp)
+				rolesInMap.add(role.Id);
+
+		}
+
+		for(AMS_Account_Role__c role : allRoles){
+
+			if(!rolesInMap.contains(role.Id))
+				toDeleteRoles.add(role);
+
+		}
+
+
+		return toDeleteRoles;
 
     }
 
