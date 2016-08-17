@@ -7,7 +7,7 @@
  *
  **/
 
-public class vfIECEBC {
+public class vfIECEBC extends IECPageController {
 	
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 	
