@@ -170,7 +170,7 @@ public class vfIECEBC extends IECPageController {
                 validUserProfile();
                 
                 // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(new Set<String>{IECConstants.ProductCategory_SF_EBROADCAST}); 
+//                ctrSubsInfo.validateAccess(new Set<String>{IECConstants.ProductCategory_SF_EBROADCAST}); 
                 
                 // if no access, redirect to the unauthorized page
 
