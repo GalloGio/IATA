@@ -1,4 +1,5 @@
 <apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_CampaignRecipient" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+<!--
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -928,4 +929,5 @@
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>
-</apex:page>
+-->
+	</apex:page>

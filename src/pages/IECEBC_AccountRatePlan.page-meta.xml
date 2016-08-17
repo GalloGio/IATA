@@ -9,9 +9,4 @@
         <minorNumber>70</minorNumber>
         <namespace>Zuora</namespace>
     </packageVersions>
-    <packageVersions>
-        <majorNumber>6</majorNumber>
-        <minorNumber>0</minorNumber>
-        <namespace>zqu</namespace>
-    </packageVersions>
 </ApexPage>
