@@ -309,7 +309,7 @@ public with sharing class AMS_AccreditationContactHelper
         accreditationContact.Agency_owner__c = true;
         accreditationContact.AMS_Pax_Accreditation_Form__c = onlineAccreditationId;
         accreditationContact.Financial_Interest__c = role.Percentage__c;
-        accreditationContact.Last_Name__c = '-';
+        accreditationContact.Last_Name__c = '_';
 
         //contact/person owners
         if(role.Contact__c != null || role.Person__c != null)
