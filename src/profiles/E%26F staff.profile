@@ -32733,7 +32733,7 @@
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Billing_Agreement__c-E%26F Relationship Layout</layout>
+        <layout>EF_Billing_Agreement__c-E%26F Airline Billing Agreement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>E_F_Asset_Value__c-E%26F Asset Value Layout</layout>
