@@ -4512,7 +4512,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <defaultValue>false</defaultValue>
         <description>tracking the CCG participants HO and AO (IDFS cargo)</description>
         <externalId>false</externalId>
-        <label>CCG Participant / KAM</label>
+        <label>CCG Participant</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -41009,7 +41009,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Governmental Aviation</fullName>
+				<fullName>Governmental Aviation</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46133,7 +46133,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_SubStatus__c</picklist>
+			<picklist>EF_SubStatus__c</picklist>
             <values>
                 <fullName>Bankrupt</fullName>
                 <default>false</default>
@@ -48513,7 +48513,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Passenger %26 Cargo</fullName>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
