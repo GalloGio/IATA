@@ -1401,43 +1401,48 @@ public with sharing class AMS_AccountRoleCreator
 
 	        Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles = syncAccreditationsWithRoles(accreditationContactsToProcess,allAccountRoles); 
 
-	        
-	        // In theory, when you remove an Accreditation Contact from the page Manage Owners, that Role has to be deactivated.
-	        // To find those lost roles, lets subtract the ones fonund by the syncAccreditationsWithRoles from the original list and deactivate them.
-	        List<AMS_Account_Role__c> lostRoles = findDeletedRoles(aContactsAndRoles,allAccountRoles);
 
-	        if(!lostRoles.isEmpty()){
+	        if(accreditationAndOscars.get(accreditationId) != 'NEW'){ // this validation is to prevent any deactivations to the hierarchy 
 
-	        	for(AMS_Account_Role__c role : lostRoles){
+		        // In theory, when you remove an Accreditation Contact from the page Manage Owners, that Role has to be deactivated.
+		        // To find those lost roles, lets subtract the ones fonund by the syncAccreditationsWithRoles from the original list and deactivate them.
+		        List<AMS_Account_Role__c> lostRoles = findDeletedRoles(aContactsAndRoles,allAccountRoles);
 
-	        		if(role.Termination_Date__c == null){
-	        			
-						role.Termination_Date__c = Date.Today();
-				        rolestoDeactivate.add(role);
-				    }
-	        	}
+		        if(!lostRoles.isEmpty()){
 
-	        }
+		        	for(AMS_Account_Role__c role : lostRoles){
 
-	        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
-			
-			for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
-
-				if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
-
-					for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
-		        		
 		        		if(role.Termination_Date__c == null){
-		        			role.Termination_Date__c = Date.Today();
-		        			rolestoDeactivate.add(role);
-		        		}
-		        		
+		        			
+							role.Termination_Date__c = Date.Today();
+					        rolestoDeactivate.add(role);
+					    }
 		        	}
 
-
-				}
+		        }
 
 			}
+
+		        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
+				
+				for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
+
+					if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
+
+						for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
+			        		
+			        		if(role.Termination_Date__c == null){
+			        			role.Termination_Date__c = Date.Today();
+			        			rolestoDeactivate.add(role);
+			        		}
+			        		
+			        	}
+
+
+					}
+
+				}
+			
 
 	        if(aContactsAndRoles == null) // opps
 		        throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !');
@@ -1537,8 +1542,10 @@ public with sharing class AMS_AccountRoleCreator
     			}
     		}
 
-    		if(orginal == null)
+    		if(orginal == null){ // this shouldn't be happening, because we have find somehow one AMS Account Role if ac.AMS_Ownership_Role__c != null ...
+    			throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !'+ac);
     			return null; // ooppss....
+    		}
     	
     		// now let's find his siblings 
     		for(AMS_Account_Role__c role: allAccountRoles){
