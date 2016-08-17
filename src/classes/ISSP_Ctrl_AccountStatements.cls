@@ -1,5 +1,6 @@
 public without sharing class ISSP_Ctrl_AccountStatements {
 
+	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
 	public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
@@ -18,7 +19,7 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c, Right__c
 				From Portal_Application_Right__c
 				Where ContactId__c = :strId.left(15)
-				And Portal_Application__r.Name = 'Account Statements'
+				And Portal_Application__r.Name = :APP_NAME
 			];
 			// If user has no rights to access to Account statements app then is redirected to Home
 			if (appRight.Right__c!='Access Granted') {
