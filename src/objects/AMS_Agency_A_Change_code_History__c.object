@@ -78,16 +78,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Field_Label__c</fullName>
-        <externalId>false</externalId>
-        <label>Field Label</label>
-        <length>80</length>
-        <required>true</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Field_New_Value__c</fullName>
         <externalId>false</externalId>
         <label>Field New Value</label>
@@ -108,9 +98,9 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Object__c</fullName>
+        <fullName>Object_API_Name__c</fullName>
         <externalId>false</externalId>
-        <label>Object</label>
+        <label>Object API Name</label>
         <length>80</length>
         <required>true</required>
         <trackTrending>false</trackTrending>

@@ -5,9 +5,9 @@ public class AMS_ChangeCodesHelper {
 	*/
 	public class ChangeCodeStruct {
 
-    private Agency_Applied_Change_code__c changeCode {get; set;}
-    private Account acct {get; set;}
-    private List<AMS_Agency_A_Change_code_History__c> changeCodeFielsHistory {get; set;}
+    public Agency_Applied_Change_code__c changeCode {get; set;}
+    public Account acct {get; set;}
+    public List<AMS_Agency_A_Change_code_History__c> changeCodeFielsHistory {get; set;}
 
 	    public ChangeCodeStruct(Agency_Applied_Change_code__c changeCode, Account acct, List<AMS_Agency_A_Change_code_History__c> changeCodeFielsHistory) {
 
