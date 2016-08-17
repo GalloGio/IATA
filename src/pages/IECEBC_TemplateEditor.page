@@ -1,3 +1,3 @@
-<apex:page sidebar="false" language="en" showHeader="false" standardStylesheets="false" id="pageVersaFix" docType="html-5.0" controller="FileUploadController">
+<apex:page sidebar="false" language="en" showHeader="false" standardStylesheets="false" id="pageVersaFix" docType="html-5.0" >
 
 </apex:page>
