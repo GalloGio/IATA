@@ -1,13 +1,16 @@
 <apex:page sidebar="false" language="en" showHeader="false" standardStylesheets="false" id="pageVersaFix" docType="html-5.0" controller="FileUploadController">
+<!--
     <c:EmailTemplateGeneratingComponent />
+-->
     <script type="text/javascript">
     function saveTemplateCB(enteredAttachmentName, cb){
         saveTemplate(enteredAttachmentName);
         cb();
     }
     </script>
+<!--
     <apex:form >  
-        <div style="background:#900000;box-shadow: 0 5px 10px #888888;border-bottom:solid #900000;">
+   <div style="background:#900000;box-shadow: 0 5px 10px #888888;border-bottom:solid #900000;">
             <!-- https://fortawesome.github.io/Font-Awesome/icons/ -->
             <div class="buttonsMenu" >
                 <a href="#" role="button" id="Blocks" style="background:#900000;border: none;border-bottom:solid #900000;margin-left:15px;color:#e6e6e6;" class="btn" onclick="setUnderline(this)" ><span class="fa fa-cubes"></span>   Blocks</a>
@@ -24,7 +27,6 @@
                 </div>
             </div>
         </div>
-        
     </apex:form>
     <div style="height:100vh;margin-top:1px;">
         <div style="height:100vh;float:left;">
@@ -54,4 +56,5 @@
         </div>
         <c:BodyComponent />
     </div>
+-->     
 </apex:page>
