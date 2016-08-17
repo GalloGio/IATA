@@ -1,25 +1,25 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
     <c:iss_ap_css />
     <script>
-        function toggleChangeFields(myValue) {
+    	function toggleChangeFields(myValue) {
             if(document.getElementById(myValue).value=='Change of Address') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='none';
-                }
+            	if(document.getElementById(myValue).checked) {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='block';
+				} else {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.AddressFields}').style.display='none';
+				}
             } else if(document.getElementById(myValue).value=='Tax Number') {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='none';
-                }
+            	if(document.getElementById(myValue).checked) {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='block';
+				} else {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.TaxFields}').style.display='none';
+				}
             } else {
-                if(document.getElementById(myValue).checked) {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='block';
-                } else {
-                    document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
-                }
+            	if(document.getElementById(myValue).checked) {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='block';
+				} else {
+    				document.getElementById('{!$Component.APChangesForm.changeblock.MasterTableFields}').style.display='none';
+				}
             }
             
         }
@@ -83,10 +83,10 @@
                         <div class="aplabel" style="margin: 5px 0px 10px 0px">
                             <apex:outputText value="
                                 {!IF(strChangeType='Minor database changes',
-                                    "By agreeing with the Terms and Conditions, the Airline representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the Airline  participation in IATA Settlement Systems as per the applicable Passenger and/or Cargo Agency Resolutions.",
+                                 	"By agreeing with the Terms and Conditions, the Airline representative submitting this form confirms that they are authorized to do so and accepts the charges and fees related to the Airline  participation in IATA Settlement Systems as per the applicable Passenger and/or Cargo Agency Resolutions.",
                                     "By agreeing with the Terms and Conditions, the Airline representative submitting this form confirms that it is authorized to do so."
                                )}"
-                            />
+                          	/>
                         </div>
                         
                         <div style="color:#a31717; font-weight:bold; margin:20px 0px 10px 0px;border: 0px !important;">Note: the fields marked in red and with a "*" are required before you can submit your application.<br/>However, you can save the incomplete draft application and come back later to fill all the required fields before submitting it to IATA.</div>
@@ -137,8 +137,8 @@
                 <br/>
                 <apex:pageBlockSection columns="1" rendered="{!strChangeType='Minor database changes'}">
                     <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="toggleChangeFields(this.id);" title="* Type of change requested" label="* Type of change requested"  style="width:80%;">
-                        <apex:selectOptions value="{!changeItems}"/>
-                    </apex:selectCheckboxes>
+          				<apex:selectOptions value="{!changeItems}"/>
+        			</apex:selectCheckboxes>
                 </apex:pageBlockSection>    
 
                 <apex:outputPanel id="AddressFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Change of Address'), '', 'display:none')}" >
@@ -163,19 +163,19 @@
                         <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Country" />
                             <apex:selectList style="width:300px" value="{!newForm.Airline_Local_address_in_the_BSP_Country__c}" size="1">
-                                <apex:selectOptions value="{!countryNameList}"/>
-                            </apex:selectList>
-                        </apex:pageBlockSectionItem>
+                            	<apex:selectOptions value="{!countryNameList}"/>
+                        	</apex:selectList>
+                    	</apex:pageBlockSectionItem>
                         
                     </apex:pageBlockSection>
-                    
+                	
                 </apex:outputPanel>
                 <apex:outputPanel id="TaxFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Tax Number'), '', 'display:none')}" >
                     <apex:pageBlockSection collapsible="false" rendered="true" columns="1" title="Change of Tax details">
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" />
-                            <apex:inputText id="vathomeno" value="{!newForm.VAT_Tax_number_in_your_home_country__c}" />
-                        </apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem >
+                        	<apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" />
+                         	<apex:inputText id="vathomeno" value="{!newForm.VAT_Tax_number_in_your_home_country__c}" />
+                    	</apex:pageBlockSectionItem>
                         <apex:pageBlockSectionItem rendered="{!NOT(OR(apcountryisocode='BR',apcountryisocode='EC',apcountryisocode='MX',apcountryisocode='VE'))}">
                             <apex:outputLabel value="VAT/Tax number in {!strLoB} {!apcountry}" for="vatbspno" />
                             <apex:inputText id="vatbspno" value="{!newForm.BSP_Country_VAT_Tax_number__c}" />
@@ -312,7 +312,7 @@
                 
                 <apex:outputPanel id="MasterTableFields" style="{!IF (CONTAINS(newForm.Type_of_Change_Requested__c, 'Master Table'), '', 'display:none')}" >
                     <apex:pageBlockSection collapsible="false" rendered="true" columns="2" title="Finance / Administration Contact Person & Title - {!strLoB}Link Master Table Change">
-                     <apex:pageBlockSectionItem >
+                	 <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField value="{!newForm.Fin_Adm_Contact__c}"/>
                     </apex:pageBlockSectionItem>
