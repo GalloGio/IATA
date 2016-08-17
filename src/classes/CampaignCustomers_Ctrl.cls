@@ -36,25 +36,26 @@ public class CampaignCustomers_Ctrl
 	
 	public CampaignCustomers_Ctrl()
 	{
+        String strFilter;
+        
 		//-- Init data 
 
 		//Campaign
 		campaigns = new List<SelectOption>();
+        strFilter = Utility.getSeqTextSetting('Campaign Filter for Renewal', ' ');
 		Campaign_Sel campaignSelector = new Campaign_Sel(); 
-		for(Campaign c: campaignSelector.getActiveCampaigns())
+        for(Campaign c: campaignSelector.getActiveCampaigns(strFilter))
 			campaigns.add(new SelectOption(c.Id, c.Name));
 		
 		//Products
-		Product_Sel pSelector = new Product_Sel();
-		availableProducts = [
-			SELECT Id, Name, SAP_Material_Number__c, Product_Segment__c 
-			FROM Product2 
-			WHERE SAP_Material_Number__c != null
-		];
+        //Product_Sel pSelector = new Product_Sel();
+        strFilter = Utility.getSeqTextSetting('Product Filter for Renewal', ' ');
+        availableProducts = Database.query('SELECT Id, Name, SAP_Material_Number__c, Product_Segment__c FROM Product2 WHERE (SAP_Material_Number__c != null) ' + strFilter);
 		  //pSelector.selectAll();
 
 		//CustomerTypes
 		availableCustomerTypes =  new List<SelectOption>(); 
+        availableCustomerTypes.add(new SelectOption('', '-'));
 		Map<String, String> mapCustomerTypes = Utility.getPicklistValue_Label('Account', 'Customer_Type__c');
 		for(String  val : mapCustomerTypes.keySet())
 			availableCustomerTypes.add(new SelectOption(val,mapCustomerTypes.get(val)));
