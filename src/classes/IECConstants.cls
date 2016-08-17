@@ -5,6 +5,21 @@
   * History: 
   */
 global class IECConstants {
+
+	//Order Status : add by CGI - David D 2015-10-16
+	public static final String ORDER_STATUS_PAID 			=	'Paid';
+	public static final String ORDER_STATUS_READY_FOR_SAP 	= 	'Ready for SAP';
+	public static final String ORDER_STATUS_CREDIT_CARD_DEFERRED = 'Credit Card Deferred';
+	public static final String ORDER_STATUS_CHECK = 'Check';
+
+	public static final String ORDER_TYPE_QUOTE = 'Quote';
+	public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
+	public static final String ORDER_TYPE_AUTORENEWAL = 'Subscription'; //Event Auto-Renew
+
+
+	public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';
+
+
 	// GET parameters constants
 	public static final string PARAM_PRODUCT_CODE = 		'ProductCode';
 	public static final string PARAM_RATEPLAN_ID = 			'rpid';
@@ -30,12 +45,15 @@ global class IECConstants {
 	public static final string PARAM_CUSTOMERTYPE_PARTNER = 		'Partner';
 	public static final string PARAM_CUSTOMERTYPE_OTHER = 			'Other';
 
-	//Params to defin elements to be shown on Maps
-	public static final string PARAM_SHOWMAPSAGENCIES = 			'sa';
-	public static final string PARAM_SHOWMAPSEMAILS =	 			'se';
-	public static final string PARAM_SHOWMAPSFLAGS = 				'sf';
+    //Params to defin elements to be shown on Maps
+    public static final string PARAM_SHOWMAPSAGENCIES =             'sa';
+    public static final string PARAM_SHOWMAPSEMAILS =               'se';
+    public static final string PARAM_SHOWMAPSFLAGS =                'sf';
 
-	
+	//Locations constants
+	public static final string SHIPTO = 'Ship To';
+	public static final string BILLTO = 'Bill To';
+	public static final string SOLDTO = 'Sold To';
 	
 	// Custom Labels: Error
 	public static string Error_InvalidProductCode = Label.IEC_Error_InvalidProductCode;
@@ -107,6 +125,7 @@ global class IECConstants {
 	public static final string ProductInformationAudience_MEMBERAIRLINE = 'Member Airline';
 	public static final string ProductInformationAudience_IATAEMPLOYEE = 'IATA Employee';
 	public static final string ProductInformationAudience_STRATEGICMEMBER = 'Strategic Member';
+	public static final string ProductInformationAudience_NonMember = 'Non Member';
 
 	// Product Category SF codes
 	public static final string ProductCategory_SF_CACFREE = 'CACFREE';
@@ -151,6 +170,7 @@ global class IECConstants {
 	public static final string PaymentThresholdType_CreditCard = 'Credit Card';
 	public static final string PaymentThresholdType_BankTransfer = 'Bank Transfer';
 	public static final string PaymentThresholdType_ICH = 'ICH';
+	public static final string PaymentThresholdType_BillMeLater = 'Bill me later';
 	
 	// Swap types (swap, upgrade, suggestions)
 	public static final string SwappingType_Swap = 'Swap';
@@ -162,8 +182,8 @@ global class IECConstants {
 	public static final string Email_Template_GDPError = 'IEC_GDP_Replicate_Error';
 	
 	// Refers to the IECAddress.Address_Type__c picklist values
-	public static final String IECAddress_AddressType_Billing = 'Billing';
-	public static final String IECAddress_AddressType_Shipping = 'Shipping';
+	public static final String IECAddress_AddressType_Billing = 'Bill To';    //*** changed by Thai (2016-02-26) from "Billing"
+	public static final String IECAddress_AddressType_Shipping = 'Ship To';   //*** changed by Thai (2016-02-26) from "Shipping"
 	
 	// IEC_SAP_Invoice__c.Status__c picklist values
 	public static final String IECSAPInvoice_Status_New = 'New';
@@ -204,7 +224,7 @@ global class IECConstants {
 	public static final String ID_Card_Status_Valid_ID_Card = 'Valid ID Card';
 	public static final String ID_Card_Status_Sent_ID_Card = 'Sent ID Card';
 	
-	public enum PaymentType {BANK_TRANSFER, ICH, CREDIT_CARD}
+	public enum PaymentType {BANK_TRANSFER, ICH, CREDIT_CARD, CHECK, OTHER}
 	
 	public enum GADAgencyNameSearchBy {TradingName, LegalName, Both}
 	public enum GADSearchType {ExactMatch, StartsWith, Contains}
@@ -218,6 +238,12 @@ global class IECConstants {
 	public static String ENCRYPTION_KEY {
 		get {
 			return Test.isRunningTest() ? 'Kg0m2vAj4VmBBviGAUehrw==' : IEC_Settings__c.getOrgDefaults().Encryption_Key__c;
+		}
+	}
+	
+	public static String PaymentMethod_ICH_ZuoraID {
+		get {
+			return IEC_Settings__c.getOrgDefaults().PaymentMethod_ICH_Zuora_ID__c;
 		}
 	}
 	
@@ -239,6 +265,18 @@ global class IECConstants {
 		}
 	}
 
+	public static String PaymentMethod_Check_ZuoraID {
+		get {
+			return IEC_Settings__c.getOrgDefaults().PaymentMethod_Check_Zuora_ID__c;
+		}
+	}
+	
+	public static String InvoiceTemplate_Check_ZuoraID {
+		get {
+			return IEC_Settings__c.getOrgDefaults().InvoiceTemplate_Check_Zuora_ID__c;
+		}
+	}
+	
 	public static String InvoiceTemplate_Credit_Card_ZuoraID {
 		get {
 			return IEC_Settings__c.getOrgDefaults().InvoiceTemplate_Credit_Card_Zuora_ID__c;
@@ -336,6 +374,18 @@ global class IECConstants {
 		if (ePmType == PaymentType.CREDIT_CARD) return PaymentThresholdType_CreditCard;
 		else if (ePmType == PaymentType.BANK_TRANSFER) return PaymentThresholdType_BankTransfer;
 		else if (ePmType == PaymentType.ICH) return PaymentThresholdType_ICH;
+		else return null;
+	}
+	
+	/**
+	 * Converts a Payment Method Type (picklist values) into a string
+	 * @param sPaymentType Payment Method Type
+	 * @return The corresponding Payment Type string with spaces
+	 */
+	public static String parsePaymentMethodTypeToTypeWithSpaces(String sPaymentType) {
+		if (sPaymentType == 'CreditCard') return PaymentThresholdType_CreditCard;
+		else if (sPaymentType == 'BankTransfer') return PaymentThresholdType_BankTransfer;
+		else if (sPaymentType == 'ACH') return PaymentThresholdType_ICH;
 		else return null;
 	}
 	
@@ -521,44 +571,44 @@ global class IECConstants {
     }
     
     public static Integer SAPSettings_SchedulePeriod {
-		get {
-			return integer.valueOf(IEC_SAP_Settings__c.getOrgDefaults().Schedule_Period__c);
-		}
-	}
-	
-	public static Boolean SAPSettings_ZuoraInterfaceActive {
-		get {
-			return IEC_SAP_Settings__c.getOrgDefaults().Activate_Zuora_Payment_Interface__c;
-		}
-	}
-	
-	public static Boolean SAPSettings_SAPInterfaceActive {
-		get {
-			return IEC_SAP_Settings__c.getOrgDefaults().Activate_SAP_Invoice_Interface__c;
-		}
-	}
+        get {
+            return integer.valueOf(IEC_SAP_Settings__c.getOrgDefaults().Schedule_Period__c);
+        }
+    }
+    
+    public static Boolean SAPSettings_ZuoraInterfaceActive {
+        get {
+            return IEC_SAP_Settings__c.getOrgDefaults().Activate_Zuora_Payment_Interface__c;
+        }
+    }
+    
+    public static Boolean SAPSettings_SAPInterfaceActive {
+        get {
+            return IEC_SAP_Settings__c.getOrgDefaults().Activate_SAP_Invoice_Interface__c;
+        }
+    }
     
     public static Integer GDPReplication_SchedulePeriod {
-		get {
-			return integer.valueOf(IEC_GDP_Replication__c.getOrgDefaults().Schedule_Period__c);
-		}
-	}
-	
-	public static Boolean GDPReplication_ScheduleActive {
-		get {
-			return IEC_GDP_Replication__c.getOrgDefaults().Schedule_Active__c;
-		}
-	}
+        get {
+            return integer.valueOf(IEC_GDP_Replication__c.getOrgDefaults().Schedule_Period__c);
+        }
+    }
+    
+    public static Boolean GDPReplication_ScheduleActive {
+        get {
+            return IEC_GDP_Replication__c.getOrgDefaults().Schedule_Active__c;
+        }
+    }
     
     public static String GDPReplication_SystemAdminEmail {
-		get {
-			return IEC_GDP_Replication__c.getOrgDefaults().System_Admin_Email__c;
-		}
-	}
+        get {
+            return IEC_GDP_Replication__c.getOrgDefaults().System_Admin_Email__c;
+        }
+    }
     
     public static String GDPReplication_ProfileIDswithAccess {
-		get {
-			return Test.isRunningTest() ? IECTestUtil.getSystemIntegrationProfileId() : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
-		}
-	}
+        get {
+            return Test.isRunningTest() ? IECTestUtil.getSystemIntegrationProfileId() : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
+        }
+    }
 }
