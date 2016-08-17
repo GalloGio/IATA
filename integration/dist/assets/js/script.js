@@ -12698,7 +12698,7 @@ jQuery(document).ready(function($) {
         }
     // End:Add-on Abdellah to solve Sticky Section Issue
     
-    $('.js-tabs').on('click', '.tabs a', function(event) {
+    $(document).on('click', '.js-tabs .tabs a', function(event) {
         event.preventDefault();
         var self = $(this),
         parent = self.parents('.js-tabs'),
@@ -12809,11 +12809,11 @@ jQuery(document).ready(function($) {
         }
     });
     
-    $('.js-template-list').on('click', '.user-input', function() {
+    $(document).on('click', '.js-template-list .user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
-    $('.js-checkbox-list').on('click', '.user-input', function() {
+    $(document).on('click', '.js-checkbox-list .user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
