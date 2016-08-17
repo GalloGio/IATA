@@ -10,6 +10,7 @@
   *  
   * History: 
   *  - 20160721-sl: initial version
+  *  - 20160810-sl: graph is added
   */
 
 
@@ -30,6 +31,9 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 		// settings related to activityList
 		itemsPerPage = 5; // number of items per page
 		sortBy = 'Activity_Date_Time__c ASC, LastModifiedDate ASC'; // set order direction
+		
+		prepareGraphDataYearAfterYear();
+		prepareGraphDataYearToDate();
 	} // end of vfIECEBC_AccountManage constructor
 	
 	
@@ -46,7 +50,7 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	// showSuggestionMessage flag is used to turn on/off upgrade suggestion message 
 	public Boolean showSuggestionMessage{
 		get{
-			return (productRatePlanChargeUpgradeList.size() > 0);
+			return (productRatePlanIdUpgradeSet != null && productRatePlanIdUpgradeSet.size() > 0);
 		}
 	}
 	
@@ -61,8 +65,8 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 						from EBC_Campaign__c
 						where Billing_Account__c = :billingAccount.Id
 					];
-				Integer iTot = Integer.valueOf(aggrList[0].get('totalCount'));
-				totalCampaigns = (iTot == null) ? 0 : iTot;
+				Object iTot =  (aggrList == null || aggrList.size() == 0) ? 0 : aggrList[0].get('totalCount');
+				totalCampaigns =  (iTot == null ) ? 0 : Integer.valueOf(iTot);
 			}
 			return totalCampaigns;
 		}
@@ -99,8 +103,8 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 					where Related_Billing_Account__c = :billingAccount.Id
 						and Activity_Type__c = 'Send'
 					];
-				Integer iTot = Integer.valueOf(aggrList[0].get('sumTotalCount'));
-				totalSends = (iTot == null) ? 0 : iTot;
+				Object iTot =  (aggrList == null || aggrList.size() == 0) ? 0 : aggrList[0].get('sumTotalCount');
+				totalSends =  (iTot == null ) ? 0 : - Integer.valueOf(iTot);
 			}
 			return totalSends;
 		}
@@ -108,26 +112,26 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	} // end of totalSends
 	
 	// ========================================================================
-	// totalCredits is the currnet total number of Credit purchased or received
+	// totalCredits is the currnet total number of Adjustment email occurs
 	// this excludes the initial balance given on new subscription
-	public Integer totalCredits
+	public Integer totalAdjustments
 	{
 		get{
-			if (totalCredits == null)
+			if (totalAdjustments == null)
 			{
 				List<AggregateResult> aggrList = [select sum(Total_Count__c) sumTotalCount
 					from EBC_Activity__c
 					where Related_Billing_Account__c = :billingAccount.Id
-						and Activity_Type__c = 'Credit'
+						and Activity_Type__c = 'Adjustment'
 					];
 				
-				Integer iTot = Integer.valueOf(aggrList[0].get('sumTotalCount'));
-				totalCredits = (iTot == null) ? 0 : iTot;
+				Object iTot =  (aggrList == null || aggrList.size() == 0) ? 0 : aggrList[0].get('sumTotalCount');
+				totalAdjustments =  (iTot == null ) ? 0 : Integer.valueOf(iTot);
 			}
-			return totalCredits;
+			return totalAdjustments;
 		}
 		private set;
-	} // end of totalCredits
+	} // end of totalAdjustments
 	
 	
 	// ========================================================================
@@ -153,20 +157,19 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			fields.add('CreatedDate');
 			fields.add('LastModifiedDate'); 
 		}
-		
+		resetPaging();
 		String query = 'Select ' + String.join(fields, ',') 
 			+ ' FROM EBC_Activity__c '
 			+ ' Where  Related_Billing_Account__c = \'' + billingAccount.Id + '\' '
 			+ selectedActivityTypeClause;
-		System.debug( 'getQuery: ' + query);
+		//System.debug( 'getQuery: ' + query);
+		currentQuery = query;
 		return query;
 	} // getQuery
 	
-	//public List<EBC_Activity__c> getActivityList() {
+	// ========================================================================
 	public List<EBC_Activity__c> activityList {
 		get{
-			system.debug ('vfIECEBC_ManageAccount getActivityList:' + items.size() );
-		
 			return (List<EBC_Activity__c>)items; 
 		}
 	} // activityList getter
@@ -176,29 +179,38 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 		return (EBC_Activity__c)selectedItem; 
 	}
 	
-	
+	public String currentQuery{get;set;} // only for debugging
 	// ========================================================================
 	// selectedActivityTypeClause will used as part of the getQuery
 	// it adds the filtering based on selected activity types 
-	private String selectedActivityTypeClause {
+	public String selectedActivityTypeClause {
 		get{
-			System.debug( 'selectedActivityTypeClause getter starts');
-			String activitySetString = '';
+			String activitySetString = ''; // include '' as the default search
+			String activityNotSetString = '';
+			boolean ArraySelected=false;
+			boolean ArrayNotSelected=false;
 			for (ActivityTypeWrapper atw : activityTypeWrapperList)
 			{
-				System.debug( 'atw:' + atw);
+				if (atw.activityType=='') continue;
+				
 				if (atw.selected) {
+					ArraySelected=true;
 					activitySetString += ((activitySetString == '') ? '' : ', ') + '\'' + atw.activityType + '\'';
+				}else{
+					ArrayNotSelected=true;
+					activityNotSetString += ((activityNotSetString == '') ? '' : ', ') + '\'' + atw.activityType + '\'';
+				
 				}
 			}
 			
-			if (activitySetString != '') {
-				activitySetString = ' and  Activity_Type__c in (' + activitySetString + ')';
-			}
-			System.debug( 'selectedActivityTypeClause getter returns: [' + activitySetString +']');
-			return activitySetString;
+			
+			if (ArraySelected) activitySetString = ' and  Activity_Type__c in (' + activitySetString + ')';
+			if (ArrayNotSelected) activityNotSetString = ' and  Activity_Type__c Not in (' + activityNotSetString + ')';
+			
+			//System.debug( 'selectedActivityTypeClause getter returns: [' + activitySetString +']');
+			return activitySetString+activityNotSetString;
 		}
-		set;
+		private set;
 	} // end selectedActivityTypeClause getter setter
 	
 	
@@ -207,10 +219,8 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	// activityTypeWrapperList is used for selecting activity types
 	public List<ActivityTypeWrapper> activityTypeWrapperList {
 		get{
-			System.debug( 'activityTypeWrapperList getter starts' + activityTypeWrapperList);
 			if (activityTypeWrapperList == null)
 			{
-				System.debug( 'activityTypeWrapperList initialization' );
 				List<ActivityTypeWrapper> actWrapList = new List<ActivityTypeWrapper>();
 				for (String actType : activityTypeSelectionList)
 				{
@@ -220,7 +230,6 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 				}
 				activityTypeWrapperList = actWrapList;
 			}
-			System.debug( 'activityTypeWrapperList size:' + activityTypeWrapperList.size());
 			return activityTypeWrapperList;
 		}
 		set;
@@ -232,14 +241,179 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 	// (based on modification in activityTypeWrapperList)
 	public void refreshTable()
 	{
-		System.debug( 'xxxx vfIECEBC_ManageAccount.refreshTable starts');
-		System.debug( 'xxxx with actClause:' + selectedActivityTypeClause);
+		//System.debug( 'vfIECEBC_ManageAccount.refreshTable starts');
 		resetQuery(); // redefine the query with new filter
 		getQuery(false);
-		ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.info, 'refresh table'));
-		System.debug( 'xxxx vfIECEBC_ManageAccount.refreshTable ends, activityList:' + activityList.size() + activityList);
+		//ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.info, 'refresh table'));
+	} // end refreshTable
+	
+	
+	// ========================================================================
+	// graph related code 
+	// ------------------------------------------------------------------------
+	
+	// ========================================================================
+	// graph related properties that will be used by Vfp
+	// data values 
+	public List<Decimal> adjustmentYayData {get; private set;}
+	public List<Decimal> creditYayData {get; private set;}
+	public List<Decimal> sendYayData {get; private set;}
+	
+	public List<Decimal> adjustmentYtdData {get; private set;}
+	public List<Decimal> creditYtdData {get; private set;}
+	public List<Decimal> sendYtdData {get; private set;}
+	
+	// the axis labels: months
+	public List<String> monthYayList {
+		get {
+			if (monthYayList == null) {
+				monthYayList = getMonthListSince(beginningOfObservationYay);
+			}
+			return monthYayList;
+		}
+		private set;
 	}
 	
+	public List<String> monthYtdList {
+		get {
+			if (monthYtdList == null) {
+				monthYtdList = getMonthListSince(beginningOfObservationYtd);
+			}
+			return monthYtdList;
+		} 
+		private set;
+	}
+	
+	
+	// ========================================================================
+	// initializer for preparing all the graph related properties above
+	
+	// ========================================================================
+	// prepareGraphDataYearToDate initializes adjustmentYayData, creditYayData, sendYayData
+	// the list size can vary from 1 to 12 (same year)
+	private void prepareGraphDataYearToDate()
+	{
+		List<AggregateResult> aggrList = [select Activity_Type__c
+			, sum(Total_Count__c) sumTotalCount
+			, calendar_year(Activity_Date_Time__c) year, calendar_month(Activity_Date_Time__c) month
+			from EBC_Activity__c
+			where Related_Billing_Account__c = :billingAccount.Id 
+				and Activity_Date_Time__c = THIS_YEAR
+			group by Related_Billing_Account__c
+					, calendar_year(Activity_Date_Time__c)
+					, calendar_month(Activity_Date_Time__c)
+					, Activity_Type__c
+			order by calendar_year(Activity_Date_Time__c)
+					, calendar_month(Activity_Date_Time__c)
+					, Activity_Type__c
+			];
+		
+		adjustmentYtdData = new List<Decimal>();
+		creditYtdData = new List<Decimal>();
+		sendYtdData = new List<Decimal>();
+		for (Integer i=0;i< Date.today().month();i++)
+		{
+			adjustmentYtdData.add( 0);
+			creditYtdData.add( 0);
+			sendYtdData.add( 0);
+		}
+		Map<String, List<Decimal>> typeToListMap = new Map<String, List<Decimal>> { 'Adjustment' => adjustmentYtdData
+			, 'Credit' => creditYtdData
+			, 'Send' => sendYtdData };
+		List<Decimal> targetList;
+		
+		for (AggregateResult aggr : aggrList)
+		{
+			targetList = typeToListMap.get( (String) aggr.get('Activity_Type__c'));
+			Integer idx = (Integer) aggr.get('month')-1;
+			targetList[idx] = Math.abs((Decimal) aggr.get('sumTotalCount'));
+		}
+	} // prepareGraphDataYearToDate
+	
+	
+	// ========================================================================
+	// prepareGraphDataYearToDate prepares adjustmentYayData, creditYayData, sendYayData
+	// the list size is fixed to 13 (last 12 months)
+	private void prepareGraphDataYearAfterYear()
+	{
+		List<AggregateResult> aggrList = [select Activity_Type__c
+			, sum(Total_Count__c) sumTotalCount
+			, calendar_year(Activity_Date_Time__c) year, calendar_month(Activity_Date_Time__c) month
+			from EBC_Activity__c
+			where Related_Billing_Account__c = :billingAccount.Id 
+				and Activity_Date_Time__c >= : beginningOfObservationYay
+			group by Related_Billing_Account__c
+					, calendar_year(Activity_Date_Time__c)
+					, calendar_month(Activity_Date_Time__c)
+					, Activity_Type__c
+			order by calendar_year(Activity_Date_Time__c), calendar_month(Activity_Date_Time__c)
+					, Activity_Type__c
+			];
+		
+		adjustmentYayData = new List<Decimal>{ 0,0,0,0,0,0, 0,0,0,0,0,0,0 };
+		creditYayData = new List<Decimal>{0,0,0,0,0,0, 0,0,0,0,0,0,0 };
+		sendYayData = new List<Decimal>{ 0,0,0,0,0,0, 0,0,0,0,0,0,0 };
+		Map<String, List<Decimal>> typeToListMap = new Map<String, List<Decimal>> { 'Adjustment' => adjustmentYayData
+			, 'Credit' => creditYayData
+			, 'Send' => sendYayData };
+		List<Decimal> targetList;
+		
+		Integer monthNumber;
+		Integer yearNumber;
+		Integer idx;
+		for (AggregateResult aggr : aggrList)
+		{
+			targetList = typeToListMap.get( (String) aggr.get('Activity_Type__c'));
+			monthNumber = (Integer) aggr.get('month');
+			yearNumber = (Integer) aggr.get('year');
+			idx = shiftIndex(yearNumber, monthNumber, beginningOfObservationYay);
+			targetList[idx] = Math.abs((Decimal) aggr.get('sumTotalCount'));
+		}
+	} // prepareGraphDataYearAfterYear
+	
+	
+	
+	// ========================================================================
+	// beginningOfObservation Year To Date, first day of the year
+	private Datetime beginningOfObservationYtd
+	{
+		get {
+			return datetime.newInstance( Date.today().Year(), 1, 1);
+		}
+	}
+	
+	// ========================================================================
+	// beginningOfObservation Year After Year, first day of the month 12 months ago
+	private Datetime beginningOfObservationYay
+	{
+		get {
+			return datetime.newInstance( Date.today().Year(), Date.today().Month(), 1).addMonths(-12);
+		}
+	}
+	
+	// ========================================================================
+	// shiftIndex return the list index for data of year and month,
+	// given that the observation starts in startingDateTime
+	private Integer shiftIndex( Integer year, Integer month, Datetime startingDateTime)
+	{
+		Integer base = (year - startingDateTime.year()) * 12 - startingDateTime.month() ;
+		return base + month;
+	}
+	
+	// ========================================================================
+	// return a list of months since beginning until now
+	private List<String> getMonthListSince(DateTime beginning)
+	{
+		Datetime observationTime = beginning;
+		List<String> monthList = new List<String>();
+		while (observationTime <= DateTime.now()) 
+		{
+			String newMonth = '\'' + observationTime.format('MMM') + ' ' + String.valueOf(Math.mod(observationTime.year(),100)) +  '\'';
+			monthList.add(newMonth);
+			observationTime = observationTime.addMonths(1);
+		}
+		return monthList;
+	} // end of getMonthListSince
 	
 	
 	// ========================================================================

@@ -3,7 +3,6 @@
  * 
  * Change log:
  *   20160809-sl: add ebcSetup
- *   20160816-sl: temporary version, need to be reviewed. modified so can be deployed to temp sandbox
  *
  **/
 
@@ -155,32 +154,47 @@ public class vfIECEBC {
 		set;
 	} // end of ebcSetup getter/setter
 	
-	
-    public Pagereference pageLoad() {
-        // first check if the user is logged in
-        try {
-            if (IECUserManager.isUserLoggedIn() == false) {
-                Pagereference prLogin = Page.IECLogin;
-                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
-                prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
-                prLogin.setRedirect(true);
-                return prLogin;
-            } else {
-                // Validate Logged in user profile and ensure profile is complete
-                validUserProfile();
-                
-                // Make sure to validate user access to application subscription
-                ctrSubsInfo.validateAccess(new Set<String>{IECConstants.ProductCategory_SF_EBROADCAST}); 
-                
-                // if no access, redirect to the unauthorized page
+	/*
+	public Pagereference pageLoad() {
+		if (String.isBlank(UserInfo.getSessionId())) {
+			Pagereference prLogin = Page.IECLogin;
+			prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+			prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+			prLogin.setRedirect(true);
+			return prLogin;
+		} else {
+			
+		}
+		throw new Controller_Exception('Session ID: ' + UserInfo.getSessionId());
+		
+		
+		return null;
+		// first check if the user is logged in
+		try {
+			if (IECUserManager.isUserLoggedIn() == false) {
+				Pagereference prLogin = Page.IECLogin;
+				prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+				prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+				prLogin.setRedirect(true);
+				return prLogin;
+			} else {
+				// Validate Logged in user profile and ensure profile is complete
+				validUserProfile();
+				
+				// Make sure to validate user access to application subscription
+				ctrSubsInfo.validateAccess(new Set<String>{IECConstants.ProductCategory_SF_EBROADCAST}); 
+				System.debug(ctrSubsInfo.hasPageAccess); 
+				
+				// if no access, redirect to the unauthorized page
 
-//		        if (!ctrSubsInfo.hasPageAccess) return Page.IECUnauthorized;
+				if (!ctrSubsInfo.hasPageAccess) return Page.IECUnauthorized;
 			}
-        }
-        catch(Exception ex) {
-            addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
-        }
+		}
+		catch(Exception ex) {
+			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
+		}
 
-        return null;
-    }
+		return null;
+	}
+*/
 }
