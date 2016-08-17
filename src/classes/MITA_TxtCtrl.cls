@@ -23,20 +23,29 @@ public with sharing class MITA_TxtCtrl {
     public static final String IAB2D4 = 'iab2d4';
     public static final String IAB2D5 = 'iab2d5';
     public static final String IAB2D6 = 'iab2d6';
+
     public static final String IAB2P2 = 'iab2p2';
+
     public static final String IAB3D1 = 'iab3d1';
     public static final String IAB3D2 = 'iab3d2';
+
     public static final String IAB4D2 = 'iab4d2';
+
     public static final String IAB5D3 = 'iab5d3';
+
     public static final String IAB7D1 = 'iab7d1';
     public static final String IAB7D2 = 'iab7d2';
+
     public static final String MITA27 = 'MITA2.7';
-    public static final set<String> LIST_TYPES = new set<String>{IAB2D1,IAB2D2,IAB2D3,IAB2D4,IAB2D5,IAB2D6,IAB2P2,IAB3D1,IAB3D2,IAB4D2,IAB5D3,IAB7D1,IAB7D2,MITA27};
 
     public String txtType {get;set;}
 
     public MITA_TxtCtrl(){
-        txtType = ApexPages.currentPage().getParameters().get('type');
+        try {
+            txtType = ApexPages.currentPage().getParameters().get('type');
+        } catch (Exception e) {
+            System.debug('No parameter "type"');
+        }
     }
 
     public String getTitle(){
@@ -58,15 +67,19 @@ public with sharing class MITA_TxtCtrl {
                             AND ACLI_Status__c = 'Active Company'
                             AND MITA_Member__c = true
                             AND Name_on_AOC__c != null
+                            AND (
+                                (MITA_IATA_Interline_Passenger__c != null and MITA_IATA_Interline_Cargo__c !=null)
+                                OR (MITA_IATA_Interline_Passenger__c = null and MITA_IATA_Interline_Cargo__c !=null)
+                                OR (MITA_IATA_Interline_Passenger__c != null and MITA_IATA_Interline_Cargo__c =null)
+                            )
                             ORDER BY Name_on_AOC__c]){
 
-                String name = a.Name_on_AOC__c;
                 String firstLetterIndicator;
-                if (firstLetter == name.left(1)) {
+                if (firstLetter == a.Name_on_AOC__c.left(1)) {
                     firstLetterIndicator = ' ';
                 } else {
                     firstLetterIndicator = '&';
-                    firstLetter = name.left(1);
+                    firstLetter = a.Name_on_AOC__c.left(1);
                 }
 
                 String legend = '  ';
@@ -78,7 +91,7 @@ public with sharing class MITA_TxtCtrl {
                     legend = ' +';
 
                 content +=legend
-                        + formatString(name,101)
+                        + formatString(a.Name_on_AOC__c,101)
                         + ' '
                         + formatDate(a.MITA_IATA_Interline_Passenger__c) +
                         + (a.MITA_IATA_Interline_Pass_Art3_Joined__c!=null && a.MITA_IATA_Interline_Pass_Art3_Joined__c!=a.MITA_IATA_Interline_Passenger__c?
@@ -86,7 +99,7 @@ public with sharing class MITA_TxtCtrl {
                                 ''.rightPad(15))+formatDate(a.MITA_IATA_Interline_Cargo__c)
                         +firstLetterIndicator
                         +NL;
-        }
+            }
 
         ///// IAB2D2.TXT /////
         // I**Aer Lingus Limited                                                                                     01 Jul 1993
@@ -98,7 +111,6 @@ public with sharing class MITA_TxtCtrl {
                             AND ACLI_Status__c = 'Active Company'
                             AND MITA_Member__c = true
                             AND MITA_One_way_Pass_Issuing_Airline__c != null
-                            AND Name_on_AOC__c != null
                             ORDER BY Name_on_AOC__c]){
 
                 String legend = '  ';
@@ -119,11 +131,12 @@ public with sharing class MITA_TxtCtrl {
         //P  Hawaii Island Air Inc.                              dba Island Air                                     21 Aug 2005
         //P *Jetblue Airways Corporation                                                                            17 Aug 2015
         }else if(txtType==IAB2P2){
-            for(Account a : [SELECT Name_on_AOC__c, MITA_One_way_Pass_Issuing_Airline__c, Membership_status__c
+            for(Account a : [SELECT Name_on_AOC__c, MITA_One_way_Pass_Participating__c, Membership_status__c
                             FROM Account
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
-                            AND Name_on_AOC__c != null
+                            AND MITA_One_way_Pass_Participating__c != null
+                            AND MITA_Member__c = true
                             ORDER BY Name_on_AOC__c]){
                 String legend = '  ';
                 if(a.Membership_status__c=='IATA Member')
@@ -134,7 +147,7 @@ public with sharing class MITA_TxtCtrl {
                 content +='P'
                         + legend
                         + formatString(a.Name_on_AOC__c,103)
-                        + formatDate(a.MITA_One_way_Pass_Issuing_Airline__c)
+                        + formatDate(a.MITA_One_way_Pass_Participating__c)
                         + ' '
                         + NL;
             }
@@ -144,11 +157,13 @@ public with sharing class MITA_TxtCtrl {
         // ABSA  -  Aerolinhas Brasileiras S.A.                                                                M3     549
         }else if(txtType==IAB2D3){
             String firstLetter = '';
-            for(Account a : [SELECT Name_on_AOC__c, MITA_IATA_Interline_Cargo__c, MITA_IATA_Interline_Passenger__c, IATAcode__c, Airline_Designator__c, Airline_Prefix__c
+            for(Account a : [ SELECT Name_on_AOC__c, MITA_IATA_Interline_Cargo__c, MITA_IATA_Interline_Passenger__c, IATAcode__c, Airline_Designator__c, Airline_Prefix__c
                             FROM Account
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND Name_on_AOC__c != null
+                            AND Airline_Designator__c != null
+                            AND MITA_Member__c = true
                             ORDER BY Name_on_AOC__c]){
 
                 String firstLetterIndicator;
@@ -179,7 +194,6 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND Airline_Designator__c <> NULL
-                            AND Name_on_AOC__c != null
                             ORDER BY Airline_Designator__c]){
 
                 String airlineDesignator = formatString(a.Airline_Designator__c,3);
@@ -207,7 +221,6 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND MITA_Member__c = true
-                            AND Name_on_AOC__c != null
                             ORDER BY Name_on_AOC__c]){
 
                 content +=formatString(a.IATAcode__c,3)
@@ -231,7 +244,7 @@ public with sharing class MITA_TxtCtrl {
                 WHERE RecordType.Name = 'Airline Headquarters'
                 AND ACLI_Status__c = 'Active Company'
                 AND IATAcode__c <> NULL
-                AND Name_on_AOC__c != null
+                and id = '001w0000015LHUsAAO'
                 ORDER BY IATAcode__c
             ];
 
@@ -266,7 +279,10 @@ public with sharing class MITA_TxtCtrl {
                         + NL;
             }
 
-        }else if(txtType==IAB3D2){
+        /**
+            File for MITA Agreements
+        **/
+        }else if(txtType==IAB3D1){
             for(Account a : [SELECT id, Name_on_AOC__c, MITA_IATA_Interline_Cargo_Claims__c,
                             ( Select Airline_2__r.Airline_designator__c, Agreement_type__c From MITA_Agreements_1__r where Active__c = true and MITAorBIETA__c = 'MITA' ORDER BY Agreement_type__c),
                             ( Select Airline_1__r.Airline_designator__c, Agreement_type__c From MITA_Agreements_2__r where Active__c = true and MITAorBIETA__c = 'MITA' ORDER BY Agreement_type__c)
@@ -274,10 +290,26 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND MITA_Member__c = true
-                            AND Name_on_AOC__c != null
                             ORDER BY Name_on_AOC__c]){
 
-                Format_IAB3D2 format = new Format_IAB3D2(a);
+                Format_IAB3 format = new Format_IAB3(a);
+                content += format.toCSV();
+            }
+
+        /**
+            File for BIETA Agreements
+        **/
+        }else if(txtType==IAB3D2){
+            for(Account a : [SELECT id, Name_on_AOC__c, MITA_IATA_Interline_Cargo_Claims__c,
+                            ( Select Airline_2__r.Airline_designator__c, Agreement_type__c From MITA_Agreements_1__r where Active__c = true and MITAorBIETA__c = 'BIETA' ORDER BY Agreement_type__c),
+                            ( Select Airline_1__r.Airline_designator__c, Agreement_type__c From MITA_Agreements_2__r where Active__c = true and MITAorBIETA__c = 'BIETA' ORDER BY Agreement_type__c)
+                            FROM Account
+                            WHERE RecordType.Name = 'Airline Headquarters'
+                            AND ACLI_Status__c = 'Active Company'
+                            AND BIETA_Member__c = true
+                            ORDER BY Name_on_AOC__c]){
+
+                Format_IAB3 format = new Format_IAB3(a);
                 content += format.toCSV();
             }
 
@@ -293,7 +325,6 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND MITA_Member__c = true
-                            AND Name_on_AOC__c != null
                             AND MITA_IATA_Interline_Cargo_Claims__c != null
                             ORDER BY Name_on_AOC__c]){
 
@@ -330,7 +361,6 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND MITA_Member__c = true
-                            AND Name_on_AOC__c != null
                             AND (MITA_IATA_Interline_Passenger_Charges__c != null  OR MITA_IATA_Interline_Cargo_Charges__c != null)
                             ORDER BY Name_on_AOC__c]){
 
@@ -370,7 +400,6 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND ICH_Member__c = true
-                            AND Name_on_AOC__c != null
                             AND MITA_Currency__c != null
                             AND MITA_Currency__c != 'N/A'
                             ORDER BY MITA_Currency__c desc, Name_on_AOC__c]){
@@ -425,7 +454,6 @@ public with sharing class MITA_TxtCtrl {
                             WHERE RecordType.Name = 'Airline Headquarters'
                             AND ACLI_Status__c = 'Active Company'
                             AND ACH_Member__c = true
-                            AND Name_on_AOC__c != null
                             ORDER BY Name_on_AOC__c]){
 
                 content += formatString(a.Name_on_AOC__c,100)
@@ -440,7 +468,7 @@ public with sharing class MITA_TxtCtrl {
         if(d!=null)
             return (d.day()<10?'0':'') + d.day()+' '+MONTH_NAMES.get(d.month())+' '+d.year();
         else
-            return '           ';
+            return '   -       ';
     }
 
     public static String formatString(String input, Integer length ) {
@@ -469,13 +497,13 @@ public with sharing class MITA_TxtCtrl {
         return content;
     }
 
-    class Format_IAB3D2 {
+    class Format_IAB3 {
         private final list<String> listLegends = new list<String>{'1.','2.','3.','4.','5.','6.','7.'};
         private final Integer elementsPerLine = 15;
 
         private Account account;
 
-        public Format_IAB3D2(Account account) {
+        public Format_IAB3(Account account) {
             this.account = account;
         }
 
