@@ -4747,6 +4747,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Critères par pays</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Pays de publication</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5266,6 +5270,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Filtrer par type</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtrer par type de participation</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Nous sommes ravis de recevoir vos compliments</label>
@@ -6026,6 +6034,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Page</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Consulter les critères BSP et CASS par pays concernant la participation pour une compagnie aérienne</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Gérer vos demandes de services pour vous et les utilisateurs du portail de votre entreprise</label>

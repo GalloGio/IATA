@@ -30,11 +30,13 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
 		prepopulateValues();
+		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		handleChangesProcess(oscars);
 	}
 
 	public static void handleBeforeInsert() {
 		prepopulateValues();
+		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
 	}
 
 	public static void handleAfterInsert() {
@@ -177,6 +179,8 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void processAgencyChanges(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
 
+		boolean isSanityCheck = false;
+
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
 		//map that will be used to verify ownership consistency between a list of agencies
@@ -241,8 +245,6 @@ public class AMS_OSCARTriggerHandler {
 					accountsChangeCode.put(accId, changeCode);
 		}
 
-		//Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Status__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
-
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
@@ -304,7 +306,10 @@ public class AMS_OSCARTriggerHandler {
 
 				if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
-					performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships);
+					isSanityCheck = true;
+
+					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships))
+						return;
 
 					//Location Type will always be selected as a single change.
 					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
@@ -354,7 +359,8 @@ public class AMS_OSCARTriggerHandler {
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
-					performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships);
+					if(!performOscarValidations(toclist, agenciesAffected, oscar, accounts, accountHierarchyRelationships))
+						return;
 
 					if (nonCascadingTOCs.length() > 0 && nonCascadingTOCs.containsIgnoreCase(AMS_Utils.LOCATION_TYPE)) {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Authorize Approval.');
@@ -422,8 +428,8 @@ public class AMS_OSCARTriggerHandler {
 					}
 
 				}
+
 			}
-			//}
 		}
 
 
@@ -485,7 +491,8 @@ public class AMS_OSCARTriggerHandler {
 			//Migrate Ownership
 			if (!accountsAffectedPerOnlineAccreditation.isEmpty()) {
 				system.debug('processAgencyChanges() --> accountsAffectedPerOnlineAccreditation = ' + accountsAffectedPerOnlineAccreditation);
-				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation);
+
+				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(accountsAffectedPerOnlineAccreditation, !isSanityCheck);
 
 				//verify ownership alignment
 				if(accsToCompareOwnership.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(accsToCompareOwnership))
@@ -613,8 +620,9 @@ public class AMS_OSCARTriggerHandler {
 
 	}
 
-	public static void performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
+	public static boolean performOscarValidations(Set<String> toclist, Set<Id> agenciesAffected, AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
 
+		boolean validationsPassed = true;
 		Set<Id> agenciesToMigrate = new Set<Id>(agenciesAffected);
 		agenciesToMigrate.add(oscar.Account__c);
 
@@ -624,34 +632,46 @@ public class AMS_OSCARTriggerHandler {
 			//agenciesToMigrate.add(oscar.Account__c);
 			Set<Id> agenciesNotMigrated = AMS_HierarchyHelper.getAccountNotMigrated(accountHierarchyRelationships.get(oscar.Account__c), agenciesToMigrate);
 			String error = AMS_HierarchyHelper.validateIncompleteMigration(agenciesNotMigrated);
-			if (error != null)
+			if (error != null){
 				oscar.addError(error);
+				validationsPassed=false;
+			}
 		}
 
-		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) && oscar.AMS_Target_Agency__c == null)
+		if (tocList.contains(AMS_Utils.OWNERSHIP_IATA) && oscar.AMS_Target_Agency__c == null){
 			oscar.AMS_Target_Agency__c.addError('The field "Target Agency" is mandatory when a change of ownership to IATA agent is being performed.');
+			validationsPassed= false;
+		}
 
 
 		Account oscarAccount = accounts.get(oscar.Account__c);
 		if (tocList.contains(AMS_Utils.LOCATION_TYPE)){
 			//block change of location type in Head Office
-			if(oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.HO))
+			if(oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.HO)){
 				oscar.addError('OSCAR for Change of Location Type cannot be performed in an HO.');
+				validationsPassed=false;
+			}
 
 			else if(oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.BR)){
-				if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP)
-					oscar.Change_of_location_type_behavior__c.addError('This option cannot be used when the OSCAR is opened for a Branch.');
+				if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP){
+					oscar.Change_of_location_type_behavior__c.addError('The field Change of location type behavior cannot have value Dont change the parent when the OSCAR is opened for a Branch.');
+					validationsPassed=false;
+				}
 			}
 			//do not allow change of location type behaviour to be dont change the parent when the oscar agency is directly under an HO
 			else if(oscarAccount.Parent.Location_Type__c.equalsIgnoreCase(AMS_Utils.HO)){
-				if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP)
+				if(oscar.Change_of_location_type_behavior__c == AMS_Utils.CHLOCTYPEBEHAVIOR_NOSWAP){
 					oscar.Change_of_location_type_behavior__c.addError('The field Change of location type behavior cannot have value Dont change the parent when the oscar is opened for an account directly under an HO.');
+					validationsPassed=false;
+				}
 			}
 
 		}else{
 			//Only allowed to be filled in for change of Location Type
-			if(oscar.Change_of_location_type_behavior__c != null)
+			if(oscar.Change_of_location_type_behavior__c != null){
 				oscar.Change_of_location_type_behavior__c.addError('The field Change of location type behavior can only be filled for changes of Location Type.');
+				validationsPassed=false;
+			}
 		}
 
 
@@ -661,31 +681,43 @@ public class AMS_OSCARTriggerHandler {
 			if (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
 
 				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)){
-					if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA))
+					if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
 						oscar.AMS_Target_Agency__c.addError('A change of location for an agency which is not an “SA” cannot specify a target agency');
+						validationsPassed=false;
+					}
 
-					if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA))
+					if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)){
 						oscar.AMS_Target_Agency__c.addError('A change of location for an SA agency, which specify a target agency, cannot be mixed with a change of ownership');
+						validationsPassed=false;
+					}
 
 				}
 				//Target agency -> A validation must ensure that only accounts with location type “HO” or “BR” should be selected.
 				Account target = accounts.get(oscar.AMS_Target_Agency__c);
 				if(target != null)
-					if(target.Location_Type__c != AMS_Utils.BR && target.Location_Type__c != AMS_Utils.HO)
+					if(target.Location_Type__c != AMS_Utils.BR && target.Location_Type__c != AMS_Utils.HO){
 						oscar.AMS_Target_Agency__c.addError('The target Agency Location Type must be either HO or BR');
+						validationsPassed=false;
+					}
 
 			}
-			else
+			else{
 				oscar.AMS_Target_Agency__c.addError('Target Agency field can only be filled for the following types of changes: Ownership to IATA Agent, Location and Location with inspection.');
+				validationsPassed=false;
+			}
 		}
 
 		//When performing change of shareholding all active hierarchy agencies must be selected
 		if (tocList.contains(AMS_Utils.MAJ_SHAREHOLDING) || tocList.contains(AMS_Utils.MIN_SHAREHOLDING) ) {
 			System.debug('Agencies Affected: ' + agenciesToMigrate);
 			System.debug('Hierarchy Agencies: ' + accountHierarchyRelationships.get(oscar.Account__c));
-			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts))
+			if(!AMS_HierarchyHelper.isAllHierarchySelected(agenciesToMigrate, accountHierarchyRelationships.get(oscar.Account__c), accounts)){
 				oscar.addError('When performing a change of shareholding all the active agencies in the hierarchy must be selected.');
+				validationsPassed=false;
+			}
 		}
+
+		return validationsPassed;
 
 	}
 

@@ -4748,6 +4748,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Requisitos del país</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>País de publicación.</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5267,6 +5271,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Filtrar por tipo.</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtrar por tipo de participación</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Gracias por enviarnos sus cumplidos</label>
@@ -6027,6 +6035,10 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
     <customLabels>
         <label>Página</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Consulta de los requisitos específicos del país exigidos para la participacion de aerolíneas en BSP y CASS</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Gestionar las solicitudes tramitadas por usted y por los usuarios de su empresa en el portal.</label>

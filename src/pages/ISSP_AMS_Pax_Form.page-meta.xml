@@ -6,7 +6,7 @@
     <label>ISSP_AMS_Pax_Form</label>
     <packageVersions>
         <majorNumber>6</majorNumber>
-        <minorNumber>36</minorNumber>
+        <minorNumber>40</minorNumber>
         <namespace>DSE</namespace>
     </packageVersions>
 </ApexPage>
