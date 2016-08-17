@@ -98,7 +98,7 @@
         <label>Related Airport/FIR codes Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Airports/FIR Codes</pluralLabel>
+    <pluralLabel>FIR Codes</pluralLabel>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FIR_Code__c</lookupDialogsAdditionalFields>
     </searchLayouts>

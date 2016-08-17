@@ -204,10 +204,6 @@
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ActivatedById</field>
             </layoutItems>
@@ -254,14 +250,14 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>EF_Related_Records__c.NAME</fields>
-        <fields>EF_Billing_Currency__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
-        <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
+        <relatedList>EF_Relationship__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CreatedDate</fields>
@@ -284,7 +280,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h26000000GCh7</masterLabel>
+        <masterLabel>00h8E000000FMoM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
