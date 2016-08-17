@@ -16,7 +16,7 @@ public  class ISSP_Ctrl_AccountStatements_Accept {
                 Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c
                 From Portal_Application_Right__c
                 Where ContactId__c = :strId.left(15)
-                And Portal_Application__r.Name = 'Account Statements'
+                And Portal_Application__r.Name = :ISSP_Ctrl_AccountStatements.APP_NAME
             ];
         } catch(Exception e) {
             this.errorMessage.add(e.getMessage());

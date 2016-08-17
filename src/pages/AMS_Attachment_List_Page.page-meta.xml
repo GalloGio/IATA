@@ -3,10 +3,5 @@
     <apiVersion>31.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ISSP_AMS_CASS_Associate_Form</label>
-    <packageVersions>
-        <majorNumber>6</majorNumber>
-        <minorNumber>40</minorNumber>
-        <namespace>DSE</namespace>
-    </packageVersions>
+    <label>AMS_Attachment_List_Page</label>
 </ApexPage>
