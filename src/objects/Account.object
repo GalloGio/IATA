@@ -17342,23 +17342,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </listViews>
     <listViews>
         <fullName>IATAoffices</fullName>
-        <booleanFilter>1 AND 2</booleanFilter>
         <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.SITE</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>ACCOUNT.INDUSTRY</columns>
         <columns>ACCOUNT.ADDRESS1_CITY</columns>
         <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
+        <columns>Sector__c</columns>
+        <columns>Category__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>IATA,Hub</value>
-        </filters>
-        <filters>
-            <field>ACCOUNT.TYPE</field>
+            <field>ACCOUNT.RECORDTYPE</field>
             <operation>equals</operation>
-            <value>IATA Head Office,IATA Local Office,IATA Regional Office</value>
+            <value>Account.IATACountryOffice</value>
         </filters>
         <label>IATA offices</label>
         <language>en_US</language>

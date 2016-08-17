@@ -4715,6 +4715,10 @@ and
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>国家或地区的规定</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>对应的国家</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5233,6 +5237,10 @@ and
     <customLabels>
         <label>按种类筛选</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>按照加入类别筛选</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>很高兴收到您的赞扬</label>
@@ -5993,6 +6001,10 @@ and
     <customLabels>
         <label>页码</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>查询航空公司参与各BSP及CASS的规定</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>管理您及您公司其他用户的服务申请</label>
