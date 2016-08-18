@@ -1307,15 +1307,17 @@ public with sharing class AMS_AccountRoleCreator
     	Set<Id> accreditationAreaIds = aoMap.keyset();
     	List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
-    	List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
+    	List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
 
     	Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
+    	String oscarProcess;
     	Id accountId; 	// this is a hack to get the Account from the Oscar. As we are supposed to only work one
     					// OSCAR at a time, let's "assume" that there is only one Account involved.
     	for(AMS_Oscar__c oscar: oscars){
     		accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
     		accountId = oscar.Account__c;
+    		oscarProcess = oscar.Process__c;
     	}
 
 
@@ -1402,7 +1404,7 @@ public with sharing class AMS_AccountRoleCreator
 	        Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles = syncAccreditationsWithRoles(accreditationContactsToProcess,allAccountRoles); 
 
 
-	        if(accreditationAndOscars.get(accreditationId) != 'NEW'){ // this validation is to prevent any deactivations to the hierarchy 
+	        if(accreditationAndOscars.get(accreditationId) != 'NEW' || oscarProcess == 'NEW.HO.1.0'){ // this validation is to prevent any deactivations to the hierarchy 
 
 		        // In theory, when you remove an Accreditation Contact from the page Manage Owners, that Role has to be deactivated.
 		        // To find those lost roles, lets subtract the ones fonund by the syncAccreditationsWithRoles from the original list and deactivate them.
