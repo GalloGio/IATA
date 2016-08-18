@@ -8167,7 +8167,7 @@ WSPN-Worldspan</inlineHelpText>
         <inlineHelpText>IDCard key Account flag used for renewal reminders. When checked Contacts under this Account will not receive renewal emails</inlineHelpText>
         <label>IDCard Key Account</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -8280,7 +8280,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <inlineHelpText>Tick this checkbox if Customer needs to be identified as a key customer</inlineHelpText>
         <label>Identify as Key Customer</label>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -41794,10 +41794,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Customer_Type__c</picklist>
-            <values>
-                <fullName>Accredited Training Center %28ATC%29</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Accredited Training Schools %28ATS%29</fullName>
                 <default>false</default>
