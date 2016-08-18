@@ -39,7 +39,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Event_Source__c</field>
+                <field>Event_Source_lk__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
