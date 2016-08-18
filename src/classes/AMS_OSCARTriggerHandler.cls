@@ -287,8 +287,12 @@ public class AMS_OSCARTriggerHandler {
 				Set<Id> agenciesAffected = new Set<Id>();
 
 				if (pds != null)
-					for (AMS_Process_Detail__c pd : pds)
-						agenciesAffected.add(pd.Account__c);
+					for (AMS_Process_Detail__c pd : pds){
+						if(pd.Account__c!=null && accounts.get(pd.Account__c) != null){
+							if(!accounts.get(pd.Account__c).Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
+								agenciesAffected.add(pd.Account__c);
+						}
+					}
 
 				AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
 
@@ -669,12 +673,11 @@ public class AMS_OSCARTriggerHandler {
 			if (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
 
 				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)){
-					if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
+					/*if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
 						oscar.AMS_Target_Agency__c.addError('A change of location for an agency which is not an “SA” cannot specify a target agency');
 						validationsPassed=false;
 					}
-
-					if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)){
+					else */if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA) && oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
 						oscar.AMS_Target_Agency__c.addError('A change of location for an SA agency, which specify a target agency, cannot be mixed with a change of ownership');
 						validationsPassed=false;
 					}
