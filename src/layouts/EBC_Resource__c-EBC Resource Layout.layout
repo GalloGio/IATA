@@ -27,10 +27,6 @@
                 <behavior>Readonly</behavior>
                 <field>Size_KBytes__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Date_Sent_To_Exactarget__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
