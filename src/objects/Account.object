@@ -35511,10 +35511,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
 	    <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>C</fullName>
                 <default>false</default>
             </values>
