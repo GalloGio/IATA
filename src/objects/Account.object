@@ -35508,45 +35508,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-	    <picklistValues>
-            <picklist>Company_Type__c</picklist>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>T</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>V</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
@@ -41785,49 +41746,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>V</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Customer_Type__c</picklist>
-            <values>
-                <fullName>Accredited Training Schools %28ATS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Employee %28commercial purposes%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Employees %28work related reason%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Training %26 Development Institute</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales Agents %28Platinum%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
