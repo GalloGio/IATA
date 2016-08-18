@@ -289,7 +289,7 @@ public class AMS_OSCARTriggerHandler {
 				if (pds != null)
 					for (AMS_Process_Detail__c pd : pds){
 						if(pd.Account__c!=null && accounts.get(pd.Account__c) != null){
-							if(!accounts.get(pd.Account__c).Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
+							if(accounts.get(pd.Account__c).Status__c != AMS_Utils.ACC_S0_TERMINATED)
 								agenciesAffected.add(pd.Account__c);
 						}
 					}
