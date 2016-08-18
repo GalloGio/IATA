@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
@@ -51,6 +52,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -387,6 +389,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
     </fields>
     <fields>
         <fullName>Number_of_Recipients__c</fullName>
+        <defaultValue>0</defaultValue>
         <externalId>false</externalId>
         <label>Number of Recipients</label>
         <precision>18</precision>
@@ -546,6 +549,13 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <customTabListAdditionalFields>EBC_Master_Filter__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Scheduled_Date__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Exact_Target_Campaign_Id__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Campaign_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Billing_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Exact_Target_Campaign_Id__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Campaign_ID__c</searchFilterFields>
+        <searchFilterFields>Billing_Account__c</searchFilterFields>
+        <searchFilterFields>Exact_Target_Campaign_Id__c</searchFilterFields>
         <searchResultsAdditionalFields>Campaign_ID__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Audience__c</searchResultsAdditionalFields>
