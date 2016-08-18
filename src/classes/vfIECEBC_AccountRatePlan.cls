@@ -23,6 +23,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 	// ======================================================================== 
 	// selectedProductRatePlan & newSubscriptionProductCharge will be the result of user interaction
 	public zqu__ProductRatePlan__c selectedProductRatePlan {get;private set;}
+	public productRatePlanWrapper selectedProductRatePlanWrapper {get;private set;}
 	public Zuora__SubscriptionProductCharge__c newSubscriptionProductCharge {get;private set;}
 	
 	
@@ -31,6 +32,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 	public vfIECEBC_AccountRatePlan()
 	{
 		selectedProductRatePlan = null; // nothing is selected at the beginning 
+        selectedProductRatePlanWrapper = null;
 		updateNewPurchasedRatePlanChargeList(null); // reset newPurchaseRatePlanChargeList and totalNewPurchaseAmount
 		newSubscriptionProductCharge = new Zuora__SubscriptionProductCharge__c( Name ='--none--'
 			, Zuora__EffectiveStartDate__c = Date.today()
@@ -96,6 +98,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 		List<zqu__ProductRatePlanCharge__c> prpcList = new List<zqu__ProductRatePlanCharge__c>();
 		updateNewPurchasedRatePlanChargeList(null); // reset newPurchaseRatePlanChargeList and totalNewPurchaseAmount
 		selectedProductRatePlan = null; // reset the selection
+        selectedProductRatePlanWrapper = null;
 		newSubscriptionProductCharge.Zuora__Price__c = 0;
 		newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = null;
 		
@@ -105,6 +108,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 				 && prpw.selected )
 			{ // select that plan
 				selectedProductRatePlan = prpw.productRatePlan;
+                selectedProductRatePlanWrapper = prpw;
 				newSubscriptionProductCharge.Zuora__Price__c = prpw.amountOneTime + prpw.amountRecurring;
 				
 				prpcList = selectedProductRatePlan.zqu__R00N40000001mFVKEA2__r;
@@ -227,6 +231,8 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 				Map<Id,zqu__ProductRatePlan__c> prodRatePlanIdMap = new Map<Id,zqu__ProductRatePlan__c>([select Id, Name
 					, zqu__Description__c
 					, zqu__EffectiveEndDate__c
+                    , EBC_Currency_Cost_Per_Email__c
+                    , EBC_PrePaid_Emails__c                                                                                   
 					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
                        		, zqu__RecurringPeriod__c
 						from zqu__R00N40000001mFVKEA2__r order by Id)

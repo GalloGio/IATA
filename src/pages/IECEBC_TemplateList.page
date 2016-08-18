@@ -1,16 +1,416 @@
-<apex:page applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+<apex:page controller="vfIECEBC_TemplateList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
-            <title>eBroadcast Template List</title>
+            <title>eBroadcast Manage List</title>
             <!-- End of Page </head> -->
         </apex:define>
         <apex:define name="pageScriptAdditions">
-            <!-- If any page specific .js, add them here -->
+            
+           
+            
+            <div class="modal-container is-hidden" id="js-modal">
+                <div class="overlay"></div>
+                <div class="modal-dialog" id="js-modal-dialog">
+
+                    
+                    <apex:form id="js-modal-delete-item-wrapper">
+                        <apex:actionFunction name="deleteItem" rerender="js-modal-delete-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="renameItem" rerender="js-modal-rename-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="createItem" rerender="js-modal-create-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();" />
+                        <apex:actionFunction name="duplicateItem" rerender="js-modal-duplicate-item-wrapper" onbeforedomupdate="jQuery('#js-modal .modal-content:not(.is-hidden)').addClass('is-hidden');" oncomplete="actionFunctionCompleted();">
+                            <apex:param name="firstParam" assignTo="{!selectedItemId}" value="" />
+                        </apex:actionFunction>
+                        <section id="js-modal-delete-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Are you sure?</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <p>You are about to delete a list called <strong class="placeholder-name">{!selectedFilter.Name}</strong>.</p>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form>
+                    <apex:form id="js-modal-create-item-wrapper">
+                        <apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" />
+                        
+                        <apex:actionFunction action="{!doNothing}" name="setAudience" rerender="create-template"> 
+                            <apex:param assignTo="{!newTemplate.Audience__c}" name="firstParam" value="" /> 
+                        </apex:actionFunction>
+                        <script type="text/javascript">
+                        function resetTemplate(recordId) {
+                            document.getElementById('{!$Component.selectedTemplate}').value = recordId;
+                        }
+                        </script>
+                        <section id="js-modal-create-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Create Template</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <apex:outputPanel id="create-template">
+                                <apex:outputText rendered="{!newTemplateStepNumber == 1}">
+                                    <div class="modal-body">
+                                        <h3 class="step-title">Audience</h3>
+                                        <p>Please select lorem dolor sit amet nulla vel sodales mauris. Maecenas ante magna, henderite at mollis quis.</p>
+                                        
+                                        <ul class="list list-radio-select js-radio-list js-form-continue-validation" data-target-button="#js-continue-to-geo-selection" id="js-radio-list-audience">
+                                            <li>
+                                                <div class="radio-box">
+                                                    <div class="custom-user-input radio">
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c == 'Agency'}">
+	                                                        <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" checked="checked" value="Agency" />
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c != 'Agency'}">
+	                                                        <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" value="Agency" />
+                                                        </apex:outputText>
+                                                        <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
+                                                    </div>
+                                                    <label class="input-label" for="new-template-agency">IATA Travel Agencies</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="radio-box">
+                                                    <div class="custom-user-input radio">
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
+                                                            <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" />
+                                                        </apex:outputText>
+                                                        <apex:outputText rendered="{!newTemplate.Audience__c != 'Agent'}">
+                                                            <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agent" type="radio" name="audience" value="Agent" />
+                                                        </apex:outputText>
+                                                        
+                                                        <label class="custom-radio" for="new-template-agent"><i class="icon"></i></label>
+                                                    </div>
+                                                    <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        
+                                    </div>
+                                    
+                                    <footer class="modal-footer">
+                                        <div class="footer-actions text-right">
+                                            <ul class="list actions">
+                                                <li>
+                                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateList)}" class="text-link">Discard</a>
+                                                </li>
+                                                <li>
+                                                    <apex:outputText rendered="{!ISBLANK(newTemplate.Audience__c)}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!NOT(ISBLANK(newTemplate.Audience__c))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="2" />
+                                                    </apex:commandLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </footer>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!newTemplateStepNumber == 2}">
+                                    <div class="modal-body">
+                                        <h3 class="step-title">Layout</h3>
+                                        
+                                        
+                                        
+                                        <div class="tab-container js-tabs">
+                                            <ul class="nav tabs">
+                                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
+                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Saved Templates</a></li>
+                                                <li data-target="#pane-3"><a href="#" onclick="resetTemplate('');">Use your HTML code</a></li>
+                                            </ul>
+                                            {!newTemplate.Audience__c}
+                                            <div class="tab-content">
+                                                <div class="tab-pane is-open" id="pane-1">
+                                                    <c:IECEBC_TemplateList global="true" limitToAudience="{!newTemplate.Audience__c}" />
+                                                </div>
+                                                <div class="tab-pane" id="pane-2">
+                                                    <c:IECEBC_TemplateList global="false" limitToAudience="{!newTemplate.Audience__c}" />
+                                                </div>
+                                                <div class="tab-pane" id="pane-3">
+                                                    <div class="group-container use-html-code">
+                                                        <p>Select this option if you want to provide a ready-made email template using HTML code.</p>
+                                                        <ul class="list caret-right">
+                                                            <li>Note that all your links to external sites and photos need to already be in place.</li>
+                                                            <li>Make sure you have already saved your photos under the section <strong>Manage Resources</strong> before you continue.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+                                    
+                                    <footer class="modal-footer">
+                                        <div class="footer-actions text-right">
+                                            <ul class="list actions">
+                                                <li>
+                                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateList)}" class="text-link">Discard</a>
+                                                </li>
+                                                <li>
+                                                    <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="3" />
+                                                    </apex:commandLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </footer>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!newTemplateStepNumber == 3}">
+                                    <div class="modal-body">
+                                        <h3 class="step-title">Name</h3>
+                                        
+                                        <apex:outputPanel id="newTemplateNameField" layout="block" styleClass="field-group text template-name">
+                                            <label>
+                                                <span class="input-label">Please provide a template name</span>
+                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newTemplate.Template_Name__c}" html-data-target-element=".js-remaining-count" html-data-target-id="template-name" html-data-max-length="{!$ObjectType.EBC_Template__c.fields.Template_Name__c.length}" />
+                                            </label>
+                                            <div class="input-remaining">
+                                                <span class="js-remaining-count" data-id="template-name">{!$ObjectType.EBC_Template__c.fields.Template_Name__c.length}</span>
+                                            </div>
+                                            
+                                            <apex:outputText rendered="{!isSaved}">
+                                                <script type="text/javascript">
+                                                //window.location.href = 'https://{!$Site.Domain}{!URLFOR($Page.IECEBC_RecipientList)}';
+                                                alert('saved!');
+                                                </script>
+                                            </apex:outputText>
+                                        </apex:outputPanel>
+                                    </div>
+                                    
+                                    <footer class="modal-footer">
+                                        <div class="footer-actions text-right">
+                                            <ul class="list actions">
+                                                <li>
+                                                    <a href="https://{!$Site.Domain}{!URLFOR($Page.IECEBC_TemplateList)}" class="text-link">Discard</a>
+                                                </li>
+                                                <li>
+                                                    <apex:outputText rendered="{!ISBLANK(newTemplate.Audience__c)}">
+                                                        <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
+                                                    </apex:outputText>
+                                                    <apex:commandLink rendered="{!NOT(ISBLANK(newTemplate.Audience__c))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!createTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">
+                                                        <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="4" />
+                                                    </apex:commandLink>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </footer>
+                                </apex:outputText>
+                            </apex:outputPanel>
+                        </section>
+                    </apex:form>
+                    <apex:form id="js-modal-rename-item-wrapper">
+                        <section id="js-modal-rename-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Rename Template</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Rename your Template</span> <apex:inputField styleClass="user-input text" value="{!selectedFilter.Name}" />
+                                    </label>
+                                    <p class="input-description"></p>
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!save}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form> 
+                    <apex:form id="js-modal-duplicate-item-wrapper">
+                        <section id="js-modal-duplicate-item" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Duplicate Template</h2>
+                                <a href="#" class="icon-close js-close-modal"><i class="fa fa-times"></i></a>
+                            </header>
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">Duplicate your Template</span> <apex:inputField styleClass="user-input text" value="{!selectedFilter.Name}" />
+                                    </label>
+                                    <p class="input-description">Format and Audience are kept the same.</p>
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <button class="text-link js-close-modal">Discard</button>
+                                    </li>
+                                    <li>
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!duplicate}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </apex:form> 
+                </div>
+            </div>
+            
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
-            ...
+            <main class="main-content manage-resources">
+                <div class="inner-wrapper">
+           	      <h1 class="page-title">Manage <span class="tab-pane is-open pane-1">templates</span><span class="tab-pane pane-2">Resources</span></h1>
+                  <div class="tab-container">
+                     <ul class="nav tabs"> 
+                       <li class="active"><a href="{!URLFOR($Page.IECEBC_TemplateList)}">Templates</a></li>
+                       <li><a href="{!URLFOR($Page.IECEBC_ResourceList)}">Resources</a></li>
+                     </ul>
+                   
+                    <div class="sort-by">
+                        <apex:form id="Sortselection">
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!sortBy}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!sortByOptions}"  />
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList,Sortselection" />
+                                </apex:selectList> 
+                            </div>
+                        </apex:form>
+                    </div>
+                    <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
+                        <script type="text/javascript">
+                        jQuery.noConflict();
+                        
+                        var filters = {};
+                        <apex:repeat value="{!filters}" var="c">
+                            filters['{!c.Id}'] = {
+                            Id: '{!c.Id}',
+                            Name: '{!JSENCODE(c.Name)}'
+                        }
+                        </apex:repeat>
+                        
+                        function closeModal() {
+                            $ = jQuery;
+                            $('#js-modal').addClass('is-hidden');
+                            $('body').attr('data-is-modal-open', 'false');
+                            $('.js-champaign-actions').val('default');
+                            jQuery('body').css('cursor', 'auto');
+                        }
+                        
+                        
+                        jQuery( document ).ready(function( $ ) {
+                            
+                            $(document).on('change', 'select[name="item-action"]', function(e){
+                                jQuery('body').css('cursor', 'wait');
+                                var item = filters[$(this).attr('data-target-item-id')];
+                                switch ($(this).val()) {
+                                    case 'delete':
+                                        deleteItem(item.Id);
+                                        break;
+                                    case 'rename':
+                                        renameItem(item.Id);
+                                        break;
+                                    case 'duplicate':
+                                        duplicateItem(item.Id);
+                                        break;
+                                    default:
+                                        alert('The action ' + $(this).val() + ' has not been defined yet.');
+                                        e.preventDefault();
+                                }
+                            });
+                        });
+                        function actionFunctionCompleted(){
+                            jQuery('#js-modal').removeClass('is-hidden');
+                            jQuery('body').css('cursor', 'auto');
+                        }
+                        
+                        </script>
+                        <table class="data-table manage-lists">
+                            <tbody>
+                                <tr>
+                                    <th class="template">Template</th>
+                                    <th class="name">Name</th>
+                                    <th class="type">Audience</th>
+                                    <th class="date created-on">Creation Date</th>
+                                    <th class="date last-edited">Last edited</th>
+                                    <th class="actions"><a class="button" href="#" onclick="createItem(); return false;">Create Template</a></th>
+                                </tr>
+                                
+                                <apex:repeat value="{!filters}" var="i">
+                                    <tr>
+                                        <td class="type">
+                                            <img src="{!URLFOR($Resource.eBroadcastAssets, '/assets/img/components/templates/template-1.png')}" alt="Template 1" width="50px"/>
+                                        </td>
+                                        <td class="name">
+                                            {!i.Name}
+                                            <!--
+                                            <apex:outputText rendered="{!i.eBroadcast_Campaigns__r.size > 0}">
+	                                            <a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
+                                            </apex:outputText>
+                                            <apex:outputPanel layout="block" rendered="{!i.eBroadcast_Campaigns__r.size > 0}" styleClass="tooltip-container">
+                                                <div class="tooltip-description">
+                                                    <p>You cannot edit this list as it is used in a campaign.</p>
+                                                </div>
+                                            </apex:outputPanel>
+											-->
+                                        </td>
+                                        <td class="type">{!i.Audience__c}</td>
+                                        <td class="date created-on">{!i.CreatedDate}</td>
+                                        <td class="date last-edited">{!i.LastModifiedDate}</td>
+                                        <td class="actions">
+                                            
+                                            <div class="custom-user-input select">
+                                                <i class="icon angle-down"></i>
+                                                <select data-target-item-id="{!i.Id}" class="user-input select js-champaign-actions" name="item-action">
+                                                    <option value="default">Select action</option>
+                                                    
+                                                    <option value="duplicate">Duplicate</option>
+                                                    <option value="rename">Rename</option>
+                                                    <option value="delete">Delete</option>
+                                                </select>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+                   </div>
+                </div>
+            </main>
+            
+            
+            <apex:form >
+                <Center>
+                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                    Page
+                    <div class="custom-user-input select">
+                        <i class="icon angle-down"></i>
+                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                            <apex:selectOptions value="{!pageOptions}"/>
+                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="itemList" />
+                        </apex:selectList> 
+                    </div>
+                    of {!maxPage}
+                </apex:outputPanel>
+                </Center>
+            </apex:form>
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>

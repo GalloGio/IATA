@@ -1,5 +1,6 @@
 <apex:component controller="vfIECEBC_TemplateCreation" allowDML="true">
     <apex:attribute name="campaign" description="The eBroadcast Campaign" type="EBC_Campaign__c" required="false"/>
+    <apex:attribute name="limitToAudience" assignTo="{!audience}" description="The audience" type="String" required="true"/>
     <apex:attribute name="global" description="Display global templates" type="Boolean" required="true"/>
     
     <!--<apex:inputHidden value="{!campaign.EBC_Selected_Template__c}" id="selectedTemplate" />-->
@@ -24,7 +25,8 @@
                 </div>
                 <h2 class="item-name">{!templateSrc.Template_Name__c}</h2>
                 <figure class="item-image">
-                    <apex:image url="{!URLFOR($Resource.eBroadcastAssets, 'assets/img/components/templates/template-1.png')}" alt="{!templateSrc.Template_Name__c}" />
+                    <apex:image rendered="{!templateSrc.Attachments.size == 0}" url="{!URLFOR($Resource.eBroadcastAssets, 'assets/img/components/templates/template-1.png')}" alt="{!templateSrc.Template_Name__c}" />
+                    <apex:image rendered="{!templateSrc.Attachments.size > 0}" url="/servlet/servlet.FileDownload?file={!templateSrc.Attachments[0].Id}" width="97" height="114" />
                 </figure>
             </li>
         </apex:repeat>

@@ -108,6 +108,9 @@
                                                             <a href="https://{!$Site.Domain}{!$Page.IECEBC_RecipientList}">Manage lists</a>
                                                         </li>
                                                         <li>
+                                                        	<apex:outputLink value="{!URLFOR($Page.IECEBC_AccountManage)}">Manage account</apex:outputLink>
+                                                        </li>
+                                                        <li>
                                                             <a href="https://{!$Site.Domain}{!$Page.IECEBC_Reports}">View reports</a>
                                                         </li>
                                                     </ul>

@@ -57,7 +57,7 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
             fields.add('Audience__c');
             fields.add('CreatedDate');
             fields.add('LastModifiedDate'); 
-            fields.add('(Select Id From eBroadcast_Campaigns__r)');
+            fields.add('(Select Id, Status__c From eBroadcast_Campaigns__r)');
         }
         
         return 'Select ' + String.join(fields, ',') + ' FROM EBC_Master_Filter__c Where Is_Global_Filter__c  = false AND Billing_Account__c = \'' + vfIECEBC.billingAccount.Id + '\'';

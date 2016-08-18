@@ -34,12 +34,12 @@
                 
                             <div class="tab-content">
                                 <div class="tab-pane is-open" id="pane-1">
-                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="true" />
+                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="true" limitToAudience="{!campaign.Audience__c}" />
                                 </div>
                                 <div class="tab-pane" id="pane-2">
-                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="false" />
+                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="false" limitToAudience="{!campaign.Audience__c}" />
                                 </div>
-                                <div class="tab-pane" id="pane-3">
+                                <div class="tab-pane" id="pane-3"> 
                                     <div class="group-container use-html-code">
                                         <p>Select this option if you want to provide a ready-made email template using HTML code.</p>
                                         <ul class="list caret-right">

@@ -1,11 +1,11 @@
 <apex:page standardController="EBC_Master_Filter__c" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+    <apex:variable var="pageTitle" value="{!IF(ISBLANK(EBC_Master_Filter__c.Id), 'Create new list', 'Edit list &quot;' + EBC_Master_Filter__c.Name + '&quot;')}" />
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
             <title>
                 eBroadcast Campaign - 
-                <apex:outputText rendered="{!ISBLANK(EBC_Master_Filter__c.Id)}" value="Create new list" />
-                <apex:outputText rendered="{!NOT(ISBLANK(EBC_Master_Filter__c.Id))}" value="Edit list {!EBC_Master_Filter__c.Name}" />
+                <apex:outputText value="{!pageTitle}" escape="false" />
             </title>
             <!-- End of Page </head> -->
         </apex:define>
@@ -13,7 +13,13 @@
             
         </apex:define>
         <apex:define name="pageContent">
-            <c:IECEBC_RecipientEdit recordId="{!EBC_Master_Filter__c.Id}"/>
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <h1 class="page-title"><apex:outputText value="{!pageTitle}" escape="false" /></h1>
+            		<c:IECEBC_RecipientEdit recordId="{!EBC_Master_Filter__c.Id}"/>
+                </div>
+            </main>
         </apex:define>
     </apex:composition>
 </apex:page>
