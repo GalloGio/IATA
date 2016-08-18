@@ -59,7 +59,7 @@ public class EF_BillingAgreementHandler
                                 System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
                                 if(r.EF_Location_ID__c== lc.Location_ID__c){
                                     // set currency in relationship as the one defined on the locationCurrency
-                                    r.CurrencyISOCode = lc.CurrencyISOCode;
+                                    r.Billing_Currency__c = lc.EF_Billing_Currency__c;
                                 }
                             }
                         }
