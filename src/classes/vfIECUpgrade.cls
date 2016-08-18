@@ -14,6 +14,8 @@ public with sharing class vfIECUpgrade extends IECPageController {
     public Boolean inEditContactInfo { get; set; }
     public Boolean isCountryFilled { get; set; }
     public IECAddress__c oBillingAddress { get; set; }
+    public IECAddress__c oOriginalBillingAddress { get; set; }
+    public Location__c oBillingLocation { get; set; }
     public IECVATUtil.VATConfiguration vatConfig { get; set; }
   public Decimal dICHMinAmount {get; private set;}
     public Decimal dCreditCardMaxAmount {get; private set;}
@@ -85,7 +87,9 @@ public with sharing class vfIECUpgrade extends IECPageController {
   public Product_Rate_Plan_Information__c oRatePlanInfoTargetUpgrade { get; private set; }
   public List<UIUpgradableRatePlan> lstUIRatePlanInfoUpgradeTargets { get; set; }
   public Decimal subTotal { get; private set; }
-  public Decimal taxes { get; private set; }
+//  public Decimal taxes { get; private set; }
+  public Decimal taxCharge { get; private set; }
+  public Decimal shippingCharge { get; private set; }
   public Decimal total { get; private set; }
   public Boolean hasICHCode { get; private set; }
   public String paymentTransactionNumber { get; private set; }
@@ -95,7 +99,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
   public String selectedCreditCardPaymentId { get; set; }
     public Boolean defaultPaymentMethodIsICH {
       get {
-        return defaultPaymentMethodId == IECConstants.PaymentMethod_Other_ZuoraID;
+        return defaultPaymentMethodId == IECConstants.PaymentMethod_ICH_ZuoraID;
       }
     }
     public Boolean defaultPaymentMethodIsBankTransfer {
@@ -121,29 +125,19 @@ public with sharing class vfIECUpgrade extends IECPageController {
         }
     }
     
+    List<ISO_Country_State_DTO> lstCountryState;
 
     public List<SelectOption> lstISOCountries {
       get {
-          List<SelectOption> options = new List<SelectOption>();
-          options.add(new SelectOption('','-Select a Country-'));
-          for(IATA_ISO_Country__c iso : [select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
-            options.add(new SelectOption(iso.Name, iso.Name));
-          }
-          return options;
+            return ISO_Country_State_Helper.getPicklistISOCountry(lstCountryState);
       }
     }
     
-    public List<SelectOption> lstCanadaProvinces {
-      get {
-          return IECConstants.getCanadaProvinces();
-      }
+    public List<SelectOption> lstStateProvince {
+        get {
+            return ISO_Country_State_Helper.getPicklistISOState(lstCountryState, oBillingAddress.ISO_Country__c);
+        }
     }
-
-    public List<SelectOption> lstUSAStates {
-      get {
-          return IECConstants.getUSAStates();
-      }
-    }        
     
     ///////////////////////////////////////////////////////
     // properties for HPM (Hosted Payment Method) of Zuora
@@ -227,8 +221,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
       if (Test.isRunningTest())
         hasAcceptedAllTnCs = value;
     }    
-    
-    
   }
   
   public Boolean hasFilledAutoRenewFlag {
@@ -277,7 +269,8 @@ public with sharing class vfIECUpgrade extends IECPageController {
       bExpandedAutoRenewal = true;
       bExpandedPaymentMethod = true;
       
-      
+            // Preload list of Countries/States
+            lstCountryState = ISO_Country_State_Helper.getCountry_State();
     }
     catch (Exception ex) {
       addErrorMessage(ex.getMessage());
@@ -315,30 +308,35 @@ public with sharing class vfIECUpgrade extends IECPageController {
                   
               // check if the customer needs to fill his contact information
               if (IECUserManager.hasAddress(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)) {
-                List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
-          if (lstAddresses.size() > 0) {
-            oBillingAddress = lstAddresses.get(0);
-            isCountryFilled = String.isNotBlank(oBillingAddress.Country__c);
-            vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
-          }
+                	// Retrieve existing billing location for this contact
+                	oBillingLocation = Location_Sel.getLocationByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing)[0];
+                    
+            	    List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
+					if (lstAddresses.size() > 0) {
+						oBillingAddress = lstAddresses.get(0);
+						// Clone the record to check later whether it is changed when saving
+                		oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
+                        isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
+                        vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
+					}
 
                 needToFillContactInfo = !IECUserManager.isBillingAddressFilled(loggedCustomer.RelatedContact.Id)
                   || !IECUserManager.isContactMandatoryFieldsFilled(loggedCustomer.RelatedContact, vatConfig);
               }
               else {
-                // customer does not have a billing address, so create a new one
+                    // customer does not have a billing address, so create a new one, and also create a new Location
+                    oBillingLocation = new Location__c(
+                    	Active__c = true
+                    	, Account__c = loggedCustomer.RelatedAccount.Id
+                    	, Contact__c = loggedCustomer.RelatedContact.Id
+                    	, Type__c = IECConstants.IECAddress_AddressType_Billing
+                    );
                 oBillingAddress = new IECAddress__c();
-                oBillingAddress.Contact__c = loggedCustomer.RelatedContact.Id;
-                oBillingAddress.Address_Type__c = IECConstants.IECAddress_AddressType_Billing;
                 needToFillContactInfo = true;
                 isCountryFilled = false;
                 vatConfig = null;
               }
               inEditContactInfo = needToFillContactInfo;                  
-                  
-                  
-                  
-                  
         
         // load the subscription object by its id (received from parameter)
         oSubscription = IECSubscriptionManager.getSubscriptionById(sSubscriptionId);
@@ -381,30 +379,97 @@ public with sharing class vfIECUpgrade extends IECPageController {
 
       upgradePreviewSuccessful = true;
 
+	  // Retrieve the SoldTo Location for the current contact
+	  Location__c oLocSoldTo = new Location_Sel().getSoldToLocationByContactId(new Set<Id> {loggedCustomer.RelatedContact.Id}).get(loggedCustomer.RelatedContact.Id);
+	  
       // for each of the available upgrades
       for (UIUpgradableRatePlan uiUpgradableRatePlan : lstUIRatePlanInfoUpgradeTargets) {
         
         // preview the amendment to have the upgrade price
-        Zuora.zApi.AmendResult upgradePreviewResult = IECSubscriptionManager.upgradeSubscription(loggedCustomer, oSubscription.Name, oSubscription.Zuora__Zuora_Id__c, sUpgradeFromRatePlanZuoraID, uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c, uiUpgradableRatePlan.productRatePlanInfo.Id, 1, Date.today(), oSubscription.Zuora__AutoRenew__c, true, IECConstants.PaymentType.ICH, null, null, sPurchaseOrder);
-
+        Zuora.zApi.AmendResult upgradePreviewResult = IECSubscriptionManager.upgradeSubscription(loggedCustomer, oSubscription.Name, oSubscription.Zuora__Zuora_Id__c, sUpgradeFromRatePlanZuoraID, uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c, uiUpgradableRatePlan.productRatePlanInfo.Id, 1, Date.today(), oSubscription.Zuora__AutoRenew__c, true, IECConstants.PaymentType.ICH, null, null, sPurchaseOrder, null, null, null, null);
+		
         // keep flag if all preview are successful
         upgradePreviewSuccessful &= upgradePreviewResult.success;
         
-        if (upgradePreviewResult.success) {
-          if (upgradePreviewResult.InvoiceDatas != null) {
-            uiUpgradableRatePlan.setInvoiceData( upgradePreviewResult.InvoiceDatas.get(0) );
-          }
-          else
-            throw new IECApplicationException(Label.IEC_Error_CannotUpgrade + '<br />InvoiceDatas is null');
+        if (upgradePreviewResult.success)
+        {
+        	if (upgradePreviewResult.InvoiceDatas != null) {
+				uiUpgradableRatePlan.setInvoiceData( upgradePreviewResult.InvoiceDatas.get(0) );
+            	
+	            /**************************************************
+	            *	2016-05-13: Samy: Add Tax calculation
+	            **************************************************/
+				// Initialize a fake OrderItem DTO for tax and shipping calculation
+				OrderItem_DTO dtoOrderItem = new OrderItem_DTO();
+				
+				//Get Product Info
+				Map<String, Product2> mapProductRatePlanZId_Product = Product_Sel.getProductsByProductRatePlan(new Set<String> {uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c});
+				
+				if (mapProductRatePlanZId_Product == null || mapProductRatePlanZId_Product.isEmpty())
+					throw new IECApplicationException('Unable to locate a Salesforce Product for the ProductRatePlan: ' + uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c);
+				else
+				{
+					Product2 oProduct = mapProductRatePlanZId_Product.get(uiUpgradableRatePlan.productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c);
+					String sProductNumber = oProduct.SAP_Material_Number__c;
+					// Get the Parent SAP Code as this is the one to be used with the TAX webservice
+					String sParentProductNumber = oProduct.IEC_Parent_Product__r.SAP_Material_Number__c;
+					
+					String sCustomerType = User_Sel.getCustomerType(UserInfo.getUserId());
+					// Retrieve the price for the upgrade product
+					Map<String, PriceInfo_DTO> mapProductNumber_Price = new Product_Sel().getProductPriceInfo(new Set<String> {sProductNumber}, sCustomerType, null, null, true);
+					
+					dtoOrderItem.PriceInfo = mapProductNumber_Price.get(sProductNumber);
+					dtoOrderItem.sapProductCode = sParentProductNumber;
+					dtoOrderItem.quantity = 1;
+					dtoOrderItem.chargeShipping = oProduct.Charge_Shipping__c;
+					dtoOrderItem.isContractProduct = oProduct.Use_Contract_when_ordered__c;
+					// Set any random ID since it is a fake item
+					dtoOrderItem.orderItemId = 'RANDOM';
+					
+					Order_Svc.setPriceToOrderItemDTO(dtoOrderItem, sCustomerType);
+	
+					// Retrieve Tax & Shipping information for current Order Item/Subscription
+					if (!Test.isRunningTest())
+					{
+						
+						String result = Order_Svc.getSAP_Freight_Tax_for_DTO(Utility.getTextSetting('vfOrder-DefaultType')
+							, Utility.getTextSetting('vfOrder-DefaultSource')
+							, Utility.getTextSetting('vfOrder-DefaultChannel')
+							, oLocSoldTo.SAP_Id__c
+							, loggedCustomer.RelatedContact.BillTo_Location__r.SAP_Id__c
+							, loggedCustomer.RelatedContact.ShipTo_Location__r.SAP_Id__c
+							, new List<OrderItem_DTO> {dtoOrderItem});
+						
+			            if (result != null)
+				   			throw new IECApplicationException('Error returned from Tax & Shipping webservice. ' + result);
+					}
+					else
+					{
+						dtoOrderItem.taxAmount = 10;
+						dtoOrderItem.shippingAmount = 5;
+					}
+	            }
+	            
+				uiUpgradableRatePlan.taxCharge = dtoOrderItem.taxAmount;
+
+				uiUpgradableRatePlan.shippingCharge = (dtoOrderItem.shippingAmount == null && dtoOrderItem.handlingCharges == null) ? null
+					: ((dtoOrderItem.shippingAmount == null ? 0 : dtoOrderItem.shippingAmount)
+						+ (dtoOrderItem.handlingCharges == null ? 0 : dtoOrderItem.handlingCharges));
+	            /**************************************************
+	            *	End Of: 2016-04-19: Samy: Add Tax calculation
+	            **************************************************/
+			}
+			else
+				throw new IECApplicationException(Label.IEC_Error_CannotUpgrade + '<br />InvoiceDatas is null');
         }
-        else {
-          String sErrors = '';
-          for (Zuora.zObject error: upgradePreviewResult.errors)
-            sErrors += error.getValue('Message');
-          throw new IECApplicationException('(Preview) ' + Label.IEC_Error_CannotUpgrade + '<br />' + sErrors);
+        else
+        {
+        	String sErrors = '';
+        	for (Zuora.zObject error: upgradePreviewResult.errors)
+            	sErrors += error.getValue('Message');
+          	throw new IECApplicationException('(Preview) ' + Label.IEC_Error_CannotUpgrade + '<br />' + sErrors);
         }
       }
-      
     }
     catch(Exception ex) {
       addErrorMessage(ex.getMessage());
@@ -425,8 +490,10 @@ public with sharing class vfIECUpgrade extends IECPageController {
         if (uiRatePlan.productRatePlanInfo.Id == selectedUpgradeRatePlanInfoID) {
           // set the pricing information
           subtotal = uiRatePlan.subTotal;
-          taxes = uiRatePlan.taxes;
-          total = uiRatePlan.total;
+          //taxes = uiRatePlan.taxes;
+          taxCharge = uiRatePlan.taxCharge;
+          shippingCharge = uiRatePlan.shippingCharge;
+          total = subtotal + (taxCharge == null ? 0 : taxCharge) + (shippingCharge == null ? 0 : shippingCharge);
         }
       }
       
@@ -499,7 +566,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
       if(ePmType == IECConstants.PaymentType.BANK_TRANSFER) 
                 defaultPaymentMethodId = IECConstants.PaymentMethod_BankTransfer_ZuoraID;
             else if(ePmType == IECConstants.PaymentType.ICH) 
-                defaultPaymentMethodId = IECConstants.PaymentMethod_Other_ZuoraID;
+                defaultPaymentMethodId = IECConstants.PaymentMethod_ICH_ZuoraID;
             else if (ePmType != null && selectedCreditCardPaymentId != '') 
                 defaultPaymentMethodId = selectedCreditCardPaymentId;
 
@@ -553,7 +620,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
         Terms_and_Conditions__c oAcceptedTnC = (needToAcceptTnC ? oTnCComponentController.listTermsAndConditions.get(0) : null);
       
         // submit the amendment
-        Zuora.zApi.AmendResult upgradeResult = IECSubscriptionManager.upgradeSubscription(loggedCustomer, oSubscription.Name, oSubscription.Zuora__Zuora_Id__c, sUpgradeFromRatePlanZuoraID, selectedUpgradeRatePlanZuoraID, selectedUpgradeRatePlanInfoID, 1, Date.today(), bAutoRenew, false, ePmType, oPaymentMethod, oAcceptedTnC, sPurchaseOrder);
+        Zuora.zApi.AmendResult upgradeResult = IECSubscriptionManager.upgradeSubscription(loggedCustomer, oSubscription.Name, oSubscription.Zuora__Zuora_Id__c, sUpgradeFromRatePlanZuoraID, selectedUpgradeRatePlanZuoraID, selectedUpgradeRatePlanInfoID, 1, Date.today(), bAutoRenew, false, ePmType, oPaymentMethod, oAcceptedTnC, sPurchaseOrder, subTotal, 1, taxCharge, shippingCharge);
         
         if (upgradeResult.success) {
           upgradeSuccessful = true;
@@ -709,7 +776,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
             }
           }          
         }
-        IECEmailUtility.sendEmail(loggedCustomer.RelatedContact.Name, loggedCustomer.RelatedContact.Email, IECConstants.Email_Template_Order, sHtmlEmailBody, 'Subsciption Upgraded (' + oSubscription.Name + ')', paymentTransactionNumber, sPaymentMethod,  subTotal, taxes, total);
+        IECEmailUtility.sendEmail(loggedCustomer.RelatedContact.Name, loggedCustomer.RelatedContact.Email, IECConstants.Email_Template_Order, sHtmlEmailBody, 'Subsciption Upgraded (' + oSubscription.Name + ')', paymentTransactionNumber, sPaymentMethod,  subTotal, taxCharge, total);
       }
       
       return null;
@@ -758,7 +825,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
    */
   public Pagereference onClickCancel() {
     try {
-      Pagereference pgRef = Page.IECHistActiveSubscriptions;
+      Pagereference pgRef = Page.IEC_DataStatisticsSubscriptions;
         pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(sSubscriptionId));
         pgRef.setRedirect(true); 
         return pgRef;
@@ -884,7 +951,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
      */
     public Pagereference displayCallBackfailure() {
       try {
-        
         loadHPMIframe();
         
           errorMessage = '';
@@ -958,12 +1024,12 @@ public with sharing class vfIECUpgrade extends IECPageController {
    */
   public void onChangeBillingCountry() {    
     // clear the state/province field
-    oBillingAddress.State__c = null;
+        oBillingAddress.ISO_State__c = null; // Changed by Samy (2016-03-01) from State__c
 
     if (vatConfig == null
-      || vatConfig.Country != oBillingAddress.Country__c) {
+            || vatConfig.CountryId != oBillingAddress.ISO_Country__c) { // Changed by Samy (2016-03-01) from Country__c
         
-      vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+            vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
       oContact.Tax_1_ID__c = null;
       oContact.Tax_2_ID__c = null;
     }
@@ -973,6 +1039,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
    * Updates the Contact Info of the customer
    */
   public void updateContactInfo() {    
+		Savepoint sp = Database.setSavepoint();
     try {
       
       List<String> lstErrorMessages = new List<String>();
@@ -994,12 +1061,12 @@ public with sharing class vfIECUpgrade extends IECPageController {
       if (String.isBlank(oBillingAddress.City__c))
         lstErrorMessages.add(Label.IEC_Error_Required_field + ' City');
 
-      if (String.isBlank(oBillingAddress.Country__c)) {
+            if (String.isBlank(oBillingAddress.ISO_Country__c)) { // Changed by Samy (2016-03-01) from Country__c
         lstErrorMessages.add(Label.IEC_Error_Required_field + ' Country');
         vatConfig = null;
       }
       else {
-        vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
 
         if (vatConfig != null && vatConfig.TaxIDMandatory) {
           if (vatConfig.ShowTax1) {
@@ -1040,23 +1107,44 @@ public with sharing class vfIECUpgrade extends IECPageController {
           }
         }
 
-        if (oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States') {
-          if (String.isBlank(oBillingAddress.State__c))
-            lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
-          /*
-          if (String.isBlank(oBillingAddress.ZipCode__c))
-            lstErrorMessages.add(Label.IEC_Error_Required_field + ' Zip/Postal code');
-          */
-        }
+                if (lstStateProvince.size() > 1 && String.isBlank(oBillingAddress.ISO_State__c)) // Changed by Samy (2016-03-01) from State__c
+                {
+                    lstErrorMessages.add(Label.IEC_Error_Required_field + ' State/Province');
+                }
+                /*
+                if (String.isBlank(oBillingAddress.ZipCode__c))
+                    lstErrorMessages.add(Label.IEC_Error_Required_field + ' Zip/Postal code');
+                */
       }
       
       if (lstErrorMessages.isEmpty()) {
         oContact.VAT_Country_Code__c = (vatConfig.VATValidationRequired) ? vatConfig.CountryCode : null;
         //update oContact;
         IECUserManager.updateContactViaWebService(oContact);
-        upsert oBillingAddress;
+
+        // First check if the address has been changed before trying to save, otherwise just ignore
+        if (IECAddress_Svc.isAddressChanged(oBillingAddress, oOriginalBillingAddress))
+        {
+            // First insert a new Billing Address
+            // TODO: Provide autocomplete feature in the page to avoid having alot of orphaned Addresses
+            oBillingAddress.Id = null; // Reset the ID to be able to insert a new IEC Address record
+            insert oBillingAddress;
+            
+            // Then copy the ID into the location record
+            oBillingLocation.Address__c = oBillingAddress.Id;
+            upsert oBillingLocation;
+            
+            // re-query the Billing Address to refresh formula fields on the record
+            List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
+            if (lstAddresses.size() > 0) {
+                oBillingAddress = lstAddresses.get(0);
+				// Clone the record to check later whether it is changed when saving
+        		oOriginalBillingAddress = lstAddresses.get(0).clone(false, true);
+            }
+        }
+                
         inEditContactInfo = false;
-        isCountryFilled = String.isNotBlank(oBillingAddress.Country__c);
+                isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country__c);
         
         // revalidate if the Billing Address is complete
         needToFillContactInfo = !IECUserManager.isBillingAddressFilled(loggedCustomer.RelatedContact.Id)
@@ -1066,6 +1154,7 @@ public with sharing class vfIECUpgrade extends IECPageController {
         addErrorMessages(lstErrorMessages);
     }
     catch (Exception ex) {
+        	Database.rollback(sp);
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
       }
   }
@@ -1083,8 +1172,8 @@ public with sharing class vfIECUpgrade extends IECPageController {
       List<IECAddress__c> lstAddresses = IECUserManager.getAddressByContact(loggedCustomer.RelatedContact.Id, IECConstants.IECAddress_AddressType_Billing);
       if (lstAddresses.size() > 0) {
         oBillingAddress = lstAddresses.get(0);
-        isCountryFilled = String.isNotBlank(oBillingAddress.Country__c);
-        vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.Country__c);
+                isCountryFilled = String.isNotBlank(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
+                vatConfig = IECVATUtil.GetVATConfiguration(oBillingAddress.ISO_Country__c); // Changed by Samy (2016-03-01) from Country__c
       }
     }
     catch (Exception ex) {
@@ -1093,7 +1182,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
   }    
     
 
-    
     public Pagereference closePopup() {
       displayPopUp = false;
       return null;
@@ -1103,7 +1191,6 @@ public with sharing class vfIECUpgrade extends IECPageController {
       displayPopUp = true;
       return null;
     }
-    
     
    public PageReference toggleBilling() {
       bExpandedBilling = !bExpandedBilling;
@@ -1156,9 +1243,13 @@ public with sharing class vfIECUpgrade extends IECPageController {
     public Product_Rate_Plan_Information__c productRatePlanInfo { get; private set; }
     public Boolean selected { get; set; }
     public Decimal subTotal { get; private set; }
-    public Decimal taxes { get; private set; }
-    public Decimal total { get; private set; }
+    //public Decimal taxes { get; private set; }
+    public Decimal total { get {return (subtotal == null ? 0 : subtotal) + (taxCharge == null ? 0 : taxCharge) + (shippingCharge == null ? 0 : shippingCharge);} }
     public List<IECZuoraHelper.InvoiceItem> lstPreviewInvoiceItems { get; set; }
+    
+    // Phase 3 tax & shipping
+    public Decimal taxCharge { get; private set; }
+    public Decimal shippingCharge { get; private set; }
     
     /**
      * Constructor
@@ -1174,8 +1265,8 @@ public with sharing class vfIECUpgrade extends IECPageController {
     public void setInvoiceData(Zuora.zObject oInvData) {
       Zuora.zObject invoice = (Zuora.zObject)oInvData.getValue('Invoice');
       subTotal = (Decimal)invoice.getValue('AmountWithoutTax');
-      taxes = (Decimal)invoice.getValue('TaxAmount');
-      total = (Decimal)invoice.getValue('Amount');
+      //taxes = (Decimal)invoice.getValue('TaxAmount');
+      //total = (Decimal)invoice.getValue('Amount');
       
       List<Object> invoiceItems = oInvData.getArrayValue('InvoiceItem');
       if(invoiceItems != null) {

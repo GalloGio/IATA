@@ -18,7 +18,7 @@ global class AMS_OSCAR_Webservice {
         
         List<AMS_OSCAR__c> oscar = database.query(theQuery);
         if(oscar != null && oscar.size()>0){    
-            for(Integer i = 0; i < fieldsToUpdateKey.size(); i++){
+            for(Integer i = 0; i < fieldsToUpdateKey.size(); i++) {
                 
                 Object fieldValue = oscar[0].get(fieldsToUpdateKey[i]);
 
@@ -134,7 +134,7 @@ global class AMS_OSCAR_Webservice {
                 }
 
                 Date currentDate = Date.today();
-                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'New Head Office – ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
+                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Changes – ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
                                          Financial_Review_Type__c = 'New applications', IFAP_Financial_Year__c = String.valueOf(currentDate.year()),
                                          Deadline_Date__c = currentDate+5, ContactId = ifapContact[0].Id, OSCAR__c = oscar[0].Id, Financial_Assessment_requested__c = currentDate);
 
@@ -204,8 +204,11 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
             AMS_Utils.copyDataToAccount(oscar);
             return 'OK';
-        }catch(Exception ex){
-            return ex.getMessage();
+        }catch (Exception ex) {
+            if (ex.getMessage().contains('ISSP_ContactUpdaetPortalUser'))
+                return Label.AMS_Duplicate_Username;
+            else
+                return ex.getMessage();
         }
     }
 

@@ -12,14 +12,47 @@ public class IECVATUtil {
 		if (String.isBlank(CountryName)) return null;
 		
 		List<IATA_ISO_Country__c> lstCountry =
-			[SELECT Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, ISO_Code__c, Name
+			[SELECT Id, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, ISO_Code__c, Name
 			FROM IATA_ISO_Country__c
 			WHERE Name = : CountryName];
+		
+		return (lstCountry != null && lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
+	}
+	
+	// Query the VAT configuration for the country based on the country ID
+	public static VATConfiguration GetVATConfiguration(Id idCountry) {
+		if (idCountry == null) return null;
+		
+		List<IATA_ISO_Country__c> lstCountry =
+			[SELECT Id, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, ISO_Code__c, Name
+			FROM IATA_ISO_Country__c
+			WHERE Id = :idCountry];
 		
 		return (lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
 	}
 	
+	public static String Validate_VAT(String sCountryCode, String sVATNumber)
+	{
+	    VATWebService ws = new VATWebService();
+	    String sErrorMessage = '';
+	    
+	    try
+	    {
+	        VATResponse res = ws.ValidateVAT(sCountryCode, ((sVATNumber.startsWithIgnoreCase(sCountryCode)) ? sVATNumber.substring(sCountryCode.length()) : sVATNumber));
+	        if (!res.valid) 
+	            sErrorMessage = String.format(Label.IEC_Invalid_VAT, new List<String>{sVATNumber});
+	    }
+	    catch (System.CalloutException e) {
+	        if (e.getMessage().contains('SERVER_BUSY'))
+	            sErrorMessage = Label.IEC_Error_VATWSBusy;
+	        else
+	            sErrorMessage = e.getMessage();
+	    }
+	    return sErrorMessage;
+	} //*** end of "validateVAT"
+	
 	public class VATConfiguration {
+		public String CountryId {get; set;}
 		public String Country {get; set;}
         public String CountryCode {get; set;}
         public String Tax1Label {get; set;}
@@ -31,6 +64,7 @@ public class IECVATUtil {
         public Boolean ShowTax2 {get {return String.isNotBlank(Tax2Label);}}
 
         public VATConfiguration (IATA_ISO_Country__c Country) {
+        	this.CountryId = Country.Id;
 	        this.Country = Country.Name;
 	        this.CountryCode = Country.ISO_Code__c;
 	        this.Tax1Label = Country.Tax_1_Label__c;

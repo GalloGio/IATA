@@ -197,16 +197,10 @@ public with sharing class ISSP_CreateNotification {
 
 
     //INC253595 - Start
-    public static void conAfterInsert(list<Contact> newportalContactList 
-                                   , map<ID, Contact> newPortalContactMap) {
-        
-        SendEmailToPortalAdminNewContact(newportalContactList);
-        
-    }
 
     public static void SendEmailToPortalAdminNewContact(list<Contact> newPortalContactList) {
-
-        system.debug('SendEmailToPortalAdminNewContact starting...');
+        
+        system.debug('SendEmailToPortalAdminNewContact starting...' + newPortalContactList);
         ID templateId = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminNewContact);
         System.debug('templateId==>'+templateId);
         if(String.isBlank(templateId)) {
@@ -217,25 +211,27 @@ public with sharing class ISSP_CreateNotification {
         for(Contact con : newPortalContactList) {
                 accountIDs.add(con.AccountId);
         }
-    System.debug('zZzZ accountIDs==>'+accountIDs);
+        
+        System.debug('zZzZ accountIDs==>'+accountIDs);
         map<ID, Set<ID>> accIdToUserIdMap = new map<ID, Set<ID>>();
         for(AccountTeamMember member : PortalServiceAccessTriggerHandler.getPortalAdmins(accountIDs)) {
             Set<ID> userIDs = accIdToUserIdMap.get(member.AccountId);
             if(null == userIDs)
                 userIDs = new Set<ID>();
-            system.debug('aqui member ' + member);
+            
             userIDs.add(member.UserId);
             accIdToUserIdMap.put(member.AccountId, userIDs);
         }
-    System.debug('zZzZ ENV.Reply_Email==>'+ENV.Reply_Email);
+        
         ID standartReplyUserID = PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email);
-    System.debug('zZzZ standartReplyUserID==>'+standartReplyUserID);    
-        list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
+        System.debug('zZzZ standartReplyUserID==>'+standartReplyUserID);    
+        
+        List<Messaging.SingleEmailMessage> msgList = new List<Messaging.SingleEmailMessage>();
         for(Contact con : newPortalContactList) {
-    System.debug('con==>'+con + 'accountMap ' + accIdToUserIdMap);
-                 
-                Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(con.AccountId);
-                if(null == portalAdminUserIDs) continue;
+            System.debug('con==>'+con + 'accountMap ' + accIdToUserIdMap);
+                     
+            Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(con.AccountId);
+            if(null == portalAdminUserIDs) continue;
                 for(ID userId : portalAdminUserIDs) {
                     Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
                     emailMsg.setTemplateId(templateId);
@@ -251,14 +247,14 @@ public with sharing class ISSP_CreateNotification {
                     emailMsg.setWhatId(con.id); 
                     msgList.add(emailMsg);
                 }
-            
+        
         }
         System.debug('zZzZ msgList==>'+msgList);
         if(!msgList.isEmpty()){
             Messaging.sendEmail(msgList);
         }
         else 
-            system.debug(LoggingLevel.ERROR, 'emials not sent !');
+            system.debug(LoggingLevel.ERROR, 'emails not sent !');
     }
    
     //INC253595 - End

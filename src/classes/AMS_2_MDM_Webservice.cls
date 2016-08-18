@@ -124,10 +124,10 @@ global class AMS_2_MDM_Webservice {
 
                     sLogRecord += a.IATACode__c + ',';
 
-                    ////Check if IATACODE exists! if not end with error
-                    //if(a.IATACode__c == Null){
-                    //    accErrors += 'IATACode error - Agency needs to have an IATACode! Agency: '+a.Name+' ('+a.Id+')';
-                    //}
+                    //Check if IATACODE exists! if not end with error
+                    if(a.IATACode__c == Null){
+                        accErrors += 'IATACode error - Agency needs to have an IATACode! Agency: '+a.Name+' ('+a.Id+')';
+                    }
 
                     //Check billing address
                     if(AMS_Utils.isAddressEmpty(a, 'Billing')){

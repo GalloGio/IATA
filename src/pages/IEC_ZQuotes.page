@@ -1,0 +1,161 @@
+<apex:page controller="vfIECHistQuotes" action="{!pageLoad}" language="{!language}" 
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+
+    <!--[if lte IE 8]>
+        <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+		<title>{!$Label.ZQuotes} - {!$Label.SiteTitle}</title>
+    </head>
+
+    <body data-media-size="" class="page-dashboard" data-is-modal-open="false">
+        <div id="js-breakpoint-finder">
+            <span class="device-xs screen-xsmall"></span>
+            <span class="device-sm screen-small"></span>
+            <span class="device-md screen-medium"></span>
+            <span class="device-lg screen-large"></span>
+            <span class="device-xl screen-xlarge"></span>
+        </div>
+
+    <div class="app-container" id="js-app-container">
+
+    	<!-- Page Header -->
+        <c:IEC_PageHeader is_dashboard="true" page_name="IEC_ZQuotes" />
+	
+    	<div class="page-container" id="js-page-container">
+
+    	<main class="main-content">
+		    <div class="inner-wrapper">
+		        <h1 class="page-title">{!$Label.ZQuotes}</h1>
+		        
+		        <div class="table-container z-quotes">
+		            <div class="table-heading">
+		                <table class="data-table table-history table-togglable">
+		                    <tr class="heading">
+                                <th class="quote-id">{!$Label.Quote_ID}</th>
+                                <th class="product">{!$Label.Product}</th>
+                                <th class="request-date">{!$Label.Request_Date}</th>
+                                <th class="valid-until">{!$Label.Valid_Until}</th>
+                                <th class="action"></th>
+                            </tr>
+		                </table>
+		            </div>
+		            <div class="scroll-container history">
+
+		                <table class="data-table table-history table-togglable">
+		                    <!-- <?= $table_header ?>
+		                    <?php for ($i=0; $i < 20; $i++) { ?> -->
+		                    <apex:repeat value="{!lstQuotes}" var="quote" id="quoteTable" rendered="{!lstQuotes != null && lstQuotes.size > 0}">
+		                    <tr class="listing-item">
+		                        <td class="quote-id" data-label="Quote ID">
+		                            <apex:outputText value="{!quote.zqu__Number__c}" />
+		                        </td>
+		                        <td class="product" data-label="Product">
+		                            <apex:repeat id="quoteRatePlans" var="quoteRatePlan" value="{!quote.zqu__Quote_Rate_Plans__r}">
+                                        <apex:outputText value="{!quoteRatePlan.zqu__QuoteProductName__c}" /><br />
+                                    </apex:repeat>
+		                        </td>
+		                        <td class="request-date" data-label="Request date">
+		                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                        <apex:param value="{!quote.zqu__StartDate__c}" /> 
+                                    </apex:outputText>
+		                        </td>
+		                        <td class="valid-until" data-label="Valid until">
+		                            <apex:outputText value="{0,date,dd MMM yyyy}">
+                                        <apex:param value="{!quote.zqu__ValidUntil__c}" /> 
+                                    </apex:outputText>
+		                        </td>
+		                        <td class="action js-toggle-table">
+		                            <a class="js-toggle-switch" href="#">
+		                                <div class="show-details">
+		                                    {!$Label.See_details}
+		                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+		                                </div>
+		                                <div class="hide-details">
+		                                    {!$Label.Hide_details}
+		                                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+		                                </div>
+		                            </a>
+		                        </td>
+
+		                        <td class="details js-toggle-details is-hidden">
+		                            <div class="order-details-container">
+		                                <div class="caption"><apex:outputText value="{!quote.zqu__Number__c}" /></div>
+		                                <div class="row">
+		                                    <div class="columns small-12">
+		                                        <div class="group-container group-summary">
+		                                        
+		                                            <div class="group-title">{!$Label.Summary}</div>
+		                                            <table class="data-table table-summary">
+		                                                <tr>
+		                                                    <th>{!$Label.Product_Name}:</th>
+		                                                    <td>
+		                                                    	<apex:repeat id="quoteRatePlansDetail" var="quoteRatePlan" value="{!quote.zqu__Quote_Rate_Plans__r}">
+	                                                                <apex:outputText value="{!quoteRatePlan.zqu__QuoteProductName__c}" />
+	                                                            </apex:repeat>
+		                                                    </td>
+		                                                </tr>
+		                                                <tr>
+		                                                    <th valign="top">{!$Label.Option_name}:</th>
+		                                                    <td>
+		                                                    	<apex:repeat id="quoteCharges" var="quoteCharge" value="{!quote.zqu__QuoteCharge__r}">
+	                                                                <apex:outputText value="{!quoteCharge.zqu__ProductRatePlanName__c}" /><br />
+	                                                            </apex:repeat>
+		                                                    </td>
+		                                                </tr>
+		                                                <tr>
+		                                                    <th>{!$Label.Creation_date}:</th>
+		                                                    <td>
+																<apex:outputText value="{0,date,dd MMM yyyy}">
+	                                                                <apex:param value="{!quote.zqu__StartDate__c}" /> 
+	                                                            </apex:outputText>
+		                                                    </td>
+		                                                </tr>
+		                                            </table>
+
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="footer-action text-right">
+		                                    <!-- <a class="button" href="#">Download</a> -->
+		                                    <apex:outputLink rendered="{!quote.Quote_Validation_Status__c == null || quote.Quote_Validation_Status__c == 'Confirmed'}" value="{!sZuoraGenerateQuotePDFURL}?attachToOpportunity=false&format=pdf&quoteId={!quote.Id}&templateId={!sQuoteTemplateZuoraId}&serverUrl={!URLENCODE(sServerURL)}&sessionId={!URLENCODE(sUserSessionId)}&ZSession={!sZuoraSessionID}" target="_blank" styleClass="button" >{!$Label.ISSP_Download}</apex:outputLink>
+		                                </div>
+		                            </div>
+		                        </td>
+		                    </tr>
+		                    <!-- <?php } ?> -->
+		                    </apex:repeat>
+		                </table>
+		            </div>
+		        </div>
+
+		    </div>
+		</main>
+        
+        <c:IEC_Footer is_dashboard="true" />
+
+    <!-- /END page-container --></div>
+    <!-- /END app-container --></div>
+    <div class="modal-container is-hidden" id="js-modal">
+    	<div class="overlay"></div>
+	    <div class="modal-dialog" id="js-modal-dialog">
+	           
+		</div>
+	</div>
+
+    
+    <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+	<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+	
+    </body>
+	</html>
+</apex:page>

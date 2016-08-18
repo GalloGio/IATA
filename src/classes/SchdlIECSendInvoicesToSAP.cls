@@ -39,8 +39,9 @@ global class SchdlIECSendInvoicesToSAP implements Schedulable {
                     ', SAP_Contract_Number__c, SAP_Invoice_Clearance_Date__c, SAP_Invoice_Number__c, Sales_Office__c, Payment_Method_Code__c' +
                     ', Sales_Org__c, Shipping_City__c, Shipping_Contact__c, Shipping_Country__c, Shipping_State__c, Total_Positive_Quantity__c' +
                     ', Shipping_Street__c, Shipping_Zip__c, Status__c, Status_Date__c, Text_Print__c, VAT_number__c, Total_Quantity__c' +
-                    ', Name, Zuora_Invoice_Number__c, Billing_Country_ISO_Code__c, Warning_Message__c, Zuora_Billing_Account_ID__c,' +
-                    '(SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
+                    ', Name, Zuora_Invoice_Number__c, Billing_Country_ISO_Code__c, Warning_Message__c, Zuora_Billing_Account_ID__c' +
+                    ', Account__r.Sales_Office__c, Account__r.Payment_Term__c' +
+                    ', (SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
                         ',Profit_Center__c,Quantity__c,Status__c,Status_Date__c,Unit_Price__c,Unit_Price_Currency__c, Name, Adjusted_Charge_Amount__c ' +
                      'FROM IEC_SAP_Invoice_Items__r) ' +
                     'FROM IEC_SAP_Invoice__c ' +
@@ -55,8 +56,9 @@ global class SchdlIECSendInvoicesToSAP implements Schedulable {
                     ', SAP_Contract_Number__c, SAP_Invoice_Clearance_Date__c, SAP_Invoice_Number__c, Sales_Office__c, Payment_Method_Code__c' +
                     ', Sales_Org__c, Shipping_City__c, Shipping_Contact__c, Shipping_Country__c, Shipping_State__c, Total_Positive_Quantity__c' +
                     ', Shipping_Street__c, Shipping_Zip__c, Status__c, Status_Date__c, Text_Print__c, VAT_number__c, Total_Quantity__c' +
-                    ', Name, Zuora_Invoice_Number__c, Billing_Country_ISO_Code__c, Warning_Message__c, Zuora_Billing_Account_ID__c,' +
-                    '(SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
+                    ', Name, Zuora_Invoice_Number__c, Billing_Country_ISO_Code__c, Warning_Message__c, Zuora_Billing_Account_ID__c' +
+                    ', Account__r.Sales_Office__c, Account__r.Payment_Term__c' +
+                    ', (SELECT Date_From__c,Date_To__c,Error_Message__c,IEC_SAP_Invoice__c,Material__c,Material_Description__c, Charge_Amount__c' +
                         ',Profit_Center__c,Quantity__c,Status__c,Status_Date__c,Unit_Price__c,Unit_Price_Currency__c, Name, Adjusted_Charge_Amount__c ' +
                      'FROM IEC_SAP_Invoice_Items__r) ' +
                     'FROM IEC_SAP_Invoice__c ' +
@@ -73,6 +75,10 @@ global class SchdlIECSendInvoicesToSAP implements Schedulable {
         string second = string.valueof(nextScheduleTime.second());
         string cronvalue = second + ' ' + minute + ' * * * ?' ;
         string jobName = 'SchdlIECSendInvoicesToSAP ' + nextScheduleTime.format('hh:mm');
+ 
+ 
+          if(Test.isRunningTest())
+            jobName = 'Test_'+Datetime.now().time();
  
         system.schedule(jobName, cronvalue , new SchdlIECSendInvoicesToSAP());
 

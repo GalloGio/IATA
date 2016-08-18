@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,21 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>エラー : 都道府県(請求先)が空欄です。次に従ってご記入下さい。
+
+1. 市区郡(請求先)の項目を編集して下さい
+2. システムによって提示された住所の中から1つご選択下さい</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらの&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;ボタンをクリックの上、あなたの請求/送付先住所をご確認下さい。</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらのチェックマークボタンをクリックの上、あなたの請求/送付先住所をご確認下さい。</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -717,6 +736,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -885,6 +912,10 @@
         <name>FooterLeadMessage</name>
     </customLabels>
     <customLabels>
+        <label>国</label>
+        <name>GeneralPublicLocation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -919,6 +950,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -1748,6 +1783,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
     <customLabels>
         <label><!-- IDCard_PendingCaseH2 --></label>
         <name>IDCard_PendingCaseH2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <name>IDCard_PendingIdCardAppH1</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -2639,6 +2678,11 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;こちらのEメールはオンラインストアへ登録済みです。
+パスワードのリセットをご希望の場合は、ログイン画面へ戻り&apos;&apos;パスワードをお忘れですか？&apos;&apos;の機能をご利用下さい。&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -4177,6 +4221,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>将来の日付で受領</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4205,6 +4257,22 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4227,6 +4295,10 @@ and
     <customLabels>
         <label>管理者</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>公認代理店</label>
@@ -4571,6 +4643,10 @@ and
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>連絡先</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4643,6 +4719,10 @@ and
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>国別要件</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>発行国</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -4681,6 +4761,10 @@ and
     <customLabels>
         <label>通貨</label>
         <name>ISSP_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
     </customLabels>
     <customLabels>
         <label>現在のパスワード</label>
@@ -4729,6 +4813,10 @@ and
     <customLabels>
         <label>デジグネーターコード</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>ドキュメント</label>
@@ -5055,6 +5143,10 @@ and
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
+    </customLabels>
+    <customLabels>
         <label>外部リンク</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -5151,6 +5243,10 @@ and
         <name>ISSP_Filter_by_Type</name>
     </customLabels>
     <customLabels>
+        <label>加盟の種類で検索する</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
         <label>お褒めの言葉を頂き光栄です</label>
         <name>ISSP_Fishing_Compliments</name>
     </customLabels>
@@ -5171,12 +5267,20 @@ and
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>&apos;Next&apos;&apos;をクリックし次へ進んで下さい</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>最近の90日間ログインがされていなかった為、新しいパスワードがEメールで送信されました。</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -5535,6 +5639,14 @@ and
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5549,6 +5661,10 @@ and
     <customLabels>
         <label>ロケーション</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>ケースを記録する</label>
@@ -5783,12 +5899,20 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>あなたのアカウントが見つからない場合は、「戻る」をクリックして一般利用者として登録手続を続けるか、検索条件を変更してもう一度検索して下さい。</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>IATAポータルアカウントに新しい通知が掲載されました。</label>
@@ -5883,6 +6007,10 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_Page</name>
     </customLabels>
     <customLabels>
+        <label>航空会社のBSPとCASS加盟に関する国別要件を閲覧する</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>あなたと御社ポータル利用者のポータルサービス申請を管理する</label>
         <name>ISSP_PageDescription_ISSP_AccessToService</name>
     </customLabels>
@@ -5927,10 +6055,18 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>Payment LinkとはIATAの請求書をクレジットカードでお支払いされる際に使用されます&lt;br/&gt;
 &lt;b&gt;警告&lt;/b&gt;&lt;br/&gt;
 IATA公認代理店の多くのIATA請求書はBSP/CASSを通して徴収します。クレジットカードでのお支払いをされる前に請求書が既に作成されていないか請求書の詳細のご確認下さい。</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>承認を保留（[編集]をクリックして管理）</label>
@@ -6194,6 +6330,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Registration_Privacy</name>
     </customLabels>
     <customLabels>
+        <label>5秒後に自動的に最初のページへ戻ります。</label>
+        <name>ISSP_Registration_Redirection</name>
+    </customLabels>
+    <customLabels>
         <label>登録プロセス</label>
         <name>ISSP_Registration_RegistrationProcess</name>
     </customLabels>
@@ -6423,6 +6563,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -6455,7 +6599,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>調査は</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
@@ -6690,6 +6834,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>必要な欄に正しい形式で記入してください。</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>登録プロセスを完了することができません。http://www.iata.org/customer-portal/Pages/contactus.aspx からお問い合わせフォームに記入し、IATAカスタマーサービスポータルにご連絡ください。</label>
@@ -8076,6 +8224,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8422,6 +8574,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

@@ -73,6 +73,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Accreditation_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>AIMS_ID__c</field>
             </layoutItems>
             <layoutItems>

@@ -790,11 +790,11 @@ public class Product_Svc
         
         for (i1 = 0; i1 < newList.size(); i1++) {
             //*** default effective from date to SAP effective from date or today
-            //if (newList[i1].Effective_From__c == null)
-            //    newList[i1].Effective_From__c = ((newList[i1].SAP_Effective_From__c != null) ? newList[i1].SAP_Effective_From__c : system.today());
+            if (newList[i1].Effective_From__c == null)
+                newList[i1].Effective_From__c = ((newList[i1].SAP_Effective_From__c != null) ? newList[i1].SAP_Effective_From__c : system.today());
             //*** default effective to date to 1 year from effective from date
-            //if (newList[i1].Effective_To__c == null)
-            //    newList[i1].Effective_To__c = newList[i1].Effective_From__c.addYears(1);
+            if (newList[i1].Effective_To__c == null)
+                newList[i1].Effective_To__c = newList[i1].Effective_From__c.addYears(1);
             //*** default activity code
             if (newList[i1].SAP_Material_Number__c != null)
                 newList[i1].Activity_Code__c = newList[i1].SAP_Material_Number__c.left(4);

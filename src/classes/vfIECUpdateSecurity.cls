@@ -7,8 +7,6 @@ public without sharing class vfIECUpdateSecurity extends IECPageController {
     		return (loggedCustomer != null) ? loggedCustomer.RelatedContact : null;
     	}
 	}
-    public IECAddress__c oBilling               {get; set;}
-    public IECVATUtil.VATConfiguration vatConfig { get; set; }
     
     public Integer iRegistrationStep            {get; set;}
     public String sAccountName					{get; set;}
@@ -52,9 +50,12 @@ public without sharing class vfIECUpdateSecurity extends IECPageController {
         try {
             // first check if the user is logged in
             if (IECUserManager.isUserLoggedIn() == false) {
-                Pagereference prLogin = Page.IECLogin;
-                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
-                prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                //Pagereference prLogin = Page.IECLogin;
+                //prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+                //prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                Pagereference prLogin = Page.IEC_Login;
+                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, ApexPages.currentPage().getUrl());
+                //prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
                 prLogin.setRedirect(true);
                 return prLogin;
             }

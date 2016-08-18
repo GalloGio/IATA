@@ -110,10 +110,16 @@ public with sharing class IECZuoraHelper {
             acc.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_BankTransfer_ZuoraID);
             acc.setValue('InvoiceTemplateId', IECConstants.InvoiceTemplate_Bank_Transfer_ZuoraID);
         }
+        // CHECK
+        else if (ePaymentType == IECConstants.PaymentType.CHECK) {
+            acc.setValue('AutoPay', false);
+            acc.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_Check_ZuoraID);
+            acc.setValue('InvoiceTemplateId', IECConstants.InvoiceTemplate_Check_ZuoraID);
+        }
         // ICH
         else if (ePaymentType == IECConstants.PaymentType.ICH) {
         	acc.setValue('AutoPay', false);
-            acc.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_Other_ZuoraID);
+            acc.setValue('DefaultPaymentMethodId', IECConstants.PaymentMethod_ICH_ZuoraID);
             acc.setValue('InvoiceTemplateId', IECConstants.InvoiceTemplate_Other_ZuoraID);
         }
         // Credit card
@@ -130,6 +136,7 @@ public with sharing class IECZuoraHelper {
         if (String.isNotBlank(theContact.Tax_2_ID__c))
             acc.setValue('Tax2ID__c', theContact.Tax_2_ID__c);
             
+		/* Commented by Samy (2016-03-11) Using the SAP ID from the new Location__c model instead of the old SAP_Account__c
 		// Get the SAP Bill-To Id
 		List<SAP_Account__c> lstSAPAcc =
 			[SELECT SAP_ID__c
@@ -139,6 +146,13 @@ public with sharing class IECZuoraHelper {
 		
 		if (!lstSAPAcc.isEmpty())
 			acc.setValue('SAPBillTo__c', lstSAPAcc.get(0).SAP_ID__c);
+		*/
+		
+		if (String.isNotBlank(theContact.BillTo_Location__r.SAP_Id__c))
+			acc.setValue('SAPBillTo__c', theContact.BillTo_Location__r.SAP_Id__c);
+		
+		if (String.isNotBlank(theContact.BillTo_Location__r.VAT_Number__c))
+			acc.setValue('VATID__c', theContact.BillTo_Location__r.VAT_Number__c);
 
         return acc;
     }
@@ -155,8 +169,8 @@ public with sharing class IECZuoraHelper {
 		IECAddress__c oBillingAddress = (lstAddresses.size() > 0 ? lstAddresses.get(0) : null);
 		
         if (oBillingAddress != null) {
-	        billToContact.setValue('Country', oBillingAddress.Country__c);
-	        billToContact.setValue('State', oBillingAddress.State__c);
+	        billToContact.setValue('Country', oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
+	        billToContact.setValue('State', oBillingAddress.ISO_State_Name__c); // Changed by Samy (2016-02-29) from State__c
 	        billToContact.setValue('City', oBillingAddress.City__c);
 	        billToContact.setValue('PostalCode', oBillingAddress.ZipCode__c);
 	        billToContact.setValue('Address1', oBillingAddress.Street__c);
@@ -177,8 +191,8 @@ public with sharing class IECZuoraHelper {
 		IECAddress__c oShippingAddress = (lstAddresses.size() > 0 ? lstAddresses.get(0) : null);
 		
         if (oShippingAddress != null) {
-	        soldToContact.setValue('Country', oShippingAddress.Country__c);
-	        soldToContact.setValue('State', oShippingAddress.State__c);
+	        soldToContact.setValue('Country', oShippingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
+	        soldToContact.setValue('State', oShippingAddress.ISO_State_Name__c); // Changed by Samy (2016-02-29) from State__c
 	        soldToContact.setValue('City', oShippingAddress.City__c);
 	        soldToContact.setValue('PostalCode', oShippingAddress.ZipCode__c);
 	        soldToContact.setValue('Address1', oShippingAddress.Street__c);
@@ -477,7 +491,7 @@ public with sharing class IECZuoraHelper {
     public static List<SelectOption> getDefaultPaymentMethods() {
 		List<SelectOption> options = new List<SelectOption>();
 		if (IECCustomer.getCurrentIECCustomer().canPayByICH()) {
-			options.add(new SelectOption(IECConstants.PaymentMethod_Other_ZuoraID, 'ICH'));
+			options.add(new SelectOption(IECConstants.PaymentMethod_ICH_ZuoraID, 'ICH'));
 		}
 		//TODO: Once Bank Transfer is added, restore the comment below
 		//options.add(new SelectOption(DEFAULT_PAYMENT_METHOD_ZID_BANKTRANSFER,'Bank Transfer'));
@@ -485,11 +499,11 @@ public with sharing class IECZuoraHelper {
 	}
     
     public static Zuora.zObject getZuoraAccountBySFAccountId(Id sfAccountId, Id sfContactId) {
-        
+
         String trimmedSFAccountId = (String)sfAccountId;
         if (trimmedSFAccountId.length() > 15)
             trimmedSFAccountId = trimmedSFAccountId.substring(0, 15);
-        
+
         List<Zuora.zObject> accountResult = queryApiCall('select Id,AccountNumber,BillToId,DefaultPaymentMethodId,Name,SoldToId,Status from Account where CrmId = \'' + trimmedSFAccountId + '\' and CRMContactID__c = \'' + sfContactId + '\'');
         if (accountResult == null || accountResult.size() == 0) {
             return null;
@@ -531,7 +545,7 @@ public with sharing class IECZuoraHelper {
 				account.setValue('AutoPay', false);
 				account.setValue('InvoiceTemplateId', IECConstants.InvoiceTemplate_Bank_Transfer_ZuoraID);
 			}
-			else if (paymentMethodZId == IECConstants.PaymentMethod_Other_ZuoraID) {
+			else if (paymentMethodZId == IECConstants.PaymentMethod_ICH_ZuoraID) {
 				account.setValue('AutoPay', false);
 				account.setValue('InvoiceTemplateId', IECConstants.InvoiceTemplate_Other_ZuoraID);
 			}
@@ -612,25 +626,27 @@ public with sharing class IECZuoraHelper {
      */
     public class PaymentMethod {
         
-        public String zId { get; private set; }
-        public String name { get; private set; }
-        public String creditCardHolderName { get; private set; }
-        public String creditCardMaskNumber { get; private set; }
-        public String creditCardType { get; private set; }
+        public String  zId { get; private set; }
+        public String  name { get; private set; }
+        public String  creditCardHolderName { get; private set; }
+        public String  creditCardMaskNumber { get; private set; }
+        public String  creditCardType { get; private set; }
         public Integer creditCardExpirationMonth { get; private set; }
         public Integer creditCardExpirationYear { get; private set; }
+        public Integer numConsecutiveFailures{get; private set;}
         
         /**
          * Constructor
          */
         public PaymentMethod(Zuora.zObject zPm) {
-            zId = (String)zPm.getValue('Id');
-            name = (String)zPm.getValue('Name');
-            creditCardHolderName = (String)zPm.getValue('CreditCardHolderName');
-            creditCardMaskNumber = (String)zPm.getValue('CreditCardMaskNumber');
-            creditCardType = (String)zPm.getValue('CreditCardType');
-            creditCardExpirationMonth = (Integer)zPm.getValue('CreditCardExpirationMonth');
-            creditCardExpirationYear = (Integer)zPm.getValue('CreditCardExpirationYear');
+            zId                         = (String)  zPm.getValue('Id');
+            name                        = (String)  zPm.getValue('Name');
+            creditCardHolderName        = (String)  zPm.getValue('CreditCardHolderName');
+            creditCardMaskNumber        = (String)  zPm.getValue('CreditCardMaskNumber');
+            creditCardType              = (String)  zPm.getValue('CreditCardType');
+            creditCardExpirationMonth   = (Integer) zPm.getValue('CreditCardExpirationMonth');
+            creditCardExpirationYear    = (Integer) zPm.getValue('CreditCardExpirationYear');
+            numConsecutiveFailures      = (Integer) zPm.getValue('NumConsecutiveFailures');
         }
     }
     
@@ -1259,7 +1275,7 @@ public with sharing class IECZuoraHelper {
     	pmt.setValue('AppliedInvoiceAmount', dAmountPaid);
     	pmt.setValue('EffectiveDate', getFutureDate(dtEffective));
     	pmt.setValue('InvoiceId', sInvoiceZID);
-    	pmt.setValue('PaymentMethodId', ((sPmtMethod == 'ICH') ? IECConstants.PaymentMethod_Other_ZuoraID : IECConstants.PaymentMethod_BankTransfer_ZuoraID));
+    	pmt.setValue('PaymentMethodId', ((sPmtMethod == 'ICH') ? IECConstants.PaymentMethod_ICH_ZuoraID : IECConstants.PaymentMethod_BankTransfer_ZuoraID));
     	pmt.setValue('SISInvoiceNumber__c', ((sPmtMethod == 'ICH') ? sSISInvoiceNumber : ''));
     	pmt.setValue('Status', 'Processed');
     	pmt.setValue('Type', 'External');

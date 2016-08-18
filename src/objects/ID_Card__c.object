@@ -1220,12 +1220,33 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Valid_To_Date__c</columns>
         <columns>MustSyncWithAIMS__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>VER_Number__c</field>
-            <operation>equals</operation>
-            <value>6124043832</value>
-        </filters>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Expired</fullName>
+        <columns>NAME</columns>
+        <columns>VER_Number__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>ID_Card_Application__c</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>Start_Date_Agency_Month__c</columns>
+        <columns>Start_Date_Agency_Year__c</columns>
+        <columns>Start_Date_Industry__c</columns>
+        <columns>Agency_IATA_Code__c</columns>
+        <columns>Name_on_ID_Card__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>MustSyncWithAIMS__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Valid_From_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Expired</label>
         <language>en_US</language>
     </listViews>
     <listViews>

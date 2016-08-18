@@ -260,6 +260,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -531,6 +541,16 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -970,6 +990,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1245,6 +1275,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1516,6 +1556,16 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -2922,6 +2972,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
     <fields>
         <fullName>BillTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - Reference to “Locations” object to default billing information in order</description>
         <externalId>false</externalId>
         <label>BillTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -6066,6 +6117,42 @@ IFAP Application.</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IATA_ISO_Billing_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Billing State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Shipping_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Shipping Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Contacts (ISO Shipping Country)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_ISO_Shipping_State__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISO Shipping State</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>Contacts (ISO Shipping State)</relationshipLabel>
+        <relationshipName>Contacts1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ICCS_CWG__c</fullName>
         <description>Currency Coordinator Working Group Membership</description>
         <externalId>false</externalId>
@@ -8695,6 +8782,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
     <fields>
         <fullName>ShipTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>IEC - Reference to “Locations” object to default shipping information in order</description>
         <externalId>false</externalId>
         <label>ShipTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -26703,7 +26791,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>IFAP_Contact_Under_Branch_Account</fullName>
         <active>true</active>
         <description>Prevent creation of IFAP contacts under Branch Account.</description>
-        <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  Financial_Assessment_Contact__c  &amp;&amp; (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;))  &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;))) , true ,false)</errorConditionFormula>
+        <errorConditionFormula>IF($RecordType.Name  = &apos;IATA Standard Contact&apos;  &amp;&amp;  
+        Financial_Assessment_Contact__c  &amp;&amp; 
+        (NOT(ISPICKVAL(Account.Location_Type__c , &apos;AO&apos;)) &amp;&amp; 
+         NOT(ISPICKVAL(Account.Location_Type__c , &apos;HO&apos;)) &amp;&amp; 
+         NOT(ISPICKVAL(Account.Location_Type__c , &apos;BR&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Type , &apos;Import Agent&apos;)) &amp;&amp;
+         NOT(ISPICKVAL(Account.Category__c , &apos;Import Agent&apos;))), true ,false)</errorConditionFormula>
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
     </validationRules>
     <validationRules>

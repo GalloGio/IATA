@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,18 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>Error : ไม่มีข้อมูลของจังหวัดอยู่ในบิลลิ่ง โปรดกรุณาทำตามข้อมูลด้านล่างเพื่อแก้ไขข้อมูลดังนี้ 1.โปรดแก้ไขข้อมูล &quot;ชื่อเมือง - สำหรับเรียกเก็บเงินในบิลลิ่ง&quot; 2. เลือกที่อยู่ตามที่เสนอโดยระบบ</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบที่อยู่สำหรับเรียกเก็บเงินใน Billing และ ที่อยู่สำหรับการจัดส่งเอกสาร โดยคลิกที่ปุ่ม &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบที่อยู่สำหรับเรียกเก็บเงินใน Billing และ ที่อยู่สำหรับการจัดส่งเอกสาร โดยคลิกที่ปุ่มเครื่องหมายถูก</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -717,6 +733,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -885,6 +909,10 @@
         <name>FooterLeadMessage</name>
     </customLabels>
     <customLabels>
+        <label>ประเทศ</label>
+        <name>GeneralPublicLocation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -919,6 +947,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -1748,6 +1780,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
     <customLabels>
         <label><!-- IDCard_PendingCaseH2 --></label>
         <name>IDCard_PendingCaseH2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH1 --></label>
+        <name>IDCard_PendingIdCardAppH1</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -2639,6 +2675,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>E-mail: อีเมลนี้ได้ถูกลงทะเบียนไว้แล้ว หากคุณต้องการที่จะตั้งค่ารหัสผ่านของคุณใหม่ โปรดกลับไปที่หน้าจอเข้าสู่ระบบ (Login) และใช้ฟังก์ชั่น &quot;ลืมรหัสผ่านของคุณหรือไม่&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -4177,6 +4217,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>ยอมรับแล้ว พร้อมวันที่ในอนาคต</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4205,6 +4253,22 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4227,6 +4291,10 @@ and
     <customLabels>
         <label>ผู้ดูแลระบบ</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>ตัวแทนได้รับการรับรองแล้ว</label>
@@ -4572,6 +4640,10 @@ and
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>ผู้ติดต่อ</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4644,6 +4716,10 @@ and
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>ข้อกำหนดของประเทศ</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>สำหรับประเทศ</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -4682,6 +4758,10 @@ and
     <customLabels>
         <label>สกุลเงิน</label>
         <name>ISSP_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
     </customLabels>
     <customLabels>
         <label>รหัสผ่านปัจจุบัน</label>
@@ -4730,6 +4810,10 @@ and
     <customLabels>
         <label>รหัสสายการบิน</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>เอกสาร</label>
@@ -5056,6 +5140,10 @@ and
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
+    </customLabels>
+    <customLabels>
         <label>ลิงค์ภายนอก</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -5152,6 +5240,10 @@ and
         <name>ISSP_Filter_by_Type</name>
     </customLabels>
     <customLabels>
+        <label>กรองโดยประเภทของการเข้าร่วม</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
         <label>เรายินดีที่ได้รับคำชมเชยจากคุณ</label>
         <name>ISSP_Fishing_Compliments</name>
     </customLabels>
@@ -5172,12 +5264,20 @@ and
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>กรุณาคลิก &quot;Next&quot; เพื่อ ดำเนินการต่อไป</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>เนื่องจากคุณไม่ได้ เข้าสู่ระบบมาเป็นเวลาเกินกว่า 90 วัน รหัสผ่านใหม่จึงได้ทำการส่งไปยังอีเมลล์</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -5536,6 +5636,14 @@ and
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5550,6 +5658,10 @@ and
     <customLabels>
         <label>สถานที่ตั้ง</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>บันทึกกรณี</label>
@@ -5784,12 +5896,20 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>หากไม่พบบัญชีของคุณ กรุณาคลิกที่ &quot;ย้อนกลับ&quot; เพื่อดำเนินกระบวนการลงทะเบียนสำหรับบุคคลทั่วไป หรือแก้ไขเกณฑ์การค้นหาและลองอีกครั้ง</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>มีการแจ้งเตือนใหม่ในบัญชีพอร์ทัล IATA ของคุณ</label>
@@ -5884,6 +6004,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Page</name>
     </customLabels>
     <customLabels>
+        <label>ปรึกษาข้อกำหนด BSP และ CASS ของประเทศสำหรับการเข้าร่วมของสายการบิน</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>จัดการคำขอเพิ่มการเข้าสู่บริการ</label>
         <name>ISSP_PageDescription_ISSP_AccessToService</name>
     </customLabels>
@@ -5929,10 +6053,18 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>PaymentLink สามารถใช้ในการชำระใบแจ้งหนี้ของ IATA ด้วยบัตรเครดิต&lt;br/&gt;
 &lt;b&gt;คำเตือน!&lt;/b&gt;&lt;br/&gt;
 โปรดทราบว่าใบแจ้งหนี้ IATA จำนวนมากของเอเย่นต์ได้ถูกเก็บผ่าน BSP / CASS คุณควรตรวจสอบรายละเอียดในใบแจ้งหนี้ของคุณเพื่อให้แน่ใจว่าคุณยังไม่ได้ทำการจ่าย ก่อนที่คุณจะดำเนินการชำระเงินด้วยบัตรเครดิต</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>รอการอนุมัติ (คลิกที่แก้ไขเพื่อจัดการ)</label>
@@ -6196,6 +6328,10 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Registration_Privacy</name>
     </customLabels>
     <customLabels>
+        <label>คุณจะถูกกลับไปยังหน้าเริ่มต้นในภายในอีก 5 วินาที</label>
+        <name>ISSP_Registration_Redirection</name>
+    </customLabels>
+    <customLabels>
         <label>ขั้นตอนการลงทะเบียน</label>
         <name>ISSP_Registration_RegistrationProcess</name>
     </customLabels>
@@ -6426,6 +6562,10 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -6458,7 +6598,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>แบบสำรวจ</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
@@ -6693,6 +6833,10 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
     <customLabels>
         <label>โปรดกรอกข้อมูลในช่องที่จำเป็นด้วยรูปแบบที่ถูกต้อง</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>ไม่สามารถดำเนินกระบวนการลงทะเบียนของคุณได้อย่างสมบูรณ์ กรุณาติดต่อฝ่ายสนับสนุนของพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
@@ -8080,6 +8224,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8426,6 +8574,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

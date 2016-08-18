@@ -1,0 +1,12 @@
+<html> 
+<head> 
+</head> 
+<body> 
+<p>Dear {!Product2.Product_Manager__c} ,</p>
+<p>Your product {!Product2.SAP_Material_Number__c}  has been replaced with a new edition.</p> 
+<p>Best regards,<br />
+eCommerce Support Team
+</p>
+
+</body> 
+</html>

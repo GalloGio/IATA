@@ -1,0 +1,228 @@
+<apex:page controller="IEC_PublicationsSubscriptionsController" language="{!language}" action="{!pageLoad}" 
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+
+    <!--[if lte IE 8]>
+        <html lang="en" class="ie lte-ie8 no-svg">
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="en">
+    <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+		<title>{!$Label.Publications_subscriptions} - {!$Label.SiteTitle}</title>
+    </head>
+
+    <body data-media-size="" class="page-dashboard" data-is-modal-open="false">
+        <div id="js-breakpoint-finder">
+            <span class="device-xs screen-xsmall"></span>
+            <span class="device-sm screen-small"></span>
+            <span class="device-md screen-medium"></span>
+            <span class="device-lg screen-large"></span>
+            <span class="device-xl screen-xlarge"></span>
+        </div>
+
+    <div class="app-container" id="js-app-container">
+
+    	<!-- Page Header -->
+        <c:IEC_PageHeader is_dashboard="true" page_name="IEC_PublicationsSubscriptions" />
+	
+    	<div class="page-container" id="js-page-container">
+
+    	<main class="main-content">
+		    <div class="inner-wrapper">
+		        <h1 class="page-title">{!$Label.Publications_subscriptions}</h1>
+		        
+		        <!-- <?php 
+		            $table_header = '';
+		        ?> -->
+
+		        <div class="table-container publications-subscriptions">
+		            <div class="table-heading">
+		                <table class="data-table table-history table-togglable">
+		                    <tr class="heading">
+                                <th class="order-number">{!$Label.Order_number}</th>
+                                <th class="order-type">{!$Label.Order_type}</th>
+                                <th class="product">{!$Label.Product}</th>
+                                <th class="date">{!$Label.Date}</th>
+                                <th class="action"></th>
+                            </tr>
+		                </table>
+		            </div>
+		            <div class="scroll-container history">
+
+		                <table class="data-table table-history table-togglable">
+		                    <!-- <?= $table_header ?>
+		                    <?php for ($i=0; $i < 20; $i++) { ?> orderItems -->
+		                    <apex:repeat value="{!lstOrderItem}" var="item">
+		                    <tr class="listing-item">
+		                        <td class="order-number" data-label="Order number">
+		                            <apex:outputText value="{!item.ordItem.Order.OrderNumber}" />
+		                        </td>
+		                        <td class="order-type" data-label="Order type">
+		                            <apex:outputText value="{!item.ordItem.Order.Type}" />
+		                        </td>
+		                        <td class="product" data-label="Product">
+		                            <apex:outputText value="{!item.ordItem.Product_Name__c}" />
+		                        </td>
+		                        <td class="date" data-label="Date">
+		                            <apex:outputText value="{0, date, medium}" >
+                                    	<apex:param value="{!item.ordItem.Order.EffectiveDate}" />
+                                    </apex:outputText>
+		                        </td>
+		                        <td class="action js-toggle-table">
+		                            <a class="js-toggle-switch" href="#">
+		                                <div class="show-details">
+		                                    {!$Label.See_details}
+		                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+		                                </div>
+		                                <div class="hide-details">
+		                                    {!$Label.Hide_details}
+		                                    <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+		                                </div>
+		                            </a>
+		                        </td>
+		                        <td class="details js-toggle-details is-hidden">
+		                            <div class="order-details-container">
+		                                <div class="caption">{!$Label.Order} &nbsp;<apex:outputText value="{!item.ordItem.Order.OrderNumber}" /></div>
+		                                <div class="row">
+		                                    <div class="columns small-6">
+		                                        <div class="group-container group-summary">
+		                                            <div class="group-title">{!$Label.Summary}</div>
+		                                            <div class="box">
+		                                                <div class="label">
+		                                                	{!$Label.Product_Name}: <br /><apex:outputText value="{!item.ordItem.Product_Name__c}" />
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="group-container group-services-dates">
+		                                            <div class="group-title">{!$Label.Services_dates}</div>
+		                                            <div class="box">
+		                                                <div class="label">{!$Label.Start_date}:</div>
+		                                                <div class="value">
+		                                                    <strong>
+		                                                    	<apex:outputText value="{0, date, medium}" >
+							                                    	<apex:param value="{!item.ordItem.Order.EffectiveDate}" />
+							                                    </apex:outputText>
+		                                                    </strong>
+		                                                </div>
+		                                            </div>
+		                                            <div class="box">
+		                                                <!-- <div class="label">{!$Label.End_date}:</div>
+		                                                <div class="value">
+		                                                    <strong>
+		                                                    	<apex:outputText value="{0, date, medium}" >
+							                                    	<apex:param value="{!item.ordItem.Effective_End_Date__c}" />
+							                                    </apex:outputText>
+		                                                    </strong>
+		                                                </div>
+		                                                <div class="remaining-days">{!item.subscriptionDaysLeft} {!$Label.days_left}</div> -->
+		                                            </div>
+		                                        </div>
+		                                        <div class="group-container group-auto-renewal">
+		                                            <!-- <div class="group-title">Auto-renewal</div>
+		                                            <div class="box">
+		                                                <div class="label">Current status:</div>
+		                                                <div class="value switch-state js-switch-state on">
+		                                                    <strong class="switch-off">OFF</strong>
+		                                                    <strong class="switch-on">ON</strong>
+		                                                </div>
+		                                            </div>
+		                                            <div class="box">
+		                                                <div class="label switch-state js-switch-state off">
+		                                                    Turn auto-renew 
+		                                                    <span class="switch-off">OFF</span>
+		                                                    <span class="switch-on">ON</span>
+		                                                    :
+		                                                </div>
+		                                                <div class="value">
+		                                                    
+		                                                </div>
+		                                                <div class="switch js-switch off">
+		                                                    <div class="toggle-switch"></div>
+		                                                    <div class="switch-label on"><div class="reader-only">On</div></div>
+		                                                    <div class="switch-label off"><div class="reader-only">Off</div></div>
+		                                                </div>
+		                                            </div> -->
+		                                        </div>
+		                                    </div>
+		                                    <div class="columns small-6">
+		                                        <div class="group-container group-terms-of-use">
+		                                            <div class="group-title">{!$Label.ISSP_Terms_of_Use}</div>
+		                                            <div class="box">
+		                                                <div class="label">{!$Label.Acceptance_date}:</div>
+		                                                <div class="value">
+		                                                    <apex:outputText value="{0, date, medium}" >
+						                                    	<apex:param value="{!item.ordItem.Order.EffectiveDate}" />
+						                                    </apex:outputText>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="group-container group-related-invoice">
+		                                            <div class="group-title">{!$Label.Related_invoice}</div>
+		                                              <!--<a href="#">INV000012334</a> -->
+		                                            <apex:outputPanel rendered="{!item.ordItem.Order.Payment_Type__c != 'ICH' && item.ordItem.Invoice_Number__c != null}">
+										        		{!$Label.Invoice_number}: <apex:outputLink value="/apex/IECInvoice?invoice={!item.ordItem.Invoice_Number__c}" id="invoiceLink" target="_blank">{!item.ordItem.Invoice_Number__c}</apex:outputLink>
+													</apex:outputPanel>
+													<apex:outputPanel rendered="{!item.ordItem.Order.Payment_Type__c == 'ICH' && item.ordItem.Invoice_Number__c != null}">
+														<a class="js-open-modal" data-target-modal="#js-modal-ICH-Customer" href="#">{!$Label.Download_Invoice}</a>
+													</apex:outputPanel>
+		                                        </div>
+		                                        <div class="group-container">
+		                                            <div class="group-title">{!$Label.Related_payment}</div>
+		                                            <div class="box">
+		                                                <div class="label">{!$Label.Payment_number}:</div>
+		                                                <div class="value">
+		                                                	<apex:outputPanel rendered="{!item.ordItem.Order.Zuora_Transaction_Id__c != null}">
+		                                                		<apex:outputText value="{!item.ordItem.Order.Zuora_Transaction_Id__c}" />
+		                                                	</apex:outputPanel>
+		                                                	<apex:outputPanel rendered="{!item.ordItem.Order.Zuora_Transaction_Id__c == null}">
+		                                                		N/A
+		                                                	</apex:outputPanel>
+		                                                </div>
+		                                            </div>
+		                                            
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </td>
+		                    </tr>
+		                    <!-- <?php } ?> -->
+		                    </apex:repeat>
+		                </table>
+		            </div>
+		        </div>
+		    </div>
+		</main>
+
+        
+        <c:IEC_Footer is_dashboard="true" />
+
+    <!-- /END page-container --></div>
+    <!-- /END app-container --></div>
+    <div class="modal-container is-hidden" id="js-modal">
+        <div class="overlay"></div>
+        <div class="modal-dialog" id="js-modal-dialog">
+        	<section class="modal-content is-hidden" id="js-modal-ICH-Customer">
+			    <header class="modal-header">
+	               <h2 class="modal-title">&nbsp;</h2>
+	                <a href="#" class="icon-close js-close-modal"><span class="reader-only">Close</span><i class="fa fa-times"></i></a>
+	            </header>
+	            <div class="modal-body">
+	                <p>{!$Label.ICH_customer_invoice_message}</p>
+	            </div>
+			</section>
+        </div>
+    </div>
+    
+    <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+	<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+	
+    </body>
+	</html>
+</apex:page>

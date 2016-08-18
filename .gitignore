@@ -3,6 +3,10 @@
 #src/objectPackage.xml
 .project
 src/layouts/Case-Case Layout.layout
+src/layouts/Case-Demo\ only\ for\ dev.layout
+src/layouts/Case-Demo only for dev.layout
+src/layouts/Idea-DPC\ Management\ layout.layout
+src/layouts/Idea-DPC Management layout.layout	
 src/layouts/Case-Cases\ - \SIS \Help \Desk \%28Agent%29.layout
 src/layouts/Case-Cases\ - \SIS \Help \Desk \%28Customer \Portal \- \Other \L2 \Support%29.layout
 src/layouts/Case-Cases\ - \SIS \Help \Desk \%28Customer \Portal \- \SIS \Participant%29.layout
