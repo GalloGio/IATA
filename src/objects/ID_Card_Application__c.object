@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Object that holds information on the application of a new/renew/reissue/replacement ID Card</description>
@@ -52,6 +53,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -551,15 +553,23 @@ Completed: Process is complete</inlineHelpText>
         <label>Package of Travel Professionals Course 1</label>
         <picklist>
             <picklistValues>
-                <fullName>Geography in Travel Planning - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Destination Geography - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Serving the T and T Customer - EN</fullName>
+                <fullName>Geography in Travel Planning - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Intro al BSPlink - ES</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -575,34 +585,14 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Intro al BSPlink - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
+                <fullName>Serving the T and T Customer - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Social Media for T and T Industry - EN</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Fundamentals Journey Pricing - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Repricing, Exchange and Reissue - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agency Fees - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -616,15 +606,23 @@ Completed: Process is complete</inlineHelpText>
         <label>Package of Travel Professionals Course 2</label>
         <picklist>
             <picklistValues>
-                <fullName>Geography in Travel Planning - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Destination Geography - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Serving the T and T Customer - EN</fullName>
+                <fullName>Geography in Travel Planning - EN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Intro al BSPlink - ES</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -640,34 +638,14 @@ Completed: Process is complete</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Intro al BSPlink - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
+                <fullName>Serving the T and T Customer - EN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Social Media for T and T Industry - EN</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Fundamentals Journey Pricing - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Repricing, Exchange and Reissue - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agency Fees - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2440,7 +2418,7 @@ sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;;
 var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
 var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
 
-var query = &apos;Select c.ContactId, c.ID_Card_Status__c, c.OwnerId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
+var query = &apos;Select c.ContactId, c.ID_Card_Status__c, c.OwnerId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
 var queryresult = sforce.connection.query(query);
 var records = queryresult.getArray(&apos;records&apos;);
 var record = records[0];		
