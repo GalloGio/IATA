@@ -18,28 +18,7 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomLabel</name>
+        <name>AuraDefinitionBundle</name>
     </types>
-    <types>
-        <members>*</members>
-        <name>RemoteSiteSetting</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Translations</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Workflow</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>E%26F staff</members>
-        <name>Profile</name>
-    </types>
-    <version>36.0</version>
+    <version>37.0</version>
 </Package>
