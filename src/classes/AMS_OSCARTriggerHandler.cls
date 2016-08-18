@@ -287,12 +287,8 @@ public class AMS_OSCARTriggerHandler {
 				Set<Id> agenciesAffected = new Set<Id>();
 
 				if (pds != null)
-					for (AMS_Process_Detail__c pd : pds){
-						if(pd.Account__c!=null && accounts.get(pd.Account__c) != null){
-							if(accounts.get(pd.Account__c).Status__c != AMS_Utils.ACC_S0_TERMINATED)
-								agenciesAffected.add(pd.Account__c);
-						}
-					}
+					for (AMS_Process_Detail__c pd : pds)
+						agenciesAffected.add(pd.Account__c);
 
 				AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
 
