@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <webLinks>
+        <fullName>Manage_File_Description</fullName>
+        <availability>online</availability>
+        <description>To maintain the relationship between Rate plan and File Description</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Manage File Description</masterLabel>
+        <openType>sidebar</openType>
+        <page>GDP_FileDefRatePlanDefWizard</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Manage_File_Description_CAC</fullName>
+        <availability>online</availability>
+        <description>Manage File Description CAC</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Manage File Description CAC</masterLabel>
+        <openType>sidebar</openType>
+        <page>GDP_FileDefRatePlanCACWizard</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>
