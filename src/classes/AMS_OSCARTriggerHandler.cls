@@ -431,6 +431,9 @@ public class AMS_OSCARTriggerHandler {
 		Savepoint sp = Database.setSavepoint();
 
 		try {
+
+			List<Account> accsToUpdateFromCC = new List<Account>();
+
 			//insert the change codes
 			if (changesContainer.size() > 0) {
 				List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
@@ -445,11 +448,13 @@ public class AMS_OSCARTriggerHandler {
 				}
 
 				//create change codes
-				AMS_Utils.createAAChangeCodes(changeCodes, theoscars, accts, true);
+				accsToUpdateFromCC = AMS_Utils.createAAChangeCodes(changeCodes, theoscars, accts, false);
 			}
 
-			if (accountsToUpdate.size() > 0) {
-				update accountsToUpdate;
+			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, accountsToUpdate);
+
+			if (!mergedAccountUpdate.isEmpty()) {
+				update mergedAccountUpdate;
 			}
 
 			if (hierarchyChanges.size() > 0) {
@@ -790,6 +795,42 @@ public class AMS_OSCARTriggerHandler {
 		} catch (exception e) {
 			system.debug('DTULLO 39 --> exception --> ' + e.getMessage());
 		}
+	}
+
+	//the oscar process requires updates on the accounts on 2 situations
+	//-when a change code is generated (in this situation only the status is updated)
+	//-when migrating fields from staging area to master data
+	//because the above situation are done in separate ocasions, we need to merge the account updates in only one list
+	//to prevent double update on accounts
+	private static List<Account> mergeAccountsToUpdate(List<Account> accountUpdatesFromChangeCodes, List<Account> accountUpdatesFromStagingArea){
+
+		List<Account> mergedAccountsToUpdate = new List<Account>();
+
+		//gather all account Ids into a set
+		Map<Id, Account> mapA = new Map<Id, Account>(accountUpdatesFromStagingArea);
+		Map<Id, Account> mapB = new Map<Id, Account>(accountUpdatesFromChangeCodes);
+		
+
+		Set<Id> allAccountsToUpdateIds = new Set<Id>();
+		allAccountsToUpdateIds.addAll(mapA.keySet());
+		allAccountsToUpdateIds.addAll(mapB.keySet());
+
+		for(Id accId: allAccountsToUpdateIds){
+			Account a;
+			if(mapA.containsKey(accId))
+				a = mapA.get(accId);
+			if(mapB.containsKey(accId))
+				if(a == null)
+					a = mapB.get(accId);
+				else
+					a.Status__c = mapA.get(accId).Status__c;
+
+			if(a!=null)
+				mergedAccountsToUpdate.add(a);
+		}
+
+		return mergedAccountsToUpdate;
+
 	}
 
 }
