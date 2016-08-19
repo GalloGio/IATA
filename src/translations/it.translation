@@ -4722,6 +4722,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Requisiti del Paese</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Paese de pubblicazione</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5240,6 +5244,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Filtrare per tipo</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtrare a seconda del tipo di partecipazione</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Grazie per inviarci i complimenti</label>
@@ -6000,6 +6008,10 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
     <customLabels>
         <label>Pagina</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Consulta i requisiti specifici BSP e Cass in un determinato mercato per la partecipazione delle compagnie aeree</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Gestire le sue richieste e quelle degli utenti della sua compagnia</label>
