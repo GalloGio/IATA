@@ -2989,7 +2989,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
     <fields>
         <fullName>CEO_CFO__c</fullName>
         <externalId>false</externalId>
-        <label>CEO/CFO</label>
+        <label>CEO/CFO/COO</label>
         <picklist>
             <picklistValues>
                 <fullName>CEO</fullName>

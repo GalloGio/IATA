@@ -4799,11 +4799,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-                <controllingFieldValues>Equipment Manufacturer</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
                 <controllingFieldValues>Association</controllingFieldValues>
@@ -8891,38 +8886,6 @@ J-Joint Vent</inlineHelpText>
         <label>IATA Membership Status</label>
         <picklist>
             <picklistValues>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>IATA member</fullName>
                 <default>false</default>
             </picklistValues>
@@ -8931,11 +8894,11 @@ J-Joint Vent</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Ex-member</fullName>
+                <fullName>Ex-IATA Member</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Member in limitation</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -23287,27 +23250,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25478,10 +25421,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -25945,27 +25884,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28111,10 +28030,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -28336,27 +28251,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30774,27 +30669,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33680,27 +33555,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36564,15 +36419,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Ex-member</fullName>
+                <fullName>Ex-IATA Member</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>IATA member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Member in limitation</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40592,27 +40443,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43063,27 +42894,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47102,27 +46913,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50826,10 +50617,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -51215,27 +51002,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53391,27 +53158,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55496,27 +55243,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57319,10 +57046,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -57703,27 +57426,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60101,10 +59804,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -60537,27 +60236,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64072,10 +63751,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -64665,27 +64340,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
+                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
