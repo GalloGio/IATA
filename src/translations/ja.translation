@@ -4719,6 +4719,10 @@ and
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>国別要件</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>発行国</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5237,6 +5241,10 @@ and
     <customLabels>
         <label>タイプ別に絞り込む</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>加盟の種類で検索する</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>お褒めの言葉を頂き光栄です</label>
@@ -5997,6 +6005,10 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
     <customLabels>
         <label>ページ</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>航空会社のBSPとCASS加盟に関する国別要件を閲覧する</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>あなたと御社ポータル利用者のポータルサービス申請を管理する</label>

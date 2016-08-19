@@ -4720,6 +4720,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Ländervorgaben</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Land</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5238,6 +5242,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
     <customLabels>
         <label>Nach Typ filtern</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtern Sie nach Art der Teilnahme</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Wir sind dankbar für Ihre positive Rückmeldung</label>
@@ -5999,6 +6007,10 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
     <customLabels>
         <label>Seite</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Rufen Sie die BSP und CASS Ländervorgaben zur Airline Teilnahme auf.</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Verwalten Sie Anträge auf Portaldienste für alle Nutzer Ihres Unternehmens</label>

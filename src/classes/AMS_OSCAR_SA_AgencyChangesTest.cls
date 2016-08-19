@@ -514,7 +514,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
-            Boolean expectedExceptionThrown =  e.getMessage().contains('This option cannot be used when the OSCAR is opened for a Branch.') ? true : false;
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The field Change of location type behavior cannot have value Dont change the parent when the OSCAR is opened for a Branch.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 
@@ -641,7 +641,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
     }
 
     //A change of location for an agency which is not an “SA” cannot specify a target agency
-    @isTest static void blockTargetAgencyOnChangeOfLocationForNonSA() {
+    /*@isTest static void blockTargetAgencyOnChangeOfLocationForNonSA() {
 
         getUpdatedAccountData();
 
@@ -661,7 +661,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.stopTest();
 
-    }
+    }*/
 
     //A change of location for an SA agency, which specify a target agency, cannot be mixed with a change of ownership
     @isTest static void blockMixChangeLocationChangeOwnership() {

@@ -119,6 +119,7 @@ public without sharing class AMS_Utils {
     public static final String TYPECHANGE_LOCATIONWITHINSPECTION = 'Location with inspection'; 
     public static final Id AccreditationContactPersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
     public static final Id AccreditationContactCompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+    public static final Id AccountRoleOwnershipRT = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
 
     public static final Set<String> LocationClassIFAPAllowed = new Set<String>{'P','C','R'};
     public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
@@ -522,7 +523,9 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-    public static void createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
+
+
+    public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
@@ -552,9 +555,11 @@ public without sharing class AMS_Utils {
 
         }
 
+        List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
+
         if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
-            update new List<Account>(accountsToUpdate);
+            update accountsToUpdateList;
         }
 
         if (!aaccToInsert.isEmpty()) {
@@ -563,6 +568,8 @@ public without sharing class AMS_Utils {
 
             insert aaccToInsert;
         }
+
+        return accountsToUpdateList;
 
     }
 
@@ -597,6 +604,12 @@ public without sharing class AMS_Utils {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'FIN' ){
+            
+            oscarAgency.Is_AIMS_Account__c = true;
             toReturn = oscarAgency;
         }
 
@@ -812,10 +825,14 @@ public without sharing class AMS_Utils {
 
 
 
+
         for (AMS_OSCAR__c oscar : oscars) {
 
             Account acc = accounts.get(oscar.Account__c);
+
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
+
+            Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
             if (acc != null && onlineAcc != null) {
 
@@ -840,19 +857,57 @@ public without sharing class AMS_Utils {
 
 
 
+            // THen move the owners
+            Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+
 
 
             if (!accountsToUpdate.isEmpty()) {
                 update accountsToUpdate;
             }
 
-            if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/)
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
+
+            //AMS-1671
+
+            //Need to apply change of ownership to all the accounts in herarchy
+            Set<Id> allHierarchyAccountIds = new Set<Id>();
+
+            if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
+                allHierarchyAccountIds.add(oscar.Account__c);
+            }else{
+                for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(oscar.Account__c)){
+                    allHierarchyAccountIds.add(rel.Parent_Account__c);
+                    allHierarchyAccountIds.add(rel.Child_Account__c);
+                }
+            }
+
+            stagingToAccounts.put(onlineAcc.Id, allHierarchyAccountIds);
+
+            if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/){
+                // old code !! AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+            }
 
 
         }
 
 
+        }
+
+    private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+
+        if(accountHierarchyRelationships.isEmpty())
+            return true;
+
+        if(accountHierarchyRelationships.values().isEmpty())
+            return true;
+
+        for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
+            if(!agency.isEmpty())
+                return false;
+        }
+
+        return true;
     }
 
     public static Boolean ownershipIsToBeMigrated(String typesOfChange){
@@ -1078,7 +1133,7 @@ public static String errorMessageBeautifyer(Exception ex) {
         System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
         Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString) + searchString.length() + 2;
         errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
-        errorString = errorString.substringBefore(':');
+        errorString = errorString.substringBefore(': [');
     }
     return 'ERROR: ' + errorString;
 }

@@ -21,7 +21,7 @@ public class ISSP_Ctrl_AccountStatements_AcceptTest {
 
     public static Portal_Applications__c createAccountStatementApp(User user) {
         Portal_Applications__c app = new Portal_Applications__c(
-            Name = 'Account Statements'
+            Name = ISSP_Ctrl_AccountStatements.APP_NAME
         );
         insert app;
         Portal_Application_Right__c appRight = new Portal_Application_Right__c(

@@ -363,10 +363,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             (c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
             (c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
             (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
-            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
+            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) || 
             (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
-            (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' )) {
+            (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
+            (c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela')) { //INC267186
           IATAcases ++;
           IATAcaseslog += c.id + ', ';
           continue;
