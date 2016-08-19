@@ -4516,6 +4516,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>Agency Holding Company</fullName>
                 <default>false</default>
+                <controllingFieldValues>Holding Company</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Aircraft Manufacturer</fullName>
@@ -4530,6 +4531,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>Airline Holding Company</fullName>
                 <default>false</default>
+                <controllingFieldValues>Holding Company</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Airline Point of Sale</fullName>
@@ -4788,6 +4790,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Financial Institution</controllingFieldValues>
                 <controllingFieldValues>General Sales Agent</controllingFieldValues>
                 <controllingFieldValues>Governmental Institution</controllingFieldValues>
+                <controllingFieldValues>Holding Company</controllingFieldValues>
                 <controllingFieldValues>IATA</controllingFieldValues>
                 <controllingFieldValues>Infrastructure Partner</controllingFieldValues>
                 <controllingFieldValues>Media</controllingFieldValues>

@@ -14,7 +14,7 @@
         <shortDescription>A-P restricted Profile Name used in the AIMS Account trigger (BU)</shortDescription>
         <value>Restricted Profile - automated process</value>
     </labels>
-    <labels> 
+    <labels>
         <fullName>AMS_Conga_Merge</fullName>
         <language>en_US</language>
         <protected>false</protected>
