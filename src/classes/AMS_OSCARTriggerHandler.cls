@@ -341,6 +341,8 @@ public class AMS_OSCARTriggerHandler {
 
 					}
 
+					agenciesAffected.add(oscar.Account__c);
+
 					//check if ownership needs to be copied from online form to Accounts
 					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c)){
 						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
@@ -681,12 +683,11 @@ public class AMS_OSCARTriggerHandler {
 			if (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION) || tocList.contains(AMS_Utils.OWNERSHIP_IATA)){
 
 				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)){
-					if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
+					/*if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
 						oscar.AMS_Target_Agency__c.addError('A change of location for an agency which is not an “SA” cannot specify a target agency');
 						validationsPassed=false;
 					}
-
-					if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)){
+					else */if((tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) && oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
 						oscar.AMS_Target_Agency__c.addError('A change of location for an SA agency, which specify a target agency, cannot be mixed with a change of ownership');
 						validationsPassed=false;
 					}

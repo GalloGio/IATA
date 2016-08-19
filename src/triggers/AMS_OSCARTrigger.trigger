@@ -246,7 +246,11 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         }
                     }
 
-
+                    //Remove TERMINATED Accounts from list
+                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds]){
+                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
+                            allHierarchyAccountIds.remove(acc.Id);
+                    }
 
                     stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
                     system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
