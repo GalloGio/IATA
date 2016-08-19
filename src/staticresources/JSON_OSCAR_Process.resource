@@ -879,10 +879,8 @@
           "Automations": [],
           "DisplayFields": [
             "Change_effective_as_of__c",
-            "Suspend_Agency__c",
-            "Remove_STD__c",
+            "Remove_STDs__c",
             "Notify_Agent_Suspension__c",
-            "Terminate_Agency__c",
             "Notify_Agent_Termination__c",
             "STEP26__c"
           ],
@@ -894,8 +892,8 @@
           "Automations": [],
           "DisplayFields": [
             "NOC_Received__c",
-            "Notify_Agent__c",
-            "Reinstate_STDs__c",
+            "Notify_Agent_Reactivation__c",
+            "Reinstate_STDs_Reactivation__c",
             "STEP27__c"
           ],
           "IsDependent": false
@@ -905,9 +903,8 @@
           "Actions": [],
           "Automations": [],
           "DisplayFields": [
-            "Notify_Agent__c",
+            "Notify_Agent_Withdrawal__c",
             "Reactivate_Ticketing_Authority__c",
-            "Reinstate_STDs__c",
             "STEP28__c"
           ],
           "IsDependent": false

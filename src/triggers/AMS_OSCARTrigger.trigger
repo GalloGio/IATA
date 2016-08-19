@@ -326,7 +326,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
             'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
             'Issue_billing_document__c'                 => 'Process_Start_Date__c',
-            'Suspend_Agency__c'                         => 'NOC_Requested__c',
+            'Notify_Agent_Suspension__c'                => 'NOC_Requested__c',
             'NOC_Received__c'                           => 'NOC_Received_Date__c'
             };
            //Map to update Date related checkbox values
@@ -416,17 +416,21 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
         }
 
-        if (oldOSCAR.Suspend_Agency__c == false && updatedOscar.Suspend_Agency__c == true) {
+        if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
             updatedOSCAR.NOC_Deadline__c = AMS_Utils.AddBusinessDays(System.today(), 5, 'Late NOC - '+updatedOSCAR.Region__c);
         }
 
-        if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
+        if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
             updatedOSCAR.Termination_Date__c = AMS_Utils.lastDayOfMonth(System.today().addMonths(1));
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 
             if (AMS_Utils.IsWeekendDay(updatedOSCAR.Termination_Date__c, 'Late NOC - '+updatedOSCAR.Region__c)) {
                 updatedOSCAR.Termination_Date__c = AMS_Utils.AddBusinessDays(updatedOSCAR.Termination_Date__c, 1, 'Late NOC - '+updatedOSCAR.Region__c);
             }
+        }
+
+        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) {
+            updatedOSCAR.Termination_Date__c = null;
         }
 
     }

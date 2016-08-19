@@ -295,10 +295,12 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
+                /*Not applicable, comissioner case can be created to passenger agencies on some situations
                 if(!AMS_Utils.LocationClassCARGO.contains(oscar[0].Account__r.Location_Class__c)){
                     result = 'Commisoner Case can only be opened on cargo agencies';
                     return 'ERROR: ' + result;
                 }
+                */
 
                 Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
 

@@ -2078,6 +2078,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Notify_Agent_Reactivation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used on Late/Absence NOC</description>
+        <externalId>false</externalId>
+        <label>Notify Agent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Notify_Agent_Suspension__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2099,9 +2110,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Notify_Agent__c</fullName>
+        <fullName>Notify_Agent_Withdrawal__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Used on Late/Absence NOC</description>
         <externalId>false</externalId>
         <label>Notify Agent</label>
         <trackFeedHistory>false</trackFeedHistory>
@@ -2520,7 +2530,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Reinstate_STDs__c</fullName>
+        <fullName>Reinstate_STDs_Reactivation__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Used on Late/Absence of NOC</description>
         <externalId>false</externalId>
@@ -2585,11 +2595,11 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Remove_STD__c</fullName>
+        <fullName>Remove_STDs__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Used on Late/Absence NOC</description>
         <externalId>false</externalId>
-        <label>Remove STD</label>
+        <label>Remove STDs</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3594,28 +3604,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Suspend_Agency__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Used on late/absence of NOC</description>
-        <externalId>false</externalId>
-        <label>Suspend Agency</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Terminate_Agency__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Used on Late/Absence NOC</description>
-        <externalId>false</externalId>
-        <label>Terminate Agency</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Termination_Date__c</fullName>
