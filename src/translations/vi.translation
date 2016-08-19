@@ -4717,6 +4717,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Các yêu cầu của thị trường</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Quốc gia xuất bản</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5235,6 +5239,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Chọn lọc theo thể loại</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Lựa chọn chương trình tham gia</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Chúng tôi rất vui vì nhận được lời khen của bạn</label>
@@ -5995,6 +6003,10 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
     <customLabels>
         <label>Trang</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Tham khảo các yêu cầu của từng thị trường BSP và CASS đối với hãng hàng không tham gia</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Quản lý yêu cầu dịch vụ cổng thông tin cho bạn và những người sử dụng cổng thông tin của công ty bạn</label>

@@ -4728,6 +4728,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Persyaratan</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Negara Publikasi</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5246,6 +5250,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
     <customLabels>
         <label>Filter berdasarkan jenis</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih berdasarkan jenis partisipasi</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Kami senang menerima pujian dari Anda</label>
@@ -6006,6 +6014,10 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
     <customLabels>
         <label><!-- ISSP_Page --></label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Persyaratan partisipasi BSP dan CASS di setiap negara untuk maskapai</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Pengaturan layanan portal Anda dan pengguna lain dari perusahaan Anda</label>

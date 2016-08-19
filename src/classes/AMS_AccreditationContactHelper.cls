@@ -309,6 +309,7 @@ public with sharing class AMS_AccreditationContactHelper
         accreditationContact.Agency_owner__c = true;
         accreditationContact.AMS_Pax_Accreditation_Form__c = onlineAccreditationId;
         accreditationContact.Financial_Interest__c = role.Percentage__c;
+        accreditationContact.Last_Name__c = '_';
 
         //contact/person owners
         if(role.Contact__c != null || role.Person__c != null)
@@ -320,7 +321,8 @@ public with sharing class AMS_AccreditationContactHelper
             accreditationContact.Agency_role__c = role.IsManager__c;
 
             accreditationContact.Company__c = role.Owner_Account__c;
-            accreditationContact.Time_devoted_to_Agency_business__c = Double.valueOf(role.Hours__c);
+            if(role.Hours__c != null)
+                accreditationContact.Time_devoted_to_Agency_business__c = Double.valueOf(role.Hours__c);
             accreditationContact.RecordTypeId = AMS_Utils.AccreditationContactPersonRT;
 
             //get remaining data from the contact or person

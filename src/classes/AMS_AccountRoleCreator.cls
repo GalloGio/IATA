@@ -1307,15 +1307,17 @@ public with sharing class AMS_AccountRoleCreator
     	Set<Id> accreditationAreaIds = aoMap.keyset();
     	List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
-    	List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
+    	List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
 
     	Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
+    	String oscarProcess;
     	Id accountId; 	// this is a hack to get the Account from the Oscar. As we are supposed to only work one
     					// OSCAR at a time, let's "assume" that there is only one Account involved.
     	for(AMS_Oscar__c oscar: oscars){
     		accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
     		accountId = oscar.Account__c;
+    		oscarProcess = oscar.Process__c;
     	}
 
 
@@ -1395,32 +1397,54 @@ public with sharing class AMS_AccountRoleCreator
 	        }
 
 
-
-
 	        // to change all the AMS Account Roles in all hierarchies, we have to create a map from a single Accreditation contact
 	        // to all AMS Acccount Roles that will be updated.
 	        // for that, we search the AMS Account Role from the Accreditation Contact and try to find it's sinblings.
 
 	        Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> aContactsAndRoles = syncAccreditationsWithRoles(accreditationContactsToProcess,allAccountRoles); 
 
-	        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
-			
-			for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
 
-				if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
-					
-					for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
-		        		
-		        		role.Termination_Date__c = Date.Today();
-		        		rolestoDeactivate.add(role);
-		        		
+	        if(accreditationAndOscars.get(accreditationId) != 'NEW' || oscarProcess == 'NEW.HO.1.0'){ // this validation is to prevent any deactivations to the hierarchy 
+
+		        // In theory, when you remove an Accreditation Contact from the page Manage Owners, that Role has to be deactivated.
+		        // To find those lost roles, lets subtract the ones fonund by the syncAccreditationsWithRoles from the original list and deactivate them.
+		        List<AMS_Account_Role__c> lostRoles = findDeletedRoles(aContactsAndRoles,allAccountRoles);
+
+		        if(!lostRoles.isEmpty()){
+
+		        	for(AMS_Account_Role__c role : lostRoles){
+
+		        		if(role.Termination_Date__c == null){
+		        			
+							role.Termination_Date__c = Date.Today();
+					        rolestoDeactivate.add(role);
+					    }
 		        	}
 
-
-				}
+		        }
 
 			}
 
+		        Set<AMS_Accreditation_Contact__c> contactsToDeactivate = aContactsAndRoles.keySet();
+				
+				for(AMS_Accreditation_Contact__c acon: contactsToDeactivate){
+
+					if(acon.AMS_Ownership_Role__c != null && !isCorrectionProcess){
+
+						for(AMS_Account_Role__c role: aContactsAndRoles.get(acon)){
+			        		
+			        		if(role.Termination_Date__c == null){
+			        			role.Termination_Date__c = Date.Today();
+			        			rolestoDeactivate.add(role);
+			        		}
+			        		
+			        	}
+
+
+					}
+
+				}
+			
 
 	        if(aContactsAndRoles == null) // opps
 		        throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !');
@@ -1472,6 +1496,34 @@ public with sharing class AMS_AccountRoleCreator
 
     }
 
+    public static List<AMS_Account_Role__c> findDeletedRoles(Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> accreditationsAndRoles, List<AMS_Account_Role__c> allRoles){
+		
+		List<AMS_Account_Role__c> toDeleteRoles = new List<AMS_Account_Role__c>();
+		Set<AMS_Accreditation_Contact__c> contactsToDeactivate = accreditationsAndRoles.keySet();
+
+		Set<Id> rolesInMap = new Set<Id>();
+
+		for(AMS_Accreditation_Contact__c aCon : contactsToDeactivate){
+
+			List<AMS_Account_Role__c> tmp = accreditationsAndRoles.get(aCon);
+
+			for(AMS_Account_Role__c role : tmp)
+				rolesInMap.add(role.Id);
+
+		}
+
+		for(AMS_Account_Role__c role : allRoles){
+
+			if(!rolesInMap.contains(role.Id))
+				toDeleteRoles.add(role);
+
+		}
+
+
+		return toDeleteRoles;
+
+    }
+
     public static Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> syncAccreditationsWithRoles(List<AMS_Accreditation_Contact__c> accreditationContactsToProcess, List<AMS_Account_Role__c> allAccountRoles){
 
     	Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>> toReturn = new Map<AMS_Accreditation_Contact__c,List<AMS_Account_Role__c>>();
@@ -1492,8 +1544,10 @@ public with sharing class AMS_AccountRoleCreator
     			}
     		}
 
-    		if(orginal == null)
+    		if(orginal == null){ // this shouldn't be happening, because we have find somehow one AMS Account Role if ac.AMS_Ownership_Role__c != null ...
+    			throw new AMS_ApplicationException('Sync Accreditations With Roles went wrong !'+ac);
     			return null; // ooppss....
+    		}
     	
     		// now let's find his siblings 
     		for(AMS_Account_Role__c role: allAccountRoles){

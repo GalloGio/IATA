@@ -334,6 +334,8 @@ public class AMS_OSCARTriggerHandler {
 
 					}
 
+					agenciesAffected.add(oscar.Account__c);
+
 					//check if ownership needs to be copied from online form to Accounts
 					if (AMS_Utils.ownershipIsToBeMigrated(oscar.Type_of_change__c)){
 						accountsAffectedPerOnlineAccreditation.put(oscar.AMS_Online_Accreditation__c, agenciesAffected);
