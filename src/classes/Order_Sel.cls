@@ -210,7 +210,7 @@ public without sharing class Order_Sel extends Selector{
             SOQL += 'AccountId in :accountIds';
         else if (contactIds != null)
             SOQL += 'BillToContactId in :contactIds or ShipToContactId in :contactIds';
-        SOQL += ' order by EffectiveDate desc, CreatedDate desc';
+        SOQL += ' order by EffectiveDate desc, CreatedDate desc limit 1000';
 
         return Database.query(SOQL);
     } //*** end of "getOrderForAccountOrContact"
@@ -885,7 +885,7 @@ public without sharing class Order_Sel extends Selector{
          String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
-            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c ' + 
+            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' + 
             ' from Orderitems) ' + 
             'FROM {1} ' + 
             'WHERE BillToContactId = :contactId and Status != :cancelStatus and Status != :renewStatus and Status != :quoteStatus ' +
