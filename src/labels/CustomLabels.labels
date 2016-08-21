@@ -1827,14 +1827,14 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Footer</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D8E000000Cv5d</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_VFEmailTemplate_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D8E000000Cv5d</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -4814,13 +4814,6 @@ and
         <protected>false</protected>
         <shortDescription>IEC_Recaptcha_SiteKey</shortDescription>
         <value>6LeFvAYTAAAAAJsxvMD0FIEU3PmZYrybMaPG20nW</value>
-    </labels>
-    <labels>
-        <fullName>IEC_Registration_UserExist</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IEC Registration UserExist</shortDescription>
-        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
         <fullName>IEC_Registration_UserExist</fullName>
@@ -8202,7 +8195,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Banner_img</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D8E000000Cv5d&amp;lastMod=1433764815000</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D2000000008TF&amp;lastMod=1433764815000</value>
     </labels>
     <labels>
         <fullName>ISSP_Banner_link</fullName>
@@ -13171,7 +13164,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KALE_SUPPORT_EMAIL</shortDescription>
-        <value>sis.servicedesk@accelyakale.com</value>
+        <value>sis.servicedesk@accelya.com</value>
     </labels>
     <labels>
         <fullName>L2_Support_Priority_escalation_check</fullName>

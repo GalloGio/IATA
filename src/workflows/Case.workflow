@@ -14934,14 +14934,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -14954,6 +14946,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

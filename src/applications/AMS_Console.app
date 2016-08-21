@@ -174,6 +174,42 @@
         <location>full</location>
     </listPlacement>
     <listRefreshMethod>none</listRefreshMethod>
+    <pushNotifications>
+        <pushNotification>
+            <fieldNames>Category__c</fieldNames>
+            <fieldNames>Email__c</fieldNames>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <fieldNames>Phone</fieldNames>
+            <fieldNames>Sector__c</fieldNames>
+            <fieldNames>Status__c</fieldNames>
+            <objectName>Account</objectName>
+        </pushNotification>
+        <pushNotification>
+            <fieldNames>Account</fieldNames>
+            <fieldNames>Attachment_received_possible_POP__c</fieldNames>
+            <fieldNames>BSPCountry__c</fieldNames>
+            <fieldNames>CaseArea__c</fieldNames>
+            <fieldNames>Case_Remarks__c</fieldNames>
+            <fieldNames>Contact</fieldNames>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <fieldNames>Origin</fieldNames>
+            <fieldNames>Owner</fieldNames>
+            <fieldNames>Parent</fieldNames>
+            <fieldNames>Priority</fieldNames>
+            <fieldNames>Reason1__c</fieldNames>
+            <fieldNames>Region__c</fieldNames>
+            <fieldNames>Status</fieldNames>
+            <fieldNames>Subject</fieldNames>
+            <objectName>Case</objectName>
+        </pushNotification>
+        <pushNotification>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <objectName>Contact__c</objectName>
+        </pushNotification>
+    </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Account</tab>
     <tab>standard-Case</tab>
