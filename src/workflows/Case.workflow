@@ -6988,6 +6988,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>update_Date_Time_Reopened</fullName>
+        <field>Date_Time_Reopened__c</field>
+        <formula>Now()</formula>
+        <name>update Date/Time: Reopened</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
@@ -7004,15 +7013,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
 (IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
 (IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>update_Date_Time_Reopened</fullName>
-        <field>Date_Time_Reopened__c</field>
-        <formula>Now()</formula>
-        <name>update Date/Time: Reopened</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -8141,6 +8141,17 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Cubana</value>
         </criteriaItems>
         <description>IDFS assign cases to Airlines SCE queue</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Case Closed By Role</fullName>
+        <actions>
+            <name>update_closed_by_role_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>This workflow fill field &apos;Closed by Role&apos; with the user&apos;s role name who closed the case</description>
+        <formula>IsClosed = true</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -10969,17 +10980,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Case Closed By Role</fullName>
-        <actions>
-            <name>update_closed_by_role_field</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>This workflow fill field &apos;Closed by Role&apos; with the user&apos;s role name who closed the case</description>
-        <formula>IsClosed = true</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Customer Recovery Mgt %28NO SCE%29</fullName>

@@ -2418,7 +2418,7 @@ sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;;
 var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
 var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
 
-var query = &apos;Select c.ContactId, c.ID_Card_Status__c, c.OwnerId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
+var query = &apos;Select c.ContactId, c.ID_Card_Status__c, c.OwnerId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
 var queryresult = sforce.connection.query(query);
 var records = queryresult.getArray(&apos;records&apos;);
 var record = records[0];		
