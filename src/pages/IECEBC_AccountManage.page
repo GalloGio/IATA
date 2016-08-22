@@ -34,7 +34,7 @@
 				$j('#pane-1-a-year-to-date-tab').on('click',  function(event) {
 					renderYtdActivityGraph();
 				});
-				$j('#pane-1-a-year-after-year-tab').on('click',  function(event) {
+				$j('#pane-1-a-last-12-months-tab').on('click',  function(event) {
 					renderYayActivityGraph();
 				});
 					
@@ -47,12 +47,12 @@
 					var observer = new MutationObserver(function(mutations) {
 						mutations.forEach(function(mutation) {
 							if (mutation.attributeName === "class") {
-								console.log("Class attribute from", $j(mutation));
+                                console.log("Class attribute from", $j(mutation));
 								var attributeValue = $j(mutation.target).prop(mutation.attributeName);
-								console.log("Class attribute changed to:", attributeValue);
+                                console.log("Class attribute changed to:", attributeValue);
 								
 								if ( !attributeValue.includes('is-open')) {
-									rerenderDataTableForm();
+									refreshActivityTable();
 									console.log( 'rerender data table') ;
 								}
 							}
@@ -73,31 +73,32 @@
 				
 				// ============================================================
 				// activity graph definition
-                var chart1;
-            	var chart2;
+				var chart1; // year to date graph
+				var chart2; // last 12 months (previously: Year after year)
 				
-				// ============================================================
-				// define the Year After Year Activity Graph
-				function renderYayActivityGraph()
-				{
-					chart1=renderActivityGraph(chart1
-                                        , '#yearAfterYearActivityGraph'
-										, 'Year After Year Credit Activities'
-										, {!monthYayList}
-										, {!adjustmentYayData}, {!creditYayData}, {!sendYayData});
-				}
-			
 				// ============================================================
 				// define the Year To Date Activity Graph
 				function renderYtdActivityGraph()
 				{
-					chart2=renderActivityGraph(chart2
-                                        , '#yearToDateActivityGraph'
-										, 'Year To Date Credit Activities'
+					chart1=renderActivityGraph(chart1
+										, '#yearToDateActivityGraph'
+										, 'Account Activities - Year To Date'
 										, {!monthYtdList}
 										, {!adjustmentYtdData}, {!creditYtdData}, {!sendYtdData});
 				}
 			    
+				// ============================================================
+				// define the Last 12 Months Activity Graph
+				function renderYayActivityGraph()
+				{
+					chart2=renderActivityGraph(chart2
+										, '#last12MonthsActivityGraph'
+										, 'Account Activities - Last 12 Months'
+										, {!monthYayList}
+										, {!adjustmentYayData}, {!creditYayData}, {!sendYayData});
+				}
+			
+			
 				// ============================================================
 				// define the Activity Graph
 				function renderActivityGraph( chart, graphId
@@ -124,7 +125,7 @@
 						yAxis: {
 							min: 0,
 							title: {
-								text: 'Email Credits'
+								text: 'Account Activities'
 							}
 						},
 						tooltip: {
@@ -139,6 +140,16 @@
 							column: {
 								pointPadding: 0.2,
 								borderWidth: 0
+							}
+						},
+						credits: {
+							enabled: false,
+						},
+						exporting: {
+							buttons: {
+								contextButton: {
+									enabled: false
+								}    
 							}
 						},
 						series: [{ name: 'Adjustment'
@@ -276,11 +287,11 @@
 										<div class="tab-pane is-open" id="pane-1-a">
 											<apex:form id="dataGraphForm">
 												<ul class="nav tabs secondary">
-													<li id="pane-1-a-year-to-date-tab" data-target="#pane-1-a-year-to-date"><a href="#">Year To Date</a></li>
-													<li id="pane-1-a-year-after-year-tab"  data-target="#pane-1-a-year-after-year" class="active"><a href="#">Year After Year</a></li>
+													<li id="pane-1-a-year-to-date-tab" data-target="#pane-1-a-year-to-date" class="active"><a href="#">Account Activities - Year To Date</a></li>
+													<li id="pane-1-a-last-12-months-tab" data-target="#pane-1-a-last-12-months"><a href="#">Account Activities - Last 12 Months</a></li>
 												</ul>
 												<div class="tab-content">
-													<div class="tab-pane" id="pane-1-a-year-to-date">
+													<div class="tab-pane is-open" id="pane-1-a-year-to-date">
 														<apex:outputPanel id="ytdGraphOutputPanel">
 														<div style="border: 1px solid #ccc; padding: 10px; width:100%;" >
 															<!--
@@ -290,10 +301,10 @@
 														</div>
 														</apex:outputPanel>
 													</div>
-													<div class="tab-pane is-open" id="pane-1-a-year-after-year">
+													<div class="tab-pane" id="pane-1-a-last-12-months">
 														<apex:outputPanel id="yayGraphOutputPanel">
 														<div style="border: 1px solid #ccc; padding: 10px; width:100%;">
-															<div id="yearAfterYearActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
+															<div id="last12MonthsActivityGraph" style="min-width: 310px; height: 400px; width:100%; margin: 0 auto"></div>
 														</div>
 														</apex:outputPanel>
 													</div>
