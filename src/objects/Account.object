@@ -24709,28 +24709,20 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Active TA</fullName>
+                <fullName>IATA member</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Non-IATA member</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Ex-IATA Member</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Active TCCargoOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active TCPaxOnly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ActiveTATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
-                <default>false</default>
+                <fullName>Not Applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
