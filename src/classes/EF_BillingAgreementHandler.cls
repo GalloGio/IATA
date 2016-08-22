@@ -52,7 +52,7 @@ public class EF_BillingAgreementHandler
                     }else{
                         if(mapRelationshipsInContract.containsKey(r.EF_Location_ID__c)){
 
-                            r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
+                           //LDC 08222016 This case should not be blocked, r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
                             
                         }else{
                             for(EF_Location_Currency__c lc: contractMap.get(r.Contract__c).EF_Locations_Currencies__r){
