@@ -1046,7 +1046,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   }
 
   private Promotion__c validatePromotion() {
-  	boolean isError = true;
+    boolean isError = true;
     //////////////////////////
     // validate the promotion
     // Promotion code must exists, must be associated to the corresponding Price Table and be between the validity period
@@ -1060,18 +1060,18 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
       system.debug('------->> ' + listPromotion[0].Type_of_Application__c);
       String[] typeOfAppInPromoCode =  listPromotion[0].Type_of_Application__c.split(';');
 
-	      for(String typeOfApp : typeOfAppInPromoCode){
-	      	if(typeOfApp == IDCardApplicationRR.Type_of_Application__c) {
-	      		isError = false;
-	        	break;
-	      	}
-	      }
+        for(String typeOfApp : typeOfAppInPromoCode){
+          if(typeOfApp == IDCardApplicationRR.Type_of_Application__c) {
+            isError = false;
+            break;
+          }
+        }
 
        
-	  if (isError) {
-	     IDCardApplicationRR.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code_2, new String[] {IDCardApplicationRR.Promotion_Code__c}));
-	     return null;
-	  }  
+    if (isError) {
+       IDCardApplicationRR.Promotion_Code__c.addError(String.Format(Label.ID_Card_Invalid_Promotion_Code_2, new String[] {IDCardApplicationRR.Promotion_Code__c}));
+       return null;
+    }  
 
       if (listPromotion[0].Promotion_Duration_Valid_Up_to__c < Date.today()) {
         IDCardApplicationRR.Promotion_Code__c.addError(Label.ID_Card_Promotion_Code_No_Longer_Valid);
