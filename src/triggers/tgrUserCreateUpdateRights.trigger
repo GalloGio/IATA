@@ -1,7 +1,5 @@
 trigger tgrUserCreateUpdateRights on User (before insert,before update) {
     
-    if(IECTestUtil.trgPortalUserAfterInserUpdate) return;  //*** (Thai) to prevent execution of trigger in test execution
-    
     for(User user : trigger.new ){
         user.Contact_Unique_Id__c  =  user.ContactId;
     }
