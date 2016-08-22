@@ -2,7 +2,7 @@
 	<apex:composition template="IECEBC_Layout">
 		<apex:define name="pageHeadAdditions">
 			<!-- Start of Page <head> -->
-			<title>eBroadcast Manager Account</title>
+			<title>eBroadcast Rate plan</title>
 			<!-- End of Page </head> -->
 		</apex:define>
 		<apex:define name="pageScriptAdditions">
