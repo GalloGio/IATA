@@ -92,6 +92,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     }
      public Boolean getExistOscarInspections(){
+
+        if(this.oscarObj == null)
+            return false;
+            
         Id oscarId=  this.oscarObj.Id;
         if (AMS_Utils.oscarProcessesWithAppointments.contains(this.oscarObj.Process__c) 
                && 
