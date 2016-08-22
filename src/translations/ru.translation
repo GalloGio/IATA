@@ -1429,6 +1429,10 @@
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_GeographyinTravelPlanning_Description --></label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1905,6 +1909,10 @@
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Revenue Confirmation Label --></label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1955,6 +1963,10 @@
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_TrxDate --></label>

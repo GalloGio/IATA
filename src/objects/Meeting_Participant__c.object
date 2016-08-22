@@ -193,32 +193,11 @@
         <label>Attendee Contact</label>
         <lookupFilter>
             <active>true</active>
-            <booleanFilter>(1 AND 2) OR 3 OR (4 AND 5 AND 2)</booleanFilter>
             <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
             <filterItems>
                 <field>Contact.Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Agency</value>
-            </filterItems>
-            <filterItems>
-                <field>$Source.Local_Group_Type__c</field>
-                <operation>equals</operation>
-                <value>ALWG, APJC, APJC / FAG, CAPJC, CEC, CGA, EACP JC, JALWG</value>
-            </filterItems>
-            <filterItems>
-                <field>Contact.Account.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Airline Headquarters, Airline Branch</value>
-            </filterItems>
-            <filterItems>
-                <field>Contact.Account.Sector__c</field>
-                <operation>equals</operation>
-                <value>Association</value>
-            </filterItems>
-            <filterItems>
-                <field>Contact.Account.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Standard Account</value>
+                <value>Agency, Airline Headquarters, Airline Branch, General Sales Agent Headquarters, Others</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
