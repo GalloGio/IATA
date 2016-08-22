@@ -1691,7 +1691,11 @@ public with sharing class AMS_AccountRoleCreator
 		{
 			role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
             role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
-		}
+		}else
+        {
+            system.debug('updateAmsAccountRole -> Terminating role which is no longer an owner: ' + role);
+            role.Termination_Date__c = Date.today();
+        }
 		
 		return role;
     }

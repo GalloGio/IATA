@@ -746,8 +746,13 @@ public without sharing class AMS_Utils {
     }
 
 
-    //Map data from staging area (AMS Online Accreditation) to account
     public static void copyDataToAccount(List<AMS_OSCAR__c> oscars) {
+        copyDataToAccount(oscars, true);
+    }
+
+
+    //Map data from staging area (AMS Online Accreditation) to account
+    public static void copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
 
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
@@ -866,7 +871,7 @@ public without sharing class AMS_Utils {
             if (!accountsToUpdate.isEmpty())
                 update accountsToUpdate;
 
-            if(!stagingToAccount.isEmpty())
+            if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
         } catch (Exception ex) {
