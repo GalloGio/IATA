@@ -201,7 +201,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         insert oscar;
 
         if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
-            processOscarProcessDetail(oscar,accreditationObj);
+            processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
         return oscar.id;
@@ -269,7 +269,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     }
 
-    private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj){
+    private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
         if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
             return;
@@ -281,7 +281,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         if(accreditationObj.Scope_of_Change__c == 'HO - Selected Branches' || accreditationObj.Scope_of_Change__c == 'Selected Branches Only'){
             
-            List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(';');
+            List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(',');
 
             List<Account> accountsToCreate = [SELECT Id from Account where IATACode__c in :iataCodes];
 
@@ -291,9 +291,14 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             for(Account acct: accountsToCreate){
 
-                AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
+                if(acct.Id <> accountFromOscar){
 
-                detailsToInsert.add(detail);
+                    System.debug('Oscar Account Id is ' + oscar.Account__r.Id + ' and account Id is ' + acct.Id);
+                    
+                    AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
+
+                    detailsToInsert.add(detail);
+                }
             }
 
             if(!detailsToInsert.isEmpty())
