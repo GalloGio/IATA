@@ -4885,6 +4885,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Recreational</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
+			<picklistValues>
+                <fullName>Other Equipment Manufacturer</fullName>
+                <default>false</default>
+                <controllingFieldValues>Airline</controllingFieldValues>
+            </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
@@ -71141,7 +71146,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA</fullName>
+                <fullName>IATA</fullName> 
                 <default>false</default>
             </values>
             <values>
