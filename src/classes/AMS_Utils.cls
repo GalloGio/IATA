@@ -523,7 +523,9 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-    public static void createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
+
+
+    public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
@@ -553,9 +555,11 @@ public without sharing class AMS_Utils {
 
         }
 
+        List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
+
         if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
-            update new List<Account>(accountsToUpdate);
+            update accountsToUpdateList;
         }
 
         if (!aaccToInsert.isEmpty()) {
@@ -564,6 +568,8 @@ public without sharing class AMS_Utils {
 
             insert aaccToInsert;
         }
+
+        return accountsToUpdateList;
 
     }
 
