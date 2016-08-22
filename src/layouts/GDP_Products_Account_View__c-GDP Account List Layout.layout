@@ -357,6 +357,13 @@
     </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
+        <fields>DeltaLastModifiedDate__c</fields>
+        <fields>GDP_File_Description__c</fields>
+        <relatedList>GDP_Delta__c.Related_GDP_Product_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Class__c</fields>
         <fields>Status__c</fields>
         <fields>Date__c</fields>
