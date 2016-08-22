@@ -757,6 +757,7 @@ public without sharing class AMS_Utils {
 
         List<Account> accountsToUpdate = new List<Account>();
         List<AMS_Pax_Accreditation_Form__c> onlineAccToCreateAccountRole = new List<AMS_Pax_Accreditation_Form__c>();
+        Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
         
         //DT: reindented and added 3 fields for iso shipping/billin
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -836,63 +837,45 @@ public without sharing class AMS_Utils {
 
             if (acc != null && onlineAcc != null) {
 
-                    for (String key : fieldsMapping.keySet()) {
-                        String value = fieldsMapping.get(key);
-                        acc.put(key, onlineAcc.get(value));
-                        System.debug(key + ':' + onlineAcc.get(value));
-                    }
+                for (String key : fieldsMapping.keySet()) {
+                    String value = fieldsMapping.get(key);
+                    acc.put(key, onlineAcc.get(value));
+                    System.debug(key + ':' + onlineAcc.get(value));
+                }
 
-                    acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
-                    acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
-                    acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
-                    acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
-                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
-                    acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
-                    onlineAccToCreateAccountRole.add(onlineAcc);
+                acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
+                acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
+                acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
+                acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
+                acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
+                onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
+                stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
             }
 
+        }
 
+        Savepoint sp = Database.setSavepoint();
 
-            // THen move the owners
-            Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+        try {
 
-
-
-            if (!accountsToUpdate.isEmpty()) {
+            if (!accountsToUpdate.isEmpty())
                 update accountsToUpdate;
-            }
 
+            if(!stagingToAccount.isEmpty())
+                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
-            //AMS-1671
-
-            //Need to apply change of ownership to all the accounts in herarchy
-            Set<Id> allHierarchyAccountIds = new Set<Id>();
-
-            if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
-                allHierarchyAccountIds.add(oscar.Account__c);
-            }else{
-                for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(oscar.Account__c)){
-                    allHierarchyAccountIds.add(rel.Parent_Account__c);
-                    allHierarchyAccountIds.add(rel.Child_Account__c);
-                }
-            }
-
-            stagingToAccounts.put(onlineAcc.Id, allHierarchyAccountIds);
-
-            if (!onlineAccToCreateAccountRole.isEmpty()/* && oscar.Process__c != COR*/){
-                // old code !! AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(onlineAccToCreateAccountRole, oscar.Process__c == COR);
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
-            }
-
-
+        } catch (Exception ex) {
+            System.debug('Exception: ' + ex);
+            Database.rollback(sp);
+            throw ex;
         }
-
-
-        }
+        
+    }
 
     private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
 
