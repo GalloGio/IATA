@@ -352,6 +352,7 @@
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
+        <fields>EF_Group_Code__c</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
         <fields>CONTRACT.STATUS</fields>

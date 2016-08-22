@@ -61,7 +61,6 @@
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
-        <relationshipLabel>E&amp;F Contact Relationships</relationshipLabel>
         <relationshipName>EF_Contact_Relationships</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -74,7 +73,6 @@
         <externalId>false</externalId>
         <label>E&amp;F Relationship</label>
         <referenceTo>EF_Billing_Agreement__c</referenceTo>
-        <relationshipLabel>E&amp;F Contact Relationships</relationshipLabel>
         <relationshipName>EF_Contact_Relationships</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -169,14 +167,14 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
-    <label>E&amp;F Contact Relationship</label>
+    <label>E&amp;F Contact Billing Agreement</label>
     <nameField>
         <displayFormat>E&amp;F CR-{0000}{MM}{YY}</displayFormat>
         <label>E&amp;F Contact Relationship Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>E&amp;F Contact Relationships</pluralLabel>
+    <pluralLabel>E&amp;F Contact Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
