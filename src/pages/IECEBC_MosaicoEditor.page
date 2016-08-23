@@ -1,0 +1,208 @@
+<apex:page standardController="EBC_Template__c" extensions="vfIECEBC_MosaicoEditor" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false">
+    <apex:outputText rendered="{!ISBLANK(EBC_Template__c.Id)}">
+        Invalid Parameters
+    </apex:outputText>
+    <apex:outputText rendered="{!NOT(ISBLANK(EBC_Template__c.Id))}">
+        <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <meta name="viewport" content="width=1024, initial-scale=1" />
+                
+                <link rel="canonical" href="http://mosaico.io" />
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                
+                <script src="/soap/ajax/37.0/connection.js"></script>
+                
+                <script type="text/javascript">
+                    sforce.connection.sessionId = '{!GETSESSIONID()}';
+                </script>
+                
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/knockout.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery-ui.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.ui.touch-punch.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/load-image.all.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/canvas-to-blob.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.iframe-transport.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.fileupload.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.fileupload-process.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.fileupload-image.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/jquery.fileupload-validate.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/knockout-jqueryui.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/tinymce.min.js')}"></script>
+                <script src="{!URLFOR($Resource.Mosaico, '/dist/mosaico.min.js')}?v=0.14"></script>
+                <script>
+                
+                
+                //var window.mosaicoSave;
+                var aMetadata = new sforce.SObject("Attachment");
+                var aJSON = new sforce.SObject("Attachment");
+                var aHTML = new sforce.SObject("Attachment");
+                
+                function b64EncodeUnicode(str) {
+                    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                        return String.fromCharCode('0x' + p1);
+                    }));
+                }
+                $(function() {
+                    if (!Mosaico.isCompatible()) {
+                        alert('Update your browser!');
+                        return;
+                    }
+                    
+                    //ko.bindingHandlers.wysiwyg.fullOptions.toolbar1 = "bold mybutton"
+                    ko.bindingHandlers.wysiwyg.standardOptions = {
+                        toolbar2: "iataMergeField",
+                        setup: function (editor) {
+                            editor.addButton('iataMergeField', {
+                                text: 'Insert Merge Field',
+                                icon: false,
+                                onclick: function () {
+                                    editor.windowManager.open({
+                                        title: 'Choose a merge field',
+                                        body: [
+                                            {
+                                                type: 'listbox',
+                                                name: 'mergeField',
+                                                label: 'Merge Field',
+                                                values: [
+                                                    {text: 'Firstname', value: '{' + '!Contact.Firstname}'},
+                                                    {text: 'Lastname', value: '{' + '!Contact.Lastname}'}
+                                                ]
+                                            }
+                                        ],
+                                        onsubmit: function(e) {
+                                            editor.insertContent(e.data.mergeField);
+                                        } 
+                                    });
+                                }
+                            });
+                        }
+                    }
+                
+                    var basePath = window.location.href;
+                    if (basePath.lastIndexOf('#') > 0) basePath = basePath.substr(0, basePath.lastIndexOf('#'));
+                    if (basePath.lastIndexOf('?') > 0) basePath = basePath.substr(0, basePath.lastIndexOf('?'));
+                    if (basePath.lastIndexOf('/') > 0) basePath = basePath.substr(0, basePath.lastIndexOf('/'));
+                    var plugins = [
+                        
+                        function(viewModel) {
+                            viewModel.loadGallery = function(a, b, c, d) {
+                                viewModel.galleryLoaded('loading');
+                                // retrieve the full list of remote files
+                                $.ajax({
+                                    dataType: "json",
+                                    url: '/services/apexrest/MosaicoUploads',
+                                    headers: {
+                                        'Authorization': 'Bearer ' + sforce.connection.sessionId
+                                    },
+                                    success: function(data) {
+                                        for (var i = 0; i < data.files.length; i++) data.files[i] = viewModel.remoteFileProcessor(data.files[i]);
+                                        viewModel.galleryLoaded(data.files.length);
+                                        // TODO do I want this call to return relative paths? Or just absolute paths?
+                                        viewModel.galleryRemote(data.files.reverse());
+                                    }
+                                }).fail(function() {
+                                    viewModel.galleryLoaded(false);
+                                    viewModel.notifier.error(viewModel.t('Unexpected error listing files'));
+                                });
+                            };
+                            
+                        },
+                        // plugin for integrating save button
+                        function(viewModel) {
+                            var saveCmd = {
+                                name: 'Save', // l10n happens in the template
+                                enabled: ko.observable(true)
+                            };
+                            
+                            saveCmd.execute = function() {
+                                saveCmd.enabled(false);
+                                viewModel.metadata.changed = Date.now();
+                                if (typeof viewModel.metadata.key == 'undefined') {
+                                    viewModel.metadata.key = '{!EBC_Template__c.Id}';
+                                }
+                                
+                                try {
+                                    
+                                    <apex:outputText rendered="{!metadata != null}">
+                                        aMetadata.Id = '{!metadata.Id}';
+                                    </apex:outputText>
+                                    aMetadata.Name = 'metadata.json';
+                                    aMetadata.Body = b64EncodeUnicode(viewModel.exportMetadata());
+                                    <apex:outputText rendered="{!templateJSON != null}">
+                                        aJSON.Id = '{!templateJSON.Id}';
+                                    </apex:outputText>
+                                    aJSON.Name = 'template.json';
+                                    aJSON.Body = b64EncodeUnicode(viewModel.exportJSON());
+                                    <apex:outputText rendered="{!templateHTML != null}">
+                                        aHTML.Id = '{!templateHTML.Id}';
+                                    </apex:outputText>
+                                    aHTML.Name = 'template.html';
+                                    aHTML.Body = b64EncodeUnicode(viewModel.exportHTML());
+                                    
+                                    aMetadata.ParentId = aJSON.ParentId = aHTML.ParentId = '{!EBC_Template__c.Id}';
+                                    
+                                    var result = sforce.connection.upsert("Id", [aMetadata,aJSON,aHTML]);
+                                    
+                                    for(var i = 0; i < result.length; i++) {
+                                        if (result[i].success == 'false') throw ('undefined' != typeof(result[0].errors.message) ? result[0].errors.message : result[0].errors)
+                                        
+                                        if (i == 0) aMetadata.Id = result[i].id;
+                                        if (i == 1) aJSON.Id = result[i].id;
+                                        if (i == 2) aHTML.Id = result[i].id;
+                                    }
+                                    viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                } catch(er) {
+                                    viewModel.notifier.error(viewModel.t('Saving failed. Please try again in a few moment or contact us.'));
+                                    console.log(er);
+                                }
+                                
+                                saveCmd.enabled(true);
+                            };
+                            
+                            window.mosaicoSave = viewModel.save = saveCmd;
+                        },
+                        
+                        function(viewModel){
+                            console.log(viewModel);
+                            
+                            
+                        	if (undefined != parent && undefined !== parent.onEditorLoaded) {
+                            	parent.onEditorLoaded();
+                            }
+                        }
+                    ];
+                    
+                    
+                    var ok = Mosaico.start({
+                        logoPath: 'jambon.png',
+                        imgProcessorBackend: 'https://mosaico.io/srv/f-dsyc9f1/img',
+                        emailProcessorBackend: basePath+'/dl/',
+                        titleToken: "MOSAICO Responsive Email Designer",
+                        fileuploadConfig: {
+                            multipart: false,
+                            url: '/services/apexrest/MosaicoUploads',
+                            headers: {
+                                'Authorization': 'Bearer ' + sforce.connection.sessionId
+                            }
+                        }
+                    }, '/iec/services/apexrest/Resources/{!EBC_Template__c.Parent_Template__c}/', undefined /* metadata */, {!IF(templateJSON == null, 'undefined', '"' + JSENCODE(JSONString) + '"')} /* model */, plugins);
+                    
+                    
+                });
+                
+                
+                
+                </script>
+                
+                <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/mosaico-material.min.css')}?v=0.10" />
+                <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/vendor/notoregular/stylesheet.css')}" />
+            </head>
+            <body class="mo-standalone">
+                
+            </body>
+        </html>
+    </apex:outputText>
+</apex:page>

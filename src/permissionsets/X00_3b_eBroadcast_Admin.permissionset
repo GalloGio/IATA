@@ -477,10 +477,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AttachmentHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AttachmentTriggerHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -809,10 +805,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CustomException</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CustomQueueNotifications</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -913,10 +905,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EditEmailTemplateController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>EmailMessageHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -990,10 +978,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Faq2CaseTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FileUploadController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

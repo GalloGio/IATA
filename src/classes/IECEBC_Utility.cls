@@ -129,4 +129,60 @@ public class IECEBC_Utility {
         System.debug(query);
         return query;
     }
+    
+    
+    public static Decimal STORAGE_CAPACITY=1; //in mg
+    
+    public static Decimal getBillingAccountCurrentStorageUsage(Id billingAccountId) {
+        AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
+                                            Where Billing_Account__c=:billingAccountId];
+        //Control over STORAGE CAPACITY
+        Decimal mb=0;
+        for (AggregateResult ar : groupedResults)  {
+            //MB
+            if (ar.get('expr0')==null) continue;
+            mb = Decimal.ValueOf(String.ValueOf(ar.get('expr0')));
+        }
+        
+        return mb;
+    }
+    
+    public class Resource_Invalid_Attachment_Exception extends Exception{}
+    public class Attachment_Size_Exceeds_Capacity_Exception extends Exception{}
+    public class Resource_Name_Already_Exists_Exception extends Exception{}
+    
+    public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
+		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('Attachment must have a name and not be blank');
+        
+        // Checking capacity
+        Decimal mb = getBillingAccountCurrentStorageUsage(billingAccount.Id);
+        String bodyEncoded = EncodingUtil.base64Encode(a.body);  
+        Decimal mk = bodyEncoded.length();
+        //mb = mb +mk;
+        mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
+        if (mb>=105) {
+            throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds capacity');
+        }
+        
+        // Checking if file name is already used
+        List<EBC_Resource__c> resourcelist= new List<EBC_Resource__c>();
+        resourcelist = [Select id From EBC_Resource__c
+                       			Where name=:a.name
+                       			and Billing_Account__c=:billingAccount.Id
+                       Limit 1];
+        if (resourcelist.Size()>0) {
+            throw new Resource_Name_Already_Exists_Exception('A resource with the same name already exists');
+        }
+        
+        // Create EBC Resource
+        //String typen = a.Name.right(3);
+        EBC_Resource__c res = new EBC_Resource__c();
+        res.Billing_Account__c=billingAccount.Id;
+        res.name = a.name;
+        res.Image_Size__c = bodyEncoded.length();
+        //AttachmentParentRec.Image_Type__c = typen; Why?
+        insert res;
+        
+        a.ParentId = res.Id;
+    }
 }

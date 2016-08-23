@@ -120,55 +120,23 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
       private set;  
     }
      
-     
     public Pagereference SaveAttachments()  
     {  
-         if (attachment.name == '' || attachment.body == null)  return null;
-        
-         AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
-                       			Where Billing_Account__c=:vfIECEBC.billingAccount.Id];
-          
-        //Control over STORAGE CAPACITY
-        Decimal mb=0;
-        for (AggregateResult ar : groupedResults)  {
-                //MB
                 
-                if (ar.get('expr0')==null) continue;
-                mb = Decimal.ValueOf(String.ValueOf(ar.get('expr0')));
-                
+        try {
+            IECEBC_Utility.createResourceForAttachment(attachment, vfIECEBC.billingAccount);
+        } catch(IECEBC_Utility.Resource_Invalid_Attachment_Exception e) {
+            return null;
+        } catch(IECEBC_Utility.Attachment_Size_Exceeds_Capacity_Exception e) {
+            UploadInit();
+            return null;
+        } catch(IECEBC_Utility.Resource_Name_Already_Exists_Exception e) {
+            UploadInit();
+            return null;
             }
-        String bodyEncoded = EncodingUtil.base64Encode(attachment.body);  
-        Decimal mk = bodyEncoded.length();
-        //mb = mb +mk;
-        mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
-        if (mb>=105) return null;
-              
-        
-        
-        //if (!attachment.Name.Contains('.png')) return null;
-        //if (!attachment.Name.Contains('.jpg')) return null;
-        //if (!attachment.Name.Contains('.gif')) return null;
-        List<EBC_Resource__c> resourcelist= new List<EBC_Resource__c>();
-        resourcelist = [Select id From EBC_Resource__c
-                       			Where name=:attachment.name
-                       			and Billing_Account__c=:vfIECEBC.billingAccount.Id
-                       Limit 1];
-        if (resourcelist.Size()>0) return null;
-        
-        String typen = attachment.Name.right(3);
-        EBC_Resource__c AttachmentParentRec = new EBC_Resource__c();
-        AttachmentParentRec.Billing_Account__c=vfIECEBC.billingAccount.Id;
-        AttachmentParentRec.name = attachment.name;
-        
-        AttachmentParentRec.Image_Size__c = bodyEncoded.length();
-        AttachmentParentRec.Image_Type__c = typen;
-        Insert AttachmentParentRec; 
-        
         
         
         attachment.Name = String.valueOf('image.png');
-        attachment.ParentId = AttachmentParentRec.Id;
-        
         attachment.OwnerId = UserInfo.getUserId();
         attachment.IsPrivate = true;
             
@@ -176,10 +144,9 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
               
         UploadInit();
         resetQuery();
+        
         return null;  
     }  
-    
-    
     //Upload
     
 }
