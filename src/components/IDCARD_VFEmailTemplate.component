@@ -217,7 +217,7 @@
                 </apex:outputText> 
                 <br/>
                 <br/>
-                <apex:outputText style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>Renewal Fee:</b> {!fee}"></apex:outputText> 
+                <apex:outputText rendered = "{!hiderenewal != true}" style="font-family:'Times New Roman';font-size:12pt" escape="false" value="<b>Renewal Fee:</b> {!fee}"></apex:outputText> 
                 <br/>             
                 
             </td> 
