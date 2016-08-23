@@ -1429,6 +1429,10 @@
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_GeographyinTravelPlanning_Description --></label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1905,6 +1909,10 @@
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Revenue Confirmation Label --></label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1955,6 +1963,10 @@
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_TrxDate --></label>
@@ -4701,6 +4713,10 @@
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Country_Requirements --></label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Country_of_Publication --></label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5219,6 +5235,10 @@
     <customLabels>
         <label><!-- ISSP_Filter_by_Type --></label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Filter_by_Type_Of_Participation --></label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Fishing Compliments --></label>
@@ -5971,6 +5991,10 @@
     <customLabels>
         <label><!-- ISSP_Page --></label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PageDescription_Country_Requirements --></label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_PageDescription_ISSP_AccessToService --></label>

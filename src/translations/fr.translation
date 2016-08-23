@@ -1452,6 +1452,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Travel professionals and their customers know how challenging travel planning can be. Itineraries can be complex and time zones confusing. This course appeals to those with a passion for travel. An engaging Avatar teaches you the richness of the world’s geography.</label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1934,6 +1938,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Je confirme avoir un revenu supérieur à $10,000</label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1984,6 +1992,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label>Date de transaction:</label>
@@ -4747,6 +4759,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Critères par pays</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Pays de publication</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5266,6 +5282,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Filtrer par type</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtrer par type de participation</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Nous sommes ravis de recevoir vos compliments</label>
@@ -6026,6 +6046,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Page</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Consulter les critères BSP et CASS par pays concernant la participation pour une compagnie aérienne</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Gérer vos demandes de services pour vous et les utilisateurs du portail de votre entreprise</label>

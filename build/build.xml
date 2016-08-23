@@ -11,63 +11,7 @@
     <property file="${basedir}/build/build.properties"/>
     <property environment="env"/>
 
-  
-  
- 
-    <target name="deployRetrieveToQA">
-      <echo level="info">Testing the deploy</echo>
-      <sf:deploy
-          logType="Detail"
-          username="${sfdc.username}"
-          password="${sfdc.password}"
-          serverurl="${sfdc.serverurl}"
-          deployRoot="${basedir}/retrieve"
-          pollWaitMillis="${sfdc.pollWaitMillis}"
-          maxPoll="${sfdc.maxPoll}" 
-        />
-    </target>
-      
 
-<target name="retrieveToDeploy">
-      <echo level="info">Retrieving the server's version of code</echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="retrieve/package.xml"/>
-
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="deploy"/>
-
-  </target>
-
-
-<target name="retrieveToRetrieve">
-      <echo level="info">Retrieving the server's version of code</echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="retrieve/package.xml"/>
-
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="retrieve"/>
-
-  </target>
-
-    <target name="specificDeploy">
-      <echo level="info">Performing the deploy of files in folder deploy</echo>
-      <sf:deploy
-        autoUpdatePackage = "true"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        deployRoot="${basedir}/deploy"
-        pollWaitMillis="${sfdc.pollWaitMillis}"
-        maxPoll="${sfdc.maxPoll}"/>
-    </target>
 
 <target name="checkCodeFolder">
   <condition property="deldir">
@@ -200,7 +144,7 @@
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${code.listfolders}" param="param" >
+      <for list="${workflowPackage.listfolders}" param="param" >
         <sequential>
              <mkdir dir="${basedir}/Code/@{param}"/>
        </sequential>
@@ -355,9 +299,24 @@
         unpackaged="src/labelPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
-       <antcallback target="getCodeLocal" />
+       <antcallback target="getWorkflowLocal" />
     </target>
 
+
+
+    <target name="getWorkflowLocal">
+      <echo level="info">Retrieving the server's version of labels</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/workflowPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/workflowPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getCodeLocal" />
+    </target>
 
     <target name="getCodeLocal">
       <echo level="info">Retrieving the server's version of code</echo>
@@ -376,6 +335,68 @@
     </target>
 
  
+
+
+
+
+
+    <target name="getCodePointAndClick">
+      <echo level="info">Retrieving the server's version of codeobject </echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/objectPackage.xml" />
+
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/objectPackage.xml" />  
+
+
+
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+        <antcallback target="getLabelPointAndClick" />
+    </target>
+
+
+
+    <target name="getLabelPointAndClick">
+      <echo level="info">Retrieving the server's version of labels</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/labelPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/labelPackage.xml"/>  
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+       <antcallback target="getWorkflowLocalPointAndClick" />
+    </target>
+
+
+
+
+    <target name="getWorkflowLocalPointAndClick">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/workflowPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/workflowPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
+<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
+
+    </target>
+
+ 
+
+
+
 
   
 <target name="bulkRetrieveEmailTemplate">

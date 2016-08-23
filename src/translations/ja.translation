@@ -1436,6 +1436,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_GeographyinTravelPlanning_Description --></label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1914,6 +1918,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Revenue Confirmation Label --></label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1964,6 +1972,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_TrxDate --></label>
@@ -4719,6 +4731,10 @@ and
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>国別要件</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>発行国</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5237,6 +5253,10 @@ and
     <customLabels>
         <label>タイプ別に絞り込む</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>加盟の種類で検索する</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>お褒めの言葉を頂き光栄です</label>
@@ -5997,6 +6017,10 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
     <customLabels>
         <label>ページ</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>航空会社のBSPとCASS加盟に関する国別要件を閲覧する</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>あなたと御社ポータル利用者のポータルサービス申請を管理する</label>

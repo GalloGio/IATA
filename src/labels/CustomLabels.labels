@@ -2631,11 +2631,18 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>&lt;b&gt;Important&lt;/b&gt;: For fraudulence and security reason, your ID Card will be sent to the following address upon approval of the application (unless you are applying for change of agency):</value>
     </labels>
     <labels>
+        <fullName>IDCard_FundamentalsJourneyPricing_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Geography in Travel Planning</shortDescription>
+        <value>Interpreting fare rules and e-ticket data elements is key to satisfying and retaining customers. This course teaches the language of fare construction and fare rules so you provide your customers with the best advice and the lowest fare for their air itinerary. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg14.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_GeographyinTravelPlanning_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_GeographyinTravelPlanning_Description</shortDescription>
-        <value>Travel professionals and their customers know how challenging travel planning can be. Itineraries can be complex and time zones confusing. This course appeals to those with a passion for travel. An engaging Avatar teaches you the richness of the world&apos;s geography. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travel-geography-tttg53.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Travel professionals and their customers know how challenging travel planning can be. Itineraries can be complex and time zones confusing. This course appeals to those with a passion for travel. An engaging Avatar teaches you the richness of the world&apos;s geography. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/geography-travel-planning-tttg53.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_GoBackLoginPage</fullName>
@@ -2740,21 +2747,21 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlBSPlink_Description</shortDescription>
-        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8274%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</shortDescription>
-        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8273%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroductiontoBSPLink_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroductiontoBSPLink_Description</shortDescription>
-        <value>Learn how to use BSPLink functionality to download reporting documents, interpret and reconcile transactions and report discrepancies or corrections. The course enables system users to access information and interprets data received in the agency&apos;s monthly billing reports. Grasping BSPLink functionality will make the agency back office productive in reconciling billing reports with other reporting systems used by the business. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/bsplink-tttg44.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Learn how to use BSPLink functionality to download reporting documents, interpret and reconcile transactions and report discrepancies or corrections. The course enables system users to access information and interprets data received in the agency&apos;s monthly billing reports. Grasping BSPLink functionality will make the agency back office productive in reconciling billing reports with other reporting systems used by the business. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduction-bsplink-tttg44.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_InvalidDateFormat</fullName>
@@ -2926,7 +2933,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
-        <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/tttg66fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -2977,7 +2984,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description</shortDescription>
-        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8276%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Match_IsNotTheAgent</fullName>
@@ -3473,6 +3480,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
 Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.</value>
     </labels>
     <labels>
+        <fullName>IDCard_RepricingExchangeReissue_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Repricing Exchange Reissue</shortDescription>
+        <value>The Ticket Repricing, Exchange and Reissue (TRER) course is an important companion for any successful Ticketing Agent. This course will give you a considerable advantage over your competition, enabling you to perform complex transactions such as revalidating, exchanging, or reissuing tickets with confidence. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/ticket-repricing-reissue-tttg91.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_RevenueConfirmation_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3505,7 +3519,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_SellingInternationalRailTransportation_Description</shortDescription>
-        <value>The expansion of dedicated high-speed rail lines has helped to increase the demand for rail transport year on year. Huge strides are being made to provide simple web-based booking systems which link to multiple railways. It&apos;s getting easier for the travel agent to take part in the rail revolution! More Details &lt;a href=\&quot; http://www.iata.org/training/courses/Pages/selling-rail-transport-tttg68.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>The expansion of dedicated high-speed rail lines has helped to increase the demand for rail transport year on year. Huge strides are being made to provide simple web-based booking systems which link to multiple railways. It&apos;s getting easier for the travel agent to take part in the rail revolution! More Details &lt;a href=\&quot; http://www.iata.org/training/courses/Pages/international-rail-transportation-tttg68.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Send_Picture_Link</fullName>
@@ -3562,6 +3576,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_Total</shortDescription>
         <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Travel_Agency_Fees_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card Travel Agency Fees</shortDescription>
+        <value>A fee-based business model is essential for travel agencies and significantly enhances their profitability. In this course you will learn the general trends and best practices in the implementation or setting of agency fees, the various types of fees collected by travel agencies, and the best way to communicate them to customers. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travel-agency-fees-tttg13.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_TrxDate</fullName>
@@ -8822,6 +8843,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Country concerned</value>
     </labels>
     <labels>
+        <fullName>ISSP_Country_Requirements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Country_Requirements</shortDescription>
+        <value>Country Requirements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Country_of_Publication</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
@@ -9855,6 +9883,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Type</shortDescription>
         <value>Filter by type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Filter_by_Type_Of_Participation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Filter_by_Type_Of_Participation</shortDescription>
+        <value>Filter by type of participation</value>
     </labels>
     <labels>
         <fullName>ISSP_Fishing_Compliments</fullName>
@@ -11361,6 +11396,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_Page</shortDescription>
         <value>Page</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PageDescription_Country_Requirements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PageDescription_Country_Requirements</shortDescription>
+        <value>Consult BSP and CASS country requirements for airline participation</value>
     </labels>
     <labels>
         <fullName>ISSP_PageDescription_ISSP_AccessToService</fullName>

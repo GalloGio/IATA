@@ -233,6 +233,17 @@ public class CampaignMember_Svc
 		//Insert orderItems
 		if(itemsToInsert.size() > 0){
 			orderItemIds = OrderItem_Svc.insertOrderItems(itemsToInsert);
+			if (orderItemIds.size() > 0) {
+				//Get Product price info
+				Set<String> setProductNumber = new Set<String>(); 
+				for(Product2 p: [select SAP_Material_Number__c from Product2 where Id in : prodIds])
+					setProductNumber.add(p.SAP_Material_Number__c);
+				Map<String, PriceInfo_DTO> mapProductNumber_Price = new Product_Sel().getProductPriceInfo(setProductNumber, null, null, null, true);
+
+				//Set the orderItems price
+				for(Order order : orderId_Order.values())
+					Order_Svc.setPriceToOrder(order, mapProductNumber_Price);
+			}
 			/*List<Database.SaveResult> srList = Database.insert(itemsToInsert, false);
 			// Iterate through each returned result
 			for (Database.SaveResult sr : srList) {

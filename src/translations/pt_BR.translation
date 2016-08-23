@@ -1436,6 +1436,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_GeographyinTravelPlanning_Description --></label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1914,6 +1918,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Revenue Confirmation Label --></label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1964,6 +1972,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_TrxDate --></label>
@@ -4718,6 +4730,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Requisitos do País</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>País de Publicação.</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -5236,6 +5252,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
     <customLabels>
         <label>Filtrar por tipo.</label>
         <name>ISSP_Filter_by_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtrar por tipo de participação</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
         <label>Estamos felizes em receber seus elogios.</label>
@@ -5996,6 +6016,10 @@ Se você continuar tendo problemas ao se no Portal do Cliente IATA, por favor co
     <customLabels>
         <label>Página</label>
         <name>ISSP_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Consulta dos requisitos especifícos do país para a participação de empresas aéreas no BSP e CASS</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
     </customLabels>
     <customLabels>
         <label>Gerencie suas solicitações ao portal e também dos demais usuários de sua empresa.</label>

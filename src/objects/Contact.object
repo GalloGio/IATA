@@ -26573,7 +26573,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
-        <errorConditionFormula>AND(TEXT(Account.Category__c)=&quot;MSO Member Sales Office&quot;,ISCHANGED(AccountId),datevalue(CreatedDate)&gt;DATE(2016,5,9),CreatedBy.LastName&lt;&gt;&quot;Site Guest User&quot;)</errorConditionFormula>
+        <errorConditionFormula>AND(TEXT(Account.Category__c)=&quot;MSO Member Sales Office&quot;,OR(isnew(),ISCHANGED(AccountId)),datevalue(CreatedDate)&gt;DATE(2016,5,9),CreatedBy.LastName&lt;&gt;&quot;Site Guest User&quot;)</errorConditionFormula>
         <errorDisplayField>AccountId</errorDisplayField>
         <errorMessage>Contacts should not be created under the MSO account, but under the airline Headquarters or branch account.</errorMessage>
     </validationRules>
