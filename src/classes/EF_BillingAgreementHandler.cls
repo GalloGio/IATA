@@ -1,6 +1,32 @@
 public class EF_BillingAgreementHandler 
 {
-    
+    // Queries for any Accounts that do not allow Billing Agreements and displays an error message to the User.
+    public static void preventAgreementCreationForNotAllowed(List<EF_Billing_Agreement__c> agreementList)
+    {
+        String errorMessage = Label.EF_Account_Disallow_BA;
+        Set<Id> accountIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            // add both Client and Customer (Airline) into the Set, so that both will be queried for
+            accountIds.add(ba.Client__c);
+            accountIds.add(ba.Airline__c);
+        }
+
+        // Find if any of the related accounts doesn't allow billing agreements to be created and throw an error
+        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Not Allowed']);
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            if(accountsInvolved.containsKey(ba.Client__c))
+            {
+                ba.Client__c.addError(errorMessage);
+            }
+            else if(accountsInvolved.containsKey(ba.Airline__c))
+            {
+                ba.Airline__c.addError(errorMessage);
+            }
+        }
+    }
+
     //checks if location chosen has been set in Contract Location Currency.
     public static void checkLocationCurrency (List<EF_Billing_Agreement__c> relationshipList){
 

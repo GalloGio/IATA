@@ -86,7 +86,42 @@ private class EF_BillingAgreementTriggerTest {
         insert locCurrency;
                
     }
-	
+
+	@isTest static void testDisallowBillingAgreementsThrowsAnError()
+	{
+		Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
+		Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
+		Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+		
+		customer.EF_Allow_Billing_Agreements__c = 'Not Allowed';
+		client.EF_Allow_Billing_Agreements__c = 'Not Allowed';
+		update customer;
+		update client;
+
+		// Try to create a billing agreement, but expect that to fail
+		EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
+		rel.Client__c = client.Id;
+		rel.Airline__c = customer.Id;
+		rel.Contract__c = contract.Id;
+		rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
+
+		List<EF_Billing_Agreement__c> baList = [select id from EF_Billing_Agreement__c];
+		System.assertEquals(0, baList.size());
+		Test.startTest();
+		try
+		{
+		   insert rel;
+		} catch(Exception e)
+		{
+			System.assert(e.getMessage().contains('The selected Client or Airline has E&F setting for "Allow Airline Billing Agreements" set to "Not Allowed". Please change this before creating a new Billing Agreement or select a different Account.'));
+		}
+		
+		baList = [select id from EF_Billing_Agreement__c];
+		System.assertEquals(0, baList.size());
+		Test.stopTest();
+
+	}
+
 	@isTest static void EF_BillingAgreementTriggger_LocationInContract() {
 		
 		// query for test data
