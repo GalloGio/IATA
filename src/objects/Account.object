@@ -7309,7 +7309,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <defaultValue>false</defaultValue>
         <description>E&amp;F CRM Project. Used to verify if the E&amp;F SIS Code has been verified/provided by SIS team</description>
         <externalId>false</externalId>
-        <label>E&amp;F SIS Code Verified</label>
+        <label>SIS Verified</label>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -7318,7 +7318,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <fullName>EF_SIS_Code__c</fullName>
         <description>E&amp;F SIS Code. Specific for them. Sometimes does not match the SIS Member Code</description>
         <externalId>false</externalId>
-        <label>E&amp;F SIS Code</label>
+        <label>SIS Accounting Code</label>
         <length>15</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
@@ -7330,7 +7330,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <fullName>EF_SIS_Designator__c</fullName>
         <description>E&amp;F SIS Designator. Most of the times the same as Airline Designator, but sometimes specific value for E&amp;F</description>
         <externalId>false</externalId>
-        <label>E&amp;F SIS Designator</label>
+        <label>SIS Designator</label>
         <length>2</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
