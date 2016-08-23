@@ -10,7 +10,7 @@ global class AMS_HierarchyHelper {
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountsIds ' + accountsIds);
 
 		for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
-		                                      FROM AMS_Agencies_relationhip__c
+		                                      FROM AMS_Agencies_relationhip__c 
 		                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 
 			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
@@ -34,7 +34,7 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
@@ -685,4 +685,21 @@ global class AMS_HierarchyHelper {
 		return toReturn;
 
 	}
+
+	public static Set<Id> addTerminatedDescendants(Set<Id> agenciesAffected, Map<Id, Set<Id>> agencyTerminatedChildAgencies){
+
+		Set<Id> output = new Set<Id>(agenciesAffected);
+
+		for(Id ag: agenciesAffected){
+			//check if agency has direct child that is terminated
+			if(agencyTerminatedChildAgencies.containsKey(ag)){
+				output.addAll(agencyTerminatedChildAgencies.get(ag));
+				output.addAll(addTerminatedDescendants(agencyTerminatedChildAgencies.get(ag), agencyTerminatedChildAgencies));
+			}
+		}
+
+		return output;
+
+	}
+
 }
