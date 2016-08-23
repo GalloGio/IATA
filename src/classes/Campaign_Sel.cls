@@ -36,14 +36,14 @@ public without sharing class Campaign_Sel extends Selector{
      *  Author David D - 02/2016
      *  return the list of active campaigns
      */
-    public List<Campaign> getActiveCampaigns()
+    public List<Campaign> getActiveCampaigns(String strFilter)
     {
         
          String query = String.format(
             'SELECT {0} ' +
             'FROM {1} ' + 
-            'WHERE IsActive = true  AND Renewal_notice_generated__c = null ' +
-            'ORDER BY Name ' , 
+            'WHERE (IsActive = true AND Renewal_notice_generated__c = null) ' + strFilter +
+            ' ORDER BY Name ' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
