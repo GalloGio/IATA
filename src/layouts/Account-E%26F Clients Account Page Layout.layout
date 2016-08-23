@@ -135,6 +135,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Allow_Billing_Agreements__c</field>
+            </layoutItems>
+			<layoutItems>
                 <behavior>Required</behavior>
                 <field>EF_Effective_Date__c</field>
             </layoutItems>
@@ -349,7 +353,7 @@
         <fields>EF_Related_Records__c.NAME</fields>
         <relatedList>FIR_Code__c.Account__c</relatedList>
     </relatedLists>
-    <relatedLists>
+	<relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
         <fields>EF_Group_Code__c</fields>
