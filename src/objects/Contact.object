@@ -5624,74 +5624,6 @@ Formula field that copies the E&amp;F Type.</description>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>EF_Role__c</fullName>
-        <description>E&amp;F CRM Project. Role for E&amp;F.</description>
-        <externalId>false</externalId>
-        <label>E&amp;F Role</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finance (Other)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales &amp; Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>true</sorted>
-        </picklist>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Status</label>
@@ -8486,25 +8418,6 @@ TotalRows-Successes-Errors</description>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>SIS_Contact_Type__c</fullName>
-        <externalId>false</externalId>
-        <label>SIS Contact Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>User</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
         <fullName>SIS_ID__c</fullName>
         <externalId>true</externalId>
         <label>SIS ID</label>
@@ -11118,65 +11031,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -11787,17 +11641,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -12356,65 +12199,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13172,17 +12956,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -13749,65 +13522,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -14418,17 +14132,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14967,65 +14670,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -15636,17 +15280,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16198,65 +15831,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16975,17 +16549,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -17553,65 +17116,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18302,17 +17806,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Sales_Region__c</picklist>
             <values>
                 <fullName>ASIA</fullName>
@@ -18791,65 +18284,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19520,17 +18954,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21096,65 +20519,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -21895,17 +21259,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23537,65 +22890,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -24450,17 +23744,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26139,65 +25422,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Role__c</picklist>
-            <values>
-                <fullName>Account Manager</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Payable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Accounts Receivable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Debt Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Dispute Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance %28Other%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Management</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Invoicing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reporting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Revenue Accounting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sales %26 Marketing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technical Support</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -27147,17 +26371,6 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>9%2E South America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SIS_Contact_Type__c</picklist>
-            <values>
-                <fullName>Super User</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

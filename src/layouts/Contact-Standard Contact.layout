@@ -60,10 +60,6 @@
                 <behavior>Readonly</behavior>
                 <field>Services__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SIS_Contact_Type__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -85,10 +81,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Function__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Role__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
