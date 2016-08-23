@@ -146,9 +146,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 if (updatedOSCAR.get(step + '__c') <> oldOSCAR.get(step + '__c')) {
 
-                    //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
-                    if(step == 'STEP29' && updatedOSCAR.STEP29__c == AMS_Utils.PASSED && !validateStep29(updatedOSCAR)) break;
-
 
                     if (helper == null) {
                         helper = new AMS_OSCAR_JSONHelper();
@@ -409,7 +406,24 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
-            updatedOSCAR.STEP29__c = AMS_Utils.PASSED;
+
+            //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
+            Set<String> tocList = new Set<String>();
+            if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
+
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] !tocList.contains(AMS_Utils.LEGAL_STATUS) - ' + (!tocList.contains(AMS_Utils.LEGAL_STATUS)));
+
+            if(
+                !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
+                && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
+                && !tocList.contains(AMS_Utils.MAJ_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.NAME)
+                && !tocList.contains(AMS_Utils.LEGAL_STATUS)
+                && !tocList.contains(AMS_Utils.LOCATION)
+            ){
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
+            }
         }
 
         if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
@@ -476,29 +490,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (!eventsToInsert.isEmpty())
             insert eventsToInsert;
 
-    }
-
-    private Boolean validateStep29(AMS_OSCAR__c updatedOscar) {
-        
-        Set<String> tocList = new Set<String>();
-        if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
-
-        System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
-        System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] !tocList.contains(AMS_Utils.LEGAL_STATUS) - ' + (!tocList.contains(AMS_Utils.LEGAL_STATUS)));
-
-        if(
-            !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
-            && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
-            && !tocList.contains(AMS_Utils.MAJ_SHAREHOLDING)
-            && !tocList.contains(AMS_Utils.NAME)
-            && !tocList.contains(AMS_Utils.LEGAL_STATUS)
-            && !tocList.contains(AMS_Utils.LOCATION)
-        ){
-            updatedOSCAR.STEP29__c = AMS_Utils.FAILED;
-            updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
-            return false;
-        }
-        return true;
     }
 
 }
