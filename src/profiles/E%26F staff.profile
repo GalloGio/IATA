@@ -763,14 +763,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AccountContactOrder_Ext</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AccountContactOrder_Ext_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AccountNoDuplicateBranchTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
