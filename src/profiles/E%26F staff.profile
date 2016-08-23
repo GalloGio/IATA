@@ -315,14 +315,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AMS_AccreditationOnlineTriggerHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_AccreditationOnlineTriggerHelperTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AMS_AddressHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
