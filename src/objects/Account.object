@@ -22969,6 +22969,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Service Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
@@ -25513,6 +25517,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Providers</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36113,6 +36121,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Service Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
@@ -42638,6 +42650,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Providers</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57145,6 +57161,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Service Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
@@ -59900,6 +59920,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Providers</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63893,6 +63917,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Service Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
@@ -63913,6 +63941,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Due_Diligence_Status__c</picklist>
+            <values>
+                <fullName>Cleared</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanctioned%2E Please contact compliance</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64208,6 +64251,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Level_of_risk__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Very high</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
