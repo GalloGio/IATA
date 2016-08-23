@@ -919,8 +919,7 @@
               "Name": "LNF",
               "ReasonCode": "03",
               "MemoText": "Penalty fee applied",
-              "ReasonDesc": "PENALTY FEE APPLIED",
-              "Status": "0"
+              "ReasonDesc": "PENALTY FEE APPLIED"
             }
           }],
           "DisplayFields": [

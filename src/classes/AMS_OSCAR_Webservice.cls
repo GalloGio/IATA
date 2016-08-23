@@ -264,7 +264,7 @@ global class AMS_OSCAR_Webservice {
                 changeCode.reasonCode = '91';
                 changeCode.memoText = 'to be defined';
                 changeCode.reasonDesc  = 'SIDRA LITE CREATED';
-                changeCode.status  = '0';
+                changeCode.status  = '7';
 
                 Account acct = new Account(Id = oscar[0].Account__c);
                 AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);
