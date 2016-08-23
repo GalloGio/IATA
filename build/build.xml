@@ -200,7 +200,7 @@
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${code.listfolders}" param="param" >
+      <for list="${workflowPackage.listfolders}" param="param" >
         <sequential>
              <mkdir dir="${basedir}/Code/@{param}"/>
        </sequential>
