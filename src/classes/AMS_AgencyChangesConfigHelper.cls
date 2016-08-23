@@ -75,7 +75,7 @@ public class AMS_AgencyChangesConfigHelper{
 	public static AMS_Utils.AgChangesConfig getSelectedTypeOfChangeCombinationConfig(AMS_OSCAR__c oscar, List<Map<String, String>> configs) {
 		Map<String, String> typeOfChangeConfig;
 
-		if(oscar.Process == 'BANK.ACCOUNT.CHANGES')
+		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES')
 			return null;
 
 		//List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
