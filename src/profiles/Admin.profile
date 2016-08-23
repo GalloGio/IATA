@@ -191,14 +191,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>EF_MaterialLineItemHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EF_MaterialLineItemHandlerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>EF_BillingAgreementHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
