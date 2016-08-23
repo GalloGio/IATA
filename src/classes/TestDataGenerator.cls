@@ -551,7 +551,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            insert orderItems;
+            database.insert(orderItems,false);
 
         return orderItems;
     }

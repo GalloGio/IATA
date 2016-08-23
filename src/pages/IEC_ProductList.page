@@ -335,6 +335,7 @@
 					var selected_filters;
 
 					var updateSelectedFilters = function(){
+						
 						selected_filters = [];
 						$(".frmFilters input[type='checkbox']:checked").each(function(idx, item){
 							selected_filters.push($(item).val());
@@ -348,22 +349,21 @@
 
 						$('input[id$=selectedFilters]').val(selected_filters.join(':'));
 
-						
-						console.log(selected_filters);
 					}
 
 					$(".frmFilters input[type='text']").on('change',function(event){
 						updateSelectedFilters();
 					});
 
-					$('.select-deselect')
+					$('.js-select-deselect')
 						.on('click', '.refine-select-all', function(event) {
+							
 							event.preventDefault();
 							var targetID = $(this).data('target'),
 								targetElement = $(this).data('target-element'),
 								targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
 
-							$(this).parents('.select-deselect').find(targetCheckbox).prop('checked', true);
+							$(this).parents('.js-select-deselect').find(targetCheckbox).prop('checked', true);
 							updateSelectedFilters();
 
 							$(this).attr('data-is-visible', 'false');
@@ -376,7 +376,7 @@
 								// checkboxContainer = targetElement+'[data-id="'+targetID+'"]',
 								targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
 
-							$(this).parents('.select-deselect').find(targetCheckbox).prop('checked', false);
+							$(this).parents('.js-select-deselect').find(targetCheckbox).prop('checked', false);
 							updateSelectedFilters();
 
 							$(this).attr('data-is-visible', 'false');
@@ -386,8 +386,6 @@
 							updateSelectedFilters();
 						}
 					);
-
-					
 
 				});
 			</script>

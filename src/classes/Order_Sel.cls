@@ -193,6 +193,7 @@ public without sharing class Order_Sel extends Selector{
                     ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,
                     Payment_Type__c,Nb_Payment_Failure__c
                     , BillToAccount_Name__c, BillToContact_Name__c, OrderNumber, Is_Paid__c
+                    ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c
                 From Order 
                 Where id in :orderIds
                ];
@@ -209,7 +210,7 @@ public without sharing class Order_Sel extends Selector{
             SOQL += 'AccountId in :accountIds';
         else if (contactIds != null)
             SOQL += 'BillToContactId in :contactIds or ShipToContactId in :contactIds';
-        SOQL += ' order by EffectiveDate desc, CreatedDate desc';
+        SOQL += ' order by EffectiveDate desc, CreatedDate desc limit 1000';
 
         return Database.query(SOQL);
     } //*** end of "getOrderForAccountOrContact"
@@ -413,7 +414,7 @@ public without sharing class Order_Sel extends Selector{
 
     public Order initializeOrder(Account a, Contact c)
     {
-    	return initializeOrder(a, c, true);	
+        return initializeOrder(a, c, true); 
     }
     
     public Order initializeOrder(Account a, Contact c, Boolean doInsert)
@@ -884,7 +885,7 @@ public without sharing class Order_Sel extends Selector{
          String query = String.format(
             'SELECT {0}' + 
             ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c, ' +
-            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c ' + 
+            'Carrier_Tracking_Number__c,Carrier_Tracking_URL__c, Coupon__c, Invoice_Number__c,Discount__c, Setup_Fee__c ' + 
             ' from Orderitems) ' + 
             'FROM {1} ' + 
             'WHERE BillToContactId = :contactId and Status != :cancelStatus and Status != :renewStatus and Status != :quoteStatus ' +
@@ -908,7 +909,7 @@ public without sharing class Order_Sel extends Selector{
             'SELECT {0}, ' + 
             'BillTo_Address__r.Street__c, BillTo_Address__r.City__c, BillTo_Address__r.ISO_Country_Name__c, BillTo_Location__r.Contact_First_Name__c,' +
             'BillTo_Location__r.Contact_Last_Name__c, BillTo_Address__r.ZipCode__c, BillTo_Address__r.ISO_Country__r.Name,BillTo_Address__r.ISO_State_Name__c' + 
-            ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c, Total__c from Orderitems) ' + 
+            ', (select Product_Name__c, Product_Number__c, Quantity, UnitPrice, Freight_Charge__c, Tax__c,Setup_Fee__c, Total__c from Orderitems) ' + 
             'FROM {1} ' + 
             'WHERE BillToContactId = :contactId and OrderNumber = :orderNumber ' +
             'ORDER BY Type,  CreatedDate DESC', 
