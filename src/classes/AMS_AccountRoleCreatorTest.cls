@@ -52,17 +52,16 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert p1;
         AMS_Person__c p2 = new AMS_Person__c(Name='do', LastName__c='notDelete', First_Name__c='DontDelete', Email__c='unique123@email.com');
         insert p2;
-        // DT: Employee no more saved as role
-        /*
-        AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p1.id, Contact__c = null);
-        insert e1;
-        AMS_Account_Role__c e2 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p2.id, Contact__c = null);
-        insert e2;
-        */
+
     }
     
     @isTest static void test_RunAccountOwnershipInsertthenUpdate_ExpectUpdatedAccountRole()
     {
+
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
+        boolean isCorrectionProcess = true;
+
         List<Contact> conList = [select Id, Email, AccountId from Contact];
         // One created by test setup, two by AMS_AccountRoleTrigger
         System.assertEquals(3, conList.size());
@@ -90,15 +89,18 @@ public with sharing class AMS_AccountRoleCreatorTest {
         upsert acList;
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        System.assertEquals(1, aoaList.size());
+
+        Set<Id> accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+        
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
         
         roleList = [select Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
-        // DT: Employee no more saved as role
-        //System.assertEquals(2, roleList.size());
-        //System.assertEquals('Employee', roleList.get(0).RecordType.DeveloperName);
-        //System.assertEquals('Ownership', roleList.get(1).RecordType.DeveloperName);
-        //System.assertEquals(20, roleList.get(1).Percentage__c);
         
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -108,96 +110,22 @@ public with sharing class AMS_AccountRoleCreatorTest {
         update companyOwnershipAC;
         
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
         roleList = [select Percentage__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
-        /* DT: Employee no more saved as role
-        System.assertEquals(2, roleList.size());
-        System.assertEquals('Ownership', roleList.get(1).RecordType.DeveloperName);
-        System.assertEquals(100, roleList.get(1).Percentage__c);
-        */
+
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
         System.assertEquals(100, roleList.get(0).Percentage__c);
         Test.stopTest();
     }
-    
-    @isTest static void test_RunAccountOwnershipInsertthenUpdateAndAnotherInsert()
-    {
-        List<Contact> conList = [select Id, Email, AccountId from Contact];
-        // One created by test setup, two by AMS_AccountRoleTrigger
-        System.assertEquals(3, conList.size());
-        String accId = conList.get(0).AccountId;
-        delete conList;
-        
-        Contact newCon = new Contact(AccountId = accId, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = 'unique@email.com', Financial_Assessment_Contact__c = false);
-        insert newCon;
-        System.debug('******************** newCon: '+newCon.AccountId);
-        
-        List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
-        delete roleList;
 
-        Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
-        Account ownerAccount2 = new Account(Name='OwnerAccount2', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '0001', Source_System__c = 'AIMS2');
-        List<Account> ownerAccounts = new List<Account>{ownerAccount, ownerAccount2};
-        insert ownerAccounts;
-        
-        List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, AMS_Employee_Role__c, AMS_Ownership_Role__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c];
-        acList.get(0).Contact__c = newCon.Id;
-        acList.get(0).Person_AMS__c = null;
-
-        // Create an Accreditation Contact record of type Account Ownership and expect a relevant account role to be created
-        // Later expect updated values on AC record to match the role record
-        AMS_Accreditation_Contact__c companyOwnershipAC = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 20, Company__c = ownerAccount.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test', Phone__c = '23432434');
-        acList.add(companyOwnershipAC);
-        upsert acList;
-        
-        Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        
-        roleList = [select Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName, RecordTypeId from AMS_Account_Role__c order by RecordTypeId];
-        // DT: Employee no more saved as role
-        /*
-        System.assertEquals(2, roleList.size());
-        System.assertEquals('Employee', roleList.get(0).RecordType.DeveloperName);
-        System.assertEquals('Ownership', roleList.get(1).RecordType.DeveloperName);
-        System.assertEquals(20, roleList.get(1).Percentage__c);
-        */
-        System.assertEquals(1, roleList.size());
-        System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
-        System.assertEquals(20, roleList.get(0).Percentage__c);
-        
-        companyOwnershipAC.Financial_Interest__c = 40;
-        update companyOwnershipAC;
-        
-        AMS_Accreditation_Contact__c companyOwnershipAC2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = acList.get(0).AMS_Pax_Accreditation_Form__c, Agency_Owner__c = true, Financial_interest__c = 60, Company__c = ownerAccount2.id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company'), Last_name__c = 'test2', Phone__c = '012345678');
-        acList.add(companyOwnershipAC2);
-        upsert acList;
-        
-        
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        roleList = [select Percentage__c, Account__c, RecordType.DeveloperName, Owner_Account__c, Owner_Account__r.Name, RecordTypeId from AMS_Account_Role__c order by RecordTypeId, Owner_Account__r.Name];
-        /* DT: Employee no more saved as role
-        System.assertEquals(3, roleList.size());
-        System.assertEquals('Ownership', roleList.get(1).RecordType.DeveloperName);
-        System.assertEquals(40, roleList.get(1).Percentage__c);
-        System.assertEquals('Ownership', roleList.get(2).RecordType.DeveloperName);
-        System.assertEquals(60, roleList.get(2).Percentage__c);
-        System.assertEquals(ownerAccount2.Id, roleList.get(2).Owner_Account__c);
-        System.assertEquals('OwnerAccount2', roleList.get(2).Owner_Account__r.Name);
-        */
-        System.assertEquals(2, roleList.size());
-        System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
-        System.assertEquals(40, roleList.get(0).Percentage__c);
-        System.assertEquals('Ownership', roleList.get(1).RecordType.DeveloperName);
-        System.assertEquals(60, roleList.get(1).Percentage__c);
-        System.assertEquals(ownerAccount2.Id, roleList.get(1).Owner_Account__c);
-        System.assertEquals('OwnerAccount2', roleList.get(1).Owner_Account__r.Name);
-        Test.stopTest();
-    }
-    
     @isTest static void test_ContactEmailChangesBeforeRoleCreation()
     {
+
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
+        boolean isCorrectionProcess = true;
+
         List<Contact> conList = [select Id, Email from Contact];
         // One created by test setup, two by AMS_AccountRoleTrigger ()
         // DT: Employee no more saved as role. All of them, are created in the test setup
@@ -220,8 +148,15 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(0, roleList.size());
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        Set<Id> accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
         
         roleList = [select Contact__c, Contact__r.Email, Termination_Date__c, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
         
@@ -261,6 +196,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         Test.startTest();
         
+
         AMS_AccreditationContactHelper.insertAmsRolesForAccreditationContacts(wrapperList);
         roleList = [select Employee_Name__c, IsManager__c, RecordType.DeveloperName, Contact__c from AMS_Account_Role__c];
         AMS_Account_Role__c role = roleList.get(0);
@@ -270,10 +206,12 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(role.Contact__c, c.Id);
         Test.stopTest();
     }
-    
 
     @isTest static void test_CreateAOCandACs_runProcessThriceForPerson()
     {
+        Set<Id> accountsInvolved = new Set<Id>();
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
         List<Contact> conList = [select Id, Email, AccountId from Contact];
         // One created by test setup, two by AMS_AccountRoleTrigger
         System.assertEquals(3, conList.size());
@@ -292,21 +230,32 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, AMS_Employee_Role__c, AMS_Ownership_Role__c from AMS_Accreditation_Contact__c];
         acList.get(0).Contact__c = null;
         acList.get(0).Person_AMS__c = newPerson.Id;
+        acList.get(0).Agency_Owner__c = true;
         update acList;
         
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, false);
         
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(1, roleList.size());
-        //DT: Employee are no more created in the Role Object
-        //System.assertEquals('Employee', roleList.get(0).RecordType.DeveloperName);
+
         acList.get(0).Agency_Owner__c = true;
         update acList;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(2, roleList.size());
         //System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -315,14 +264,24 @@ public with sharing class AMS_AccountRoleCreatorTest {
         AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email2.com', Person_AMS__c = newPerson.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(3, roleList.size());
         Test.stopTest();
     }
-    
+
     @isTest static void test_CreateAOCandACs_runProcessThriceForNoLinking()
     {
+
+        Set<Id> accountsInvolved = new Set<Id>();
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
         List<Contact> conList = [select Id, Email, AccountId from Contact];
         // One created by test setup, two by AMS_AccountRoleTrigger
         System.assertEquals(3, conList.size());
@@ -345,8 +304,15 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
         
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
@@ -356,7 +322,13 @@ public with sharing class AMS_AccountRoleCreatorTest {
         acList.get(0).Agency_Owner__c = true;
         update acList;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
@@ -365,46 +337,57 @@ public with sharing class AMS_AccountRoleCreatorTest {
         AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', Person_AMS__c = newPerson.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+
         roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
         //System.assertEquals(2, roleList.size());
         System.assertEquals(2, roleList.size());
         Test.stopTest();
     }
-    
+
     @isTest static void test_CreateAOCandACs_runWholeProcessForNoLinking()
     {
+
+        Set<Id> accountsInvolved = new Set<Id>();
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, Company__c from AMS_Accreditation_Contact__c];
         acList.get(0).Contact__c = null;
         acList.get(0).Person_AMS__c = null;
-        //acList.get(0).Company__c = null;
+
         update acList;
         
         List<AMS_Account_Role__c> roleList = [select Contact__c, Contact__r.Email, Person__c, Account__c from AMS_Account_Role__c];
         delete roleList;
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
         
         roleList = [select Contact__c, Contact__r.Email, Contact__r.FirstName, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
-        //DT: Employee are no more created in the Role Object
-        /*System.assertEquals(1, roleList.size());
-        System.assertEquals('NameToUse', roleList.get(0).Contact__r.FirstName);
-        System.assertEquals('unique@email.com', roleList.get(0).Contact__r.Email);
-        
-        List<AMS_Accreditation_Contact__c> updatedAcList = [select id, AMS_Ownership_Role__c, AMS_Employee_Role__c from AMS_Accreditation_Contact__c];
-        for(AMS_Accreditation_Contact__c ac : updatedAcList)
-        {
-            System.assertEquals(ac.AMS_Employee_Role__c, roleList.get(0).Id);
-        }*/
+
         System.assertEquals(0, roleList.size());
         Test.stopTest();
     }
-    
+
     @isTest static void test_CreateAOCandACs_runProcessThriceForContact()
     {
+        Set<Id> accountsInvolved = new Set<Id>();
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
         List<Contact> conList = [select Id, Email, AccountId from Contact];
         // One created by test setup, two by AMS_AccountRoleTrigger
         System.assertEquals(3, conList.size());
@@ -424,35 +407,43 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        
-        roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
-        //DT: Employee are no more created in the Role Object
-        //System.assertEquals(1, roleList.size());
-        //System.assertEquals('Employee', roleList.get(0).RecordType.DeveloperName);
+
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+
+        roleList = [select Id, Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
+
         System.assertEquals(0, roleList.size());
         acList.get(0).Agency_Owner__c = true;
         update acList;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
     
-        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', Contact__c = newCon.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, AMS_Ownership_Role__c = roleList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', Contact__c = newCon.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c];
-        //DT: Employee are no more created in the Role Object
-        //System.assertEquals(2, roleList.size());
-        System.assertEquals(1, roleList.size());
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+        roleList = [select Contact__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, RecordType.DeveloperName from AMS_Account_Role__c where Active__c = true];
+
+
+        System.assertEquals(2, roleList.size());
         Test.stopTest();
     }
     
     @isTest static void test_CreateAOCandACs_runWholeProcessForContactOnly()
     {
+        Set<Id> accountsInvolved = new Set<Id>();
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
         List<Contact> conList = [select Id, Email from Contact];
         // One created by test setup, two by AMS_AccountRoleTrigger ()
         System.assertEquals(3, conList.size());
@@ -469,12 +460,19 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(0, roleList.size());
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
         AMS_OSCAR__c oscar = [select AMS_Online_Accreditation__c from AMS_OSCAR__c limit 1];
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
         update oscar;
-        
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
+    
+
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
         
         roleList = [select Contact__c, Contact__r.Email, Termination_Date__c, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
         
@@ -503,8 +501,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         
         Test.stopTest();
     }
-    
-    
+
     //DT: Employee are no more created in the Role Object
     @isTest static void test_PersonNotFound_ContactFound_updateContactWithACdata()
     {
@@ -596,6 +593,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(c.FirstName, 'NameToUse');
         Test.stopTest();
     }
+
     
     @isTest static void test_PersonsContactNotLinked_RoleWithContactLinkingCreated()
     {
@@ -640,6 +638,9 @@ public with sharing class AMS_AccountRoleCreatorTest {
     
     @isTest static void test_CreateAOCandACs_runWholeProcessForPersonOnly()
     {
+        Set<Id> accountsInvolved = new Set<Id>();
+        Map<Id,Set<Id>> aoMap = new Map<Id,Set<Id>>();
+
         List<Contact> conList = [select id from Contact];
         delete conList;
         
@@ -648,14 +649,22 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, Financial_Assessment_Contact__c from AMS_Accreditation_Contact__c];
         acList.get(0).Person_AMS__c = personList.get(0).Id;
         acList.get(0).Financial_Assessment_Contact__c = true;
+        acList.get(0).Agency_owner__c = true;
         update acList;
         
         List<AMS_Account_Role__c> roleList = [select Contact__c, Contact__r.Email, Person__r.Email__c, Person__c, Account__c from AMS_Account_Role__c];
         
         Test.startTest();
-        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
         
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+
+        accountsInvolved = new Set<Id>();
+        accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        aoMap.put(aoaList.get(0).Id, accountsInvolved);
+
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap);
+       
         roleList = [select Contact__c, Contact__r.Email, Person__c, Financial_Assessment_Contact__c, Termination_Date__c, Account__c from AMS_Account_Role__c];
         //DT: Employee are no more created in the Role Object
         //System.assertEquals(3, roleList.size());
@@ -682,105 +691,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         Test.stopTest();
     }
     
-    
-    @isTest static void test_BulkUpdateACsWithNoLinking()
-    {
-        List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
-        delete roleList;
-        //DT: Employee are no more created in the Role Object
-        //Id employeeRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
         
-        Contact c = [select id, AccountId from Contact where email = 'unique@email.com' limit 1];
-        //DT: Employee are no more created in the Role Object
-        //AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = employeeRtId, Account__c = c.AccountId, Person__c = null, Contact__c = c.Id);
-        //insert e1;
-        
-        IATA_ISO_Country__c isocountry = new IATA_ISO_Country__c(Name = '12314', ISO_Code__c = 'AG');       
-        insert isocountry;
-        
-        List<Case> caseList = [select id from Case];
-        
-        List<AMS_Pax_Accreditation_Form__c> aoaList = new List<AMS_Pax_Accreditation_Form__c>();
-        Map<Integer, AMS_Pax_Accreditation_Form__c> aoaMap = new Map<Integer, AMS_Pax_Accreditation_Form__c>();
-        for(Integer i=0;i<170;i++)
-        {
-            AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isocountry.CurrencyIsoCode, SAAM_Case__c = caseList.get(0).Id);
-            aoaMap.put(i, onlineAccreditation);
-            aoaList.add(onlineAccreditation);
-        }
-        
-        insert aoaMap.values();
-        List<Contact> conList = [select Id from Contact];
-        delete conList;
-        List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        for(Integer i=0;i<170;i++)
-        {
-            acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaMap.get(i).Id, Company__c = c.Accountid, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c=i+'unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
-        }
-        
-        insert acList;
-        
-        Test.startTest();
-        
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        conList = [select id from Contact];
-        System.assertEquals(170, conList.size());
-        Test.stopTest();
-    }
-    
-    @isTest static void test_BulkUpdateACsWithContactLink()
-    {
-        List<AMS_Account_Role__c> roleList = [select id from AMS_Account_Role__c];
-        delete roleList;
-        //DT: Employee are no more created in the Role Object
-        //Id employeeRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Employee');
-        
-        Contact c = [select id, AccountId from Contact where email = 'unique@email.com' limit 1];
-        
-         //DT: Employee are no more created in the Role Object
-        //AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = employeeRtId, Account__c = c.AccountId, Person__c = null, Contact__c = c.Id);
-        //insert e1;
-        
-        IATA_ISO_Country__c isocountry = new IATA_ISO_Country__c(Name = '12314', ISO_Code__c = 'AG');       
-        insert isocountry;
-        
-        List<Case> caseList = [select id from Case];
-        
-        List<AMS_Pax_Accreditation_Form__c> aoaList = new List<AMS_Pax_Accreditation_Form__c>();
-        Map<Integer, AMS_Pax_Accreditation_Form__c> aoaMap = new Map<Integer, AMS_Pax_Accreditation_Form__c>();
-        for(Integer i=0;i<170;i++)
-        {
-            AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isocountry.CurrencyIsoCode, SAAM_Case__c = caseList.get(0).Id);
-            aoaMap.put(i, onlineAccreditation);
-            aoaList.add(onlineAccreditation);
-        }
-        
-        insert aoaMap.values();
-        
-        List<Contact> conList = new List<Contact>();
-        for(Integer i=0;i<170;i++)
-        {
-            Contact c1 = new Contact(AccountId = c.AccountId, Firstname = 'c1ObsoleteName', Lastname='c1LastName', Phone = '911111111', MobilePhone = '911111111', Email = i+'test@test.com', Financial_Assessment_Contact__c = false);
-            conList.add(c1);
-        }
-        insert conList;
-        
-        List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        for(Integer i=0;i<170;i++)
-        {
-            acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaMap.get(i).Id, Contact__c = conList.get(i).Id, Company__c = c.Accountid, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c=i+'test@test.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
-        }
-        
-        insert acList;
-        
-        Test.startTest();
-        
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoaList);
-        acList = [select id from AMS_Accreditation_Contact__c];
-        System.assertEquals(171, acList.size());
-        Test.stopTest();
-    }
-    
     //DT: Seems that this method is no more used. Test on it anyway
     @isTest static void test_MethodfindRoleAndPersonRecords(){
         map<String, AMS_Account_Role__c> theMap = new map<String, AMS_Account_Role__c>();
@@ -836,5 +747,4 @@ public with sharing class AMS_AccountRoleCreatorTest {
         update oscar;
         
     }
-    
 }

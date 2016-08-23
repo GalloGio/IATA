@@ -314,17 +314,24 @@
                                                             
                                                             <td class="slds-size--1-of-5" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Last_name__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Last_name__c}" rendered="{!s.blockEdit}" html-disabled=""/>
-                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Last_name__c}" id="lastName" rendered="{!NOT(s.blockEdit)}"/>
+                                                                <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Last_name__c}" id="lastName" rendered="{!NOT(s.blockEdit)}">
+                                                                    <apex:actionSupport event="onchange" reRender="roleSelection, messages"/>
+                                                                </apex:inputField>
+
                                                             </td>
                                                             
                                                             <td class="slds-size--1-of-5" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Email__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Email__c}" rendered="{!s.blockEdit}" html-disabled=""/>
-                                                                <apex:inputField required="true" html-class="slds-input inputPointer" value="{!s.ac.Email__c}" id="email" rendered="{!NOT(s.blockEdit)}"/>
+                                                                <apex:inputField required="true" html-class="slds-input inputPointer" value="{!s.ac.Email__c}" id="email" rendered="{!NOT(s.blockEdit)}">
+                                                                    <apex:actionSupport event="onchange" reRender="roleSelection, messages"/>
+                                                                </apex:inputField>
                                                             </td>
                                                            
                                                            <td class="slds-size--1-of-5" data-label="{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Phone__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!s.ac.Phone__c}" rendered="{!s.blockEdit}" html-disabled=""/>
-                                                                <apex:inputField required="true" html-class="slds-input inputPointer" value="{!s.ac.Phone__c}" id="businessPhone" rendered="{!NOT(s.blockEdit)}"/>
+                                                                <apex:inputField required="true" html-class="slds-input inputPointer" value="{!s.ac.Phone__c}" id="businessPhone" rendered="{!NOT(s.blockEdit)}">
+                                                                    <apex:actionSupport event="onchange" reRender="roleSelection, messages"/>
+                                                                </apex:inputField>
                                                             </td>
                                                             
                                                            

@@ -191,13 +191,14 @@ public class ISSP_PortalService_Test {
         profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
         insert profileCS2;
         
-        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+               IECTestUtil.trgPortalUserAfterInserUpdate = true;
 		
 		Contact con1 = ISSP_ObjectFactory.createNewContact();
 		con1.AccountId = acc.Id;
 		con1.User_Portal_Status__c = 'Pending Approval';
 		insert con1;
-		
+		test.startTest();
+
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.AccountId = acc.Id;
 		con2.User_Portal_Status__c = 'Approved User';
@@ -209,7 +210,7 @@ public class ISSP_PortalService_Test {
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
-        
+        test.stopTest();
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
         Apexpages.currentPage().getParameters().put('PSname', 'test');
         ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();

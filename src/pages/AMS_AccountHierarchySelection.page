@@ -110,7 +110,7 @@
 
 			<apex:pageBlockButtons location="bottom">
 				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.Site.Save}" reRender="pageMessages"/>
-				<apex:commandButton onclick="closeTab();" status="blockEditing" value="{!$Label.Site.Cancel}" immediate="true"/>
+				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.Site.Cancel}" immediate="true"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 
@@ -141,7 +141,7 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons>
-				<button class="btn" onclick="closeTab();">{!$Label.Site.Cancel}</button>
+				<button class="btn" onclick="closeTab(); return false;">{!$Label.Site.Cancel}</button>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 	</apex:form>
