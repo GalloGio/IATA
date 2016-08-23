@@ -847,10 +847,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Address_DTO</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AgentStatusExtension</apexClass>
         <enabled>false</enabled>
     </classAccesses>
