@@ -129,4 +129,147 @@ public class IECEBC_Utility {
         System.debug(query);
         return query;
     }
+    
+    
+    public static Decimal STORAGE_CAPACITY=1; //in mg
+    
+    public static Decimal getBillingAccountCurrentStorageUsage(Id billingAccountId) {
+        AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
+                                            Where Billing_Account__c=:billingAccountId];
+        //Control over STORAGE CAPACITY
+        Decimal mb=0;
+        for (AggregateResult ar : groupedResults)  {
+            //MB
+            if (ar.get('expr0')==null) continue;
+            mb = Decimal.ValueOf(String.ValueOf(ar.get('expr0')));
+        }
+        
+        return mb;
+    }
+    
+    public class Resource_Invalid_Attachment_Exception extends Exception{}
+    public class Attachment_Size_Exceeds_Capacity_Exception extends Exception{}
+    public class Resource_Name_Already_Exists_Exception extends Exception{}
+    
+    public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
+		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('Attachment must have a name and not be blank');
+        
+        // Checking capacity
+        Decimal mb = getBillingAccountCurrentStorageUsage(billingAccount.Id);
+        String bodyEncoded = EncodingUtil.base64Encode(a.body);  
+        Decimal mk = bodyEncoded.length();
+        //mb = mb +mk;
+        mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
+        if (mb>=105) {
+            throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds capacity');
+        }
+        
+        // Checking if file name is already used
+        List<EBC_Resource__c> resourcelist= new List<EBC_Resource__c>();
+        resourcelist = [Select id From EBC_Resource__c
+                       			Where name=:a.name
+                       			and Billing_Account__c=:billingAccount.Id
+                       Limit 1];
+        if (resourcelist.Size()>0) {
+            throw new Resource_Name_Already_Exists_Exception('A resource with the same name already exists');
+        }
+        
+        // Create EBC Resource
+        //String typen = a.Name.right(3);
+        EBC_Resource__c res = new EBC_Resource__c();
+        res.Billing_Account__c=billingAccount.Id;
+        res.name = a.name;
+        res.Image_Size__c = bodyEncoded.length();
+        //AttachmentParentRec.Image_Type__c = typen; Why?
+        insert res;
+        
+        a.ParentId = res.Id;
+    }
+    
+	// =======================================================================-
+	// ebcSetup return the only EBC_Setup records in the system
+	// in case there is none (should not be the case), it return a blank record.
+	public static EBC_Setup__c ebcSetup {
+		get {
+			if (ebcSetup==null)
+			{
+				List<EBC_Setup__c> ebcSetupList = [select Id, Name
+								, Member_Email_Block_Product__c
+								, Member_Prepaid_Product_Rate_Plan_01__c
+								, Member_Prepaid_Product_Rate_Plan_02__c
+								, Member_Prepaid_Product_Rate_Plan_03__c
+								, Member_Prepaid_Product_Rate_Plan_04__c
+
+								, Non_Member_Email_Block_Product__c
+								, Non_Member_Prepaid_Product_Rate_Plan_01__c
+								, Non_Member_Prepaid_Product_Rate_Plan_02__c
+								, Non_Member_Prepaid_Product_Rate_Plan_03__c
+								, Non_Member_Prepaid_Product_Rate_Plan_04__c
+								
+								, Enhanced_Reporting_Product_Rate_Plan__c
+								, Storage_Product_Rate_Plan__c
+								
+								, Default_Storage_Capacity__c
+								, E_Commerce_Base_Url__c
+							from EBC_Setup__c
+							order by CreatedDate
+							limit 1];
+				ebcSetup = (ebcSetupList.size()==1) ? ebcSetupList[0] : new EBC_Setup__c (Name = 'Blank');
+			}
+			return ebcSetup;
+		}
+		set;
+	} // end of ebcSetup getter/setter
+	
+    public static Set<Id> ebcAddOnProductRatePlanAllIdSet {
+        get {
+            if (ebcAddOnProductRatePlanAllIdSet == null) {
+            	Set<Id> allIdSet = new Set<Id>();
+            	if (ebcSetup!=null) {
+                	allIdSet.add(ebcSetup.Storage_Product_Rate_Plan__c);
+                	allIdSet.add(ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c);
+            	}
+                ebcAddOnProductRatePlanAllIdSet = allIdSet;
+            } // end if
+            return ebcAddOnProductRatePlanAllIdSet;
+        }
+        private set;
+    }
+    
+    // ebcMemberProductRatePlanIdList list all the available Product Rate Plan for eBroadcast product for Member
+    // the order is maintaned that the first is the one with highest value
+    public static List<Id> ebcMemberProductRatePlanIdList{
+        get {
+            if (ebcMemberProductRatePlanIdList == null) {
+                List<Id> memberRatePlanIdList = new List<Id>();
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c);
+            	ebcMemberProductRatePlanIdList = memberRatePlanIdList;
+            }
+            return ebcMemberProductRatePlanIdList;
+        }
+        
+        private set;
+    } // end of ebcMemberProductRatePlanIdList getter/setter
+    
+    // ebcNonMemberProductRatePlanIdList list all the available Product Rate Plan for eBroadcast product for Member
+    // the order is maintaned that the first is the one with highest value
+    public static List<Id> ebcNonMemberProductRatePlanIdList{
+        get {
+            if (ebcNonMemberProductRatePlanIdList == null) {
+                List<Id> nonMemberRatePlanIdList = new List<Id>();
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c);
+            	ebcNonMemberProductRatePlanIdList = nonMemberRatePlanIdList;
+            }
+            return ebcNonMemberProductRatePlanIdList;
+        }
+        
+        private set;
+    } // end of ebcNonMemberProductRatePlanIdList getter/setter
+    
 }
