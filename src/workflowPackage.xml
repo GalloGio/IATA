@@ -6,11 +6,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>Workflow</name>
+        <name>Report</name>
     </types>
     <types>
         <members>*</members>
-        <name>Report</name>
+        <name>Workflow</name>
     </types>
     <version>37.0</version>
 </Package>

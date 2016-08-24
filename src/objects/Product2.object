@@ -3894,11 +3894,12 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
-        <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
         <columns>Sell_through_eCommerce__c</columns>
         <columns>IEC_Cart_Option__c</columns>
-        <columns>Display_to_ECommerce__c</columns>
+        <columns>Mega_Menu__c</columns>
+        <columns>Display_Ecom_Topic__c</columns>
         <columns>Effective_To__c</columns>
         <columns>Product_Manager_lookup__c</columns>
         <filterScope>Everything</filterScope>
