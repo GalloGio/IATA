@@ -42,7 +42,15 @@ global without sharing class AMS_RecordCreatorWebservice {
                 realAccountId = accountId;
             }
 
-            oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId);
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
+
+            Id ownerId = null;
+
+            if(!cases.isEmpty()){
+                ownerId = cases.get(0).OwnerId;
+            }
+
+            oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
 
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
@@ -56,7 +64,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 }
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c from CASE where Id = :caseId LIMIT 1];
+            
 
             if(!cases.isEmpty()){
 
@@ -179,12 +187,15 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     } 
 
-    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId){
+    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner){
 
         AMS_OSCAR__c oscar;
         AMS_Pax_Accreditation_Form__c accreditationObj;
  
-        oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId );
+        if(owner == null)
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId );
+        else
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId, OwnerId = owner );
 
         if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
 
