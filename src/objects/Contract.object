@@ -2864,8 +2864,8 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contract.Id}
-&amp;reportId=00O26000000M12F?pv0={!Contract.Id}
-&amp;templateId=a7v260000004Cir
+&amp;reportId=00O8E000000KPON?pv0={!Contract.Id}
+&amp;templateId=a7v8E00000004nb
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
