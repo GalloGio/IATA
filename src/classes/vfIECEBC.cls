@@ -2,7 +2,7 @@
  * This vfIECEBC class provided collection static methods related to eBroadcast feature
  * 
  * Change log:
- *   20160809-sl: add ebcSetup
+ *   20160824-sl: move ebcSetup out to IECEBC_Utility
  *
  **/
 
@@ -124,35 +124,6 @@ public class vfIECEBC extends IECPageController {
 		}
 	}
 	
-	// =======================================================================-
-	// ebcSetup return the only EBC_Setup records in the system
-	// in case there is none (should not be the case), it return a blank record.
-	public static EBC_Setup__c ebcSetup {
-		get {
-			if (ebcSetup==null)
-			{
-				List<EBC_Setup__c> ebcSetupList = [select Id, Name
-								, Member_Email_Block_Product__c
-								, Member_Prepaid_Product_Rate_Plan_01__c
-								, Member_Prepaid_Product_Rate_Plan_02__c
-								, Member_Prepaid_Product_Rate_Plan_03__c
-								, Member_Prepaid_Product_Rate_Plan_04__c
-
-								, Non_Member_Email_Block_Product__c
-								, Non_Member_Prepaid_Product_Rate_Plan_01__c
-								, Non_Member_Prepaid_Product_Rate_Plan_02__c
-								, Non_Member_Prepaid_Product_Rate_Plan_03__c
-								, Non_Member_Prepaid_Product_Rate_Plan_04__c
-
-							from EBC_Setup__c
-							order by CreatedDate
-							limit 1];
-				ebcSetup = (ebcSetupList.size()==1) ? ebcSetupList[0] : new EBC_Setup__c (Name = 'Blank');
-			}
-			return ebcSetup;
-		}
-		set;
-	} // end of ebcSetup getter/setter
 	
 	/*
 	public Pagereference pageLoad() {
