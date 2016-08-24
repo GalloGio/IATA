@@ -26547,6 +26547,26 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_id_card_holder_cont_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Contact_Name__c )
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_id_card_holder_cont_name_portal</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+ ISPICKVAL($User.UserType,&quot;PowerPartner&quot;), 
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Contact_Name__c )
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. To change name, please log a query to our Customer Service Team</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Comment_data_quality_feedback_Mandatory</fullName>
         <active>true</active>
         <errorConditionFormula>NOT(ISBLANK(TEXT(Data_quality_feedback__c))) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
