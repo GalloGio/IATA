@@ -322,7 +322,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		accr.Scope_of_Change__c = 'HO - All Branches';
 
-		accr.Agency_Codes_Concerned__c = '7654321;1234567';
+		accr.Agency_Codes_Concerned__c = '7654321,1234567';
 
 		update accr;
 
@@ -425,7 +425,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		accr.Scope_of_Change__c = 'HO - Selected Branches';
 
-		accr.Agency_Codes_Concerned__c = '7654321;1234567';
+		accr.Agency_Codes_Concerned__c = '7654321,1234567';
 
 		update accr;
 
@@ -484,7 +484,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		accr.Scope_of_Change__c = 'HO - Selected Branches';
 
-		accr.Agency_Codes_Concerned__c = '7654321;1234567';
+		accr.Agency_Codes_Concerned__c = '7654321,1234567';
 
 		update accr;
 
