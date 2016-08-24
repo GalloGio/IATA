@@ -58,7 +58,8 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane is-open" id="sub-nav-pane-1">
                                                     <div class="title">Service Details</div>
-                                                    <table class="table-service-details">                                                 <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
+                                                    <table class="table-service-details">
+                                                        <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
                                                         <tr>
                                                             <th>Subscription ID:</th>
                                                             <td>{!subscription.Name}</td>
@@ -66,7 +67,7 @@
                                                         </apex:outputText>
                                                         <tr>
                                                             <th>Rate Plan:</th>
-                                                            <td>{!productRatePlan.EBC_SubscriptionType__c}</td>
+                                                            <td>{!productRatePlan.Name}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Cost per e-mail:</th>
