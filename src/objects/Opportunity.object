@@ -2965,6 +2965,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Laetitia Slottved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2978,6 +2982,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Michael Huntington</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monica Papuga</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3002,6 +3010,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Rachel Zhang</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ruba Abdulaziz</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5661,6 +5673,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Laetitia Slottved</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </values>
@@ -5674,6 +5690,10 @@
             </values>
             <values>
                 <fullName>Michael Huntington</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monica Papuga</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5698,6 +5718,10 @@
             </values>
             <values>
                 <fullName>Rachel Zhang</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ruba Abdulaziz</fullName>
                 <default>false</default>
             </values>
             <values>
