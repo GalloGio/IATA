@@ -28189,7 +28189,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004ng
+&amp;templateId=a7v260000004Cim
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
@@ -28215,33 +28215,7 @@ myuser={!User.Id}</url>
 ?sessionId={!API.Session_ID}
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Contact.Id}
-&amp;templateId=a7v8E00000004nl
-&amp;AC0=0
-&amp;DS7=3</url>
-    </webLinks>
-    <webLinks>
-        <fullName>SIS_SAP_Client_Request</fullName>
-        <availability>online</availability>
-        <description>Merge Document to Request to SIS and SAP to create a client</description>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>SIS &amp; SAP Client Request</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://composer.congamerge.com
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_290}
-&amp;id={!Contact.Id}
-&amp;templateId=a7v260000004Cir
+&amp;templateId=a7v260000004Cih
 &amp;AC0=0
 &amp;DS7=3</url>
     </webLinks>
