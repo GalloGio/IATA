@@ -1,4 +1,4 @@
-<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Campaign,vfIECEBC_CampaignTemplate" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0" action="{!pageLoad}">
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
@@ -17,7 +17,7 @@
                     <h1 class="page-title">Select Template</h1>
                     
                     <apex:form >
-                        <apex:inputHidden value="{!campaign.EBC_Selected_Template__c}" id="selectedTemplate" />
+                        <apex:inputHidden value="{!selectedTemplate}" id="selectedTemplate" />
                         
                         <script type="text/javascript">
                         function resetTemplate(recordId) {
@@ -31,13 +31,12 @@
                                 <li data-target="#pane-2"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Saved Templates</a></li>
                                 <li data-target="#pane-3"><a href="#" onclick="resetTemplate('');">Use your HTML code</a></li>
                             </ul>
-                
                             <div class="tab-content">
                                 <div class="tab-pane is-open" id="pane-1">
-                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="true" limitToAudience="{!campaign.Audience__c}" />
+                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="true" limitToAudience="{!campaign.Audience__c}" />
                                 </div>
                                 <div class="tab-pane" id="pane-2">
-                                    <c:IECEBC_TemplateList campaign="{!campaign}" global="false" limitToAudience="{!campaign.Audience__c}" />
+                                    <c:IECEBC_TemplateList selectedTemplatedId="{!selectedTemplate}" global="false" limitToAudience="{!campaign.Audience__c}" />
                                 </div>
                                 <div class="tab-pane" id="pane-3"> 
                                     <div class="group-container use-html-code">
@@ -56,10 +55,10 @@
 	                                <li><apex:commandLink action="{!previous}" styleClass="button secondary" value="Previous" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndExit}" reRender="pageMessagesBlock" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
+	                                <li><apex:commandLink action="{!upsertDesignAndExit}" styleClass="button secondary" value="Save and Return to Dashboard" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!campaign.Is_Step3_Writable__c}">
-	                                <li><apex:commandLink action="{!saveAndContinue}" reRender="pageMessagesBlock" styleClass="button" value="Continue" /></li>
+	                                <li><apex:commandLink action="{!upsertDesignAndContinue}" styleClass="button" value="Continue" /></li>
                                 </apex:outputText>
                                 <apex:outputText rendered="{!NOT(campaign.Is_Step3_Writable__c)}">
 	                                <li><apex:commandLink action="{!previous}" value="Previous" styleClass="button secondary" /></li>

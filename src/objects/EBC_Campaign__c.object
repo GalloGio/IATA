@@ -140,21 +140,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>EBC_Selected_Template__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Reusable template selected by the end user at the Step 3 of the Wizard</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Reusable template selected by the end user at the Step 3 of the Wizard</inlineHelpText>
-        <label>EBC Selected Template</label>
-        <referenceTo>EBC_Template__c</referenceTo>
-        <relationshipLabel>EBC Campaigns (EBC Selected Template)</relationshipLabel>
-        <relationshipName>EBC_Campaigns1</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Exact_Target_Campaign_Id__c</fullName>
         <description>Exact Target Campaign Record Id. 
 The value is determined by ExactTarget, and this is is only populated once a campaign is uploaded to ExactTarget
@@ -259,7 +244,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step3_Valid__c</fullName>
         <description>Verify if the Step 3 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK(EBC_Selected_Template__c)</formula>
+        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK( EBC_Design__r.Parent_Template__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 3 is valid and meet the validation.</inlineHelpText>
         <label>Is Step3 Valid</label>
@@ -686,16 +671,5 @@ PRIORVALUE( Subject__c ) != Subject__c &amp;&amp;
 TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
         <errorDisplayField>Subject__c</errorDisplayField>
         <errorMessage>The Subject can only be changed when the campaign status is Draft</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Template_vs_Status</fullName>
-        <active>true</active>
-        <errorConditionFormula>NOT(ISPICKVAL($Profile.UserType, &quot;Standard&quot;)) &amp;&amp;
-
-PRIORVALUE( EBC_Selected_Template__c ) != EBC_Selected_Template__c &amp;&amp;
-
-TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
-        <errorDisplayField>EBC_Selected_Template__c</errorDisplayField>
-        <errorMessage>The Campaign Design &amp; Template can only be changed when the campaign status is Draft</errorMessage>
     </validationRules>
 </CustomObject>
