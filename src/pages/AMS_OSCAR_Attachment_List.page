@@ -11,6 +11,10 @@
             max-height: 150px;
             overflow-y: auto;
         }
+
+        .icontainer{
+            padding-right: 15px;
+        }
     
         .iocontainer:hover{
             background-color: #e3f3ff;
