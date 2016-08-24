@@ -179,6 +179,9 @@ public class AMS_OSCARTriggerHandler {
 		//map that will be used to verify ownership consistency between a list of agencies
 		Map<Id, Set<Id>> accsToCompareOwnership = new Map<Id, Set<Id>>();
 
+		//map that given an agency will give us the id of its terminated child accounts
+		Map<Id, Set<Id>> agencyTerminatedChildAgencies = new Map<Id, Set<Id>>();
+
 		//this Container will store all change codes that need to be created
 		List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
 
@@ -202,26 +205,35 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		//query the the Process Detail object for all the agencies that are being bought
-		List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds]);
+		List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c, Account__r.Status__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds]);
 
 		for (AMS_Process_Detail__c pd : allProcessDetails) {
-
-			if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
-				processDetailPerOSCAR.put(pd.OSCAR__c, new List<AMS_Process_Detail__c> {pd});
-			else
-				processDetailPerOSCAR.get(pd.OSCAR__c).add(pd);
+			//TERMINATED AGENCIES IGNORED
+			if(pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+				if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
+					processDetailPerOSCAR.put(pd.OSCAR__c, new List<AMS_Process_Detail__c> {pd});
+				else
+					processDetailPerOSCAR.get(pd.OSCAR__c).add(pd);
+			}
 
 		}
 
 		//need to get all the hierarchy relationships for the account related to each OSCAR
 		Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(accountIds);
 
-		//all accounts in the hierarchies should be queried DONT KNOW IF THIS WILL BE NECESSARY
 		for (List<AMS_Agencies_relationhip__c> hierarchyRelations : accountHierarchyRelationships.values()) {
 			for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
 
 				accountIds.add(relationship.Parent_Account__c);
 				accountIds.add(relationship.Child_Account__c);
+
+				if(relationship.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
+					if(!agencyTerminatedChildAgencies.containsKey(relationship.Parent_Account__c))
+						agencyTerminatedChildAgencies.put(relationship.Parent_Account__c, new Set<Id>());
+
+					agencyTerminatedChildAgencies.get(relationship.Parent_Account__c).add(relationship.Child_Account__c);
+					
+				}
 
 			}
 		}
@@ -387,7 +399,12 @@ public class AMS_OSCARTriggerHandler {
 					//Hierarchy changes are applied to the agencies in the process detail and also to the OSCAR Account
 					agenciesAffected.add(oscar.Account__c);
 
-					AMS_HierarchyHelper.HierarchyStruct hs = processHierarchyChanges(oscar, accounts, accountHierarchyRelationships, agenciesAffected);
+					//All terminated agencies that would be left without parent MUST be automatically migrated, thus following their parents
+					Set<Id> agenciesToMigrate = AMS_HierarchyHelper.addTerminatedDescendants(agenciesAffected, agencyTerminatedChildAgencies);
+					system.debug('AgenciesToMigrateHierarchy: ' + agenciesToMigrate);
+					system.debug('AgenciesToMigrateData: ' + agenciesAffected);
+
+					AMS_HierarchyHelper.HierarchyStruct hs = processHierarchyChanges(oscar, accounts, accountHierarchyRelationships, agenciesToMigrate);
 
 					hierarchyChanges.add(hs);
 
@@ -800,7 +817,7 @@ public class AMS_OSCARTriggerHandler {
 	//the oscar process requires updates on the accounts on 2 situations
 	//-when a change code is generated (in this situation only the status is updated)
 	//-when migrating fields from staging area to master data
-	//because the above situation are done in separate ocasions, we need to merge the account updates in only one list
+	//because the above situations are done in separate ocasions, we need to merge the account updates in only one list
 	//to prevent double update on accounts
 	private static List<Account> mergeAccountsToUpdate(List<Account> accountUpdatesFromChangeCodes, List<Account> accountUpdatesFromStagingArea){
 
