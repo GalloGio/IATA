@@ -47,7 +47,7 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 	// this is based on what defined in EBC_Setup and whether the user is a member
 	private Id emailBlockProductId {
 		get{
-			Id prodId = (isMember) ? vfIECEBC.ebcSetup.Member_Email_Block_Product__c : vfIECEBC.ebcSetup.Non_Member_Email_Block_Product__c;
+			Id prodId = (isMember) ? IECEBC_Utility.ebcSetup.Member_Email_Block_Product__c : IECEBC_Utility.ebcSetup.Non_Member_Email_Block_Product__c;
 			return prodId;
 		}
 	}

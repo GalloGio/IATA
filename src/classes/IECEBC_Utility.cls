@@ -185,4 +185,91 @@ public class IECEBC_Utility {
         
         a.ParentId = res.Id;
     }
+    
+	// =======================================================================-
+	// ebcSetup return the only EBC_Setup records in the system
+	// in case there is none (should not be the case), it return a blank record.
+	public static EBC_Setup__c ebcSetup {
+		get {
+			if (ebcSetup==null)
+			{
+				List<EBC_Setup__c> ebcSetupList = [select Id, Name
+								, Member_Email_Block_Product__c
+								, Member_Prepaid_Product_Rate_Plan_01__c
+								, Member_Prepaid_Product_Rate_Plan_02__c
+								, Member_Prepaid_Product_Rate_Plan_03__c
+								, Member_Prepaid_Product_Rate_Plan_04__c
+
+								, Non_Member_Email_Block_Product__c
+								, Non_Member_Prepaid_Product_Rate_Plan_01__c
+								, Non_Member_Prepaid_Product_Rate_Plan_02__c
+								, Non_Member_Prepaid_Product_Rate_Plan_03__c
+								, Non_Member_Prepaid_Product_Rate_Plan_04__c
+								
+								, Enhanced_Reporting_Product_Rate_Plan__c
+								, Storage_Product_Rate_Plan__c
+								
+								, Default_Storage_Capacity__c
+								, E_Commerce_Base_Url__c
+							from EBC_Setup__c
+							order by CreatedDate
+							limit 1];
+				ebcSetup = (ebcSetupList.size()==1) ? ebcSetupList[0] : new EBC_Setup__c (Name = 'Blank');
+			}
+			return ebcSetup;
+		}
+		set;
+	} // end of ebcSetup getter/setter
+	
+    public static Set<Id> ebcAddOnProductRatePlanAllIdSet {
+        get {
+            if (ebcAddOnProductRatePlanAllIdSet == null) {
+            	Set<Id> allIdSet = new Set<Id>();
+            	if (ebcSetup!=null) {
+                	allIdSet.add(ebcSetup.Storage_Product_Rate_Plan__c);
+                	allIdSet.add(ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c);
+            	}
+                ebcAddOnProductRatePlanAllIdSet = allIdSet;
+            } // end if
+            return ebcAddOnProductRatePlanAllIdSet;
+        }
+        private set;
+    }
+    
+    // ebcMemberProductRatePlanIdList list all the available Product Rate Plan for eBroadcast product for Member
+    // the order is maintaned that the first is the one with highest value
+    public static List<Id> ebcMemberProductRatePlanIdList{
+        get {
+            if (ebcMemberProductRatePlanIdList == null) {
+                List<Id> memberRatePlanIdList = new List<Id>();
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c);
+            	ebcMemberProductRatePlanIdList = memberRatePlanIdList;
+            }
+            return ebcMemberProductRatePlanIdList;
+        }
+        
+        private set;
+    } // end of ebcMemberProductRatePlanIdList getter/setter
+    
+    // ebcNonMemberProductRatePlanIdList list all the available Product Rate Plan for eBroadcast product for Member
+    // the order is maintaned that the first is the one with highest value
+    public static List<Id> ebcNonMemberProductRatePlanIdList{
+        get {
+            if (ebcNonMemberProductRatePlanIdList == null) {
+                List<Id> nonMemberRatePlanIdList = new List<Id>();
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c);
+				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c);
+            	ebcNonMemberProductRatePlanIdList = nonMemberRatePlanIdList;
+            }
+            return ebcNonMemberProductRatePlanIdList;
+        }
+        
+        private set;
+    } // end of ebcNonMemberProductRatePlanIdList getter/setter
+    
 }
