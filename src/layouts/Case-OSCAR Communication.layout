@@ -185,10 +185,6 @@
         <label>Performance information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ACC_Process_Type__c</field>
             </layoutItems>
