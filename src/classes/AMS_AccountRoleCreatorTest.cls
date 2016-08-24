@@ -8,7 +8,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
 
-        Account acc1 = new Account(Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account acc1 = new Account(Status__c = 'Approved' , Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);
@@ -248,6 +248,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(1, roleList.size());
 
         acList.get(0).Agency_Owner__c = true;
+        acList.get(0).Person_AMS__c = null;
+
         update acList;
         
         accountsInvolved = new Set<Id>();
@@ -261,7 +263,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         //System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
     
     
-        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email2.com', Person_AMS__c = newPerson.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email2.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
         accountsInvolved = new Set<Id>();
@@ -334,7 +336,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
     
     
-        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique@email.com', Person_AMS__c = newPerson.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+        AMS_Accreditation_Contact__c newAc = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accId, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique2@email.com', Person_AMS__c = newPerson.Id, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
         insert newAc;
         
         accountsInvolved = new Set<Id>();
@@ -686,7 +688,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         }
         
         personList = [select Id from AMS_Person__c];
-        System.assertEquals(2, personList.size());
+        System.assertEquals(1, personList.size());
         
         Test.stopTest();
     }
@@ -726,7 +728,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id from AMS_Pax_Accreditation_Form__c limit 1];
 
         List<Contact> conList = [select Id, Email, AccountId from Contact];
-        List<Account> accList = [select Id, Name from Account];
+        List<Account> accList = [select Id, Name, Status__c from Account];
 
         AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Contact__c = conList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
         AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Owner_Account__c = accList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
