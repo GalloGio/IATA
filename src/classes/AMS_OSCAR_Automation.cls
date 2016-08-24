@@ -1062,6 +1062,42 @@ public with sharing class AMS_OSCAR_Automation
         }
     }
 
+    public class AMS_OSCAR_Step16_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step16_succeeded.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+                    res = true;
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+                res = False;
+            }
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step16_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step16_failed.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+                    res = true;
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+                res = False;
+            }
+            return res;
+        }
+    }
+
     public class AMS_OSCAR_Step17_succeeded implements IClassFactory
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
@@ -1085,7 +1121,7 @@ public with sharing class AMS_OSCAR_Automation
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
         {
-            system.debug('Start AUTOMATION AMS_OSCAR_Step17_succeeded.processWork');
+            system.debug('Start AUTOMATION AMS_OSCAR_Step17_failed.processWork');
             Boolean res = False;
             try{
                 if(oscar != null){
