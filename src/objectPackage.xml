@@ -39,6 +39,10 @@
     </types>
     <types>
         <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+	<types>
+        <members>*</members>
         <name>CustomTab</name>
     </types>
     <types>
@@ -51,7 +55,6 @@
     </types> 
 	<types>
         <members>Admin</members>
-        <members>E%26F staff</members>
         <name>Profile</name>
     </types>
     <version>37.0</version>
