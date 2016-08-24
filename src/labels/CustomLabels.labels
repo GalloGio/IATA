@@ -1413,6 +1413,13 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EF_Account_Disallow_BA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Disallow Account Relationships</shortDescription>
+        <value>The selected Client or Airline has E&amp;F setting for &quot;Allow Airline Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please change this before creating a new Billing Agreement or select a different Account.</value>
+    </labels>
+    <labels>
         <fullName>EF_Currency_Not_In_Contract_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
