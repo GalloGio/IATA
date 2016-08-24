@@ -118,7 +118,7 @@ public class AMS_AccountRoleTest {
         
         system.debug('DTULLO 119 --> ' + parameter);
         
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
 		
         // CHECK THE RESULTS
         List<Contact> newContacts = [SELECT FirstName, LastName, Email FROM Contact ORDER BY Email];
@@ -191,7 +191,7 @@ public class AMS_AccountRoleTest {
         theStagingConts[2].Financial_interest__c = 33.3;
         update theStagingConts;
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
 
 
         persons = [SELECT Id FROM AMS_Person__c];
@@ -341,7 +341,7 @@ public class AMS_AccountRoleTest {
         theStagingConts[1].Financial_interest__c = 50;
         update theStagingConts;
 
-        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
 
         owners = [SELECT Owner_Account__r.Name,  Percentage__c, Termination_Date__c
                     FROM AMS_Account_Role__c 
