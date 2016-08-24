@@ -1259,6 +1259,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Event_Source_lk__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Please enter at least 2 characters of the event you are looking for. To display all events use the wild card: *2</inlineHelpText>
+        <label>Event Source</label>
+        <referenceTo>Event__c</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ExpectedRevenue</fullName>
         <trackTrending>false</trackTrending>
     </fields>
@@ -11316,11 +11330,10 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
     </validationRules>
     <validationRules>
         <fullName>Opp_event_required_for_event_leads</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>“Lead source” and “event source” need to be mandatory, but the event only if the lead source was an even</description>
         <errorConditionFormula>AND (
-  ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source__c =&apos;&apos; )</errorConditionFormula>
-        <errorDisplayField>Event_Source__c</errorDisplayField>
+  ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source_lk__c =&apos;&apos; )</errorConditionFormula>
         <errorMessage>If the lead source was an event you need to specify the event</errorMessage>
     </validationRules>
     <validationRules>
