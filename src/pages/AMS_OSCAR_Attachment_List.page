@@ -140,7 +140,7 @@
     </script>
 
     <apex:form id="mainform" >
-        <apex:actionFunction name="refreshList" action="{!refreshList}"  rerender="mainform" status="loading" oncomplete="stopLoading();" />
+        <apex:actionFunction name="refreshList" action="{!refreshList}" reRender="mainform" status="loading" oncomplete="stopLoading();" />
 
         <apex:pageblock id="fileList" title="{!$Label.Attachments}" >
 

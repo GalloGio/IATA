@@ -36,6 +36,28 @@ global class AMS_OSCAR_Attachments {
         get { return WrapperAttach.getAmazonFolder(this.cse.Id); }
     }
 
+    private List<ErrorMessageConstruct> errorMessages{
+        get{
+            if(errorMessages == null) errorMessages = new List<ErrorMessageConstruct>();
+            return errorMessages;
+        }
+        set;
+    }
+
+    private void logMessage(ApexPages.Message message){
+        errorMessages.add(new ErrorMessageConstruct(message));
+    }
+
+    private class ErrorMessageConstruct{
+        ApexPages.Severity severity;
+        String message;
+
+        public ErrorMessageConstruct(ApexPages.Message message){
+            this.severity = message.getSeverity();
+            this.message = message.getSummary();
+        }
+    }
+
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
@@ -55,8 +77,11 @@ global class AMS_OSCAR_Attachments {
             this.listAttachments.sort();
         } catch (Exception e ) {
             TransformationHelper.sendEmailSupport('FATAL: GenericAttachmentListController in function refreshList()  ' ,'STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, e.getMessage()));
+            logMessage(new ApexPages.message(ApexPages.Severity.WARNING, e.getMessage()));
         }
+
+        for(ErrorMessageConstruct message : errorMessages) ApexPages.addMessage(new ApexPages.message(message.severity, message.message));
+        errorMessages.clear();
     }
 
     /*
@@ -168,10 +193,10 @@ global class AMS_OSCAR_Attachments {
         try{
             for(WrapperAttach att : listAttachments){
                 att.updateAttach();
-                ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Attachments updated'));
             }
+            logMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, 'Attachments updated'));
         }catch(Exception e){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Error updating attachments: '+ e.getMessage()));
+            logMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Error updating attachments: '+ e.getMessage()));
         }
         
     }
