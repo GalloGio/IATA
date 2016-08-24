@@ -1,5 +1,5 @@
 <apex:component >
-    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
     <apex:actionStatus id="Loading" stopText="">
         <apex:facet name="start">
             <apex:outputPanel >
