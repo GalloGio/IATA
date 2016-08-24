@@ -200,7 +200,7 @@ public class AMS_AccountHierarchySelectionController {
 			if(oscar.Type_of_Change__c != null){
 
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) return true;
-				if(tocList.contains(AMS_Utils.LOCATION) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
+				if((tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
 			}
 			
 			oscar.AMS_Target_Agency__c = null;
@@ -306,7 +306,7 @@ public class AMS_AccountHierarchySelectionController {
 			ownershipAgenciesNotSelected = false;
 		}
 
-		if(tocList.contains(AMS_Utils.LOCATION)) errorChecks.put(AMS_Utils.LOCATION, true);
+		if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchy){
 			
