@@ -133,7 +133,7 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Allow_Billing_Agreements__c</field>
             </layoutItems>
