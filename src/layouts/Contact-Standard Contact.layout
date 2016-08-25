@@ -693,7 +693,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EF_Relationship__c</fields>
+        <fields>EF_Airline_Billing_Agreement__c</fields>
         <fields>Role__c</fields>
         <fields>Status__c</fields>
         <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>

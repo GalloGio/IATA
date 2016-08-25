@@ -5629,7 +5629,8 @@ Formula field that copies the E&amp;F Type.</description>
         <globalPicklist>EF_Role</globalPicklist>
         <label>E&amp;F Role</label>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>EF_Status__c</fullName>
