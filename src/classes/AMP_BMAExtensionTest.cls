@@ -45,7 +45,7 @@ private class AMP_BMAExtensionTest
 			
 			bmaExtension.IdConcerned = o.Id;
 			bmaExtension.EditCommentLine();
-			bmaExtension.selectedComment.Status__c = 'Active';
+			bmaExtension.selectedComment.Status__c = 'In Progress';
 			bmaExtension.SaveCommentLine();
 
 			// for @AuraEnabled
