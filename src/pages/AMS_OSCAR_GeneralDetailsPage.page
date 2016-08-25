@@ -228,9 +228,10 @@
                 </apex:outputField>
                  -->
                  <!-- DT: Added as per request -->
-                 <apex:outputField value="{!accreditationObj.ISO_Country__c}" >
+                <!--<apex:outputField value="{!accreditationObj.ISO_Country__c}" >
                     <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
                 </apex:outputField>
+                -->
                 <apex:outputField value="{!accreditationObj.Branch_Office_City__c}" >
                     <apex:inlineEditSupport event="ondblClick" showonEdit="saveButton,cancelButton" />
                 </apex:outputField>
