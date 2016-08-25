@@ -16882,7 +16882,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Contact_Relationship__c.EF_Relationship__c</field>
+        <field>EF_Contact_Relationship__c.EF_Airline_Billing_Agreement__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
