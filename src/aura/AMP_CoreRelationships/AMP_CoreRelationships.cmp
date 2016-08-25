@@ -74,25 +74,9 @@
         
     </div>
     
-    <h3 class="slds-section__title">Relationship with External Entities</h3>        
-    
-    <div class="slds-grid slds-wrap">
-        
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label">Membership SITA</label>
-                <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.Membership_SITA__c}" />-->
-                    <ui:outputCheckbox value="{!v.account.Membership_SITA__c}"/>
-                </div>
-            </div>            
-        </div>
-        
-    </div>
     
     
-    
-    <div class="slds-card">
+    <div class="slds-card slds-m-bottom--x-large">
 
         <div class="slds-card__header slds-grid">
             <div class="slds-media slds-media--center slds-has-flexi-truncate">
@@ -135,5 +119,21 @@
         
     </div>
 
+    	
+   	<h3 class="slds-section__title">Relationship with External Entities</h3>        
+    
+    <div class="slds-grid slds-wrap">
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Membership SITA</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.Membership_SITA__c}" />-->
+                    <ui:outputCheckbox value="{!v.account.Membership_SITA__c}"/>
+                </div>
+            </div>            
+        </div>
+        
+    </div>
 
 </aura:component>
