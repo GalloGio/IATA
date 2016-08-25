@@ -28944,21 +28944,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>AM_Ownership_Type__c</picklist>
-            <values>
-                <fullName>Government-held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privately-held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publically-held</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -45609,21 +45594,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>AM_Ownership_Type__c</picklist>
-            <values>
-                <fullName>Government-held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privately-held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publically-held</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -49575,21 +49545,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>yy</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>AM_Ownership_Type__c</picklist>
-            <values>
-                <fullName>Government-held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privately-held</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publically-held</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
