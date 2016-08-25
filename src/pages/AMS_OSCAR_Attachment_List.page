@@ -1,6 +1,7 @@
-<apex:page controller="AMS_OSCAR_Attachments" >
+<apex:page controller="AMS_OSCAR_Attachments" title="Manage Attachments" >
     <!-- <c:GenericAttachmentList sobjectId="{!oscCase.Id}" uploaderWizard="AMS_File" sourceSystem="Internal" scrollable="true"/> -->
     
+    <apex:includeScript value="/support/console/20.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
     <apex:includeScript value="{!URLFOR($Resource.tablesorter, 'jquery.tablesorter.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.tablesorter,'/themes/blue/style.css')}" />
@@ -66,6 +67,20 @@
     <script>
     // Get the Root URL dynamically
         var pageMainUrl = window.location.protocol + "//" + window.location.hostname;
+
+        function testSetTabTitle() {
+            //Set the current tab's title
+            var title = document.getElementsByTagName("title")[0].innerHTML;
+            sforce.console.setTabTitle(title);
+        }
+
+        var pageLoad = window.onload;
+        window.onload = function() {
+            if (pageLoad) {
+                pageLoad();
+            }
+            testSetTabTitle();
+        }
 
         console.info('jQuery version: '+$.fn.jquery);
 
