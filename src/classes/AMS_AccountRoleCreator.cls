@@ -341,6 +341,9 @@ public with sharing class AMS_AccountRoleCreator
 
 	        List<AMS_Accreditation_Contact__c> accreditationContactsToProcess = database.query(query);
 
+            // Maças, se tiveres que comentar isto desulpa :P
+            accreditationContactsToProcess = cleanPersons(accreditationContactsToProcess);
+
 	        // need to get all the contacts in case I need later on to update them...
 	        Map<String, Contact> emailContactMap = new Map<String, Contact>();
         	Set<Id> acContactIdSet = new Set<Id>();
@@ -499,6 +502,144 @@ public with sharing class AMS_AccountRoleCreator
 
 
         }
+
+    }
+
+
+    //when we have an accreditation contact without any link to a contact but with a link to a person
+    //then we create the contact and delete the person but before deleting the person we should check:
+    //if the person was linked to any account role, we need to update those account roles with the lookup to the new contact
+    public static List<AMS_Accreditation_Contact__c> cleanPersons(List<AMS_Accreditation_Contact__c> contacts){
+
+        List<AMS_Accreditation_Contact__c> aContactsToUpdate = new List<AMS_Accreditation_Contact__c>();
+
+        Set<Id> personsToDelete = new Set<Id>();
+
+        Map<AMS_Accreditation_Contact__c, Id> accreditationsAndContacts = new Map<AMS_Accreditation_Contact__c, Id>();
+
+        Map<Id, Id> personsAndContacts = new Map<Id, Id>();
+
+        Map<Id, Contact> personsAndContactsObj = new Map<Id, Contact>();
+
+        Map<String, Contact> newContactsToInsert = new Map<String, Contact>();
+
+        for(AMS_Accreditation_Contact__c ac: contacts){
+
+            if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null && ac.Contact__c == null){ // we have to create a new contact
+        
+                if(newContactsToInsert.get(ac.email__c) == null){ // this is only for new created contacts, not updates.
+
+                    Contact con = new Contact();
+
+                    con = AMS_AccreditationContactHelper.populateNewContactFields(con, ac);
+                    newContactsToInsert.put(con.Email, con);
+
+                    //accreditationsAndContacts.put(ac,con);
+                    personsToDelete.add(ac.Person_AMS__c);
+                    personsAndContactsObj.put(ac.Person_AMS__r.Id,con);
+                }
+
+                continue;
+            }
+
+            if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
+
+                personsToDelete.add(ac.Person_AMS__c);
+                personsAndContacts.put(ac.Person_AMS__r.Id,ac.Contact__c);
+
+                continue;
+            }
+
+
+            if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null && ac.Contact__c == null){ // we dont have to create a new contact, just update the AC
+
+                accreditationsAndContacts.put(ac,ac.Person_AMS__r.Contact__c);
+
+                personsToDelete.add(ac.Person_AMS__c);
+
+                personsAndContacts.put(ac.Person_AMS__r.Id,ac.Person_AMS__r.Contact__c);
+
+                continue;
+            }
+
+            if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
+
+                personsToDelete.add(ac.Person_AMS__c);
+
+                personsAndContacts.put(ac.Person_AMS__r.Id,ac.Person_AMS__r.Contact__c);
+
+                continue;
+            }
+
+        }
+
+
+        if(!newContactsToInsert.isEmpty()){
+        
+            insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+        
+        }
+
+
+
+
+        for(AMS_Accreditation_Contact__c ac: contacts){
+
+            if(accreditationsAndContacts.get(ac) != null){
+                ac.Contact__c = accreditationsAndContacts.get(ac);
+                ac.Person_AMS__c = null;
+                aContactsToUpdate.add(ac);
+            }
+            else
+                if(newContactsToInsert.get(ac.email__c) != null){
+                    ac.Contact__c = newContactsToInsert.get(ac.email__c).Id;
+                    ac.Person_AMS__c = null;
+                    aContactsToUpdate.add(ac);
+                }
+        }
+
+        System.debug('List of persons to delete:' + personsToDelete);
+
+        // before deleting the persons, let's update any AMS Account Roles that have those persons associated ...
+
+        updateAMSRolesBeforePersonDeletion(personsToDelete,personsAndContacts,personsAndContactsObj);
+
+        List<AMS_Person__c> personDeletionList = [select id, Name from AMS_Person__c where id in :personsToDelete];
+
+        if(personDeletionList.size() > 0){
+            delete personDeletionList;
+        }
+
+        if(!aContactsToUpdate.isEmpty())
+            update aContactsToUpdate;
+
+        return contacts;
+
+
+    }
+
+    public static void updateAMSRolesBeforePersonDeletion(Set<Id> personsToDelete, Map<Id, Id> personsAndContacts , Map<Id, Contact> personsAndContactsObj){
+
+        // first lets find the AMS Account Roles to Update
+
+        List<AMS_Account_Role__c> rolesToUpdate = new List<AMS_Account_Role__c>();
+
+        List<AMS_Account_Role__c> roles = [SELECT ID , Contact__c, Person__c from AMS_Account_Role__c where Person__c in :personsToDelete];
+
+        for(AMS_Account_Role__c role: roles){
+
+            if(role.Contact__c == null && ( personsAndContacts.get(role.Person__c) != null || personsAndContactsObj.get(role.Person__c) != null) ){
+
+                role.Contact__c = personsAndContacts.get(role.Person__c) != null ? personsAndContacts.get(role.Person__c) : personsAndContactsObj.get(role.Person__c).Id;
+
+                rolesToUpdate.add(role);
+
+            }
+
+        }
+
+        if(!rolesToUpdate.isEmpty())
+            update rolesToUpdate;
 
     }
 
@@ -682,9 +823,9 @@ public with sharing class AMS_AccountRoleCreator
         }
         else if(ac.Person_AMS__c != null)
         {
-        	role.Person__c = ac.Person_AMS__c;
+            role.Person__c = ac.Person_AMS__c;
         }
-       
+
         
 		role.Duty__c 			= ac.Job_Title__c;
 		role.Hours__c 			= String.valueOf(ac.Time_devoted_to_Agency_business__c);

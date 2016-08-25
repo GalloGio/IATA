@@ -206,6 +206,13 @@ public with sharing class AMS_AccreditationContactController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the date field format is "YYYY-MM-DD". First error with: '+firstErrorDate));
             return null;
         }
+
+        String duplicatedContacts = verifyEmailDuplication();
+        if(duplicatedContacts != null)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure the Owners are not using the same email address: '+duplicatedContacts));
+            return null;
+        }
         
         // Verify that no emails entered for "new" contacts are found in the system
         Set<String> emailSetToConfirm = new Set<String>();
@@ -366,6 +373,27 @@ public with sharing class AMS_AccreditationContactController {
         return numberOfIFAPs;
     }
     
+    public String verifyEmailDuplication(){
+
+        Set<String> emails = new Set<String>();
+
+        for(AccreditationContactWrapper wrapped : acWrapper){
+
+            if(wrapped.ac == null || wrapped.ac.Email__c == null)
+                continue;
+            if(emails.contains(wrapped.ac.Email__c))
+                return wrapped.ac.Email__c;
+            else
+                emails.add(wrapped.ac.Email__c);
+            
+        }
+
+        return null;
+    }
+
+
+
+
     public String verifyDateFormatting()
     {
         for(AccreditationContactWrapper wrapped : acWrapper)
