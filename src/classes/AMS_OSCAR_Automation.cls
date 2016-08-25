@@ -69,7 +69,7 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
 
-                    oscar.IRIS_update_result__c = true;
+                    oscar.IRIS_update_result__c = 'Passed';
 
                     res = True;
                 }
@@ -93,7 +93,7 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
 
-                    oscar.IRIS_update_result__c = false;
+                    oscar.IRIS_update_result__c = 'Failed';
 
                     res = True;
                 }
@@ -1077,7 +1077,7 @@ public with sharing class AMS_OSCAR_Automation
             try{
                 if(oscar != null){
 
-                    oscar.Finalization_result__c = true;
+                    oscar.Finalization_result__c = 'Passed';
 
                     res = true;
                 }
@@ -1098,7 +1098,7 @@ public with sharing class AMS_OSCAR_Automation
             try{
                 if(oscar != null){
 
-                    oscar.Finalization_result__c = false;
+                    oscar.Finalization_result__c = 'Failed';
                     
                     res = true;
                 }
