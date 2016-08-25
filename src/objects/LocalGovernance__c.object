@@ -140,7 +140,6 @@
         <externalId>false</externalId>
         <label>Cluster</label>
         <referenceTo>Cluster__c</referenceTo>
-        <relationshipLabel>Local Groups</relationshipLabel>
         <relationshipName>Local_Groups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -322,7 +321,6 @@
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>Local Groups</relationshipLabel>
         <relationshipName>APJCs</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -743,7 +741,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <type>LongTextArea</type>
         <visibleLines>4</visibleLines>
     </fields>
-    <label>Local Group</label>
+    <label>Industry Group</label>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -983,11 +981,11 @@ Record Type + Group Type + ISO_Country_Name</description>
         <language>en_US</language>
     </listViews>
     <nameField>
-        <label>Local Group Name</label>
+        <label>Group Name</label>
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Local Groups</pluralLabel>
+    <pluralLabel>Industry Groups</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Draft_Reg_Div_Group</fullName>
@@ -1876,7 +1874,11 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>

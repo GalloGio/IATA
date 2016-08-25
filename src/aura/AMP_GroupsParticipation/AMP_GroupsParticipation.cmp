@@ -4,7 +4,7 @@
     <aura:attribute name="ParticipantWrappers" type="Object" access="private"/>
     
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
-    <ltng:require scripts="{!join(',', $Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />
+    <!--<ltng:require scripts="{!join(',', $Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />-->
 
     
     <div class="slds-card">
@@ -12,7 +12,7 @@
         <div class="slds-card__header slds-grid">
             <div class="slds-media slds-media--center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
-                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#groups'}" class="slds-icon slds-icon-standard-account slds-icon--medium" />
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#groups'}" class="slds-icon slds-icon-standard-groups slds-icon--medium" />
                 </div>
                 <div class="slds-media__body slds-truncate">
                     <span class="slds-text-heading--small">Industry Groups Participation</span>
@@ -29,7 +29,7 @@
                         <th style="width: 12%;"><span>IATA Group Owner</span></th>
                         <th style="width: 30%;"><span>Mission of IATA Group</span></th>
                         <th style="width: 11%;"><span>Role Within Group</span></th>
-                        <th style="width: 5%;"><span>Salutation</span></th>
+                        <th style="width: 5%;"><span>Salut.</span></th>
                         <th style="width: 8%;"><span>First Name</span></th>
                         <th style="width: 8%;"><span>Last Name</span></th>
                         <th style="width: 9%;"><span>Title</span></th>

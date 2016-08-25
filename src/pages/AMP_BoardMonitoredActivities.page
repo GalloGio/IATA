@@ -30,7 +30,7 @@
                 </apex:column> -->
 
                 <apex:column >
-                    <apex:facet name="header">Name of Activity</apex:facet>
+                    <apex:facet name="header">Activity</apex:facet>
                     <apex:outputField value="{!item.Name}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), false, true)}" />
                         <apex:inputField value="{!item.Name}" rendered="{!IF(AND(isEditMode, IdConcerned==item.Id), true, false)}" style="width: 80%;" />
                 </apex:column>

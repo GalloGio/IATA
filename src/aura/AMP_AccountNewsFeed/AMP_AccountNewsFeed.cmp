@@ -1,0 +1,29 @@
+<aura:component controller="AMP_AccountNewsFeedExtension">
+    <aura:attribute name="account" type="Account" />
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="searchTerm" type="String" />
+    <aura:attribute name="newsfeed" type="AMP_AccountNewsFeedExtension.rssPost[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="slds-grid slds-wrap" >
+        <table class="slds-table slds-table--bordered slds-table--striped">
+            <thead>
+                <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.newsfeed}" var="news" indexVar="index" >
+                    <tr>
+                        <td>{!news.dateString}</td>
+                        <td><a href="{!news.link}" target="_blank">{!news.title}</a></td>
+                        <td><span class="slds-truncate"><ui:outputRichText value="{!news.description}" /></span></td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+    
+</aura:component>

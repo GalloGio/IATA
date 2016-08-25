@@ -1,44 +1,46 @@
 ({
-	doInit: function(component, event, helper) {
-		var relatedAccount = component.get("v.relatedAccount");
-
-		if(relatedAccount.Id === undefined) {
-			component.set("v.isEditMode", true);
-		} else {
-			component.set("v.isEditMode", false);
-		}
-
-	},
+    doInit: function(component, event, helper) {
+        var relatedAccount = component.get("v.relatedAccount");
+        
+        if(relatedAccount.Id === undefined) {
+            component.set("v.isEditMode", true);
+        } else {
+            component.set("v.isEditMode", false);
+        }
+        
+    },
     switchToEditMode : function(component, event, helper) {
-		component.set("v.isEditMode", true);
+        component.set("v.isEditMode", true);
         console.log('going into edit mode...');
-	},
-    switchToErrorMode : function(component, event, helper) {
+    },
+    HandleOwnershipError: function(component, event, helper) {
         var componentIndex = event.getParam("index");
-        console.log('component ' + component.get("v.index") + ' analyzing OwnershipErrorEvent with index ' + componentIndex);
-        if (componentIndex == component.get("v.index")) {
-            console.log('Index ' + component.get("v.index") + ' going into error mode... ');
+        var accountRoleId = event.getParam("accountRoleId");
+        //console.log('Index ' + component.get("v.index") + ' with account role Id ' + component.get("v.relatedAccount").Id + ' is treating error message ');
+        
+        if (componentIndex == component.get("v.index") && accountRoleId == component.get("v.relatedAccount").Id) {
+            console.log('Index ' + component.get("v.index") + ' with account role Id ' + accountRoleId + ' is going into error mode... ');
             
             component.set("v.isEditMode", true);
             component.set("v.isError", true);
             component.set("v.errorMessage", event.getParam("errorMessage"));
         }
-	},
+    },
     cancelEditMode : function(component, event, helper) {
-			var relatedAccount = component.get("v.relatedAccount");
-			if(relatedAccount.Id === undefined) {
-				console.log('delete');
-				var deleteAccountEvent = component.getEvent("deleteAccount");
-				deleteAccountEvent.setParams({'accountRole' : relatedAccount});
-				deleteAccountEvent.fire();
-				// component.set("v.editMode", false);
-			}
-		component.set("v.isEditMode", false);
+        var relatedAccount = component.get("v.relatedAccount");
+        if(relatedAccount.Id === undefined) {
+            console.log('cancel add new  -> delete');
+            var deleteAccountEvent = component.getEvent("deleteAccount");
+            deleteAccountEvent.setParams({'accountRole' : relatedAccount});
+            deleteAccountEvent.fire();
+            // component.set("v.editMode", false);
+        }
+        component.set("v.isEditMode", false);
         // console.log('canceling edit mode...');
-	},
+    },
     deleteItem : function(component, event, helper) {
-		// Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list
-
+        // Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list
+        
         console.log('delete clicked...');
         var relatedAccount = component.get("v.relatedAccount");
         
@@ -46,19 +48,17 @@
         deleteAccountEvent.setParams({'accountRole' : relatedAccount});
         deleteAccountEvent.fire();
         component.set("v.isEditMode", false);
-	},
-	clickSaveAccount : function(component, event, helper) {
-
-		var relatedAccount = component.get("v.relatedAccount");
-
-		console.log(JSON.stringify(relatedAccount));
-		var index = component.get("v.index");
-		var updateEvent = component.getEvent("updateAccount");
-		updateEvent.setParams({ "accountRole": relatedAccount, "index":index }).fire();
-
-
-		component.set("v.isEditMode", false);
-	},
+    },
+    clickSaveAccount : function(component, event, helper) {
+        
+        var relatedAccount = component.get("v.relatedAccount");
+        
+        var index = component.get("v.index");
+        var updateEvent = component.getEvent("updateAccount");
+        updateEvent.setParams({ "accountRole": relatedAccount, "index":index }).fire();
+        
+        component.set("v.isEditMode", false);
+    },
     /**
      * Handler for receiving the updateLookupIdEvent event
      */
@@ -78,7 +78,7 @@
         // Set the Id bound to the View
         cmp.set("v.relatedAccount", account);
     },
-
+    
     /**
      * Handler for receiving the clearLookupIdEvent event
      */
@@ -90,7 +90,7 @@
         } else {
             account.Account__c = null;
         }
-
+        
         // Set the Id bound to the View
         cmp.set("v.relatedAccount", account);
     }

@@ -7,7 +7,7 @@
 				<table class="detailList" border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td class="labelCol">Account Manager</td>
-						<td class="dataCol col02 inlineEditLock"><apex:outputField value="{!Account.AM_Account_Manager__c}" /></td>
+						<td class="dataCol col02 inlineEditLock"><apex:outputLink target="_blank" value="/{!Account.AM_Account_Manager__c}" >{!Account.AM_Account_Manager__r.Name}</apex:outputLink></td>
 						<td class="labelCol">Email</td>
 						<td class="dataCol inlineEditLock"><apex:outputField value="{!Account.AM_Account_Manager__r.Email}" /></td>
 					</tr>

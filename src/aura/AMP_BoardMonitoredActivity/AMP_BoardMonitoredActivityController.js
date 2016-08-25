@@ -3,10 +3,10 @@
 		var bma = component.get("v.bma");
 		var dpt = component.get("v.displayType");
 		if(dpt === 'Division') {
-			console.log(JSON.stringify(bma));
+			
 			var comment;
 	    if(bma.Comments__r !== undefined) comment = bma.Comments__r[0];
-			console.log(JSON.stringify(comment));
+			
 		}
 		component.set("v.comment",comment);
 	},
@@ -16,7 +16,21 @@
 	},
     cancelEditMode : function(component, event, helper) {
 		component.set("v.isEditMode", false);
+        component.set("v.isError", false);
         console.log('canceling edit mode...');
+	},    
+    HandleBMAError: function(component, event, helper) {
+        var componentIndex = event.getParam("index");
+        var bmaId = event.getParam("bmaId");
+        //console.log('Index ' + component.get("v.index") + ' with BMA Id ' + component.get("v.bma").Id + ' is treating error message ');
+        
+        if (componentIndex == component.get("v.index") && bmaId == component.get("v.bma").Id) {
+            console.log('Index ' + component.get("v.index") + ' with BMA Id ' + bmaId + ' is going into error mode... ');
+            
+            component.set("v.isEditMode", true);
+            component.set("v.isError", true);
+            component.set("v.errorMessage", event.getParam("errorMessage"));
+        }
 	},
     deleteItem : function(component, event, helper) {
 		// Add attribute info, trigger event, handle in AMP_AccountOwnership component - to be able to refresh the list
@@ -26,7 +40,8 @@
 	clickSaveComment : function(component, event, helper) {
 
 		var comment = component.get("v.comment");
-		console.log(JSON.stringify(comment));
+        comment.Status__c = component.find("accountStatus").get("v.value");
+		
 		var index = component.get("v.index");
 
 		var updateEvent = component.getEvent("updateBMA");
@@ -39,44 +54,44 @@
 		var details = component.find("details");
 		$A.util.removeClass(details, 'slds-truncate');
 		$A.util.addClass(details, 'popup');
-
-		var showMore = component.find("show-more-button");
-		$A.util.addClass(showMore, 'hidden');
-		var showLess = component.find("show-less-button");
-		$A.util.removeClass(showLess, 'hidden');
-		$A.util.addClass(showLess, 'popup-button');
+        
+        var showMore = component.find("show-more-button");
+        $A.util.addClass(showMore, 'slds-hide');
+        var showLess = component.find("show-less-button");
+        $A.util.removeClass(showLess, 'slds-hide');
+        $A.util.addClass(showLess, 'popup-button');
 	},
 	showLess : function(component, event, helper) {
 		var details = component.find("details");
 		$A.util.addClass(details, 'slds-truncate');
 		$A.util.removeClass(details, 'popup');
-
-		var showMore = component.find("show-more-button");
-		$A.util.removeClass(showMore, 'hidden');
-		var showLess = component.find("show-less-button");
-		$A.util.addClass(showLess, 'hidden');
-		$A.util.removeClass(showLess, 'popup-button');
+        
+        var showMore = component.find("show-more-button");
+        $A.util.removeClass(showMore, 'slds-hide');
+        var showLess = component.find("show-less-button");
+        $A.util.addClass(showLess, 'slds-hide');
+        $A.util.removeClass(showLess, 'popup-button');
 	},
 	showMoreTarget : function(component, event, helper) {
 		var details = component.find("target");
 		$A.util.removeClass(details, 'slds-truncate');
 		$A.util.addClass(details, 'popup');
-
-		var showMore = component.find("show-more-target-button");
-		$A.util.addClass(showMore, 'hidden');
-		var showLess = component.find("show-less-target-button");
-		$A.util.removeClass(showLess, 'hidden');
-		$A.util.addClass(showLess, 'popup-button');
+        
+        var showMore = component.find("show-more-target-button");
+        $A.util.addClass(showMore, 'slds-hide');
+        var showLess = component.find("show-less-target-button");
+        $A.util.removeClass(showLess, 'slds-hide');
+        $A.util.addClass(showLess, 'popup-button');
 	},
 	showLessTarget : function(component, event, helper) {
 		var details = component.find("target");
 		$A.util.addClass(details, 'slds-truncate');
 		$A.util.removeClass(details, 'popup');
-
-		var showMore = component.find("show-more-target-button");
-		$A.util.removeClass(showMore, 'hidden');
-		var showLess = component.find("show-less-target-button");
-		$A.util.addClass(showLess, 'hidden');
-		$A.util.removeClass(showLess, 'popup-button');
+        
+        var showMore = component.find("show-more-target-button");
+        $A.util.removeClass(showMore, 'slds-hide');
+        var showLess = component.find("show-less-target-button");
+        $A.util.addClass(showLess, 'slds-hide');
+        $A.util.removeClass(showLess, 'popup-button');
 	}
 })

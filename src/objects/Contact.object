@@ -5734,6 +5734,8 @@ IFAP Application.</description>
         <fullName>Function__c</fullName>
         <externalId>false</externalId>
         <label>Primary Contact for</label>
+        <description>This list serves as a flag to show whether this is the primary contact for the account, and for what domains. Introduced by the Account Management project.</description>
+        <inlineHelpText>Shows that the contact is the primary contact for the domains selected in the list</inlineHelpText>
         <picklist>
             <picklistValues>
                 <fullName>Aeropolitical</fullName>
@@ -5756,7 +5758,7 @@ IFAP Application.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Gen. Management</fullName>
+                <fullName>Gen.Management</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7512,16 +7514,6 @@ TotalRows-Successes-Errors</description>
         </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Primary_Contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>This box serves as a flag to show whether this is the primary contact for the account. Introduced by the Account Management project.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Shows that the contact is the primary contact for the domains selected in the &quot;Primary Contact for&quot; list</inlineHelpText>
-        <label>Primary Contact</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Region_10__c</fullName>
@@ -20420,7 +20412,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gen%2E Management</fullName>
+                <fullName>Gen%2EManagement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22787,7 +22779,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gen%2E Management</fullName>
+                <fullName>Gen%2EManagement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25312,7 +25304,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gen%2E Management</fullName>
+                <fullName>Gen%2EManagement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26611,7 +26603,7 @@ OR(
  TEXT(CEO_CFO__c)=&quot;CFO&quot;,
  TEXT(CEO_CFO__c)=&quot;COO&quot;,
  Membership_Main_Contact__c,
- Primary_Contact__c
+ NOT(ISBLANK(Function__c))
 ),
 OR(
  ISBLANK(FirstName ) ,
@@ -26636,22 +26628,6 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
    ,ISBLANK(Senior_Contact_Phone__c))
   )</errorConditionFormula>
         <errorMessage>Please fill a phone number or an email address</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Primary_contact_needs_Function</fullName>
-        <active>true</active>
-        <description>primary contact need a Primary for
-AND(Primary_Contact__c ,  ISBLANK(Function__c) )</description>
-        <errorConditionFormula>false</errorConditionFormula>
-        <errorMessage>Only contacts that have Primary For can be flagged as Primary Contact</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Primary_contact_needs_Job_Function</fullName>
-        <active>true</active>
-        <description>primary contact needs to be linked to a job function
-AND(Primary_Contact__c , ISPICKVAL(  Function__c,&quot;&quot;  ))</description>
-        <errorConditionFormula>false</errorConditionFormula>
-        <errorMessage>Only contacts that have a Job Function can be flagged as Primary Contact</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Validate_FA_Contact_creation</fullName>

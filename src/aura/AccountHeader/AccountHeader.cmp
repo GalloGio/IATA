@@ -1,109 +1,118 @@
 <aura:component >
     <aura:attribute name="account" type="Account"/>
-
-	<!-- PAGE HEADER -->
+    
+    <!-- PAGE HEADER -->
     <div class="slds-page-header" role="banner">
-
-      <!-- PAGE HEADER TOP ROW -->
-      <div class="slds-grid">
-
-        <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
-        <div class="slds-col">
-
-          <!-- HEADING AREA -->
-          <!-- MEDIA OBJECT = FIGURE + BODY -->
-          <div class="slds-media">
-
-            <div class="slds-media__figure">
-                <span class="slds-icon__container slds-icon-standard-account">
-                  <img src="/resource/AMP_logo" />
-                </span>
+        
+        <!-- PAGE HEADER TOP ROW -->
+        <div class="slds-grid">
+            
+            <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
+            <div class="slds-col">
+                
+                <!-- HEADING AREA -->
+                <!-- MEDIA OBJECT = FIGURE + BODY -->
+                <div class="slds-media">
+                    
+                    <div class="slds-media__figure">
+                        <span class="slds-icon__container slds-icon-standard-account">
+                            <img src="/resource/AMP_logo" />
+                        </span>
+                    </div>
+                    
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading--label">Account</p>
+                        <h1 class="slds-text-heading--medium">{!v.account.Name}</h1>
+                    </div>
+                    
+                </div>
+                <!-- / MEDIA OBJECT -->
+                <!-- HEADING AREA -->
+                
             </div>
-
-            <div class="slds-media__body">
-              <p class="slds-text-heading--label">Account</p>
-              <h1 class="slds-text-heading--medium">{!v.account.Name}</h1>
+            <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
+            
+            <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
+            <div class="slds-col slds-align-middle">
+                <aura:unescapedHtml value="{!v.account.Company_Logo__c}" />
             </div>
-
-          </div>
-          <!-- / MEDIA OBJECT -->
-          <!-- HEADING AREA -->
-
+            <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
+            
+            <!-- PAGE HEADER / ROW 1 / COLUMN 3 -->
+            <div class="slds-col slds-no-flex slds-align-middle">
+                <div class="slds-button-group" role="group">
+                    <button class="slds-button slds-button--neutral">
+                        <a href="{!'/' + v.account.Id}">Back to Classic View</a>
+                    </button>
+                </div>
+            </div>
+            <!-- / PAGE HEADER / ROW 1 / COLUMN 3 -->
+            
         </div>
-        <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-
-        <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
-        <div class="slds-col slds-align-middle">
-            <aura:unescapedHtml value="{!v.account.Company_Logo__c}" />
+        <!-- / PAGE HEADER TOP ROW -->
+        
+        <!-- PAGE HEADER DETAIL ROW -->
+        <div class="slds-grid slds-page-header__detail-row">
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
+            <div class="slds-col--padded slds-size--1-of-5">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Account Record Type</p>
+                    </dt>
+                    <dd>
+                        <p class="slds-text-body--regular slds-truncate">{!v.account.RecordType.Name}</p>
+                    </dd>
+                </dl>
+            </div>
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
+            <div class="slds-col--padded slds-size--1-of-5">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Verified</p>
+                    </dt>
+                    <dd>
+                        <p class="slds-text-body--regular slds-truncate"><aura:unescapedHtml value="{!v.account.Quality__c}" /></p>
+                    </dd>
+                </dl>
+            </div>
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
+            <div class="slds-col--padded slds-size--1-of-5">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Country</p>
+                    </dt>
+                    <dd>{!v.account.IATA_ISO_Country__r.Name}</dd>
+                </dl>
+            </div>
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
+            <div class="slds-col--padded slds-size--1-of-5">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Sector</p>
+                    </dt>
+                    <dd>{!v.account.Sector__c}</dd>
+                </dl>
+            </div>
+            
+            <!-- PAGE HEADER / ROW 2 / COLUMN 5 -->
+            <div class="slds-col--padded slds-size--1-of-5">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">Category</p>
+                    </dt>
+                    <dd>{!v.account.Category__c}</dd>
+                </dl>
+            </div>
+            
         </div>
-        <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
-
-        <!-- PAGE HEADER / ROW 1 / COLUMN 3 -->
-        <div class="slds-col slds-no-flex slds-align-middle">
-          <div class="slds-button-group" role="group">
-            <button class="slds-button slds-button--neutral">
-              Key Account Plan
-            </button>
-            <button class="slds-button slds-button--neutral">
-              <a href="{!'/' + v.account.Id}">Back to Classic View</a>
-            </button>
-          </div>
-        </div>
-        <!-- / PAGE HEADER / ROW 1 / COLUMN 3 -->
-
-      </div>
-      <!-- / PAGE HEADER TOP ROW -->
-
-      <!-- PAGE HEADER DETAIL ROW -->
-    <div class="slds-grid slds-page-header__detail-row">
-
-      <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
-      <div class="slds-col--padded slds-size--1-of-4">
-        <dl>
-          <dt>
-            <p class="slds-text-heading--label slds-truncate">Account Record Type</p>
-          </dt>
-          <dd>
-            <p class="slds-text-body--regular slds-truncate">{!v.account.RecordType.Name}</p>
-          </dd>
-        </dl>
-      </div>
-
-      <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
-      <div class="slds-col--padded slds-size--1-of-4">
-        <dl>
-          <dt>
-            <p class="slds-text-heading--label slds-truncate">Country</p>
-          </dt>
-          <dd>{!v.account.IATA_ISO_Country__r.Name}</dd>
-        </dl>
-      </div>
-
-      <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
-      <div class="slds-col--padded slds-size--1-of-4">
-        <dl>
-          <dt>
-            <p class="slds-text-heading--label slds-truncate">Sector</p>
-          </dt>
-          <dd>{!v.account.Sector__c}</dd>
-        </dl>
-      </div>
-
-      <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
-      <div class="slds-col--padded slds-size--1-of-4">
-        <dl>
-          <dt>
-            <p class="slds-text-heading--label slds-truncate">Category</p>
-          </dt>
-          <dd>{!v.account.Category__c}</dd>
-        </dl>
-      </div>
-
-    </div>
-    <!-- / PAGE HEADER DETAIL ROW -->
-
-
+        <!-- / PAGE HEADER DETAIL ROW -->
+        
+        
     </div>
     <!-- / PAGE HEADER -->
-
+    
 </aura:component>

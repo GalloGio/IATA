@@ -1,4 +1,6 @@
-.THIS {
+.THIS .noUpperCase{
+    text-transform: none !important;
+    font-size: small;
 }
 .THIS td {
   max-width: 500px;
@@ -6,7 +8,10 @@
   white-space: normal !important;
 }
 .THIS th.narrowColumn {
-  width: 80px;
+  width: 70px;
+}
+.THIS th.medColumn {
+  width: 110px;
 }
 .THIS th.actionColumn {
   width: 100px;

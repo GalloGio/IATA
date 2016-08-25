@@ -15,7 +15,7 @@
       </div>
     </div>
 <div class="slds-card__body">
-   <table class="slds-table slds-table--bordered">
+   <table class="slds-table slds-table--bordered slds-table--striped">
       <thead>
         <tr>
 			<!-- <th scope="col"><span class="slds-truncate">Actions</span></th> -->

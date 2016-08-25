@@ -9,13 +9,14 @@
     <aura:handler name="updateBMA" event="c:AMP_UpdateBMA" action="c.handleUpdateBMAs" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     
+    <aura:registerEvent name="AMP_BMActivityError" type="c:AMP_BMActivityError"/>
     
     
     <div class="slds-card">
         <div class="slds-card__header slds-grid">
             <div class="slds-media slds-media--center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
-                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/custom-sprite/svg/symbols.svg#custom48'}" class="slds-icon slds-icon-standard-account slds-icon--medium" />
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/custom-sprite/svg/symbols.svg#custom48'}" class="slds-icon  slds-icon-standard-event slds-icon--medium" />
                 </div>
                 <div class="slds-media__body slds-truncate">
                     <span class="slds-text-heading--small">{!v.title}</span>
@@ -26,24 +27,23 @@
         <div class="slds-card__body">
 
 
-            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                 <thead>
                     <aura:renderIf isTrue="{!v.displayType=='Division'}">
                         <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-                            <th scope="col" class="narrowColumn"><span class="slds-truncate"></span></th>
-                            <th scope="col" class="column-10p"><span class="slds-truncate">Activity</span></th>
-                            <!-- <th scope="col" class="column-30p"><span class="slds-truncate">Target</span></th> -->
-                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Type</span></th>
-                            <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Status</span></th>
-                            <th scope="col" class="wideColumn"><span class="slds-truncate">Comments</span></th>
+                            <th scope="col" class="columnActions"><span class="slds-truncate"></span></th>
+                            <th scope="col" class="column-20p"><span class="slds-truncate">Activity</span></th>
+                            <th scope="col" class="columnType"><span class="slds-truncate">Type</span></th>
+                            <th scope="col" class="column-10p"><span class="slds-truncate">Account Status</span></th>
+                            <th scope="col" class="column-40p"><span class="slds-truncate">Comments</span></th>
                         </tr>
                     </aura:renderIf>
                     <aura:renderIf isTrue="{!v.displayType=='Account'}">
                         <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
-                            <th scope="col" class="column-10p"><span class="slds-truncate">Activity</span></th>
-                            <th scope="col" class="column-30p"><span class="slds-truncate">Account Target</span></th>
-                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Type</span></th>
-                            <th scope="col" class="wideColumn"><span class="slds-truncate">Comments</span></th>
+                            <th scope="col" class="column-20p"><span class="slds-truncate">Activity</span></th>
+                            <th scope="col" class="column-20p"><span class="slds-truncate">Account Target</span></th>
+                            <th scope="col" class="columnType"><span class="slds-truncate">Type</span></th>
+                            <th scope="col" class="column-40p"><span class="slds-truncate">Comments</span></th>
                         </tr>
                     </aura:renderIf>
                 </thead>

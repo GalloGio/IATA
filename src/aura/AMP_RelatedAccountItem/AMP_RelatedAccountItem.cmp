@@ -24,7 +24,7 @@
     <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
     <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
     
-    <aura:handler event="c:AMP_OwnershipError" action="{!c.switchToErrorMode}"/>
+    <aura:handler event="c:AMP_OwnershipError" action="{!c.HandleOwnershipError}"/>
 
     
     
@@ -52,7 +52,7 @@
                             
                             <span class="slds-assistive-text">Review the Following Errors</span>
                         </a>
-                        <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite" style="position:absolute;top:55px;left:75px;white-space:normal;">
+                        <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite">
                             <div class="slds-popover__body slds-text-longform">
                                 {!v.errorMessage}
                             </div>
@@ -63,7 +63,7 @@
                 </td>
                 <td><c:LookupSObject aura:id="accountLookup" preselectedSearchString="{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Name : v.relatedAccount.Account__r.Name}" label="Account" pluralLabel="Accounts" sObjectAPIName="Account" listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#account" listIconClass="slds-icon-standard-account" /></td>
                 <td>{!v.displayType == 'Owners' ? v.relatedAccount.Owner_Account__r.Membership_status__c : v.relatedAccount.Account__r.Membership_status__c}</td>
-                <td><ui:inputNumber size="3" maxlength="3" aura:id="percentage" value="{!v.relatedAccount.Percentage__c}" /></td>
+                <td><ui:inputNumber size="3" maxlength="3" class="slds-input" aura:id="percentage" value="{!v.relatedAccount.Percentage__c}" /></td>
             <!-- </tr> -->
 
         <aura:set attribute="else">
