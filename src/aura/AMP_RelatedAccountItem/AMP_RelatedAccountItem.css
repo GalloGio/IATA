@@ -4,3 +4,9 @@
 .THIS .uiInputNumber {
     max-width: 55px;
 }
+.THIS .slds-popover {
+    position: absolute !important;
+    top: 55px;
+    left: 75px;
+    white-space: normal;
+}

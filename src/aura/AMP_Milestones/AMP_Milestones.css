@@ -1,11 +1,12 @@
-.THIS .narrowColumn{
-  width: 5%;
+.THIS .milestoneNarrowColumn{
+  width: 7%;
+    white-space: normal !important;
 }
-.THIS .mediumColumn{
+.THIS .milestoneMediumColumn{
   width: 12%;
 }
-.THIS .wideColumn{
-  width: 20%;
+.THIS .milestoneWideColumn{
+  width: 21%;
 }
 .THIS .column-10p{
   width: 10%;

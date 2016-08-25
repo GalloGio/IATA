@@ -3,6 +3,8 @@ public with sharing class AMP_ChatterBroadcastToolController {
 	
 	public String message {get; set;}
 
+	public String accountId {get; set;}
+
 	public String strAcctList {get{
 			String tmpStr = '';
 			for (AccountWrapper aw : lstAccounts) {
@@ -60,16 +62,18 @@ public with sharing class AMP_ChatterBroadcastToolController {
 				list<FeedItem> lstItemsToPost = new list<FeedItem>();
 
 				for (AccountWrapper aw : lstAccounts) {
-					FeedItem newPost = new FeedItem();
-					newPost.ParentId = aw.acct.Id;
-					newPost.Body = message;
-					newPost.Type = 'TextPost';
+					if (aw.isSelected) {
+						FeedItem newPost = new FeedItem();
+						newPost.ParentId = aw.acct.Id;
+						newPost.Body = message;
+						newPost.Type = 'TextPost';
 
-					lstItemsToPost.add(newPost);
+						lstItemsToPost.add(newPost);
+					}
 				}
-				
+
 				Database.SaveResult[] srList = Database.insert(lstItemsToPost, false);
-	    		
+
 	    		Integer success = 0;
 	    		Integer errors = 0;
 	    		for (Database.SaveResult sr : srList) {
@@ -81,10 +85,10 @@ public with sharing class AMP_ChatterBroadcastToolController {
 	    		}
 
 	    		if (success > 0) {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The message was successfully broadcast to ' + success + ' account(s) out of ' + lstItemsToPost.size() + '. ' + errors + ' error(s) encountered.'));
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'The message was successfully broadcasted.')); // to ' + success + ' account(s) out of ' + lstItemsToPost.size() + '. ' + errors + ' error(s) encountered.'));
 					step = 3;
 				} else {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcast with ' + errors + ' error(s) when trying to post.'));
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The message failed to be broadcasted.'));// with ' + errors + ' error(s) when trying to post.'));
 				}
 
 
@@ -119,6 +123,8 @@ public with sharing class AMP_ChatterBroadcastToolController {
 		step = 1;
 		strRegion = '';
 		RefreshAccountsList();
+
+		accountId =  ApexPages.currentPage().getParameters().get('accountId');
 	}
 
 	public class AccountWrapper {

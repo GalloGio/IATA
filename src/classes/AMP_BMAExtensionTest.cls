@@ -18,16 +18,19 @@ private class AMP_BMAExtensionTest
 		System.runAs(testUser) {
 
 			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
-			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);
+			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId, Sector__c='Airline', Category__c='Passenger and Cargo');
 			insert a;
 
-			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
+			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
 
 			Objective__c o = new Objective__c();
 			o.Account__c = a.Id;
 			o.RecordTypeId = objectiveRecordTypeId;
 			o.Name = 'testObjective';
+			o.AM_Related_to_Sector__c = 'Airline';
+			o.AM_Related_to_Categories__c = 'Passenger and Cargo';
 			insert o;
+			System.debug(o);
 
 			ApexPages.currentPage().getParameters().put('id',a.id);
 			ApexPages.StandardController stdController = new ApexPages.StandardController(a);
@@ -39,9 +42,21 @@ private class AMP_BMAExtensionTest
 			bmaExtension.EditLine();
 			bmaExtension.CancelEdit();
 			bmaExtension.SaveLine();
+			
+			bmaExtension.IdConcerned = o.Id;
+			bmaExtension.EditCommentLine();
+			bmaExtension.selectedComment.Status__c = 'Active';
+			bmaExtension.SaveCommentLine();
+
+			// for @AuraEnabled
+			AMP_BoardMonitoredActivitiesExtension.getBMAs(a.Id);
+			AMP_BoardMonitoredActivitiesExtension.getDivisionBMAs(a.Id);
+			AMP_BoardMonitoredActivitiesExtension.upsertBMA(o);
+			AMP_BoardMonitoredActivitiesExtension.upsertComment(bmaExtension.selectedComment);
+
 
 			list<Objective__c> lsBMAS = bmaExtension.getBMAs();
-			System.assertEquals(2,lsBMAS.size(),'There should be 2 BMAs');
+			System.assertEquals(1,lsBMAS.size(),'There should be 1 BMAs');
 
 			bmaExtension.IdConcerned = o.Id;
 			bmaExtension.DeleteLine();

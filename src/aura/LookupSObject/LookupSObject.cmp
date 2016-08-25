@@ -10,6 +10,7 @@
     <aura:attribute name="listIconSVGPath" type="String" default="/resource/SLDS102/assets/icons/custom-sprite/svg/symbols.svg#custom11" description="The static resource path to the svg icon to use." />
     <aura:attribute name="listIconClass" type="String" default="slds-icon-custom-11" description="The SLDS class to use for the icon." />
     <aura:attribute name="preselectedSearchString" type="String" default="" description="The search string to find." />
+    <aura:attribute name="searchConditions" type="String" default="" description="The optional query filters (start with WHERE)" />
     <aura:attribute name="searchString" type="String" description="The search string to find." />
     <aura:attribute name="matches" type="LookupSObjectController.Result[]" description="The resulting matches returned by the Apex controller." />
  

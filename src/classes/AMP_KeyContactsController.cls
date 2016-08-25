@@ -44,13 +44,35 @@ public with sharing class AMP_KeyContactsController {
         public static List<Contact> getKeyContacs(Id AccountId) {
             List<Contact> lsKeyContacts =
                 [SELECT Id, Name, Airline_Contact_Type__c, Title, Phone,
-                        MobilePhone, Email, Membership_Function__c, Function__c, 
-                        AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c
+                        MobilePhone, Email, Membership_Function__c, Function__c,
+                        AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c,
+						CEO_CFO__c, Membership_Main_Contact__c
                 FROM Contact
                 WHERE (AccountId = :accountId OR Account.ParentId = :accountId )
                 AND Account_Management_Key_Contact__c = true
+				ORDER BY CEO_CFO__c NULLS LAST
                 ];
 
-            return lsKeyContacts;
+			// sorting
+			List<Contact> lsKeyContactsSorted = new List<Contact>();
+			Set<Contact> setKeyContactsSorted = new Set<Contact>();
+			for(Contact c : lsKeyContacts) {
+				if(c.CEO_CFO__c != null && c.CEO_CFO__c != '') {
+					setKeyContactsSorted.add(c);
+					lsKeyContactsSorted.add(c);
+				}
+			}
+			for(Contact c : lsKeyContacts) {
+				if(!setKeyContactsSorted.contains(c) && c.Membership_Main_Contact__c == true) {
+					setKeyContactsSorted.add(c);
+					lsKeyContactsSorted.add(c);
+				}
+			}
+			for(Contact c : lsKeyContacts) {
+				if(!setKeyContactsSorted.contains(c) ) {
+					lsKeyContactsSorted.add(c);
+				}
+			}
+            return lsKeyContactsSorted;
         }
 }

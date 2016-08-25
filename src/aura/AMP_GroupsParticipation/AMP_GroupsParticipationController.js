@@ -9,7 +9,7 @@
 			});
 			action.setCallback(this, function(a) {
 				 var participants = a.getReturnValue();
-				 console.log(JSON.stringify(participants));
+				 
 				 var state = a.getState();
 				 var ParticipantWrappers = new Array();
 				 if (component.isValid() && state === "SUCCESS") {
@@ -54,7 +54,7 @@
 					 }
 
 						component.set("v.participants", participants);
-						console.log( ParticipantWrappers);
+						
 						component.set("v.ParticipantWrappers", ParticipantWrappers);
 
 				 }

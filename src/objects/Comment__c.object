@@ -1375,23 +1375,7 @@ Object to store comments related to objectives, or independent comments that we 
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Aborted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed without intervention</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Completed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Deferred</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1400,18 +1384,10 @@ Object to store comments related to objectives, or independent comments that we 
             </values>
             <values>
                 <fullName>Not Started</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>On hold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Out of scope</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resolved</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

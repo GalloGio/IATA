@@ -1,9 +1,9 @@
-.THIS td.longText{
+.THIS td, .THIS th{
   white-space: normal !important;
 }
 .THIS .dontIndent {
   padding-left: 0.5em !important;
 }
 .THIS .underGroup {
-    background-color: rgb(244, 246, 249);
+    background-color: rgb(160, 195, 248);
 }

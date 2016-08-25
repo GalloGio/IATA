@@ -30,9 +30,9 @@
 						&nbsp;
 			</apex:column>
 
-					<apex:column headerValue="Name of Milestone">
+					<apex:column headerValue="Milestone">
 							<apex:outputLink value="/{!task.Id}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject}</apex:outputLink>
-							<apex:inputField value="{!task.Subject}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
+							<apex:inputText value="{!task.Subject}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}"/>
 					</apex:column>
 
 					<apex:column headerValue="Responsible" >

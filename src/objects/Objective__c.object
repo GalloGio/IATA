@@ -247,7 +247,7 @@ Object used to store objectives that can be independent, related to other object
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Airline Headquarters</value>
+                <value>Airline Headquarters, Agency, Airline Headquarters, Airline Branch, General Sales Agent Headquarters, Others</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -971,6 +971,19 @@ Object used to store objectives that can be independent, related to other object
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Forecast_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>if ( Target__c == 0, 0, (Forecast__c) / Target__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Forecast Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Forecast__c</fullName>
         <description>Forecast at the end of the forecast deadline date</description>
         <externalId>false</externalId>
@@ -1141,7 +1154,7 @@ Object used to store objectives that can be independent, related to other object
         <picklist>
             <picklistValues>
                 <fullName>Not Started</fullName>
-                <default>false</default>
+                <default>true</default>
             </picklistValues>
             <picklistValues>
                 <fullName>In Progress</fullName>
@@ -1197,6 +1210,10 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <picklistValues>
                 <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>At risk</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -2040,6 +2057,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>At risk</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3574,6 +3595,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>At risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Completed</fullName>
                 <default>false</default>
             </values>
@@ -4511,6 +4536,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>At risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Completed</fullName>
                 <default>false</default>
             </values>
@@ -5209,6 +5238,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Park</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger and Cargo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6042,6 +6075,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>At risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Completed</fullName>
                 <default>false</default>
             </values>
@@ -6136,8 +6173,28 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <fullName>AMP_Issues_and_Priorities_need_Status</fullName>
         <active>true</active>
         <description>Status and Level of Importance are mandatory</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Account_Issues_and_Priorities&apos; , OR(  ISPICKVAL( Status__c , &quot;&quot;) ,  ISPICKVAL(AM_Level_of_importance__c, &quot;&quot;)  ))</errorConditionFormula>
-        <errorMessage>Please fill in Status and Level of Importance</errorMessage>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName = &apos;Account_Issues_and_Priorities&apos; ,
+  OR(
+    ISPICKVAL( Status__c , &quot;&quot;) ,
+    ISPICKVAL(AM_Level_of_importance__c, &quot;&quot;),
+    ISBLANK(Name)
+  )
+)</errorConditionFormula>
+        <errorMessage>Please fill in the Name, Status and Importance fields</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>KAP_Mandatory_Fields</fullName>
+        <active>true</active>
+        <description>Make some fields mandatory for the Key Account Plan record type.</description>
+        <errorConditionFormula>AND (
+  RecordType.DeveloperName = &apos;Key_Account_Plan&apos;,
+  OR (
+    ISBLANK(Description__c ),
+    ISBLANK(Name)
+  )
+)</errorConditionFormula>
+        <errorMessage>Please fill in the Activity and the Description fields</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>New_Account_Objective</fullName>

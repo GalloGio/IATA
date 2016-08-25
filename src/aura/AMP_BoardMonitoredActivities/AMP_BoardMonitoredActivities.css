@@ -1,14 +1,17 @@
-.THIS .narrowColumn{
-  width: 3%;
+.THIS .columnType{
+  width: 4%;
 }
-.THIS .mediumColumn{
-  width: 5%;
-}
-.THIS .wideColumn{
-  width: 30%;
+.THIS .columnActions{
+  width: 6%;
 }
 .THIS .column-10p{
   width: 10%;
+}
+.THIS .column-40p{
+  width: 40%;
+}
+.THIS .column-20p{
+  width: 20%;
 }
 .THIS .column-30p{
   width: 30%;

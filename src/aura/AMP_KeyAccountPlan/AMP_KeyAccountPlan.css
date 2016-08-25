@@ -1,5 +1,5 @@
 .THIS .narrowColumn{
-  width: 5%;
+  width: 6%;
 }
 .THIS .mediumColumn{
   width: 12%;
@@ -17,6 +17,9 @@
   word-wrap: break-word;
   /*overflow: hidden;*/
   text-overflow: ellipsis;
+  /*vertical-align: top;*/
+}
+.THIS td.allignTop {
   vertical-align: top;
 }
 .THIS .slds-truncate {

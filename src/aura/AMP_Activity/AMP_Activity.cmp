@@ -1,77 +1,122 @@
 <aura:component >
-  <aura:attribute name="activity" type="Objective__c"  />
-  <aura:attribute name="index" type="Integer"  />
-  <aura:attribute name="isEditMode" type="Boolean" default="false"/>
-  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-  <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
-  <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
-
-  <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIssueIdUpdate}"/>
-  <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIssueIdClear}"/>
-
-  <aura:registerEvent name="updateActivity" type="c:AMP_UpdateIssueOrPriority"/>
-  <aura:registerEvent name="deleteActivity" type="c:AMP_UpdateIssueOrPriority"/>
-  <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
-
-  <!-- <tr> -->
+    <aura:attribute name="activity" type="Objective__c"  />
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="index" type="Integer"  />
+    <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+    <aura:attribute name="isError" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="editMenuClick" event="c:AMP_EditMenuItemClick" action="{!c.switchToEditMode}"/>
+    <aura:handler name="deleteMenuClick" event="c:AMP_DeleteMenuItemClick" action="{!c.deleteItem}"/>
+    
+    <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIssueIdUpdate}"/>
+    <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIssueIdClear}"/>
+    
+    <aura:registerEvent name="updateActivity" type="c:AMP_UpdateIssueOrPriority"/>
+    <aura:registerEvent name="deleteActivity" type="c:AMP_UpdateIssueOrPriority"/>
+    <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
+    
+    <aura:handler event="c:AMP_KAPActivityError" action="{!c.HandleActivityError}"/>
+    
+    <!-- <tr> -->
     <aura:if isTrue="{!v.isEditMode}">
-      <td>
-        <button class="slds-button slds-button--icon-border slds-button--icon-medium" onclick="{!c.cancelEditMode}">
-            <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
-            <span class="slds-assistive-text">Cancel</span>
-        </button>
-
-        <button class="slds-button slds-button--icon-border slds-button--icon-medium" onclick="{!c.clickSaveActivity}">
-            <c:svg xlinkHref="{!$Resource.SLDS103 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
-            <span class="slds-assistive-text">Save</span>
-        </button>
-        <!-- <ui:button label="Show Milestones" press="{!c.showMilestones}" /> -->
-      </td>
-      <td><ui:inputText value="{!v.activity.Name}" /></td>
-      <td><ui:inputTextArea value="{!v.activity.Details__c}" class="longTextArea" rows="5"/></td>
-      <td>
-        <ui:inputSelect aura:id="status">
-          <ui:inputSelectOption value="On Track" text="On Track"/>
-          <ui:inputSelectOption value="On Hold" text="On Hold"/>
-          <ui:inputSelectOption value="Delayed" text="Delayed"/>
-          <ui:inputSelectOption value="Delivered" text="Delivered"/>
-          <ui:inputSelectOption value="Cancelled" text="Cancelled"/>
-        </ui:inputSelect>
-      </td>
-      <td>
-        <!-- <ui:inputText value="{!v.activity.Account_Issue_or_Priority__c}" /> -->
-        <c:LookupSObject aura:id="accountIssueLookup"
-          preselectedSearchString="{!v.activity.Account_Issue_or_Priority__r.Name}"
-          label="Objective"
-          pluralLabel="Objectives"
-          sObjectAPIName="Objective__c"
-          listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#drafts"
-          listIconClass="slds-icon-standard-account" />
-      </td>
-      <td><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" class="longTextArea" rows="5"/></td>
-      <td><ui:inputDate value="{!v.activity.Deadline__c}" aura:id="deadline"  /></td>
-
-      <aura:set attribute="else">
-      <td>
-        <c:AMP_EditSaveMenu />
-
-        <ui:button label="Milestones" press="{!c.showMilestones}" />
-      </td>
-      <td><ui:outputText value="{!v.activity.Name}" class="slds-truncate"/></td>
-      <td>
-        <ui:outputRichText value="{!v.activity.Details__c}" class="slds-truncate" aura:id="details"/>
-        <ui:button aura:id="show-more-button" label="show more" press="{!c.showMore}"/>
-        <ui:button aura:id="show-less-button" label="show less" press="{!c.showLess}" class="hidden"/>
-      </td>
-      <td><ui:outputText value="{!v.activity.Status__c}" /></td>
-      <td><ui:outputText value="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
-      <td>
-        <ui:outputRichText value="{!v.activity.Benefits_to_Account__c}" class="slds-truncate" aura:id="benefits"/>
-        <ui:button aura:id="show-more-benefits-button" label="show more" press="{!c.showMoreBenefits}"/>
-        <ui:button aura:id="show-less-benefits-button" label="show less" press="{!c.showLessBenefits}" class="hidden"/>
-      </td>
-      <td><ui:outputDate value="{!v.activity.Deadline__c}" /></td>
-    </aura:set>
-  </aura:if>
-  <!-- </tr> -->
+        <td class="allignTop">
+            <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.cancelEditMode}">
+                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
+                <span class="slds-assistive-text">Cancel</span>
+            </button>
+            
+            <button class="slds-button slds-button--icon-border slds-button--icon-small" onclick="{!c.clickSaveActivity}">
+                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
+                <span class="slds-assistive-text">Save</span>
+            </button>
+            
+            
+            <aura:if isTrue="{!v.isError}">
+                <div>
+                    <a href="javascript:void(0);" class="slds-button" >
+                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#warning'}" class="slds-icon slds-icon-text-error slds-icon--small" />
+                        
+                        <span class="slds-assistive-text">Review the Following Errors</span>
+                    </a>
+                    <div class="slds-popover slds-nubbin--top-left slds-theme--error" role="alert" aria-live="polite" >
+                        <div class="slds-popover__body slds-text-longform">
+                            {!v.errorMessage}
+                        </div>
+                    </div>
+                </div>
+                
+            </aura:if>
+        </td>
+        <td class="allignTop"><ui:inputText value="{!v.activity.Name}" class="slds-input" /></td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Details__c}" class="slds-textarea" rows="5"/></td>
+        <td class="allignTop">
+            <ui:inputSelect aura:id="status" class="slds-select">
+                <ui:inputSelectOption label="On Track" text="On Track" value="{!v.activity.Status__c == 'On Track'}" />
+                <ui:inputSelectOption label="On Hold" text="On Hold" value="{!v.activity.Status__c == 'On Hold'}" />
+                <ui:inputSelectOption label="Delayed" text="Delayed" value="{!v.activity.Status__c == 'Delayed'}" />
+                <ui:inputSelectOption label="Delivered" text="Delivered" value="{!v.activity.Status__c == 'Delivered'}" />
+                <ui:inputSelectOption label="Cancelled" text="Cancelled" value="{!v.activity.Status__c == 'Cancelled'}" />/>
+            </ui:inputSelect>
+        </td>
+        <td class="allignTop"><ui:inputDate value="{!v.activity.Deadline__c}" aura:id="deadline"  class="slds-input" displayDatePicker="true" /></td>
+        <td class="allignTop">
+            <!-- <ui:inputText value="{!v.activity.Account_Issue_or_Priority__c}" /> -->
+            <c:LookupSObject aura:id="accountIssueLookup"
+                             preselectedSearchString="{!v.activity.Account_Issue_or_Priority__r.Name}"
+                             searchConditions="{!' WHERE Account__c = \'' + v.accountId + '\''}"
+                             label="Objective"
+                             pluralLabel="Objectives"
+                             sObjectAPIName="Objective__c"
+                             listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#connected_apps"
+                             listIconClass="slds-icon-standard-connected-apps" />
+        </td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.activity.Benefits_to_Account__c}" class="slds-textarea" rows="5"/></td>
+        
+        <aura:set attribute="else">
+            <td>
+                <div>
+                    <div style="display: inline-block;">
+                        <c:AMP_EditSaveMenu />
+                    </div>
+                    
+                    <button class="slds-button slds-button--icon-border-filled slds-button--icon-small slds-m-around--xx-small" onclick="{!c.showMilestones}" >
+                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#list'}" class="slds-button__icon slds-button__icon--medium" />
+                    </button>
+                </div>
+            </td>
+            <td><ui:outputText value="{!v.activity.Name}" class="slds-truncate"/></td>
+            <td>
+                <div class="slds-p-right--medium">
+                    <ui:outputRichText value="{!v.activity.Details__c}" class="slds-truncate" aura:id="details"/>
+                    
+                    <aura:renderIf isTrue="{!v.activity.Details__c != null}">
+                        <button aura:id="show-more-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMore}" >
+                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
+                        </button>
+                        <button aura:id="show-less-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLess}" >
+                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
+                        </button>
+                    </aura:renderIf>
+                </div>
+            </td>
+            <td><ui:outputText value="{!v.activity.Status__c}" /></td>
+            <td><ui:outputDate value="{!v.activity.Deadline__c}" class="slds-truncate"/></td>
+            <td><ui:outputText value="{!v.activity.Account_Issue_or_Priority__r.Name}" /></td>
+            <td>
+                <div class="slds-p-right--medium">
+                    <ui:outputRichText value="{!v.activity.Benefits_to_Account__c}" class="slds-truncate" aura:id="benefits"/>
+                    
+                    <aura:renderIf isTrue="{!v.activity.Benefits_to_Account__c != null}">
+                        <button aura:id="show-more-benefits-button" class="slds-button slds-button--icon slds-m-around--xx-small show-more-button" onclick="{!c.showMoreBenefits}" >
+                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomin'}" class="slds-button__icon slds-button__icon--large" />
+                        </button>
+                        <button aura:id="show-less-benefits-button" class="slds-button slds-button--icon slds-hide show-more-button" onclick="{!c.showLessBenefits}" >
+                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#zoomout'}" class="slds-button__icon slds-button__icon--large" />
+                        </button>
+                    </aura:renderIf>
+                </div>
+            </td>
+        </aura:set>
+    </aura:if>
+    <!-- </tr> -->
 </aura:component>

@@ -12,10 +12,11 @@
     <body>
         <apex:form >
         <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink>
-        <apex:pageBlock id="theBlock">
+        <apex:pageBlock id="theBlock" title="Key Account Plan for {!AccountName}">
         <apex:image value="{!$Resource.AMP_logo}" />
             <apex:commandButton value="History" action="{!showPrevious}" reRender="theBlock" />
             <apex:commandButton value="Current" action="{!showThis}" reRender="theBlock" />
+            <apex:outputLink value="/apex/AMP_KeyAccountPlanPrintable?accountId={!accountId}">Printable</apex:outputLink>
             <!-- <apex:commandButton value="Next Year" action="{!showNext}" reRender="theBlock" /> -->
 
             <apex:outputPanel id="thisPanel" >
@@ -45,7 +46,7 @@
                   <apex:outputLink value="AMP_KAPMilestones?accountId={!accountId}&objectiveId={!objective.Id}" target="_blank">Show Milestones</apex:outputLink>
       			    </apex:column>
 
-      					<apex:column headerValue="Name of Activity">
+      					<apex:column headerValue="Activity">
 
                     <apex:outputField value="{!objective.Name}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Name}"  rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" required="true" style="width: 80%;" />

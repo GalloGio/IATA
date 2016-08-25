@@ -5,6 +5,7 @@
     doSearch : function(cmp) {
         // Get the search string, input element and the selection container
         var searchString = cmp.get('v.searchString');
+        var searchConditions = cmp.get('v.searchConditions');
         var inputElement = cmp.find('lookup');
         var lookupList = cmp.find('lookuplist');
  
@@ -17,6 +18,11 @@
             // Hide the lookuplist
             $A.util.addClass(lookupList, 'slds-hide');
             return;
+        }
+        
+        if (typeof searchConditions === 'undefined')
+        {
+            searchConditions = '';
         }
  
         // Show the lookuplist
@@ -32,7 +38,7 @@
         action.setAbortable();
  
         // Set the parameters
-        action.setParams({ "searchString" : searchString, "sObjectAPIName" : sObjectAPIName});
+        action.setParams({ "searchString" : searchString, "sObjectAPIName" : sObjectAPIName, "searchConditions" : searchConditions});
                            
         // Define the callback
         action.setCallback(this, function(response) {

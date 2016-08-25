@@ -8404,7 +8404,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Legal_name__c</fullName>
         <description>Field used for the legal name of the airlines and the travel agents</description>
         <externalId>false</externalId>
-        <label>Legal/Registered name</label>
+        <label>Legal name</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -28944,6 +28944,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AM_Ownership_Type__c</picklist>
+            <values>
+                <fullName>Government-held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Privately-held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -45594,6 +45609,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>AM_Ownership_Type__c</picklist>
+            <values>
+                <fullName>Government-held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Privately-held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -49545,6 +49575,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>yy</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AM_Ownership_Type__c</picklist>
+            <values>
+                <fullName>Government-held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Privately-held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publically-held</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -30,7 +30,7 @@
 	},
 	getTasks : function(component) {
 		var action = component.get("c.getTasksByAccount");
-		// var filterView = component.get("v.filterView");
+		// var filterView = component.get("v.filterView"); 
 		// var items = new Array();
 		// var today = new Date();
 		action.setParams({

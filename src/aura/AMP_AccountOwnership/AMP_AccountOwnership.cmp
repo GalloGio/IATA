@@ -17,27 +17,27 @@
     <aura:registerEvent name="AMP_OwnershipError" type="c:AMP_OwnershipError"/>
 
     <div class="slds-card">
-			{!v.body}
+
         <div class="slds-card__header slds-grid">
             <div class="slds-media slds-media--center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
-                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#hierarchy'}" class="slds-icon slds-icon-standard-account slds-icon--medium" />
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#hierarchy'}" class="slds-icon slds-icon-standard-hierarchy slds-icon--medium" />
                 </div>
                 <div class="slds-media__body slds-truncate">
                     <span class="slds-text-heading--small">{!v.displayType}</span>
                 </div>
             </div>
-
+            
             <div class="slds-no-flex">
                 <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addAccountRole}">New</button>
                 <!--<ui:button label="New" press="{!c.addAccountRole}"/>-->
             </div>
-
+            
         </div>
 
         <div class="slds-card__body">
 
-            <table class="slds-table slds-table--bordered ">
+            <table class="slds-table slds-table--bordered  slds-table--striped">
                 <thead>
                     <tr>
                         <th scope="col"><span class="slds-truncate">&nbsp;</span></th>
@@ -54,7 +54,7 @@
                     </aura:iteration>
                 </tbody>
            </table>
-
+					 
         </div>
 
     </div>

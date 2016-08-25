@@ -31,8 +31,13 @@ public with sharing class AMP_KeyAccountPlanExtension {
 	private Id taskRecordTypeId {get;set;}
 	private Id objectiveRecordTypeId {get;set;}
 
-		public String getAccountName() {
+		/*public String getAccountName() {
 			return [SELECT Id, Name FROM Account WHERE Id = :accountId].Name;
+		}*/
+
+		@AuraEnabled
+		public static String getObjectiveName(Id objectiveId) {
+			return [SELECT Id, Name FROM Objective__c WHERE Id = :objectiveId].Name;
 		}
 
     public AMP_KeyAccountPlanExtension() {}
@@ -41,6 +46,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 				taskRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Task' AND DeveloperName='Key_Account_Plan_Milestone'].Id;
 				objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Objective__c' AND DeveloperName='Key_Account_Plan'].Id;
 				accountId =  ApexPages.currentPage().getParameters().get('accountId');
+				accountName = [SELECT Id, Name FROM Account WHERE Id = :accountId].Name;
 				objectiveId =  ApexPages.currentPage().getParameters().get('objectiveId');
 
 				visibleTab = 'this';
@@ -106,7 +112,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Objective__c' AND DeveloperName='Key_Account_Plan'].Id;
         List<Objective__c> lsObjectives = new List<Objective__c>();
 				lsObjectives =
-					[SELECT Id, Name, Account_Issue_or_Priority__c, Benefits_to_Account__c,
+					[SELECT Id, Name, Account_Issue_or_Priority__c, Account_Issue_or_Priority__r.Name, Benefits_to_Account__c,
 									Details__c, AM_Level_of_importance__c,
 									Status__c, Deadline__c,
 									(SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
@@ -121,7 +127,75 @@ public with sharing class AMP_KeyAccountPlanExtension {
 				return lsObjectives;
     }
 
+		@AuraEnabled
+		public static Objective__c upsertActivity(Objective__c activity) {
+			if(activity.RecordTypeId == null ) {
+				Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Objective__c' AND DeveloperName='Key_Account_Plan'].Id;
+				activity.RecordTypeId = objectiveRecordTypeId;
+			}
+			upsert activity;
+			return activity;
+		}
 
+		@AuraEnabled
+		public static Objective__c deleteActivity(Objective__c activity) {
+			delete activity;
+			return activity;
+		}
+
+		@AuraEnabled
+    public static List<Task> getTasksByAccount(Id accountId) {
+			List<Task> lsTasks = new List<Task>();
+			if(accountId != null) {
+			 List<Objective__c> activities =  getObjectives(accountId);
+			 List<Id> lsActivityIds = new List<Id>();
+			 for(Objective__c o : activities) {
+				 lsActivityIds.add(o.Id);
+			 }
+
+				lsTasks =
+					[SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
+									AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c,
+									WhatId
+					FROM Task
+					WHERE WhatId IN :lsActivityIds
+					ORDER BY CreatedDate DESC
+					];
+				}
+				return lsTasks;
+    }
+
+		@AuraEnabled
+    public static List<Task> getTasks(Id objectiveId) {
+        List<Task> lsTasks = new List<Task>();
+				if(objectiveId != null) {
+
+				lsTasks =
+					[SELECT Id, Subject, Description,  ActivityDate, Status, Owner.Name, OwnerId,
+									AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
+					FROM Task
+					WHERE WhatId = :objectiveId
+					ORDER BY CreatedDate DESC
+					];
+				}
+				return lsTasks;
+    }
+
+		@AuraEnabled
+		public static Task upsertMilestone(Task milestone) {
+			if(milestone.RecordTypeId == null ) {
+				Id taskRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Task' AND DeveloperName='Key_Account_Plan_Milestone'].Id;
+				milestone.RecordTypeId = taskRecordTypeId;
+			}
+			upsert milestone;
+			return milestone;
+		}
+
+		@AuraEnabled
+		public static Task deleteMilestone(Task milestone) {
+			delete milestone;
+			return milestone;
+		}
 
     public List<Task> getTasks() {
         List<Task> lsTasks = new List<Task>();
@@ -176,7 +250,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 			if(objectiveStatus == null) {
 				tmpTask = new Task();
 				tmpTask.WhatId = objectiveId;
-				tmpTask.Subject = 'testSubject';
+				tmpTask.Subject = '';
 				tmpTask.ActivityDate = System.Today();
 				tmpTask.RecordTypeId = taskRecordTypeId;
 				lsMilestones.add(tmpTask);

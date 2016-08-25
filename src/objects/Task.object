@@ -869,6 +869,19 @@
         <errorDisplayField>Communication_Sent_Date__c</errorDisplayField>
         <errorMessage>Please specify the date when the communication was sent.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>KAP_Milestone_Mandatory_Fields</fullName>
+        <active>true</active>
+        <description>Make the Subject and Deadline fields mandatory</description>
+        <errorConditionFormula>AND ( 
+  RecordType.DeveloperName = &apos;Key_Account_Plan_Milestone&apos;, 
+  OR ( 
+    ISBLANK( Subject ), 
+    ISBLANK( ActivityDate ) 
+  ) 
+)</errorConditionFormula>
+        <errorMessage>Please fill in the Milestone and the Deadline fields</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Close_Task</fullName>
         <availability>online</availability>

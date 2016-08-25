@@ -24,15 +24,23 @@ private class AMP_IssuesAndprioritiesExtensionTest
 			Account a = new Account(name='testAccount', RecordTypeId=accountRecordTypeId);
 			insert a;
 
-			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Account Issues and Priorities'].Id;
+			Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName ='Account_Issues_and_Priorities'].Id;
 
 			Objective__c o = new Objective__c();
 			o.Account__c = a.Id;
 			o.RecordTypeId = objectiveRecordTypeId;
 			o.Name = 'testObjective';
-			o.Status__c = 'Not Started';
+			o.Status__c = 'Open';
 			o.AM_Level_of_importance__c = 'Medium';
 			insert o;
+
+			Objective__c o2 = new Objective__c();
+			o2.Account__c = a.Id;
+			o2.RecordTypeId = objectiveRecordTypeId;
+			o2.Name = 'testObjective';
+			o2.Status__c = 'Open';
+			o2.AM_Level_of_importance__c = 'Medium';
+			insert o2;
 
 			ApexPages.currentPage().getParameters().put('id',a.id);
 			ApexPages.StandardController stdController = new ApexPages.StandardController(a);
@@ -47,6 +55,7 @@ private class AMP_IssuesAndprioritiesExtensionTest
 			issuesAndPrioritiesExtension.sortByDescription();
 			issuesAndPrioritiesExtension.sortByDetails();
 			issuesAndPrioritiesExtension.sortByLocal();
+			issuesAndPrioritiesExtension.sortBySource();
 			issuesAndPrioritiesExtension.sortByRegional();
 			issuesAndPrioritiesExtension.sortByGlobal();
 			issuesAndPrioritiesExtension.sortByPublic();
@@ -58,12 +67,19 @@ private class AMP_IssuesAndprioritiesExtensionTest
 			issuesAndPrioritiesExtension.newLine();
 			issuesAndPrioritiesExtension.EditLine();
 			issuesAndPrioritiesExtension.SaveLine();
+			issuesAndPrioritiesExtension.SaveList();
+			issuesAndPrioritiesExtension.filterIssuesAndPriorities();
 			issuesAndPrioritiesExtension.CancelEdit();
 			issuesAndPrioritiesExtension.IdConcerned = o.Id;
 			issuesAndPrioritiesExtension.DeleteLine();
 
+			// for @AuraEnabled
+			AMP_IssuesAndPrioritiesExtension.getIssuesAndPriorities(a.Id);
+			AMP_IssuesAndPrioritiesExtension.upsertIssue(o2);
+			AMP_IssuesAndPrioritiesExtension.deleteIssue(o2);
+
 			PageReference pr = issuesAndPrioritiesExtension.saveList();
-			System.assertEquals(1,lsIssuesAndPriorities.size());
+			System.assertEquals(2,lsIssuesAndPriorities.size(), 'There should be 2 issues');
 			try {
 				o.Id = 'fakeId';
 				issuesAndPrioritiesExtension.saveList();

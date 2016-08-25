@@ -7,17 +7,19 @@ public with sharing class LookupSObjectController
      * Aura enabled method to search a specified SObject for a specific string
      */
     @AuraEnabled
-    public static Result[] lookup(String searchString, String sObjectAPIName)
+    public static Result[] lookup(String searchString, String sObjectAPIName, String searchConditions)
     {
         // Sanitze the input
         String sanitizedSearchString = String.escapeSingleQuotes(searchString);
         String sanitizedSObjectAPIName = String.escapeSingleQuotes(sObjectAPIName);
+        //String sanitizedSearchConditions = String.escapeSingleQuotes(searchConditions);
  
         List<Result> results = new List<Result>();
  
         // Build our SOSL query
-        String searchQuery = 'FIND \'' + sanitizedSearchString + '*\' IN ALL FIELDS RETURNING ' + sanitizedSObjectAPIName + '(id,name) Limit 50'; 
- 
+        String searchQuery = 'FIND \'' + sanitizedSearchString + '*\' IN ALL FIELDS RETURNING ' + sanitizedSObjectAPIName + '(id,name ' + searchConditions + ') Limit 50'; 
+        
+        system.debug('searchQuery: ' + searchQuery);
         // Execute the Query
         List<List<SObject>> searchList = search.query(searchQuery);
  
