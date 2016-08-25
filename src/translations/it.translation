@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,22 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>Errore : il campo Stato/Provincia di fatturazione è vuoto, la preghiamo di seguire 
+la seguente procedura per completarlo :
+
+1. Modificare il campo &quot;&quot; Cittá di Fatturazione&quot;&quot;
+2. Selezionare uno degli indirizzi proposti dal sistema</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>Si prega di validare l&apos;indirizzo di fatturazione e quello di consegna cliccando sull&apos;icona &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>Si prega di validare l&apos;indirizzo di fatturazione e quello di consegna cliccando sulla casella di selezione.</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -717,6 +737,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -885,6 +913,10 @@
         <name>FooterLeadMessage</name>
     </customLabels>
     <customLabels>
+        <label>Paese</label>
+        <name>GeneralPublicLocation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -919,6 +951,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -1401,6 +1437,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_GeographyinTravelPlanning_Description --></label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1879,6 +1919,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Revenue Confirmation Label --></label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1929,6 +1973,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_TrxDate --></label>
@@ -2643,6 +2691,13 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>Quest&apos; indirizzo e-mail è già registrato nel Negozio Online .
+Se desidera reimpostare la password ,
+la preghiamo di tornare alla schermata di login ed utilizzare 
+la funzione &quot;Password dimenticata?&quot;</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -4181,6 +4236,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>Accettazione con data futura</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4209,6 +4272,22 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4231,6 +4310,10 @@ and
     <customLabels>
         <label>Amministratore</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>Agente accreditato</label>
@@ -4575,6 +4658,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>Contatto</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4647,6 +4734,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>Requisiti del Paese</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Paese de pubblicazione</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -4685,6 +4776,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Valuta</label>
         <name>ISSP_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
     </customLabels>
     <customLabels>
         <label>Password attuale</label>
@@ -4733,6 +4828,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Codice identificativo</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>Documenti</label>
@@ -5059,6 +5158,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
+    </customLabels>
+    <customLabels>
         <label>Collegamenti esterni</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -5155,6 +5258,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Filter_by_Type</name>
     </customLabels>
     <customLabels>
+        <label>Filtrare a seconda del tipo di partecipazione</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
         <label>Grazie per inviarci i complimenti</label>
         <name>ISSP_Fishing_Compliments</name>
     </customLabels>
@@ -5175,12 +5282,20 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>Si prega di fare clic su Next per procedere</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>Se non entra nel portale per 90 giorni, le verrá inviata un&apos;email con una nuova password.</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -5539,6 +5654,14 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5553,6 +5676,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Città</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>Creazione di un caso</label>
@@ -5787,12 +5914,20 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>Nel caso in cui non sia possibile trovare il vostro account, fate clic su INDIETRO per procedere con il processo di registrazione in qualità di &quot;Pubblico generale&quot;, oppure modificate i vostri criteri di ricerca ed eseguite nuovamente la ricerca</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>È stata pubblicata una nuova notifica sul vostro account del portale IATA.</label>
@@ -5887,6 +6022,10 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_Page</name>
     </customLabels>
     <customLabels>
+        <label>Consulta i requisiti specifici BSP e Cass in un determinato mercato per la partecipazione delle compagnie aeree</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>Gestire le sue richieste e quelle degli utenti della sua compagnia</label>
         <name>ISSP_PageDescription_ISSP_AccessToService</name>
     </customLabels>
@@ -5931,10 +6070,18 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>Puo utilizzare Payment Link per pagare le fatture IATA con carta di credito&lt;br/&gt;
 &lt;b&gt;ATTENZIONE!&lt;/b&gt;&lt;br/&gt;
 Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghiamo pertanto di fare attenzione prima del pagamento con carta di credito, per essere sicuro di non averlo gia pagato.</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>Approvazioni in attesa (fare clic su Modifica per gestirle)</label>
@@ -6198,6 +6345,10 @@ Se non si dispone di un codice IATA, è necessario selezionare &quot;&quot;Altro
         <name>ISSP_Registration_Privacy</name>
     </customLabels>
     <customLabels>
+        <label>Verrà reindirizzato alla pagina iniziale in 5 secondi.</label>
+        <name>ISSP_Registration_Redirection</name>
+    </customLabels>
+    <customLabels>
         <label>Processo di registrazione</label>
         <name>ISSP_Registration_RegistrationProcess</name>
     </customLabels>
@@ -6428,6 +6579,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -6460,7 +6615,7 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>Sondaggio</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
@@ -6695,6 +6850,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label>Compili i campi richiesti, nel formato corretto</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>Non è possibile finalizzare il processo di registrazione. Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
@@ -8081,6 +8240,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8427,6 +8590,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

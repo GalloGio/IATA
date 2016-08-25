@@ -76,9 +76,11 @@ public with sharing class vfIECHistQuotes extends IECPageController {
         try {
             // first check if the user is logged in
             if (IECUserManager.isUserLoggedIn() == false) {
-                Pagereference prLogin = Page.IECLogin;
-                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
-                prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                //Pagereference prLogin = Page.IECLogin;
+                //prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+                //prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                Pagereference prLogin = Page.IEC_Login;
+                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, ApexPages.currentPage().getUrl());
                 prLogin.setRedirect(true);
                 return prLogin;
             }

@@ -68,33 +68,28 @@ public without sharing class IECUserManager {
         
      try{   
         
-    list<User> userList = Comm_User_Helper.getUserListByNameOrEmail2(sUsername);
+    list<User> userList = Comm_User_Helper.getUserListByNameOrEmail(sUsername);
        
        if(userList == null || userlist.size() == 0) {
-        Pagereference pr = Page.IECHomepage;
+        
+        Pagereference pr = Page.IEC_Home;
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Could not find any Contact with username ' + sUsername));
         return null;
        }
         
-             boolean firstLogin = false;
-              
-             list<User> users = [Select Id, Username, Email, LastLoginDate, Portal_User_Frozen__c, Portal_User_Frozen_Checkbox__c, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' ];    
-              IF( (users <> null && users.size()>0))
-              firstLogin = users[0].uid__C <> null ? true: false;
-             
-             sReturnUrl = firstLogin ?  Site.getBaseUrl()+ '/IECChangePassword' :sReturnUrl ;
-      
-        
+        boolean firstLogin = false;
+          
+        list<User> users = [Select Id, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
+        IF( (users <> null && users.size()>0))
+            firstLogin = true;
+        //firstLogin = users[0].uid__C <> null ? true: false;
+         
+            //sReturnUrl = firstLogin ?  Site.getBaseUrl()+ '/IECChangePassword' :sReturnUrl ;
+        sReturnUrl = firstLogin ?  '/IEC_ChangePassword?returl='+sReturnUrl :sReturnUrl ;
+
         sUsername = userList[0].username;
-
-        if (users[0].Portal_User_Frozen_Checkbox__c){
-            reactivateUser(sUsername);
-            Pagereference pr = Page.IECHomepage;
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, Label.ISSP_Frozen_User_Alert_Message));
-            return null;
-        }
-
-        Pagereference pr = Site.login(sUsername, sPassword, (firstLogin ? '/IECChangePassword': null));
+        Pagereference pr = Site.login(sUsername, sPassword, sReturnUrl);
+        //Pagereference pr = Site.login(sUsername, sPassword, (firstLogin ? '/IECChangePassword': null));
            //throw new transformationException(' USERS ' + users);
 
         // check if SalesForce is redirecting the customer to the Change password page
@@ -339,6 +334,8 @@ public without sharing class IECUserManager {
             return [SELECT Legal_name__c, Name, Agent_Type_Code__c
                 , IATA_Area__c, IATACode__c, Status__c, Profit_Center__c
                 , CurrencyIsoCode, RecordType.DeveloperName, Industry, Membership_status__c, ParentId, ICH_Member__c
+                , Customer_Type__c, Region__c, Services_Rendered_Country__c
+                , BillingCountry, Default_Payment_Type__c
                 FROM Account
                 WHERE Id = :accountId];
         }
@@ -351,11 +348,18 @@ public without sharing class IECUserManager {
      */
     public static Contact getContactById(Id contactId) {
         if (contactId != null) {
-            List<Contact> listContact = [Select c.Zuora_Billing_Acount_Id__c, c.Phone, c.MailingStreet, c.MailingState, c.MailingPostalCode, c.MailingCountry, c.MailingCity 
-                                            , c.LastName, c.Id, c.FirstName, c.Name, c.Salutation, c.Title, c.Membership_Function__c, c.Email, c.AccountId
-                                            , c.User_IECPortal_Status__c, c.Tax_1_ID__c, c.Tax_2_ID__c, c.VAT_Country_Code__c 
-                                         From Contact c 
-                                         where c.ID = :contactId];
+            List<Contact> listContact =
+                [Select c.Zuora_Billing_Acount_Id__c, c.Phone, c.MailingStreet, c.MailingState, c.MailingPostalCode, c.MailingCountry, c.MailingCity 
+                    , c.LastName, c.Id, c.FirstName, c.Name, c.Salutation, c.Title, c.Membership_Function__c, c.Email, c.AccountId
+                    , c.User_IECPortal_Status__c, c.Tax_1_ID__c, c.Tax_2_ID__c, c.VAT_Country_Code__c 
+                    , c.Account.Name 
+                    , c.Account.ShippingStreet, c.Account.ShippingCity, c.Account.ShippingPostalCode, c.Account.ShippingCountry,c.Account.ShippingState
+                    , c.Account.BillingStreet, c.Account.BillingCity, c.Account.BillingPostalCode, c.Account.BillingCountry, c.Account.BillingState
+                    , c.BillTo_Location__r.ISO_Country_Code__c, c.ShipTo_Location__r.ISO_Country_Code__c
+                    , c.BillTo_Location__r.VAT_Number__c, c.BillTo_Location__r.SAP_Id__c,c.BillTo_Location__c, c.ShipTo_Location__c
+                    ,  c.ShipTo_Location__r.SAP_Id__c 
+                 From Contact c 
+                 where c.ID = :contactId];
             if (listContact.isEmpty())
                 return null;
             else
@@ -370,7 +374,11 @@ public without sharing class IECUserManager {
      */
     public static User getUserByContactId(Id contactId) {
         
-        List<User> users = [Select u.Username, u.LastName, u.LanguageLocaleKey, u.FirstName, u.Email, u.ContactId From User u where u.ContactId = :contactId];
+        //*** 2015-11-09 Thai: add more fields to results in order to balance with method "getUser" allowing CSR performs things for customer
+        //List<User> users = [Select u.Username, u.LastName, u.LanguageLocaleKey, u.FirstName, u.Email, u.ContactId From User u where u.ContactId = :contactId];
+        List<User> users = [Select u.Username, u.LastName, u.LanguageLocaleKey, u.FirstName, u.Email, u.ContactId
+                                 , u.UserType, u.IsActive, u.AccountId, u.CompanyName, u.Name, u.Id
+                            From User u where u.ContactId = :contactId];
         
         if (users == null || users.size() == 0)
             throw new IECApplicationException('No User found for Contact ID ' + contactId);
@@ -392,19 +400,32 @@ public without sharing class IECUserManager {
      * @param contactId The Id of the Contact to get the addresses
      * @param sAddressType Picklist value of the field IECAddress__c.Address_Type__c (Billing or Shipping)
      * @return A list of IECAddress__c related to the contact
+     *
+     * Edited by Thai (2016-02-26)
+     *    Move filter of contact and address to Location object and add ISO fields to returning fields
      */
     public static List<IECAddress__c> getAddressByContact(Id contactId, String sAddressType) {
         
         if (String.isBlank(sAddressType)) {
             return [select Name, Contact__c, Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c 
+                         , ISO_Country__c, ISO_Country_Code__c, ISO_Country_Name__c, ISO_State__c, ISO_State_Code__c, ISO_State_Name__c
                     from IECAddress__c 
-                    where contact__c =: contactId];
+                    where Id in (select Address__c
+                                 from Location__c
+                                 where Contact__c = :contactId and Active__c = true
+                                   and Type__c in (:IECConstants.IECAddress_AddressType_Billing, :IECConstants.IECAddress_AddressType_Shipping))];
+                    //where contact__c =: contactId];
         }
         else {
             return [select Name, Contact__c, Address_Type__c, State__c, Street__c, City__c, Country__c, ZipCode__c 
+                         , ISO_Country__c, ISO_Country_Code__c, ISO_Country_Name__c, ISO_State__c, ISO_State_Code__c, ISO_State_Name__c
                     from IECAddress__c 
-                    where contact__c =: contactId
-                        and Address_Type__c = :sAddressType];
+                    where Id in (select Address__c
+                                 from Location__c
+                                 where Contact__c = :contactId and Active__c = true
+                                   and Type__c = :sAddressType)];
+                    //where contact__c =: contactId
+                    //    and Address_Type__c = :sAddressType];
         }
     }
     
@@ -433,12 +454,12 @@ public without sharing class IECUserManager {
             // Street address, City and Country are mandatory
             Boolean baseInfoFilled = String.isNotBlank(oBillingAddress.Street__c)
                     && String.isNotBlank(oBillingAddress.City__c)
-                    && String.isNotBlank(oBillingAddress.Country__c);
+                    && String.isNotBlank(oBillingAddress.ISO_Country__c);  //*** changed by Thai (2016-03-01) from "Country__c"
             
             // State/Province and Zip Code are mandatory for Canada and USA
-            if (oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States') {
+            if (oBillingAddress.ISO_Country_Code__c == 'CA' || oBillingAddress.ISO_Country_Code__c == 'US') {                      //*** changed by Samy (2016-03-01) from "Country__c"
                 return baseInfoFilled
-                        && String.isNotBlank(oBillingAddress.State__c) && String.isNotBlank(oBillingAddress.ZipCode__c);
+                        && String.isNotBlank(oBillingAddress.ISO_State__c) && String.isNotBlank(oBillingAddress.ZipCode__c);  //*** changed by Thai (2016-03-01) from "State__c"
             }
             else 
                 return baseInfoFilled;
@@ -486,11 +507,12 @@ public without sharing class IECUserManager {
      */
     public static User getUser(Id userId) {
         if (userId != null) {
-            List<User> listUser = [SELECT UserType, Username, IsActive, AccountId, CompanyName, 
+           /* List<User> listUser = [SELECT UserType, Username, IsActive, AccountId, CompanyName, 
                                     ContactId, Email, FirstName, Name, LastName, Id, Portal_User_Frozen__c
                                     FROM User
-                                    WHERE Id = :userId];
-            return listUser.get(0);
+                                    WHERE Id = :userId];*/
+                                    
+            return IECUSerSingleTon.getIECUser(userID);
         }
         else
             return null;

@@ -1230,7 +1230,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
     <fields>
         <fullName>SAP_ID_8digit__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Please provide 8 digit SAP ID, if customer is not an airline.</inlineHelpText>
         <label>SAP ID</label>
         <length>8</length>
         <required>false</required>

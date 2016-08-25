@@ -13,6 +13,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Duplicate Username --></label>
+        <name>AMS_Duplicate_Username</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR AGENCYFEES --></label>
         <name>AMS_OSCAR_AGENCYFEES</name>
     </customLabels>
@@ -267,6 +271,18 @@
     <customLabels>
         <label><!-- Add campaign member error --></label>
         <name>Add_campaign_member_error</name>
+    </customLabels>
+    <customLabels>
+        <label>报错：账单国家/省市信息空缺，请按照下面的步骤进行填写：1- 编辑账单城市一栏   2-选择一个系统提供的地址</label>
+        <name>AddressDoctorNoState</name>
+    </customLabels>
+    <customLabels>
+        <label>请通过点击&lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt;按钮来确认您的账单地址及邮寄地址</label>
+        <name>AddressDoctorValidate</name>
+    </customLabels>
+    <customLabels>
+        <label>请通过勾选右侧方框确认您的账单地址及邮寄地址</label>
+        <name>AddressDoctorValidate2</name>
     </customLabels>
     <customLabels>
         <label><!-- Address Line 1 --></label>
@@ -717,6 +733,14 @@
         <name>DataAndStatistics</name>
     </customLabels>
     <customLabels>
+        <label><!-- Data Statistics History --></label>
+        <name>Data_Statistics_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Data Statistics Subscriptions --></label>
+        <name>Data_Statistics_Subscriptions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Date --></label>
         <name>Date</name>
     </customLabels>
@@ -885,6 +909,10 @@
         <name>FooterLeadMessage</name>
     </customLabels>
     <customLabels>
+        <label>国家/地区</label>
+        <name>GeneralPublicLocation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -919,6 +947,10 @@
     <customLabels>
         <label><!-- Home --></label>
         <name>Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Page New Release Msg. --></label>
+        <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Alpha/Numeric Code --></label>
@@ -1401,6 +1433,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Fraudulence_and_Security</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Geography in Travel Planning --></label>
+        <name>IDCard_FundamentalsJourneyPricing_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_GeographyinTravelPlanning_Description --></label>
         <name>IDCard_GeographyinTravelPlanning_Description</name>
     </customLabels>
@@ -1879,6 +1915,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Repricing Exchange Reissue --></label>
+        <name>IDCard_RepricingExchangeReissue_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Revenue Confirmation Label --></label>
         <name>IDCard_RevenueConfirmation_Label</name>
     </customLabels>
@@ -1929,6 +1969,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_Total --></label>
         <name>IDCard_Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card Travel Agency Fees --></label>
+        <name>IDCard_Travel_Agency_Fees_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_TrxDate --></label>
@@ -2643,6 +2687,10 @@ and
     <customLabels>
         <label><!-- IEC_Recaptcha_SiteKey --></label>
         <name>IEC_Recaptcha_SiteKey</name>
+    </customLabels>
+    <customLabels>
+        <label>此邮箱已被注册，如果您需要重置密码，请返回登录页面点击“忘记密码”功能。</label>
+        <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
@@ -3681,7 +3729,7 @@ and
         <name>ISSP_AMS_Reason_Branch_Abroad</name>
     </customLabels>
     <customLabels>
-        <label>多项变更</label>
+        <label>分公司新申请</label>
         <name>ISSP_AMS_Reason_New_Branch</name>
     </customLabels>
     <customLabels>
@@ -4181,6 +4229,14 @@ and
         <name>ISSP_ASD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Accept --></label>
+        <name>ISSP_Accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Accept Terms Warning --></label>
+        <name>ISSP_Accept_Terms_Warning</name>
+    </customLabels>
+    <customLabels>
         <label>已受理（今后日期）</label>
         <name>ISSP_Accepted_Future_Date</name>
     </customLabels>
@@ -4209,6 +4265,22 @@ and
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Statements --></label>
+        <name>ISSP_Account_Statements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer --></label>
+        <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Title --></label>
+        <name>ISSP_Account_Statements_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account not approved --></label>
+        <name>ISSP_Account_not_approved</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_Activate</name>
     </customLabels>
@@ -4231,6 +4303,10 @@ and
     <customLabels>
         <label>管理员</label>
         <name>ISSP_Administrator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency Head Office code --></label>
+        <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
         <label>已认证代理</label>
@@ -4575,6 +4651,10 @@ and
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Consolidated --></label>
+        <name>ISSP_Consolidated</name>
+    </customLabels>
+    <customLabels>
         <label>联系人</label>
         <name>ISSP_Contact</name>
     </customLabels>
@@ -4647,6 +4727,10 @@ and
         <name>ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label>国家或地区的规定</label>
+        <name>ISSP_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>对应的国家</label>
         <name>ISSP_Country_of_Publication</name>
     </customLabels>
@@ -4685,6 +4769,10 @@ and
     <customLabels>
         <label>货币</label>
         <name>ISSP_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Currency Filter --></label>
+        <name>ISSP_Currency_Filter</name>
     </customLabels>
     <customLabels>
         <label>当前密码</label>
@@ -4733,6 +4821,10 @@ and
     <customLabels>
         <label>航空公司两字码</label>
         <name>ISSP_Designator_Code_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Display Records per page --></label>
+        <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
         <label>文件</label>
@@ -5059,6 +5151,10 @@ and
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Excess --></label>
+        <name>ISSP_Excess</name>
+    </customLabels>
+    <customLabels>
         <label>外部链接</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -5155,6 +5251,10 @@ and
         <name>ISSP_Filter_by_Type</name>
     </customLabels>
     <customLabels>
+        <label>按照加入类别筛选</label>
+        <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
         <label>很高兴收到您的赞扬</label>
         <name>ISSP_Fishing_Compliments</name>
     </customLabels>
@@ -5175,12 +5275,20 @@ and
         <name>ISSP_ForgotYourPassword</name>
     </customLabels>
     <customLabels>
+        <label>请点击下一步来继续申请</label>
+        <name>ISSP_FoundGeneralPublic</name>
+    </customLabels>
+    <customLabels>
         <label>由于您在过去连续的90天内未登录，一封包含新密码的邮件已经发送给您</label>
         <name>ISSP_Frozen_User_Alert_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Frozen_User_Message --></label>
         <name>ISSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Fullpayment --></label>
+        <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP GSA Country --></label>
@@ -5539,6 +5647,14 @@ and
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Last Updated on --></label>
+        <name>ISSP_Last_Updated_on</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Last updated statement --></label>
+        <name>ISSP_Last_updated_statement</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -5553,6 +5669,10 @@ and
     <customLabels>
         <label>区域</label>
         <name>ISSP_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Location Filter --></label>
+        <name>ISSP_Location_Filter</name>
     </customLabels>
     <customLabels>
         <label>提交问询</label>
@@ -5787,12 +5907,20 @@ and
         <name>ISSP_No_application_available</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP No records available --></label>
+        <name>ISSP_No_records_available</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Not_Authorized --></label>
         <name>ISSP_Not_Authorized</name>
     </customLabels>
     <customLabels>
         <label>如无法找到您的账户，请点击“上一步“（BACK）继续公众的注册，或更改搜索条件再试一次。</label>
         <name>ISSP_NoteWhenAccountFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Nothing found --></label>
+        <name>ISSP_Nothing_found</name>
     </customLabels>
     <customLabels>
         <label>一条新通知已发布至您的 IATA 门户网站账户。</label>
@@ -5887,6 +6015,10 @@ and
         <name>ISSP_Page</name>
     </customLabels>
     <customLabels>
+        <label>查询航空公司参与各BSP及CASS的规定</label>
+        <name>ISSP_PageDescription_Country_Requirements</name>
+    </customLabels>
+    <customLabels>
         <label>管理您及您公司其他用户的服务申请</label>
         <name>ISSP_PageDescription_ISSP_AccessToService</name>
     </customLabels>
@@ -5931,10 +6063,18 @@ and
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Past Periods --></label>
+        <name>ISSP_Past_Periods</name>
+    </customLabels>
+    <customLabels>
         <label>Payment Link 可以用信用卡支付IATA账单&lt;br/&gt;
 &lt;b&gt;注意！&lt;/b&gt;&lt;br/&gt;
 请知悉，所有IATA认可代理人的缴费清单均通过BSP/CASS开具账单来收取。所以请在通过使用信用卡支付前，先行确认您的缴费清单是否已经完成结算。</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Pending --></label>
+        <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
         <label>&quot;待处理的审批（点击 &quot;&quot;Edit&quot;&quot; [编辑]进行管理）&quot;</label>
@@ -6193,6 +6333,10 @@ and
         <name>ISSP_Registration_Privacy</name>
     </customLabels>
     <customLabels>
+        <label>5秒后跳转至初始界面</label>
+        <name>ISSP_Registration_Redirection</name>
+    </customLabels>
+    <customLabels>
         <label>注册程序</label>
         <name>ISSP_Registration_RegistrationProcess</name>
     </customLabels>
@@ -6423,6 +6567,10 @@ and
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Showing page --></label>
+        <name>ISSP_Showing_page</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -6455,7 +6603,7 @@ and
         <name>ISSP_SureToContinue</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Survey --></label>
+        <label>调查问卷</label>
         <name>ISSP_Survey</name>
     </customLabels>
     <customLabels>
@@ -6688,6 +6836,10 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
     <customLabels>
         <label>请按正确格式输入必填信息</label>
         <name>ISSP_fill_required_fields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP filtered from total records --></label>
+        <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
         <label>您的注册申请无法完成，请联系航协客户入口寻求帮助，请通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
@@ -8075,6 +8227,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Public</name>
     </customLabels>
     <customLabels>
+        <label><!-- PublicationQuotes --></label>
+        <name>PublicationQuotes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Publications --></label>
         <name>Publications</name>
     </customLabels>
@@ -8421,6 +8577,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- User name --></label>
         <name>User_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VAT Tax Msg --></label>
+        <name>VAT_Tax_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_number --></label>

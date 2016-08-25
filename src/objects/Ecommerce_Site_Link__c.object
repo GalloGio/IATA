@@ -47,6 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>IEC - static URLs to use in Ecommerce pages</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -58,6 +59,7 @@
     <fields>
         <fullName>IsActive__c</fullName>
         <defaultValue>true</defaultValue>
+        <description>IEC - Indicate if URL is to use</description>
         <externalId>false</externalId>
         <label>IsActive</label>
         <trackTrending>false</trackTrending>
@@ -65,7 +67,7 @@
     </fields>
     <fields>
         <fullName>Order_By__c</fullName>
-        <description>ORDER TO DISPLAY THE LINK E=IN THE ECOMMERCE SITE</description>
+        <description>IEC - Order to display URL</description>
         <externalId>false</externalId>
         <label>Order By</label>
         <precision>3</precision>
@@ -77,6 +79,7 @@
     </fields>
     <fields>
         <fullName>Page_Section__c</fullName>
+        <description>IEC - Page section to display URL</description>
         <externalId>false</externalId>
         <label>Page Section</label>
         <picklist>
@@ -99,6 +102,7 @@
     </fields>
     <fields>
         <fullName>URL__c</fullName>
+        <description>IEC - static URL</description>
         <externalId>false</externalId>
         <label>URL</label>
         <length>255</length>
@@ -118,6 +122,11 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
     </listViews>
     <nameField>
         <label>Link Name</label>

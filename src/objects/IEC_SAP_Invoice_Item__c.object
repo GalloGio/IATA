@@ -165,6 +165,7 @@ else
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>IEC - Subscription product</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>
@@ -265,6 +266,7 @@ else
     <fields>
         <fullName>Use_Contract__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>IEC - True means to create a SAP contract for subscribed product</description>
         <externalId>false</externalId>
         <label>Use Contract</label>
         <trackHistory>false</trackHistory>

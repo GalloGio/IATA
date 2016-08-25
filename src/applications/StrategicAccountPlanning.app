@@ -3,7 +3,6 @@
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Strategic Account Planning is an application that helps sales managers and executives collaborate, plan, and manage goals and strategies for penetrating strategic accounts.</description>
     <label>Strategic Account Planning</label>
-    <logo>StrategicAccountPlanning/Logo.gif</logo>
     <tab>AboutStrategicAccountPlanning</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>

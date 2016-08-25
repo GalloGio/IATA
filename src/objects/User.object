@@ -2566,9 +2566,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.PROFILE.NAME</field>
-            <operation>equals</operation>
-            <value>Developer</value>
+            <field>Profile_Name__c</field>
+            <operation>contains</operation>
+            <value>agency management</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

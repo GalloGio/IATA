@@ -3,102 +3,108 @@
  */
 @isTest
 private class vfIECUpgrade_tst {
-	private static Zuora__Subscription__c oSubscription1;
-	private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge1;
-	private static Zuora__Subscription__c oSubscription2;
-	private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge2;
-	private static Zuora__CustomerAccount__c customerAccount;
-	private static Product_Category__c oProductCategory;
-	private static Product_Information__c oProductInfo;
-	private static Product_Information__c oProductInfo2;
-	private static Product_Information__c oProductInfo3;
-	private static zqu__ZProduct__c oProduct;
-	private static zqu__ZProduct__c oProduct2;
-	private static zqu__ZProduct__c oProduct3;
-	private static zqu__ProductRatePlan__c oProductRatePlan;
-	private static zqu__ProductRatePlan__c oProductRatePlan2;
-	private static zqu__ProductRatePlan__c oProductRatePlan3Trial;
-	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
-	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge2;
-	private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge3;
-	private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
-	private static Product_Rate_Plan_Information__c oProductRatePlanInfo2;
-	private static Product_Rate_Plan_Information__c oProductRatePlanInfo3Trial;
-	private static Swap_Configuration__c oUpgradeConfig1;
-	private static Swap_Configuration__c oUpgradeConfigTrial;
-	private static Terms_and_Conditions__c oTnC;
-	private static Terms_and_Conditions__c oTnC_v2;
-	private static Terms_and_Conditions__c oTnC2;
-	private static Attachment oAttachment;
-	private static Attachment oAttachment2;
-	private static SAP_Account__c oSAPAccount;
-	private static SAP_Account__c oSAPAccount2;
-	
-	private static void InitProduct() {
+    private static Zuora__Subscription__c oSubscription1;
+    private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge1;
+    private static Zuora__Subscription__c oSubscription2;
+    private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge2;
+    private static Zuora__CustomerAccount__c customerAccount;
+    private static Product_Category__c oProductCategory;
+    private static Product_Information__c oProductInfo;
+    private static Product_Information__c oProductInfo2;
+    private static Product_Information__c oProductInfo3;
+    private static zqu__ZProduct__c oProduct;
+    private static zqu__ZProduct__c oProduct2;
+    private static zqu__ZProduct__c oProduct3;
+    private static zqu__ProductRatePlan__c oProductRatePlan;
+    private static zqu__ProductRatePlan__c oProductRatePlan2;
+    private static zqu__ProductRatePlan__c oProductRatePlan3Trial;
+    private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge;
+    private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge2;
+    private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge3;
+    private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
+    private static Product_Rate_Plan_Information__c oProductRatePlanInfo2;
+    private static Product_Rate_Plan_Information__c oProductRatePlanInfo3Trial;
+    private static Swap_Configuration__c oUpgradeConfig1;
+    private static Swap_Configuration__c oUpgradeConfigTrial;
+    private static Terms_and_Conditions__c oTnC;
+    private static Terms_and_Conditions__c oTnC_v2;
+    private static Terms_and_Conditions__c oTnC2;
+    private static Attachment oAttachment;
+    private static Attachment oAttachment2;
+    private static SAP_Account__c oSAPAccount;
+    private static SAP_Account__c oSAPAccount2;
+    
+    private static void InitProduct() {
+            
         oProductCategory = IECTestUtil.CreateSampleProductCategory('PCTST', true);
-		insert oProductCategory;
-		
-		oProduct = IECTestUtil.CreateSampleProduct('PTST');
-		insert oProduct;
-		
-		oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
-		insert oProduct2;
-		
-		oProduct3 = IECTestUtil.CreateSampleProduct('PTST3');
-		insert oProduct3;
-		
-		oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
-		oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-		insert oProductInfo;
-		
-		oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
-		oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT; //ProductInformationAudience_MEMBERAIRLINE
-		insert oProductInfo2;
-		
-		oProductInfo3 = IECTestUtil.CreateSampleProductInfo('PITST3', oProductCategory, oProduct3);
-		oProductInfo3.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
-		insert oProductInfo3;
-		
-		oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
-		insert oProductRatePlan;
-		
-		oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', false, oProduct2);
-		insert oProductRatePlan2;
-		
-		oProductRatePlan3Trial = IECTestUtil.CreateSampleProductRatePlan('PRPTST3', true, oProduct3);
-		insert oProductRatePlan3Trial;
-		
-		oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 42);
-    	oProductRatePlanCharge.zqu__Deleted__c = false;
-    	insert oProductRatePlanCharge;
-    	
-    	oProductRatePlanCharge2 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan2, 'CHARGETEST', 42);
-    	oProductRatePlanCharge2.zqu__Deleted__c = false;
-    	insert oProductRatePlanCharge2;
-    	
-    	oProductRatePlanCharge3 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan3Trial, 'CHARGETEST', 10);
-    	oProductRatePlanCharge3.zqu__Deleted__c = false;
-    	insert oProductRatePlanCharge3;
-		
-		oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
-		insert oProductRatePlanInfo;
-		
-		oProductRatePlanInfo2 = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST2', false, oProductRatePlan2, oProductInfo2);
-		insert oProductRatePlanInfo2;
-		
-		oProductRatePlanInfo3Trial = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST3', true, oProductRatePlan3Trial, oProductInfo3);
-		insert oProductRatePlanInfo3Trial;
-	}
-	
-	private static void InitSubscription1(IECCustomer currentCustomer){
-		oSAPAccount = IECTestUtil.CreateSampleSAPAccount(currentCustomer.RelatedAccount.Id);
-    	insert oSAPAccount;
-    	
-    	IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(currentCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-		insert oBillingAddress;
+        insert oProductCategory;
+        
+        oProduct = IECTestUtil.CreateSampleProduct('PTST');
+        oProduct2 = IECTestUtil.CreateSampleProduct('PTST2');
+        oProduct3 = IECTestUtil.CreateSampleProduct('PTST3');
 
-		// create first Terms & Conditions
-		oTnC = IECTestUtil.CreateSampleTermsAndConditions('My T&Cs', oProductInfo, true, 1);
+        insert new List<sObject> {oProduct, oProduct2, oProduct3};
+        
+        oProductInfo = IECTestUtil.CreateSampleProductInfo('PITST', oProductCategory, oProduct);
+        oProductInfo.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
+        oProductInfo2 = IECTestUtil.CreateSampleProductInfo('PITST2', oProductCategory, oProduct2);
+        oProductInfo2.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT; //ProductInformationAudience_MEMBERAIRLINE
+        oProductInfo3 = IECTestUtil.CreateSampleProductInfo('PITST3', oProductCategory, oProduct3);
+        oProductInfo3.Product_Audience__c = IECConstants.ProductInformationAudience_DEFAULT;
+
+        insert new List<sObject> {oProductInfo, oProductInfo2, oProductInfo3};
+        
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('PRPTST', false, oProduct);
+        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('PRPTST2', false, oProduct2);
+        oProductRatePlan3Trial = IECTestUtil.CreateSampleProductRatePlan('PRPTST3', true, oProduct3);
+
+        insert new List<sObject> {oProductRatePlan, oProductRatePlan2, oProductRatePlan3Trial};
+        
+        oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'CHARGETEST', 42);
+        oProductRatePlanCharge.zqu__Deleted__c = false;
+        oProductRatePlanCharge2 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan2, 'CHARGETEST', 42);
+        oProductRatePlanCharge2.zqu__Deleted__c = false;
+        oProductRatePlanCharge3 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan3Trial, 'CHARGETEST', 10);
+        oProductRatePlanCharge3.zqu__Deleted__c = false;
+
+        insert new List<sObject> {oProductRatePlanCharge, oProductRatePlanCharge2, oProductRatePlanCharge3};
+        
+        insert new List<zqu__ProductRatePlanChargeTier__c> {
+            TestDataGenerator.generateZTiers(oProductRatePlanCharge.Id, 1, false)[0]
+            , TestDataGenerator.generateZTiers(oProductRatePlanCharge2.Id, 1, false)[0]
+            , TestDataGenerator.generateZTiers(oProductRatePlanCharge3.Id, 1, false)[0]
+        };      
+
+        oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST', false, oProductRatePlan, oProductInfo);
+        oProductRatePlanInfo2 = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST2', false, oProductRatePlan2, oProductInfo2);
+        oProductRatePlanInfo3Trial = IECTestUtil.CreateSampleProductRatePlanInfo('PCRPTST3', true, oProductRatePlan3Trial, oProductInfo3);
+
+        insert new List<sObject> {oProductRatePlanInfo, oProductRatePlanInfo2, oProductRatePlanInfo3Trial};
+
+        List<Product2> lstProduct = TestDataGenerator.generateProducts(4, true);
+        lstProduct[0].SAP_Material_Number__c = 'TESTPRODCODE';
+        
+        lstProduct[1].IEC_Parent_Product__c = lstProduct[0].Id;
+        lstProduct[1].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
+        
+        lstProduct[2].IEC_Parent_Product__c = lstProduct[0].Id;
+        lstProduct[2].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo2.Id;
+        
+        lstProduct[3].IEC_Parent_Product__c = lstProduct[0].Id;
+        lstProduct[3].IEC_Product_Rate_Plan_Information__c = oProductRatePlanInfo3Trial.Id;
+        
+        update lstProduct;
+    }
+    
+    private static void InitSubscription1(IECCustomer currentCustomer){
+        oSAPAccount = IECTestUtil.CreateSampleSAPAccount(currentCustomer.RelatedAccount.Id);
+        insert oSAPAccount;
+        
+        IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(currentCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
+        //insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
+
+        // create first Terms & Conditions
+        oTnC = IECTestUtil.CreateSampleTermsAndConditions('My T&Cs', oProductInfo, true, 1);
         insert oTnC;
         
         // create dummy Attachment for the T&C
@@ -110,30 +116,30 @@ private class vfIECUpgrade_tst {
         update oTnC;
         
         oUpgradeConfig1 = new Swap_Configuration__c (
-        	Source_Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id, 
-			Target_Product_Rate_Plan_Information__c = oProductRatePlanInfo2.Id,
-			Relationship_Type__c = IECConstants.SwappingType_Upgrade);
-		insert oUpgradeConfig1;
+            Source_Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id, 
+            Target_Product_Rate_Plan_Information__c = oProductRatePlanInfo2.Id,
+            Relationship_Type__c = IECConstants.SwappingType_Upgrade);
+        insert oUpgradeConfig1;
 
-		oSubscription1 = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 01', Date.newInstance(2014, 06, 30));
-		oSubscription1.Zuora__Status__c = 'Active';
-		oSubscription1.Zuora__AutoRenew__c = false;
-		insert oSubscription1;
-		
-		 // create dummy subscription charge
+        oSubscription1 = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 01', Date.newInstance(2014, 06, 30));
+        oSubscription1.Zuora__Status__c = 'Active';
+        oSubscription1.Zuora__AutoRenew__c = false;
+        insert oSubscription1;
+        
+         // create dummy subscription charge
         oSubscriptionCharge1 = IECTestUtil.createSampleSubscriptionCharge(oSubscription1.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert oSubscriptionCharge1;
-	}
-	
-	private static void InitSubscription2(IECCustomer currentCustomer){
-		oSAPAccount2 = IECTestUtil.CreateSampleSAPAccount(currentCustomer.RelatedAccount.Id);
-    	insert oSAPAccount2;
-    	
-    	IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(currentCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
-		insert oBillingAddress;
+    }
+    
+    private static void InitSubscription2(IECCustomer currentCustomer){
+        oSAPAccount2 = IECTestUtil.CreateSampleSAPAccount(currentCustomer.RelatedAccount.Id);
+        insert oSAPAccount2;
+        
+        IECAddress__c oBillingAddress = IECTestUtil.CreateSampleIECAddress(currentCustomer.RelatedContact, IECConstants.IECAddress_AddressType_Billing);
+        //insert oBillingAddress;  //*** commented by Thai (2016-02-29) because address was inserted in the calling method
 
-		// create first Terms & Conditions
-		oTnC2 = IECTestUtil.CreateSampleTermsAndConditions('My T&Cs', oProductInfo2, true, 1);
+        // create first Terms & Conditions
+        oTnC2 = IECTestUtil.CreateSampleTermsAndConditions('My T&Cs', oProductInfo2, true, 1);
         insert oTnC2;
         
         // create dummy Attachment for the T&C
@@ -145,467 +151,480 @@ private class vfIECUpgrade_tst {
         update oTnC2;
         
         oUpgradeConfigTrial = new Swap_Configuration__c (
-        	Source_Product_Rate_Plan_Information__c = oProductRatePlanInfo3Trial.Id, 
-			Target_Product_Rate_Plan_Information__c = oProductRatePlanInfo2.Id,
-			Relationship_Type__c = IECConstants.SwappingType_Upgrade);
-		insert oUpgradeConfigTrial;
-		
-		oSubscription2 = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 02', Date.newInstance(2014, 06, 30));
-		oSubscription2.Zuora__Status__c = 'Active';
-		oSubscription2.Zuora__AutoRenew__c = false;
-		insert oSubscription2;
-		
-		// create dummy subscription charge
+            Source_Product_Rate_Plan_Information__c = oProductRatePlanInfo3Trial.Id, 
+            Target_Product_Rate_Plan_Information__c = oProductRatePlanInfo2.Id,
+            Relationship_Type__c = IECConstants.SwappingType_Upgrade);
+        insert oUpgradeConfigTrial;
+        
+        oSubscription2 = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 02', Date.newInstance(2014, 06, 30));
+        oSubscription2.Zuora__Status__c = 'Active';
+        oSubscription2.Zuora__AutoRenew__c = false;
+        insert oSubscription2;
+        
+        // create dummy subscription charge
         oSubscriptionCharge2 = IECTestUtil.createSampleSubscriptionCharge(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3Trial);
         insert oSubscriptionCharge2;
-	}
+    }
 
-	@isTest(SeeAllData=true)
+    @isTest(SeeAllData=true)
     static void testNormalUpgrade() {
-    	
-    	// Initialize Data for test scenario
-	    InitProduct();
+        
+        // Initialize Data for test scenario
+        InitProduct();
 
-		Test.startTest();
-		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
-		IECPageController baseCont = new IECPageController();
+        User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
+        IECPageController baseCont = new IECPageController();
 
-    	System.runAs(usr) {
-	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
-    	}
-	
-		InitSubscription1(baseCont.loggedCustomer);
+        System.runAs(usr) {
+            baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
+        }
+    
+        InitSubscription1(baseCont.loggedCustomer);
+        
+        Test.startTest();
+        System.runAs(usr) {
+            PageReference pgRef = Page.IECUpgrade;
+            pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
+            Test.setCurrentPage(pgRef);
+    
+            //Instantiate Controller
+            vfIECUpgrade pgCont = new vfIECUpgrade();
+            
+            
+            // Test #1 - test initial loading of page
+            try {           
+                pgCont.pageLoad();
+                        
+                // assertions after page load
+                system.assert(pgCont.oSubscription != null, 'The subscription object should not be null.');
+                system.assertEquals(false, pgCont.upgradeSuccessful, 'The upgrade should not yet be flagged as successful.');
+                system.assertEquals(false, pgCont.upgradePreviewSuccessful, 'The upgrade preview should not yet be flagged as successful');
+                system.assertEquals('null', pgCont.autoRenewSubscription, 'The auto renew flag should be null (not selected)');
+                system.assertEquals(true, pgCont.hasRatePlanUpgradeSource, 'The source rate plan info should be found');
+                system.assert(pgCont.oRatePlanInfoSourceUpgrade != null && pgCont.oRatePlanInfoSourceUpgrade.Id == oProductRatePlanInfo.Id, 'The appropriate source Rate Plan Information should be selected');
+                system.assertEquals(false, pgCont.hasSubscriptionResult, 'The page shouldn\'t have any subscribe results');
+                system.assertEquals(true, pgCont.hasUpgradesAvailable, 'Upgrades should be available');
+                system.assertEquals(false, pgCont.hasAcceptedAllTnCs, 'The T&Cs shound not yet be flagged as accepted');
+                system.assertEquals(false, pgCont.hasFilledAutoRenewFlag, 'The Auto renew shound not yet be flagged as filled');
+                system.assert(pgCont.lstUIRatePlanInfoUpgradeTargets != null && pgCont.lstUIRatePlanInfoUpgradeTargets.size() == 1, 'There should be 1 upgrade path displayed');
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to load the page. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            // Test #2 - test the preview of the prices
+            try {           
+                pgCont.previewUpgrades();
+                
+                // assertions after price preview
+                system.assertEquals(true, pgCont.upgradePreviewSuccessful, 'The upgrade preview should be successful');
+                for (vfIECUpgrade.UIUpgradableRatePlan uiRatePlan : pgCont.lstUIRatePlanInfoUpgradeTargets) {
+                    system.assert(uiRatePlan.lstPreviewInvoiceItems != null && uiRatePlan.lstPreviewInvoiceItems.size() > 0, 'Invoice Items should be gotten from the preview process');
+                }
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to preview the prices of the upgrades. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            // Test #3 - select the upgrade without setting the ids (ERROR)
+            try {
+                pgCont.selectUpgrade();
+                system.assert(false, 'Select the upgrade without setting the ids should throw an error');
+            }
+            catch(Exception ex) {
+                system.assert(true, 'Select the upgrade without setting the ids should throw an error');
+            }
+            
+            // Test #4 - select the available upgrade, no new T&C to accept
+            try {
+                pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
+                pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
+                pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
+                pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
+                pgCont.selectUpgrade();
 
-    	System.runAs(usr) {
-			PageReference pgRef = Page.IECUpgrade;
-    		pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
-    		Test.setCurrentPage(pgRef);
-	
-	    	//Instantiate Controller
-	        vfIECUpgrade pgCont = new vfIECUpgrade();
-	        
-	        // Test #1 - test initial loading of page
-	        try {	        
-		        pgCont.pageLoad();
-		                
-		        // assertions after page load
-		        system.assert(pgCont.oSubscription != null, 'The subscription object should not be null.');
-		        system.assertEquals(false, pgCont.upgradeSuccessful, 'The upgrade should not yet be flagged as successful.');
-		        system.assertEquals(false, pgCont.upgradePreviewSuccessful, 'The upgrade preview should not yet be flagged as successful');
-		        system.assertEquals('null', pgCont.autoRenewSubscription, 'The auto renew flag should be null (not selected)');
-		        system.assertEquals(true, pgCont.hasRatePlanUpgradeSource, 'The source rate plan info should be found');
-		        system.assert(pgCont.oRatePlanInfoSourceUpgrade != null && pgCont.oRatePlanInfoSourceUpgrade.Id == oProductRatePlanInfo.Id, 'The appropriate source Rate Plan Information should be selected');
-		        system.assertEquals(false, pgCont.hasSubscriptionResult, 'The page shouldn\'t have any subscribe results');
-		        system.assertEquals(true, pgCont.hasUpgradesAvailable, 'Upgrades should be available');
-		        system.assertEquals(false, pgCont.hasAcceptedAllTnCs, 'The T&Cs shound not yet be flagged as accepted');
-		        system.assertEquals(false, pgCont.hasFilledAutoRenewFlag, 'The Auto renew shound not yet be flagged as filled');
-		        system.assert(pgCont.lstUIRatePlanInfoUpgradeTargets != null && pgCont.lstUIRatePlanInfoUpgradeTargets.size() == 1, 'There should be 1 upgrade path displayed');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to load the page. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        // Test #2 - test the preview of the prices
-	        try {	        
-		        pgCont.previewUpgrades();
-		        
-		        // assertions after price preview
-		        system.assertEquals(true, pgCont.upgradePreviewSuccessful, 'The upgrade preview should be successful');
-		        for (vfIECUpgrade.UIUpgradableRatePlan uiRatePlan : pgCont.lstUIRatePlanInfoUpgradeTargets) {
-		        	system.assert(uiRatePlan.lstPreviewInvoiceItems != null && uiRatePlan.lstPreviewInvoiceItems.size() > 0, 'Invoice Items should be gotten from the preview process');
-		        }
-		    }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to preview the prices of the upgrades. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        // Test #3 - select the upgrade without setting the ids (ERROR)
-	        try {
-	        	pgCont.selectUpgrade();
-	        	system.assert(false, 'Select the upgrade without setting the ids should throw an error');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(true, 'Select the upgrade without setting the ids should throw an error');
-	        }
-	        
-	        // Test #4 - select the available upgrade, no new T&C to accept
-	        try {
-	        	pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
-	        	pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
-	        	pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
-	        	pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-	        	pgCont.selectUpgrade();
-
-	        	system.assert(pgCont.subTotal != null, 'The subTotal should not be null');
-	        	system.assert(pgCont.taxes != null, 'The taxes should not be null');
-	        	system.assert(pgCont.total != null, 'The total should not be null');
-	        	system.assertEquals(false, pgCont.needToAcceptTnC, 'Since the T&C havent changed, no need to accept the T&C again');
-	        	system.assert(pgCont.oTnCComponentController != null, 'The T&C component shouldnt be null');
-	        	system.assertEquals(true, pgCont.hasPaymentMethods, 'The customer should have payment methods');
-	        	system.assert(pgCont.defaultPaymentMethodIsICH != null, 'defaultPaymentMethodIsICH should be set');
-	        	system.assert(pgCont.defaultPaymentMethodIsBankTransfer != null, 'defaultPaymentMethodIsBankTransfer should be set');
-	        	system.assert(pgCont.isPaymentAvailableWithCreditCard != null, 'isPaymentAvailableWithCreditCard should be set');
-	        	system.assert(pgCont.isPaymentAvailableWithICH != null, 'isPaymentAvailableWithICH should be set');
-	        	//system.assert(pgCont.isPaymentAvailableWithBankTransfer != null, 'isPaymentAvailableWithBankTransfer should be set');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to select an upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        // Test # - change selection
-	        try {
-	        	pgCont.changeSelection();
-	        	
-	        	system.assert(pgCont.selectedUpgradeRatePlanZuoraID == '', 'The selectedUpgradeRatePlanZuoraID should not null');
-	        	system.assert(pgCont.selectedUpgradeProductInfoID == '', 'The selectedUpgradeProductInfoID should not null');
-	        	system.assert(pgCont.selectedUpgradeRatePlanInfoID == '', 'The selectedUpgradeRatePlanInfoID should not null');
-	        	system.assert(pgCont.selectedPaymentMethodType == '', 'The selectedPaymentMethodType should be null');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to change the selection. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        // Test # - upgrade without specifying the IDs (ERROR)
-	        try {
-	        	pgCont.selectedUpgradeRatePlanZuoraID = null;
-	        	pgCont.selectedUpgradeProductInfoID = null;
-	        	pgCont.selectedUpgradeRatePlanInfoID = null;
-	        	pgCont.proceedToUpgrade();
-	        	system.assert(false, 'Performing the upgrade without setting the ids should throw an error');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(true, 'Performing the upgrade without setting the ids should throw an error');
-	        }
-	        
-	        // Test # - perform the real upgrade (not from a trial)
-	        try {
-	        	pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
-	        	pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
-	        	pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-	        	
-	        	// set the auto renew flag
-	        	pgCont.autoRenewSubscription = 'true';
-	        	pgCont.selectedPaymentMethodType = 'ICH';
-	        	
-	        	pgCont.proceedToUpgrade();
-	        	
-	        	system.assertEquals(true, pgCont.upgradeSuccessful, 'The upgrade should be successful');
-	        	system.assert(pgCont.paymentTransactionNumber != null, 'The paymentTransactionNumber should not be null');
-	        	
-		        // Test # - Make sure an email has been triggered to the contact
-		        List<IEC_Email_Notification__c> lstEmails = [SELECT Email_Sent__c FROM IEC_Email_Notification__c WHERE To_Email__c = :baseCont.loggedCustomer.RelatedContact.Email];
-		        
-		        system.assertNotEquals(lstEmails.size(), 0, 'An email notification must be recorded in the system.');
-		        system.assertEquals(lstEmails.get(0).Email_Sent__c, true, 'Workflow must kick in and flag the email as sent.');
-		        	
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        pgCont.displayCallBackfailure();
-	        pgCont.getExtraParamString();
-	        pgCont.onClickCancel();
-	        
-	        // Test callback error
-	        pgRef.getParameters().put('errorCode', IECUtil.EncryptEncodeParameter('Some error code'));
-	        pgRef.getParameters().put('errorMessage', IECUtil.EncryptEncodeParameter('Some error'));
-    		Test.setCurrentPage(pgRef);
-    		pgCont.displayCallBackfailure();
-    		
-    		Test.stopTest();
-    	}
+                system.assert(pgCont.subTotal != null, 'The subTotal should not be null');
+//              system.assert(pgCont.taxes != null, 'The taxes should not be null');
+                system.assert(pgCont.taxCharge != null, 'The taxes should not be null');
+                system.assert(pgCont.shippingCharge != null, 'The shipping should not be null');
+                system.assert(pgCont.total != null, 'The total should not be null');
+                system.assertEquals(false, pgCont.needToAcceptTnC, 'Since the T&C havent changed, no need to accept the T&C again');
+                system.assert(pgCont.oTnCComponentController != null, 'The T&C component shouldnt be null');
+                system.assertEquals(true, pgCont.hasPaymentMethods, 'The customer should have payment methods');
+                system.assert(pgCont.defaultPaymentMethodIsICH != null, 'defaultPaymentMethodIsICH should be set');
+                system.assert(pgCont.defaultPaymentMethodIsBankTransfer != null, 'defaultPaymentMethodIsBankTransfer should be set');
+                system.assert(pgCont.isPaymentAvailableWithCreditCard != null, 'isPaymentAvailableWithCreditCard should be set');
+                //system.assert(pgCont.isPaymentAvailableWithICH != null, 'isPaymentAvailableWithICH should be set');
+                //system.assert(pgCont.isPaymentAvailableWithBankTransfer != null, 'isPaymentAvailableWithBankTransfer should be set');
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to select an upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            // Test # - change selection
+            try {
+                pgCont.changeSelection();
+                
+                system.assert(pgCont.selectedUpgradeRatePlanZuoraID == '', 'The selectedUpgradeRatePlanZuoraID should not null');
+                system.assert(pgCont.selectedUpgradeProductInfoID == '', 'The selectedUpgradeProductInfoID should not null');
+                system.assert(pgCont.selectedUpgradeRatePlanInfoID == '', 'The selectedUpgradeRatePlanInfoID should not null');
+                system.assert(pgCont.selectedPaymentMethodType == '', 'The selectedPaymentMethodType should be null');
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to change the selection. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            // Test # - upgrade without specifying the IDs (ERROR)
+            try {
+                pgCont.selectedUpgradeRatePlanZuoraID = null;
+                pgCont.selectedUpgradeProductInfoID = null;
+                pgCont.selectedUpgradeRatePlanInfoID = null;
+                pgCont.proceedToUpgrade();
+                system.assert(false, 'Performing the upgrade without setting the ids should throw an error');
+            }
+            catch(Exception ex) {
+                system.assert(true, 'Performing the upgrade without setting the ids should throw an error');
+            }
+            
+            // Test # - perform the real upgrade (not from a trial)
+            try {
+                pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
+                pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
+                pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
+                
+                // set the auto renew flag
+                pgCont.autoRenewSubscription = 'true';
+                pgCont.selectedPaymentMethodType = 'ICH';
+                
+                pgCont.proceedToUpgrade();
+                
+                system.assertEquals(true, pgCont.upgradeSuccessful, 'The upgrade should be successful');
+                system.assert(pgCont.paymentTransactionNumber != null, 'The paymentTransactionNumber should not be null');
+                
+                // Test # - Make sure an email has been triggered to the contact
+                List<IEC_Email_Notification__c> lstEmails = [SELECT Email_Sent__c FROM IEC_Email_Notification__c WHERE To_Email__c = :baseCont.loggedCustomer.RelatedContact.Email];
+                
+                system.assertNotEquals(lstEmails.size(), 0, 'An email notification must be recorded in the system.');
+                system.assertEquals(lstEmails.get(0).Email_Sent__c, true, 'Workflow must kick in and flag the email as sent.');
+                    
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            pgCont.displayCallBackfailure();
+            pgCont.getExtraParamString();
+            pgCont.onClickCancel();
+            
+            // Test callback error
+            pgRef.getParameters().put('errorCode', IECUtil.EncryptEncodeParameter('Some error code'));
+            pgRef.getParameters().put('errorMessage', IECUtil.EncryptEncodeParameter('Some error'));
+            Test.setCurrentPage(pgRef);
+            pgCont.displayCallBackfailure();
+            
+            Test.stopTest();
+        }
     }
     
     @isTest(SeeAllData=true)
     static void testUpgradeWithNewCreditCard() {
-    	
-    	// Initialize Data for test scenario
-	    InitProduct();
+        
+        // Initialize Data for test scenario
+        InitProduct();
 
-		Test.startTest();
-		User usr = IECTestUtil.createSampleGuestUserAndLogin();
-    	IECPageController baseCont = new IECPageController();
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        IECPageController baseCont = new IECPageController();
 
-    	System.runAs(usr) {
-	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
-    	}
-	
-		InitSubscription1(baseCont.loggedCustomer);
+        System.runAs(usr) {
+            baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
+        }
+    
+        InitSubscription1(baseCont.loggedCustomer);
+        
+        Test.startTest();
+        System.runAs(usr) {         
+            PageReference pgRef = Page.IECUpgrade;
+            pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
+            Test.setCurrentPage(pgRef);
+    
+            //Instantiate Controller
+            vfIECUpgrade pgCont = new vfIECUpgrade();
+            
 
-    	System.runAs(usr) {			
-			PageReference pgRef = Page.IECUpgrade;
-    		pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
-    		Test.setCurrentPage(pgRef);
-	
-	    	//Instantiate Controller
-	        vfIECUpgrade pgCont = new vfIECUpgrade();
-
-	        // Test # - perform the upgrade with a new credit card
-	        try {
-	        	pgCont.pageLoad();
-	        	pgCont.previewUpgrades();
-	        	pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
-	        	pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
-	        	pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
-	        	pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-	        	pgCont.selectUpgrade();
-	        	
-	        	// set the auto renew flag
-	        	pgCont.autoRenewSubscription = 'true';
-	        	pgCont.selectedPaymentMethodType = 'CREDIT_CARD';
-	        	pgCont.selectedCreditCardPaymentId = '78978s76fg56g4h45sadsdfa';
-	        	
-	        	pgCont.proceedToUpgrade();
-	        	
-	        	system.assertEquals(true, pgCont.upgradeSuccessful, 'The upgrade should be successful');
-	        	system.assert(pgCont.paymentTransactionNumber != null, 'The paymentTransactionNumber should not be null');
-	        	
-		        // Test # - Make sure an email has been triggered to the contact
-		        List<IEC_Email_Notification__c> lstEmails = [SELECT Email_Sent__c FROM IEC_Email_Notification__c WHERE To_Email__c = :baseCont.loggedCustomer.RelatedContact.Email];
-		        
-		        system.assertNotEquals(lstEmails.size(), 0, 'An email notification must be recorded in the system.');
-		        system.assertEquals(lstEmails.get(0).Email_Sent__c, true, 'Workflow must kick in and flag the email as sent.');
-		        	
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-    		
-    		Test.stopTest();
-    	}
+            // Test # - perform the upgrade with a new credit card
+            try {
+                pgCont.pageLoad();
+                pgCont.previewUpgrades();
+                pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
+                pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
+                pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
+                pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
+                pgCont.selectUpgrade();
+                
+                // set the auto renew flag
+                pgCont.autoRenewSubscription = 'true';
+                pgCont.selectedPaymentMethodType = 'CREDIT_CARD';
+                pgCont.selectedCreditCardPaymentId = '78978s76fg56g4h45sadsdfa';
+                
+                pgCont.proceedToUpgrade();
+                
+                system.assertEquals(true, pgCont.upgradeSuccessful, 'The upgrade should be successful');
+                system.assert(pgCont.paymentTransactionNumber != null, 'The paymentTransactionNumber should not be null');
+                
+                // Test # - Make sure an email has been triggered to the contact
+                List<IEC_Email_Notification__c> lstEmails = [SELECT Email_Sent__c FROM IEC_Email_Notification__c WHERE To_Email__c = :baseCont.loggedCustomer.RelatedContact.Email];
+                
+                system.assertNotEquals(lstEmails.size(), 0, 'An email notification must be recorded in the system.');
+                system.assertEquals(lstEmails.get(0).Email_Sent__c, true, 'Workflow must kick in and flag the email as sent.');
+                    
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            Test.stopTest();
+        }
     }
     
     @isTest(SeeAllData=true)
     static void testTrialUpgrade() {
-    	
-    	// Initialize Data for test scenario
-	    InitProduct();
+        
+        // Initialize Data for test scenario
+        InitProduct();
 
-		Test.startTest();
-		User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
-		IECPageController baseCont = new IECPageController();
+        User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
+        IECPageController baseCont = new IECPageController();
 
-    	System.runAs(usr) {
-	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
-    	}
-	
-		InitSubscription2(baseCont.loggedCustomer);
+        System.runAs(usr) {
+            baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
+        }
+    
+        InitSubscription2(baseCont.loggedCustomer);
+        
+        Test.startTest();
+        System.runAs(usr) {         
+            PageReference pgRef = Page.IECUpgrade;
+            pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription2.Id));
+            Test.setCurrentPage(pgRef);
+        
+            vfIECUpgrade pgCont = new vfIECUpgrade();           
+            pgCont.pageLoad();
+                
+            // basic assertions after page load
+            system.assertEquals(true, pgCont.hasRatePlanUpgradeSource, 'The source rate plan info should be found');
+            system.assert(pgCont.oRatePlanInfoSourceUpgrade != null && pgCont.oRatePlanInfoSourceUpgrade.Id == oProductRatePlanInfo3Trial.Id, 'The appropriate source Rate Plan Information should be selected');
+            system.assertEquals(true, pgCont.hasUpgradesAvailable, 'Upgrades should be available');
+            
+            // preview the upgrades prices
+            pgCont.previewUpgrades();
+                    
+            // Test #1 - select the available upgrade, T&C to accept since the source rate plan is a trial
+            try {
+                pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
+                pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
+                pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
+                pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
+                pgCont.selectUpgrade();
+                
+                system.assertEquals(true, pgCont.upgradePreviewSuccessful, 'The upgrade preview should be successful');
+                system.assert(pgCont.subTotal != null, 'The subTotal should not be null');
+                //system.assert(pgCont.taxes != null, 'The taxes should not be null');
+                system.assert(pgCont.taxCharge != null, 'The taxes should not be null');
+                system.assert(pgCont.shippingCharge != null, 'The shipping should not be null');
+                system.assert(pgCont.total != null, 'The total should not be null');
+                system.assertEquals(true, pgCont.needToAcceptTnC, 'It is mandatory to accept the T&C when upgrading from trial');
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            // Test #2 - try to upgrade from a trial without accepting the T&C (ERROR)
+            try {
+                pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
+                
+                // set the auto renew flag
+                pgCont.autoRenewSubscription = 'false';
+                pgCont.selectedPaymentMethodType = 'ICH';
+                
+                pgCont.proceedToUpgrade();
+                
+                system.assert(false, 'Should throw an error because the T&C were not accepted.');
+            }
+            catch(Exception ex) {
+                system.assert(true, 'Should throw an error because the T&C were not accepted.');
+            }
+            
+            // Test #3 - accept the T&C and perform the upgrade
+            try {
+                for (VfIECTermsAndConditionsComponent.UITermsAndConditions uiTnc : pgCont.oTnCComponentController.listTermsAndConditionsToDisplay)
+                    uiTnc.checked = true;
 
-    	System.runAs(usr) {			
-			PageReference pgRef = Page.IECUpgrade;
-    		pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription2.Id));
-    		Test.setCurrentPage(pgRef);
-    	
-	        vfIECUpgrade pgCont = new vfIECUpgrade();	        
-	        pgCont.pageLoad();
-	            
-	        // basic assertions after page load
-	        system.assertEquals(true, pgCont.hasRatePlanUpgradeSource, 'The source rate plan info should be found');
-	        system.assert(pgCont.oRatePlanInfoSourceUpgrade != null && pgCont.oRatePlanInfoSourceUpgrade.Id == oProductRatePlanInfo3Trial.Id, 'The appropriate source Rate Plan Information should be selected');
-	        system.assertEquals(true, pgCont.hasUpgradesAvailable, 'Upgrades should be available');
-	        
-	        // preview the upgrades prices
-	        pgCont.previewUpgrades();
-	                
-	        // Test #1 - select the available upgrade, T&C to accept since the source rate plan is a trial
-	        try {
-	        	pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
-	        	pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
-	        	pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
-	        	pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-	        	pgCont.selectUpgrade();
-	        	
-	        	system.assertEquals(true, pgCont.upgradePreviewSuccessful, 'The upgrade preview should be successful');
-	        	system.assert(pgCont.subTotal != null, 'The subTotal should not be null');
-	        	system.assert(pgCont.taxes != null, 'The taxes should not be null');
-	        	system.assert(pgCont.total != null, 'The total should not be null');
-	        	system.assertEquals(true, pgCont.needToAcceptTnC, 'It is mandatory to accept the T&C when upgrading from trial');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        // Test #2 - try to upgrade from a trial without accepting the T&C (ERROR)
-	        try {
-	        	pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-	        	
-	        	// set the auto renew flag
-	        	pgCont.autoRenewSubscription = 'false';
-	        	pgCont.selectedPaymentMethodType = 'ICH';
-	        	
-	        	pgCont.proceedToUpgrade();
-	        	
-	        	system.assert(false, 'Should throw an error because the T&C were not accepted.');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(true, 'Should throw an error because the T&C were not accepted.');
-	        }
-	        
-	        // Test #3 - accept the T&C and perform the upgrade
-	        try {
-	        	for (VfIECTermsAndConditionsComponent.UITermsAndConditions uiTnc : pgCont.oTnCComponentController.listTermsAndConditionsToDisplay)
-	        		uiTnc.checked = true;
-
-	        	pgCont.proceedToUpgrade();
-	        	system.assertEquals(true, pgCont.upgradeSuccessful, 'The upgrade should be successful');
-	        	system.assertEquals(true, pgCont.hasSubscriptionResult, 'Should have subscriptionresult');
-	        	
-	        	// Test 004: Make sure an email has been triggered to the contact
-		        List<IEC_Email_Notification__c> lstEmails = [SELECT Email_Sent__c FROM IEC_Email_Notification__c WHERE To_Email__c = :baseCont.loggedCustomer.RelatedContact.Email];
-		        
-		        system.assertNotEquals(lstEmails.size(), 0, 'An email notification must be recorded in the system.');
-		        system.assertEquals(lstEmails.get(0).Email_Sent__c, true, 'Workflow must kick in and flag the email as sent.');
-	        }
-	        catch(Exception ex) {
-	        	system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
-	        }
-	        
-	        Test.stopTest();
-    	}
+                pgCont.proceedToUpgrade();
+                system.assertEquals(true, pgCont.upgradeSuccessful, 'The upgrade should be successful');
+                system.assertEquals(true, pgCont.hasSubscriptionResult, 'Should have subscriptionresult');
+                
+                // Test 004: Make sure an email has been triggered to the contact
+                List<IEC_Email_Notification__c> lstEmails = [SELECT Email_Sent__c FROM IEC_Email_Notification__c WHERE To_Email__c = :baseCont.loggedCustomer.RelatedContact.Email];
+                
+                system.assertNotEquals(lstEmails.size(), 0, 'An email notification must be recorded in the system.');
+                system.assertEquals(lstEmails.get(0).Email_Sent__c, true, 'Workflow must kick in and flag the email as sent.');
+            }
+            catch(Exception ex) {
+                system.assert(false, 'Should be able to upgrade. Error:' + ex.getMessage() + ' - ' + ex.getStacktraceString());
+            }
+            
+            Test.stopTest();
+        }
     }
     
     @isTest(SeeAllData=true)
     static void TestUpgrade_Misc() {
-    	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-    	System.debug('Unit Test: Start: TestUpgrade_Misc');
-    	
-    	// Initialize Data for test scenario
-	    InitProduct();
+        System.debug('Unit Test: Start: TestUpgrade_Misc');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        // Initialize Data for test scenario
+        InitProduct();
 
-		Test.startTest();
-		User usr = IECTestUtil.createSampleGuestUserAndLogin();
-		IECPageController baseCont = new IECPageController();
-		vfIECUpgrade pgCont;
+        Test.startTest();
+                TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 
-    	System.runAs(usr) {
-	    	baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
-	    	//Instantiate Controller
-	        pgCont = new vfIECUpgrade();
-    	}
-    	
-    	pgCont.pageLoad();
-	
-		InitSubscription1(baseCont.loggedCustomer);
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        IECPageController baseCont = new IECPageController();
+        vfIECUpgrade pgCont;
 
-    	System.runAs(usr) {
+        System.runAs(usr) {
+            baseCont.loggedCustomer = IECCustomer.getCurrentIECCustomer();
+            //Instantiate Controller
+            pgCont = new vfIECUpgrade();
+        }
+        
+        pgCont.pageLoad();
+    
+        InitSubscription1(baseCont.loggedCustomer);
 
-			PageReference pgRef = Page.IECUpgrade;
-    		pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
-    		Test.setCurrentPage(pgRef);
+        System.runAs(usr) {
+            TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+            PageReference pgRef = Page.IECUpgrade;
+            pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(oSubscription1.Id));
+            Test.setCurrentPage(pgRef);
 
-	        pgCont = new vfIECUpgrade();
-	
-	        String sTest = pgCont.sOriginalProductName;
-	        sTest = pgCont.sUpgradeProductName;
-	        Boolean bTest = pgCont.hasFilledAutoRenewFlag;
-	        
-	        pgCont.pageLoad();
-	        pgCont.previewUpgrades();
-        	pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
-        	pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
-        	pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
-        	pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
-        	pgCont.selectUpgrade();
+            pgCont = new vfIECUpgrade();
+    
+            String sTest = pgCont.sOriginalProductName;
+            sTest = pgCont.sUpgradeProductName;
+            Boolean bTest = pgCont.hasFilledAutoRenewFlag;
+            
+            pgCont.pageLoad();
+            pgCont.previewUpgrades();
+            pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).selected = true;
+            pgCont.selectedUpgradeRatePlanZuoraID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Product_Rate_Plan__r.zqu__ZuoraId__c;
+            Test.stopTest();
+            pgCont.selectedUpgradeProductInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Related_Product_Information__c;
+            pgCont.selectedUpgradeRatePlanInfoID = pgCont.lstUIRatePlanInfoUpgradeTargets.get(0).productRatePlanInfo.Id;
+            pgCont.selectUpgrade();
 
-	        Contact oContact = pgCont.oContact;
-	        Account oAccount = pgCont.oAccount;
-	        List<SelectOption> lstOptions = pgCont.lstISOCountries;
-	        lstOptions = pgCont.lstCanadaProvinces;
-	        lstOptions = pgCont.lstUSAStates;
+            Contact oContact = pgCont.oContact;
+            Account oAccount = pgCont.oAccount;
+            List<SelectOption> lstOptions = pgCont.lstISOCountries;
+            lstOptions = pgCont.lstStateProvince;
 
-	        pgCont.needToFillContactInfo = true;
-	        try {pgCont.proceedToUpgrade();} catch (Exception e) {}
-	        pgCont.needToFillContactInfo = false;
-	        pgCont.inEditContactInfo = true;
-	        try {pgCont.proceedToUpgrade();} catch (Exception e) {}
-	        pgCont.inEditContactInfo = false;
-	        pgCont.hasFilledAutoRenewFlag = false;
-	        try {pgCont.proceedToUpgrade();} catch (Exception e) {}
-	        pgCont.hasFilledAutoRenewFlag = true;
-	        pgCont.selectedPaymentMethodType = '';
-	        try {pgCont.proceedToUpgrade();} catch (Exception e) {}
+            pgCont.needToFillContactInfo = true;
+            try {pgCont.proceedToUpgrade();} catch (Exception e) {}
+            pgCont.needToFillContactInfo = false;
+            pgCont.inEditContactInfo = true;
+            try {pgCont.proceedToUpgrade();} catch (Exception e) {}
+            pgCont.inEditContactInfo = false;
+            pgCont.hasFilledAutoRenewFlag = false;
+            try {pgCont.proceedToUpgrade();} catch (Exception e) {}
+            pgCont.hasFilledAutoRenewFlag = true;
+            pgCont.selectedPaymentMethodType = '';
+            try {pgCont.proceedToUpgrade();} catch (Exception e) {}
 
-	        pgCont.hasAcceptedAllTnCs = true;
-	        pgCont.selectedPaymentMethodType = 'BANK_TRANSFER';
-	        try {pgCont.proceedToUpgrade();} catch (Exception e) {}
-	        pgCont.selectedPaymentMethodType = 'CREDIT_CARD';
-	        try {pgCont.proceedToUpgrade();} catch (Exception e) {}
-	        
-	        pgCont.modifyContactInfo();
-	        
-			// Reset contact for testing
-	        pgCont.oContact.FirstName = null;
-	        pgCont.oContact.LastName = null;
-	        pgCont.oContact.Title = null;
-	        pgCont.oContact.Email = null;
-	        pgCont.oContact.Phone = null;
+            pgCont.hasAcceptedAllTnCs = true;
+            pgCont.selectedPaymentMethodType = 'BANK_TRANSFER';
+            try {pgCont.proceedToUpgrade();} catch (Exception e) {}
+            pgCont.selectedPaymentMethodType = 'CREDIT_CARD';
+            try {pgCont.proceedToUpgrade();} catch (Exception e) {}
+            
+            pgCont.modifyContactInfo();
+            
+            // Reset contact for testing
+            pgCont.oContact.FirstName = null;
+            pgCont.oContact.LastName = null;
+            pgCont.oContact.Title = null;
+            pgCont.oContact.Email = null;
+            pgCont.oContact.Phone = null;
+            
+           
 
-	        // Test 005: Test contact update validation
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' First Name'));
-	        pgCont.oContact.FirstName = 'FirstName';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Last Name'));
-	        pgCont.oContact.LastName = 'LastName';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Job Title'));
-	        pgCont.oContact.Title = 'Title';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Email'));
-	        pgCont.oContact.Email = 'a@a.com';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Phone'));
-	        pgCont.oContact.Phone = '4169494949';
+            // Test 005: Test contact update validation
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' First Name'));
+            pgCont.oContact.FirstName = 'FirstName';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Last Name'));
+            pgCont.oContact.LastName = 'LastName';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Job Title'));
+            pgCont.oContact.Title = 'Title';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Email'));
+            pgCont.oContact.Email = 'a@a.com';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Phone'));
+            pgCont.oContact.Phone = '4169494949';
 
-			pgCont.oBillingAddress = new IECAddress__c(
-				Contact__c = pgCont.oContact.Id
-	            , Address_Type__c = IECConstants.IECAddress_AddressType_Billing
-			);
-			
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Address'));
-	        pgCont.oBillingAddress.Street__c = 'Address';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' City'));
-	        pgCont.oBillingAddress.City__c = 'City';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Country'));
-	        pgCont.oBillingAddress.Country__c = 'Test';
-	        
-	        // Setup a VAT Configuration
-	        IATA_ISO_Country__c country = IECTestUtil.CreateSampleIATAISOCountry();
-	        country.VAT_Validation_Required__c =
-	        	country.Tax_ID_Mandatory__c = true;
-	        country.Tax_1_Label__c = 'Tax 1 ID';
-        	country.Tax_2_Label__c = 'Tax 2 ID';
-	        insert country;
-	        
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 1 ID'));
-	        pgCont.oContact.Tax_1_ID__c = 'Tax1ID';
-	        pgCont.updateContactInfo();
-	        system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 2 ID'));
-	        pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
-	        pgCont.updateContactInfo();
-	        
-	        // Misc Coverage
-	        pgCont.oBillingAddress.Country__c = 'Teesstt';
-	        pgCont.onChangeBillingCountry();
-	        
-	        pgCont.cancelUpdateContactInfo();
-	        pgCont.closePopup();
-	        pgCont.showPopUp();
-	        pgCont.bExpandedBilling = false;
-	        pgCont.toggleBilling();
-	        pgCont.bExpandedTCs = false;
-	        pgCont.toggleTCs();
-	        pgCont.bExpandedAutoRenewal = false;
-	        pgCont.toggleAutoRenew();
-	        pgCont.bExpandedPaymentMethod = false;
-	        pgCont.togglePaymentMethod();	        
-    	}
-    	System.debug('Unit Test: Finish: TestUpgrade_Misc');
+            pgCont.oBillingLocation = new Location__c(
+                Active__c = true
+                , Account__c = pgCont.oAccount.Id
+                , Contact__c = pgCont.oContact.Id
+                , Type__c = IECConstants.IECAddress_AddressType_Billing
+            );
+            pgCont.oBillingAddress = new IECAddress__c();
+            
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Address'));
+            pgCont.oBillingAddress.Street__c = 'Address';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' City'));
+            pgCont.oBillingAddress.City__c = 'City';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Country'));
+            
+            // Setup a VAT Configuration
+            IATA_ISO_Country__c country = IECTestUtil.CreateSampleIATAISOCountry();
+            country.VAT_Validation_Required__c =
+                country.Tax_ID_Mandatory__c = true;
+            country.Tax_1_Label__c = 'Tax 1 ID';
+            country.Tax_2_Label__c = 'Tax 2 ID';
+            insert country;
+
+            pgCont.oBillingAddress.ISO_Country__c = country.Id;
+            
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 1 ID'));
+            pgCont.oContact.Tax_1_ID__c = 'Tax1ID';
+            pgCont.updateContactInfo();
+            system.assert(IECTestUtil.PageContainsMessage(ApexPages.getMessages(), Label.IEC_Error_Required_field + ' Tax 2 ID'));
+            pgCont.oContact.Tax_2_ID__c = 'Tax2ID';
+            pgCont.updateContactInfo();
+            
+            // Misc Coverage
+            pgCont.oBillingAddress.ISO_Country__c = ([SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c IN ('EG')])[0].Id;
+            pgCont.onChangeBillingCountry();
+            
+            pgCont.cancelUpdateContactInfo();
+            pgCont.closePopup();
+            pgCont.showPopUp();
+            pgCont.bExpandedBilling = false;
+            pgCont.toggleBilling();
+            pgCont.bExpandedTCs = false;
+            pgCont.toggleTCs();
+            pgCont.bExpandedAutoRenewal = false;
+            pgCont.toggleAutoRenew();
+            pgCont.bExpandedPaymentMethod = false;
+            pgCont.togglePaymentMethod();           
+        }
+        System.debug('Unit Test: Finish: TestUpgrade_Misc');
     }
 
     @isTest
@@ -626,9 +645,5 @@ private class vfIECUpgrade_tst {
         HPM_Setting__c hpmsetting = HPM_Setting__c.getInstance ('Zuora HPM Setting');
         if(hpmsetting != null)
             delete hpmsetting;
-    }
-    
-   
-    
-    
+    }    
 }

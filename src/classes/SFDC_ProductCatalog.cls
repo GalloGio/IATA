@@ -193,7 +193,7 @@ global class SFDC_ProductCatalog
 	    	ws.ProductDescription 		= p.Short_Description__c;
 	    	ws.ProductNotes 			= p.Notes__c;	    	
 	    	ws.ProductLink 				= '/IEC_ProductDetails?id='+p.SAP_Material_Number__c;
-	    	ws.ProductLanguage 			= p.Language__c; 
+	    	ws.ProductLanguage 			= p.Refinement_Language__c; 
 	    	ws.ProductCategory 			= p.Line_of_Business__c;
 	    	ws.ProductMedia 			= p.Media__c;
 	    	ws.ProductAvailabilityDate 	= p.Effective_From__c;

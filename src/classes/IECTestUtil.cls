@@ -4,7 +4,8 @@
   * Version: 1.0
   * History: 
   */
-public with sharing class IECTestUtil {
+//*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
+public without sharing class IECTestUtil {
     public static string InvoiceTestOrigin = '';
     public static string TEST_CLASS_AIMSID = 'Flag4Test';
     public static boolean trgPortalUserAfterInserUpdate = false;
@@ -96,6 +97,7 @@ public with sharing class IECTestUtil {
             prpi.Active__c = true;
             prpi.Monthly_Price__c = 10.00;
             prpi.Display_As_Monthly_Fee__c = !triable;
+            //prpi.User_Interface_Display__c = 'Yes';
             prpi.Order__c = 1;
             prpi.Short_Description__c = 'Sample Product Rate Plan Information';
             prpi.Long_Description__c = 'long desc';
@@ -110,6 +112,7 @@ public with sharing class IECTestUtil {
             ratePlanCharge.zqu__Deleted__c = false;
             ratePlanCharge.zqu__ZuoraId__c = generateZuoraID();
             ratePlanCharge.zqu__ListPrice__c = dPrice;
+            ratePlanCharge.zqu__Model__c = 'Flat Fee Pricing';
             
             return ratePlanCharge;
     }
@@ -153,17 +156,26 @@ public with sharing class IECTestUtil {
     public static Account createSampleAccount(String ClientType) {
         Account newAccount = new Account();
         newAccount.RecordTypeId = IECUserManager.getAccountRecordTypeForIEC(ClientType);
+        newAccount.BillingStreet = '123 main street';
+        newAccount.BillingPostalCode = 'H0H 0H0';
         newAccount.BillingCountry = 'Canada';
         newAccount.BillingCity = 'Montreal';
-        //newAccount.ClientType__c = ClientType;
+        newAccount.Customer_Type__c = ClientType;
         newAccount.Name = 'Company';
+
+
+        //IATA_ISO_Country__c isoCountry = CreateSampleIATAISOCountry();
+        //insert isoCountry;
+        //newAccount.IATA_ISO_Country__c = isoCountry.Id;
+
+
         newAccount.OwnerId = IECUserManager.getIECAccountOwnerId();
         
         if (ClientType == IECConstants.Account_ClientType_MemberAirline) {
             newAccount.Membership_status__c = IECConstants.Account_MembershipStatus_IATAMember;
             newAccount.ICH_Member__c = true;
         }
-        
+
         return newAccount;
     }
     
@@ -185,6 +197,69 @@ public with sharing class IECTestUtil {
         return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
     }
     
+      public static User createSampleGuestUserAndLoginOlder() {
+        return createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
+    }
+    public static User createSampleGuestUserAndLoginOLD(String ClientType) {
+        // insert account
+        Account newAccount = createSampleAccount(ClientType);
+        insert newAccount;
+
+        // create Bill To contact info
+        Contact newContact = new Contact();
+        newContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
+        newContact.AccountId = newAccount.Id;
+        newContact.OwnerId = IECUserManager.getIECContactOwnerId();
+        newContact.FirstName = 'Test';
+        newContact.LastName = 'User';
+        newContact.Title = 'TestTitle';
+        newContact.Email = 'testIECGuest@test.iata.org';
+        newContact.Phone = '514123345';
+        newContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
+        insert newContact;
+        
+        Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
+        insert oBillingAccount;        
+
+        User u = new User(
+            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
+            , Email = 'testIECGuest@test.iata.org'
+            , emailencodingkey = 'UTF-8'
+            , Alias = IECUserManager.createAliasFromName(newContact.LastName)
+            , FirstName = newContact.FirstName
+            , LastName = newContact.LastName
+            , LocaleSidKey = 'en_US'
+            , CommunityNickname = 'testIECGuest@iata.org'
+            , ProfileId = IECUserManager.getProfileIdForIECUser()
+            , LanguageLocaleKey = 'en_US'
+            , timezonesidkey = 'America/New_York'
+            , ContactId = newContact.Id
+            , IsActive = true
+            , ReceivesAdminInfoEmails = false
+            , ReceivesInfoEmails = false
+        );
+        insert u;
+        trgPortalUserAfterInserUpdate = true;
+        String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
+      //  trgPortalUserAfterInserUpdate = false;
+        /*
+        // assign Permission Set to provide access to objects
+        Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
+        if (permissionSetId != null) {
+            PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
+            oPermissionSetAssignment.AssigneeId = userId;
+            oPermissionSetAssignment.PermissionSetId = permissionSetId;
+            insert oPermissionSetAssignment;
+        }
+        */
+        
+        IECUserManager.login(u.Username, 'testpassword', null);
+           
+        return u;
+    }
+    
+    
+    
     public static User createSampleGuestUserAndLogin(String ClientType) {
         // insert account
         Account newAccount = createSampleAccount(ClientType);
@@ -204,10 +279,10 @@ public with sharing class IECTestUtil {
         insert newContact;
         
         Zuora__CustomerAccount__c oBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
-        insert oBillingAccount;
+        insert oBillingAccount;        
 
         User u = new User(
-            Username = 'testIECGuest@test.iata.org'
+            Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
             , Email = 'testIECGuest@test.iata.org'
             , emailencodingkey = 'UTF-8'
             , Alias = IECUserManager.createAliasFromName(newContact.LastName)
@@ -223,6 +298,7 @@ public with sharing class IECTestUtil {
             , ReceivesAdminInfoEmails = false
             , ReceivesInfoEmails = false
         );
+        insert u;
         trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, newAccount.Id, 'testpassword');
       //  trgPortalUserAfterInserUpdate = false;
@@ -619,15 +695,49 @@ public with sharing class IECTestUtil {
     }
     */
     public static IECAddress__c CreateSampleIECAddress(Contact oContact, String sType) {
-        return new IECAddress__c(
-            Address_Type__c = sType
-            , Country__c = 'CA'
-            , City__c = 'Montreal'
-            , Contact__c = oContact.Id
-            , State__c = 'QC'
-            , Street__c = '123 main street'
-            , ZipCode__c = 'h1q2w3'
-        );
+        //*** modified by Thai (2016-02-29) to create address and necessary relations instead of preparing a new address
+        
+        //return new IECAddress__c(
+        //    Address_Type__c = sType
+        //    , Country__c = 'CA'
+        //    , City__c = 'Montreal'
+        //    , Contact__c = oContact.Id
+        //    , State__c = 'QC'
+        //    , Street__c = '123 main street'
+        //    , ZipCode__c = 'h1q2w3'
+        //);
+
+        //*** get ISO country
+        IATA_ISO_Country__c country;
+        try
+        {
+            country = [select Id, ISO_Code__c, Name from IATA_ISO_Country__c where ISO_Code__c='CA' limit 1][0];
+        }
+        catch (Exception e)
+        {
+            country = new IATA_ISO_Country__c(Name='Canada', ISO_Code__c='CA', ISO_Code_Numeric__c=1);
+            insert country;
+        }
+        //*** get ISO state
+        IATA_ISO_State__c state;
+        try
+        {
+            state = [select Id, ISO_Code__c, Name from IATA_ISO_State__c where IATA_ISO_Country__c = :country.Id and ISO_Code__c in ('CA-QC', 'QC') limit 1][0];
+        }
+        catch (Exception e)
+        {
+            state = new IATA_ISO_State__c(IATA_ISO_Country__c=country.Id, Name='Quebec', ISO_Code__c='QC');
+            insert state;
+        }
+        //*** create address -> also populate unused fields Country__c and State__c for "just in case"
+        IECAddress__c address = new IECAddress__c(Street__c='123 main street', City__c='Montreal', ISO_Country__c=country.Id, ISO_State__c=state.Id, ZipCode__c='h1q2w3'
+                                                , Country__c=country.ISO_Code__c, State__c=state.ISO_Code__c);
+        insert address;
+        //*** create location
+        Location__c location = new Location__c(Account__c=oContact.AccountId, Contact__c=oContact.Id, Address__c=address.Id, Type__c=sType, Active__c=true);
+        insert location;
+        
+        return address;
     }
     
     public static Opportunity createSampleOpportunity(Account oAccount, String sName, Decimal dAmount) {
@@ -687,6 +797,16 @@ public with sharing class IECTestUtil {
             , Text_Print__c = IECSAPManager_tst.TEST_FLAG_SUCCESS
             , SAP_Invoice_Clearance_Date__c = Date.today()
             , SAP_Invoice_Number__c = 'SAP-23475923450978'
+            , Doc_Type__c = 'TST'
+            , Sales_Org__c = 'TST'
+            , Dist_Chan__c ='TST'
+            , Division__c ='TST'
+            , Sales_Office__c ='TST'
+            , Employee_Responsible__c = 'TST'
+            , Name = 'TST'
+            , Order_Reason__c = 'TST'
+            , Pay_Terms__c = 'TST'
+            , Bill_To__c = '123'
         );
     }
     
