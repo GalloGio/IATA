@@ -55,7 +55,6 @@
     </types> 
 	<types>
         <members>Admin</members>
-        <members>E%26F Management</members>
         <members>E%26F staff</members>
         <name>Profile</name>
     </types>
