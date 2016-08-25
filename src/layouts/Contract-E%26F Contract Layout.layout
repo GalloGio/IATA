@@ -249,20 +249,17 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EF_Material__c</fields>
+        <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>EF_Material_Line_Item__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>EF_Related_Records__c.NAME</fields>
-        <fields>EF_Billing_Currency__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Client__c</fields>
-        <fields>Airline__c</fields>
-        <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CreatedDate</fields>

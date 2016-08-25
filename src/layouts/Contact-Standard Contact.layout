@@ -80,15 +80,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>EF_Role__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Function__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Role__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
