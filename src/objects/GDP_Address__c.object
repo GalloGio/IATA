@@ -50,7 +50,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,6 +62,7 @@
         <label>AIMS ID</label>
         <length>40</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -72,6 +73,7 @@
         <label>Address City</label>
         <length>30</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -84,6 +86,7 @@
         <inlineHelpText>IATA_ISO_Country Name in uppercase</inlineHelpText>
         <label>Address Country Name Uppercase</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -94,6 +97,7 @@
         <formula>IATA_ISO_Country__r.Name</formula>
         <label>Address Country Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -111,6 +115,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <inlineHelpText>Used as LCtryISO, MCtryISO, RCtryISO by the GDP/MDP table, based on Address_ISO_Country_Code__c or Address_State_Code__c</inlineHelpText>
         <label>Address IATA Custom ISO Country Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -121,6 +126,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
         <label>Address ISO Country Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -134,6 +140,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -144,6 +151,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Line 1</label>
         <length>32</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -154,6 +162,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Line 2</label>
         <length>32</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -164,6 +173,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Line 3</label>
         <length>32</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -174,6 +184,7 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <label>Address Postal Code</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -192,6 +203,7 @@ In case the dash (-) does not exist,  e.g. CA60, it will only display the Countr
 The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <label>Address State Code</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -204,6 +216,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <inlineHelpText>IATA_ISO_State Name in uppercase</inlineHelpText>
         <label>Address State Name Uppercase</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -214,6 +227,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <formula>IATA_ISO_State__r.Name</formula>
         <label>Address State Name</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -237,6 +251,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -250,6 +265,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
 , &apos;|&apos;, &apos;/&apos;)</formula>
         <label>Address</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -263,6 +279,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -275,6 +292,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -285,6 +303,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <precision>2</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -298,6 +317,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -308,6 +328,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Profit Center</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -321,6 +342,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -333,6 +355,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -342,6 +365,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <formula>GDP_Geo_Detail__r.Sub_Continent__c</formula>
         <label>Sub Continent</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -353,6 +377,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <label>WebStar ID</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -410,9 +435,11 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <nameField>
         <displayFormat>A-{00000}</displayFormat>
         <label>GDP Address Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP Addresses</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>GDP</fullName>
         <active>true</active>
