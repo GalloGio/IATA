@@ -61,7 +61,7 @@
         <label>AIMS Area ID</label>
         <length>1</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -73,7 +73,7 @@
         <label>AIMS ID</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -84,7 +84,7 @@
         <label>AIMS Related Account</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -99,7 +99,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <label>AIMS Territory Unique Reference</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -111,7 +111,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -122,7 +122,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <label>Airline Code</label>
         <length>3</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -133,7 +133,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <label>Airline Name</label>
         <length>60</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -143,7 +143,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <externalId>false</externalId>
         <label>Appointment Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -153,7 +153,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <label>Appointment Type</label>
         <length>1</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -164,7 +164,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <label>Check Digit</label>
         <length>1</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -175,7 +175,7 @@ It uses concatenation of Territory Id + Airline Code + State + seq number.</desc
         <label>IATA Code</label>
         <length>7</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -207,7 +207,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>IATA ISO Country</label>
         <length>2</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -219,7 +219,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <precision>2</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -230,7 +230,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>Location Country Name</label>
         <length>30</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -244,7 +244,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <relationshipLabel>GSA Territories</relationshipLabel>
         <relationshipName>GSA_Territories</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -257,7 +257,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <relationshipLabel>GSA Territories</relationshipLabel>
         <relationshipName>GSA_Territories</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -270,7 +270,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <relationshipLabel>GSA Territories</relationshipLabel>
         <relationshipName>GSA_Territories</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -280,7 +280,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>Territory Country Name</label>
         <length>30</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -291,7 +291,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>Territory Description</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -302,7 +302,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>Territory IATA Numeric Country Code</label>
         <length>2</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -313,7 +313,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>Territory ISO Country</label>
         <length>2</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -324,7 +324,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <label>Territory State Abbreviation</label>
         <length>6</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -332,7 +332,7 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
     <label>GSA Territory</label>
     <nameField>
         <label>GSA Territory Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>GSA Territories</pluralLabel>

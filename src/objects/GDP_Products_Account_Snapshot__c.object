@@ -50,7 +50,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -61,6 +61,7 @@
         <label>AIMS ID</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -74,6 +75,7 @@
         <relationshipLabel>GDP Products - Accounts Snapshot</relationshipLabel>
         <relationshipName>GDP_Products_Accounts_Snapshot</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -83,6 +85,7 @@
         <label>Agency Code</label>
         <length>12</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -93,6 +96,7 @@
         <label>Check Digit</label>
         <length>2</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -103,6 +107,7 @@
         <label>City</label>
         <length>30</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -113,6 +118,7 @@
         <label>Country ISO Code</label>
         <length>2</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -123,6 +129,7 @@
         <label>IATA Code</label>
         <length>11</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -133,6 +140,7 @@
         <label>Legal Name</label>
         <length>98</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -143,6 +151,7 @@
         <label>Location Type Name</label>
         <length>80</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -153,6 +162,7 @@
         <label>Related Accreditation Class Code</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -163,6 +173,7 @@
         <label>Related Accreditation Class Table</label>
         <length>60</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -173,6 +184,7 @@
         <label>State/Province Code</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -183,6 +195,7 @@
         <label>Sub Continent</label>
         <length>50</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -193,6 +206,7 @@
         <label>Trading Name</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -203,6 +217,7 @@
         <label>Zip/Postal Code</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -210,6 +225,7 @@
     <label>GDP Products - Account Snapshot</label>
     <nameField>
         <label>Trading Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>GDP Products - Accounts Snapshot</pluralLabel>
