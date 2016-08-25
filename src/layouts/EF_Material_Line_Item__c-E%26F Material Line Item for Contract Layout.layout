@@ -13,13 +13,13 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Contract__c</field>
+                <field>EF_Material__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EF_Material__c</field>
+                <field>Contract__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

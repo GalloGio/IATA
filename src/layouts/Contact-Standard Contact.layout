@@ -80,15 +80,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>EF_Role__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Function__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Role__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -693,7 +693,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EF_Relationship__c</fields>
+        <fields>EF_Airline_Billing_Agreement__c</fields>
         <fields>Role__c</fields>
         <fields>Status__c</fields>
         <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>

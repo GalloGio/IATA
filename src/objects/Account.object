@@ -7198,6 +7198,17 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EF_Allow_Billing_Agreements__c</fullName>
+        <description>Field allowed to be updated only by E&amp;F Business Development Manager. This field controls whether E&amp;F Billing Agreements are allowed (occasionally with management&apos;s approval) for the Account or not.</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
+        <inlineHelpText>Controls whether the creation of Billing Agreements on this Account is allowed or not. With &quot;Allowed with Approval&quot; selection, the E&amp;F management must approval creation of Billing Agreements before they are activated.</inlineHelpText>
+        <label>E&amp;F Allow Billing Agreements</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_Annual_Revenue_USD__c</fullName>
         <description>E&amp;F Project. Annual Revenue for E&amp;F, might be different to Standard Annual Revenue. Allways computed on USD</description>
         <externalId>false</externalId>
