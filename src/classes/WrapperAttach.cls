@@ -197,11 +197,17 @@ global class WrapperAttach implements Comparable {
         if (this.filetype == 'Amazon') {
             this.fileAmazon.amazonFile.Description__c = this.description;
             this.fileAmazon.amazonFile.Internal_Comments__c = this.internalComments;
+            this.fileAmazon.amazonFile.isPublic__c = isPublic;
+            
             update this.fileAmazon.amazonFile;
         }
         if (filetype == 'Salesforce' ) {
             this.fileAttachment.Description = this.description;
             update this.fileAttachment;
+            if ( this.permission.ShowToPortalUsers__c != isPublic ) {
+                this.permission.ShowToPortalUsers__c = isPublic;
+                upsert this.permission;
+            }
         }
         if ( filetype == 'Archived' ) {
             this.fileArchived.Description__c = this.description;

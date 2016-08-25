@@ -12,8 +12,8 @@
             overflow-y: auto;
         }
 
-        .icontainer{
-            padding-right: 15px;
+        .iocontainer{
+            padding-right: 15px !important;
         }
     
         .iocontainer:hover{
@@ -58,6 +58,9 @@
             right: 0;
             background: black;
             opacity: 0.3;
+        }
+        .input, .hidden{
+            display: none;
         }
     </style>
     <script>
@@ -114,7 +117,7 @@
                 $(this).parent().parent().addClass("edited");
             });
 
-            $(".iocontainer .input").hide().on({
+            $(".iocontainer .input").on({
                 change: function() {
                     $(this).parent().addClass("edited");
                 },
@@ -127,7 +130,12 @@
 
                     if($(this).parent().hasClass('edited')){
                         $input = $(this).hasClass('popUp') ? $(this).find('textarea') : $(this);
-                        $output.html($input.val());
+
+                        if($input.is(':checkbox')){
+                            $output.find('img').toggleClass('hidden')
+                        }else{
+                            $output.html($input.val());
+                        }                        
                     }
 
                     $output.show();
@@ -198,9 +206,9 @@
                     <apex:outputLink onclick="return deleteAttachment('{!attach.Id}','{!attach.fullName}');" styleClass="actionLink" >{!$Label.Del}</apex:outputLink>
 
                     <!-- MAKE PUBLIC ACTION -->
-                    &nbsp;|&nbsp;
+                    <!-- &nbsp;|&nbsp;
 
-                    <apex:commandLink onclick="startLoading();" action="{!attach.changePermission}" value="{!IF(attach.isPublic, $Label.Make_Private, $Label.Make_Public)}" target="_blank" oncomplete="refreshList();" styleClass="actionLink" />
+                    <apex:commandLink onclick="startLoading();" action="{!attach.changePermission}" value="{!IF(attach.isPublic, $Label.Make_Private, $Label.Make_Public)}" target="_blank" oncomplete="refreshList();" styleClass="actionLink" /> -->
                 </apex:column>
 
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}" >
@@ -225,8 +233,14 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.Public}" >
-                    <apex:outputText style="display: none;" value="{!IF(attach.isPublic, 1, 0)}"/> <!-- lets the collumn be sorted -->
-                    <apex:inputcheckbox value="{!attach.isPublic}" disabled="true" />
+                    <apex:outputPanel styleClass="{!IF(attach.isArchived, '', 'iocontainer')}" layout="block" >
+                        <apex:outputText style="display: none;" value="{!IF(attach.isPublic, 1, 0)}"/> <!-- lets the collumn be sorted -->
+                        <apex:inputCheckbox styleClass="input" value="{!attach.isPublic}"/>
+                        <apex:outputPanel styleClass="output">
+                            <apex:image styleClass="{!IF(attach.isPublic, '', 'hidden')}" value="../img/checkbox_checked.gif" />
+                            <apex:image styleClass="{!IF(attach.isPublic, 'hidden', '')}" value="../img/checkbox_unchecked.gif" />
+                        </apex:outputPanel>
+                    </apex:outputPanel>
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.File_Name}">
