@@ -37,11 +37,16 @@
 						//
 						// 	 }
 						var currentUnder = participants[i].Local_Governance__r.AM_Under__r.Name;
+						var ownerName = '';
+						if(participants[i].Local_Governance__r.Group_Owner__r !== undefined) {
+							ownerName = participants[i].Local_Governance__r.Group_Owner__r.Name;
+						}
+
 						 var pWrapper = {
 							 Rowspan : rowspan,
                              Under : previousUnder != currentUnder ? currentUnder : '',
 							 GroupName : participants[i].Local_Governance__r.Name,
-							 GroupOwner : participants[i].Local_Governance__r.Group_Owner__r.Name,
+							 GroupOwner : ownerName,
 							 Mission : participants[i].Local_Governance__r.Mission__c,
 							 Role : participants[i].Participant_Type__c.replace(/^\d+\s/,''),
 							 Salutation : participants[i].Contact__r.Salutation,
