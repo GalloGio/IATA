@@ -24,7 +24,7 @@
     <aura:registerEvent name="AMP_IssueOrPriorityError" type="c:AMP_IssueOrPriorityError"/>
     
     <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />
-    <!--<ltng:require scripts="{!join(',',$Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />-->
+    <ltng:require scripts="{!join(',',$Resource.jQuery172)}" afterScriptsLoaded="{!c.jsLoaded}" />
     
     <div class="slds-card">
         

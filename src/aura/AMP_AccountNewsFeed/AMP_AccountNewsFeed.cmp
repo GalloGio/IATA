@@ -9,17 +9,17 @@
         <table class="slds-table slds-table--bordered slds-table--striped">
             <thead>
                 <tr>
-                    <th scope="col">Time</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
+                    <th scope="col" class="timeColumn">Time</th>
+                    <th scope="col" class="wideColumn">Title</th>
+                    <th scope="col" class="wideColumn">Description</th>
                 </tr>
             </thead>
             <tbody>
                 <aura:iteration items="{!v.newsfeed}" var="news" indexVar="index" >
                     <tr>
                         <td>{!news.dateString}</td>
-                        <td><a href="{!news.link}" target="_blank">{!news.title}</a></td>
-                        <td><span class="slds-truncate"><ui:outputRichText value="{!news.description}" /></span></td>
+                        <td class="slds-truncate"><a href="{!news.link}" target="_blank">{!news.title}</a></td>
+                        <td class="slds-truncate"><!--<ui:outputRichText value="{!news.description}" />--><aura:unescapedHtml value="{!news.description}" /></td>
                     </tr>
                 </aura:iteration>
             </tbody>
