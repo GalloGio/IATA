@@ -47,7 +47,9 @@ public class AMS_OscarCaseTriggerHelper {
 
     private static void checkOscarUniqueness(List<Case> oscarCases, Set<Id> oscarIds) {
         Map<Id, Case> caseOSCARMap = new Map<Id, Case>();
-        for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null]){
+
+        //see if the oscars had a case before the insert/update
+        for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
             caseOSCARMap.put(c.OSCAR__c, c);
         }
 
@@ -59,6 +61,9 @@ public class AMS_OscarCaseTriggerHelper {
                 && mainOscarCase.Id != c.ParentId
             ){
                 c.addError('The OSCAR assigned to this Case already has a Case Assigned.');
+            }else{
+                //prevents error if the oscar had no case and two or more were added
+                caseOSCARMap.put(c.OSCAR__c, c);
             }
         }
     }
@@ -78,29 +83,29 @@ public class AMS_OscarCaseTriggerHelper {
 
         System.debug('Renaming OSCAR');
 
-        List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id,AMS_OSCAR__c> oscars = null;
-
         Set<Id> oscarIds = new Set<Id>();
+        List<Case> oscarCases = new List<Case>();
 
-         for(Case c: triggerNew)
-            if(c.OSCAR__c != null)
-                oscarIds.add(c.Oscar__c);
+         for(Case c: triggerNew){
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  c.ParentId == null){
+                //need to verify just for the first case on the trigger, since the second one will throw an error
+                if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
+            }
+        }
 
-        for(Case c: triggerNew){
+        if(oscarCases.isEmpty()) return;
 
-            if(c.RecordTypeID == OSCARCaseRecordTypeID){
-                if(oscars==null)
-                    oscars = new Map<Id,AMS_OSCAR__c>([SELECT Id,Name FROM AMS_OSCAR__c where Id = :oscarIds]);
-                AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
-                if(oscar!= null && oscar.Name != c.CaseNumber){
+        List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name FROM AMS_OSCAR__c where Id = :oscarIds]);
 
-                    System.debug('Renaming OSCAR with ID ' + oscar.Id);
-                    
-                    oscar.Name = c.CaseNumber;
-                    oscarsToUpdate.add(oscar);
-                }
+        for(Case c: oscarCases){
+            AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
+            if(oscar!= null && oscar.Name != c.CaseNumber){
 
+                System.debug('Renaming OSCAR with ID ' + oscar.Id);
+                
+                oscar.Name = c.CaseNumber;
+                oscarsToUpdate.add(oscar);
             }
         }
 
