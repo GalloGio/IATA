@@ -218,7 +218,7 @@
      </for>
 
  <move file="${basedir}/src/workflowPackage.xml" tofile="${basedir}/Code/package.xml"/>  
-      <antcallback target="bulkRetrieveEmailTemplate" />
+      <!--<antcallback target="bulkRetrieveEmailTemplate" />-->
       <antcallback target="deployCodeLocal" />
         <antcallback target="deployCodeLocalFolder" />
 
