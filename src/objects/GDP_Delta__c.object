@@ -54,7 +54,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -67,6 +67,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <label>Change Code</label>
         <length>1</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -80,6 +81,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <inlineHelpText>Date time when one of the fields refered in the File definition was modified</inlineHelpText>
         <label>DeltaLastModifiedDate</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -94,6 +96,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <relationshipName>GDP_Delta</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -107,6 +110,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <relationshipLabel>GDP_Delta</relationshipLabel>
         <relationshipName>GDP_Delta</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -145,6 +149,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
     <nameField>
         <displayFormat>GDP-Delta-{0000000}</displayFormat>
         <label>GD Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP_Delta</pluralLabel>
