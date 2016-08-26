@@ -353,24 +353,29 @@ private class AMS_OSCAR_TriggerTest {
 
         dmo.assignmentRuleHeader.useDefaultRule= false;
         newCase2.setOptions(dmo);
+         
+        Case newCase3 = new Case(Status = 'New', OSCAR__c = oscar.Id, RecordTypeID = oscarCommRecordTypeId);
+
+        dmo.assignmentRuleHeader.useDefaultRule= false;
+        newCase3.setOptions(dmo);
 
         try {
-            insert newCase2;
+            insert new List<Case>{newCase2, newCase3};
             System.assert(false, 'Exception expected'); // garantee that it does not pass here.
         } catch (DMLException e) {
              System.assert(e.getMessage().contains('The OSCAR assigned to this Case already has a Case Assigned.'), 'message=' + e.getMessage());
         }
          
-        Case newCase3 = new Case(Status = 'New', RecordTypeID = oscarCommRecordTypeId);
+        Case newCase4 = new Case(Status = 'New', RecordTypeID = oscarCommRecordTypeId);
         
-        insert newCase3;
+        insert newCase4;
          
-        newCase3 = [SELECT id , OSCAR__c from Case where OSCAR__c = null LIMIT 1];
+        newCase4 = [SELECT id , OSCAR__c from Case where OSCAR__c = null LIMIT 1];
         
-        newCase3.OSCAR__c = oscar.Id;
+        newCase4.OSCAR__c = oscar.Id;
         
         try {
-            update newCase3;
+            update newCase4;
             System.assert(false, 'Exception expected'); // garantee that it does not pass here.
         } catch (DMLException e) {
              System.assert(e.getMessage().contains('The OSCAR assigned to this Case already has a Case Assigned.'), 'message=' + e.getMessage());
