@@ -1,0 +1,56 @@
+Here is the monthly summary of your eBroadcast account per {!EBC_Account_Notification__c.Notification_Date__c}:
+
+<ul>
+<li> Username:   {!EBC_Account_Notification__c.Username__c} </li>
+
+<li> Billing account:   {!EBC_Account_Notification__c.Billing_Account_Name__c} </li>
+
+<li> EBC Account Status: {!EBC_Account_Notification__c.EBC_Account_Status__c} </li>
+
+<li> Subscription end date:  {!EBC_Account_Notification__c.Subscription_End_Date__c}
+</li>
+
+<li> Email Balance:  {!EBC_Account_Notification__c.Email_Balance__c}
+</li>
+
+<li> eBroadcast Rate Plan:   {!EBC_Account_Notification__c.EBC_Rate_Plan_Name__c}
+</li>
+
+<li> Link: Manage Your Account:   {!EBC_Account_Notification__c.Manage_My_Account_URL__c}
+</li>
+
+
+
+<li> Num of campaigns last month: {!EBC_Account_Notification__c.Number_of_Campaigns_Last_Month__c}
+</li>
+
+<li> Num of Email Sent last month: {!EBC_Account_Notification__c.Number_of_Email_Recipients_Last_Month__c}
+</li>
+
+<li> Link: Manage Your Account:   {!EBC_Account_Notification__c.Create_New_Campaign_URL__c}
+</li>
+
+
+</ul>
+
+<b> Not used anymore </b>
+<ul>
+<li> {!EBC_Account_Notification__c.Contact_Name__c} 
+</li>
+
+<li> Subscription type: {!EBC_Account_Notification__c.EBC_Subscription_Type__c} </li>
+
+<li> Storage Capacity:   {!EBC_Account_Notification__c.00N8E000000rPlD}
+</li>
+
+<li> Storage Usage: {!EBC_Account_Notification__c.00N8E000000rPl8}
+</li>
+
+</ul>
+
+
+<b> For test only: 
+<br/>
+This email is based on this link {!EBC_Account_Notification__c.Link}, which will be deleted later.
+
+ <b/>
