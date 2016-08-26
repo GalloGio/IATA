@@ -60,7 +60,7 @@
             background: black;
             opacity: 0.3;
         }
-        .input, .hidden{
+        .input, .checkvalue, .hidden{
             display: none;
         }
     </style>
@@ -68,10 +68,10 @@
     // Get the Root URL dynamically
         var pageMainUrl = window.location.protocol + "//" + window.location.hostname;
 
-        function testSetTabTitle() {
+        function setConsoleTabTitle(variation) {
             //Set the current tab's title
             var title = document.getElementsByTagName("title")[0].innerHTML;
-            sforce.console.setTabTitle(title);
+            sforce.console.setTabTitle(variation+title);
         }
 
         var pageLoad = window.onload;
@@ -79,7 +79,7 @@
             if (pageLoad) {
                 pageLoad();
             }
-            testSetTabTitle();
+            setConsoleTabTitle('');
         }
 
         console.info('jQuery version: '+$.fn.jquery);
@@ -103,7 +103,7 @@
             startLoading();
             AMS_OSCAR_Attachments.deleteAttachment(id, fullName,function(result, event){
                 if (!result) alert("{!$Label.Delete_Attachment_Error}");
-                refreshList();
+                refreshPage();
             }, {timeout: 120000} );
             return false;
         }
@@ -111,6 +111,11 @@
         function redirect(page) {
             window.top.location=page;
             return false;
+        }
+
+        function refreshPage(){
+            setConsoleTabTitle('');
+            refreshList();
         }
 
         function bindings() {
@@ -128,32 +133,30 @@
                 $(this).find('textarea').focus();
             }).css("cursor", "pointer");
 
-            $(".iocontainer .popUp").find('textarea').on("change", function() {
-                $(this).parent().parent().addClass("edited");
+            $(".iocontainer .input").on("change", function() {
+                $(this).parent().addClass("edited");
+
+                var $input = $(this).hasClass('popUp') ?  $(this).find("textarea") : $(this);
+                var $output = $(this).hasClass('popUp') ? $(this).parent().parent().find(".output") : $(this).parent().find(".output") ;
+
+                if($input.is(':checkbox')){
+                    $output.find('img').toggleClass('hidden');
+                    $output.find('.checkvalue').text($input.is(':checked') ? '1' : '0');
+                }else{
+                    $output.text($input.val());
+                }
             });
 
-            $(".iocontainer .input").on({
-                change: function() {
-                    $(this).parent().addClass("edited");
-                },
+            $(".iocontainer .input").on("focusout", function() {
+                $( this ).hide();
+                $back.hide();
 
-                focusout: function() {
-                    var $output = $(this).parent().find(".output");
+                $(this).parent().find(".output").show();
 
-                    $back.hide();
-                    $( this ).hide();
-
-                    if($(this).parent().hasClass('edited')){
-                        $input = $(this).hasClass('popUp') ? $(this).find('textarea') : $(this);
-
-                        if($input.is(':checkbox')){
-                            $output.find('img').toggleClass('hidden')
-                        }else{
-                            $output.html($input.val());
-                        }                        
-                    }
-
-                    $output.show();
+                if($(this).parent().hasClass('edited')){
+                    $("[id$=tableAttachments]").trigger('update');
+                    //$(".saveButton").val('Save *');
+                    setConsoleTabTitle('* ');
                 }
             });
 
@@ -175,9 +178,9 @@
             <apex:pageblockButtons location="top" >
                 <c:UploadMultipleFileToAmazonButton sObjectId="{!caseId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="AMS_File" sourceSystem="Internal"/>
                 <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
-                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshList();" />
-                <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshList()" />
-                <apex:commandButton value="{!$Label.Site.Save}" action="{!updateAllAttach}" oncomplete="refreshList()" />
+                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshPage();" />
+                <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" />
+                <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" />
             </apex:pageblockButtons>
 
             <apex:pageMessages />
@@ -202,7 +205,7 @@
                 <!--  ACTIONS -->
                 <apex:column headerValue="{!$Label.Action}" styleClass="actionColumn">
 
-                    <!-- <apex:commandLink action="{!callEditAttachment}" value="{!$Label.Edit}" oncomplete="refreshList();" styleClass="actionLink">
+                    <!-- <apex:commandLink action="{!callEditAttachment}" value="{!$Label.Edit}" oncomplete="refreshPage();" styleClass="actionLink">
                         <apex:param name="edit" value="{!attach.Id}" assignTo="{!editAttachmentId}" />
                     </apex:commandLink>
 
@@ -223,7 +226,7 @@
                     <!-- MAKE PUBLIC ACTION -->
                     <!-- &nbsp;|&nbsp;
 
-                    <apex:commandLink onclick="startLoading();" action="{!attach.changePermission}" value="{!IF(attach.isPublic, $Label.Make_Private, $Label.Make_Public)}" target="_blank" oncomplete="refreshList();" styleClass="actionLink" /> -->
+                    <apex:commandLink onclick="startLoading();" action="{!attach.changePermission}" value="{!IF(attach.isPublic, $Label.Make_Private, $Label.Make_Public)}" target="_blank" oncomplete="refreshPage();" styleClass="actionLink" /> -->
                 </apex:column>
 
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}" >
@@ -249,9 +252,9 @@
 
                 <apex:column headerValue="{!$Label.Public}" >
                     <apex:outputPanel styleClass="{!IF(attach.isArchived, '', 'iocontainer')}" layout="block" >
-                        <apex:outputText style="display: none;" value="{!IF(attach.isPublic, 1, 0)}"/> <!-- lets the collumn be sorted -->
                         <apex:inputCheckbox styleClass="input" value="{!attach.isPublic}"/>
                         <apex:outputPanel styleClass="output">
+                            <apex:outputText styleClass="checkvalue" value="{!IF(attach.isPublic, 1, 0)}"/> <!-- lets the collumn be sorted -->
                             <apex:image styleClass="{!IF(attach.isPublic, '', 'hidden')}" value="../img/checkbox_checked.gif" />
                             <apex:image styleClass="{!IF(attach.isPublic, 'hidden', '')}" value="../img/checkbox_unchecked.gif" />
                         </apex:outputPanel>
@@ -268,7 +271,7 @@
                     <apex:outputPanel styleClass="iocontainer" layout="block" >
                         <apex:outputText styleClass="output truncate" value="{!attach.Description}"/>
                         <apex:outputPanel styleClass="input popUp" layout="block">
-                            <apex:inputTextarea value="{!attach.Description}" cols="42" rows="2" style="resize: none;" />
+                            <apex:inputTextarea value="{!attach.Description}" cols="42" rows="2" />
                         </apex:outputPanel>
                     </apex:outputPanel>
                 </apex:column>
@@ -277,7 +280,7 @@
                     <apex:outputPanel styleClass="iocontainer" layout="block" rendered="{!OR(attach.isAmazon, attach.isArchived)}" >
                         <apex:outputText styleClass="output truncate" value="{!attach.internalComments}"/>
                         <apex:outputPanel styleClass="input popUp" layout="block">
-                            <apex:inputTextarea value="{!attach.internalComments}" cols="42" rows="2" style="resize: none;" />
+                            <apex:inputTextarea value="{!attach.internalComments}" cols="42" rows="2" />
                         </apex:outputPanel>
                     </apex:outputPanel>
                 </apex:column>
