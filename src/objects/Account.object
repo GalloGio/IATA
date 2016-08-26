@@ -27563,6 +27563,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
 	    <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Airport Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -27652,39 +27671,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>Category__c</picklist>
-            <values>
-                <fullName>Airport Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Governmental Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Vendor</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-		<picklist>EF_Allow_Billing_Agreements__c</picklist>
-			<values>
-				<fullName>Allowed</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Allowed with Approval</fullName>
-				<default>false</default>
-			</values>
-			<values>
-				<fullName>Not Allowed</fullName>
-				<default>false</default>
-			</values>
-		</picklistValues>
         <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
