@@ -26564,7 +26564,7 @@ ISCHANGED(ISSP_Contact_Name__c )
 ID_Card_Holder__c=true,
 ISCHANGED(ISSP_Contact_Name__c )
 )</errorConditionFormula>
-        <errorMessage>This contact is an ID Card holder. To change name, please log a query to our Customer Service Team</errorMessage>
+        <errorMessage>This contact is an ID Card holder. To change the contact name, please contact to IATA Customer Service team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Comment_data_quality_feedback_Mandatory</fullName>
