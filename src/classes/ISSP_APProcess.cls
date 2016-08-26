@@ -544,12 +544,16 @@ public without sharing class ISSP_APProcess {
                 if (!airlineList.isEmpty()){
                     newCase.IATAcode__c = airlineList[0].IATACode__c;
                     newCase.Provider__c = con.AccountId;  //Put GSSA as Provider for backwards compatibility
-                    newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c, hqAccount.Airline_Prefix__c, apCountryisocode, airlineList[0].Name, airlineList[0].Id);
+                    newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c, 
+                                                                            hqAccount.Airline_Prefix__c, 
+                                                                            apCountryisocode, airlineList[0].Name, airlineList[0].Id);
                 }
             }
         } else {
             newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
-            newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c, con.Account.IATACode__c, apCountryisocode, con.Account.Name, vHqAccountId);
+            newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c, 
+                                                                    con.Account.IATACode__c, 
+                                                                    apCountryisocode, con.Account.Name, vHqAccountId);
         }
         
         //Defining default values for the case
@@ -1112,7 +1116,12 @@ public without sharing class ISSP_APProcess {
         Id accountConcernedId;
         String airlinesite_BR;
         
-        airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+        //airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+
+        airlinesite_BR = (IATACode == null && hq.Airline_Prefix__c != null)? 
++                            DesignatorCode + ' ' + hq.Airline_Prefix__c + ' ' + CountryCode : 
++                            DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+
         System.debug('AL BR Site:' + airlinesite_BR);
         
         List <Account> concernedAccount = [
