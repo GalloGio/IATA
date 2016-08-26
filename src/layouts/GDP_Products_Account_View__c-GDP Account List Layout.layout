@@ -361,6 +361,16 @@
         <fields>DeltaLastModifiedDate__c</fields>
         <fields>GDP_File_Description__c</fields>
         <relatedList>GDP_Delta__c.Related_GDP_Product_Account_View__c</relatedList>
+        <sortField>DeltaLastModifiedDate__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Agency_Code__c</fields>
+        <fields>Legal_Name__c</fields>
+        <fields>Location_Type_Name__c</fields>
+        <fields>Country_ISO_Code__c</fields>
+        <relatedList>GDP_Products_Account_Snapshot__c.Account_View__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -441,6 +451,9 @@
         <fields>Assoc_Affiliation_ID__c</fields>
         <fields>Assoc_Affiliation_Code__c</fields>
         <relatedList>Assoc_Affiliation_Membership__c.Related_GDP_Products_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>Incorporation_Type__c</relatedObjects>
     <relatedObjects>Location_Type__c</relatedObjects>

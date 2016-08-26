@@ -10540,6 +10540,16 @@ else
 alert(&apos; Failed to generate a new IATA CODE. Please contact your administrator with Message: &apos; +s[1]);</url>
     </webLinks>
     <webLinks>
+        <fullName>Manage_Attachments</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Manage Attachments</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>javascript:srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);</url>
+    </webLinks>
+    <webLinks>
         <fullName>Set_Ownership</fullName>
         <availability>online</availability>
         <displayType>button</displayType>

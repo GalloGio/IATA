@@ -56,17 +56,19 @@
         }
     </script>
 
-        <apex:pageblock id="fileList" title="{!$Label.Attachments}" >
+        <apex:pageblock id="fileList" title="{!$Label.Attachments}" > 
 
 <!--            BUTTONS -->
-            <apex:pageblockButtons location="top" rendered="{!NOT(isPortal)}" >
-                <c:UploadMultipleFileToAmazonButton sObjectId="{!sObjectId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="{!uploader}" sourceSystem="{!source}"/>
-                <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
-                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
-                <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" />
-            </apex:pageblockButtons>
-            <apex:pageblockButtons location="top" rendered="{!isPortal}" >
-                <apex:commandButton action="{!goToAttachmentPage}" value="{!$Label.ISSP_Attach_File}" rendered="{!canAttachFilesToCase}"/>
+            <apex:pageblockButtons location="top">
+                <apex:outputPanel rendered="{!NOT(isPortal)}">
+                    <c:UploadMultipleFileToAmazonButton sObjectId="{!sObjectId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="{!uploader}" sourceSystem="{!source}"/>
+                    <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
+                    <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
+                    <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" />
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!isPortal}" >
+                    <apex:commandButton action="{!goToAttachmentPage}" value="{!$Label.ISSP_Attach_File}" rendered="{!canAttachFilesToCase}"/>
+                </apex:outputPanel>
             </apex:pageblockButtons>
             <div class="{!IF(scroll == true, 'tableWrapper', '')}">
             <apex:pageBlockTable id="tableAttachments" value="{!listAttachments}" var="attach" Title="title">

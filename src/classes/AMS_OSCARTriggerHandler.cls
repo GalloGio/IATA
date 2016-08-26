@@ -399,8 +399,10 @@ public class AMS_OSCARTriggerHandler {
 					//Hierarchy changes are applied to the agencies in the process detail and also to the OSCAR Account
 					agenciesAffected.add(oscar.Account__c);
 
+					Boolean isChangeOwnershipToIATA = tocList.contains(AMS_Utils.OWNERSHIP_IATA) ? true : false;
 					//All terminated agencies that would be left without parent MUST be automatically migrated, thus following their parents
-					Set<Id> agenciesToMigrate = AMS_HierarchyHelper.addTerminatedDescendants(agenciesAffected, agencyTerminatedChildAgencies);
+					//Exception to the above rule is when we have change of ownership to IATA, where BRs will be left as standalone
+					Set<Id> agenciesToMigrate = AMS_HierarchyHelper.addTerminatedDescendants(agenciesAffected, agencyTerminatedChildAgencies, isChangeOwnershipToIATA, accounts);
 					system.debug('AgenciesToMigrateHierarchy: ' + agenciesToMigrate);
 					system.debug('AgenciesToMigrateData: ' + agenciesAffected);
 
@@ -479,6 +481,7 @@ public class AMS_OSCARTriggerHandler {
 				List<AMS_Agencies_relationhip__c> allRelationsToUpdate = new List<AMS_Agencies_relationhip__c>();
 				List<AMS_Agencies_relationhip__c> allRelationsToInsert = new List<AMS_Agencies_relationhip__c>();
 				List<AMS_Agencies_relationhip__c> allRelationsToDelete = new List<AMS_Agencies_relationhip__c>();
+				List<Id> allHierarchiesToDelete = new List<Id>();
 
 				for (AMS_HierarchyHelper.HierarchyStruct hs : hierarchyChanges) {
 					if (hs.relationsToUpdate != null)
@@ -487,6 +490,8 @@ public class AMS_OSCARTriggerHandler {
 						allRelationsToInsert.addAll(hs.relationsToInsert);
 					if (hs.relationsToDelete != null)
 						allRelationsToDelete.addAll(hs.relationsToDelete);
+					if (hs.hierarchiesToDelete != null)
+						allHierarchiesToDelete.addAll(hs.hierarchiesToDelete);
 				}
 
 				if (!allRelationsToDelete.isEmpty())
@@ -495,6 +500,12 @@ public class AMS_OSCARTriggerHandler {
 					update allRelationsToUpdate;
 				if (!allRelationsToInsert.isEmpty())
 					insert allRelationsToInsert;
+
+				if(!allHierarchiesToDelete.isEmpty()){
+					List<AMS_Agencies_Hierarchy__c> hierarchiesDel = new List<AMS_Agencies_Hierarchy__c>([SELECT Id FROM AMS_Agencies_Hierarchy__c WHERE Id IN :allHierarchiesToDelete]);
+					if (!hierarchiesDel.isEmpty())
+						delete hierarchiesDel;
+				}
 
 			}
 
@@ -537,7 +548,7 @@ public class AMS_OSCARTriggerHandler {
 			hierarchyChanges = processChangeOfLocationType(oscar, accounts, hierarchies);
 		else if (tocList.contains(AMS_Utils.OWNERSHIP_IATA)) {
 			keepSALocationTypeFlag = true;
-			hierarchyChanges = processChangeOfOwnershipToIATA(oscar, hierarchies, agenciesAffected);
+			hierarchyChanges = processChangeOfOwnershipToIATA(oscar, hierarchies, agenciesAffected, accounts);
 		} else if (tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) {
 			keepSALocationTypeFlag = true;
 			hierarchyChanges = processChangeOfOwnershipToNonIATA(oscar, accounts, hierarchies, agenciesAffected);
@@ -574,7 +585,7 @@ public class AMS_OSCARTriggerHandler {
 
 	}
 
-	public static AMS_HierarchyHelper.HierarchyStruct processChangeOfOwnershipToIATA(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
+	public static AMS_HierarchyHelper.HierarchyStruct processChangeOfOwnershipToIATA(AMS_OSCAR__c oscar, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected, Map<Id, Account> accounts) {
 
 		System.debug('AGENCY CHANGES: Processing change of ownership. Scenario IATA Buys IATA');
 
@@ -584,7 +595,7 @@ public class AMS_OSCARTriggerHandler {
 		List<AMS_Agencies_relationhip__c> currentHierarchy = hierarchies.get(oscar.Account__c);
 		AMS_HierarchyHelper.HierarchyStruct relationshipsToManage;
 
-		relationshipsToManage = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(currentHierarchy, targetHierarchyHO, newHierarchy, agenciesAffected);
+		relationshipsToManage = AMS_HierarchyHelper.migrateAccountsToExistingHierarchy(currentHierarchy, targetHierarchyHO, newHierarchy, agenciesAffected, accounts);
 
 		if (relationshipsToManage.errorMessage != null)
 			oscar.addError(relationshipsToManage.errorMessage);
@@ -749,7 +760,7 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c from CASE WHERE Oscar__c != null and RecordType.Name = 'OSCAR Communication' and Oscar__c IN :updatedOscars]){
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c from CASE WHERE Oscar__c != null and RecordType.Name = 'OSCAR Communication' and Oscar__c IN :updatedOscars AND ParentId = null]){
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;

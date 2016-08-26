@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Set_Ownership</customButtons>
+    <customButtons>Manage_Attachments</customButtons>
     <customButtons>Edit_accounts_involved</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -444,22 +445,6 @@
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Attachments - Online Applciation</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>200</height>
-                <page>AMS_OSCAR_Attachment_List</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
-        <style>OneColumn</style>
     </layoutSections>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

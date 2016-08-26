@@ -323,18 +323,20 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String getFormatedTypeOfChange(String processType, AMS_Pax_Accreditation_Form__c accreditationObj){
 
-        String typeOfChange = null;
+        String typeOfChange = '';
 
         if(accreditationObj.Notify_Change_Legal_Details__c)
-            typeOfChange = 'Name;';
+            typeOfChange += 'Name;';
         if(accreditationObj.Notify_Change_Location__c)
-            typeOfChange = 'Location;';
+            typeOfChange += 'Location;';
         if(accreditationObj.Notify_Change_Ownership__c)
-            typeOfChange = 'Ownership to non-IATA Agent;';
+            typeOfChange += 'Ownership to non-IATA Agent;';
 
-        if(typeOfChange != null)
+        if(typeOfChange != '')
             typeOfChange = typeOfChange.removeEnd(';');
-
+        else
+            return null;
+            
         return typeOfChange;
 
     }
