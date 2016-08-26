@@ -22,7 +22,7 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
 		string minute = string.valueof(nextScheduleTime.minute());
 		string second = string.valueof(nextScheduleTime.second ());
 		string cronvalue = second + ' ' + minute + ' * * * ?' ;
-		string jobName = 'SchdlIECProcessPayment ' + nextScheduleTime.format('hh:mm');
+		string jobName = 'SchdlEBCCreateNotificationOnStatus TEST ' + nextScheduleTime.format('hh:mm');
 		system.schedule(jobName, cronvalue , new SchdlEBCCreateNotificationOnStatus());
 		
 		Test.stopTest();
@@ -32,48 +32,53 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
 	
 	
 	// ========================================================================
-	// basic test: calling batch job, with data provided
+	// basic test: calling batch job, no data provided
 	@isTest (SeeAllData=false)
 	static void test02_BasicTestOnBatchJob() {
 		//prepareTestData();
 		//createEbcData();
 		//createUsers();
-        
-        /*
+		
+		/*
 		System.assertNotEquals( 0, lUser.size(), 'number of newly created users should be > 0');
 		System.assertEquals( lUser.size(), lContact.size(), 'number of newly created users and contacts should be the same');
 		System.assertEquals( lContact.size(), lEbcPreference.size(), 'number of newly created contacts and EBC Preference should be the same');
 		System.assertEquals( lContact.size(), lBillingAccount.size(), 'number of newly created contacts and Billing Accounts should be the same');
-        System.assertNotEquals(null, IECEBC_Utility.ebcSetup.Id);
+		System.assertNotEquals(null, IECEBC_Utility.ebcSetup.Id);
 		*/
-        
-        Test.startTest();
 		
-		BtchEBCCreateAccountNotificationOnStatus.callBatchEBCCreateAccountNotificationOnStatus();
+		Test.startTest();
+		
+		BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
 		
 		Test.stopTest();
 		
 		System.debug('Unit Test: Finish: BtchEBCCreateAccountNotificationOnStatus');
-	} // test02_BasicTestOnScheduleJob
+	} // test02_BasicTestOnBatchJob
+	
 	
 	// ========================================================================
-	// basic test: calling batch job, with data provided
+	// basic test: calling batch job, with access to existing live data 
 	@isTest (SeeAllData=true)	
 	static void test03_BasicTestOnBatchJobExistingData() {
-        System.assertNotEquals(null, IECEBC_Utility.ebcSetup.Id);
-        
-        Test.startTest();
+		System.assertNotEquals(null, IECEBC_Utility.ebcSetup.Id);
 		
-		BtchEBCCreateAccountNotificationOnStatus.callBatchEBCCreateAccountNotificationOnStatus();
+		Test.startTest();
+		
+		BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
 		
 		Test.stopTest();
 		
 		System.debug('Unit Test: Finish: test03_BasicTestOnBatchJobExistingData');
-	} // test03_BasicTestOnScheduleJob
-    
-    
+	} // test03_BasicTestOnBatchJobExistingData
+	
+	
+	
+	
 	// ========================================================================
 	// test data
+	// the following will only be used if we want to create out test data
+	
 	private static Product_Category__c oEbcProductCategory;
 	private static zqu__ZProduct__c oEbcProductMember;
 	private static zqu__ZProduct__c oEbcProductNonMember;
@@ -93,7 +98,7 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
 	
 	// ================================================================================
 	//@testSetup
-    private static void prepareTestData()
+	private static void prepareTestData()
 	{
 		createEbcData();
 		
@@ -232,7 +237,7 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
 	private static List<Contact> lContact;
 	private static List<Account> lAccount;
 	private static List<Zuora__CustomerAccount__c> lBillingAccount;
-    private static List<EBC_Preference__c> lEbcPreference;
+	private static List<EBC_Preference__c> lEbcPreference;
 	
 	// ========================================================================
 	// create users, subscriptions, subscription charge etc
@@ -246,20 +251,20 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
 		
 		// create users 
 		
-        List<User> lNewUser = new List<User>();
+		List<User> lNewUser = new List<User>();
 		lNewUser.add(IECTestUtil.createSampleGuestUserAndLogin());
 		lNewUser.add(IECTestUtil.createSampleGuestUserAndLogin());
 		lNewUser.add(IECTestUtil.createSampleGuestUserAndLogin());
 		lNewUser.add(IECTestUtil.createSampleGuestUserAndLogin());
 		//insert lnewUser;
-        
-        System.assertNotEquals(null, lNewUser[0].Id, 'User.Id should not be null for user:'+ lNewUser[0]);
-        
+		
+		System.assertNotEquals(null, lNewUser[0].Id, 'User.Id should not be null for user:'+ lNewUser[0]);
+		
 		Set<Id> sUserId = new Set<Id>();
-        for (User usr: lNewUser) 
-        {
+		for (User usr: lNewUser) 
+		{
 			sUserId.add(usr.Id);
-        }
+		}
 		
 		lUser = [select Id, Name
 				, ContactId

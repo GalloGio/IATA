@@ -99,11 +99,11 @@ Email will be sent by using workflow.</description>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Create_New_Campaign_Url__c</fullName>
+        <fullName>Create_New_Campaign_URL__c</fullName>
         <description>The link to create new Campaign Url for eBroadcast community page.</description>
         <externalId>false</externalId>
         <inlineHelpText>The link to create new Campaign Url for eBroadcast community page.</inlineHelpText>
-        <label>Create New Campaign Url</label>
+        <label>Create New Campaign URL</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Url</type>
@@ -111,10 +111,10 @@ Email will be sent by using workflow.</description>
     <fields>
         <fullName>EBC_Account_Status__c</fullName>
         <description>EBC Subscription Status for this Billing Account.
-This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c (true will set the value to Active)</description>
+This is set based on Zuora__CustomerAccount__c eBroadcast_Product_Access__c (true will set the value to Active)</description>
         <externalId>false</externalId>
         <inlineHelpText>EBC Subscription Status for this Billing Account.
-This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</inlineHelpText>
+This is set based on Billing Account eBroadcast Product Access</inlineHelpText>
         <label>EBC Account Status</label>
         <picklist>
             <picklistValues>
@@ -132,6 +132,16 @@ This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</inl
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EBC_Dashboard_URL__c</fullName>
+        <description>Link to the EBC Dashboard.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link to the EBC Dashboard.</inlineHelpText>
+        <label>EBC Dashboard URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>EBC_Rate_Plan_Name__c</fullName>
         <defaultValue>&quot;&quot;</defaultValue>
         <description>Selected eBroadcast rate plan name. The value is set to the EBC Product Rate Plan.Name</description>
@@ -146,9 +156,9 @@ This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</inl
     </fields>
     <fields>
         <fullName>EBC_Subscription_Type__c</fullName>
-        <description>eBroadcast Subscription Type of this user based on productRatePlan.EBC_SubscriptionType__c</description>
+        <description>eBroadcast Subscription Type of this user, based on productRatePlan.EBC_SubscriptionType__c</description>
         <externalId>false</externalId>
-        <inlineHelpText>eBroadcast Subscription Type of this user based on productRatePlan.EBC_SubscriptionType__c</inlineHelpText>
+        <inlineHelpText>eBroadcast Subscription Type of this user, based on Product Rate Plan&apos;s EBC SubscriptionType</inlineHelpText>
         <label>EBC Subscription Type</label>
         <picklist>
             <picklistValues>
@@ -180,9 +190,11 @@ This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</inl
     </fields>
     <fields>
         <fullName>Email__c</fullName>
-        <description>Recipient Email Address of this notification</description>
+        <description>Recipient Email Address of this notification.
+This is set based on the EBC Preference.PrimaryContact_Email.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Recipient Email Address of this notification</inlineHelpText>
+        <inlineHelpText>Recipient Email Address of this notification. 
+This is set based on the EBC Preference&apos;s Primary Contact Email.</inlineHelpText>
         <label>Email</label>
         <required>true</required>
         <trackTrending>false</trackTrending>
@@ -190,14 +202,24 @@ This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</inl
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Manage_My_Account_Url__c</fullName>
+        <fullName>Manage_My_Account_URL__c</fullName>
         <description>URL pointing to my manage account page.</description>
         <externalId>false</externalId>
         <inlineHelpText>URL pointing to my manage account page.</inlineHelpText>
-        <label>Manage My Account Url</label>
+        <label>Manage My Account URL</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Next_Renewal_Date__c</fullName>
+        <description>Zuora__Subscription__r.Zuora__NextRenewalDate__c for this EBC Subscription.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Zuora Subscription Next Renewal Date  for this EBC Subscription.</inlineHelpText>
+        <label>Next Renewal Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Notification_Date__c</fullName>
@@ -213,13 +235,17 @@ This is set based on Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</inl
     <fields>
         <fullName>Notification_Type__c</fullName>
         <description>Notification Type is used to define which email template that will be used to sent.
-Initial version is only for Account Status</description>
+Used for Account Monthly Status and Renewal Notification</description>
         <externalId>false</externalId>
         <inlineHelpText>Notification Type is used to define which email template that will be used to sent.</inlineHelpText>
         <label>Notification Type</label>
         <picklist>
             <picklistValues>
                 <fullName>Account Status</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal Offer</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -278,8 +304,8 @@ This is calculated based on the EBC Activities.</inlineHelpText>
         <description>Subscription End Date (Zuora__Subscription__r.Zuora__TermEndDate__c), only set if the user has Active Prepaid EBC Subscription. 
 Active is defined as Zuora__Status=Active and Zuora__TermEndDate__c &gt;= Today</description>
         <externalId>false</externalId>
-        <inlineHelpText>Subscription End Date (Zuora__TermEndDate), only set if the user has Active Prepaid EBC Subscription.
-Active is defined as Zuora__Status=Active and Zuora__TermEndDate__c &gt;= Today</inlineHelpText>
+        <inlineHelpText>Value of  Zuora Subscription&apos;s  Zuora TermEndDate, only set if the user has Active Prepaid EBC Subscription.
+Active is defined as Zuora Status=Active and Zuora TermEndDate__c &gt;= Today</inlineHelpText>
         <label>Subscription End Date</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -287,9 +313,10 @@ Active is defined as Zuora__Status=Active and Zuora__TermEndDate__c &gt;= Today<
     </fields>
     <fields>
         <fullName>Username__c</fullName>
-        <description>Related user.username for this billing account</description>
+        <description>Related User.Email for this billing account. 
+It is the version of the username seen by the end user.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Related user.username for this billing account</inlineHelpText>
+        <inlineHelpText>Related Username (User.Email) for this billing account.</inlineHelpText>
         <label>Username</label>
         <length>80</length>
         <required>false</required>
@@ -311,11 +338,59 @@ Active is defined as Zuora__Status=Active and Zuora__TermEndDate__c &gt;= Today<
         <columns>Number_of_Campaigns_Last_Month__c</columns>
         <columns>Number_of_Email_Recipients_Last_Month__c</columns>
         <columns>Notification_Date__c</columns>
-        <columns>Create_New_Campaign_Url__c</columns>
-        <columns>Manage_My_Account_Url__c</columns>
+        <columns>Create_New_Campaign_URL__c</columns>
+        <columns>Manage_My_Account_URL__c</columns>
         <columns>Notification_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Monthly_Status</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Username__c</columns>
+        <columns>Email__c</columns>
+        <columns>Primary_Contact_Name__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
+        <columns>Subscription_End_Date__c</columns>
+        <columns>Email_Balance__c</columns>
+        <columns>Number_of_Campaigns_Last_Month__c</columns>
+        <columns>Number_of_Email_Recipients_Last_Month__c</columns>
+        <columns>Notification_Date__c</columns>
+        <columns>Create_New_Campaign_URL__c</columns>
+        <columns>Manage_My_Account_URL__c</columns>
+        <columns>Notification_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Notification_Type__c</field>
+            <operation>equals</operation>
+            <value>Account Status</value>
+        </filters>
+        <label>Monthly Status</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Renewal_Offer_Notifications</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Username__c</columns>
+        <columns>Email__c</columns>
+        <columns>Primary_Contact_Name__c</columns>
+        <columns>EBC_Rate_Plan_Name__c</columns>
+        <columns>Next_Renewal_Date__c</columns>
+        <columns>Subscription_End_Date__c</columns>
+        <columns>Notification_Date__c</columns>
+        <columns>Create_New_Campaign_URL__c</columns>
+        <columns>Manage_My_Account_URL__c</columns>
+        <columns>Notification_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Notification_Type__c</field>
+            <operation>equals</operation>
+            <value>Renewal Offer</value>
+        </filters>
+        <label>Renewal Offer Notifications</label>
         <language>en_US</language>
     </listViews>
     <nameField>

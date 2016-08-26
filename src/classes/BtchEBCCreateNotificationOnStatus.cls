@@ -3,7 +3,7 @@
   * Initial Author: Sonny Leman
   * Version: 1.0
   * History: 
-  *   2016-08-23-sl: initial version
+  *   2016-08-26-sl: initial version
   *
   * Note:
   *   - Email notification will only be sent to those with Zuora__CustomerAccount__c.eBroadcast_Product_Access__c = true
@@ -14,7 +14,7 @@
   * 
   */
   
-global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batchable<sObject>, Database.Stateful {
+global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sObject>, Database.Stateful {
 	global List<IEC_Error_Log__c> logs;
 	
 	public String query; // this is the query to pass to this batch job
@@ -23,10 +23,12 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 	
 	private String manageAccountUrl;  // complete url for IECEBC_AccountManage.page
 	private String createCampaignUrl; // complete url for IECEBC_Campaign.page
+	private String ebcDashboardUrl; // complete url for IECEC_Dashboard with its parameter
 	
 	// configuration constants
 	private static final String MANAGE_ACCOUNT_PAGE = 'IECEBC_AccountManage'; // the page for the manage account
 	private static final String CREATE_CAMPAIGN_PAGE = 'IECEBC_Campaign'; // the page for creating a new campaign
+	private static final String EBC_DASHBOARD_PAGE = 'IECEBC_Dashboard?ProductCode='; // the page for creating a new campaign
 	
 	private static final Integer BATCH_INSERT_SIZE = 200; // batch size for creating new record
 	private static final Integer BATCH_DELETE_SIZE = 600; // batch size for deleting record, should be no less than BATCH_INSERT_SIZE
@@ -43,12 +45,13 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 	
 	// ========================================================================
 	// constructor
-	global BtchEBCCreateAccountNotificationOnStatus() {
+	global BtchEBCCreateNotificationOnStatus() {
 		logs = new List<IEC_Error_Log__c>();
 		bErrorFound = false;
 		
 		manageAccountUrl = IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/' + MANAGE_ACCOUNT_PAGE;
 		createCampaignUrl = IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/' +  CREATE_CAMPAIGN_PAGE;
+		ebcDashboardUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/' +  EBC_DASHBOARD_PAGE + IECUtil.EncryptEncodeParameter(IECConstants.ProductCategory_SF_EBROADCAST);
 	}
 	
 	// ========================================================================
@@ -61,7 +64,7 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 	// ========================================================================
 	// batch execution method
 	global void execute(Database.BatchableContext BC, List<sObject> scope){
-		//System.debug( 'BtchEBCCreateAccountNotificationOnStatus: execute(), scope length:' + scope.size());
+		//System.debug( 'BtchEBCCreateNotificationOnStatus: execute(), scope length:' + scope.size());
 		
 		Map<Id, Zuora__CustomerAccount__c> billingAccountIdToObjectMap = new Map<Id, Zuora__CustomerAccount__c>();
 		
@@ -76,7 +79,7 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 						, Zuora__Subscription__r.Zuora__Status__c
 						, Zuora__Subscription__r.Zuora__CustomerAccount__c
 						//, Zuora__Subscription__r.Zuora__Account__c
-						//, Zuora__Subscription__r.Zuora__NextRenewalDate__c
+						, Zuora__Subscription__r.Zuora__NextRenewalDate__c
 						//, Zuora__Subscription__r.Zuora__SubscriptionEndDate__c
 						, Zuora__Subscription__r.Zuora__TermEndDate__c 
 						//, Zuora__Subscription__r.Product_Rate_Plan_Information__c
@@ -134,11 +137,11 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 	// use callBatchEBCCreateAccountNotificationOnStatus to do standard call to this batch class.
 	// this will simplify debugging and scheduling this job
 	//
-	public static void callBatchEBCCreateAccountNotificationOnStatus()
+	public static void callBatchEBCCreateNotification()
 	{
-		//System.debug( 'BtchEBCCreateAccountNotificationOnStatus.callBatchEBCCreateAccountNotificationOnStatus');
+		//System.debug( 'BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification');
 			
-		BtchEBCCreateAccountNotificationOnStatus btchProc = new BtchEBCCreateAccountNotificationOnStatus();
+		BtchEBCCreateNotificationOnStatus btchProc = new BtchEBCCreateNotificationOnStatus();
 		
 		btchProc.query =
 			'SELECT Id, Name'
@@ -161,7 +164,7 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 		
 		//System.debug( 'to exec batch ' + btchProc);
 		Database.executeBatch(btchProc, BATCH_INSERT_SIZE);
-	} // callBatchReplicateTerritories
+	} // callBatchEBCCreateNotification
 	
 	
 	// ========================================================================
@@ -171,25 +174,7 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 	private void prepareEBCAccountNotification(Map<Id, Zuora__CustomerAccount__c> billingAccountIdToObjectMap
 											, Map<Id, Zuora__SubscriptionProductCharge__c> subProdChargeIdToObjectMap )
 	{
-		// clean old EBC_Account_Notification records
-		// also delete some other's old records (which might not have billing account included in the list)
-		Date veryOldDate = Date.today().addMonths(- HISTORY_CUT_OFF_MONTHS);
-		List<EBC_Account_Notification__c> oldNotificationList = [select Id 
-				from EBC_Account_Notification__c 
-				where Notification_Type__c = : EBC_ACCOUNT_NOTIFICATION_TYPE_STATUS
-					and (Billing_Account__c in : billingAccountIdToObjectMap.keySet()
-						or CreatedDate < : veryOldDate)
-				order by CreatedDate desc 
-				limit : BATCH_DELETE_SIZE
-				];
-		try {
-			delete oldNotificationList;
-		} catch (Exception ex) {
-			System.debug( 'BtchEBCCreateAccountNotificationOnStatus.prepareEBCAccountNotification(), error on deleting old recs' + oldNotificationList);
-			System.debug( 'Exception: ' + ex );
-			logs.add(IECErrorLogger.logBatchError('Error on deleting.', ex.getMessage(), null
-					, 'BtchEBCCreateAccountNotificationOnStatus', ex.getStackTraceString()));
-		}
+		deleteEBCAccountNotification(billingAccountIdToObjectMap.keySet());
 		
 		// set notification for each billing account, if EBC Preference Monthly Account Status is checked	
 		Map<Id, EBC_Account_Notification__c> contactIdToAccountNotificationMap = new Map<Id,EBC_Account_Notification__c>();
@@ -209,8 +194,9 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 							, Notification_Type__c = EBC_ACCOUNT_NOTIFICATION_TYPE_STATUS
 							, Notification_Date__c = Date.today()
 							, EBC_Account_Status__c = EBC_ACCOUNT_STATUS_ACTIVE // (selected billingAcct.eBroadcast_Product_Access__c should  be true)
-							, Create_New_Campaign_Url__c = createCampaignUrl
-							, Manage_My_Account_Url__c = manageAccountUrl
+							, Create_New_Campaign_URL__c = createCampaignUrl
+							, Manage_My_Account_URL__c = manageAccountUrl
+							, EBC_Dashboard_URL__c = ebcDashboardUrl
 						);
 				
 				EBC_Preference__c ebcPref = billingAcct.eBroadcast_Preferences__r[0];
@@ -245,6 +231,7 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 				if (accNotification.EBC_Subscription_Type__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID) {
 					accNotification.Subscription_End_Date__c = subProdCharge.Zuora__Subscription__r.Zuora__TermEndDate__c;
 				}
+				accNotification.Next_Renewal_Date__c = subProdCharge.Zuora__Subscription__r.Zuora__NextRenewalDate__c;
 			} // end if accNotification
 		} //  end for Zuora__SubscriptionProductCharge__c
 		
@@ -281,27 +268,53 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 		} // end of for campaignAggr
 		
 		// collect the user name relevant BillingAccounts
-		Map<Id,User> userIdToObjectMap = new Map<Id,User> ([select Id, ContactId, Username
+		Map<Id,User> userIdToObjectMap = new Map<Id,User> ([select Id, ContactId, Email
 				from User
 				where IsPortalEnabled = true
 					and contactId in : contactIdToAccountNotificationMap.keySet()]);
 		for (User usr : userIdToObjectMap.values())
 		{
 			EBC_Account_Notification__c acctNot = contactIdToAccountNotificationMap.get(usr.ContactId);
-			acctNot.UserName__c = usr.Username;
+			acctNot.UserName__c = usr.Email;
 		}
 		
 		// insert new EBC Account Notification records
 		try {
 			insert billingAccountIdToEbcAccountNotificationMap.values();
 		} catch (Exception ex) {
-			System.debug( 'BtchEBCCreateAccountNotificationOnStatus.prepareEBCAccountNotification(), error on inserting ' + subProdChargeIdToObjectMap.values());
+			System.debug( 'BtchEBCCreateNotificationOnStatus.prepareEBCAccountNotification(), error on inserting ' + subProdChargeIdToObjectMap.values());
 			System.debug( 'Exception: ' + ex );
 			
 			logs.add(IECErrorLogger.logBatchError('Error on inserting.', ex.getMessage(), null
-					, 'BtchEBCCreateAccountNotificationOnStatus', ex.getStackTraceString()));
+					, 'BtchEBCCreateNotificationOnStatus', ex.getStackTraceString()));
 		}
 	} // prepareEBCAccountNotification
+	
+	
+	// ========================================================================
+	// for the given BillingAccount, delete related old notification of this Type
+	private void deleteEBCAccountNotification( Set<Id> billingAccountIdSet )
+	{
+		// clean old EBC_Account_Notification records
+		// also delete some other's old records (which might not have billing account included in the list)
+		Date veryOldDate = Date.today().addMonths(- HISTORY_CUT_OFF_MONTHS);
+		List<EBC_Account_Notification__c> oldNotificationList = [select Id 
+				from EBC_Account_Notification__c 
+				where Notification_Type__c = : EBC_ACCOUNT_NOTIFICATION_TYPE_STATUS
+					and (Billing_Account__c in : billingAccountIdSet
+						or CreatedDate < : veryOldDate)
+				order by CreatedDate desc 
+				limit : BATCH_DELETE_SIZE
+				];
+		try {
+			delete oldNotificationList;
+		} catch (Exception ex) {
+			System.debug( 'BtchEBCCreateNotificationOnStatus.prepareEBCAccountNotification(), error on deleting old recs' + oldNotificationList);
+			System.debug( 'Exception: ' + ex );
+			logs.add(IECErrorLogger.logBatchError('Error on deleting.', ex.getMessage(), null
+					, 'BtchEBCCreateNotificationOnStatus', ex.getStackTraceString()));
+		}
+	} // end of deleteEBCAccountNotification
 	
 	
 	// ========================================================================
@@ -325,10 +338,10 @@ global class BtchEBCCreateAccountNotificationOnStatus implements Database.Batcha
 	// debugging tool to show if the query return some records
 	private static void showQuery( String query)
 	{
-		System.debug( '\n\BtchEBCCreateAccountNotificationOnStatus query at ' + DateTime.now() + ':\n' + query) ;
+		System.debug( '\n\BtchEBCCreateNotificationOnStatus query at ' + DateTime.now() + ':\n' + query) ;
 		List<Zuora__CustomerAccount__c> customerAccountList = Database.query(query + ' LIMIT 5');
 		System.debug( '\n\BillingAcct query num of recs:' + customerAccountList.size());
 		System.debug( 'BillingAcct query result:' + customerAccountList);
 	} // showQuery
 	*/
-} // end of BtchEBCCreateAccountNotificationOnStatus class
+} // end of BtchEBCCreateNotificationOnStatus class

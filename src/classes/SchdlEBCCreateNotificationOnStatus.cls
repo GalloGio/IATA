@@ -3,7 +3,7 @@
   * Author: Sonny Leman
   *
   * Related class
-  *  - BtchEBCCreateAccountNotificationOnStatus
+  *  - BtchEBCCreateNotificationOnStatus
   *  
   * Note:
   *  - For simplicity, current version need to be scheduled manually on Salesforce
@@ -20,7 +20,7 @@ global class SchdlEBCCreateNotificationOnStatus implements Schedulable {
 		try {
 			// Only run the job if the schedule interface is activated through the custom settings
 			
-			BtchEBCCreateAccountNotificationOnStatus.callBatchEBCCreateAccountNotificationOnStatus();
+			BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
 			
 			/* 
 			// the following is used if we want the job to auto reschedule

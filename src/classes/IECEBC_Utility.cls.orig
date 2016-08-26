@@ -185,6 +185,8 @@ public class IECEBC_Utility {
         
         a.ParentId = res.Id;
     }
+<<<<<<< HEAD
+=======
     
 	// =======================================================================-
 	// ebcSetup return the only EBC_Setup records in the system
@@ -211,8 +213,6 @@ public class IECEBC_Utility {
 								
 								, Default_Storage_Capacity__c
 								, E_Commerce_Base_Url__c
-								, Product_Category__c
-								, Renewal_Window__c
 							from EBC_Setup__c
 							order by CreatedDate
 							limit 1];
@@ -238,7 +238,7 @@ public class IECEBC_Utility {
         private set;
     }
     
-    // ebcMemberProductRatePlanIdList list all the available Prepaid Product Rate Plan for eBroadcast product for Member
+    // ebcMemberProductRatePlanIdList list all the available Product Rate Plan for eBroadcast product for Member
     // the order is maintaned that the first is the one with highest value
     public static List<Id> ebcMemberProductRatePlanIdList{
         get {
@@ -256,7 +256,7 @@ public class IECEBC_Utility {
         private set;
     } // end of ebcMemberProductRatePlanIdList getter/setter
     
-    // ebcNonMemberProductRatePlanIdList list all the available Prepaid Product Rate Plan for eBroadcast product for Member
+    // ebcNonMemberProductRatePlanIdList list all the available Product Rate Plan for eBroadcast product for Member
     // the order is maintaned that the first is the one with highest value
     public static List<Id> ebcNonMemberProductRatePlanIdList{
         get {
@@ -274,4 +274,5 @@ public class IECEBC_Utility {
         private set;
     } // end of ebcNonMemberProductRatePlanIdList getter/setter
     
+>>>>>>> ebc-sl-dev
 }
