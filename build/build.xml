@@ -386,7 +386,7 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
+      <antcallback target="bulkRetrieveEmailTemplate" />
 
     </target>
 
@@ -445,7 +445,7 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/workflowPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
+      <antcallback target="bulkRetrieveEmailTemplate" />
 
     </target>
 
