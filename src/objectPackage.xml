@@ -38,6 +38,10 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>unfiled$public/EF_Contact_Deactivation_Notification</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
         <members>*</members>
         <name>PermissionSet</name>
     </types>
