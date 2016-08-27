@@ -11,6 +11,7 @@
   * History: 
   *  - 20160721-sl: initial version
   *  - 20160810-sl: graph is added
+  *  - 20160826-sl: add Renew Link
   */
 
 
@@ -53,6 +54,33 @@ public with sharing class vfIECEBC_AccountManage extends vfIECEBC_Abstract_List
 			return (productRatePlanIdUpgradeSet != null && productRatePlanIdUpgradeSet.size() > 0);
 		}
 	}
+	
+	// ======================================================================== 
+	// showRenewNow link is used to turn on/off Renew Now link 
+	public Boolean showRenewNow{
+		get{
+			return vfIECEBC.isSubscriptionRenewable;
+		}
+	} // end of showRenewNow getter
+	
+	
+	// ======================================================================== 
+	// renewalPageUrl link contains the URL for the URL
+	public String renewalPageUrl{
+		get{
+			return IECEBC_Utility.renewalPageUrl;
+		}
+	} // end of renewalPageUrl getter
+	
+	
+	// ======================================================================== 
+	// subscriptionId is used for debugging on VfP
+	public String subscriptionId{
+		get{
+			return vfIECEBC.subscription.Id + ' - ' + vfIECEBC.subscription.Name;
+		}
+	} // end of showRenewNow getter
+	
 	
 	// ========================================================================
 	// totalCampaigns is the number of campaign records for this billing account

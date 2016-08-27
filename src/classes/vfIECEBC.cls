@@ -2,13 +2,14 @@
  * This vfIECEBC class provided collection static methods related to eBroadcast feature
  * 
  * Change log:
- *   20160824-sl: move ebcSetup out to IECEBC_Utility
+ *   20160826-sl: move ebcSetup out to IECEBC_Utility, add isSubscriptionRenewable
  *
  **/
 
 public class vfIECEBC extends IECPageController {
 	
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
+	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';	
 	
 	public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
 	public static Zuora__CustomerAccount__c billingAccount {
@@ -50,8 +51,10 @@ public class vfIECEBC extends IECPageController {
 			if (subscription == null) {
 				List<Zuora__Subscription__c> subsList = [SELECT Id, Name
 														 	 , Zuora__AutoRenew__c
-															 , Zuora__SubscriptionEndDate__c
 															 , Zuora__NextRenewalDate__c
+															 , Zuora__Status__c
+															 , Zuora__SubscriptionEndDate__c
+															 , Zuora__TermEndDate__c
 															 , Product_Rate_Plan_Information__r.Product_Rate_Plan__c
 															 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Id
 															 , Product_Rate_Plan_Information__r.Product_Rate_Plan__r.Name
@@ -85,6 +88,26 @@ public class vfIECEBC extends IECPageController {
 		private set;
 	}
 	
+	// ========================================================================
+	// return true if the subscription can still be renewed
+	// this is used to show the renewal link 
+	public static Boolean isSubscriptionRenewable 
+	{
+		get{
+			Integer renewalWindows = (IECEBC_Utility.ebcSetup.Renewal_Window__c == null) ? 0 : Integer.valueOf(IECEBC_Utility.ebcSetup.Renewal_Window__c); 
+			
+			Boolean result = ( (subscription != null)
+								&& (subscription.Zuora__Status__c == 'Active')
+								&& (subscription.Product_Rate_Plan_Information__r.Product_Rate_Plan__r.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID)
+								&& (subscription.Zuora__NextRenewalDate__c >= Date.today())
+								&& (subscription.Zuora__NextRenewalDate__c <= Date.today().addDays(renewalWindows))
+								);
+			return result;
+		}
+		//private set;
+	} // end of isSubscriptionRenewable getter
+    
+    
 	/*
 	public static vfIECSubscriptionInfo subscriptionInfo {
 		get {

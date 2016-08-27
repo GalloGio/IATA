@@ -41,15 +41,16 @@
 			
 				// =========================================================================================
 				// startObservingClassMutation is used if we want to detect the chage of class of a component
+				/*
 				function startObservingClassMutation() 
 				{
 					// listener definition on class change
 					var observer = new MutationObserver(function(mutations) {
 						mutations.forEach(function(mutation) {
 							if (mutation.attributeName === "class") {
-                                console.log("Class attribute from", $j(mutation));
+								console.log("Class attribute from", $j(mutation));
 								var attributeValue = $j(mutation.target).prop(mutation.attributeName);
-                                console.log("Class attribute changed to:", attributeValue);
+								console.log("Class attribute changed to:", attributeValue);
 								
 								if ( !attributeValue.includes('is-open')) {
 									refreshActivityTable();
@@ -63,6 +64,7 @@
 					var obsConfig = { attributes: true, attributeOldValue: true};
 					observer.observe($div[0],  obsConfig);
 				}
+				*/
 				
 				function SetFilter()
 				{
@@ -161,8 +163,8 @@
 								}
 							]
 					});
-                    $j(window).resize();
-                    return chart;
+					$j(window).resize();
+					return chart;
 				} // end of renderYtdActivityGraph
 			
 			</script>
@@ -190,9 +192,9 @@
 							<li class="active"><a href="{!URLFOR($Page.IECEBC_AccountManage)}">Overview</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Rate plan</a></li>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountExtras)}">Extras</a></li>
-                            <apex:outputPanel rendered="{!isEbcPrepaid}">
-    	                        <li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
-	                        </apex:outputPanel>
+							<apex:outputPanel rendered="{!isEbcPrepaid}">
+								<li><a href="{!URLFOR($Page.IECEBC_AccountEmailBlocks)}">Email Blocks</a></li>
+							</apex:outputPanel>
 							<li><a href="{!URLFOR($Page.IECEBC_AccountSettings)}">Settings</a></li> 
 							<li><a href="{!URLFOR($Page.IECEBC_AccountUserGuide)}">User Guide</a>
 							</li>
@@ -205,13 +207,15 @@
 								<div class="row">
 									<div class="columns medium-8">
 										<h2 class="heading-2">Current plan: <strong>{!productRatePlan.Name}</strong></h2>
-										
 										<h3 class="heading-3">Current cost per email: ${!productRatePlan.EBC_Currency_Cost_Per_Email__c}</h3>
 										<apex:outputPanel rendered="{!showSubscriptionEnd}">
 											<p>This cost per email is guaranteed until the end of your subscription 
 												<strong>
 													<apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText>
 												</strong>
+												<apex:outputLink value="{!renewalPageUrl}" rendered="{!showRenewNow}">
+													Renew Now
+												</apex:outputLink>
 											</p>
 										</apex:outputPanel>
 										<apex:outputPanel rendered="{!showSuggestionMessage}">

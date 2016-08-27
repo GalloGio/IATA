@@ -25,4 +25,21 @@ public with sharing class vfIECEBC_Layout extends vfIECEBC_Controller {
         return null;
     }
 
-}
+	// ======================================================================== 
+	// showRenewNow link is used to turn on/off Renew Now link 
+	public Boolean showRenewNow{
+		get{
+			return vfIECEBC.isSubscriptionRenewable;
+		}
+	} // end of showRenewNow getter
+	
+	
+	// ======================================================================== 
+	// renewalPageUrl link contains the URL for the URL
+	public String renewalPageUrl{
+		get{
+			return IECEBC_Utility.renewalPageUrl;
+		}
+	} // end of renewalPageUrl getter
+    
+} // end of vfIECEBC_Layout
