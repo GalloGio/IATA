@@ -2965,6 +2965,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Laetitia Slottved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2978,6 +2982,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Michael Huntington</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monica Papuga</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3002,6 +3010,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Rachel Zhang</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ruba Abdulaziz</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5661,6 +5673,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Laetitia Slottved</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </values>
@@ -5674,6 +5690,10 @@
             </values>
             <values>
                 <fullName>Michael Huntington</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monica Papuga</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5698,6 +5718,10 @@
             </values>
             <values>
                 <fullName>Rachel Zhang</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ruba Abdulaziz</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11330,7 +11354,7 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
     </validationRules>
     <validationRules>
         <fullName>Opp_event_required_for_event_leads</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>“Lead source” and “event source” need to be mandatory, but the event only if the lead source was an even</description>
         <errorConditionFormula>AND (
   ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source_lk__c =&apos;&apos; )</errorConditionFormula>
