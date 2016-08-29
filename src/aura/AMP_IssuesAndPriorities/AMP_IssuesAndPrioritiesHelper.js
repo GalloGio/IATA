@@ -37,11 +37,23 @@
 	sortIssues : function (component, fieldname,reverse) {
 		var backup = component.get("v.backup");
 		backup.sort(function(a,b) {
-			return (a[fieldname] > b[fieldname]);
+			// var x = a[fieldname] + ' ' + b[fieldname] + ' ';
+			// x+= a[fieldname] < b[fieldname];
+			// console.log(x );
+			// special treatment for Priority
+			var rating = {'High':1,'Medium':2,'Low':3};
+			if(fieldname == 'AM_Level_of_importance__c') {
+				if( rating[a[fieldname]] < rating[b[fieldname]]) return 1;
+				else return -1;
+			}
+			if (a[fieldname] === undefined) return 1;
+			if (b[fieldname] === undefined) return -1;
+			if (a[fieldname].toLowerCase() < b[fieldname].toLowerCase()) return 1;
+			else return -1;
 		});
 		if (reverse < 0) backup.reverse();
 		component.set("v.backup",backup);
-		this.refreshIssues(component)
+		this.refreshIssues(component);
 	},
 	refreshIssues : function(component) {
 		var issues = component.get("v.backup");

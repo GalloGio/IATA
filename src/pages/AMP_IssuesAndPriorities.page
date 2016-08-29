@@ -66,14 +66,14 @@
                     <apex:outputField value="{!i.Description__c}" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}"/>
                     <apex:inputField value="{!i.Description__c}" rendered="{!AND(isEditMode, IdConcerned==i.Id)}"/>
                 </apex:column> -->
-                <apex:column >
-                            <apex:facet name="header">
+                <apex:column headerValue="Description">
+                            <!-- <apex:facet name="header">
                     <apex:commandLink action="{! sortByDetails }"
                         reRender="issueTable">Description
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Details__c ASC'}">&nbsp;&#8593;</apex:outputPanel>
                                     <apex:outputPanel layout="none" rendered="{!sortOrder == ' Details__c DESC'}">&nbsp;&#8595;</apex:outputPanel>
                     </apex:commandLink>
-                </apex:facet>
+                </apex:facet> -->
           <apex:outputPanel styleClass="long-text-area hidden" rendered="{!NOT(AND(isEditMode, IdConcerned==i.Id))}" >
             <apex:outputText value="{!i.Details__c}"   />
             <a href="#" class="show-less">[show less]</a>

@@ -33,10 +33,12 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     public void sortByName() {
         if(this.sortOrder == ' Name DESC') this.sortOrder = ' Name ASC';
         else this.sortOrder = ' Name DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortBySource() {
         if(this.sortOrder == ' AM_Source_Text__c DESC') this.sortOrder = ' AM_Source_Text__c ASC';
         else this.sortOrder = ' AM_Source_Text__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByDescription() {
         if(this.sortOrder == ' Description__c DESC') this.sortOrder = ' Description__c ASC';
@@ -49,34 +51,42 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     public void sortByPublic() {
         if(this.sortOrder == ' AM_Public__c DESC') this.sortOrder = ' AM_Public__c ASC';
         else this.sortOrder = ' AM_Public__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByLocal() {
         if(this.sortOrder == ' AM_Local__c DESC') this.sortOrder = ' AM_Local__c ASC';
         else this.sortOrder = ' AM_Local__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByRegional() {
         if(this.sortOrder == ' AM_Regional__c DESC') this.sortOrder = ' AM_Regional__c ASC';
         else this.sortOrder = ' AM_Regional__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByGlobal() {
         if(this.sortOrder == ' AM_Global__c DESC') this.sortOrder = ' AM_Global__c ASC';
         else this.sortOrder = ' AM_Global__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByIssueWithIATA() {
         if(this.sortOrder == ' AM_Issue_with_IATA__c DESC') this.sortOrder = ' AM_Issue_with_IATA__c ASC';
         else this.sortOrder = ' AM_Issue_with_IATA__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByCanIATASupport() {
         if(this.sortOrder == ' AMP_Can_IATA_support_the_airline__c DESC') this.sortOrder = ' AMP_Can_IATA_support_the_airline__c ASC';
         else this.sortOrder = ' AMP_Can_IATA_support_the_airline__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByStatus() {
         if(this.sortOrder == ' Status__c DESC') this.sortOrder = ' Status__c ASC';
         else this.sortOrder = ' Status__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByLevelOfImportance() {
         if(this.sortOrder == ' AM_Level_of_importance__c DESC') this.sortOrder = ' AM_Level_of_importance__c ASC';
         else this.sortOrder = ' AM_Level_of_importance__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
     }
 
 
@@ -91,7 +101,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         'FROM Objective__c WHERE Account__c =\'' + this.myAccount.Id + '\''+
         ' AND RecordTypeId = \'' + this.objectiveRecordTypeId+ '\'';
         if(!showAllItems) queryString += ' AND Status__c =  \'Open\'  ';
-        if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
+        if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' NULLS LAST ';
         System.debug(queryString);
         List<SObject> lsSObjects = Database.query(queryString);
         for(SObject s : lsSObjects) {
@@ -146,26 +156,27 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
       return issue;
   }
 
-  public void newLine() {
-    try {
-        Objective__c newIssue = new Objective__c();
-        newIssue.Account__c = this.myAccount.Id;
-        newIssue.RecordTypeId = this.objectiveRecordTypeId;
-            //newIssue.Name = 'new issue or priority';
-            //insert newIssue;
-            lsIssuesAndPriorities.add(newIssue);
+    public void newLine() {
+      try {
+          Objective__c newIssue = new Objective__c();
+          newIssue.Account__c = this.myAccount.Id;
+          newIssue.RecordTypeId = this.objectiveRecordTypeId;
+          //newIssue.Name = 'new issue or priority';
+          //insert newIssue;
+          lsIssuesAndPriorities.add(newIssue);
+        //   lsIssuesAndPriorities.clear();
 
-            isEditMode = true;
-            isNewLine = true;
-            IdConcerned = newIssue.Id;
-            sortOrder = ' CreatedDate ASC ';
-            //lsIssuesAndPriorities = getIssuesAndPriorities();
+          isEditMode = true;
+          isNewLine = true;
+          IdConcerned = newIssue.Id;
+          sortOrder = ' CreatedDate ASC ';
+        //   lsIssuesAndPriorities = getIssuesAndPriorities();
 
-            } catch(Exception e) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
-            }
+      } catch(Exception e) {
+          ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+      }
 
-        }
+    }
 
         public void EditLine() {
             isEditMode = true;
