@@ -22148,21 +22148,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Material__c.Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Material__c.IATA_Ticket_Tax_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Material__c.SAP_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Related_Records__c.FIR_Code_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -38048,9 +38033,6 @@
         <recordType>EF_Material_Line_Item__c.Relationship_Line_Item</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Material__c-E%26F Material Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>EF_Related_Records__c-E%26F Related Records Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -39197,15 +39179,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>EF_Material_Line_Item__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>EF_Material__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -41559,7 +41532,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Standard_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -41990,13 +41962,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -42017,7 +41987,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>EF_Material_Line_Item__c.Contract_Line_Item</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -42598,10 +42567,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>EF_Billing_Agreement__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>EF_Material__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
