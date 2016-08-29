@@ -921,10 +921,6 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>A4A-IATA Reservations Interline Procedures (AIRIMP)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Aircraft Reliability</fullName>
                 <default>false</default>
             </picklistValues>
@@ -946,6 +942,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Airport Handling Manual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ATA-IATA Reservations Interline Procedures (AIRIMP)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4582,7 +4582,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6761,7 +6761,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8916,7 +8916,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>A4A-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
+                <fullName>ATA-IATA Reservations Interline Procedures %28AIRIMP%29</fullName>
                 <default>false</default>
             </values>
             <values>
