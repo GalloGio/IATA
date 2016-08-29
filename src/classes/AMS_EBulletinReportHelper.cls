@@ -17,7 +17,7 @@ public class AMS_EBulletinReportHelper {
 		get{ 
 			if(fieldsList == null) fieldsList = new List<String>();return fieldsList;
 		}
-		set;}
+		set;}	
 	
 	public static List<String> headersList{
 		get{ 
@@ -40,18 +40,29 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Generate CSV Header with the recovered metadata records 
 	*/
-	public static void getEBulletinFields(String csvFormat)
+	public static void getEBulletinFields(String csvFormat , String objectBaseQuery)
 	{
 		getEBulletinSettings();
 
+		Map<String, Schema.SObjectField> fieldMap  = Schema.getGlobalDescribe().get(objectBaseQuery).getDescribe().Fields.getMap();
+
 		for (AMS_EBulletin_Setting__mdt EBulletinSetting : EBulletinSettingsList)
 		{
-			fieldsList.add(EBulletinSetting.Field_API_Name__c);
-			headersList.add(EBulletinSetting.Label);
+			fieldsList.add(EBulletinSetting.Label);
+				
+			system.debug('fieldMap: ' + fieldMap);
+			system.debug('EBulletinSetting.Label: ' + EBulletinSetting.Label);
+			
+			system.debug('fieldMap: ' + fieldMap);
+
+			headersList.add(fieldMap.get(EBulletinSetting.Label).getDescribe().getLabel());
+			
 		}
 
 		fieldsQuery = convertToCSV(fieldsList, ',');
 		headerCSV   = convertToCSV(headersList, csvFormat);
+
+		system.debug('headerCSV: ' + headerCSV);
 	
 	}
 

@@ -94,7 +94,7 @@ public class OrderItem_DTO implements Comparable
         ret.quantity  = orderItem.Quantity;
         
         ret.IECStaticCartQuantity = orderItem.IEC_Static_Cart_Quantity__c; //Default quantity for phase 1 and 2 products
-        if(ret.IECStaticCartQuantity != null && ret.IECStaticCartQuantity > 0)  ret.quantity = ret.IECStaticCartQuantity;
+        if(ret.IECStaticCartQuantity != null && ret.IECStaticCartQuantity > 0 && orderItem.Quantity == null)  ret.quantity = ret.IECStaticCartQuantity;
 
         ret.IsQuantityInteger = orderItem.Is_Quantity_Integer__c;
         ret.unitPrice = orderItem.UnitPrice;
@@ -165,7 +165,7 @@ public class OrderItem_DTO implements Comparable
             ret.quantity  = orderItem.Quantity;
             
             ret.IECStaticCartQuantity = orderItem.IEC_Static_Cart_Quantity__c; //Default quantity for phase 1 and 2 products
-            if(ret.IECStaticCartQuantity != null && ret.IECStaticCartQuantity > 0)
+            if(ret.IECStaticCartQuantity != null && ret.IECStaticCartQuantity > 0 && orderItem.Quantity == null)
                 ret.quantity = ret.IECStaticCartQuantity;
 
             ret.IsQuantityInteger = orderItem.Is_Quantity_Integer__c;

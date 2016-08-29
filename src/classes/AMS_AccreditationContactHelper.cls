@@ -268,7 +268,7 @@ public with sharing class AMS_AccreditationContactHelper
 
         String query = 'select Id, FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, MailingCountry, MailingState, ' + 
                         'MailingStreet, MailingCity, MailingPostalCode, Phone, Mobilephone, Fax, Financial_Assessment_Contact__c, Birthdate, Email, ISO_Country__c, RecordTypeId ' +
-                        'from Contact where RecordTypeId = \'' +standardContactRtId + '\' ';
+                        'from Contact where Status__c = \'Active\' and RecordTypeId = \'' +standardContactRtId + '\' ';
 
         if(firstName != '' && lastName != '' && email != '')
         {

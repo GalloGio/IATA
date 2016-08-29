@@ -57,7 +57,7 @@ public with sharing class AMS_OSCAR_Automation
     }
     
     //STEP WAS REMOVED
-    /*public class AMS_OSCAR_Step7_succeeded implements IClassFactory
+    public class AMS_OSCAR_Step7_succeeded implements IClassFactory
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
         {
@@ -68,7 +68,9 @@ public with sharing class AMS_OSCAR_Automation
             try{
 
                 if(oscar != null){
-                    oscar.Anti_Money_Laundering_Complete__c = Date.today();
+
+                    oscar.IRIS_update_result__c = 'Passed';
+
                     res = True;
                 }
             }catch(Exception e){
@@ -77,7 +79,31 @@ public with sharing class AMS_OSCAR_Automation
 
             return res;
         }
-    }*/
+    }
+    
+    public class AMS_OSCAR_Step7_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step7_failed.processWork');
+
+            Boolean res = False;
+
+            try{
+
+                if(oscar != null){
+
+                    oscar.IRIS_update_result__c = 'Failed';
+
+                    res = True;
+                }
+            }catch(Exception e){
+                res = False;
+            }
+
+            return res;
+        }
+    }
 
     //OK
     public class AMS_OSCAR_Step8_succeeded implements IClassFactory
@@ -331,7 +357,7 @@ public with sharing class AMS_OSCAR_Automation
 
                 if(oscar != null){
                     // JH: Removed to fix INC255865 
-						// oscar.Bank_Guarantee_received__c = Date.today();
+                        // oscar.Bank_Guarantee_received__c = Date.today();
                     oscar.Financial_security_result__c = 'N/A';
                     res = True;
                 }
@@ -1042,6 +1068,48 @@ public with sharing class AMS_OSCAR_Automation
         }
     }
 
+    public class AMS_OSCAR_Step16_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step16_succeeded.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+
+                    oscar.Finalization_result__c = 'Passed';
+
+                    res = true;
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+                res = False;
+            }
+            return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step16_failed implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step16_failed.processWork');
+            Boolean res = False;
+            try{
+                if(oscar != null){
+
+                    oscar.Finalization_result__c = 'Failed';
+                    
+                    res = true;
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+                res = False;
+            }
+            return res;
+        }
+    }
+
     public class AMS_OSCAR_Step17_succeeded implements IClassFactory
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
@@ -1065,7 +1133,7 @@ public with sharing class AMS_OSCAR_Automation
     {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
         {
-            system.debug('Start AUTOMATION AMS_OSCAR_Step17_succeeded.processWork');
+            system.debug('Start AUTOMATION AMS_OSCAR_Step17_failed.processWork');
             Boolean res = False;
             try{
                 if(oscar != null){

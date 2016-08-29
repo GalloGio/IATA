@@ -11,8 +11,8 @@ global class AMS_EBulletinReportWebservice {
 
 		System.debug('Initializing...');
 
-		try
-		{
+		//try
+		//{
 			String csv = getHeader() + '\n' + getRecords();
 
 			ContentVersion file = new ContentVersion(
@@ -25,10 +25,10 @@ global class AMS_EBulletinReportWebservice {
 			System.debug('CSV File Generated: ' + file);
 
 			return true;
-		}
-		catch(Exception e){	
-			return false;
-        }
+		//}
+		//catch(Exception e){	
+		//	return false;
+        //}
 		
 	}
 
@@ -39,7 +39,7 @@ global class AMS_EBulletinReportWebservice {
 	private static String getHeader(){
 
 		System.debug('Get CSV Header...');
-		AMS_EBulletinReportHelper.getEBulletinFields('";"');
+		AMS_EBulletinReportHelper.getEBulletinFields('";"',objectBaseQuery);
 
 		return AMS_EBulletinReportHelper.headerCSV;
 	}

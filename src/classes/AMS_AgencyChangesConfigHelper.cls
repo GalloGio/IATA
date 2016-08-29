@@ -75,6 +75,9 @@ public class AMS_AgencyChangesConfigHelper{
 	public static AMS_Utils.AgChangesConfig getSelectedTypeOfChangeCombinationConfig(AMS_OSCAR__c oscar, List<Map<String, String>> configs) {
 		Map<String, String> typeOfChangeConfig;
 
+		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES')
+			return null;
+
 		//List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 		Boolean foundValidCombination = false;
 		System.debug('TYPE OF CHANGE: ' + oscar.Type_of_change__c);
@@ -152,6 +155,9 @@ public class AMS_AgencyChangesConfigHelper{
 
 		//get the groups of fields to be migrated from the config table
 		AMS_Utils.AgChangesConfig config = getSelectedTypeOfChangeCombinationConfig(oscar, configs);
+
+		if(config == null)
+			return fieldsToMigrate;
 
 		List<String> fieldSetsToMigrate = getFieldSetsToMigrate(config.config);
 

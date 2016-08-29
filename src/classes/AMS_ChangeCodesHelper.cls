@@ -111,7 +111,7 @@ public class AMS_ChangeCodesHelper {
 
 	*/
 
-	public static void createAAChangeCodes(List<ObjectChangesStruct> objectChanges, List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
+	public static List<Account> createAAChangeCodes(List<ObjectChangesStruct> objectChanges, List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
@@ -120,8 +120,8 @@ public class AMS_ChangeCodesHelper {
         Set<Account> accountsToUpdate = new Set<Account>();
 
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
-		
-		List<list<AMS_Agency_A_Change_code_History__c>> aaccHistoryToProcess = new List <List <AMS_Agency_A_Change_code_History__c>>();
+        
+        List<list<AMS_Agency_A_Change_code_History__c>> aaccHistoryToProcess = new List <List <AMS_Agency_A_Change_code_History__c>>();
 
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
 
@@ -144,9 +144,11 @@ public class AMS_ChangeCodesHelper {
 
         }
 
+            List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
+
         if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
-            update new List<Account>(accountsToUpdate);
+                update accountsToUpdateList;
         }
 
         if (!aaccToInsert.isEmpty()) {
@@ -165,20 +167,20 @@ public class AMS_ChangeCodesHelper {
 
          
         if(!aaccHistoryToProcess.isEmpty())
-	       	{for (Agency_Applied_Change_code__c aaccCreated : aaccToInsert){
+            {for (Agency_Applied_Change_code__c aaccCreated : aaccToInsert){
 
-		      	for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(index2))
-		      	{
-		      		//Add Agency_Applied_Change_Code__c IDs to AMS_Agency_A_Change_code_History__c
-		      		
-		      		aaccHist.Agency_Applied_Change_Code__c = aaccCreated.id;
-		      		aaccHistoryToInsert.add(aaccHist);
-		      	}
+                for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(index2))
+                {
+                    //Add Agency_Applied_Change_Code__c IDs to AMS_Agency_A_Change_code_History__c
+                    
+                    aaccHist.Agency_Applied_Change_Code__c = aaccCreated.id;
+                    aaccHistoryToInsert.add(aaccHist);
+                }
 
 
-	       		index2++;
-	       	}
-		}
+                index2++;
+            }
+        }
 
         if (!aaccHistoryToInsert.isEmpty()) {
 
@@ -186,9 +188,10 @@ public class AMS_ChangeCodesHelper {
 
             insert aaccHistoryToInsert;
         }
+             return accountsToUpdateList;
     }
 
-    public static void createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
+    public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
@@ -218,9 +221,11 @@ public class AMS_ChangeCodesHelper {
 
         }
 
+        List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
+
         if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
-            update new List<Account>(accountsToUpdate);
+            update accountsToUpdateList;
         }
 
         if (!aaccToInsert.isEmpty()) {
@@ -229,6 +234,8 @@ public class AMS_ChangeCodesHelper {
 
             insert aaccToInsert;
         }
+
+        return accountsToUpdateList;
 
     }
 
@@ -326,6 +333,12 @@ public class AMS_ChangeCodesHelper {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
+            toReturn = oscarAgency;
+        }
+
+        if( aacNEW.Change_Code__c == 'FIN' ){
+            
+            oscarAgency.Is_AIMS_Account__c = true;
             toReturn = oscarAgency;
         }
 

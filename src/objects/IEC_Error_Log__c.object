@@ -329,6 +329,11 @@
             <operation>contains</operation>
             <value>Accreditations</value>
         </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>6/10/2016 12:00 AM</value>
+        </filters>
         <label>DataLoader - Accreditation errors</label>
         <language>en_US</language>
     </listViews>
