@@ -10,13 +10,19 @@
             $(this).parents('th').addClass('slds-is-sorted--asc');
             var fieldname = $(this).data('fieldname');
             var currentSortOrder = component.get('v.sortOrder');
-            var reverse = 1;
-            if(fieldname === currentSortOrder) {
-                fieldname = fieldname+'desc';
-                reverse *= -1;
+            if(currentSortOrder === undefined) {
+                currentSortOrder = fieldname;
             }
             
-            component.set("v.sortOrder",fieldname);
+            var reverse = 1;
+            if(fieldname === currentSortOrder) {
+                currentSortOrder = fieldname+'desc';
+                reverse *= -1;
+            } else {
+                currentSortOrder = fieldname;
+            }
+
+            component.set("v.sortOrder",currentSortOrder);
             helper.sortIssues(component,fieldname,reverse);
         });
         
