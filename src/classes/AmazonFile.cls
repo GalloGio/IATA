@@ -23,6 +23,10 @@ public class AmazonFile {
 	public String getDescription() {
 		return amazonFile==null? '': this.amazonFile.Description__c;
 	}
+	
+	public String getInternalComments() {
+		return amazonFile==null? '': this.amazonFile.Internal_Comments__c;
+	}
 
 	public String getFullName() {
 		return this.s3File.getFullName();
@@ -166,7 +170,7 @@ public class AmazonFile {
 			//get the amazonFile Object
 			AmazonFile__c aFile;
 			list<AmazonFile__c> aFiles = [
-				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, Internal_Comments__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName
 				From AmazonFile__c 
 				Where id = :sobjectId
@@ -206,7 +210,7 @@ public class AmazonFile {
 		// for cases
 		if ( String.ValueOf(sobjectId.getSObjectType()) == 'Case') {
 			listFiles = [
-				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+				Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, Internal_Comments__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName
 				From AmazonFile__c
 				Where Case__c = :sobjectId

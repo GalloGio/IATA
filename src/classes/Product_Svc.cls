@@ -312,6 +312,11 @@ public class Product_Svc
             //Get the email template to add on the body of the task for manager and alternate manager
             lstEmailTemplate = Utility.getEmailTemplatebyTemplateId(Utility.getTextSetting('Product Effective to template Id'));
         }
+
+        //Get all the product api name that we handle the change event
+        map<String,String> apiName_Label = productApiNames();
+        map<String,String> new_oldValue = new map<String,String>();
+        map<String,String> value_Label = new map<String,String>();
         
         for(Product2 product : products){
             
@@ -319,12 +324,9 @@ public class Product_Svc
             
             if(product.Product_Set_Up_Notifications__c){
                 boolean asBeenChanged = false;
+                new_oldValue.clear();
+                value_Label.clear();
 
-                //Get all the product api name that we handle the change event
-                map<String,String> apiName_Label = productApiNames();
-                map<String,String> new_oldValue = new map<String,String>();
-                map<String,String> value_Label = new map<String,String>();
-                
                 //Get the old value of the product
                 
                 for(String apiName : apiName_Label.keySet()){
