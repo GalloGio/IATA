@@ -258,8 +258,8 @@
         <label>Industry Settlement Systems</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>BSP_Participant_value__c</field>
+                <behavior>Edit</behavior>
+                <field>Airline_BSP_Participations__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -268,8 +268,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CASS_Participant_value__c</field>
+                <behavior>Edit</behavior>
+                <field>Airline_CASS_Participations__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
