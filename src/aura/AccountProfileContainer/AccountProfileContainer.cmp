@@ -57,11 +57,11 @@
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Key Account Plan" role="presentation">
                         <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-9" id="tab-default-9__item" >Key Account Plan</a>
                     </li>
-                        <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation">
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation">
                         <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-10" id="tab-default-10__item" >Chatter</a>
                     </li>
-                        <li class="slds-tabs--default__item slds-text-heading--label" title="Newsfeed" role="presentation">
-                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-11" id="tab-default-11__item" >Newsfeed</a>
+                    <li class="slds-tabs--default__item slds-text-heading--label" title="News" role="presentation">
+                        <a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-11" id="tab-default-11__item" >News</a>
                     </li>
                 </ul>
                 
