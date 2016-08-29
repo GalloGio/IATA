@@ -17,7 +17,7 @@ public class AMS_OscarCaseTriggerHelper {
         Set<Id> oscarIds = new Set<Id>();
 
         for(Case c: triggerNew){
-            if(c.RecordTypeID == OSCARCaseRecordTypeID && c.OSCAR__c != null){
+            if(c.RecordTypeID == OSCARCaseRecordTypeID && c.OSCAR__c != null && c.ParentId == null){
                 oscarCases.add(c);
                 oscarIds.add(c.OSCAR__c);
             }
@@ -34,7 +34,7 @@ public class AMS_OscarCaseTriggerHelper {
         Set<Id> oscarIds = new Set<Id>();
 
         for(Case c: triggerNew){
-            if(c.RecordTypeID == OSCARCaseRecordTypeID && triggerOldMap.get(c.id).Oscar__c == null && c.OSCAR__c != null){
+            if(c.RecordTypeID == OSCARCaseRecordTypeID && triggerOldMap.get(c.id).Oscar__c == null && c.OSCAR__c != null && c.ParentId == null){
                 oscarCases.add(c);
                 oscarIds.add(c.OSCAR__c);
             }
