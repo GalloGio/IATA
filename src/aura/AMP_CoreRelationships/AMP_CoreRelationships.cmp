@@ -56,8 +56,8 @@
             <div class="slds-form-element">
                 <label class="slds-form-element__label">Total BSP Participations</label>
                 <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.BSP_Participant_value__c}" />-->
-                    <ui:outputText value="{!v.account.BSP_Participant_value__c}" />
+                	<!--<force:outputField value="{!v.account.Airline_BSP_Participations__c}" />-->
+                    <ui:outputText value="{!v.account.Airline_BSP_Participations__c}" />
                 </div>
             </div>            
         </div>
@@ -66,8 +66,8 @@
             <div class="slds-form-element">
                 <label class="slds-form-element__label">Total CASS Participations</label>
                 <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.CASS_Participant_value__c}" />-->
-                    <ui:outputText value="{!v.account.CASS_Participant_value__c}" />
+                	<!--<force:outputField value="{!v.account.Airline_CASS_Participations__c}" />-->
+                    <ui:outputText value="{!v.account.Airline_CASS_Participations__c}" />
                 </div>
             </div>            
         </div>
