@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>E&amp;F Billing Agreement Rejected</name>
+    <style>none</style>
+    <subject>Billing Agreement changes rejected</subject>
+    <textOnly>Dear {!User.FirstName},
+
+your changes for an Airline Billing Agreement between {!EF_Billing_Agreement__c.Client__r.Name} and {!EF_Billing_Agreement__c.Airline__r.Name} have been rejected. Please visit the Approval History section on the record for manager&apos;s comments.</textOnly>
+    <type>custom</type>
+</EmailTemplate>
