@@ -5633,6 +5633,38 @@ Formula field that copies the E&amp;F Type.</description>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>EF_Services_Used__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Services Used</label>
+        <picklist>
+            <picklistValues>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>E&amp;F Customer Portal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Signatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>E&amp;F Signatory</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>EF_Status__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Status</label>
@@ -11059,6 +11091,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -12238,6 +12285,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13572,6 +13634,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -14727,6 +14804,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15903,6 +15995,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17203,6 +17310,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -18378,6 +18500,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20620,6 +20757,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23002,6 +23154,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Show</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25545,6 +25712,21 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Sales</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Services_Used__c</picklist>
+            <values>
+                <fullName>BDG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Efleet</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
