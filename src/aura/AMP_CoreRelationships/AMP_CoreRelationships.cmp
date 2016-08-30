@@ -44,16 +44,6 @@
     	
         <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
             <div class="slds-form-element">
-                <label class="slds-form-element__label">MITA Member</label>
-                <div class="slds-form-element__control">
-                	<!--<force:outputField value="{!v.account.MITA_Member__c}" />-->
-                    <ui:outputCheckbox value="{!v.account.MITA_Member__c}"/>
-                </div>
-            </div>            
-        </div>
-        
-        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
-            <div class="slds-form-element">
                 <label class="slds-form-element__label">Total BSP Participations</label>
                 <div class="slds-form-element__control">
                 	<!--<force:outputField value="{!v.account.Airline_BSP_Participations__c}" />-->
@@ -68,6 +58,19 @@
                 <div class="slds-form-element__control">
                 	<!--<force:outputField value="{!v.account.Airline_CASS_Participations__c}" />-->
                     <ui:outputText value="{!v.account.Airline_CASS_Participations__c}" />
+                </div>
+            </div>            
+        </div>
+        
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+        </div>
+    	
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-3 slds-p-bottom--medium">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">MITA Member</label>
+                <div class="slds-form-element__control">
+                	<!--<force:outputField value="{!v.account.MITA_Member__c}" />-->
+                    <ui:outputCheckbox value="{!v.account.MITA_Member__c}"/>
                 </div>
             </div>            
         </div>

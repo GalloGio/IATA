@@ -79,6 +79,7 @@
         <externalId>false</externalId>
         <label>Under</label>
         <referenceTo>LocalGovernance__c</referenceTo>
+        <relationshipLabel>Industry Groups (Under)</relationshipLabel>
         <relationshipName>Industry_Groups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -140,6 +141,7 @@
         <externalId>false</externalId>
         <label>Cluster</label>
         <referenceTo>Cluster__c</referenceTo>
+        <relationshipLabel>Local Groups</relationshipLabel>
         <relationshipName>Local_Groups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -321,6 +323,7 @@
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>Account</referenceTo>
+        <relationshipLabel>Local Groups</relationshipLabel>
         <relationshipName>APJCs</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -573,6 +576,10 @@
                 <fullName>Europe</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>true</sorted>
         </picklist>
         <trackHistory>false</trackHistory>
@@ -585,6 +592,7 @@
         <externalId>false</externalId>
         <label>Reporting to</label>
         <referenceTo>LocalGovernance__c</referenceTo>
+        <relationshipLabel>Subgroups</relationshipLabel>
         <relationshipName>IATA_Groups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
