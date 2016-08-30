@@ -23,6 +23,7 @@ public without sharing class CustomerAccount_Sel {
 				Zuora__CreditCard_Number__c,
 				Zuora__CreditCard_Expiration__c,
 				Zuora__Default_Payment_Method__c,
+                Zuora__DefaultPaymentMethod__c,
 				Zuora__Default_Payment_Method__r.Zuora__External_Id__c,
 				Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationMonth__c,
 				Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationYear__c,
