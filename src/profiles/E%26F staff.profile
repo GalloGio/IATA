@@ -15426,7 +15426,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.EF_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17104,9 +17104,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>EF_Contact_Relationship__c.EF_Airline_Billing_Agreement__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -26689,6 +26689,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.EF_IATA_Ticket_Tax_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Product2.Edition__c</field>
         <readable>false</readable>
@@ -35990,7 +35995,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>EF_Billing_Agreement__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>EF_Related_Records__c</tab>
