@@ -694,7 +694,7 @@ public without sharing class ISSP_APProcess {
             strReasonMembership= ' - Non-Member';
         }
         
-        if(isGSSAUser) {
+        if(isGSSAUser && category <> 'IBCS consolidator') {
             if (strType=='CASS Import') {
                 strReason='CASS Import via GHA' + strReasonMembership;
             } else {
