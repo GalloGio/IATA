@@ -17,7 +17,7 @@ private class AMS_FillCaseTypeOfCustomerTest {
         AMS_FillCaseTypeOfCustomer plugin = new AMS_FillCaseTypeOfCustomer();
         plugin.invoke(request);
 
-        
+        plugin.describe();
 
     	Test.stopTest();
       	
