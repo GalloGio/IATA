@@ -63,9 +63,21 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>EF_Relationships_Airline</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Base_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT($Api.Enterprise_Server_URL_300, FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_300))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Base URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Billed_Account__c</fullName>
@@ -98,7 +110,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -110,7 +122,7 @@
         <referenceTo>Account</referenceTo>
         <relationshipName>EF_Relationships_Client</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -122,7 +134,7 @@
         <relationshipName>EF_Relationships</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -166,9 +178,18 @@
         <referenceTo>EF_Related_Records__c</referenceTo>
         <relationshipName>EF_LocationRelationships</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>E&amp;F Status</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Invoice_Distribution_Method_Code__c</fullName>
@@ -199,7 +220,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -210,17 +231,49 @@
         <label>Location Code</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager_Approval__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>Manager Approval</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Payment_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -259,7 +312,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -298,7 +351,47 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>Requested Changes</label>
+        <length>10000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Require_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field that gets set to TRUE if one of the Billing Agreements &quot;require approval&quot; fields gets changed.</description>
+        <externalId>false</externalId>
+        <label>Require Approval</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Send_to_SAP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>Send to SAP</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>Status</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>

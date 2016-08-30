@@ -1,5 +1,107 @@
 public class EF_BillingAgreementHandler 
 {
+    private static boolean run = true;   
+    
+    public static void startApprovalProcesses(List<EF_Billing_Agreement__c> baList)
+    {
+        Set<Id> processedAgreementsIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : baList)
+        {
+            if(ba.Require_Approval__c)
+            {
+                EF_BaContractApprovalHelper.submitForApproval(ba.Id, UserInfo.getUserId(), '');
+                processedAgreementsIds.add(ba.Id);
+            }
+        }
+    }
+
+
+    public static void handleApprovedAndRejectedApprovals(List<EF_Billing_Agreement__c> newValues, Map<Id, EF_Billing_Agreement__c> oldValues)
+    {
+        List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+        List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+        List<EF_Billing_Agreement__c> approvedList = EF_BaContractApprovalHelper.identifyApprovedBillingAgreements(newValues, oldValues);
+        List<EF_Billing_Agreement__c> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledBillingAgreements(newValues, oldValues);
+        if(approvedList.size() > 0)
+        {
+            EF_BaContractApprovalHelper.copyValuesFromTempStorageOnBaApproval(approvedList, fields);
+        }
+        if(rejectedList.size() > 0)
+        {
+            EF_BaContractApprovalHelper.removeTempStorageRecordOnBaRejection(rejectedList);
+        }
+    }
+
+    // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
+    public static void handleWithApprovalAccountUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
+    {
+        Set<Id> accountIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : newAgreements.values())
+        {
+            // add both Client and Customer (Airline) into the Set, so that both will be queried for
+            accountIds.add(ba.Client__c);
+            accountIds.add(ba.Airline__c);
+        }
+
+        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        if(accountsInvolved.size() > 0)
+        {
+            List<EF_Billing_Agreement__c> agreementsToApprove = new List<EF_Billing_Agreement__c>();
+            for(EF_Billing_Agreement__c allAgreements : newAgreements.values())
+            {
+                if(accountsInvolved.get(allAgreements.Client__c) != null)
+                    agreementsToApprove.add(allAgreements);
+                else if(accountsInvolved.get(allAgreements.Airline__c) != null)
+                    agreementsToApprove.add(allAgreements);
+            }
+
+            // Create a list of EF Approval records that will be stored in the system to contain the UPDATED versions of Billing Agreements
+            List<EF_Approval__c> approvalStorageList = new List<EF_Approval__c>();
+            // Get the list of fields that require Approval from Custom Settings and place them in a List
+            List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+            List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+
+            // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
+            for(EF_Billing_Agreement__c ba : agreementsToApprove)
+            {
+                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields))
+                {
+                    EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), ba, fields);
+                    ba.Require_Approval__c = true;
+                    approvalStorageList.add(approval);
+                    EF_BaContractApprovalHelper.rollbackPreviousValues(ba, oldAgreements.get(ba.Id), fields);
+                }
+            }
+
+            if(approvalStorageList.size() > 0)
+            {
+                insert approvalStorageList;
+            }
+        }
+    }
+
+    
+
+    // Queries for any Accounts that do only allow Billing Agreements to be created with approval
+    public static void handleWithApprovalAccountInserts(List<EF_Billing_Agreement__c> agreementList)
+    {
+        Set<Id> accountIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            // add both Client and Customer (Airline) into the Set, so that both will be queried for
+            accountIds.add(ba.Client__c);
+            accountIds.add(ba.Airline__c);
+        }
+
+        // Find if any of the related accounts doesn't allow billing agreements to be created without approval and force-start an approval process
+        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            ba.Require_Approval__c = true;
+            ba.Status__c = 'Inactive';
+        }
+    }
+
     // Queries for any Accounts that do not allow Billing Agreements and displays an error message to the User.
     public static void preventAgreementCreationForNotAllowed(List<EF_Billing_Agreement__c> agreementList)
     {
@@ -160,6 +262,19 @@ public class EF_BillingAgreementHandler
 	                }	
                 }
             }
+        }
+    }
+
+    public static boolean runOnce()
+    {
+        if(run)
+        {
+            run = false;
+            return true;
+        }
+        else
+        {
+            return run;
         }
     }
     
