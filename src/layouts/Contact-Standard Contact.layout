@@ -60,10 +60,6 @@
                 <behavior>Readonly</behavior>
                 <field>Services__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SIS_Contact_Type__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -73,14 +69,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Role__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -160,6 +148,33 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ISO_Country__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>E&amp;F Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Role__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Signatory__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -407,6 +422,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Contact_cleanup_remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Services_Used__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -693,8 +712,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>EF_Airline_Billing_Agreement__c</fields>
-        <fields>Role__c</fields>
         <fields>Status__c</fields>
         <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>
     </relatedLists>
