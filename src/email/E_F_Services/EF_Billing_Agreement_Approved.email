@@ -1,0 +1,5 @@
+Dear {!User.FirstName},<br/><br/>
+
+your changes for an Airline Billing Agreement between {!EF_Billing_Agreement__c.Client__r.Name} and {!EF_Billing_Agreement__c.Airline__r.Name} have been approved.<br/><br/>
+
+Please find the record <a href="{!EF_Billing_Agreement__c.Base_URL__c}{!EF_Billing_Agreement__c.Id}">here</a>.
