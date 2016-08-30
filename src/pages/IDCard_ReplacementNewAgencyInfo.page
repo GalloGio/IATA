@@ -278,7 +278,7 @@
                                 </tr>
                                 <tr>
                                     <td><b class="LabelsGray">{!$Label.IDCard_Address}:</b></td>
-                                    <td class="outputText2">{!theAccount.BillingStreet} {!theAccount.BillingCity} {!theAccount.BillingState} {!theAccount.BillingCountry} {!theAccount.BillingPostalCode}</td>
+                                    <td class="outputText2">{!theAddress[0]} {!theAddress[4]} {!theAddress[1]} {!theAddress[2]} {!theAddress[3]}</td>
                                 </tr> 
                                 <script>
                                     var legalName  = '{!theAccount.Legal_name__c}';                                                       
