@@ -309,7 +309,7 @@ public class AMS_AccountHierarchySelectionController {
 			ownershipAgenciesNotSelected = false;
 		}
 
-		if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) errorChecks.put(AMS_Utils.LOCATION, true);
+		if(oscar.AMS_Target_Agency__c != null && (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION))) errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchy){
 			

@@ -1144,6 +1144,7 @@ public without sharing class ISSP_APProcess {
             airlineBR.Site_index__c = airlineSite_BR;
             airlineBR.Airline_designator__c = DesignatorCode;
             airlineBR.IATACode__c = IATACode;
+            airlineBR.Airline_Prefix__c = hq.Airline_Prefix__c;
             airlineBR.IATA_ISO_Country__c = countryRequirement.Country__c;
             airlineBR.Sector__c = hq.Sector__c;
             airlineBR.Category__c = hq.Category__c;
