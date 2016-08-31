@@ -690,6 +690,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Full_Address__c</fields>
+        <fields>Type__c</fields>
+        <fields>SAP_Id__c</fields>
+        <fields>Active__c</fields>
+        <fields>Email__c</fields>
+        <fields>Phone__c</fields>
+        <relatedList>Location__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>System__c</fields>
         <fields>Method__c</fields>
         <fields>Success__c</fields>
