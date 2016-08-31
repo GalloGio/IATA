@@ -37173,10 +37173,6 @@
         <recordType>Account.IATA_Airline</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Operators Page Layout</layout>
-        <recordType>Account.Operator</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Account-E%26F Operators and Suppliers Account Page Layout</layout>
         <recordType>Account.IATA</recordType>
     </layoutAssignments>
