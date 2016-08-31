@@ -1774,7 +1774,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>PDF & Excel files</fullName>
+                <fullName>PDF &amp; Excel files</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
