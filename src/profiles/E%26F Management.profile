@@ -39000,10 +39000,6 @@
         <layout>ContentVersion-General</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ContentVersion-Translations</layout>
-        <recordType>ContentVersion.Translations</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Content__kav-Content Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
