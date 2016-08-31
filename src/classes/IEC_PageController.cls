@@ -20,9 +20,9 @@ public virtual class IEC_PageController
 	public String currentPageName{get{
 		String pageName = ApexPages.CurrentPage().getUrl();  
 		pageName = pageName.replaceFirst('/apex/','');         
-		pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');  
+		/*pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');  
 		string[] pageNameExtra = pageName.split('%3F',0);   
-		pageName = pageNameExtra[0]; 
+		pageName = pageNameExtra[0]; */
 
 		return pageName;
 	}set;}  

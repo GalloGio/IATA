@@ -1,0 +1,12 @@
+.THIS td {
+  max-width: 500px;
+}
+.THIS th.timeColumn {
+    width: 20%;
+}
+.THIS th.wideColumn {
+    width: 40%;
+}
+.THIS .fullWidth {
+    width: 100%;
+}

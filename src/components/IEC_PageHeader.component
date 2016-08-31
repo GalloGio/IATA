@@ -4,8 +4,8 @@
         .messageCell .messageText h4{display:none;}
         .category-container {
             border: none !important;
-            display: table-cell;
-            padding: 0 30px;
+            /*display: table-cell;
+            padding: 0 30px;*/
         }
         .intl-tel-input{
 

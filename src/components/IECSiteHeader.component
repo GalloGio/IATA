@@ -126,14 +126,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
            
           <apex:form >
               <div class="navigation-dropdown">             <!--  style="background-image:url({!$Resource.IEC_dropdownnavy})"  -->
-                <apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>
-                <apex:outputpanel layout="none" rendered="{!bAvailMDP}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdMDP}" class="navigation-dropdown__link">Marketing Data Package</a></apex:outputpanel>              
-                <apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>
-                <apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>-->
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailMDP}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdMDP}" class="navigation-dropdown__link">Marketing Data Package</a></apex:outputpanel>-->              
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailGAD}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGAD}" class="navigation-dropdown__link">Global Agency Directory</a></apex:outputpanel>-->
+                <!--<apex:outputpanel layout="none" rendered="{!bAvailCACPro}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdCACPro}" class="navigation-dropdown__link">CHECKACODE PROFESSIONAL</a></apex:outputpanel>-->
                 <!-- apex:outputpanel layout="none" rendered="{!bAvailCACWeb}"><a href="{!$Site.BaseUrl}/IEC_SearchResults}?site-search={!sProdCACWeb}" class="navigation-dropdown__link">Check-a-code Webservice</a></apex:outputpanel-->
                 <!-- apex:outputpanel layout="none" rendered="{!bAvailEBro}"><a href="{!$Site.BaseUrl}/IECProductViewer}?ProductCode={!sProdEBro}" class="navigation-dropdown__link">E-Broadcast</a></apex:outputpanel-->
               </div>
           </apex:form>
+          
         </li>
 
         <li class="header__navigation-li">
