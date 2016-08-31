@@ -1324,7 +1324,7 @@
                     proceedToAddNewBackend();
                 }
                 
-                function callbackfailure( paramString ) { 
+                function callbackfailure( paramString ) {
                     $("#loader").addClass(className.hidden);  
                     displayCallBackfailureJS(paramString);
                 }

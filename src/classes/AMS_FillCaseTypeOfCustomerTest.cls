@@ -6,7 +6,6 @@ private class AMS_FillCaseTypeOfCustomerTest {
       
       	Test.startTest();
 
-        
         Map<String,Object> inputParams = new Map<String,Object>();
 
         inputParams.put('Category_Input', 'IATA Passenger Sales Agent');
