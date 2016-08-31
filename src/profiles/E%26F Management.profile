@@ -22225,21 +22225,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Material__c.Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Material__c.IATA_Ticket_Tax_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Material__c.SAP_Code__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Related_Records__c.FIR_Code_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -39070,9 +39055,6 @@
         <recordType>EF_Material_Line_Item__c.Relationship_Line_Item</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Material__c-E%26F Material Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>EF_Related_Records__c-E%26F FIR Code Page Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -40221,15 +40203,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>EF_Material_Line_Item__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>EF_Material__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
