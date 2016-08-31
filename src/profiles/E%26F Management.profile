@@ -42927,7 +42927,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>ContentVersion.Translations</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
