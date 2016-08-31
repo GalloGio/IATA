@@ -90,8 +90,14 @@
         </div>
         <div class="undertitle">
           <div class="undertitleLeft">
-            <apex:outputLink styleclass="link" value="/faq_home?q=account statements">FAQ</apex:outputLink>
-            <apex:outputLink styleclass="link" value="/ISSP_ContentPage">Documents</apex:outputLink>
+            <!--<apex:outputLink styleclass="link" value="/faq_home?q=ICE">FAQ</apex:outputLink>-->
+            <apex:outputLink styleclass="link" value="{!instance}/sfc/servlet.shepherd/version/download/{!faq.id}" target="_document" rendered="{!faq!=null}">
+              FAQ
+            </apex:outputLink>
+            <!--<apex:outputLink styleclass="link" value="/ISSP_ContentPage">{!$Label.ISSP_Documents}</apex:outputLink>-->
+            <apex:outputLink styleclass="link" value="{!instance}/sfc/servlet.shepherd/version/download/{!document.id}" target="_document" rendered="{!document!=null}">
+              {!$Label.ISSP_Documents}
+            </apex:outputLink>
           </div>
           <div class="undertitleRight">
             <apex:outputText styleclass="label normal" value="{!$Label.ISSP_Agency_Head_Office_code}"/>

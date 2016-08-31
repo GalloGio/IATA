@@ -4,17 +4,18 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
     
     //In time all logic in this trigger should be moved inside these helper methods
     if (Trigger.isBefore && Trigger.isInsert) {
-        AMS_OSCARTriggerHandler.handleBeforeInsert(Trigger.new);
+        AMS_OSCARTriggerHandler.handleBeforeInsert();
     } else if (Trigger.isBefore && Trigger.isUpdate) {
-        AMS_OSCARTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
+        AMS_OSCARTriggerHandler.handleBeforeUpdate(Trigger.new);
     }//TD: After Insert && after update. 
     else if(trigger.isAfter && trigger.isInsert){
-        AMS_OSCARTriggerHandler.handleAfterInsert(Trigger.new);
+        AMS_OSCARTriggerHandler.handleAfterInsert();
     }else if(trigger.isAfter && trigger.isUpdate){
-        AMS_OSCARTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+        AMS_OSCARTriggerHandler.handleAfterUpdate();
     }
 
-    List<CASE> casesToUpdate = new List<CASE>();
+    List<Case> casesToUpdate = new List<Case>();
+    Set<Id> caseCheck = new Set<Id>(); //prevent same case from being added to the list again
 
     public Map<String, String> oscarExternalLabels {
         get {
@@ -36,6 +37,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 'STEP22__c' => System.Label.AMS_OSCAR_STEP22,
                 'STEP23__c' => System.Label.AMS_OSCAR_STEP23,
                 'STEP24__c' => System.Label.AMS_OSCAR_STEP24,
+                'STEP25__c' => System.Label.AMS_OSCAR_STEP25,
                 'STEP3__c' => System.Label.AMS_OSCAR_STEP3,
                 'STEP4__c' => System.Label.AMS_OSCAR_STEP4,
                 'STEP5__c' => System.Label.AMS_OSCAR_STEP5,
@@ -47,7 +49,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
         set;
     }
-
+    
     //get all step fields from the OSCAR object
     List<String> stepsOSCAR = new List<String>();
     Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
@@ -89,32 +91,36 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //ON INSERT
             //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
             oscar.Dossier_Reception_Date__c = Date.today();
-            oscar.Sanity_check_deadline__c = Date.today() + 15;
+
+            //removed in issue AMS-1584
+            //oscar.Sanity_check_deadline__c = Date.today() + 15;
 
 
             oscars.add(oscar);
 
         }
 
-        if (!oscars.isEmpty())
-            AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+        if (!oscars.isEmpty()){
+            //deprecated AMS-1665
+            //AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(oscars);
+        }
 
     } //TD: Because I added "AFTER UPDATE", I added here the isBefore, which was missing
     else if (Trigger.isBefore && Trigger.isUpdate) {
+
+        Set<Id> oscarAccountIds = new Set<Id>();
+
+        for (AMS_OSCAR__c oscar : Trigger.new)
+            oscarAccountIds.add(oscar.Account__c);
+
+        Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(oscarAccountIds);
 
         AMS_OSCAR_JSONHelper helper = null;
         boolean resultLoad = false;
 
         List<AMS_OSCAR__c> closedOscars = new List<AMS_OSCAR__c>();
 
-        //List<CASE> caseList = [select id, Status, Oscar__r.Id from CASE c where c.Oscar__r.id in :Trigger.newMap.keySet() and recordType.name = 'OSCAR Communication'];
-        List<CASE> caseList = [select id, Status, Oscar__r.Id from CASE c where c.Oscar__c != null and recordType.name = 'OSCAR Communication' and c.Oscar__r.id in :Trigger.newMap.keySet()];
-
         Map<Id, Case> caseOscars = new Map<Id, Case>();
-
-        for (Case caseOscar : caseList) {
-            caseOscars.put(caseOscar.OSCAR__r.Id, caseOscar);
-        }
 
         //processes to ignore in the creation of the DIS change code
         Set<String> ProcessesToIgnoreChangeCode = new Set <String> {AMS_Utils.new_TIDS,
@@ -124,13 +130,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                                                                     AMS_Utils.new_AHA
                                                                     };
 
-        for (AMS_OSCAR__c updatedOSCAR : Trigger.new) {
+        for (AMS_OSCAR__c updatedOSCAR : Trigger.New) {
             AMS_OSCAR__c oldOSCAR = Trigger.oldMap.get(updatedOSCAR.Id);
 
             applyAccreditationProcessLogic(oldOSCAR, updatedOscar);
 
             if(!ProcessesToIgnoreChangeCode.contains(updatedOscar.Process__c))
-                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar);
+                applyChangeCodesWithDependencies(oldOSCAR, updatedOscar, accountHierarchyRelationships);
 
 
             processFieldsTracking(oldOSCAR, updatedOscar);
@@ -155,66 +161,20 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             // logic: When the user changes the OSCAR status to any of the 4 Closed values (either on the left or directly in the centre),
             // the Date Closed field should be populated with the current date and the case should be closed.
 
-            if (updatedOSCAR.Status__c <> oldOSCAR.Status__c) {
+            if ( updatedOSCAR.Status__c != null && updatedOSCAR.Status__c <> oldOSCAR.Status__c && AMS_OSCARTriggerHandler.closedStatusMapping.containsKey(updatedOSCAR.Status__c) ) {
 
-                if ( updatedOSCAR.Status__c == 'Closed (Closed)' ||
-                        updatedOSCAR.Status__c == 'Closed_Not Accepted' ||
-                        updatedOSCAR.Status__c == 'Closed_Rejected' ||
-                        updatedOSCAR.Status__c == 'Closed_Withrawn' ) {
-
-                    updatedOSCAR.Date_Time_Closed__c = System.now();
-
-                    // now get the associated case and close it
-                    Case caseToClose = caseOscars.get(updatedOSCAR.Id);
-
-                    if (caseToClose != null) {
-
-                        //CASE caseToClose = caseList.get(0);
-
-                        if (updatedOSCAR.Status__c == 'Closed (Closed)')
-                            caseToClose.Status = 'Closed';
-                        else if (updatedOSCAR.Status__c == 'Closed_Not Accepted')
-                            caseToClose.Status = 'Closed_ Not Accepted';
-                        else if (updatedOSCAR.Status__c == 'Closed_Rejected')
-                            caseToClose.Status = 'Closed_Rejected';
-                        else if (updatedOSCAR.Status__c == 'Closed_Withrawn')
-                            caseToClose.Status = 'Closed_Withdrawn';
-
-                        casesToUpdate.add(caseToClose);
-                    }
-                } else if ( updatedOSCAR.Status__c.equalsIgnoreCase('Pending Approval') || updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
-                    // Start an approval process
-                    if (updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
-                        AMS_OSCAR_ApprovalHelper.submit('', updatedOSCAR.Id, UserInfo.getUserId(), 'Automated approval submission based on OSCAR Status "Pending Validation".');
-                    }
-
-                    Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
-
-                    if (caseToUpdate != null) {
-                        caseToUpdate.Status = updatedOSCAR.Status__c;
-                    }
-                    casesToUpdate.add(caseToUpdate);
-
-                } else {
-                    //for other OSCAR "Status__c" values, updates the CASE status to be equal to the one in the OSCAR!
-                    //Status to be caught on this area: 'Accepted_Pending Agreement', 'Accepted_Pending BG', 'Accepted_Pending Docs',
-                    //                                  'On Hold_External', 'On Hold_Internal', 'Open', 'Reopen'
-
-                    Case caseToUpdate = caseOscars.get(updatedOSCAR.Id);
-
-                    if (caseToUpdate != null) {
-                        caseToUpdate.Status = updatedOSCAR.Status__c;
-                    }
-                    casesToUpdate.add(caseToUpdate);
-                }
+                updatedOSCAR.Date_Time_Closed__c = System.now();
             }
+
+            if (updatedOSCAR.Status__c != null && updatedOSCAR.Status__c <> oldOSCAR.Status__c && updatedOSCAR.Status__c.equalsIgnoreCase('Pending Validation')) {
+                AMS_OSCAR_ApprovalHelper.submit('', updatedOSCAR.Id, UserInfo.getUserId(), 'Automated approval submission based on OSCAR Status "Pending Validation".');
+            }
+
         }
 
-        if (!casesToUpdate.isEmpty())
-            update casesToUpdate;
     }
 
-    private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
+    private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
         if (updatedOscar.recordTypeID == newRT){
@@ -246,39 +206,135 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == corrRT){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){
-                // If the checkbox is set create a COR change code.
-                if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
-                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
-                    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-                    changeCode.name = 'COR';
-                    changeCode.reasonCode = '91';
-                    changeCode.memoText = 'Correction';
-                    changeCode.reasonDesc  = 'ACCREDITED';
-                    changeCode.status  = '9';
+                Savepoint sp = Database.setSavepoint();
 
-                    Account acct = new Account(Id = updatedOscar.Account__c);
-                    AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                try {
+                    // If the checkbox is set create a COR change code.
+                    if(updatedOscar.AMS_Generate_COR_change_code__c==true) {
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.name = 'COR';
+                        changeCode.reasonCode = '91';
+                        changeCode.memoText = 'Correction';
+                        changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+                        changeCode.status  = '9';
+
+                        Account acct = new Account(Id = updatedOscar.Account__c);
+                        AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
+                    }
+
+                    // Regardless the changecode is generated or not, move data to Master Data
+                    // First move the account
+                    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
+                    AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar}, false);
+
+                    // THen move the owners
+                    Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
+                    //Need to apply change of ownership to all the accounts in herarchy
+                    Set<Id> allHierarchyAccountIds = new Set<Id>();
+
+
+                    //AMS-1671
+                    if(isEmptyAccountHierarchyRelationshipsMap(accountHierarchyRelationships)){// it means that the account does not have an hierarchy yet generated.
+                        allHierarchyAccountIds.add(updatedOscar.Account__c);
+                    }else{
+                        for(AMS_Agencies_relationhip__c rel: accountHierarchyRelationships.get(updatedOscar.Account__c)){
+                            allHierarchyAccountIds.add(rel.Parent_Account__c);
+                            allHierarchyAccountIds.add(rel.Child_Account__c);
+                        }
+                    }
+
+                    //Remove TERMINATED Accounts from list
+                    for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds]){
+                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
+                            allHierarchyAccountIds.remove(acc.Id);
+                    }
+
+                    stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
+                    system.debug('applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
+                    AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts, true);
+
+
+                    //verify ownership alignment
+                    if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
+                        throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
+
+                } catch (Exception ex) {
+                    System.debug('Exception: ' + ex);
+                    Database.rollback(sp);
+                    throw ex;
                 }
 
-                // Regardless the changecode is generated or not, move data to Master Data
-                // First move the account
-                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD account data');
-                AMS_Utils.copyDataToAccount(new List<AMS_OSCAR__c>{updatedOscar});
-
-                // THen move the owners
-                Map<Id, Set<Id>> stagingToAccounts = new Map<Id, Set<Id>>();
-                stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, new Set<Id>{updatedOscar.Account__c});
-                system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> move to MD contact data. Pass map: '+stagingToAccounts);
-                AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccounts);
             }
 
         }
     }
 
+    private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+
+        if(accountHierarchyRelationships.isEmpty())
+            return true;
+
+        if(accountHierarchyRelationships.values().isEmpty())
+            return true;
+
+        for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
+            if(!agency.isEmpty())
+                return false;
+        }
+
+        return true;
+    }
+
 
     private static void applyAccreditationProcessLogic(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
-
+        //To update with current date 'Checkbox Field' => 'Date Field'
+        Map<String,String> oscarDateFieldsMap = new Map <String,String> {
+            'Cancel_Inspection_Requests_Disapproval__c' => 'Cancel_Inspection_Req_Disapproval_Date__c',
+            'Cancel_Inspection_Requests_Rejection__c'   => 'Cancel_Inspection_Req_Rejection_Date__c',
+            'Close_IFAP_Disapproval__c'                 => 'Close_IFAP_Disapproval_Date__c',
+            'Close_IFAP_Rejection__c'                   => 'Close_IFAP_Rejection_Date__c',
+            'Country_Specifics_Approval__c'             => 'Country_Specifics_Approval_Date__c',
+            'Country_Specifics_Disapproval__c'          => 'Country_Specifics_Disapproval_Date__c',
+            'Country_Specifics_Rejection__c'            => 'Country_Specifics_Rejection_Date__c',
+            'Update_AIMS_Approval__c'                   => 'Update_AIMS_Approval_Date__c',
+            'Update_AIMS_Disapproval__c'                => 'Update_AIMS_Disapproval_Date__c',
+            'Update_AIMS_Rejection__c'                  => 'Update_AIMS_Rejection_Date__c',
+            'Update_DPC__c'                             => 'DPC_updated__c',
+            'Update_IRIS__c'                            => 'IRIS_updated__c',
+            'Update_BSPLink_CASSLink__c'                => 'Operational_Systems_Updated__c',
+            'Update_Portal_Setup__c'                    => 'Portal_setup_performed__c',
+            'Send_approval_letter__c'                   => 'Approval_letter_sent__c',
+            'Welcome_pack__c'                           => 'Welcome_Pack_Sent__c',
+            'Off_site_storage__c'                       => 'Storage_performed__c',
+            'Welcome_call__c'                           => 'Welcome_call_performed__c',
+            'Issue_disapproval_pack__c'                 => 'Disapproval_pack_sent__c',
+            'Issue_credit_note_if_applicable__c'        => 'Fees_refund_requested__c',
+            'Release_FS_if_applicable__c'               => 'Financial_Security_released__c',
+            'Issue_Withdrawal_notification__c'          => 'Withdrawal_notification_sent__c',
+            'Issue_credit_note_withdrawal__c'           => 'Fees_refunds_requested_withdrawal__c',
+            'Release_FS_withdrawal__c'                  => 'Financial_Security_released_withdrawal__c',
+            'Update_IRIS_processing__c'                 => 'IRIS_updated_processing__c',
+            'Confirm_DD_setup_with_R_S__c'              => 'DD_setup_with_R_S_confirmed__c',
+            'Confirm_DD_setup_with_agent__c'            => 'DD_setup_with_agent_confirmed__c',
+            'Confirm_DGR_DGA__c'                        => 'DGR_DGA_confirmed__c',
+            'Issue_rejection_notification_pack__c'      => 'Rejection_notification_sent__c',
+            'Roll_back_account_data__c'                 => 'Account_data_rolled_back__c',
+            'Issue_billing_document__c'                 => 'Process_Start_Date__c'
+            };
+           //Map to update Date related checkbox values
+        for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
+        {
+            if (oldOSCAR.get(oscarDateFieldKey) == false && updatedOscar.get(oscarDateFieldKey) == true)
+            {
+                system.debug(oscarDateFieldsMap.get(oscarDateFieldKey));
+                updatedOscar.put(oscarDateFieldsMap.get(oscarDateFieldKey),Date.today());
+            }
+        }
+      
+      
         if (oldOSCAR.Send_invoice__c == false && updatedOscar.Send_invoice__c == true) {
             updatedOSCAR.STEP8__c = 'Passed';
             updatedOSCAR.Payment_requested__c = Date.today();
@@ -290,48 +346,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.Send_agreement__c == false && updatedOscar.Send_agreement__c == true)
             updatedOSCAR.STEP14__c = 'In Progress';
-
-        if (oldOSCAR.Update_DPC__c == false && updatedOscar.Update_DPC__c == true)
-            updatedOSCAR.DPC_updated__c = Date.today();
-
-        if (oldOSCAR.Update_IRIS__c == false && updatedOscar.Update_IRIS__c == true)
-            updatedOSCAR.IRIS_updated__c = Date.today();
-
-        if (oldOSCAR.Update_BSPLink_CASSLink__c == false && updatedOscar.Update_BSPLink_CASSLink__c == true)
-            updatedOSCAR.Operational_Systems_Updated__c = Date.today();
-
-        if (oldOSCAR.Update_Portal_Setup__c == false && updatedOscar.Update_Portal_Setup__c == true)
-            updatedOSCAR.Portal_setup_performed__c = Date.today();
-
-        if (oldOSCAR.Send_approval_letter__c == false && updatedOscar.Send_approval_letter__c == true)
-            updatedOSCAR.Approval_letter_sent__c = Date.today();
-
-        if (oldOSCAR.Welcome_pack__c == false && updatedOscar.Welcome_pack__c == true)
-            updatedOSCAR.Welcome_Pack_Sent__c = Date.today();
-
-        if (oldOSCAR.Off_site_storage__c == false && updatedOscar.Off_site_storage__c == true)
-            updatedOSCAR.Storage_performed__c = Date.today();
-
-        if (oldOSCAR.Welcome_call__c == false && updatedOscar.Welcome_call__c == true)
-            updatedOSCAR.Welcome_call_performed__c = Date.today();
-
-        if (oldOSCAR.Issue_disapproval_pack__c == false && updatedOscar.Issue_disapproval_pack__c == true)
-            updatedOSCAR.Disapproval_pack_sent__c = Date.today();
-
-        if (oldOSCAR.Issue_credit_note_if_applicable__c == false && updatedOscar.Issue_credit_note_if_applicable__c == true)
-            updatedOSCAR.Fees_refund_requested__c = Date.today();
-
-        if (oldOSCAR.Release_FS_if_applicable__c == false && updatedOscar.Release_FS_if_applicable__c == true)
-            updatedOSCAR.Financial_Security_released__c = Date.today();
-
-        if (oldOSCAR.Issue_Withdrawal_notification__c == false && updatedOscar.Issue_Withdrawal_notification__c == true)
-            updatedOSCAR.Withdrawal_notification_sent__c = Date.today();
-
-        if (oldOSCAR.Issue_credit_note_withdrawal__c == false && updatedOscar.Issue_credit_note_withdrawal__c == true)
-            updatedOSCAR.Fees_refunds_requested_withdrawal__c = Date.today();
-
-        if (oldOSCAR.Release_FS_withdrawal__c == false && updatedOscar.Release_FS_withdrawal__c == true)
-            updatedOSCAR.Financial_Security_released_withdrawal__c = Date.today();
 
         if (oldOSCAR.Send_FS_request__c == false && updatedOscar.Send_FS_request__c == true) {
             updatedOSCAR.Bank_Guarantee_requested__c = Date.today();
@@ -367,20 +381,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (oldOSCAR.Bank_Guarantee_amount__c == null && updatedOscar.Bank_Guarantee_amount__c != null)
             updatedOSCAR.STEP12__c = 'In Progress';
 
-        if (oldOSCAR.Update_IRIS_processing__c == false && updatedOscar.Update_IRIS_processing__c == true)
-            updatedOSCAR.IRIS_updated_processing__c = Date.today();
-
-        if (oldOSCAR.Confirm_DD_setup_with_R_S__c == false && updatedOscar.Confirm_DD_setup_with_R_S__c == true)
-            updatedOSCAR.DD_setup_with_R_S_confirmed__c = Date.today();
-
-        if (oldOSCAR.Confirm_DD_setup_with_agent__c == false && updatedOscar.Confirm_DD_setup_with_agent__c == true)
-            updatedOSCAR.DD_setup_with_agent_confirmed__c = Date.today();
-
-        if (oldOSCAR.Confirm_DGR_DGA__c == false && updatedOscar.Confirm_DGR_DGA__c == true)
-            updatedOSCAR.DGR_DGA_confirmed__c = Date.today();
-
-        if (oldOSCAR.Issue_rejection_notification_pack__c == false && updatedOscar.Issue_rejection_notification_pack__c == true)
-            updatedOSCAR.Rejection_notification_sent__c = Date.today();
 
         if (oldOSCAR.Validation_Status__c != updatedOscar.Validation_Status__c) {
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
@@ -397,10 +397,11 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 if (currentApprovals.size() > 0)
                     AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
             }
-            updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
+            if(updatedOscar.Process__c.equals(AMS_Utils.AGENCYCHANGES))
+                updatedOscar.STEP25__c = updatedOscar.Validation_Status__c;
+            else
+                updatedOscar.STEP15__c = updatedOscar.Validation_Status__c;
         }
-        if (oldOSCAR.Issue_billing_document__c == false && updatedOscar.Issue_billing_document__c == true)
-            updatedOSCAR.Process_Start_Date__c = Date.today();
 
     }
 
