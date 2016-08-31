@@ -38135,8 +38135,8 @@
         <recordType>Account.IATA_Airline</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-E%26F Clients Account Page Layout</layout>
-        <recordType>Account.Airport</recordType>
+        <layout>Account-Operators Page Layout</layout>
+        <recordType>Account.Operator</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account-GDP Accounts Page Layout Regular Users</layout>
