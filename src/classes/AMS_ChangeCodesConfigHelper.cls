@@ -59,7 +59,7 @@ public class AMS_ChangeCodesConfigHelper {
 			if(action == AMS_Utils.SANITYCHECK)
 				changeCode.memoText += ' in process';
 			else if(action == AMS_Utils.APPROVAL)
-				changeCode.memoText += ' finalised';
+				changeCode.memoText += ' finalized';
 			else if(action == AMS_Utils.WITHDRAWAL)
 				changeCode.memoText += ' withdrawn';
 

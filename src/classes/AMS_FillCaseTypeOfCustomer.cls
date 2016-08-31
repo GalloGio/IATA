@@ -1,6 +1,6 @@
 global class AMS_FillCaseTypeOfCustomer implements Process.Plugin{
 
-    global Process.PluginResult invoke(Process.PluginRequest request) { 
+	global Process.PluginResult invoke(Process.PluginRequest request) { 
         
         String category = (String) request.inputParameters.get('Category_Input');
         String locationType = (String) request.inputParameters.get('LocationType_Input');
@@ -8,7 +8,8 @@ global class AMS_FillCaseTypeOfCustomer implements Process.Plugin{
         System.debug('Type of Category_Input is ' + category);
         System.debug('Type of LocationType_Input is ' + locationType);
         
-        String typeOfCustomer = '';//AMS_Utils.fetchTypeOfCustomer(locationType,category);
+        String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(locationType,category);
+
 
         Map<String,Object> result = new Map<String,Object>();
 
