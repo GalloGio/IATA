@@ -57,13 +57,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Account__c</fullName>
-        <description>E&amp;F Project. Account containing the FIR Code</description>
+        <fullName>Contract__c</fullName>
         <externalId>false</externalId>
-        <label>Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipName>FIR_Codes</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
+        <label>Contract</label>
+        <referenceTo>Contract</referenceTo>
+        <relationshipLabel>Airports/FIR Codes</relationshipLabel>
+        <relationshipName>Airports_FIR_Codes</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
@@ -86,7 +86,7 @@
         <referenceTo>EF_Related_Records__c</referenceTo>
         <relationshipLabel>Airport/FIR Codes</relationshipLabel>
         <relationshipName>FIR_Codes</relationshipName>
-        <relationshipOrder>1</relationshipOrder>
+        <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
