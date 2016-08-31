@@ -130,6 +130,31 @@
                 <default>false</default>
                 <closed>false</closed>
             </picklistValues>
+            <picklistValues>
+                <fullName>On track</fullName>
+                <default>false</default>
+                <closed>false</closed>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+                <closed>false</closed>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+                <closed>false</closed>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+                <closed>true</closed>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+                <closed>true</closed>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <type>Picklist</type>
@@ -429,6 +454,242 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>Key_Account_Plan_Milestone</fullName>
+        <active>true</active>
+        <description>Used by the Account Management project to implement milestones for the Key Account Plan activities</description>
+        <label>Key Account Plan Milestone</label>
+        <picklistValues>
+            <picklist>Call_TIme__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Communication_Sent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On track</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Busy Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Busy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Successful</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Voice Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - Answered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - No Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call customer%21</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract elaboration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Feedback request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Needs assessment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post sales follow-up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preparation of product information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Presentation preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R%26S reinstatement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Update application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voice Mail</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>90-Day Rolling Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Create Field %2F Picklist Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG Brief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delete Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Field %2F Picklist Values</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Page Layout</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Report Content</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Standard</fullName>
         <active>true</active>
         <description>Used by IDFS Passenger, IDFS InvoiceWorks, and Central Billing</description>
@@ -607,6 +868,19 @@
 )</errorConditionFormula>
         <errorDisplayField>Communication_Sent_Date__c</errorDisplayField>
         <errorMessage>Please specify the date when the communication was sent.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>KAP_Milestone_Mandatory_Fields</fullName>
+        <active>true</active>
+        <description>Make the Subject and Deadline fields mandatory</description>
+        <errorConditionFormula>AND ( 
+  RecordType.DeveloperName = &apos;Key_Account_Plan_Milestone&apos;, 
+  OR ( 
+    ISBLANK( Subject ), 
+    ISBLANK( ActivityDate ) 
+  ) 
+)</errorConditionFormula>
+        <errorMessage>Please fill in the Milestone and the Deadline fields</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Close_Task</fullName>
