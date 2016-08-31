@@ -399,11 +399,21 @@ global class Order_Ext
         {
             if(ep.PriceInfo != null)
             {
-                ep.ProductDesc = '';
-                ep.ImageName = '';
-                ep.Keywords = '';
-                ep.ProductShortDesc = '';
-              
+                //*** empty useless fields to fix issue of "Maximum view state size"
+                ep.AvailabilityDate = null;
+                ep.Edition = null;
+                ep.EffectiveFrom = null;
+                ep.EffectiveTo = null;
+                ep.ImageName = null;
+                ep.InventoryStatus = null;
+                ep.Keywords = null;
+                ep.megaMenu = null;
+                ep.Portfolio = null;
+                ep.ProductCategory = null;
+                ep.ProductComponent = null;
+                ep.ProductDesc = null;
+                ep.ProductShortDesc = null;
+                ep.ShortTitle = null;
                 
                 SalesOrderProduct_DTO ap = new SalesOrderProduct_DTO();
                     ap.ecomProduct = ep; 
