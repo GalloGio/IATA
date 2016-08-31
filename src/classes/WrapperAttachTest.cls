@@ -73,7 +73,7 @@ public class WrapperAttachTest {
 		aFile = [Select isPublic__c, SystemModstamp, Size_MB__c, OwnerId, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, 
                  		Full_Name_Unique__c, File_Identifier__c, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId, 
                  		ConnectionReceivedId, Case__c, CreatedBy.Name, File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, 
-                 		RecordType.DeveloperName
+                 		RecordType.DeveloperName, Internal_Comments__c
                  From AmazonFile__c where id = :aFile.Id];
 		
 		list<AmazonRest.S3File> s3Files = AmazonRest.getListFiles(filename,AmazonCredentials.getCredentials('GenericAttach') );
@@ -150,7 +150,7 @@ public class WrapperAttachTest {
 		);
 		insert att;
 		
-		att = [Select SystemModstamp, Original_Creation_Date__c, OriginalCreatedBy__c, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ContentType__c, ConnectionSentId, ConnectionReceivedId, Case__c, Bucket__c, BodyLength__c, ArchivedMessage__c, AWS_S3_URL__c, createdBy.Name
+		att = [Select SystemModstamp, Original_Creation_Date__c, OriginalCreatedBy__c, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ContentType__c, ConnectionSentId, ConnectionReceivedId, Case__c, Bucket__c, BodyLength__c, ArchivedMessage__c, AWS_S3_URL__c, createdBy.Name, Internal_Comments__c
 			From Archived_Attachment__c where id = :att.id];
 		
 		
