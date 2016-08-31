@@ -208,7 +208,9 @@ public without sharing class IEC_Invoice_Item_Svc {
 			// Get the payment method
             String sPaymentMethod = '';
             if(oBillingAccount != null && oBillingAccount.Zuora__Default_Payment_Method__c != null && oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c != null)
-            	sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c);
+                sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c);
+            if(sPaymentMethod == '' && oBillingAccount != null && oBillingAccount.Zuora__DefaultPaymentMethod__c != null)
+                sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__DefaultPaymentMethod__c);
 			
 			// Create the Order record
 			if (!mapSubZId_Order.containsKey(oSub.Zuora__External_Id__c))
@@ -264,10 +266,8 @@ public without sharing class IEC_Invoice_Item_Svc {
 		            OrderItem oOrderItem = new OrderItem (
 		                PriceBookEntryId = mapProdId_PBE.get(oProduct.Id).Id
 		                , Quantity = (mapSubZId_ProductQty.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ProductQty.get(oSub.Zuora__External_Id__c) : 1
-                        //*** temporary add setup fee to unit price in waiting of SAP interface
 		                , UnitPrice = ((mapSubZId_ProductPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ProductPrice.get(oSub.Zuora__External_Id__c) : 0)
-                                    + ((mapSubZId_ProductSetupFee.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ProductSetupFee.get(oSub.Zuora__External_Id__c) : 0)
-		                //, Setup_Fee__c = mapSubZId_ProductSetupFee.get(oSub.Zuora__External_Id__c)
+		                , Setup_Fee__c = mapSubZId_ProductSetupFee.get(oSub.Zuora__External_Id__c)
 		                , Charge_Shipping__c = oProduct.Charge_Shipping__c
 		                , Tax__c = (mapSubZId_TaxPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_TaxPrice.get(oSub.Zuora__External_Id__c) : 0
 		                , Freight_Charge__c = (mapSubZId_ShippingPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ShippingPrice.get(oSub.Zuora__External_Id__c) : null

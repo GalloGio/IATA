@@ -221,7 +221,13 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				zAccPaymentMethod.zPaymentMethod = sfOrder.Zuora_Credit_Card_Id__c;
 				iecOrderId_paymentMethod.put(sfOrder.Id,zAccPaymentMethod);
 
-				Map<Id,String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(subscribeSub,iecOrderId_paymentMethod);
+				try{
+					Map<Id,String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(subscribeSub,iecOrderId_paymentMethod);
+				}catch(Exception ex){
+					addErrorMessage(Label.Order_transaction_failed_message);
+					return null;
+				}
+				
 
 			}else{
 				

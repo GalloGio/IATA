@@ -652,7 +652,7 @@ public without sharing class Order_Svc
             product = mapProductId_Info.get(ordItem.Product__c);
             
             //Validate its contrat product 
-            if(!product.Use_Contract_when_ordered__c) continue;
+            //if(!product.Use_Contract_when_ordered__c) continue;
             
             contract = new iataComXiSalesforceOtcWid5600Sales3.Contract_element();
             lstContract.add(contract);
@@ -2506,16 +2506,7 @@ public without sharing class Order_Svc
             This function calls SAP to get freight charges and taxes for shopping cart
     ****************************************************************************************************/
     public static String getSAP_Freight_Tax_for_DTO(String orderType, String orderSource, String orderChannel, String soldToPartnerId, String billToPartnerId, String shipToPartnerId, List<OrderItem_DTO> listItem) {
-        
-        system.debug('orderType in getSAP_Freight_Tax_for_DTO ' + orderType);
-        system.debug('orderSource in getSAP_Freight_Tax_for_DTO ' + orderSource);
-        system.debug('orderChannel in getSAP_Freight_Tax_for_DTO ' + orderType);
-        system.debug('soldToPartnerId in getSAP_Freight_Tax_for_DTO ' + soldToPartnerId);
-        system.debug('billToPartnerId in getSAP_Freight_Tax_for_DTO ' + billToPartnerId);
-        system.debug('shipToPartnerId in getSAP_Freight_Tax_for_DTO ' + shipToPartnerId);
-        system.debug('listItem in getSAP_Freight_Tax_for_DTO ' + listItem);
-        
-        
+     
         SAP_Freight_and_Tax.HTTPS_Port request = new SAP_Freight_and_Tax.HTTPS_Port();
         SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response response;
         List<SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response> lstResponse = new List<SAP_Freight_and_Tax.DT_SFDC_TaxShippingCalc_Response>();
@@ -2531,8 +2522,7 @@ public without sharing class Order_Svc
         
         if (conversion == null)
             return Label.ErrMsg_Shipping_Tax_No_Conversion;
-        
-        system.debug('conversion ' + conversion);
+    
         
         //*** build outbound products list
         outProductList.put('Order', new List<SAP_Freight_and_Tax.Product_element>());
@@ -2580,12 +2570,6 @@ public without sharing class Order_Svc
             for (String outType : outProductList.keySet())
             {
                 
-                system.debug('outProductList.get(outType) ' + outProductList.get(outType));
-                
-                system.debug('soldToPartner ' + soldToPartner);
-                system.debug('shipToPartner ' + shipToPartner);
-                system.debug('billToPartner ' + billToPartner);
-                
                 response = request.SI_SFDC_TaxShippingCalculation_SYNC((outType == 'Order' ? conversion.SAP_Order_Type__c : 'Contract')
                                                                      , (outType == 'Order' ? conversion.SAP_Sales_Org__c : '')
                                                                      , (outType == 'Order' ? conversion.SAP_Division__c : '')
@@ -2593,7 +2577,6 @@ public without sharing class Order_Svc
 //                                                                     , conversion.SAP_Sales_Org__c, conversion.SAP_Division__c, conversion.SAP_Distribition_Channel__c
                                                                      , soldToPartner, shipToPartner, billToPartner, outProductList.get(outType));
                 
-                system.debug('response in getSAP_Freight_Tax_for_DTO ' + response);
                 if (response.Error != null)
                     break;
                 lstResponse.add(response);

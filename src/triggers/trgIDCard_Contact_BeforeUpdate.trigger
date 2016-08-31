@@ -47,24 +47,22 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert)
                 isAdmin = true;
 
             Contact OldContact = Trigger.oldMap.get(CurrentContact.ID);
-
             if (CurrentContact.RecordTypeId == contactTypeID && (!isAdmin || test.isRunningTest())) {
 
                 //checks if theres any active IDCard for this contact.
 
                 //ID_Card__c[] IDCard = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c= null  and i.Card_Status__c = 'Printed/Delivered' and i.Related_Contact__c =: CurrentContact.ID ];
-                //top statement replaced by following to bulkify
+                //top statement replaced by following to bulkify 
                 Boolean isThereAnyActiveCard = false;
                 for (ID_Card__c  card : IDCards) {
-
                     if (card.Related_Contact__r.Id == CurrentContact.id)
                         isThereAnyActiveCard = true;
                 }
 
                 //if last name has been changed
-                if ( OldContact.LastName != CurrentContact.LastName && isThereAnyActiveCard ) { //IDCard.size()>0) //
+                if ( (OldContact.LastName != CurrentContact.LastName || OldContact.FirstName != CurrentContact.FirstName ) && isThereAnyActiveCard) { //IDCard.size()>0) //
                     if (CurrentContact.Allow_Contact_LastName_Change__c == false )
-                        CurrentContact.addError('Theres an active IDCard for the following Contact. Changing the LastName will not be reflected on the current IDCard, To continue with this modification please check "Allow Contact LastName change box" in order to be able to do the changes');
+                        CurrentContact.addError('Theres an active IDCard for the following Contact. Changing the Name will not be reflected on the current IDCard, To continue with this modification please check "Allow Contact LastName change box" in order to be able to do the changes');
 
                     if (CurrentContact.Allow_Contact_LastName_Change__c)
                         CurrentContact.Allow_Contact_LastName_Change__c = false;

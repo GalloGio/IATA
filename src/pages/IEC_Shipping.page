@@ -1001,7 +1001,7 @@
                                                         <!-- <apex:commandButton action="{!processPayment}" status="payStatus" styleClass="button wide" value="Continue" reRender="errorBloc" oncomplete="$(window).scrollTop(0);" /> -->
                                                     </li>
                                                 </ul>
-                                        	</apex:outputPanel>
+                                            </apex:outputPanel>
                                         </apex:outputPanel>
                                         
                                         <!-- <apex:actionStatus id="payStatus">
@@ -1150,7 +1150,7 @@
                                 <a href="javascript:;" onclick="javascript:closeModal('#quote-modal')" class="icon-close"><span class="reader-only">Close</span><i class="fa fa-times"></i></a>
                             </header>
                             <div class="modal-body">
-                                <p>{!$Label.GetQuoteConfirmationMsg}</p>
+                                <p><apex:outputText escape="false" value="{!$Label.GetQuoteConfirmationMsg}" /></p>
                             </div>
                             <footer class="modal-footer">
                                 <ul class="list actions">
@@ -1324,7 +1324,7 @@
                     proceedToAddNewBackend();
                 }
                 
-                function callbackfailure( paramString ) { 
+                function callbackfailure( paramString ) {
                     $("#loader").addClass(className.hidden);  
                     displayCallBackfailureJS(paramString);
                 }

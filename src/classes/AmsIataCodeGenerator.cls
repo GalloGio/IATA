@@ -349,6 +349,12 @@ global class AmsIataCodeGenerator{
                                     //theAccreditation.IATACode__c =  theAccreditation.C_Code__c + theAccreditation.A_Code__c + theAccreditation.N_Code__c;
                                     
                                     String iatacodeToValidate = generateIATACodeWithCheckDigit(theAccreditation, theAccount);
+
+                                    if(iatacodeToValidate == null){
+                                        returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class and category are correct';
+                                        returnedValues[0] = '4';
+                                        return returnedValues;
+                                    }
                                     
                                     if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
                                         returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
@@ -416,6 +422,12 @@ global class AmsIataCodeGenerator{
                             //theAccreditation.IATACode__c =  theAccreditation.C_Code__c +theAccreditation.A_Code__c+theAccreditation.N_Code__c;
                             
                             String iatacodeToValidate = generateIATACodeWithCheckDigit(theAccreditation, theAccount);
+
+                            if(iatacodeToValidate == null){
+                                returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class and category are correct';
+                                returnedValues[0] = '4';
+                                return returnedValues;
+                            }
                                     
                             if(!isIATACodeGeneratedUnique(iatacodeToValidate)){
                                 returnedValues[1] = 'The IATA code generated is not unique. Please check the CASS Number (if it is a branch) in the hierarchy or search for the IATA Code ' + theAccreditation.IATACode__c + ' in the search tool ';
@@ -520,7 +532,7 @@ global class AmsIataCodeGenerator{
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c;
         }
-        else
+        else if(agt.C_Code__c != null && agt.A_Code__c != null&& agt.N_Code__c != null&& agt.CASS_Number__c != null&& agt.Chk_Dgt__c != null)
         {
             agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c+agt.Chk_Dgt__c;
             act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c;
@@ -682,7 +694,7 @@ global class AmsIataCodeGenerator{
     
     private static Map<String, String> constructProgramCategoryMap()
     {
-        Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)', 'G'=> 'GSA General Sales Agent', 'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
+        Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
         return pcMap;
     }
 
