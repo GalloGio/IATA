@@ -83,7 +83,7 @@ public with sharing class EComProduct_DTO
         Edition = prod.Edition__c;
         Portfolio = prod.Product_Segment__c;
         Media = mapPickList_Label.get('Media').get(prod.Media__c);
-        ImageName = (prod.Image__c == null) ? Utility.getTextSetting('Default Product Image Name').toLowerCase() : 'media-' + prod.Image__c + '.gif'.toLowerCase();
+        ImageName = ((prod.Image__c == null) ? ((prod.Media__c == null) ? Utility.getTextSetting('Default Product Image Name') : (prod.Media__c + '.gif')) : (prod.Image__c + '.gif')).toLowerCase();
         
         Language = mapPickList_Label.get('Language').get(prod.Language__c);
         InventoryStatus = mapPickList_Label.get('InvStatus').get(prod.Inventory_Status__c);
