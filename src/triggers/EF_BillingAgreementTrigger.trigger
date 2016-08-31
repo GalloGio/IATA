@@ -22,10 +22,17 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             }
             
         } else if (Trigger.isAfter)
-        {     
-            if(EF_BillingAgreementHandler.runOnce())
+        {
+            Set<Id> withApprovalIds = EF_BillingAgreementHandler.findIdsOfWithApprovalBillingAgreements(Trigger.new);
+            if(EF_BillingAgreementHandler.runOnce() && withApprovalIds.size() > 0)
             {
-                EF_BillingAgreementHandler.startApprovalProcesses(Trigger.new);                
+                List<EF_Billing_Agreement__c> toApprove = new List<EF_Billing_Agreement__c>();
+                for(Id toApproveId : withApprovalIds)
+                {
+                    toApprove.add(Trigger.newMap.get(toApproveId));
+                }
+                if(toApprove.size() > 0)
+                    EF_BillingAgreementHandler.startApprovalProcesses(toApprove);                
             }
         }
 
