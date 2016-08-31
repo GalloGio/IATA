@@ -26618,6 +26618,7 @@ ISCHANGED(ISSP_Contact_Name__c )
         <active>true</active>
         <description>Put in place for the Account Management Project, this rule is meant to ensure data quality for the key contacts.</description>
         <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;Standard_Contact&apos;,
 OR(
  TEXT(CEO_CFO__c)=&quot;CEO&quot;,
  TEXT(CEO_CFO__c)=&quot;CFO&quot;,

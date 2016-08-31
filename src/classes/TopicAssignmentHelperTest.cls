@@ -61,7 +61,9 @@ private class TopicAssignmentHelperTest {
         	system.assertEquals(false, isExceptionThrown);
 
 
+            // ######## not working on Contact as the feedtracking is not enabled #######
         	// #2, not an accepptable topic, but attached to another object than an account
+            /*
         	fi = new FeedItem(ParentId = con.Id, Body = 'Post with #[Unlisted Topic]');
 
         	isExceptionThrown = false;
@@ -73,6 +75,7 @@ private class TopicAssignmentHelperTest {
         	}
 
         	system.assertEquals(false, isExceptionThrown);
+            */
 
             // #3, not an accepptable topic, but attached to a non-airline HQ account
             fi = new FeedItem(ParentId = std_acct.Id, Body = 'Post with #[Unlisted Topic]');
