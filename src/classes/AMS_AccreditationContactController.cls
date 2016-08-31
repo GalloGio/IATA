@@ -56,22 +56,25 @@ public with sharing class AMS_AccreditationContactController {
                 // Need to go over the list to get to know if any Companies belong to the ownership to get a map of Ac.Id and Account
                 Set<Id> accountsToLoadSetId = new Set<Id>();
                 Set<String> accountsToLoadSetNumber = new Set<String>();
+                Set<String> accountsToLoadSetIATACode = new Set<String>();
 
                 for(AMS_Accreditation_Contact__c acTemp : acList){
 
                     if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company'){
                         accountsToLoadSetId.add(acTemp.Company__c);
                         accountsToLoadSetNumber.add(acTemp.Registration_number__c);
+                        accountsToLoadSetIATACode.add(acTemp.IATACode__c);
                     }
                 }
                 
                 Map<Id, Account> accListId = new Map<Id, Account>();
-                if(accountsToLoadSetId.size() > 0) accListId = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSetId]);
-
                 Map<String, Account> accListNumber = new Map<String, Account>();
+                Map<String, Account> accListIATACode = new Map<String, Account>();
                 if(accountsToLoadSetNumber.size() > 0){
-                    for(Account acc : [select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c, Registration_Number__c from Account where Registration_number__c in :accountsToLoadSetNumber]){
+                    for(Account acc : [select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c, Registration_Number__c from Account where Id in :accountsToLoadSetId OR Registration_number__c in :accountsToLoadSetNumber OR IATACode__c IN :accountsToLoadSetIATACode]){
+                        accListId.put(acc.Id, acc);
                         accListNumber.put(acc.Registration_Number__c, acc);
+                        accListIATACode.put(acc.IATACode__c, acc);
                     }
                 }
 
@@ -91,10 +94,15 @@ public with sharing class AMS_AccreditationContactController {
                             System.debug('********************* company found with Id: '+accListId.get(ac.Company__c));
                             accWrapper = new AccountWrapper(ac, accListId.get(ac.Company__c), accListId.get(ac.Company__c).Id, false);
                         }
+                        else if(accListIATACode.get(ac.IATACode__c) != null)
+                        {
+                            System.debug('********************* company found with IATA Code: '+accListId.get(ac.IATACode__c));
+                            accWrapper = new AccountWrapper(ac, accListIATACode.get(ac.IATACode__c), accListId.get(ac.IATACode__c).Id, false);
+                        }
                         else if(accListNumber.get(ac.Registration_number__c) != null)
                         {
                             System.debug('********************* company found with Registration Number: '+accListId.get(ac.Registration_number__c));
-                            accWrapper = new AccountWrapper(ac, accListId.get(ac.Registration_number__c), accListId.get(ac.Registration_number__c).Id, false);
+                            accWrapper = new AccountWrapper(ac, accListNumber.get(ac.Registration_number__c), accListId.get(ac.Registration_number__c).Id, false);
                         }
                         else
                         {
