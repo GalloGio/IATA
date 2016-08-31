@@ -4111,6 +4111,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>bookcd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>More</fullName>
                 <default>false</default>
             </values>
@@ -6251,6 +6255,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Directories</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>bookcd-rom</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8434,6 +8442,10 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>Category_Group__c</picklist>
             <values>
                 <fullName>Directories</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>bookcd-rom</fullName>
                 <default>false</default>
             </values>
             <values>
