@@ -80,7 +80,24 @@ public class EF_BillingAgreementHandler
         }
     }
 
-    
+    // For after insert trigger to find out if any of the attached Accounts is set to "Allow Billing Agreements with Approval"
+    public static Set<Id> findIdsOfWithApprovalBillingAgreements(List<EF_Billing_Agreement__c> agreementList)
+    {
+        Set<Id> accountIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            accountIds.add(ba.Client__c);
+            accountIds.add(ba.Airline__c);
+        }
+
+        Set<Id> withApprovalIds = new Set<Id>();
+        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            withApprovalIds.add(ba.Id);
+        }
+        return withApprovalIds;
+    }
 
     // Queries for any Accounts that do only allow Billing Agreements to be created with approval
     public static void handleWithApprovalAccountInserts(List<EF_Billing_Agreement__c> agreementList)
@@ -97,8 +114,11 @@ public class EF_BillingAgreementHandler
         Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            ba.Require_Approval__c = true;
-            ba.Status__c = 'Inactive';
+            if(accountsInvolved.get(ba.Client__c) != null || accountsInvolved.get(ba.Airline__c) != null)
+            {
+                ba.Require_Approval__c = true;
+                ba.Status__c = 'Inactive';
+            }
         }
     }
 
