@@ -102,35 +102,40 @@ public class AMS_AgencyRelationshipTriggerHandler {
             // whatever is the level of the relationship I update parentid and location type of the child
             accounts.get(rel.Child_Account__c).ParentId = rel.Parent_Account__c;
 
-            //the following logic is not to be applied when a change of location is being performed on an SA
-            if(AMS_OSCARTriggerHandler.keepSALocationTypeFlag == false){
-                //when an SA is switched with a BR or an HO we must update the location type
-                //also when an SA parent changes from BR to HO its Location type must change to BR
-                if (oldMap != null){
-                    //verify if there was an update on the relation. only in this situation the location type needs to be updated
-                    //SA is parent meaning that it was switched with a BR or HO
-                    if (accountsInitialLocType.get(rel.Parent_Account__c) == AMS_Utils.SA ) {
 
-                        String newParentOldLocType = accountsInitialLocType.get(rel.Parent_Account__c);
-                        if (rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c && rel.Child_Account__c != oldMap.get(rel.Id).Child_Account__c) {
-                            System.debug('Parent SA Location type Change to : ' + accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c));
-                            accounts.get(rel.Parent_Account__c).Location_Type__c = accountsInitialLocType.get(oldMap.get(rel.Id).Parent_Account__c);
-                            System.debug('Child Location type Change to : ' + newParentOldLocType);
-                            accounts.get(rel.Child_Account__c).Location_Type__c = newParentOldLocType;
-                        }
-                    }
-                    //parent of relation changed, the child remains the same and its location type is SA.
-                    //This means the SA was reparented from a BR to an HO, so we need to change the location type from SA to BR
-                    else if (accountsInitialLocType.get(rel.Child_Account__c) == AMS_Utils.SA) {
-                        if (rel.Child_Account__c == oldMap.get(rel.Id).Child_Account__c && rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c)
-                            accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
-                    }
+            //when an SA is switched with a BR or an HO we must update the location type
+            //also when an SA parent changes from BR to HO its Location type must change to BR
+
+            //the following logic is not to be applied when a change of location is being performed on an SA
+            //verify if there was an update on the relation. only in this situation the location type needs to be updated
+            if(AMS_OSCARTriggerHandler.keepSALocationTypeFlag == false && oldMap != null){
+                        
+                String newParentOldLocType = accountsInitialLocType.get(rel.Parent_Account__c);
+                String newChildOldLocType = accountsInitialLocType.get(rel.Child_Account__c);
+
+                if (rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c && rel.Child_Account__c != oldMap.get(rel.Id).Child_Account__c) {
+                    System.debug('Parent Location type Change to : ' + newChildOldLocType);
+                    accounts.get(rel.Parent_Account__c).Location_Type__c = newChildOldLocType;
+                    System.debug('Child Location type Change to : ' + newParentOldLocType);
+                    accounts.get(rel.Child_Account__c).Location_Type__c = newParentOldLocType;
+                }
+
+                //parent of relation changed, the child remains the same and its location type is SA.
+                //This means the SA was reparented from a BR to an HO/AO, so we need to change the location type from SA to BR
+                if (
+                    rel.Child_Account__c == oldMap.get(rel.Id).Child_Account__c
+                    && newChildOldLocType == AMS_Utils.SA
+                    && rel.Parent_Account__c != oldMap.get(rel.Id).Parent_Account__c
+                    && (accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.HO || accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.AO)
+                    && newParentOldLocType != AMS_Utils.SA
+                ) {
+                    accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
+                    System.debug('setStandardHierarchyRelationship() --> SA being passed to a new HO - '+accounts.get(rel.Child_Account__c).Name + ' to HO '+accounts.get(rel.Parent_Account__c).Name);
                 }
             }
 
 
-            if (accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO && (accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.BR || accounts.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.HO))
-                accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
+            if (accounts.get(rel.Child_Account__c).Location_Type__c == AMS_Utils.HO) accounts.get(rel.Child_Account__c).Location_Type__c = AMS_Utils.BR;
             
         }
 
