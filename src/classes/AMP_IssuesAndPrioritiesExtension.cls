@@ -74,8 +74,8 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByCanIATASupport() {
-        if(this.sortOrder == ' AMP_Can_IATA_support_the_airline__c DESC') this.sortOrder = ' AMP_Can_IATA_support_the_airline__c ASC';
-        else this.sortOrder = ' AMP_Can_IATA_support_the_airline__c DESC';
+        if(this.sortOrder == ' AM_Can_IATA_support_the_airline__c DESC') this.sortOrder = ' AM_Can_IATA_support_the_airline__c ASC';
+        else this.sortOrder = ' AM_Can_IATA_support_the_airline__c DESC';
         lsIssuesAndPriorities = getIssuesAndPriorities();
     }
     public void sortByStatus() {
