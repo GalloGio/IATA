@@ -169,8 +169,16 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Account_Type__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Services_Used__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -422,10 +430,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Contact_cleanup_remarks__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Services_Used__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
