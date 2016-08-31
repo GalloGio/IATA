@@ -1706,87 +1706,147 @@
         <label>Image</label>
         <picklist>
             <picklistValues>
-                <fullName>Book</fullName>
+                <fullName>book</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Book and CD-ROM</fullName>
+                <fullName>bookcd-rom</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Book and Web Download</fullName>
+                <fullName>bookelec.dnl</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Book CD-ROM Web download</fullName>
+                <fullName>brochure</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Card</fullName>
+                <fullName>calendar</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CD-ROM</fullName>
+                <fullName>card</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Data File</fullName>
+                <fullName>cd-rom</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DVD</fullName>
+                <fullName>cd-romlan</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>eBook</fullName>
+                <fullName>chartphotofolde</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Email Service</fullName>
+                <fullName>datafile</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Excel Spreadsheet</fullName>
+                <fullName>disk</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Floating License</fullName>
+                <fullName>download</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Folder</fullName>
+                <fullName>dvd</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Kit</fullName>
+                <fullName>emails</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Labels</fullName>
+                <fullName>excel</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Memory Stick</fullName>
+                <fullName>fee</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>PDF</fullName>
+                <fullName>folder</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>PDF &amp; Excel files</fullName>
+                <fullName>form</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Poster</fullName>
+                <fullName>kit</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>WEB Application</fullName>
+                <fullName>labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>WEB Download</fullName>
+                <fullName>lo</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>magazine</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>memory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>newsletter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>poster</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>seconaccess</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>sf_sdl</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>sftapp</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>special charges</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>video</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>wa</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>web</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>webaccess</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>webinar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>zpc</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -4111,10 +4171,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>bookcd-rom</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>More</fullName>
                 <default>false</default>
             </values>
@@ -6255,10 +6311,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Directories</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>bookcd-rom</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8442,10 +8494,6 @@ The product will only appear on the Online Store when the date entered in this f
             <picklist>Category_Group__c</picklist>
             <values>
                 <fullName>Directories</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>bookcd-rom</fullName>
                 <default>false</default>
             </values>
             <values>
