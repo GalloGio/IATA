@@ -22200,11 +22200,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Contact_Relationship__c.EF_Relationship__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Contact_Relationship__c.Role__c</field>
         <readable>true</readable>
     </fieldPermissions>
