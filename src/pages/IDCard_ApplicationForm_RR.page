@@ -5,7 +5,7 @@
             <apex:stylesheet value="{!URLFOR($Resource.IDCard_Styles, 'IATA_IDCard.css')}" />
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>IATA/IATAN ID Card Online Platform</title>
-            
+             
             
         </head>
         
@@ -57,7 +57,7 @@
     /**
                 **** Function responsible to calculate the displayed card name
                 */
-    function calculateDisplayedName () {            
+    function calculateDisplayedName () {             
         
         if (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}'))
         {      
@@ -155,7 +155,7 @@
         
         var popupStatus = 0;
         
-        $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN").click(function() {
+       $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN").click(function() {
             
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
@@ -178,7 +178,7 @@
             }
             if ($(this).is("#IntroalSistemayLenguajeBSP-ES")) {
                 $("#popup_Content").html("{!introduccionAlSistemaBSPyLenguajeBSP_Description}");
-            }
+            } 
             if ($(this).is("#IntrotoBSPLink-EN")) {
                 $("#popup_Content").html("{!introductiontoBSPLink_Description}");
             }
@@ -192,8 +192,17 @@
                 $("#popup_Content").html("{!servingtheTravelTourismCustomer_Description}");
             }    
             if ($(this).is("#SocialMediaforTandTIndustry-EN")) {
-                $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");
-            }        
+                $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");     
+            }
+            if ($(this).is("#FundamentalsJourneyPricing-EN")) {
+                $("#popup_Content").html("{!fundamentalsJourneyPricing_Description}");
+            }
+            if ($(this).is("#Repricing\\,ExchangeandReissue-EN")) {
+                $("#popup_Content").html("{!repricingExchangeReissue_Description}");
+            }
+            if ($(this).is("#TravelAgencyFees-EN")) {
+                $("#popup_Content").html("{!travelAgencyFees_Description}");
+            }           
             
             //centering
             $("#popupLogin").css({

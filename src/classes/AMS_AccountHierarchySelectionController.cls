@@ -200,7 +200,7 @@ public class AMS_AccountHierarchySelectionController {
 			if(oscar.Type_of_Change__c != null){
 
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) return true;
-				if(tocList.contains(AMS_Utils.LOCATION) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
+				if((tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
 			}
 			
 			oscar.AMS_Target_Agency__c = null;
@@ -283,6 +283,9 @@ public class AMS_AccountHierarchySelectionController {
 			accountIds.add(r.Parent_Account__c);
 		}
 
+		//to prevent nullpointer on agencies with no hierarchy
+		accountIds.add(oscar.Account__c);
+
 		String terminatedStatus = AMS_Utils.ACC_S0_TERMINATED;
 		List<HierarchyItem> result = new List<HierarchyItem>();
 		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+' FROM Account WHERE Id IN :accountIds AND Status__c != :terminatedStatus')){
@@ -306,7 +309,7 @@ public class AMS_AccountHierarchySelectionController {
 			ownershipAgenciesNotSelected = false;
 		}
 
-		if(tocList.contains(AMS_Utils.LOCATION)) errorChecks.put(AMS_Utils.LOCATION, true);
+		if(oscar.AMS_Target_Agency__c != null && (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION))) errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchy){
 			
@@ -380,7 +383,7 @@ public class AMS_AccountHierarchySelectionController {
 
 			if(!processDetails.isEmpty()) delete processDetails.values();
 			if(!newProcessHierarchy.isEmpty()) insert newProcessHierarchy;
-			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication'].Id;
+			Id cId = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ParentId = null].Id;
 			update new Case(Id = cId, AccountId = oscar.Account__c);
 		}catch(Exception e){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));

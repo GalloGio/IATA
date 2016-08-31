@@ -281,7 +281,7 @@ public  class AccountTriggerHelper {
         'Type_of_Service__c', 'Type',
         'BSP_CI_Valid__c', 'BSP_FOC_Valid__c', 'CASS_CI_Valid__c',
         'CASS_FOC_Valid__c', 'Airline_designator__c', 'IATACode__c',
-        'TradeName__c',  'ACLI_Status__c'
+        'TradeName__c',  'ACLI_Status__c', 'Airline_Prefix__c'
                                                 };
 
     //  map<string,id> developerNamePerId = TransformationHelper.AccRtNamePerIds();

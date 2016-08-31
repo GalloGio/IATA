@@ -90,7 +90,7 @@
             <filterItems>
                 <field>Contact.Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Standard Account</value>
+                <value>Others</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>

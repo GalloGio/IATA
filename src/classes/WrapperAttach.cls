@@ -11,6 +11,7 @@ global class WrapperAttach implements Comparable {
     public String filetype {get;set;}
     public String name {get;set;}
     public String description {get;set;}
+    public String internalComments {get;set;}
     public String contentType {get;set;}
     public Decimal size {get;set;}
     public DateTime lastModified {get;set;}
@@ -60,6 +61,7 @@ global class WrapperAttach implements Comparable {
         this.filetype = 'Archived';
         this.name = file.name;
         this.description = file.description__c;
+        this.internalComments = file.Internal_Comments__c;
         this.contentType = file.contentType__c;
         this.size = file.BodyLength__c * 0.000001;
         this.lastModified = file.LastModifiedDate;
@@ -79,6 +81,7 @@ global class WrapperAttach implements Comparable {
         this.name = file.getName();
         this.size = file.getSize();
         this.description = file.getDescription();
+        this.internalComments = file.getInternalComments();
         this.lastModified = file.getLastModifiedDate();
         this.createdDate = file.getCreatedDate();
         this.createdBy = file.getCreatedById();
@@ -193,14 +196,22 @@ global class WrapperAttach implements Comparable {
     public void updateAttach() {
         if (this.filetype == 'Amazon') {
             this.fileAmazon.amazonFile.Description__c = this.description;
+            this.fileAmazon.amazonFile.Internal_Comments__c = this.internalComments;
+            this.fileAmazon.amazonFile.isPublic__c = isPublic;
+            
             update this.fileAmazon.amazonFile;
         }
         if (filetype == 'Salesforce' ) {
             this.fileAttachment.Description = this.description;
             update this.fileAttachment;
+            if ( this.permission.ShowToPortalUsers__c != isPublic ) {
+                this.permission.ShowToPortalUsers__c = isPublic;
+                upsert this.permission;
+            }
         }
         if ( filetype == 'Archived' ) {
             this.fileArchived.Description__c = this.description;
+            this.fileArchived.Internal_Comments__c = this.internalComments;
             update this.fileArchived;
         }
     }

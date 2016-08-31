@@ -10,7 +10,7 @@ global class AMS_HierarchyHelper {
 		system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> accountsIds ' + accountsIds);
 
 		for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Parent_Account__c, Child_Account__c
-		                                      FROM AMS_Agencies_relationhip__c
+		                                      FROM AMS_Agencies_relationhip__c 
 		                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 
 			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
@@ -34,7 +34,7 @@ global class AMS_HierarchyHelper {
 		for (Id accountId : accountsIds)
 			result.put(accountId, new List<AMS_Agencies_relationhip__c>());
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c, Parent_Account__c,  Child_Account__c, Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  Child_Account__r.Status__c, Parent_Account__r.Status__c
 		                                      FROM AMS_Agencies_relationhip__c
 		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
@@ -105,7 +105,7 @@ global class AMS_HierarchyHelper {
 				relToUpdate.add(rel);
 		}
 
-		return new HierarchyStruct(relToUpdate, null, null);
+		return new HierarchyStruct(relToUpdate, null, null, null);
 	}
 
 	public static HierarchyStruct reparentChildSA(Id child, Id newParent, Map<Id, Account> accounts, List<AMS_Agencies_relationhip__c> hierarchyRelationships) {
@@ -125,7 +125,7 @@ global class AMS_HierarchyHelper {
 
 		}
 
-		return new HierarchyStruct(relToUpdate, null, null);
+		return new HierarchyStruct(relToUpdate, null, null, null);
 	}
 
 
@@ -248,10 +248,12 @@ global class AMS_HierarchyHelper {
 	// currentHierarchy = mainAccount's hierarhcy
 	// targetHO = the HO of the target hierarchy
 	// agenciesToMigrate = the list of the agencies which will be migrated: the mainAccount + all the others
-	public static HierarchyStruct migrateAccountsToExistingHierarchy(List<AMS_Agencies_relationhip__c> currentHierarchy, Id targetAccount, List<AMS_Agencies_relationhip__c> newHierarchy, Set<Id> agenciesToMigrate) {
+	public static HierarchyStruct migrateAccountsToExistingHierarchy(List<AMS_Agencies_relationhip__c> currentHierarchy, Id targetAccount, List<AMS_Agencies_relationhip__c> newHierarchy, Set<Id> agenciesToMigrate, Map<Id, Account> accounts) {
 		// check if the old hierarchy is completely migrated
-		Set<Id> agenciesNotMigrated = getAccountNotMigrated(currentHierarchy, agenciesToMigrate);
+		Set<Id> agenciesNotMigrated = getAccountNotMigratedExcludingTerminated(currentHierarchy, agenciesToMigrate, accounts);
 		boolean completeMigration = (agenciesNotMigrated.size() == 0);
+
+		List<Account> accountsToUpdate = new List<Account>();
 
 		// check if the old HO is the same as the new HO
 		Id oldHO = getHierarchyHO(currentHierarchy);
@@ -287,17 +289,46 @@ global class AMS_HierarchyHelper {
 
 			HierarchyStruct res = new HierarchyStruct();
 			res.relationsToUpdate = new List<AMS_Agencies_relationhip__c>();
+			res.relationsToDelete = new List<AMS_Agencies_relationhip__c>();
+			res.hierarchiesToDelete = new List<Id>();
+
+			Id hierarchyToDelete;
+
 			for (AMS_Agencies_relationhip__c rel : currentHierarchy) {
+
+				if(hierarchyToDelete==null)
+					hierarchyToDelete = rel.Hierarchy__c;
+
 				//BRs under the oldHO will move under the targetHO
-				if (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR)
+				if (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
 					rel.Parent_Account__c = targetHO;
-				rel.Hierarchy__c = newHierarchyName;
-				res.relationsToUpdate.add(rel);
+				}
+				//TERMINATED BRs ARE TO BE LEFT STANDALONE
+				//TERMINATED SAs UNDER TERMINATED BRs also to be left STANDALONE
+				if((rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)
+					|| (rel.Parent_Account__r.Location_Type__c == AMS_Utils.BR && rel.Parent_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && rel.Child_Account__r.Location_Type__c == AMS_Utils.SA && rel.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)){
+					//delete relation
+					//remove parentId from Account
+					res.relationsToDelete.add(rel);
+					Account a = accounts.get(rel.Child_Account__c);
+					a.ParentId = null;
+					accountsToUpdate.add(a);
+				}
+				else{
+					rel.Hierarchy__c = newHierarchyName;
+					res.relationsToUpdate.add(rel);
+				}
 			}
 			//still need to create a new relation to move the oldHO under the targetHO
 			res.relationsToInsert = new List<AMS_Agencies_relationhip__c>();
 			res.relationsToInsert.add(new AMS_Agencies_relationhip__c(Hierarchy__c = newHierarchyName, Parent_Account__c = targetHO,
 			                          Child_Account__c = oldHO));
+
+			if(!accountsToUpdate.isEmpty())
+				update accountsToUpdate;
+
+			//on a complete migration the old hierarchy is to be deleted
+			res.hierarchiesToDelete.add(hierarchyToDelete);
 
 			return res;
 
@@ -359,6 +390,25 @@ global class AMS_HierarchyHelper {
 		}
 		for (Id id : accountsInHierarchy)
 			if (!agenciesToMigrate.contains(id))
+				accountsNotMigrated.add(id);
+
+		System.debug('AGENCY CHANGES: accounts not migrated: ' + accountsNotMigrated);
+
+		return accountsNotMigrated;
+	}
+
+	public static Set<Id> getAccountNotMigratedExcludingTerminated(List<AMS_Agencies_relationhip__c> hierarchyRelationships, Set<Id> agenciesToMigrate, Map<Id, Account> accounts) {
+
+		System.debug('AGENCY CHANGES: hierarchyRelationships: ' + hierarchyRelationships + '  agenciesToMigrate: ' + agenciesToMigrate);
+
+		Set<Id> accountsInHierarchy = new Set<Id>();
+		Set<Id> accountsNotMigrated = new Set<Id>();
+		for (AMS_Agencies_relationhip__c rel : hierarchyRelationships) {
+			accountsInHierarchy.add(rel.Parent_Account__c);
+			accountsInHierarchy.add(rel.Child_Account__c);
+		}
+		for (Id id : accountsInHierarchy)
+			if (!agenciesToMigrate.contains(id) && accounts.get(id).Status__c != AMS_Utils.ACC_S0_TERMINATED)
 				accountsNotMigrated.add(id);
 
 		System.debug('AGENCY CHANGES: accounts not migrated: ' + accountsNotMigrated);
@@ -431,6 +481,8 @@ global class AMS_HierarchyHelper {
 		public List<AMS_Agencies_relationhip__c> relationsToInsert; //the relationship to be inserted may have hierarchy = null. If so they should be filled with hierarchyToInsert
 		public List<AMS_Agencies_relationhip__c> relationsToDelete;
 
+		public List<Id> hierarchiesToDelete;
+
 		// map, hierarchy to insert --> relationship update with the hierarchy id and upsert
 		// public AMS_Agencies_Hierarchy__c hierarchyToInsert;
 
@@ -438,11 +490,12 @@ global class AMS_HierarchyHelper {
 
 		public HierarchyStruct() {}
 
-		public HierarchyStruct(List<AMS_Agencies_relationhip__c> relationsToUpdate, List<AMS_Agencies_relationhip__c> relationsToInsert, List<AMS_Agencies_relationhip__c> relationsToDelete) {
+		public HierarchyStruct(List<AMS_Agencies_relationhip__c> relationsToUpdate, List<AMS_Agencies_relationhip__c> relationsToInsert, List<AMS_Agencies_relationhip__c> relationsToDelete, List<Id> hierarchiesToDelete) {
 
 			this.relationsToUpdate = relationsToUpdate;
 			this.relationsToInsert = relationsToInsert;
 			this.relationsToDelete = relationsToDelete;
+			this.hierarchiesToDelete = hierarchiesToDelete;
 
 		}
 
@@ -685,4 +738,30 @@ global class AMS_HierarchyHelper {
 		return toReturn;
 
 	}
+
+	public static Set<Id> addTerminatedDescendants(Set<Id> agenciesAffected, Map<Id, Set<Id>> agencyTerminatedChildAgencies, Boolean isChangeOwnershipToIATA, Map<Id, Account> accounts){
+
+		Set<Id> output = new Set<Id>(agenciesAffected);
+
+		for(Id ag: agenciesAffected){
+			//check if agency has direct child that is terminated
+			if(agencyTerminatedChildAgencies.containsKey(ag)){
+				if(!isChangeOwnershipToIATA){
+					output.addAll(agencyTerminatedChildAgencies.get(ag));
+					output.addAll(addTerminatedDescendants(agencyTerminatedChildAgencies.get(ag), agencyTerminatedChildAgencies, isChangeOwnershipToIATA, accounts));
+				}
+				else{
+					//in this situation we only need to add the Terminated SA's automatically
+					for(Id childAgTerminated: agencyTerminatedChildAgencies.get(ag)){
+						if(accounts.get(childAgTerminated).Location_Type__c == AMS_Utils.SA)
+							output.add(childAgTerminated);
+					}
+				}
+			}
+		}
+
+		return output;
+
+	}
+
 }

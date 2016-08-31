@@ -551,7 +551,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            insert orderItems;
+            database.insert(orderItems,false);
 
         return orderItems;
     }
@@ -729,7 +729,7 @@ public with sharing class TestDataGenerator
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
             products[x].ZProduct__c = zProducts[x].Id;
         }
-        insert products;
+        database.insert(products,false) ;
         System.debug('products generated::'+products);
 
         insert zRatePlans;

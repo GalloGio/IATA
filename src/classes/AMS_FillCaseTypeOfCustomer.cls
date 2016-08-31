@@ -10,6 +10,7 @@ global class AMS_FillCaseTypeOfCustomer implements Process.Plugin{
         
         String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(locationType,category);
 
+
         Map<String,Object> result = new Map<String,Object>();
 
         result.put('typeOfCustomer',typeOfCustomer);
