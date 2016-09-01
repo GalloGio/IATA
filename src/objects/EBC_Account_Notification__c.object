@@ -214,6 +214,25 @@ This is set based on the EBC Preference&apos;s Primary Contact Email.</inlineHel
         <type>Url</type>
     </fields>
     <fields>
+        <fullName>Next_Renewal_Date_String__c</fullName>
+        <description>Next Renewal Date in string, with format DD Month YYYY. 
+This is needed to display as required in the email template.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Next_Renewal_Date__c)) 
++ CASE(MONTH(Next_Renewal_Date__c) 
+,1, &quot; January &quot;,2,&quot; February &quot;,3,&quot; March &quot;,4,&quot; April &quot;,5,&quot; May &quot;, 6,&quot; June &quot; 
+,7,&quot; July &quot;,8,&quot; August &quot;,9,&quot; September &quot;,10,&quot; October &quot;,11,&quot; November &quot;,12,&quot; December &quot; 
+,&quot;-???-&quot;) 
++ TEXT(YEAR(Next_Renewal_Date__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Next Renewal Date in string, with format DD Month YYYY.</inlineHelpText>
+        <label>Next Renewal Date String</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Next_Renewal_Date__c</fullName>
         <description>Zuora__Subscription__r.Zuora__NextRenewalDate__c for this EBC Subscription.</description>
         <externalId>false</externalId>
@@ -222,6 +241,25 @@ This is set based on the EBC Preference&apos;s Primary Contact Email.</inlineHel
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Notification_Date_String__c</fullName>
+        <description>Notification Date in string, with format DD Month YYYY. 
+This is needed to display as required in the email template.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Notification_Date__c)) 
++ CASE(MONTH(Notification_Date__c) 
+,1, &quot; January &quot;,2,&quot; February &quot;,3,&quot; March &quot;,4,&quot; April &quot;,5,&quot; May &quot;, 6,&quot; June &quot; 
+,7,&quot; July &quot;,8,&quot; August &quot;,9,&quot; September &quot;,10,&quot; October &quot;,11,&quot; November &quot;,12,&quot; December &quot; 
+,&quot;-???-&quot;) 
++ TEXT(YEAR(Notification_Date__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Notification Date in string, with format DD Month YYYY.</inlineHelpText>
+        <label>Notification Date String</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Notification_Date__c</fullName>
@@ -296,6 +334,25 @@ This is calculated based on the EBC Activities.</inlineHelpText>
         <inlineHelpText>Primary Contact Name, copied from EBC_Preference PrimaryContact_Name</inlineHelpText>
         <label>Primary Contact Name</label>
         <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date_String__c</fullName>
+        <description>Subscription End Date in string, with format DD Month YYYY.
+This is needed to display as required in the email template.</description>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Subscription_End_Date__c)) 
++ CASE(MONTH(Subscription_End_Date__c)
+,1, &quot; January &quot;,2,&quot; February &quot;,3,&quot; March &quot;,4,&quot; April &quot;,5,&quot; May &quot;, 6,&quot; June &quot;
+,7,&quot; July &quot;,8,&quot; August &quot;,9,&quot; September &quot;,10,&quot; October &quot;,11,&quot; November &quot;,12,&quot; December &quot;
+,&quot;-???-&quot;)
++ TEXT(YEAR(Subscription_End_Date__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Subscription End Date in string, with format DD Month YYYY.</inlineHelpText>
+        <label>Subscription End Date String</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -413,6 +470,21 @@ It is the version of the username seen by the end user.</description>
         <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Billing_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Notification_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Notification_Type__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Billing_Account__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Contact_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Email__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Notification_Date__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Notification_Type__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Billing_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notification_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notification_Type__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>

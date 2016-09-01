@@ -125,6 +125,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.Id '
 			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.Name '
 			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.Contact__c '
+			+ ', Zuora__Subscription__r.Zuora__CustomerAccount__r.eBroadcast_Email_Balance__c '
 			// + ', Zuora__Subscription__r.Zuora__Account__c '
 			+ ', Zuora__Subscription__r.Zuora__NextRenewalDate__c '
 			// + ', Zuora__Subscription__r.Zuora__SubscriptionEndDate__c '
@@ -188,7 +189,7 @@ global class BtchEBCCreateNotificationForRenewal implements Database.Batchable<s
 			EBC_Account_Notification__c accNotification = new EBC_Account_Notification__c( Billing_Account__c = billingAcct.Id
 																						, Name = billingAcct.Name
 																						//, Email__c = billingAcct.Contact__r.Email
-																						//, Email_Balance__c = billingAcct.eBroadcast_Email_Balance__c
+																						, Email_Balance__c = billingAcct.eBroadcast_Email_Balance__c
 																						//, Storage_Usage__c = billingAcct.eBroadcast_Storage_Usage__c
 																						//, Account_Level_Add_On__c = '' // default is none (billingAcct.eBroadcast_Add_On_Access__c) ? 'Extra Added' : ''
 																						//, Service_Level_Add_On__c = ''
