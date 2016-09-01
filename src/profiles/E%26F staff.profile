@@ -37222,8 +37222,8 @@
     <layoutAssignments>
         <layout>Account-IATA Travel %26 Cargo Agent Account</layout>
         <recordType>Account.IATA_Agency_Account</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
+    </layoutAssignments>	
+	<layoutAssignments>
         <layout>Account-Operators Page Layout</layout>
         <recordType>Account.Others</recordType>
     </layoutAssignments>
