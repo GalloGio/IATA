@@ -37169,7 +37169,7 @@
         <layout>AWS_S3_Object__c-AWS S3 Document Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Airline Hqs Read-Only</layout>
+        <layout>Account-Airline Hqs</layout>
         <recordType>Account.IATA_Airline</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -37185,7 +37185,7 @@
         <recordType>Account.IATA_Agency</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-IATA Airline - Branch Read-Only</layout>
+        <layout>Account-IATA Airline - Branch</layout>
         <recordType>Account.IATA_Airline_BR</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -37222,6 +37222,10 @@
     <layoutAssignments>
         <layout>Account-IATA Travel %26 Cargo Agent Account</layout>
         <recordType>Account.IATA_Agency_Account</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Operators Page Layout</layout>
+        <recordType>Account.Others</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Others</layout>

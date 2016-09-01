@@ -37224,6 +37224,10 @@
         <recordType>Account.MACSSalesAccount</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-Operators Page Layout</layout>
+        <recordType>Account.Operator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Others</layout>
         <recordType>Account.Others</recordType>
     </layoutAssignments>
