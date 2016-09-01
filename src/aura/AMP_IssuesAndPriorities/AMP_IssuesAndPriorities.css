@@ -1,0 +1,27 @@
+.THIS .noUpperCase{
+    text-transform: none !important;
+    font-size: small;
+}
+.THIS td {
+  max-width: 500px;
+  /*overflow-x: hidden;*/
+  white-space: normal !important;
+}
+.THIS th.narrowColumn {
+  width: 70px;
+}
+.THIS th.medColumn {
+  width: 110px;
+}
+.THIS th.actionColumn {
+  width: 100px;
+}
+.THIS th.wideColumn-30 {
+  width: 30%;
+}
+.THIS th.narrowColumn > a > span.slds-truncate {
+  white-space: normal !important;
+}
+.THIS .uiMenuList--default .uiMenuItem>a {
+      height: 2em;
+}

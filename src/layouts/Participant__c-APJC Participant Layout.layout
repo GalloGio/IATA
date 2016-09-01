@@ -26,6 +26,10 @@
                 <behavior>Required</behavior>
                 <field>Local_Governance__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Representing__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

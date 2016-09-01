@@ -26,6 +26,12 @@ trigger AMS_AccountRoleTrigger on AMS_Account_Role__c (before update, after upda
 
         if(bindToContact.size()>0)
             AMS_EmployeeHelper.addContactIfEmpty(bindToContact);
+
+
+        // AMP Project: Custom account ownership validations
+        AMS_AccountRoleHelper handler = new AMS_AccountRoleHelper();
+        handler.verifyAccountRole(Trigger.new);
+        
     }
 
     //merge owners coming from AIMS. (AIMS sometimes split records that have long names)

@@ -18,7 +18,7 @@ private class ImportantContactsControllerTest {
         Contact c1 = new Contact(FirstName = 'Test', LastName = 'Contact', Email = 'test@test.com', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id);
         insert c1;
         
-        Contact c2 = new Contact(FirstName = 'Another', LastName = 'Contact', Email = 'test2@test.com', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id, CEO_CFO__c = 'CEO');
+        Contact c2 = new Contact(FirstName = 'Another', LastName = 'Contact', Email = 'test2@test.com', Title = 'CEO', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id, CEO_CFO__c = 'CEO');
         insert c2;
         
         test.startTest();
