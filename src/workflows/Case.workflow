@@ -13399,11 +13399,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>ISPICKVAL(IRR_Approval_Rejection__c, &apos;Approved&apos;)
-&amp;&amp;
-(
- CASE(TEXT(IRR_Type__c), &apos;Single Irregularity&apos;, 1, &apos;Double Irregularity&apos;, 2, 0) + Accumulated_Irregularities__c &gt;= Acc_IRR_leading_to_DEF__c
-)</formula>
+        <formula>ISPICKVAL(IRR_Approval_Rejection__c, &apos;Approved&apos;) &amp;&amp; (  CASE(TEXT(IRR_Type__c), &apos;Single Irregularity&apos;, 1, &apos;Double Irregularity&apos;, 2, 0) + Accumulated_Irregularities__c &gt;= Acc_IRR_leading_to_DEF__c )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

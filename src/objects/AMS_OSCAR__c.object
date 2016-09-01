@@ -10252,14 +10252,14 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         <width>750</width>
     </webLinks>
     <webLinks>
-       <fullName>Edit_accounts_involved</fullName>
-       <availability>online</availability>
-       <displayType>button</displayType>
-       <linkType>javascript</linkType>
-       <masterLabel>Edit the accounts involved</masterLabel>
-       <openType>onClickJavaScript</openType>
-       <protected>false</protected>
-       <url>javascript:srcUp(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);</url>
+        <fullName>Edit_accounts_involved</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit the accounts involved</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>javascript:srcUp(&quot;/apex/AMS_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);</url>
     </webLinks>
     <webLinks>
         <fullName>IATA_Code_Gen</fullName>
