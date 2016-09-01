@@ -1,0 +1,51 @@
+<aura:component >
+    <aura:attribute name="accountId" type="String" />
+    
+    <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIdUpdate}"/>
+    
+    <aura:registerEvent name="AccountIdSelected" type="c:AMP_AccountIdSelected"/>    
+    
+    
+    
+    <!-- PAGE LAYOUT -->
+    <!-- Include the SLDS static resource -->
+    <ltng:require styles="{!$Resource.SLDS102 + '/assets/styles/salesforce-lightning-design-system-ltng.css'}"/>    
+    
+    <!-- SLDS SCOPING DIV -->
+    <div class="slds">
+        
+        <article class="slds-card slds-card--narrow slds-m-around--xx-large">
+            <header class="slds-card__header slds-grid">
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <c:svg class="slds-icon slds-icon-standard-account slds-icon--small" xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#account'}" />
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <h2>
+                            <a href="javascript:void(0);" class="slds-text-link--reset">
+                                <span class="slds-text-heading--small">Please select an Account</span>
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="slds-card__body slds-text-align--center">
+                
+                <c:LookupSObject aura:id="accountIssueLookup"
+                                 preselectedSearchString=""
+                                 searchConditions="{!' WHERE RecordType.DeveloperName = \'IATA_Airline\''}"
+                                 label="Account"
+                                 pluralLabel="Accounts"
+                                 sObjectAPIName="Account"
+                                 listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#account"
+                                 listIconClass="slds-icon-standard-account" />
+                
+            </div>
+        </article>
+        
+        
+        
+    </div>
+    
+</aura:component>

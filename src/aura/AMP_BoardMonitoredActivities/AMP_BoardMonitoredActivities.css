@@ -1,0 +1,29 @@
+.THIS .columnType{
+  width: 4%;
+}
+.THIS .columnActions{
+  width: 6%;
+}
+.THIS .column-10p{
+  width: 10%;
+}
+.THIS .column-40p{
+  width: 40%;
+}
+.THIS .column-20p{
+  width: 20%;
+}
+.THIS .column-30p{
+  width: 30%;
+}
+.THIS .slds-truncate {
+  white-space: normal !important;
+  max-width: 100% !important;
+  max-height: 3em;
+}
+.THIS td {
+  vertical-align: top;
+}
+.THIS textarea {
+  width: 90%;
+}
