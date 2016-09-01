@@ -160,6 +160,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Reset_irregularity_email</fullName>
+        <field>Send_Irregularity_Email__c</field>
+        <literalValue>0</literalValue>
+        <name>Reset irregularity email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SIS_Assign_account_recordtype</fullName>
         <field>RecordTypeId</field>
         <lookupValue>IATA_SIS_Account</lookupValue>
@@ -594,6 +603,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>SIS</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Send Irregularity Email</fullName>
+        <actions>
+            <name>Irregularity_Thresold_Met</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Reset_irregularity_email</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Send_Irregularity_Email__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Sends email when the account reaches the irregularity thresold for the country. This validation is made on the AccountTrigger trigger</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Site Index</fullName>

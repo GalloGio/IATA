@@ -205,11 +205,6 @@
             <fieldNames>Subject</fieldNames>
             <objectName>Case</objectName>
         </pushNotification>
-        <pushNotification>
-            <fieldNames>LastModifiedBy</fieldNames>
-            <fieldNames>LastModifiedDate</fieldNames>
-            <objectName>Contact__c</objectName>
-        </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Chatter</tab>
