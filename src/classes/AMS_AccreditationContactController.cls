@@ -73,8 +73,8 @@ public with sharing class AMS_AccreditationContactController {
                 if(accountsToLoadSetNumber.size() > 0){
                     for(Account acc : [select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c, Registration_Number__c from Account where Id in :accountsToLoadSetId OR Registration_number__c in :accountsToLoadSetNumber OR IATACode__c IN :accountsToLoadSetIATACode]){
                         accListId.put(acc.Id, acc);
-                        accListNumber.put(acc.Registration_Number__c, acc);
-                        accListIATACode.put(acc.IATACode__c, acc);
+                        if(acc.Registration_Number__c != null) accListNumber.put(acc.Registration_Number__c, acc);
+                        if(acc.IATACode__c != null) accListIATACode.put(acc.IATACode__c, acc);
                     }
                 }
 
@@ -96,8 +96,8 @@ public with sharing class AMS_AccreditationContactController {
                         }
                         else if(accListIATACode.get(ac.IATACode__c) != null)
                         {
-                            System.debug('********************* company found with IATA Code: '+accListId.get(ac.IATACode__c));
-                            accWrapper = new AccountWrapper(ac, accListIATACode.get(ac.IATACode__c), accListId.get(ac.IATACode__c).Id, false);
+                            System.debug('********************* company found with IATA Code: '+accListIATACode.get(ac.IATACode__c));
+                            accWrapper = new AccountWrapper(ac, accListIATACode.get(ac.IATACode__c), accListIATACode.get(ac.IATACode__c).Id, false);
                         }
                         else if(accListNumber.get(ac.Registration_number__c) != null)
                         {
