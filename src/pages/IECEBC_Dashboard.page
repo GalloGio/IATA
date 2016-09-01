@@ -47,7 +47,7 @@
                                                     <apex:outputLink value="{!URLFOR($Page.IECEBC_AccountRatePlan)}" rendered="{!productRatePlan.Name != 'Premium Edition'}">Lower your cost per email</apex:outputLink>
                                                 </td>
                                             </tr>
-                                            <apex:outputText rendered="{!subscription.Zuora__AutoRenew__c}">
+                                            <apex:outputText rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">
                                                 <tr> 
                                                     <th>
                                                         <div class="item-name">Next Renewal Date</div>
@@ -56,7 +56,9 @@
                                                         <div class="item-value">
                                                             <strong><apex:outputText value="{0, date, MMMM d','  yyyy}"><apex:param value="{!subscription.Zuora__NextRenewalDate__c }" /></apex:outputText></strong>
                                                         </div>
-                                                        <apex:outputLink value="#" rendered="{!productRatePlan.Name != 'Pay-As-You-Go'}">Renew Rate Plan</apex:outputLink>
+                                                        <apex:outputLink value="{!renewalPageUrl}" rendered="{!showRenewNow}">
+                                                             Renew Subscription
+                                                        </apex:outputLink>
                                                     </td>
                                                 </tr>
                                             </apex:outputText>

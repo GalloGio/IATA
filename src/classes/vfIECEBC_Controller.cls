@@ -5,18 +5,21 @@
  * as the access to the rate plan, etc.
  *
  * Change log:
+ *   20160704-mb: initial version
  *   20160809-sl: modify productRatePlanIdUpgradeList
  *   20160811-sl: add currentAddon
+ *   20160824-sl: modify the query for EbcAddOn rate plans to comply with technical design: select based on EBC_Setup instead of zqu__ZProduct.ProductCategory__c 
  *
  **/
+
 public virtual class vfIECEBC_Controller {
 	
 	// contants for zqu__ProductRatePlan.EBC_SubscriptionType__c
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';
 	
-	// Zuora__CustomerAccount__c.ClientType__c picklist value
-	private static final String BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE = 'Member Airline'; 
+	// Zuora__CustomerAccount__c.ClientType__c picklist value, this was used to determine if a billing account is of a member
+	//private static final String BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE = 'Member Airline'; 
 	
 	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
@@ -86,7 +89,7 @@ public virtual class vfIECEBC_Controller {
 			return (productRatePlan.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID);
 		}
 	}
-    
+	
 	// =======================================================================-
 	// current Product Rate Plan Charge based on given ProductRatePlan
 	// assumptions:
@@ -121,7 +124,6 @@ public virtual class vfIECEBC_Controller {
 	// recalc newPurchasedRatePlanChargeList and totalNewPurchaseAmount
 	public void updateNewPurchasedRatePlanChargeList( List<zqu__ProductRatePlanCharge__c> prpcList )
 	{
-        System.debug( 'xxxx updateNewPurchasedRatePlanChargeList.prpcList:' + prpcList);
 		newPurchasedRatePlanChargeList = new List<zqu__ProductRatePlanCharge__c>();
 		totalNewPurchaseAmount = 0;
 		if (prpcList != null)
@@ -138,48 +140,10 @@ public virtual class vfIECEBC_Controller {
 			zqu__ProductRatePlanCharge__c dummyRatePlan = new zqu__ProductRatePlanCharge__c( Id=null, Name='Please select a plan', zqu__ListPrice__c=0);
 			newPurchasedRatePlanChargeList.add(dummyRatePlan);
 		}
-        System.debug( 'xxxx updateNewPurchasedRatePlanChargeList.totalNewPurchaseAmount:' + totalNewPurchaseAmount);
-        System.debug( 'xxxx updateNewPurchasedRatePlanChargeList.newPurchasedRatePlanChargeList:' + newPurchasedRatePlanChargeList);
+		//System.debug( 'updateNewPurchasedRatePlanChargeList.totalNewPurchaseAmount:' + totalNewPurchaseAmount);
+		//System.debug( 'updateNewPurchasedRatePlanChargeList.newPurchasedRatePlanChargeList:' + newPurchasedRatePlanChargeList);
 	} // end of updateNewPurchasedRatePlanChargeList
 	
-	
-	
-	// =======================================================================-
-	// productRatePlanIdUpgradeSet return set of zqu__ProductRatePlan__.Id available as the upgrade destination from the current ProductRatePlan
-	// i.e. to which the current Product Rate Plan can be directly upgraded
-	// assumptions:
-	//  - the relationship between ProductRatePlan and Product Rate Plan Information is 1:1 for eBroadcast 
-	//  - the relationship between ProductRatePlan and Product Rate Plan Charge is 1:1 for eBroadcast
-	//  THIS IS THE OLD MODEL of productRatePlanIdUpgradeSet using Swap_Configuration object.
-	/*
-	private Set<Id> productRatePlanIdUpgradeSet {
-		get{
-			if (productRatePlanIdUpgradeSet==null) 
-			{
-				List<Swap_Configuration__c> swapConfigList = [select Id
-						//, Source_Product_Rate_Plan_Information__c
-						//, Target_Product_Rate_Plan_Information__c
-						//, Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
-						, Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c
-					from Swap_Configuration__c
-					where Source_Product_Rate_Plan_Information__r.Product_Rate_Plan__c = : productRatePlan.Id
-						and Relationship_Type__c = 'Upgrade'
-					order by Target_Product_Rate_Plan_Information__c
-					];
-				
-				Set<Id> targetProductRatePlanIdSet = new Set<Id>();
-				for (Swap_Configuration__c swapConf : swapConfigList)
-				{
-					targetProductRatePlanIdSet.add(swapConf.Target_Product_Rate_Plan_Information__r.Product_Rate_Plan__c);
-				}
-				productRatePlanIdUpgradeSet = targetProductRatePlanIdSet;
-			} // end if
-			
-			return productRatePlanIdUpgradeSet;
-		} // end getter
-		private set;
-	} // productRatePlanChargeUpgradeList getter/setter.
-	*/
 	
 	
 	// =======================================================================-
@@ -207,19 +171,8 @@ public virtual class vfIECEBC_Controller {
 		get{
 			if (productRatePlanIdUpgradeList==null) 
 			{
-				List<Id> nonMemberRatePlanIdList = new List<Id>();
-				List<Id> memberRatePlanIdList = new List<Id>();
-				
-				EBC_Setup__c ebcSetup = vfIECEBC.ebcSetup;
-				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_01__c);
-				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_02__c);
-				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_03__c);
-				if (ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c != null)  memberRatePlanIdList.add(ebcSetup.Member_Prepaid_Product_Rate_Plan_04__c);
-				
-				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_01__c);
-				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_02__c);
-				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_03__c);
-				if (ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c != null)  nonMemberRatePlanIdList.add(ebcSetup.Non_Member_Prepaid_Product_Rate_Plan_04__c);
+				List<Id> nonMemberRatePlanIdList = IECEBC_Utility.ebcNonMemberProductRatePlanIdList;
+				List<Id> memberRatePlanIdList = IECEBC_Utility.ebcMemberProductRatePlanIdList;
 				
 				// check if the upgrade options are in rate plan for member
 				// scan the list based on membership
@@ -311,34 +264,8 @@ public virtual class vfIECEBC_Controller {
 	
 	// ========================================================================
 	// Supporting methods for EBC AddOns
-	// this will be used in the IECEBC Dashboard and IECEBC AccountExtras(?)
+	// this will be used in the IECEBC Dashboard and IECEBC AccountExtras
 	// ------------------------------------------------------------------------
-	
-	// zqu__ProductRatePlan__c.zqu__ZProduct__c.ProductCategory__c accepted values
-	public static final String EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL = 'Account-Level Add-On';
-	public static final String EBC_ADD_ON_CATEGORY_SERVICE_LEVEL = 'Service-Level Add-On';
-	private static final Set<String> ebcAddOnProductCategoryAllAvailableSet = new Set<String> {EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL, EBC_ADD_ON_CATEGORY_SERVICE_LEVEL};
-	
-	// ========================================================================
-	// ebcAddOnProductCategoryAllowedSet list the Add On category allowed for 
-	// the current user, based on the current eBroadcast Product Rate Plan.
-	private Set<String> ebcAddOnProductCategoryAllowedSet {
-		get{
-			if (ebcAddOnProductCategoryAllowedSet == null)
-			{
-				Set<String> allowedSet = new Set<String>();
-				if ( productRatePlan.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID ) 
-				{
-					allowedSet = new Set<String> {EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL, EBC_ADD_ON_CATEGORY_SERVICE_LEVEL};
-				} else {
-					allowedSet = new Set<String> {EBC_ADD_ON_CATEGORY_ACCOUNT_LEVEL};
-				}
-				ebcAddOnProductCategoryAllowedSet = allowedSet;
-			}
-			return ebcAddOnProductCategoryAllowedSet;
-		}
-		private set;
-	} // end ebcAddOnProductCategoryAllowedSet getter/setter
 	
 	
 	// ========================================================================
@@ -352,27 +279,23 @@ public virtual class vfIECEBC_Controller {
 					, zqu__Description__c
 					, zqu__EffectiveEndDate__c
 					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
-					   		, zqu__RecurringPeriod__c
-						from zqu__R00N40000001mFVKEA2__r 
+							, zqu__RecurringPeriod__c
+						from zqu__R00N40000001mFVKEA2__r // zqu__ProductRatePlanCharge__r child list
 						where zqu__Deleted__c != true
 						order by Id)
-						//from zqu__ProductRatePlanCharge__r order by Id)
 					, (select Id, Name, Product_Rate_Plan__c, Short_Description__c, Long_Description__c, Order__c
 						from Product_Rate_Plan_Informations__r order by Order__c, Id)
 					
 					from zqu__ProductRatePlan__c 
-  					where  zqu__ZProduct__r.ProductCategory__c in : ebcAddOnProductCategoryAllowedSet
-							//and zqu__ZProduct__r.zqu__Active__c = true
+					where  Id in : allowableEbcAddOnProductRatePlanIdSet
 							and zqu__Deleted__c != true
-							and zqu__EffectiveStartDate__c <= TODAY
-							and zqu__EffectiveEndDate__c >= TODAY
-					order by zqu__ZProduct__r.zqu__EffectiveEndDate__c ASC, Id DESC
+					order by Name ASC, Id DESC
 					limit 100];
 				
 				allowableEbcAddOnProductRatePlanList = prodRatePlanList;
-			}
+			} // end if
 			return allowableEbcAddOnProductRatePlanList;
-		}
+		} // end get
 		private set;
 	} // end of allowableEbcAddOnProductRatePlanList getter/setter
 	
@@ -381,32 +304,36 @@ public virtual class vfIECEBC_Controller {
 	// that also includes those that are already subscribed
 	private Set<Id> allowableEbcAddOnProductRatePlanIdSet{
 		get{
-			if (allowableEbcAddOnProductRatePlanIdSet == null) {
-				Set<Id> prpIdSet = new Set<Id>();
-				List<zqu__ProductRatePlan__c> prpList = allowableEbcAddOnProductRatePlanList;
-				for (zqu__ProductRatePlan__c prp: prpList) 
-				{
-					prpIdSet.add(prp.Id);
+			Set<Id> allowedSet = new Set<Id>();
+			if ( productRatePlan.EBC_SubscriptionType__c == EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID ) 
+			{
+				if (IECEBC_Utility.ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c != null) {
+					allowedSet.add(IECEBC_Utility.ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c);
 				}
-				allowableEbcAddOnProductRatePlanIdSet = prpIdSet;
-			}
-			return allowableEbcAddOnProductRatePlanIdSet;
+				if (IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c != null) {
+					allowedSet.add(IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c);
+				}
+			} else {
+				if (IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c != null) {
+					allowedSet.add(IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c);
+				}
+			} // end if
+			return allowedSet;
 		}
-		private set;
+		//private set;
 	} // end of allowableEbcAddOnProductRatePlanIdSet getter/setter
 	
 	// =========================================================================
-	// showLinkToProductAddOn is true if all allowableEbcAddOnProductRatePlanIdSet already subscribed
+	// showLinkToProductAddOn is false if all allowableEbcAddOnProductRatePlanIdSet already subscribed
 	public Boolean showLinkToProductAddOn {
 		get {
 			Boolean hasNoMoreAvailableOptions = ! currentEbcAddOnProductRatePlanIdToSubscriptionMap.keyset().containsAll(allowableEbcAddOnProductRatePlanIdSet);
 			return hasNoMoreAvailableOptions;
 		}
-		private set;
+		//private set;
 	}
 	// =========================================================================
 	// currentEbcAddOnProductRatePlanList return currently subscribed ProductRatePlan for EBC Add Ons
-	// note that selecting on EBC Add On category is based on ProductCategory__c from zqu__ZProduct not Zuora__Product.
 	public List<zqu__ProductRatePlan__c> currentEbcAddOnProductRatePlanList
 	{
 		get{
@@ -474,7 +401,7 @@ public virtual class vfIECEBC_Controller {
 					from Zuora__SubscriptionProductCharge__c 
 					where Zuora__Subscription__r.Zuora__CustomerAccount__c = : billingAccount.Id
 						and Zuora__Subscription__r.Zuora__TermEndDate__c >= TODAY
-						and ( Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZProduct__r.ProductCategory__c in : ebcAddOnProductCategoryAllAvailableSet )
+						and ( Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.Id in : IECEBC_Utility.ebcAddOnProductRatePlanAllIdSet )
 					order by Zuora__Subscription__r.Zuora__Status__c DESC, Zuora__Subscription__r.LastModifiedDate
 				];
 				currentEbcAddOnSubscriptionProductChargeList = subsProductChargeList;
@@ -484,4 +411,4 @@ public virtual class vfIECEBC_Controller {
 		private set;
 	} // currentEbcAddOnSubscriptionProductChargeList getter/setter
 	
-}
+} // end of vfIECEBC_Controller

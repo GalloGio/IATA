@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is a renewal notification email, sent at Renewal_Window date before Zuora__NextRenewalDate__c</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EBC Account Notification For Renewal</name>
+    <style>none</style>
+    <subject>It&apos;s time to renew your EBC Subscription</subject>
+    <textOnly>Here is the Renewal Offering for  your eBroadcast account per {!EBC_Account_Notification__c.Notification_Date__c}:
+
+Username:   {!EBC_Account_Notification__c.Username__c}
+Billing account:   {!EBC_Account_Notification__c.Billing_Account_Name__c}
+EBC Account Status: {!EBC_Account_Notification__c.EBC_Account_Status__c}
+Next Renewal date  {!EBC_Account_Notification__c.Subscription_End_Date__c}
+eBroadcast Rate Plan:   {!EBC_Account_Notification__c.EBC_Rate_Plan_Name__c}
+Link: Manage Your Account:   {!EBC_Account_Notification__c.Manage_My_Account_URL__c}
+Link: Manage Your Account:   {!EBC_Account_Notification__c.Create_New_Campaign_URL__c}
+
+Not used anymore
+
+Email Balance:  {!EBC_Account_Notification__c.Email_Balance__c}
+Num of campaigns last month: {!EBC_Account_Notification__c.Number_of_Campaigns_Last_Month__c}
+Num of Email Sent last month: {!EBC_Account_Notification__c.Number_of_Email_Recipients_Last_Month__c}
+{!EBC_Account_Notification__c.Contact_Name__c}
+Subscription type: {!EBC_Account_Notification__c.EBC_Subscription_Type__c}
+Storage Capacity:   {!EBC_Account_Notification__c.00N8E000000rPlD}
+Storage Usage: {!EBC_Account_Notification__c.00N8E000000rPl8}
+
+For test only:
+This email is based on this link {!EBC_Account_Notification__c.Link}, which will be deleted later.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

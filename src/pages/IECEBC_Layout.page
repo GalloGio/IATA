@@ -80,12 +80,14 @@
                                                             <th>Account Balance:</th>
                                                             <td><apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!billingAccount.eBroadcast_Email_Balance__c}"/></apex:outputText> e-mail(s)</td>
                                                         </tr>
-                                                        <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__SubscriptionEndDate__c >= TODAY()}">
+                                                        <apex:outputText rendered="{!productRatePlan.EBC_SubscriptionType__c == 'Pre-Paid' && subscription.Zuora__NextRenewalDate__c >= TODAY()}">
                                                             <tr>
                                                                 <th>Rate Plan End Date:</th>
                                                                 <td>
                                                                     <apex:outputText value="{0, date, d MMMM yyyy}"><apex:param value="{!subscription.Zuora__SubscriptionEndDate__c}" /></apex:outputText><br />
-                                                                    <a href="#">Renew Now</a>
+                                                                    <apex:outputLink value="{!renewalPageUrl}" rendered="{!showRenewNow}">
+                                                                        Renew Now
+                                                                    </apex:outputLink>
                                                                 </td>
                                                             </tr>
                                                         </apex:outputText>
