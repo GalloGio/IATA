@@ -210,7 +210,10 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
         } catch(Exception e) { 
             if (!isUpdate) newFilter.Id = null;
             if (newListStepNumber == 2 && e.getMessage().contains('Audience__c')) newFilterFieldsValidity.put('Audience__c', false);
-            if (newListStepNumber == 2 && e.getMessage().contains('IATA_Codes__c')) newFilterFieldsValidity.put('IATA_Codes__c', false);
+            if (e.getMessage().contains('IATA_Codes__c')) {
+                newListStepNumber = 1;
+                newFilterFieldsValidity.put('IATA_Codes__c', false);
+            }
         }
         
         return null;

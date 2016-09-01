@@ -308,7 +308,7 @@
                                     <div class="action refresh-count">
                                         <span class="recipientCountContainer" style="display: none"><strong><span class="newFilterCount">n/a</span> recipients</strong> in this segment.</span>
                                         <a href="javascript:void(0);" styleClass="button secondary" onclick="saveGeoStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Refresh count</a>
-                                        <div class="recipientCountContainer" style="display: none"><strong>Note:</strong> The number of recipients is based on any Geo &amp; Refinement filters you may have set.</div>
+                                        <div class="recipientCountContainer" style="display: none"><strong>Note:</strong> The number of recipients is also based on any refinement filters you may have set.</div>
                                     </div>
                                     
                                 </div>
@@ -429,7 +429,7 @@
                                 <strong><span class="newFilterCount">n/a</span> recipients</strong> in this segment.
                             </span>
                             <a href="javascript:void(0);" styleClass="button secondary" onclick="saveRefinementStateAndRefreshCount();"><i class="icon fa fa-refresh" aria-hidden="true"></i> Calculate recipients count</a>
-                            <div style="display: none" class="recipientCountContainer"><strong>Note:</strong> The number of recipients is based on any Geo &amp; Refinement filters you may have set.</div>
+                            <div style="display: none" class="recipientCountContainer"><strong>Note:</strong> The number of recipients is also based on any geo filters you may have set.</div>
                         </div>
                     </div>
                 </div>
@@ -464,7 +464,7 @@
                                 <tr>
                                     <th>Audience:</th>
                                     <td>
-                                        IATA Travel Agencies
+                                        {!IF(newFilter.Audience__c != 'Custom', newFilter.Audience__c, 'Agency')}
                                     </td>
                                 </tr>
                                 <apex:outputText rendered="{!newFilter.Audience__c != 'Custom'}">
@@ -513,7 +513,7 @@
                             <div class="summary-box">
                                 <div class="box-body fit">
                                     <table class="data-table zibra cost"> 
-                                        <caption>Campaign Cost</caption>
+                                        <caption>Hint: This is what a campaign using this list would cost you</caption>
                                         <tr>
                                             <th>
                                                 <div class="item-name">Recipients selected</div>
@@ -540,12 +540,12 @@
                                         </apex:outputText>
                                         <tr>
                                             <th>
-                                                <div class="item-name">Provisional cost</div>
+                                                <div class="item-name">Campaign cost</div>
                                             </th>
                                             <td>
                                                 <div class="item-value">
                                                     <apex:variable var="cost" value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c * IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}" />
-                                                    <strong class="text-orange">USD $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!cost}"/></apex:outputText></strong>
+                                                    <strong class="text-orange">$<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!cost}"/></apex:outputText></strong>
                                                     <apex:outputText rendered="{!cost > 0}">
                                                         <p>for <apex:outputText value="{0, number, ###,###,##0}"><apex:param value="{!IF((billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c) < 0, ABS(billingAccount.eBroadcast_Email_Balance__c - newFilter.Number_of_Recipients__c), 0)}"/></apex:outputText> email(s) at $<apex:outputText value="{0, number, ###,###,##0.00}"><apex:param value="{!productRatePlan.EBC_Currency_Cost_Per_Email__c}"/></apex:outputText> /email</p>
                                                     </apex:outputText>

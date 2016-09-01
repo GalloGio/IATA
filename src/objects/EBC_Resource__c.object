@@ -69,6 +69,19 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Height__c</fullName>
+        <description>Image height as returned by Exact Target</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Image height as returned by Exact Target</inlineHelpText>
+        <label>Height</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Image_Size__c</fullName>
         <description>Image Size</description>
         <externalId>false</externalId>
@@ -87,11 +100,32 @@
         <externalId>false</externalId>
         <inlineHelpText>Image Type</inlineHelpText>
         <label>Image Type</label>
-        <length>3</length>
+        <length>4</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Image_URL__c</fullName>
+        <description>ExactTarget Public URL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>ExactTarget Public URL</inlineHelpText>
+        <label>Image URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Is_Ready__c</fullName>
+        <description>Is image has been pushed to Exact Target</description>
+        <externalId>false</externalId>
+        <formula>!ISBLANK( Image_URL__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is image has been pushed to Exact Target</inlineHelpText>
+        <label>Is Ready</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Size_KBytes__c</fullName>
@@ -101,6 +135,29 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Size in KiloBytes</inlineHelpText>
         <label>Size KBytes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Thumbnail_URL__c</fullName>
+        <description>ExactTarget Thumbnail URL</description>
+        <externalId>false</externalId>
+        <inlineHelpText>ExactTarget Thumbnail URL</inlineHelpText>
+        <label>Thumbnail URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Width__c</fullName>
+        <description>Image width as returned by Exact Target</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Image width as returned by Exact Target</inlineHelpText>
+        <label>Width</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>

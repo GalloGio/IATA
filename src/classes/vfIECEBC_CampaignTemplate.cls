@@ -33,7 +33,7 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
             d.Id = campaign.EBC_Design__c;
         }
         
-        d.Parent_Template__c = selectedTemplate;
+        if (!String.isBlank(selectedTemplate)) d.Parent_Template__c = selectedTemplate;
         
         upsert d;
         
@@ -41,8 +41,6 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
     }
     
     public PageReference upsertDesignAndExit() {
-        if (String.isBlank(selectedTemplate)) return null;
-        
         upsertDesign();
             
         PageReference pr = this.con.save();
@@ -55,8 +53,6 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
         return pr;
     }
     public PageReference upsertDesignAndContinue() {
-        if (String.isBlank(selectedTemplate)) return null;
-        
         upsertDesign();
         
         PageReference pr = this.con.save();
