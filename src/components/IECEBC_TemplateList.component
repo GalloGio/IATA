@@ -25,9 +25,9 @@
                     </div>
                     <label class="input-label" for="item{!templateSrc.Id}"><span class="input-state unselected">Select</span> <span class="input-state selected">Selected</span></label>
                 </div>
-                <h2 class="item-name">{!templateSrc.Template_Name__c}</h2>
+                <h2 class="item-name">{!templateSrc.Name}</h2>
                 <figure class="item-image">
-                    <apex:image rendered="{!templateSrc.Attachments.size == 0}" url="{!URLFOR($Resource.eBroadcastAssets, 'assets/img/components/templates/template-1.png')}" alt="{!templateSrc.Template_Name__c}" />
+                    <apex:image rendered="{!templateSrc.Attachments.size == 0}" url="{!URLFOR($Resource.eBroadcastAssets, 'assets/img/components/templates/template-1.png')}" alt="{!templateSrc.Name}" />
                     <apex:image rendered="{!templateSrc.Attachments.size > 0}" url="/servlet/servlet.FileDownload?file={!templateSrc.Attachments[0].Id}" width="97" height="114" />
                 </figure>
             </li>

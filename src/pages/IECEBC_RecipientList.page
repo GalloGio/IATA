@@ -119,7 +119,9 @@
                                     <label>
                                         <span class="input-label">Name of the copy </span> <apex:inputField styleClass="user-input text" value="{!selectedFilter.Name}" />
                                     </label>
+                                    <!--
                                     <p class="input-description">Internal use only. This name will not appear on your compaign.</p>
+									-->
                                 </div>
                             </div>
                             <footer class="modal-footer">
@@ -219,7 +221,7 @@
                                             </apex:outputText>
                                             <apex:outputPanel layout="block" rendered="{!NOT(isEditable)}" styleClass="tooltip-container">
                                                 <div class="tooltip-description">
-                                                    <p>You cannot edit this list as it is used in a campaign.</p>
+                                                    <p>You cannot edit / delete this list as it is used in an active campaign.</p>
                                                 </div>
                                             </apex:outputPanel>
                                         </td>

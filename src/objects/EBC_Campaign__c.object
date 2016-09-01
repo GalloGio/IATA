@@ -244,7 +244,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step3_Valid__c</fullName>
         <description>Verify if the Step 3 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK( EBC_Design__r.Parent_Template__c )</formula>
+        <formula>Is_Step2_Valid__c &amp;&amp; !ISBLANK( EBC_Design__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 3 is valid and meet the validation.</inlineHelpText>
         <label>Is Step3 Valid</label>
@@ -256,7 +256,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step3_Writable__c</fullName>
         <description>Is Step3 is writable based on other fields values</description>
         <externalId>false</externalId>
-        <formula>TEXT(Status__c) == &apos;DRAFT&apos;</formula>
+        <formula>TEXT(Status__c) == &apos;DRAFT&apos; &amp;&amp; ISBLANK( EBC_Design__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Is Step3 is writable based on other fields values</inlineHelpText>
         <label>Is Step3 Writable</label>
@@ -268,7 +268,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step4_Valid__c</fullName>
         <description>Verify if the Step 4 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c)</formula>
+        <formula>Is_Step3_Valid__c &amp;&amp; !ISBLANK(EBC_Design__c) &amp;&amp;  EBC_Design__r.Is_Tested__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 4 is valid and meet the validation.</inlineHelpText>
         <label>Is Step4 Valid</label>

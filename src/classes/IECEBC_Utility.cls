@@ -1,4 +1,14 @@
 public class IECEBC_Utility {
+    public static String generateRandomString(Integer len) {
+        final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+        String randStr = '';
+        while (randStr.length() < len) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += chars.substring(idx, idx+1);
+        }
+        return randStr; 
+    }
+    
     public static void creditCampaign(Id campaignId) {
         EBC_Campaign__c c = [Select Id, Number_of_Recipients__c, Billing_Account__c, Billing_Account__r.eBroadcast_Email_Balance__c From EBC_Campaign__c Where Id = :campaignId AND Status__c in ('APPROVED', 'PENDING_APPROVAL') LIMIT 1];
         

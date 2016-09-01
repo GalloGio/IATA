@@ -1,4 +1,4 @@
-<apex:page standardController="EBC_Template__c" extensions="vfIECEBC_CampaignPreview" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+<apex:page standardController="EBC_Template__c" extensions="vfIECEBC_Template" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
     <html>
         <head>
             <meta charset="UTF-8" />

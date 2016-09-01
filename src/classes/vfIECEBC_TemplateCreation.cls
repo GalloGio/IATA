@@ -9,7 +9,7 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                 globalTemplates = [
                     SELECT
                         Id,
-                        Template_Name__c,
+                        Name,
                         (Select Id, Name From Attachments where Name = '/edres/_full.png')
                     FROM EBC_Template__c
                     WHERE
@@ -19,6 +19,28 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
             }
             
             return globalTemplates;
+        }
+        set;
+    }
+    public List<EBC_Template__c> userEditableTemplates {
+        get {  
+            if (userEditableTemplates == null) {
+                userEditableTemplates = [
+                    Select
+                    	Id,
+                    	Name,
+                    	(Select
+                         	Id,
+                         	Name
+                         From Attachments)
+                    from EBC_Template__c
+                    where Is_Reusable__c = true
+                        and OwnerId =: userinfo.getUserId()
+                        and RecordType.DeveloperName != 'Global'
+                        and Audience__c = :audience
+                ];
+            }
+            return userEditableTemplates;
         }
         set;
     }

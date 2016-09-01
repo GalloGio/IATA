@@ -45,5 +45,43 @@ global without sharing class restIEC_Attachment {
         
         res.responseBody = a.Body;
         res.addHeader('Content-Type', a.ContentType);
+        
+        if (req.params != null && req.params.containsKey('client') && req.params.get('client') == 'exacttarget' && objectPrefix == resourcePrefix) {
+            EBC_Resource__c resource = [Select Id, Name From EBC_Resource__c Where Id = :aId];
+            
+            String filename = aId;
+            filename += resource.Name.substring(resource.Name.lastIndexOf('.'));
+            
+            getExactTargetImageStatus(aId, filename);
+        }
+    }
+    
+    @future(callout=true)
+    public static void getExactTargetImageStatus(Id ebcResourceId, String filename) { 
+		Map<String, Object> uploadStatus = IECEBC_ETImage.getImageStatus(filename);
+        System.debug(uploadStatus);
+        
+        EBC_Resource__c resource = new EBC_Resource__c();
+        resource.Id = ebcResourceId;
+        
+        Boolean isUpdated = false;
+        if (uploadStatus.containsKey('Image_Url') && !String.isBlank((String)uploadStatus.get('Image_Url'))) {
+            resource.Image_URL__c = (String)uploadStatus.get('Image_Url');
+            isUpdated = true;
+        }
+        if (uploadStatus.containsKey('Thumb_Url') && !String.isBlank((String)uploadStatus.get('Thumb_Url'))) {
+            resource.Thumbnail_URL__c = (String)uploadStatus.get('Thumb_Url');
+            isUpdated = true;
+        }
+        if (uploadStatus.containsKey('Width') && Integer.valueOf(uploadStatus.get('Width')) != 0) {
+            resource.Width__c = Integer.valueOf(uploadStatus.get('Width'));
+            isUpdated = true;
+        }
+        if (uploadStatus.containsKey('Height') && Integer.valueOf(uploadStatus.get('Height')) != 0) {
+            resource.Height__c = Integer.valueOf(uploadStatus.get('Height'));
+            isUpdated = true;
+        }
+        
+        if (isUpdated) update resource;
     }
 }

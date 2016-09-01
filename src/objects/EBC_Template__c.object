@@ -96,11 +96,30 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Is_Reusable__c</fullName>
         <defaultValue>false</defaultValue>
         <description>This checkbox is checked if the template if only for a particular campaign and is not reusable</description>
         <externalId>false</externalId>
         <label>Is Reusable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Tested__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Tested</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

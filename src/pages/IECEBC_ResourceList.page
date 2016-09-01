@@ -2,7 +2,7 @@
 	<apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
-            <title>eBroadcast Manage List</title>
+            <title>eBroadcast Manage Resources</title>
             <!-- End of Page </head> -->
         </apex:define>
         <apex:define name="pageScriptAdditions">
@@ -28,10 +28,10 @@
                             <footer class="modal-footer">
                                 <ul class="list actions">
                                     <li>
-                                        <button class="text-link js-close-modaldel">Discard</button>
+                                        <button class="text-link js-close-modaldel">Cancel</button>
                                     </li>
                                     <li>
-                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="I confirm" reRender="itemList" oncomplete="closeModal();" />
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="Confirm" reRender="itemList" oncomplete="closeModal();" />
                                     </li>
                                 </ul>
                             </footer>
