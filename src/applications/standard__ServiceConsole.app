@@ -168,6 +168,11 @@
     <listRefreshMethod>refreshList</listRefreshMethod>
     <pushNotifications>
         <pushNotification>
+            <fieldNames>LastModifiedBy</fieldNames>
+            <fieldNames>LastModifiedDate</fieldNames>
+            <objectName>01I20000000UKcO</objectName>
+        </pushNotification>
+        <pushNotification>
             <fieldNames>Category__c</fieldNames>
             <fieldNames>Email__c</fieldNames>
             <fieldNames>LastModifiedBy</fieldNames>
@@ -195,11 +200,6 @@
             <fieldNames>Status</fieldNames>
             <fieldNames>Subject</fieldNames>
             <objectName>Case</objectName>
-        </pushNotification>
-        <pushNotification>
-            <fieldNames>LastModifiedBy</fieldNames>
-            <fieldNames>LastModifiedDate</fieldNames>
-            <objectName>Contact__c</objectName>
         </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
