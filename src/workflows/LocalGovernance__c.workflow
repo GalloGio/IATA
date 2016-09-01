@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldUpdates>
-        <fullName>Set_Industry_Group_Unique_Name</fullName>
-        <description>To be used for Reg / Div Groups. Copies the Name field into the Unique Name field.</description>
-        <field>Unique_Name__c</field>
-        <formula>Name</formula>
-        <name>Set Industry Group Unique Name</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Change_recordtype</fullName>
         <description>Change the recordtype from draft to permanent to hide the Approval History on the assigned page layout</description>
         <field>RecordTypeId</field>
@@ -19,6 +9,16 @@
         <name>Change recordtype</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Industry_Group_Unique_Name</fullName>
+        <description>To be used for Reg / Div Groups. Copies the Name field into the Unique Name field.</description>
+        <field>Unique_Name__c</field>
+        <formula>Name</formula>
+        <name>Set Industry Group Unique Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
