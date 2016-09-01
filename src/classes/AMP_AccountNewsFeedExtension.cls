@@ -71,16 +71,16 @@ public with sharing class AMP_AccountNewsFeedExtension {
                   r.link = channel.getchildElement('link',null).getText();
                   r.description = channel.getchildElement('description',null).getText().replaceAll('\\<.*?\\>', '');
 
-                  // trick to cut the title from the description, the title until ' -'
-                  String title = r.title.substring(0,r.title.indexOf(' -'));
-                  // replace the encoded quotes
-                  String description = r.description.replaceAll('&#39;','\'');
-                
-                  Integer length = description.length()-1;
-                  System.debug(description +' ' + length);
-                  // jump to the location of title end
-                  description = description.substring(description.indexOf(title)+title.length(),length);
-                  r.description = description;
+                //   // trick to cut the title from the description, the title until ' -'
+                //   String title = r.title.substring(0,r.title.indexOf(' -'));
+                //   // replace the encoded quotes
+                //   String description = r.description.replaceAll('&#39;','\'');
+                //
+                //   Integer length = description.length()-1;
+                //   System.debug(description +' ' + length);
+                //   // jump to the location of title end
+                //   description = description.substring(description.indexOf(title)+title.length(),length);
+                //   r.description = description;
 
                 //   r.description = r.description.substring(r.description.indexOf(r.title),100);
                   // r.description = String.escapeSingleQuotes(channel.getchildElement('description',null).getText());
