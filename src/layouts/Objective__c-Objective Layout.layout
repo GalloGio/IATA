@@ -65,7 +65,7 @@
                 <field>Children_Current_Value__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Target__c</field>
             </layoutItems>
             <layoutItems>

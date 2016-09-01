@@ -6,7 +6,7 @@ after update, before delete, before insert, before update) {
             CommentHandler.setObjectiveInfo(Trigger.new[0]);
         }
         if (Trigger.isUpdate) {
-            CommentHandler.setObjectiveInfo(Trigger.new[0]);
+            //CommentHandler.setObjectiveInfo(Trigger.new[0]);
         }
         if (Trigger.isDelete) {
         }

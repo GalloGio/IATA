@@ -12,7 +12,7 @@
 
 global class SchdlCACWSUsageUpdate implements Schedulable {
     
-    private static integer HOUR_DELAY_BETWEEN_JOBS = 6; // number of hours for the next scheduled run
+    private static integer HOUR_DELAY_BETWEEN_JOBS = 24; // number of hours for the next scheduled run
     
     global void execute(SchedulableContext sc) {
         

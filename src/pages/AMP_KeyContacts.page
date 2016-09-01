@@ -1,0 +1,37 @@
+<apex:page showHeader="false" standardStylesheets="true" sidebar="false"
+  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Account" extensions="AMP_KeyContactsController">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!--
+showHeader="true" sidebar="true"  >
+-->
+<head>
+
+  <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+</head>
+<apex:pageBlock >
+    <apex:pageBlockTable value="{!lsKeyContacts}" var="c">
+        <apex:column >
+        	<apex:facet name="header">Contact Name</apex:facet>
+
+        	<apex:outputLink target="_blank" value="/{!c.Id}" rendered="{! OR(c.AM_First_Name_Latin_Char__c != null, c.AM_Last_Name_Latin_Char__c != null)}">{!c.AM_First_Name_Latin_Char__c} {!c.AM_Last_Name_Latin_Char__c}</apex:outputLink>
+
+            <apex:outputLink target="_blank" value="/{!c.Id}" rendered="{! AND(c.AM_First_Name_Latin_Char__c == null, c.AM_Last_Name_Latin_Char__c == null)}">{!c.Name}</apex:outputLink>
+        </apex:column>
+        <apex:column value="{!c.Airline_Contact_Type__c}" />
+        <apex:column value="{!c.Function__c}" headerValue="Job Function"/>
+        <apex:column >
+            <apex:facet name="header">Title</apex:facet>
+
+            <apex:outputText value="{! IF(c.AM_Job_Title_English__c != null, c.AM_Job_Title_English__c, c.Title) }" />
+        </apex:column>
+        <apex:column value="{!c.Phone}" />
+        <apex:column value="{!c.MobilePhone}" />
+        <apex:column value="{!c.Email}" />
+    </apex:pageBlockTable>
+
+</apex:pageBlock>
+
+
+
+</html>
+</apex:page>

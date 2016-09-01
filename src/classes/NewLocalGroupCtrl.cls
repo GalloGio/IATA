@@ -11,9 +11,33 @@ global  class NewLocalGroupCtrl {
     public NewLocalGroupCtrl(ApexPages.StandardController stdctrl){
         lg = (LocalGovernance__c)stdctrl.getRecord();
         onChangeGroupType();
+        redirect();
     }
-    
-    
+
+    public PageReference redirect(){
+      List<RecordType> lsRecordTypes =
+          [SELECT Id FROM RecordType
+          WHERE SObjectType = 'LocalGovernance__c'
+          AND ( DeveloperName  = 'Reg_Div_Groups' OR DeveloperName  = 'Draft_Reg_Div_Group')];
+      Set<Id> setRegDivRecordTypes = new Set<Id>();
+      for(RecordType rt : lsRecordTypes) {setRegDivRecordTypes.add(rt.Id);}
+      if(setRegDivRecordTypes.Contains(lg.RecordTypeId )){
+        String prURL = '/apex/AMP_NewIATAGroup?';
+
+        String recordId =  ApexPages.currentPage().getParameters().get('id');
+        if(recordId != null) prUrl +='id='+recordId;
+        String recordType =  ApexPages.currentPage().getParameters().get('RecordType');
+        if(recordType != null) prUrl +='RecordType='+recordType;
+        String retUrl =  ApexPages.currentPage().getParameters().get('retUrl');
+        if(retUrl != null) prUrl +='&retURL='+retUrl;
+        prUrl +='&save_new=1&sfdc.override=1';
+        PageReference pageRef = new PageReference(prURL);
+        pageRef.setRedirect(true);
+        return pageRef;
+      }
+      else return null;
+    }
+
     public void onChangeGroupType(){
         // I cannot do that by filtered lookup because it's from parent to child
         nton = [SELECT IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Cluster__c, Cluster__r.Name,

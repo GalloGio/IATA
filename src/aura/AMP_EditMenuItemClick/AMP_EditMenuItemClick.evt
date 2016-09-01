@@ -1,0 +1,1 @@
+<aura:event type="COMPONENT" description="Click on the Edit menu item (usually in a list)" />
