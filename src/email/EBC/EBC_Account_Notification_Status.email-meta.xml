@@ -6,27 +6,34 @@
     <name>EBC Account Notification Status</name>
     <style>none</style>
     <subject>Your eBroadcast account status</subject>
-    <textOnly>Here is the monthly summary of your eBroadcast account per {!EBC_Account_Notification__c.Notification_Date__c}:
+    <textOnly>IATA eBroadcast Account
 
-User name:   {!EBC_Account_Notification__c.User_Name__c}
-Billing account:   {!EBC_Account_Notification__c.Billing_Account_Name__c}
-EBC Account Status: {!EBC_Account_Notification__c.EBC_Account_Status__c}
-Subscription end date:  {!EBC_Account_Notification__c.Subscription_End_Date__c}
-Email Balance:  {!EBC_Account_Notification__c.Email_Balance__c}
-eBroadcast Rate Plan:   {!EBC_Account_Notification__c.EBC_Rate_Plan_Name__c}
-Link: Manage Your Account:   {!EBC_Account_Notification__c.Manage_My_Account_URL__c}
-Num of campaigns last month: {!EBC_Account_Notification__c.Number_of_Campaigns_Last_Month__c}
-Num of Email Sent last month: {!EBC_Account_Notification__c.Number_of_Email_Recipients_Last_Month__c}
-Link: Manage Your Account:   {!EBC_Account_Notification__c.Create_New_Campaign_URL__c}
+Here is the monthly summary of your eBroadcast account
 
-Not used anymore
+Account details as of {!EBC_Account_Notification__c.Notification_Date_String__c}
 
-{!EBC_Account_Notification__c.Contact_Name__c}
-Subscription type: {!EBC_Account_Notification__c.EBC_Subscription_Type__c}
-Storage Capacity:   {!EBC_Account_Notification__c.00N8E000000rPlD}
-Storage Usage: {!EBC_Account_Notification__c.00N8E000000rPl8}
+Username: {!EBC_Account_Notification__c.Username__c}
 
-For test only:
-This email is based on this link {!EBC_Account_Notification__c.Link}, which will be deleted later.</textOnly>
+Account Name: {!EBC_Account_Notification__c.Billing_Account_Name__c}
+
+Account Status: {!EBC_Account_Notification__c.EBC_Account_Status__c}
+
+Account Balance: {!EBC_Account_Notification__c.Email_Balance__c} 	emails available
+
+Current Rate Plan: {!EBC_Account_Notification__c.EBC_Rate_Plan_Name__c}
+Expires: {!EBC_Account_Notification__c.Subscription_End_Date_String__c}
+
+Manage your account: {!EBC_Account_Notification__c.Manage_My_Account_URL__c}
+
+Campaigns sent last month
+
+Total Campaigns: {!EBC_Account_Notification__c.Number_of_Campaigns_Last_Month__c}
+
+Total Recipients: {!EBC_Account_Notification__c.Number_of_Email_Recipients_Last_Month__c}
+
+Create new campaigns: {!EBC_Account_Notification__c.Create_New_Campaign_URL__c}
+
+© International Air Transport Association, All Rights Reserved.
+800 Place Victoria • Montreal, Quebec • H4Z 1M1 Canada</textOnly>
     <type>custom</type>
 </EmailTemplate>

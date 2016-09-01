@@ -4,8 +4,7 @@
  * This is part of the eBroadcast feature
  * 
  * History: 
- *  - 20160826-sl: initial version
- * 
+ *  - 20160901-sl: initial version, using IECEBC_TestUtility
  *
  */
 @isTest
@@ -58,5 +57,24 @@ private class SchdlEBCCreateNotificationForRenewal_tst {
 		
 		System.debug('Unit Test: Finish: BtchEBCCreateNotificationForRenewal');
 	} // test03_BasicTestOnBatchStaticGetter
+	
+	// ========================================================================
+	// basic test: calling batch job, with single test data provided
+	@isTest (SeeAllData=false)	
+	static void test04_BasicTestOnBatchJobWithTestData() {
+		IECEBC_TestUtility.createEbcSetupAndRelatedData();
+		IECEBC_TestUtility.createTestUser();
+		Date dSubscriptionEndDate = Date.today().addDays(Integer.valueOf(IECEBC_TestUtility.EBC_RENEWAL_WINDOW));
+		IECEBC_TestUtility.createEbcSubscription( IECEBC_TestUtility.lEbcProductRatePlanMember[0], IECEBC_TestUtility.oEbcProductMember, dSubscriptionEndDate);
+		
+		Test.startTest();
+		
+		BtchEBCCreateNotificationForRenewal.callBatchEBCCreateNotification();
+		
+		Test.stopTest();
+		
+		System.debug('Unit Test: Finish: test04_BasicTestOnBatchJobWithTestData');
+	} // test04_BasicTestOnBatchJobWithTestData
+	
 	
 } // end of SchdlEBCCreateNotificationForRenewal_tst
