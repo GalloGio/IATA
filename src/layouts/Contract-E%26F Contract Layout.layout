@@ -13,6 +13,10 @@
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract_Name__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -21,11 +25,11 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>CCF_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -47,7 +51,7 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>CCF_Amount__c</field>
             </layoutItems>
             <layoutItems>
@@ -59,7 +63,7 @@
                 <field>CustomerSignedDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>StartDate</field>
             </layoutItems>
             <layoutItems>
@@ -67,7 +71,7 @@
                 <field>EndDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>ContractTerm</field>
             </layoutItems>
             <layoutItems>
@@ -263,6 +267,10 @@
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
         <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>FIR_Code__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CreatedDate</fields>
