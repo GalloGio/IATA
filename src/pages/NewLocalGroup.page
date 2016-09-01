@@ -1,4 +1,4 @@
-<apex:page standardController="LocalGovernance__c" extensions="NewLocalGroupCtrl" >
+<apex:page standardController="LocalGovernance__c" extensions="NewLocalGroupCtrl" action="{!redirect}">
     <c:Loading />
     <apex:form >
     <apex:sectionHeader title="Local Group Edit" subtitle="{!IF(ISBLANK(LocalGovernance__c.Name), 'New Local Group', LocalGovernance__c.Name)}" /> 
@@ -20,6 +20,7 @@
             <apex:pageBlockSectionItem rendered="{!allClustersSize<=1}" />
             
             
+            <apex:inputField value="{!LocalGovernance__c.Reporting_to__c}" required="true" />
             <apex:inputField value="{!LocalGovernance__c.Group_Owner__c}" styleClass="hidePicklist"/>
             
             

@@ -58,6 +58,19 @@ Object to store comments related to objectives, or independent comments that we 
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>News</relationshipLabel>
+        <relationshipName>Comments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Achievement__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Is this a comment that should be displayed on the weekly or monthly reports</description>
@@ -540,6 +553,58 @@ Object to store comments related to objectives, or independent comments that we 
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed without intervention</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Out of scope</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Sub_region__c</fullName>
         <description>Some divisions may need to report at a sub-region level instead of regional</description>
         <externalId>false</externalId>
@@ -940,6 +1005,49 @@ Object to store comments related to objectives, or independent comments that we 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed without intervention</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Out of scope</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sub_region__c</picklist>
             <values>
                 <fullName>AFI</fullName>
@@ -1265,6 +1373,25 @@ Object to store comments related to objectives, or independent comments that we 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sub_region__c</picklist>
             <values>
                 <fullName>AFI</fullName>
@@ -1310,6 +1437,15 @@ Object to store comments related to objectives, or independent comments that we 
         <active>true</active>
         <description>Type of comment is mandatory</description>
         <errorConditionFormula>(RecordType.DeveloperName = &quot;Objective_Independent&quot;) &amp;&amp; ((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE))</errorConditionFormula>
+        <errorMessage>Please specify the type of comment</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Type_of_related_comment</fullName>
+        <active>false</active>
+        <description>Type of comment is mandatory.
+Non specified means that it is an internal comment</description>
+        <errorConditionFormula>(RecordType.DeveloperName = &quot;Objective Related&quot;) &amp;&amp; ((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE) &amp;&amp; (Achievement__c = FALSE))</errorConditionFormula>
+        <errorDisplayField>Achievement__c</errorDisplayField>
         <errorMessage>Please specify the type of comment</errorMessage>
     </validationRules>
     <webLinks>

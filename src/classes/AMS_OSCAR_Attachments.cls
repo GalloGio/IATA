@@ -3,6 +3,13 @@ global class AMS_OSCAR_Attachments {
     private Boolean canAttachFiles;
     private Case cse;
 
+public Case oscCase {get;set;}
+  public AMS_OSCAR_Attachments(ApexPages.StandardController ctrl){
+
+
+  }
+
+
     public Boolean isAdminUser {get; set;}
 
     public Id caseId{
