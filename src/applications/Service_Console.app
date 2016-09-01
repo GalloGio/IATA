@@ -177,11 +177,6 @@
     <listRefreshMethod>refreshListRows</listRefreshMethod>
     <pushNotifications>
         <pushNotification>
-            <fieldNames>LastModifiedBy</fieldNames>
-            <fieldNames>LastModifiedDate</fieldNames>
-            <objectName>01I20000000UKcO</objectName>
-        </pushNotification>
-        <pushNotification>
             <fieldNames>Category__c</fieldNames>
             <fieldNames>Email__c</fieldNames>
             <fieldNames>LastModifiedBy</fieldNames>
