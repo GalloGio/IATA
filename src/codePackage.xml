@@ -20,5 +20,15 @@
         <members>*</members>
         <name>AuraDefinitionBundle</name>
     </types>
+    <types>
+        <members>Account-Airline Hqs Read-Only</members>
+        <members>Account-Airline Hqs</members>
+        <members>Account-IATA Airline - Branch</members>
+        <members>Account-Operators Page Layout</members>
+        <members>Account-Others</members>
+        <members>Account-new IATA Standard Account</members>
+        <members>Contract-E%26F Contract Layout</members>
+        <name>Layout</name>
+    </types>
     <version>37.0</version>
 </Package>
