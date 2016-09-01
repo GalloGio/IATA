@@ -260,6 +260,16 @@
                 <behavior>Required</behavior>
                 <field>EF_SubStatus__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Allow_Billing_Agreements__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Effective_Date__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Liquidator_Administrator__c</field>
@@ -267,16 +277,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Status_Additional_Information__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>EF_Effective_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Allow_Billing_Agreements__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -670,6 +670,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Client__c</fields>
+        <fields>Contract__c</fields>
+        <fields>EF_Status__c</fields>
+        <fields>Payment_Method_Code__c</fields>
+        <fields>Data_Currency__c</fields>
+        <fields>Billing_Currency__c</fields>
+        <fields>Payment_Currency__c</fields>
         <relatedList>EF_Billing_Agreement__c.Airline__c</relatedList>
     </relatedLists>
     <relatedLists>
