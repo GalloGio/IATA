@@ -1,6 +1,9 @@
 public without sharing class ISSP_Ctrl_AccountStatements {
 
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
+
+	public ContentVersion faq {get;set;}
+	public ContentVersion document {get;set;}
 	public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
@@ -43,10 +46,17 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		return pageref;
 	}
 
+	public String getInstance() {
+		return URL.getSalesforceBaseUrl().toExternalForm();
+	}
+
 	/**
 		CONSTRUCTOR
 	**/
 	public ISSP_Ctrl_AccountStatements() {
+		this.faq = getContentDoc('IATA Customer E-Statement (ICE)');
+		this.document = getContentDoc('IATA Customer E-Statement (ICE) User Guide');
+
 		this.listMessages = new list<String>();
 		// get current user
 		this.currentUser = [
@@ -101,6 +111,23 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		markLastUpdated();
 		markFirstOldPeriod();
         initListCurrency();
+	}
+
+	/**
+		Get File document object from the library with given name
+	**/
+	private ContentVersion getContentDoc(String name) {
+		try {
+			return [
+				Select Id
+				From ContentVersion
+				Where isLatest = true
+				And title = :name
+				Limit 1];
+		} catch (Exception e) {
+			System.debug('ERROR, document "' + name + '" not found: ' + e.getMessage());
+			return null;
+		}
 	}
 
 	/**

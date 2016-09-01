@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>37.0</apiVersion>
+    <description>Component that either requires the selection of an account, or displays the account profile if an account Id is already set</description>
+</AuraDefinitionBundle>

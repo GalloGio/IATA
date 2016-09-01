@@ -67,11 +67,11 @@ System.debug('******* 2 oscar: ' + oscar);
         System.debug('****************** result: '+result);
         
         
-        oscar = [SELECT Id, Status__c, Billing_Document_Number__c FROM AMS_OSCAR__c limit 1];
+        oscar = [SELECT Id, Status__c, Billing_Document_Number__c FROM AMS_OSCAR__c WHERE Id = :oscar1.Id limit 1];
         Test.startTest();
         
-        // System.assertEquals(oscar.Billing_Document_Number__c, '12345');
-        System.assertEquals(oscar.Billing_Document_Number__c, '54321');
+         System.assertEquals(oscar.Billing_Document_Number__c, '12345');
+        //System.assertEquals(oscar.Billing_Document_Number__c, '54321');
         /**
             REVIEW - the Assert below is failing!
         */

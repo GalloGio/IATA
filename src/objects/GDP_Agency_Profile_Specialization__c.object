@@ -50,7 +50,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,6 +62,7 @@
         <label>AIMS ID</label>
         <length>40</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -75,6 +76,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -87,6 +89,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Main Destination Specialization)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_SpecializatiOCBG</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -99,6 +102,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Main Market Specialization)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations9</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -111,6 +115,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Market Focus - Corporate)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations3</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -123,6 +128,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Market Focus - Leisure)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations1</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -135,6 +141,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -147,6 +154,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -159,6 +167,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Sales % - Accomodation)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations5</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -171,6 +180,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Sales % - Air)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations4</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -183,6 +193,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Sales % - Land)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations8</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -195,6 +206,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Sales % - Sea)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations6</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -207,6 +219,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Sales % - Tour)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations7</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -219,6 +232,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Sales Volume)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_Specializations2</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -231,6 +245,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Secondary Destination Specialization)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_SpecializatiOCBQ</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -243,6 +258,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Secondary Market Specialization)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_SpecializatiOCAw</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -255,6 +271,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Tertiary Destination Specialization)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_SpecializatiOCBa</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -267,6 +284,7 @@
         <relationshipLabel>GDP Agency Profiles and Specializations (Tertiary Market Specialization)</relationshipLabel>
         <relationshipName>GDP_Agency_Profiles_and_SpecializatiOCB6</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -277,6 +295,7 @@
         <label>WebStar ID</label>
         <length>40</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -285,9 +304,11 @@
     <nameField>
         <displayFormat>A-{00000}</displayFormat>
         <label>GDP Agency Profile and Specialization Na</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP Agency Profiles and Specializations</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>GDP</fullName>
         <active>true</active>

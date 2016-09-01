@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable">
+    
+	<!-- Account ID parameter - to be received from app -->
+    <aura:attribute name="accountId" type="String"/>
+    
+    <aura:handler name="AccountIdSelected" event="c:AMP_AccountIdSelected" action="{!c.setAccountId}"/>
+    
+    <aura:if isTrue="{!v.accountId == null}">
+        
+        <c:AMP_AccountSelector />
+        
+        <aura:set attribute="else">
+            
+            <c:AccountProfileContainer accountId="{!v.accountId}"/>
+            
+        </aura:set>
+    </aura:if>
+    
+</aura:component>

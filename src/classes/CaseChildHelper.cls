@@ -18,7 +18,8 @@ public  class CaseChildHelper {
         Set<String> statuses = new Set<String> {'Assessment Performed', 'Financial Security Requested', 'Financial Assessment Challenged'};    
         List<String> fieldsToCopy = new List<String>{'IFAP_Country_ISO__c','Subject', 'Description','RecordTypeId', 
                                                      'Origin', 'AccountId','ContactId','Region__c','BusinessHoursID',
-                                                     'Financial_Review_Type__c','IFAP_Financial_Year__c','FS_Deadline_Date__c'                                                     
+                                                     'Financial_Review_Type__c','IFAP_Financial_Year__c','FS_Deadline_Date__c',
+                                                     'IFAP_Financial_Month__c' //INC270744                                                     
                                                      
                                                      /*'BatchNumber__c','Priority',
                                                      'Status', 'IFAP_Country_ISO__c','Origin', 'ArchivedDate__c',

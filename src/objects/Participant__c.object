@@ -60,6 +60,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( NOT(ISBLANK(Representing__c )), Representing__r.Name ,  Head_Quartier__r.Name )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact__c</fullName>
         <externalId>false</externalId>
         <label>Contact</label>
@@ -90,7 +102,7 @@
             <filterItems>
                 <field>Contact.Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Standard Account</value>
+                <value>Others</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -110,6 +122,18 @@
         <formula>Contact__r.Account.IATA_ISO_Country__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Participant Office</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group_RecordType__c</fullName>
+        <externalId>false</externalId>
+        <formula>Local_Governance__r.RecordType.DeveloperName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Group RecordType</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -246,6 +270,28 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Representing__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Representing</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Airline Headquarters</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Participants (Representing)</relationshipLabel>
+        <relationshipName>Participants1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Title__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.Title</formula>
@@ -285,6 +331,13 @@
         <errorMessage>It&apos; s not possible to insert a new pariticipant or change  the existing one if the participant is related to an inactive local group.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Cant_add_before_approval</fullName>
+        <active>true</active>
+        <description>Participants cannot be added before a Reg/Div group has been approved</description>
+        <errorConditionFormula>Local_Governance__r.RecordType.DeveloperName  =    &apos;Draft_Reg_Div_Group&apos;</errorConditionFormula>
+        <errorMessage>Participants cannot be added before the group has been approved</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Contact_should_have_value_in_main_fields</fullName>
         <active>true</active>
         <description>The contact chosen must have a value for the following fields:
@@ -295,7 +348,8 @@
 •	Account Name
 •	Country</description>
         <errorConditionFormula>AND(
- Local_Governance__r.RecordType.DeveloperName = &quot;Local_Groups&quot;,
+ OR(Local_Governance__r.RecordType.DeveloperName = &quot;Local_Groups&quot;,
+    Local_Governance__r.RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;),
  OR(
   ISBLANK(Contact__r.FirstName),
   ISBLANK(Contact__r.LastName),
@@ -307,6 +361,45 @@
 )</errorConditionFormula>
         <errorMessage>The contact chosen must have a value for the following fields:
 First Name, Last Name, Job Title, Email and Account Name. Please complete these information and try again.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Group_Type</fullName>
+        <active>true</active>
+        <description>Verify the account type for the participiant</description>
+        <errorConditionFormula>AND(
+ AND(
+  AND(
+    AND( Contact__r.Account.RecordType.DeveloperName = &quot;Agency&quot;,
+      NOT(OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
+      )
+    ),
+    NOT(OR(Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot;,
+       Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot;)
+    )
+  ),
+  AND( ISPICKVAL(Contact__r.Account.Sector__c,&quot;Association&quot;),
+       Contact__r.Account.RecordType.DeveloperName = &quot;Standard_Account&quot;,
+       OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+        ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
+      )
+  )
+ ),
+ Group_RecordType__c = &quot;Local_Groups&quot;
+)</errorConditionFormula>
+        <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Title_under_contact_is_blank</fullName>

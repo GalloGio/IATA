@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION">
+  <aura:attribute name="errorMessage" type="String" />
+  <aura:attribute name="index" type="Integer" />
+  <aura:attribute name="bmaId" type="String" />
+</aura:event>

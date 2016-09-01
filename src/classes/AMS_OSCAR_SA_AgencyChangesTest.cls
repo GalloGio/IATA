@@ -64,7 +64,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-        return [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
+        return [SELECT Id, Account__c, Type_of_change__c FROM AMS_OSCAR__c LIMIT 1];
 
     }
 
@@ -172,6 +172,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = true, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+                           TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
+                           TC_Major_Shareholding__c = true, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
 
         insert customsettings;
 
@@ -189,8 +194,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         //refresh the Account's data
         getUpdatedAccountData();
@@ -242,13 +245,15 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                 System.assertEquals(HO1.Id, rel.Child_Account__r.ParentId);
                 countConditions++;
             }
+
         }
 
         System.assertEquals(BR1.ParentId, null);
 
         //all the conditions inside the loop must happen
         System.assertEquals(6, countConditions);
-
+        
+        Test.stopTest();
     }
 
     //Scenario 2: SA become BR
@@ -263,7 +268,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -320,6 +324,9 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+
+        Test.stopTest();
+
     }
 
     //Scenario 3: SA becomes BR, the parent is not changed (SA under a BR moves directly under the HO of the hierarchy)
@@ -335,7 +342,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -392,6 +398,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
     //Scenario 4: SA becomes HO
@@ -406,8 +414,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -464,6 +470,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
     //Change of location type behavior - If “Type of change” is not “Location type” this field must be empty
@@ -506,7 +514,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
             update oscar;
             System.assert(false, 'exception expected');
         } catch (Exception e) {
-            Boolean expectedExceptionThrown =  e.getMessage().contains('This option cannot be used when the OSCAR is opened for a Branch.') ? true : false;
+            Boolean expectedExceptionThrown =  e.getMessage().contains('The field Change of location type behavior cannot have value Dont change the parent when the OSCAR is opened for a Branch.') ? true : false;
             System.assertEquals(expectedExceptionThrown, true);
         }
 
@@ -525,8 +533,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         Test.startTest();
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -583,6 +589,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
 
@@ -633,7 +641,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
     }
 
     //A change of location for an agency which is not an “SA” cannot specify a target agency
-    @isTest static void blockTargetAgencyOnChangeOfLocationForNonSA() {
+    /*@isTest static void blockTargetAgencyOnChangeOfLocationForNonSA() {
 
         getUpdatedAccountData();
 
@@ -653,7 +661,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         Test.stopTest();
 
-    }
+    }*/
 
     //A change of location for an SA agency, which specify a target agency, cannot be mixed with a change of ownership
     @isTest static void blockMixChangeLocationChangeOwnership() {
@@ -757,8 +765,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
 
-        Test.stopTest();
-
         getUpdatedAccountData();
 
         //get the new hierarchy created by the system
@@ -821,6 +827,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 7);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership IATA buys IATA: SA and parent included in the change (migrate one Branch)
@@ -841,8 +849,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -913,6 +919,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership IATA buys IATA: SA is included, the parent is not
@@ -931,8 +939,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1004,6 +1010,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership non IATA buys IATA: both SA and parent included (Complete migration and HO remains the same)
@@ -1028,8 +1036,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1087,6 +1093,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership non IATA buys IATA: both SA and parent included (Complete migration and HO is replaced with a BR)
@@ -1111,8 +1119,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1170,6 +1176,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 6);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership non IATA buys IATA: SA is included, the parent is not
@@ -1191,8 +1199,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1257,6 +1263,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 5);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership non IATA buys IATA: Only BR 
@@ -1270,8 +1278,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1324,6 +1330,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 5);
 
+        Test.stopTest();
+
     }
 
     //Change of ownership non IATA buys IATA: Only SA 
@@ -1337,8 +1345,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1391,6 +1397,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 5);
 
+        Test.stopTest();
+
     }
 
     //• Change of ownership non IATA buys IATA: both SA and parent included (open oscar in SA)
@@ -1411,8 +1419,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1483,6 +1489,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 5);
 
+        Test.stopTest();
+
     }
 
 
@@ -1505,8 +1513,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         update oscar;
-
-        Test.stopTest();
 
         getUpdatedAccountData();
 
@@ -1571,6 +1577,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         //all the conditions inside the loop must happen
         System.assertEquals(countConditions, 5);
 
+        Test.stopTest();
+
     }
 
     //Change of location type behavior - oscar is opened with change of location type on SA which is directly under HO.
@@ -1597,4 +1605,105 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
     }
 
+    //Change of minor shareholding and major shareholding affect ownership master data
+    //since ownership must be equal on all the agencies in a hierarchy we must enforce the selection
+    //of all the agencies involved in these type of changes
+    @isTest static void enforceAllHierarchySelection() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(SA1, 'Major Shareholding', null, null);
+
+        Test.startTest();
+
+        try {
+
+            //deactivate an agency
+            BR2.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+            update BR2;
+
+            //Adding all agencies to migration list
+            List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = HO1.Id));
+            //pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR2.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA2.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA3.Id));
+            pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+
+            insert pds;
+
+            oscar.STEP6__c = AMS_Utils.PASSED;
+            update oscar;
+            //should update the oscar without any error
+            System.assert(true, true);
+
+            oscar.STEP6__c = AMS_Utils.FAILED;
+            update oscar;
+
+            delete pds;
+
+            //block is only done when trying to pass sanity check
+            oscar.STEP6__c = AMS_Utils.PASSED;
+            update oscar;
+            System.assert(false, 'exception expected');
+        } catch (Exception e) {
+            Boolean expectedExceptionThrown =  e.getMessage().contains('When performing a change of shareholding all the active agencies in the hierarchy must be selected.') ? true : false;
+            System.assertEquals(expectedExceptionThrown, true);
+        }
+
+        Test.stopTest();
+
+    }
+
+
+
+    //using page to create Process Details
+    @isTest static void accountHierarchySelectionPage() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Ownership to IATA Agent', null, null);
+
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+
+        insert pds;
+
+        PageReference pg = Page.AMS_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar.Id);
+
+        Test.startTest();
+
+        AMS_AccountHierarchySelectionController con = new AMS_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+        System.assert(con.editable);
+        System.assertEquals(7,con.hierarchy.size());
+
+        con.hierarchy[2].main = true;
+        con.hierarchy[2].selectMain(); //simulates page actionSupport
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
+
+        con.hierarchy[2].main = false;
+        con.hierarchy[2].selectMain(); //simulates page actionSupport
+        System.assert(con.hierarchy[2].main);
+
+        System.assert(!con.oscarFieldList.isEmpty());
+        System.assert(con.showTargetAgency);
+        System.assert(!con.showLocationTypeBehavior);
+
+        con.oscar.AMS_Target_Agency__c = HO1.Id;
+        con.save();
+        System.assert(!con.closeTab);
+
+        con.selectAll = true;
+        con.doSelectAll(); //simulates page actionSupport
+
+        con.oscar.AMS_Target_Agency__c = HO2.Id;
+        con.save();
+
+        Test.stopTest();
+
+    }
 }
