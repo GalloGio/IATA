@@ -37225,7 +37225,7 @@
     </layoutAssignments>	
 	<layoutAssignments>
         <layout>Account-Operators Page Layout</layout>
-        <recordType>Account.Others</recordType>
+        <recordType>Account.Operator</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Others</layout>
