@@ -21395,6 +21395,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.Contract_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.Contract_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22091,6 +22096,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Billing_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Billing_Agreement_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
