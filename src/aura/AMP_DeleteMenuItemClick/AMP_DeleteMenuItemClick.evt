@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="relatedAccount" type="AMS_Account_Role__c" />
+</aura:event>
