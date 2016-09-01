@@ -286,10 +286,6 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>FIR_Code__c.FIR_Code__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>
