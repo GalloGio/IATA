@@ -1,0 +1,17 @@
+<apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AMP_CoreRelationshipExtension">
+
+	<apex:pageBlock title="Membership on Main IATA Industry Groups">
+		<apex:pageBlockTable value="{!lsParticipantWrappers}" var="participant">
+			<apex:column headerValue="IATA Group Name" style="width:15%;">
+				<apex:outputLink value="/{!participant.groupId}" target="_blank">{!participant.groupName}</apex:outputLink>
+			</apex:column>
+			<apex:column value="{!participant.role}" headerValue="Role Within Group" style="width:10%;"/>
+			<apex:column value="{!participant.salutation}" headerValue="Salutation" style="width:5%;"/>
+			<apex:column value="{!participant.firstName}" headerValue="First Name" style="width:20%;"/>
+			<apex:column value="{!participant.lastName}" headerValue="Last Name" style="width:20%;"/>
+			<apex:column value="{!participant.title}" headerValue="Title" style="width:20%;"/>
+		</apex:pageBlockTable>
+
+	</apex:pageBlock>
+
+</apex:page>

@@ -1,0 +1,27 @@
+<aura:component >
+	<!-- VARIABLES INITIATION -->    
+    	<!-- Account ID parameter - to be received from the parent component -->
+        <aura:attribute name="account" type="Account"/>
+    
+    <!-- / VARIABLES INITIATION -->
+    
+    
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="myapp">
+    
+        <div class="slds-tabs--default">
+            <ul class="slds-tabs--default__nav" role="tablist">
+                <li class="slds-tabs--default__item slds-text-heading--label" title="Item One" role="presentation"><a class="slds-tabs--default__link" href="javascript:toggle();" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-1" id="tab-default-1__item">Item One</a></li>
+                <li class="slds-tabs--default__item slds-text-heading--label slds-active"
+                    title="Item Two" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-2" id="tab-default-2__item">Item Two</a></li>
+                <li class="slds-tabs--default__item slds-text-heading--label" title="Item Three"
+                    role="presentation"><a class="slds-tabs--default__link" href="javascript:toggle();" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab-default-3__item">Item Three</a></li>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-1__item">Item One Content</div>
+            <div id="tab-default-2" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+            <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+        </div>
+    
+    </div>
+    <!-- / PRIMARY CONTENT WRAPPER -->
+</aura:component>

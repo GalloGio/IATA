@@ -35,7 +35,7 @@
 
 			<apex:panelGrid id="fields" columns="2">
 				<apex:pageBlockSection id="controlField" columns="1">
-					<apex:inputField value="{!oscar.Type_of_Change__c}">
+					<apex:inputField value="{!oscar.Type_of_change__c}">
 						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes"/>
 					</apex:inputField>
 				</apex:pageBlockSection>
@@ -64,7 +64,7 @@
 						</apex:inputCheckbox>
 					</apex:column>
 
-					<apex:column>
+					<apex:column >
 						<apex:facet name="header">
 							<apex:inputCheckbox value="{!selectAll}">
 								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
@@ -109,15 +109,15 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom">
-				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.Site.Save}" reRender="pageMessages"/>
-				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.Site.Cancel}" immediate="true"/>
+				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
+				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 
 		<apex:pageBlock tabStyle="AMS_OSCAR__c" rendered="{!NOT(editable)}">
 
 			<apex:pageBlockSection id="controlField" columns="1">
-				<apex:outputField value="{!oscar.Type_of_Change__c}"/>
+				<apex:outputField value="{!oscar.Type_of_change__c}"/>
 				<apex:outputField value="{!oscar.AMS_Target_Agency__c}" rendered="{!showTargetAgency}"/>
 				<apex:outputField value="{!oscar.Change_of_location_type_behavior__c}" rendered="{!showLocationTypeBehavior}"/>
 			</apex:pageBlockSection>
@@ -130,7 +130,7 @@
 						<apex:inputCheckbox value="{!hi.main}" disabled="true"/>
 					</apex:column>
 
-					<apex:column>
+					<apex:column >
 						<apex:inputCheckbox value="{!hi.selected}" disabled="true"/>
 					</apex:column>
 
@@ -140,8 +140,8 @@
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
 
-			<apex:pageBlockButtons>
-				<button class="btn" onclick="closeTab(); return false;">{!$Label.Site.Cancel}</button>
+			<apex:pageBlockButtons >
+				<button class="btn" onclick="closeTab(); return false;">{!$Label.site.cancel}</button>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 	</apex:form>

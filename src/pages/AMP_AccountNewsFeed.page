@@ -1,0 +1,112 @@
+<apex:page showHeader="false" standardStylesheets="true" sidebar="false"
+	applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
+	standardController="Account" extensions="AMP_AccountNewsFeedExtension">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<head>
+
+	  <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+	</head>
+
+	<!-- REQUIRED SLDS WRAPPER -->
+	<div class="slds">
+		<div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+			<div id="feed-list" class="slds-p-vertical--medium"></div>
+		</div>
+
+		<div id="test-div"></div>
+		<a href="https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&q={!searchTerm}" target="_blank">Show More News</a>
+	</div>
+	<!-- / REQUIRED SLDS WRAPPER -->
+
+	<apex:outputPanel id="js">
+</apex:outputPanel>
+<!-- JAVASCRIPT -->
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+<script>
+var obj = jQuery.parseJSON('{!JSONrssData}');
+var searchTerm = '{!searchTerm}'.replace('+',' ');
+var replaceWith = '<b>{!searchTerm}</b>'.replace('+',' ');
+// var obj = jQuery.parseJSON('[{"title":"Famed ship\'s wreckage found","timeStamp":"2016-05-03T15:55:37.000Z","link":"http://www.cnn.com/2016/05/02/living/endeavour-wreckage-found/index.html?eref=rss_world","description":"Researchers believe ","dateString":"Tue, 03 May 2016 15:55:37 EDT"}]');
+var links = new Array();
+var headlines = new Array();
+
+var dataTable = document.createElement('table');
+// create data table wrapper
+var tableWrapper = document.createElement('div');
+tableWrapper.className = 'slds-scrollable--x';
+tableWrapper.appendChild(dataTable);
+dataTable.className = 'slds-table slds-table--bordered';
+
+var fieldNames = ["Time","Title","Description"];
+
+var tableBody = dataTable.appendChild(document.createElement('tbody'));
+var headerRow = tableBody.appendChild(document.createElement('tr'));
+headerRow.className = 'slds-text-heading--label';
+fieldNames.forEach(function(item, index) {
+	var cell =  tableBody.appendChild(document.createElement('th'));
+	var label = document.createTextNode(item);
+	cell.appendChild(label);
+	headerRow.appendChild(cell);
+});
+
+var counter = 0;
+
+obj.forEach(function(item, index) {
+	if(counter<7) {
+
+	console.log(item.title);
+	console.log(item.link);
+	links.push(item.link);
+	headlines.push(item.title);
+	var dataRow = dataTable.insertRow();
+
+	var cell =  tableBody.appendChild(document.createElement('td'));
+	label = document.createTextNode(item.dateString);
+	cell.appendChild(label);
+	dataRow.appendChild(cell);
+
+	cell =  tableBody.appendChild(document.createElement('td'));
+	var link = $('<a></a>')
+	.attr('href',item.link)
+	.attr('target','_blank')
+	.text(item.title.substring(0,70));
+	// var link = document.createElement('a');
+	// var label = document.createTextNode(item.title);
+	// link.appendChild(label);
+	// //.appendTo(cell);
+	$(cell).append(link);
+	dataRow.appendChild(cell);
+	 cell =  tableBody.appendChild(document.createElement('td'));
+	 label = document.createTextNode(item.description.replace(/&#39;/g,'\'').substring(0,100));
+	cell.appendChild(label);
+	dataRow.appendChild(cell);
+
+}
+
+	counter++;
+});
+var outputDiv = document.getElementById("feed-list");
+outputDiv.appendChild(tableWrapper);
+$('td').each(function() {
+	$(this).html($(this).html().replace(searchTerm,replaceWith));
+});
+
+
+// var tid = setTimeout(mycode, 2000);
+// var index = 0;
+// function mycode() {
+//   // do some stuff...
+// 	// var c = $('<div id="c"></div>');
+// 	// c.text(headlines[index]);
+// 	// $('#test-div').append(c);
+//
+// 	$('#test-div').html('<a href="'+links[index]+'" target="_blank">'+headlines[index]+'</a>');
+// 	index++;
+// 	if(index == headlines.length) index = 0;
+//   tid = setTimeout(mycode, 2000); // repeat myself
+// }
+</script>
+
+</html>
+</apex:page>

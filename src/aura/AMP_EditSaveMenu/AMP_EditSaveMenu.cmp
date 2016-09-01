@@ -1,0 +1,22 @@
+<aura:component >
+    <aura:registerEvent name="editMenuClick" type="c:AMP_EditMenuItemClick"/>
+    <aura:registerEvent name="deleteMenuClick" type="c:AMP_DeleteMenuItemClick"/>
+    
+    
+    <ui:menu >
+        
+        <ui:menuTriggerLink aura:id="trigger">
+            <button class="slds-button slds-button--icon-border-filled slds-button--icon-small" aria-haspopup="true" >
+                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#down'}" class="slds-button__icon" />
+                <span class="slds-assistive-text">Show More</span>
+            </button>
+        </ui:menuTriggerLink>
+        
+        <ui:menuList class="actionMenu" aura:id="actionMenu">
+            <ui:actionMenuItem aura:id="item1" label="Edit" click="{!c.clickEdit}" />
+            <ui:actionMenuItem aura:id="item2" label="Delete" click="{!c.clickDelete}" />
+        </ui:menuList>
+        
+    </ui:menu>
+    
+</aura:component>

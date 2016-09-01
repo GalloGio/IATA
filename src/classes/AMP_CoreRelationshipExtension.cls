@@ -1,0 +1,91 @@
+public with sharing class AMP_CoreRelationshipExtension {
+
+	private final Account myAccount;
+	// public List<Participant__c> lsParticipants {get;set;}
+
+	public class Participant {
+		public String groupId {get;set;}
+		public String groupName {get;set;}
+		public String salutation {get;set;}
+		public String firstName {get;set;}
+		public String lastName {get;set;}
+		public String role {get;set;}
+		public String title {get;set;}
+		public String type {get;set;}
+	}
+
+
+
+	public List<Participant> lsParticipantWrappers {get;set;}
+
+    public AMP_CoreRelationshipExtension(ApexPages.StandardController stdController) {
+        this.myAccount = (Account)stdController.getRecord();
+				// lsParticipants = getParticipants();
+				lsParticipantWrappers = getParticipantWrappers(this.myAccount.Id);
+    }
+
+		@AuraEnabled
+		public static List<String> getGroupNames() {
+			List<AMPCoreGroups__c> lsCoreGroups = AMPCoreGroups__c.getAll().Values();
+			lsCoreGroups.sort();
+			List<String> groupNames = new List<String>();
+			Integer min = 0;
+			while (min <= lsCoreGroups.size()) {
+
+				for(AMPCoreGroups__c a : lsCoreGroups) {
+					if( a.Order__c == min) groupNames.add(a.Name);
+				}
+				min++;
+			}
+			return groupNames;
+		}
+
+		@AuraEnabled
+		public static List<Participant__c> getParticipants(Id accountId) {
+			List<String> groupNames = getGroupNames();
+			List<Participant__c> lsParticipants = new List<Participant__c>();
+			lsParticipants =
+				[SELECT Id, Local_Governance__c, Local_Governance__r.Name,	Participant_Type__c,
+								Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName,
+								Contact__r.Title
+				FROM Participant__c
+				WHERE Contact__r.AccountId = :accountId
+				AND Local_Governance__r.Name IN :groupNames];
+			return lsParticipants;
+		}
+
+		@AuraEnabled
+		public static List<Participant> getParticipantWrappers(Id accountId) {
+
+			List<String> groupNames = getGroupNames();
+			List<Participant__c> lsParticipants = getParticipants(accountId);
+			List<Participant> lsParticipantWrappers = new List<Participant>();
+			for(String groupname : groupNames) {
+				Boolean found = false;
+				for(Participant__c pa : lsParticipants) {
+					if(pa.Local_Governance__r.Name == groupname) {
+						Participant p = new Participant();
+						p.groupId = pa.Local_Governance__c;
+						p.groupName = groupname;
+						p.role = pa.Participant_Type__c.replaceAll('^\\d+\\s','');// remove leading number from participant type;
+						p.salutation = pa.Contact__r.Salutation;
+						p.firstName = pa.Contact__r.FirstName;
+						p.lastName = pa.Contact__r.LastName;
+						p.title = pa.Contact__r.Title;
+						found = true;
+						lsParticipantWrappers.add(p);
+						// break;
+					}
+				}
+				if(!found) {
+					Participant p = new Participant();
+					p.groupName = groupname;
+					p.role = 'not at this time';
+					lsParticipantWrappers.add(p);
+				}
+			}
+			System.debug(lsParticipantWrappers);
+			return lsParticipantWrappers;
+
+		}
+}
