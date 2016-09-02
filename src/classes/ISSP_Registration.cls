@@ -161,14 +161,14 @@ public without sharing class ISSP_Registration {
         //Start MM: "Project Registration Merge"- Check the referer:
         
         //EM : With new modification: now it is passed directly the page from which the user is coming
-        
+         
          
         sRefererCommunity = ApexPages.currentPage().getParameters().get('sRefererCommunity');
         country = ApexPages.currentPage().getParameters().get('country');
         //In order to load the correct template it is checked the 'CommunityName' parameter
         
         if (!String.isBlank(sRefererCommunity)) urlredirect = sRefererCommunity;
-        if( sRefererCommunity != null && sRefererCommunity != '' && sRefererCommunity.indexOf('iec') !=-1){
+        if( sRefererCommunity != null && sRefererCommunity != '' && (sRefererCommunity.indexOf('iec') !=-1 || sRefererCommunity.indexOf('IEC') !=-1)){
             sRefererCommunity = constIEC;
             //templatename = constIEC.toUpperCase() + '_Template' ;
         }   

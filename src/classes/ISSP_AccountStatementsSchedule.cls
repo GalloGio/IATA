@@ -29,7 +29,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         ISSP_NotificationBatch bc = new ISSP_NotificationBatch();
         bc.Query = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',')
         + ' FROM Contact '
-        + ' WHERE Status__c != \'Approved\''
+        + ' WHERE Account.Status__c = \'Approved\''
         + ' AND AccountId in ('
         + '   Select Account__c'
         + '   From Account_Statement__c'
@@ -38,7 +38,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         + '   Select contact__c'
         + '   From Portal_Application_Right__c'
         + '   Where Right__c = \'Access Granted\''
-        + '   And Portal_Application__r.ServiceName__c = \'Account Statements\')';
+        + '   And Portal_Application__r.Name =  \'' + ISSP_Ctrl_AccountStatements.APP_NAME + '\')';
         //+ '   And Terms_Acceptance__c = true'
 
         bc.NotificationTemplate = NOTIFICATION_TEMPLATE;

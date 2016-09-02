@@ -10,7 +10,7 @@ public with sharing class AMS_OSCAR_CommunicationController {
 
         this.oscar = (AMS_OSCAR__c)stdController.getRecord();
 
-        List<Case> tempCaseList = [Select id from Case where OSCAR__c = :this.oscar.id and RecordType.Name = 'OSCAR Communication' limit 1];
+        List<Case> tempCaseList = [Select id from Case where OSCAR__c = :this.oscar.id and RecordType.Name = 'OSCAR Communication' AND ParentId = null limit 1];
         if(tempCaseList.size() > 0)
             c = tempCaseList.get(0);
     }

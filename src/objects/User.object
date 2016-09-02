@@ -2568,7 +2568,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>Profile_Name__c</field>
             <operation>contains</operation>
-            <value>Portal</value>
+            <value>agency management</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

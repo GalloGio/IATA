@@ -8,7 +8,7 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   private List<Attachment> docs;
   private Boolean newContactRequired;
   private Map<String, decimal> detailledFees;
-  private String accountType;
+  private String accountType; 
 
   public String hiddenFilename {get; set;}
   public decimal expediteFees {get; private set;}
@@ -32,6 +32,10 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
   public String introduccionAlSistemaBSPyLenguajeBSP_Description {get; set;}
   public String losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description {get; set;}
   public String socialMediaForTheTravelIndustry_Description {get; set;}
+
+  public String fundamentalsJourneyPricing_Description {get; set;}
+  public String repricingExchangeReissue_Description {get; set;}
+  public String travelAgencyFees_Description {get; set;} 
 
   private String IATA_Code;
   private Account theAccount;
@@ -228,12 +232,11 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
       itdiCourses.add(s);
     }
     return itdiCourses;
-  }
+  } 
 
   public IDCard_ApplicationFormRRController() {
     initialize();
     system.debug('[IDCard_ApplicationFormRRController] Controller started')  ;
-
     detailledFees = new Map<String, decimal>();
     DocUploaded = false;
     selectedITDICourses = new String[] {};
@@ -248,6 +251,10 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
     introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
     socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
+
+    fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
+    repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
+    travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
 
     //knows what part of page to load
     part = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PAGE_PART));

@@ -1259,6 +1259,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Event_Source_lk__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Please enter at least 2 characters of the event you are looking for. To display all events use the wild card: *2</inlineHelpText>
+        <label>Event Source</label>
+        <referenceTo>Event__c</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ExpectedRevenue</fullName>
         <trackTrending>false</trackTrending>
     </fields>
@@ -2951,6 +2965,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Laetitia Slottved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2964,6 +2982,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Michael Huntington</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monica Papuga</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2988,6 +3010,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Rachel Zhang</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ruba Abdulaziz</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5647,6 +5673,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Laetitia Slottved</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Louise Denis</fullName>
                 <default>false</default>
             </values>
@@ -5660,6 +5690,10 @@
             </values>
             <values>
                 <fullName>Michael Huntington</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monica Papuga</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5684,6 +5718,10 @@
             </values>
             <values>
                 <fullName>Rachel Zhang</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ruba Abdulaziz</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11319,8 +11357,7 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
         <active>true</active>
         <description>“Lead source” and “event source” need to be mandatory, but the event only if the lead source was an even</description>
         <errorConditionFormula>AND (
-  ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source__c =&apos;&apos; )</errorConditionFormula>
-        <errorDisplayField>Event_Source__c</errorDisplayField>
+  ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source_lk__c =&apos;&apos; )</errorConditionFormula>
         <errorMessage>If the lead source was an event you need to specify the event</errorMessage>
     </validationRules>
     <validationRules>

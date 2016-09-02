@@ -1237,8 +1237,8 @@
                                                 <apex:column >
                                                     <!-- {!$ObjectType.OrderItem.fields.Quantity.Label} -->
                                                     <apex:facet name="header">Qty</apex:facet>
-                                                    <input type="number" class="qty" min="1" step="{!IF(product.IsQuantityInteger, '1', 'any')}" value="{!product.quantity}" size="5" />
-                                                    <apex:inputHidden value="{!product.quantity}" />
+                                                    <apex:input type="number" styleClass="qty" html-min="1" html-step="{!IF(product.IsQuantityInteger, '1', 'any')}" value="{!product.quantity}" size="5" />
+                                                    <!-- <apex:inputHidden value="{!product.quantity}" /> -->
                                                 </apex:column>
                                                 <apex:column >
                                                     <apex:facet name="header">{!$ObjectType.OrderItem.fields.Coupon__c.Label}</apex:facet>
