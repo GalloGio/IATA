@@ -38,6 +38,9 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>E_F_Services/Contract_Rejected</members>
+        <members>E_F_Services/Contract_Approval_Request</members>
+        <members>E_F_Services/Contract_Approved</members>
         <members>E_F_Services/EF_Billing_Agreement_Rejected</members>
         <members>E_F_Services/EF_Billing_Agreement_Approval_Request</members>
         <members>E_F_Services/EF_Billing_Agreement_Approved</members>
