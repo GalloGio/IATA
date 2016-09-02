@@ -4651,6 +4651,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>tenPageExtension</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>testIFAPContactAndAccounts</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -21531,6 +21535,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_SIS_Aggregator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -40887,6 +40896,10 @@
     <pageAccesses>
         <apexPage>EC2Images</apexPage>
         <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_UpdateBillingAgreement</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>EasyUploadAttachment</apexPage>
