@@ -2986,8 +2986,16 @@ and
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label>Ajouter un directeur / agent</label>
+        <name>ISSP_AMS_Add_Director</name>
+    </customLabels>
+    <customLabels>
         <label>Ajouter les ventes internationales</label>
         <name>ISSP_AMS_Add_International_Sales</name>
+    </customLabels>
+    <customLabels>
+        <label>Ajouter un gérant</label>
+        <name>ISSP_AMS_Add_Manager</name>
     </customLabels>
     <customLabels>
         <label>Ajouter une personne</label>
@@ -3010,12 +3018,28 @@ and
         <name>ISSP_AMS_Authorised_Sig</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Billing_Address_Field_Label --></label>
+        <name>ISSP_AMS_Billing_Address_Field_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Les succursales à l’étranger ne peuvent pas se trouver dans le même pays que votre siège social.</label>
+        <name>ISSP_AMS_Branch_Abroad_Invalid_Country</name>
+    </customLabels>
+    <customLabels>
         <label>Coordonnées de la succursale :</label>
         <name>ISSP_AMS_Branch_Office_address_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Business_Activities_Field_Label --></label>
+        <name>ISSP_AMS_Business_Activities_Field_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Êtes-vous sûr de bien vouloir effacer le dossier ?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label --></label>
+        <name>ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label</name>
     </customLabels>
     <customLabels>
         <label>Pièces justificatives supplémentaires</label>
@@ -3046,6 +3070,14 @@ and
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Completed_dangerous_goods_awareness_certificate --></label>
+        <name>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Completed_dangerous_goods_training --></label>
+        <name>ISSP_AMS_Completed_dangerous_goods_training</name>
+    </customLabels>
+    <customLabels>
         <label>Informations de contact</label>
         <name>ISSP_AMS_Contact_Info</name>
     </customLabels>
@@ -3074,7 +3106,7 @@ and
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Email Branch Abroad Subject --></label>
+        <label>Brouillon de demande d&apos;agrément de la succursale à l’étranger</label>
         <name>ISSP_AMS_Email_Branch_Abroad_Subject</name>
     </customLabels>
     <customLabels>
@@ -3094,8 +3126,240 @@ and
         <name>ISSP_AMS_Empty_Location_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Expiry_date --></label>
+        <name>ISSP_AMS_Expiry_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Alarm_system --></label>
+        <name>ISSP_AMS_FACILITIES_Alarm_system</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_An_alarm_system --></label>
+        <name>ISSP_AMS_FACILITIES_An_alarm_system</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Automated_export_accounting --></label>
+        <name>ISSP_AMS_FACILITIES_Automated_export_accounting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Automated_export_documentation --></label>
+        <name>ISSP_AMS_FACILITIES_Automated_export_documentation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Date_agreement_expires --></label>
+        <name>ISSP_AMS_FACILITIES_Date_agreement_expires</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Date_lease_expires --></label>
+        <name>ISSP_AMS_FACILITIES_Date_lease_expires</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Distance_from_nearest_Airport --></label>
+        <name>ISSP_AMS_FACILITIES_Distance_from_nearest_Airport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Distance_from_nearest_Office --></label>
+        <name>ISSP_AMS_FACILITIES_Distance_from_nearest_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Duration_of_contract --></label>
+        <name>ISSP_AMS_FACILITIES_Duration_of_contract</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Duration_of_lease --></label>
+        <name>ISSP_AMS_FACILITIES_Duration_of_lease</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Email --></label>
+        <name>ISSP_AMS_FACILITIES_Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Fax --></label>
+        <name>ISSP_AMS_FACILITIES_Fax</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Forklift_Max_Weight --></label>
+        <name>ISSP_AMS_FACILITIES_Forklift_Max_Weight</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Forklift_Number --></label>
+        <name>ISSP_AMS_FACILITIES_Forklift_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Forklift_Type --></label>
+        <name>ISSP_AMS_FACILITIES_Forklift_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Is_the_office_leased --></label>
+        <name>ISSP_AMS_FACILITIES_Is_the_office_leased</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Is_the_warehouse_leased --></label>
+        <name>ISSP_AMS_FACILITIES_Is_the_warehouse_leased</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Name_of_lessor --></label>
+        <name>ISSP_AMS_FACILITIES_Name_of_lessor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Name_of_subcontractor --></label>
+        <name>ISSP_AMS_FACILITIES_Name_of_subcontractor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Office_Full_Address --></label>
+        <name>ISSP_AMS_FACILITIES_Office_Full_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Other_Equipment_Max_Weight --></label>
+        <name>ISSP_AMS_FACILITIES_Other_Equipment_Max_Weight</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Other_Equipment_Number --></label>
+        <name>ISSP_AMS_FACILITIES_Other_Equipment_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Other_Equipment_Type --></label>
+        <name>ISSP_AMS_FACILITIES_Other_Equipment_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Other_pertinent_details --></label>
+        <name>ISSP_AMS_FACILITIES_Other_pertinent_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q1 --></label>
+        <name>ISSP_AMS_FACILITIES_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q10 --></label>
+        <name>ISSP_AMS_FACILITIES_Q10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q2 --></label>
+        <name>ISSP_AMS_FACILITIES_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q3 --></label>
+        <name>ISSP_AMS_FACILITIES_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q4 --></label>
+        <name>ISSP_AMS_FACILITIES_Q4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q5 --></label>
+        <name>ISSP_AMS_FACILITIES_Q5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q6 --></label>
+        <name>ISSP_AMS_FACILITIES_Q6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q7 --></label>
+        <name>ISSP_AMS_FACILITIES_Q7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q8 --></label>
+        <name>ISSP_AMS_FACILITIES_Q8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Q9 --></label>
+        <name>ISSP_AMS_FACILITIES_Q9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Scales_Max_Weight --></label>
+        <name>ISSP_AMS_FACILITIES_Scales_Max_Weight</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Scales_Number --></label>
+        <name>ISSP_AMS_FACILITIES_Scales_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Scales_Type --></label>
+        <name>ISSP_AMS_FACILITIES_Scales_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Size --></label>
+        <name>ISSP_AMS_FACILITIES_Size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_TEXT1 --></label>
+        <name>ISSP_AMS_FACILITIES_TEXT1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_TEXT2 --></label>
+        <name>ISSP_AMS_FACILITIES_TEXT2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_TEXT3 --></label>
+        <name>ISSP_AMS_FACILITIES_TEXT3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Telephone --></label>
+        <name>ISSP_AMS_FACILITIES_Telephone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Type_of_Premises --></label>
+        <name>ISSP_AMS_FACILITIES_Type_of_Premises</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Warehouse_Full_Address --></label>
+        <name>ISSP_AMS_FACILITIES_Warehouse_Full_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_Website --></label>
+        <name>ISSP_AMS_FACILITIES_Website</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_a --></label>
+        <name>ISSP_AMS_FACILITIES_a</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_b --></label>
+        <name>ISSP_AMS_FACILITIES_b</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_c --></label>
+        <name>ISSP_AMS_FACILITIES_c</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_d --></label>
+        <name>ISSP_AMS_FACILITIES_d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_e --></label>
+        <name>ISSP_AMS_FACILITIES_e</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_f --></label>
+        <name>ISSP_AMS_FACILITIES_f</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_g --></label>
+        <name>ISSP_AMS_FACILITIES_g</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_FACILITIES_sprinkler_system --></label>
+        <name>ISSP_AMS_FACILITIES_sprinkler_system</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_FAX --></label>
         <name>ISSP_AMS_FAX</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Facilities --></label>
+        <name>ISSP_AMS_Facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Facilities_Facility_Name --></label>
+        <name>ISSP_AMS_Facilities_Facility_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Facility_Name --></label>
+        <name>ISSP_AMS_Facility_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Facility_Type --></label>
+        <name>ISSP_AMS_Facility_Type</name>
     </customLabels>
     <customLabels>
         <label>Le téléchargement de votre fichier a échoué. Des problèmes ont été signalés pour le téléchargement du fichier Agrément avec Internet Explorer 10, si c&apos;est le cas veuillez essayer de télécharger via un autre navigateur, par exemple Internet Explorer 11 ou Chrome. Si les problèmes persistent, veuillez contacter l&apos;assistance et créer une requête pour nous le faire savoir.</label>
@@ -3190,6 +3454,14 @@ and
         <name>ISSP_AMS_Invalid_IATA_Code</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Is_Applicant_Parent_Field_Label --></label>
+        <name>ISSP_AMS_Is_Applicant_Parent_Field_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Is_Make_Declarations_Field_Label --></label>
+        <name>ISSP_AMS_Is_Make_Declarations_Field_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Cette succursale est-elle :</label>
         <name>ISSP_AMS_Is_this_branch_office</name>
     </customLabels>
@@ -3200,6 +3472,46 @@ and
     <customLabels>
         <label>* Votre organisation est-elle une entité légale dont les actions participent à des opérations boursières ou sont régulièrement échangées sur un marché hors cote ?</label>
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LS Association --></label>
+        <name>ISSP_AMS_LS_Association</name>
+    </customLabels>
+    <customLabels>
+        <label>Coopérative</label>
+        <name>ISSP_AMS_LS_Co_operative</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LS Corporation --></label>
+        <name>ISSP_AMS_LS_Corporation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LS Government --></label>
+        <name>ISSP_AMS_LS_Government</name>
+    </customLabels>
+    <customLabels>
+        <label>Société à responsabilité limitée</label>
+        <name>ISSP_AMS_LS_Limited_Company</name>
+    </customLabels>
+    <customLabels>
+        <label>Société en commandite</label>
+        <name>ISSP_AMS_LS_Limited_Partnership</name>
+    </customLabels>
+    <customLabels>
+        <label>Autre</label>
+        <name>ISSP_AMS_LS_Other</name>
+    </customLabels>
+    <customLabels>
+        <label>Partenariat</label>
+        <name>ISSP_AMS_LS_Partnership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LS Sole Owner --></label>
+        <name>ISSP_AMS_LS_Sole_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label>Société de gestion</label>
+        <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
         <label>Nom (Chinois)</label>
@@ -3214,20 +3526,48 @@ and
         <name>ISSP_AMS_LeftNav_Section2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section2_Cargo_Agency --></label>
+        <name>ISSP_AMS_LeftNav_Section2_Cargo_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section2_Cargo_Intermediary --></label>
+        <name>ISSP_AMS_LeftNav_Section2_Cargo_Intermediary</name>
+    </customLabels>
+    <customLabels>
         <label>3. Informations financières</label>
         <name>ISSP_AMS_LeftNav_Section3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section3_Cargo_Agency --></label>
+        <name>ISSP_AMS_LeftNav_Section3_Cargo_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section3_Cargo_Intermediary --></label>
+        <name>ISSP_AMS_LeftNav_Section3_Cargo_Intermediary</name>
     </customLabels>
     <customLabels>
         <label>4. Contacts de l&apos;agence</label>
         <name>ISSP_AMS_LeftNav_Section4</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section4_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section4_Cargo</name>
+    </customLabels>
+    <customLabels>
         <label>5. Locaux de l&apos;agence</label>
         <name>ISSP_AMS_LeftNav_Section5</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section5_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section5_Cargo</name>
+    </customLabels>
+    <customLabels>
         <label>6. Autres informations</label>
         <name>ISSP_AMS_LeftNav_Section6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section6_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section6_Cargo</name>
     </customLabels>
     <customLabels>
         <label>7. Relevé des ventes internationales</label>
@@ -3236,6 +3576,26 @@ and
     <customLabels>
         <label>6. Relevé des ventes internationales</label>
         <name>ISSP_AMS_LeftNav_Section7_Branch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section7_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section7_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section8_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Link_Add_Office --></label>
+        <name>ISSP_AMS_Link_Add_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Link_Add_Trained_Staff_Member --></label>
+        <name>ISSP_AMS_Link_Add_Trained_Staff_Member</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Link_Add_Warehouse --></label>
+        <name>ISSP_AMS_Link_Add_Warehouse</name>
     </customLabels>
     <customLabels>
         <label>Téléchargement des informations concernant le contact...</label>
@@ -3278,27 +3638,27 @@ and
         <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Legal Name --></label>
+        <label>* Dénomination sociale/enregistrée (langue locale)</label>
         <name>ISSP_AMS_Local_Details_Legal_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Legal Name ENG --></label>
+        <label>Dénomination sociale/enregistrée (anglais)</label>
         <name>ISSP_AMS_Local_Details_Legal_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Company --></label>
+        <label>Pas de nom de société en langue locale ? Veuillez alors saisir le nom de la société en caractères latins.</label>
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <label>Pas de nom de société en langue locale ? Veuillez alors saisir le nom en caractères latins.</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <label>Pas de nom local ? Veuillez alors saisir à nouveau le prénom en caractères latins.</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <label>Pas de nom local ? Veuillez alors saisir le nom en caractères latins.</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -3306,7 +3666,7 @@ and
         <name>ISSP_AMS_Local_Details_Physical_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Please Enter --></label>
+        <label>Veuillez saisir la dénomination sociale et l’adresse physique et de correspondance de l’agence à accréditer dans votre langue locale.</label>
         <name>ISSP_AMS_Local_Details_Please_Enter</name>
     </customLabels>
     <customLabels>
@@ -3322,20 +3682,38 @@ and
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Current Legal details --></label>
+        <label>Détails juridiques actuels</label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Current Location --></label>
+        <label>Situation géographique actuelle de l&apos;agence</label>
         <name>ISSP_AMS_NOC_Current_Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Instructions --></label>
+        <label>&lt;div&gt;
+Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;Confirmer que les coordonnées de l’agence sont correctes,&lt;/li&gt;
+&lt;li&gt;signaler à l’IATA toute modification et mise à jour des coordonnées de votre agence&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</label>
         <name>ISSP_AMS_NOC_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
+        <label>D. Envoyer à IATA</label>
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriétaire(s) mis à jour - Sociétés</label>
+        <name>ISSP_AMS_NOC_Updated_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label>Statut juridique mis à jour</label>
+        <name>ISSP_AMS_NOC_Updated_Legal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriétaire(s) mis à jour - Personnes physiques</label>
+        <name>ISSP_AMS_NOC_Updated_Owners_Managers</name>
     </customLabels>
     <customLabels>
         <label>Nom de l&apos;employeur :</label>
@@ -3422,7 +3800,7 @@ and
         <name>ISSP_AMS_NoC_Confirm_details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Curr_Company_Owner --></label>
+        <label>Propriétaire actuel de la société</label>
         <name>ISSP_AMS_NoC_Curr_Company_Owner</name>
     </customLabels>
     <customLabels>
@@ -3434,7 +3812,7 @@ and
         <name>ISSP_AMS_NoC_Current_Legal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Owner --></label>
+        <label>Propriétaire actuel</label>
         <name>ISSP_AMS_NoC_Current_Owner</name>
     </customLabels>
     <customLabels>
@@ -3450,8 +3828,28 @@ and
         <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
     </customLabels>
     <customLabels>
+        <label>Siège et toutes les succursales</label>
+        <name>ISSP_AMS_NoC_HO_All_Branches</name>
+    </customLabels>
+    <customLabels>
+        <label>Siège et une ou plusieurs succursales</label>
+        <name>ISSP_AMS_NoC_HO_Some_Branches</name>
+    </customLabels>
+    <customLabels>
         <label>Siège social</label>
         <name>ISSP_AMS_NoC_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label>Reçu et accepté :</label>
+        <name>ISSP_AMS_NoC_IATA_Acknowledged</name>
+    </customLabels>
+    <customLabels>
+        <label>Administrateur des agences IATA</label>
+        <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label>Utilisateur interne IATA uniquement</label>
+        <name>ISSP_AMS_NoC_IATA_Only</name>
     </customLabels>
     <customLabels>
         <label>Nom légal après changement</label>
@@ -3494,6 +3892,10 @@ and
         <name>ISSP_AMS_NoC_Name_address</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NoC No Company Owners --></label>
+        <name>ISSP_AMS_NoC_No_Company_Owners</name>
+    </customLabels>
+    <customLabels>
         <label>Notification de Changement</label>
         <name>ISSP_AMS_NoC_Notice_of_Change</name>
     </customLabels>
@@ -3502,7 +3904,15 @@ and
         <name>ISSP_AMS_NoC_Ownership_Shareholding</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Prev_Company_Owner --></label>
+        <label>NOTIFICATION DE CHANGEMENT - DEMANDE D’APPROBATION</label>
+        <name>ISSP_AMS_NoC_PDF_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez vous assurer que le % du total de propriété est égal à 100 %.</label>
+        <name>ISSP_AMS_NoC_Percent_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label>Propriétaire de la société mis à jour</label>
         <name>ISSP_AMS_NoC_Prev_Company_Owner</name>
     </customLabels>
     <customLabels>
@@ -3510,7 +3920,7 @@ and
         <name>ISSP_AMS_NoC_Previous_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Previous_Owner --></label>
+        <label>Propriétaire mis à jour</label>
         <name>ISSP_AMS_NoC_Previous_Owner</name>
     </customLabels>
     <customLabels>
@@ -3578,6 +3988,10 @@ and
         <name>ISSP_AMS_NoC_Summary_Previous_Ownership</name>
     </customLabels>
     <customLabels>
+        <label>Résumé de propriété mise à jour</label>
+        <name>ISSP_AMS_NoC_Summary_Updated_Ownership</name>
+    </customLabels>
+    <customLabels>
         <label>Je certifie, par la présente, qu&apos;à ma connaissance, les déclarations susmentionnées (ainsi que les déclarations mentionnées dans les annexes jointes) sont véridiques et correctes et que je suis dûment autorisé par l&apos;organisation identifiée dans la section «Informations sur la société» ci-dessus, à procéder auxdites déclarations et à remplir le présent document.</label>
         <name>ISSP_AMS_NoC_TC</name>
     </customLabels>
@@ -3598,15 +4012,15 @@ and
         <name>ISSP_AMS_NoC_Witness</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_error_message1 --></label>
+        <label>Veuillez soit confirmer que les détails juridiques de l’agence sont corrects, soit signaler tout changement à l’IATA.</label>
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_error_message2 --></label>
+        <label>Veuillez soit confirmer que les détails concernant la situation géographie de l’agence sont corrects, soit signaler tout changement à l’IATA.</label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_error_message3 --></label>
+        <label>Veuillez soit confirmer que les détails concernant la propriété de l’agence sont corrects, soit signaler tout changement à l’IATA.</label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
@@ -3658,6 +4072,10 @@ and
         <name>ISSP_AMS_Not_Listed_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Number_of_Years_Traded_Field_Label --></label>
+        <name>ISSP_AMS_Number_of_Years_Traded_Field_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS OPTION CASS ASSOC BRANCH --></label>
         <name>ISSP_AMS_OPTION_CASS_ASSOC_BRANCH</name>
     </customLabels>
@@ -3702,7 +4120,7 @@ and
         <name>ISSP_AMS_OPTION_PAX_BRANCH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS OPTION PAX BRANCH ABROAD --></label>
+        <label>Ventes passagers IATA - Succursale à l’étranger</label>
         <name>ISSP_AMS_OPTION_PAX_BRANCH_ABROAD</name>
     </customLabels>
     <customLabels>
@@ -3710,16 +4128,32 @@ and
         <name>ISSP_AMS_OPTION_PAX_HO</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Office_Full_Address --></label>
+        <name>ISSP_AMS_Office_Full_Address</name>
+    </customLabels>
+    <customLabels>
         <label>Propriétaire</label>
         <name>ISSP_AMS_Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Ownership Update --></label>
+        <name>ISSP_AMS_Ownership_Update</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_PAX_Company --></label>
         <name>ISSP_AMS_PAX_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_PAX_Person --></label>
+        <label>Personne</label>
         <name>ISSP_AMS_PAX_Person</name>
+    </customLabels>
+    <customLabels>
+        <label>Initiales ici</label>
+        <name>ISSP_AMS_PDF_Initials_Here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF Page --></label>
+        <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
     <customLabels>
         <label>Partenaire</label>
@@ -3740,6 +4174,10 @@ and
     <customLabels>
         <label>Administrateur&lt;br/&gt;du portail</label>
         <name>ISSP_AMS_Portal_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Position --></label>
+        <name>ISSP_AMS_Position</name>
     </customLabels>
     <customLabels>
         <label>Code postal</label>
@@ -3778,7 +4216,7 @@ and
         <name>ISSP_AMS_Reason_New_HO</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Rejected_File --></label>
+        <label>Veuillez télécharger le(s) fichier(s) pour chaque demande pour laquelle un fichier a été rejeté par l’IATA (indiqué par un X).  Une fois la procédure terminée, veuillez revenir dans le dossier et ajouter un commentaire pour informer l’IATA que votre candidature peut être traitée.</label>
         <name>ISSP_AMS_Rejected_File</name>
     </customLabels>
     <customLabels>
@@ -3810,8 +4248,20 @@ and
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
+        <label>* Succursales sélectionnées</label>
+        <name>ISSP_AMS_Selected_Branch_Offices</name>
+    </customLabels>
+    <customLabels>
         <label>Actionnaire</label>
         <name>ISSP_AMS_Shareholder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Shipping_Address_Field_Label --></label>
+        <name>ISSP_AMS_Shipping_Address_Field_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_State_Names_Addresses_Field_Label --></label>
+        <name>ISSP_AMS_State_Names_Addresses_Field_Label</name>
     </customLabels>
     <customLabels>
         <label>Obtenir l&apos;accréditation IATA</label>
@@ -3960,12 +4410,52 @@ and
         <name>ISSP_AMS_Step2_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_3_1_Title --></label>
+        <name>ISSP_AMS_Step3_3_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_3_2_Title --></label>
+        <name>ISSP_AMS_Step3_3_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_3_3_Title --></label>
+        <name>ISSP_AMS_Step3_3_3_Title</name>
+    </customLabels>
+    <customLabels>
         <label>SECTION 3 - Informations financières d’entreprise</label>
         <name>ISSP_AMS_Step3_3_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_3_Title_Cargo_Agency --></label>
+        <name>ISSP_AMS_Step3_3_Title_Cargo_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_3_Title_Cargo_Intermediary --></label>
+        <name>ISSP_AMS_Step3_3_Title_Cargo_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_20 --></label>
+        <name>ISSP_AMS_Step3_4_20</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_20_Agency --></label>
+        <name>ISSP_AMS_Step3_4_20_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_20_Intermediary --></label>
+        <name>ISSP_AMS_Step3_4_20_Intermediary</name>
+    </customLabels>
+    <customLabels>
         <label>Si votre agence appartient en tout ou partie à une ou plusieurs personnes, veuillez saisir les informations ici en tant que propriétaires, partenaires ou actionnaires (sauf si votre organisation est une entité légale dont les actions participent à des opérations boursières ou sont régulièrement échangées sur un marché hors cote).&lt;br/&gt;Saisissez les noms et fonctions des directeurs et agents d&apos;une entreprise, et les informations concernant les gérants de l&apos;agence.&lt;br/&gt;Sélectionnez au moins un signataire autorisé.</label>
         <name>ISSP_AMS_Step3_4_Branch_People</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
+        <name>ISSP_AMS_Step3_4_Cargo_Agent_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
+        <name>ISSP_AMS_Step3_4_Cargo_Intermediary_Title</name>
     </customLabels>
     <customLabels>
         <label>Si votre agence appartient en tout ou partie à une ou plusieurs sociétés, veuillez saisir les informations ici (sauf si votre organisation est une entité légale dont les actions participent à des opérations boursières ou sont régulièrement échangées sur un marché hors cote).</label>
@@ -3992,8 +4482,124 @@ and
         <name>ISSP_AMS_Step3_4_People</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step3 4 People Intermediary --></label>
+        <name>ISSP_AMS_Step3_4_People_Intermediary</name>
+    </customLabels>
+    <customLabels>
         <label>4.1 PERSONNES</label>
         <name>ISSP_AMS_Step3_4_People_SubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q10 --></label>
+        <name>ISSP_AMS_Step3_4_Q10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q11 --></label>
+        <name>ISSP_AMS_Step3_4_Q11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q12 --></label>
+        <name>ISSP_AMS_Step3_4_Q12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q13 --></label>
+        <name>ISSP_AMS_Step3_4_Q13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q13_F1 --></label>
+        <name>ISSP_AMS_Step3_4_Q13_F1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q14 --></label>
+        <name>ISSP_AMS_Step3_4_Q14</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q15 --></label>
+        <name>ISSP_AMS_Step3_4_Q15</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q16_Association --></label>
+        <name>ISSP_AMS_Step3_4_Q16_Association</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q16_partnership --></label>
+        <name>ISSP_AMS_Step3_4_Q16_partnership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q17 --></label>
+        <name>ISSP_AMS_Step3_4_Q17</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q18 --></label>
+        <name>ISSP_AMS_Step3_4_Q18</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q18_F1 --></label>
+        <name>ISSP_AMS_Step3_4_Q18_F1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q19 --></label>
+        <name>ISSP_AMS_Step3_4_Q19</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q1_Agency --></label>
+        <name>ISSP_AMS_Step3_4_Q1_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q1_Intermediary --></label>
+        <name>ISSP_AMS_Step3_4_Q1_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q2 --></label>
+        <name>ISSP_AMS_Step3_4_Q2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q2_ErrMsg --></label>
+        <name>ISSP_AMS_Step3_4_Q2_ErrMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q3 --></label>
+        <name>ISSP_AMS_Step3_4_Q3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q3_F1 --></label>
+        <name>ISSP_AMS_Step3_4_Q3_F1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q4 --></label>
+        <name>ISSP_AMS_Step3_4_Q4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q4_ErrMsg --></label>
+        <name>ISSP_AMS_Step3_4_Q4_ErrMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q5 --></label>
+        <name>ISSP_AMS_Step3_4_Q5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q5_F1 --></label>
+        <name>ISSP_AMS_Step3_4_Q5_F1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q6 --></label>
+        <name>ISSP_AMS_Step3_4_Q6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q6_F1 --></label>
+        <name>ISSP_AMS_Step3_4_Q6_F1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q7 --></label>
+        <name>ISSP_AMS_Step3_4_Q7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q9 --></label>
+        <name>ISSP_AMS_Step3_4_Q9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_5_Facilities --></label>
+        <name>ISSP_AMS_Step3_5_Facilities</name>
     </customLabels>
     <customLabels>
         <label>SECTION 5 - Locaux de l&apos;agence pour laquelle une approbation est requise</label>
@@ -4002,6 +4608,98 @@ and
     <customLabels>
         <label>SECTION 6 - Autres informations</label>
         <name>ISSP_AMS_Step3_6_Other_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_6_Trained_Staff_Members --></label>
+        <name>ISSP_AMS_Step3_6_Trained_Staff_Members</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_7_F2 --></label>
+        <name>ISSP_AMS_Step3_7_F2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_7_F3 --></label>
+        <name>ISSP_AMS_Step3_7_F3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_7_F4 --></label>
+        <name>ISSP_AMS_Step3_7_F4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_7_F5 --></label>
+        <name>ISSP_AMS_Step3_7_F5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_7_Financial --></label>
+        <name>ISSP_AMS_Step3_7_Financial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_7_credit_ref --></label>
+        <name>ISSP_AMS_Step3_7_credit_ref</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_F1 --></label>
+        <name>ISSP_AMS_Step3_8_F1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_F2 --></label>
+        <name>ISSP_AMS_Step3_8_F2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_F3 --></label>
+        <name>ISSP_AMS_Step3_8_F3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_F4 --></label>
+        <name>ISSP_AMS_Step3_8_F4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_H1 --></label>
+        <name>ISSP_AMS_Step3_8_H1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_H2 --></label>
+        <name>ISSP_AMS_Step3_8_H2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_H3 --></label>
+        <name>ISSP_AMS_Step3_8_H3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_H4 --></label>
+        <name>ISSP_AMS_Step3_8_H4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_Sales_Promotion --></label>
+        <name>ISSP_AMS_Step3_8_Sales_Promotion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_TableH1 --></label>
+        <name>ISSP_AMS_Step3_8_TableH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_TableH2 --></label>
+        <name>ISSP_AMS_Step3_8_TableH2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_TableH3 --></label>
+        <name>ISSP_AMS_Step3_8_TableH3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_TableH4 --></label>
+        <name>ISSP_AMS_Step3_8_TableH4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_TableH5 --></label>
+        <name>ISSP_AMS_Step3_8_TableH5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_8_TableH6 --></label>
+        <name>ISSP_AMS_Step3_8_TableH6</name>
+    </customLabels>
+    <customLabels>
+        <label>Emplacement de la succursale à l’étranger de l&apos;agent accrédité IATA suivant :</label>
+        <name>ISSP_AMS_Step3_Branch_Abroad</name>
     </customLabels>
     <customLabels>
         <label>&lt;strong&gt;Emplacement de la succursale&lt;/strong&gt; de l&apos;agent accrédité IATA suivant :&apos;</label>
@@ -4112,11 +4810,11 @@ and
         <name>ISSP_AMS_StepFinal_Access_Direct2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS StepFinal ChangeBank --></label>
+        <label>Nous vous remercions d’avoir envoyé votre demande de changement de coordonnées bancaires.</label>
         <name>ISSP_AMS_StepFinal_ChangeBank</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS StepFinal ChangeOther --></label>
+        <label>Nous vous remercions d’avoir envoyé votre demande de changement des coordonnées de votre agence.</label>
         <name>ISSP_AMS_StepFinal_ChangeOther</name>
     </customLabels>
     <customLabels>
@@ -4128,7 +4826,7 @@ and
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
+        <label>Nous vous remercions d&apos;avoir envoyé votre demande d&apos;accréditation pour la succursale à l’étranger de votre agence de voyage.</label>
         <name>ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks</name>
     </customLabels>
     <customLabels>
@@ -4146,6 +4844,14 @@ and
     <customLabels>
         <label>Demande d&apos;approbation en tant que IATA</label>
         <name>ISSP_AMS_StepsALL_Approval_As</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo CASS Associate Title --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo EACP Intermediary Title --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo Title --></label>
@@ -4180,8 +4886,16 @@ and
         <name>ISSP_AMS_Top</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Trained_Staff_Name --></label>
+        <name>ISSP_AMS_Trained_Staff_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Types de changement sélectionnés</label>
         <name>ISSP_AMS_Type_of_Change_Seclected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Type_of_Premises --></label>
+        <name>ISSP_AMS_Type_of_Premises</name>
     </customLabels>
     <customLabels>
         <label>Mettre à jour les informations de l&apos;agence</label>
@@ -4350,6 +5064,10 @@ and
     <customLabels>
         <label><!-- ISSP Agency Head Office code --></label>
         <name>ISSP_Agency_Head_Office_code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agency name --></label>
+        <name>ISSP_Agency_name</name>
     </customLabels>
     <customLabels>
         <label>Agent accrédité</label>
@@ -4711,6 +5429,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Contact_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Contact Name --></label>
+        <name>ISSP_Contact_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Créer un utilisateur de portail actif</label>
         <name>ISSP_Contact_OneStepCreate</name>
     </customLabels>
@@ -4885,6 +5607,18 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Brouillon</label>
         <name>ISSP_Draft</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_EBuletin --></label>
+        <name>ISSP_EBuletin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EBulletin --></label>
+        <name>ISSP_EBulletin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EBulletin Description --></label>
+        <name>ISSP_EBulletin_Description</name>
     </customLabels>
     <customLabels>
         <label>Modifier</label>
@@ -5612,6 +6346,66 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_IFAP_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP IFAP FA Deadline --></label>
+        <name>ISSP_IFAP_FA_Deadline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FA In Progress --></label>
+        <name>ISSP_IFAP_FA_In_Progress</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FA Performed --></label>
+        <name>ISSP_IFAP_FA_Performed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FA SECOND DEADLINE --></label>
+        <name>ISSP_IFAP_FA_SECOND_DEADLINE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FA Submitted --></label>
+        <name>ISSP_IFAP_FA_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FA Third Deadline --></label>
+        <name>ISSP_IFAP_FA_Third_Deadline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Deadline --></label>
+        <name>ISSP_IFAP_FSEC_Deadline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Provided --></label>
+        <name>ISSP_IFAP_FSEC_Provided</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Rejected --></label>
+        <name>ISSP_IFAP_FSEC_Rejected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Requested --></label>
+        <name>ISSP_IFAP_FSEC_Requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Second Deadline --></label>
+        <name>ISSP_IFAP_FSEC_Second_Deadline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Submitted --></label>
+        <name>ISSP_IFAP_FSEC_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FSEC Third Deadline --></label>
+        <name>ISSP_IFAP_FSEC_Third_Deadline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FS Requested --></label>
+        <name>ISSP_IFAP_FS_Requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP FS Uploaded --></label>
+        <name>ISSP_IFAP_FS_Uploaded</name>
+    </customLabels>
+    <customLabels>
         <label>Évaluation financière d&apos;IATA</label>
         <name>ISSP_IFAP_IATAFinancialAssessment</name>
     </customLabels>
@@ -5622,6 +6416,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Information Révision Financière</label>
         <name>ISSP_IFAP_Review</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFAP To Notify Agent --></label>
+        <name>ISSP_IFAP_To_Notify_Agent</name>
     </customLabels>
     <customLabels>
         <label>Instructions pour téléchargement Documents Financiers</label>
@@ -5928,6 +6726,10 @@ Si vous continuez à avoir des problèmes d&apos;inscription au Portail Clientè
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <name>ISSP_NoRecordsFoundCreateAgency2</name>
+    </customLabels>
+    <customLabels>
         <label>Aucune entreprise n&apos;a été trouvée pour ces critères de recherche. Veuillez modifier votre recherche et essayez à nouveau ou cliquez sur &quot;Créer&quot; pour créer un nouveau registre de votre entreprise.</label>
         <name>ISSP_NoRecordsFoundCreateStandardAirline</name>
     </customLabels>
@@ -6128,6 +6930,10 @@ Veuillez noter que de nombreuses factures de IATA pour les agents accrédités s
     <customLabels>
         <label>Approbation en attente</label>
         <name>ISSP_Pending_Approval</name>
+    </customLabels>
+    <customLabels>
+        <label>Documents en attente</label>
+        <name>ISSP_Pending_Documents</name>
     </customLabels>
     <customLabels>
         <label>Votre demande de changement d&apos;entreprise</label>
@@ -6461,7 +7267,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Request_Ongoing</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Request Submitted --></label>
+        <label>Demande envoyée</label>
         <name>ISSP_Request_Submitted</name>
     </customLabels>
     <customLabels>
@@ -8962,77 +9768,6 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>wire_transfer_payment_msg</name>
     </customLabels>
     <globalPicklists>
-        <name>Sector</name>
-        <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Category</name>
         <picklistValues>
             <masterLabel>ANSP</masterLabel>
@@ -9301,6 +10036,77 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <picklistValues>
             <masterLabel>Travel Agency Association</masterLabel>
             <translation><!-- Travel Agency Association --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

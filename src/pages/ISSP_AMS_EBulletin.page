@@ -1,0 +1,1165 @@
+<apex:page controller="ISSP_AMS_EBulletin"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           language="{!displayLanguage}"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}"
+           docType="html-5.0" 
+           >
+
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+        <script src="{!URLFOR($Resource.bootbox)}" />
+        <script src="{!URLFOR($Resource.datePickerFix)}" />
+        <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" /-->
+        <!--script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" /-->
+       
+    <style>
+        .pbTitle {
+            width: {!IF(isstep2,'90% !important','40% !important')};
+        }
+       
+       .pbBody {
+        padding-left:10px !important;    
+       }
+            
+       .pbBody a{color:#337ab7 !important}
+               
+        .bPageBlock {
+            border-top-width : thin !important;
+        }
+        
+        .bEditBlock input {
+            vertical-align:top !important;
+        }
+       
+       .btn {
+            padding: 2px 12px !important;
+        }
+                             
+        .btn-primary {
+            color: #fff !important;
+            background: inherit !important;
+            background-color: #337ab7 !important;
+            border-color: #2e6da4 !important;
+            border: 1px solid transparent !important;
+            /*background: */
+        }
+        
+        .tb-header {
+            padding-right:20px;
+        }
+                 
+        .modalrow {
+            padding-top:10px;
+        }
+            
+        ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+        }
+        
+        #contentWrapper {  background: #fff !important; margin: 0 auto;max-width: 1170px;}
+            
+        .requiredText {display:none;}
+        
+        .dateFormat {display:none;}
+        
+        .errorMsg {color:#d74c3b}
+            
+        .progress-bar-off {
+                color:#6BBBEA;
+                font-weight:bold;
+                background-image:none !important;
+                background-color:transparent !important;
+                border-right:2px solid white;
+        }
+        
+        .progress-bar {
+                font-size:inherit;
+        }
+        
+        body .bPageBlock .pbBody .pbSubheader .data2Col{
+                background-image: url('') !important;
+                background-color:  #1797c0;
+                color: #fff;
+        }
+        
+        .data2Col {
+        	padding-left:0px !important
+        }
+
+        body .bPageBlock .pbBody .summary-subsection .pbSubheader{
+                background-image: url('') !important;
+                background-color: initial;
+                color: initial;
+        }
+        
+        .pbSubheader {
+            font-weight:bold;
+            font-size:15px;
+        }
+
+        .pbSubheader2 {
+        	background-image: url('') !important;
+            background-color:  #AFDBF6;
+            color: initial;
+            font-weight:bold;
+            font-size:15px;
+        }
+                   
+        .contact-detail {
+            font-size:12px;
+            margin-bottom:3px;
+        }
+                   
+        .tbFooter {
+         text-align:right;
+        }
+                   
+        .requiredBlock {
+            width:5px !important;
+        }
+
+        .checkbox-td {
+            text-align: center;
+        }
+
+        .summary-table th {
+            text-align: center;
+        }
+
+        .summary-table td.dataCell {
+            border: 1px solid #e0e3e5 !important;
+        }
+        
+            .col1 {
+                padding-bottom:5px;
+                width:40%;
+                vertical-align: text-top;
+                font-weight:bold
+            }
+            
+            .col1_regular {
+                padding-bottom:5px;
+                width:25%;
+                vertical-align: text-top;
+                font-weight:bold
+            }       
+                   
+            .col2 {width:60%; padding-left:50px;vertical-align: text-top;}
+            .col2_regular {width:25%; padding-left:50px;vertical-align: text-top;}
+            .col2_4 {width:10%;padding-left:5px;vertical-align: text-top;}
+            .col3 {width:50%;vertical-align: text-top;}
+            
+            .col1_inner {width:25%; vertical-align: text-top;}
+       		.col2_inner {width:25%; vertical-align: text-top;}
+                   
+             .row1 {padding-bottom:16px; vertical-align: text-top;}
+    </style>
+    
+    <script>
+            
+            function isInArray(arr, val) {
+                for(var i=0; i<arr.length; i++) {
+                    if (arr[i] == val) return true;
+                }
+                return false;
+           }
+                   
+           
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+           
+        function resetStep1(v) {  
+            operationType = v ;         
+            if(v=='Cargo_Agent') {
+                $('#isGSA').hide();
+                $('#langPanel').hide();
+            } else {
+                $('#isGSA').show();
+                $('#langPanel').show();
+            }   
+        }
+                   
+        function togglePageItem(v, fldId) {
+            var el = document.getElementById(fldId);
+            if(v=='HO - Selected Branches' || v=='Selected Branches Only') {
+                el.style.display='block';
+            } else {
+                el.style.display='none';
+            }
+        }
+                 
+        
+    
+        function isIE(){
+            //alert(navigator.userAgent);
+            //return /MSIE/.test(navigator.userAgent);
+            if (/MSIE/.test(navigator.userAgent)){
+                return true;
+            }
+            else if (/rv:11/.test(navigator.userAgent)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    var vReqNo
+    
+    
+   
+    </script>
+
+    <apex:outputPanel id="amscountrylabel"> 
+      <script>  
+      function getCountryFromController() {
+        //$('#brcountry').text("{ !amsAllLangCountryLabel}");
+        //$('[id$=countrySelected]').val('{ !con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+      }
+      </script>
+    </apex:outputPanel>
+            
+     <div class="container">
+       <div id="contentWrapper">
+           <c:ISSP_CustomNavigation />
+            
+   
+    
+    <!-- ----------------------------------------->
+    <!--STEP 1 -->
+    <!----------------------------------------- -->
+     <apex:outputText rendered="{!IF(isStep1, true, false)}">
+        <div class="panel-primary">
+            <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">E-Bulletin</h3>
+            </div>
+            <div class="panel-body" id="body-enquiries">
+                <!--apex:form >
+                <div class="progress">
+                    
+                    <div class="progress-bar { !IF(isStep1, '', 'progress-bar-off')}" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                        < ! - -{  ! $ Label.ISSP_AMS_Step2_ProgressBar } - - >
+                        Step 1 - Selection Criteria
+                    </div>
+                    <div class="progress-bar { !IF(isStep2, '','progress-bar-off')}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 34%">
+                        Step 2 - Confirm Filtering Options
+                    </div>
+                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                        Step 3 - Generate Reports
+                    </div>
+                     
+                </div>
+                </apex:form-->
+
+                <apex:form >
+					<apex:inputHidden value="{!newFormDaily.RecordTypeId}" />
+					<apex:inputHidden value="{!newFormDaily.User__c}" />
+					<apex:inputHidden value="{!newFormDaily.Suspend_Subscription__c}" />
+					<apex:inputHidden value="{!newFormWeekly.RecordTypeId}" />
+					<apex:inputHidden value="{!newFormWeekly.User__c}" />
+					<apex:inputHidden value="{!newFormWeekly.Suspend_Subscription__c}" />
+					
+                    <apex:pageMessages id="theMessages" />
+                    
+                    <apex:outputPanel rendered="false">
+                        <script>
+                        // Check_CountryReqments();
+                        </script> 
+                    </apex:outputPanel>
+
+	                <apex:pageblock mode="detail" id="countryreqs" rendered="false" title="" >
+	                    
+	                </apex:pageblock>
+	                
+	                <center>
+	                    
+	                            <!-- apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/ -->
+	                	<div >
+	                		<apex:pageBlock id="SelectionCriteria">
+		                		<apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
+			                		<apex:facet name="header">
+				                        <apex:outputpanel >
+				                            Selection Criteria for DAILY Bulletin
+				                        </apex:outputpanel>
+			                        </apex:facet>
+		                        
+			                		<table width="100%">
+					               	<tr>
+						                <td width="30%">
+							                <table width="100%">
+								                <tr>
+									                <td width="100%" style="font-weight:bold">
+										                Geographic Area
+										            </td>
+								                </tr>
+								               	<tr>
+									                <td>
+									                	<apex:inputCheckBox value="{!newFormDaily.Area_1__c}" id="Area_1" label="Area 1 - North, Central, South America & Environs"
+									                		rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" >
+									                		<apex:actionSupport event="onchange" reRender="dailyCountry" id="Us1"/>
+									                	</apex:inputCheckbox>
+														<apex:outputField value="{!newFormDaily.Area_1__c}" label="Area 1 - North, Central, South America & Environs" 
+															rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+								        		    </td>
+								                </tr>
+								                <tr>
+									                <td>
+									                	<apex:inputCheckBox value="{!newFormDaily.Area_2__c}"  label="Area 2 - Europe, Middle East & Africa" 
+									                		rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" >
+									                		<apex:actionSupport event="onchange" reRender="dailyCountry" id="Us2"/>
+									                	</apex:inputCheckbox>
+														<apex:outputField value="{!newFormDaily.Area_2__c}" label="Area 2 - Europe, Middle East & Africa" 
+															rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />				                    
+										            </td>
+								                </tr>
+								                <tr>
+									                <td>
+									                	<apex:inputCheckBox value="{!newFormDaily.Area_3__c}" label="Area 3 - Far East, Australia, New Zealand & Pacific Islands"
+									                		rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" >
+									                		<apex:actionSupport event="onchange" reRender="dailyCountry" id="Us3"/>
+									                	</apex:inputCheckbox>
+														<apex:outputField value="{!newFormDaily.Area_3__c}" label="Area 3 - Far East, Australia, New Zealand & Pacific Islands" 
+															rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+									                </td>
+								                </tr>
+								                <tr>
+									                <td style="font-weight:bold">
+										                &nbsp;&nbsp;
+										            </td>
+								                </tr>
+								            </table> 
+								            <!-- *********************************************************************************************** -->
+								            <!-- *********************************************************************************************** -->
+								            <!-- Daily Frequency disabled by request of business -->
+								            <!-- *********************************************************************************************** -->
+								            <!-- *********************************************************************************************** -->
+								            <table width="100%" style="display:none">
+								                <tr>
+									                <td width="100%" style="font-weight:bold">
+										                Daily Frequency
+										            </td>
+								                </tr>
+								                <tr>
+									                <td>
+									                    <apex:inputField value="{!newFormDaily.Daily_Frequency__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+														<apex:outputField value="{!newFormDaily.Daily_Frequency__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+										            </td>
+								                </tr>
+								            </table> 
+								            <!-- *********************************************************************************************** -->
+								            <!-- *********************************************************************************************** -->
+								            <!-- *********************************************************************************************** -->
+								            <table width="100%">
+								            	<tr>
+									                <td width="100%" align="right" height="80px">
+									                	&nbsp;
+										            </td>
+								                </tr>
+								                <tr>
+									                <td width="100%" align="right" height="100">
+									                	<apex:inputField value="{!newFormDaily.Opt_out_Bulletin__c}" label="Opt out from Daily bulletin" 
+									                		rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+									                		<!--apex:actionSupport event="onchange" reRender="SelectionCriteria" id="optout1"/>
+									                	</apex:inputField-->
+														<apex:outputField value="{!newFormDaily.Opt_out_Bulletin__c}" label="Opt out from Daily bulletin"
+															rendered="{!IF(newFormDaily.Suspend_Subscription__c,'true','false')}" />
+										            </td>
+								                </tr>
+								            </table> 
+						                </td>
+						                <td width="10%">
+						                	&nbsp;
+						                </td>
+						                <td width="60%">
+
+						                	<table width="100%">
+							                <tr>
+								                <td width="100%"  colspan="2">
+
+
+									                <table width="100%" style="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'','display:none')}">
+									                <tr>
+										                <td>
+										                	<!--apex:selectList styleClass="contactcountry" id="dailyCountry" style="width:85%" value="{ !dailyCountry}" multiselect="true" size="9" disabled="{ !NOT(onOff)}">
+										                	    <apex:selectOptions value="{ !countryNameListSelectOptionDaily}"/>
+							                                </apex:selectList-->
+
+							                                <c:MultiselectPicklist id="dailyCountry"
+							                                			   leftLabel="Available Countries" 
+		                                                                   leftOptions="{!countryNameListSelectOptionDaily}"
+		                                                                   rightLabel="Selected Countries"
+		                                                                   rightOptions="{!dailyCountrySelected}"
+		                                                                   size="8"
+		                                                                   width="300px"
+		                                            		/>
+							                        	</td>
+									                </tr>
+									                </table>
+									                <table width="100%">
+									                <tr>
+										                <td width="40%" >
+							                                <apex:inputCheckBox value="{!dailyCountrySelectAll}" label="Select All" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}">
+										                		<apex:actionSupport event="onchange" action="{!dailyCountrySelectAll}"  id="cbSAd"/>
+										                	</apex:inputCheckbox>
+											            </td>
+									                </tr>
+									                </table> 
+
+									                <table width="100%" style="{!IF(newFormDaily.Suspend_Subscription__c ,'','display:none')}">
+									                <tr>
+										                <td width="100%" style="font-weight:bold">
+											                Countries
+											            </td>
+									                </tr>
+									                <tr>
+										                <td align="center">
+										                	<apex:dataList value="{!dailyCountryName}" var="countryName">
+														        <apex:outputText value="{!countryName}"/>
+														    </apex:dataList>
+							                            </td>
+									                </tr>
+									                </table>
+									            </td>
+							                </tr>
+							                <tr>
+								                <td  width="50%">
+								                
+									                <table width="100%">
+									                <tr>
+										                <td width="50%" style="font-weight:bold">
+											                Program
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Program_Passage__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Program_Passage__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Program_Cargo__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Program_Cargo__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Program_CASS_Associates__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Program_CASS_Associates__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											            </td>
+									                </tr>
+									                </table> 
+								                
+								                </td>
+								                <td  width="50%">
+
+									                <table width="100%">
+									                <tr>
+										                <td width="50%" style="font-weight:bold">
+											                Agency Information
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Agency_Info_Irregularities__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Agency_Info_Irregularities__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Agency_Info_Defaults__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Agency_Info_Defaults__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Agency_Info_Termination_Closures__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Agency_Info_Termination_Closures__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormDaily.Agency_Info_Reviews__c}" rendered="{!IF(NOT(newFormDaily.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormDaily.Agency_Info_Reviews__c}" rendered="{!IF(newFormDaily.Suspend_Subscription__c ,'true','false')}" />
+											           </td>
+									                </tr>
+									                </table> 
+
+								                </td>
+								            </tr>
+									        </table>
+						                </td>
+						                
+						                
+					                </tr>
+					           		</table> 
+
+			            		</apex:pageBlockSection>
+	                        
+					       
+
+					    		<apex:pageBlockSection columns="1" id="LegalStatusSection2" collapsible="false">
+			                		<apex:facet name="header">
+				                        <apex:outputpanel >
+				                            Selection Criteria for WEEKLY Bulletin
+				                        </apex:outputpanel>
+			                        </apex:facet>
+	                        
+			                		<table width="100%">
+					               	<tr>
+						                <td width="30%">
+							                <table width="100%">
+							                <tr>
+								                <td width="100%" style="font-weight:bold">
+									                Geographic Area
+									            </td>
+							                </tr>
+							               	<tr>
+								                <td>
+									                <apex:inputCheckBox value="{!newFormWeekly.Area_1__c}" label="Area 1 - North, Central, South America & Environs" 
+									                	rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}">
+								                		<apex:actionSupport event="onchange" reRender="weeklyCountry" id="Us4"/>
+								                	</apex:inputCheckbox>
+													<apex:outputField value="{!newFormWeekly.Area_1__c}" label="Area 1 - North, Central, South America & Environs" 
+														rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:inputCheckBox value="{!newFormWeekly.Area_2__c}" label="Area 2 - Europe, Middle East & Africa"
+								                		rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}">
+								                		<apex:actionSupport event="onchange" reRender="weeklyCountry" id="Us5"/>
+								                	</apex:inputCheckbox>
+													<apex:outputField value="{!newFormWeekly.Area_2__c}" label="Area 2 - Europe, Middle East & Africa" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+								                    
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:inputCheckBox value="{!newFormWeekly.Area_3__c}" label="Area 3 - Far East, Australia, New Zealand & Pacific Islands"
+								                		rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}">
+								                		<apex:actionSupport event="onchange" reRender="weeklyCountry" id="Us6"/>
+								                	</apex:inputCheckbox>
+													<apex:outputField value="{!newFormWeekly.Area_3__c}" label="Area 3 - Far East, Australia, New Zealand & Pacific Islands" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+								                    
+									            </td>
+							                </tr>
+							                <tr>
+								                <td style="font-weight:bold">
+									                &nbsp;&nbsp;
+									            </td>
+							                </tr>
+							                <tr>
+								                <td align="right" height="180">
+								                	<apex:inputField value="{!newFormWeekly.Opt_out_Bulletin__c}" label="Opt out from Weekly bulletin" 
+								                		rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+													<apex:outputField value="{!newFormWeekly.Opt_out_Bulletin__c}" label="Opt out from Weekly bulletin" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}" />
+									            </td>
+							                </tr>
+								            </table> 
+							            </td>
+						                <td width="10%">
+						                	&nbsp;
+						                </td>
+						                <td width="60%">
+
+						                	<table width="100%">
+							                <tr>
+								                <td width="100%"  colspan="2">
+
+									                <table width="100%" style="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'','display:none')}">
+									                <tr>
+										                <td align="center">
+										                	<!--apex:selectList styleClass="contactcountry" id="weeklyCountry" style="width:85%" value="{ !weeklyCountry}" multiselect="true" size="9" disabled="{ !NOT(onOff)}">
+							                                    <apex:selectOptions value="{ !countryNameListSelectOptionWeekly}"/>
+							                                </apex:selectList-->
+
+							                                <c:MultiselectPicklist id="weeklyCountry" 
+							                                			   leftLabel="Available Countries"  
+		                                                                   leftOptions="{!countryNameListSelectOptionWeekly}"
+		                                                                   rightLabel="Selected Countries"
+		                                                                   rightOptions="{!weeklyCountrySelected}"
+		                                                                   size="8"
+		                                                                   width="300px"
+		                                            		/>
+							                            </td>
+									                </tr>
+									                </table>
+
+									                <table width="100%">
+									                <tr>
+										                <td width="40%">
+							                                <apex:inputCheckBox value="{!weeklyCountrySelectAll}" label="Select All" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}">
+										                		<apex:actionSupport event="onchange" action="{!weeklyCountrySelectAll}" reRender="weeklyCountry" id="cbSAw"/>
+										                	</apex:inputCheckbox>
+											            </td>
+									                </tr>
+									                </table> 
+
+													<table width="100%" style="{!IF(newFormWeekly.Suspend_Subscription__c,'','display:none')}">
+									                <tr>
+										                <td width="100%" style="font-weight:bold">
+											                Countries
+											            </td>
+									                </tr>
+									                <tr>
+										                <td align="center">
+										                	<apex:dataList value="{!weeklyCountryName}" var="countryName">
+														        <apex:outputText value="{!countryName}"/>
+														    </apex:dataList>
+							                            </td>
+									                </tr>
+									                </table>
+									            </td>
+									        </tr>   
+									        <tr>
+										        <td width="50%">
+									                <table width="100%">
+									                <tr>
+										                <td width="50%" style="font-weight:bold">
+											                Program
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Program_Passage__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Program_Passage__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Program_Cargo__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Program_Cargo__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Program_CASS_Associates__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Program_CASS_Associates__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											            </td>
+									                </tr>
+									                
+									                </table> 
+								                </td>
+								                <td width="50%">
+									                <table width="100%">
+									                <tr>
+										                <td width="50%" style="font-weight:bold">
+											                Agency Information
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Irregularities__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Agency_Info_Irregularities__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Defaults__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Agency_Info_Defaults__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Termination_Closures__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Agency_Info_Termination_Closures__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Reviews__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Agency_Info_Reviews__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Agency_Info_New_Aplication_Processes__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Agency_Info_New_Aplication_Processes__c}" rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Agency_Changes__c}" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}" />
+															<apex:outputField value="{!newFormWeekly.Agency_Info_Agency_Changes__c}"  rendered="{!IF(newFormWeekly.Suspend_Subscription__c ,'true','false')}"/>
+											           </td>
+									                </tr>
+									                </table> 
+
+									            </td>
+									        </tr>
+									        </table> 
+						                </td>
+					                </tr>
+					            	</table> 
+
+				            	</apex:pageBlockSection>
+
+				            	<apex:pageBlockSection >
+				            		<apex:pageBlockSectionItem dataStyle="text-align:left; width: 50%;" rendered="{!IF(NOT(newFormWeekly.Suspend_Subscription__c) ,'true','false')}">
+										<apex:commandLink action="{!suspendSubscription}" value="Suspend Subscription" />
+				            		</apex:pageBlockSectionItem>
+				            		<apex:pageBlockSectionItem dataStyle="text-align:left; width: 50%;" rendered="{!IF(newFormWeekly.Suspend_Subscription__c,'true','false')}">
+										<apex:commandLink action="{!suspendSubscription}" value="Activate Subscription" />
+				            		</apex:pageBlockSectionItem>
+									<apex:pageBlockSectionItem dataStyle="text-align:right; width: 50%;" rendered="{!isStep1}">
+				            				<!--apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}" rendered="{!NOT(onOff)}"/-->
+							                <!--apex:commandButton action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}" rendered="{!isStep1}"/-->
+							                <apex:commandButton action="{!saveAMSFormAndGoForward}" value="Save & Generate Report"/>
+				            		</apex:pageBlockSectionItem>
+				            	</apex:pageBlockSection>
+
+				            	<!-- apex:pageBlockButtons location="top"  >
+					                <apex:commandButton action="{ ! suspendSubscription}" value="Suspend Subscription" rendered="{ !onOff}"/>&nbsp;
+					                
+					            </apex:pageBlockButtons>
+							    <apex:pageBlockButtons location="bottom" >
+					                <apex:commandButton action="{ !saveAMSFormAndGoBack}" value="{ !$Label.ISSP_Back}" rendered="{ !NOT(onOff)}"/>&nbsp;
+					                <apex:commandButton action="{ !saveAMSFormAndGoForward}" value="{ !$Label.ISSP_Next}" rendered="{ !isStep1}"/>
+					                <apex:commandButton action="{ !saveAMSFormAndGoForward}" value="Confirm" rendered="{ !isStep2}"/>
+					            </apex:pageBlockButtons -->
+
+                        	</apex:pageBlock>   
+					    </div>
+                   
+                    </center>
+                </apex:form>
+             </div>   
+        </div>
+     </apex:outputText>
+           
+     <apex:outputText rendered="{!IF(isStep2, true, IF(isStep3, true,  false))}">
+
+     	 <div class="panel-primary">
+            <div class="panel-heading head_panel_green">
+                <h3 class="panel-title">E-Bulletin</h3>
+            </div>
+            <div class="panel-body" id="body-enquiries">
+                <apex:form >
+                <div class="progress">
+                    <div class="progress-bar {!IF(isStep3, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep3, 'none', '')}">
+                        DAILY Bulletin
+                    </div>
+                    <div class="progress-bar {!IF(isStep3, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep2, 'none', '')}">
+                        <apex:commandLink action="{!goToStep2}" value="DAILY Bulletin" id="DailyBulletinLink"/>
+                    </div>
+                    <div class="progress-bar {!IF(isStep2, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep2, 'none', '')}">
+                        WEEKLY Bulletin
+                    </div>
+                    <div class="progress-bar {!IF(isStep2, 'progress-bar-off', '')}" role="progressbar" style="width: 50%;display:{!IF(isStep3, 'none', '')}">
+                        <apex:commandLink action="{!goToStep3}" value="WEEKLY Bulletin" id="WeeklyBulletinLink"/>
+                    </div>
+
+                </div>
+                </apex:form>
+                <apex:form >
+                    <apex:pageMessages id="theMessages" />
+                    
+                    <apex:outputPanel rendered="false">
+                        <script>
+                        // Check_CountryReqments();
+                        </script> 
+                    </apex:outputPanel>
+	              
+	                <center>
+	                    
+	                            <!-- apex:commandButton styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_Back}" id="Previous"/ -->
+	                	<div >
+	                		<apex:pageBlock id="AMSBlock_step2" mode="edit" rendered="{!isStep2}">
+		                		<apex:pageBlockSection columns="1" id="LegalStatusSection_step2" collapsible="false">
+			                		<!--apex:facet name="header">
+				                        <apex:outputpanel >
+				                            DAILY Bulletin
+				                        </apex:outputpanel>
+			                        </apex:facet-->
+		                        	
+		                        	<table width="100%">
+					               	<tr>
+						                <td width="40%">
+
+						                	<table width="100%">
+							                <tr>
+								                <td>
+                                                    <apex:outputpanel >
+                                                        <span class="h4">Filter Options (DAILY)</span> <apex:commandButton action="{!goToStep1}" value="Edit Selection Criteria" style="margin-left:30px;vertical-align:bottom !important"/>
+                                                    </apex:outputpanel>
+									            </td>
+							                </tr>
+							                </table> 
+
+						                	<table width="100%">
+							                <tr>
+								                <td width="50%" style="font-weight:bold">
+									                Subscription Status
+									            </td>
+							                </tr>
+							                <tr>
+								                <td align="center" class="labelCol">
+								                	<b><u>{!IF(newFormDaily.Suspend_Subscription__c,'Suspended', 'Active')}</u></b>
+									           </td>
+							                </tr>
+							                <tr>
+								                <td align="center">
+								                	<apex:outputField value="{!newFormDaily.Opt_out_Bulletin__c}"/>
+									           </td>
+							                </tr>
+							                </table> 
+							                
+							                <br/>
+
+						                	<table width="100%">
+							                <tr>
+								                <td width="50%" style="font-weight:bold">
+									                Program
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Program_Passage__c}" />
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Program_Cargo__c}" />
+								                </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Program_CASS_Associates__c}" />
+									            </td>
+							                </tr>
+							                </table> 
+							                
+							                <br/>
+							               
+							                <table width="100%">
+							                <tr>
+								                <td width="50%" style="font-weight:bold">
+									                Agency Information
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Agency_Info_Irregularities__c}" />
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Agency_Info_Defaults__c}" />
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Agency_Info_Termination_Closures__c}" />
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Agency_Info_Reviews__c}" />
+									           </td>
+							                </tr>
+							                </table> 
+
+							                <br/>
+
+					                		<table width="100%">
+							                <tr>
+								                <td width="70%" style="font-weight:bold">
+									                Geographic Area
+									            </td>
+							                </tr>
+							               	<tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Area_1__c}" label="Area 1 - North, Central, South America & Environs" />
+							        		    </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Area_2__c}" label="Area 2 - Europe, Middle East & Africa" />
+								                    
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormDaily.Area_3__c}" label="Area 3 - Far East, Australia, New Zealand & Pacific Islands" />
+								                </td>
+							                </tr>
+							                <tr>
+								                <td style="font-weight:bold">
+									                &nbsp;&nbsp;
+									            </td>
+							                </tr>
+							            	</table> 
+
+								            <table width="100%">
+							                <tr>
+								                <td width="100%" style="font-weight:bold">
+									                Countries
+									            </td>
+							                </tr>
+							                <tr>
+								                <td align="center">
+								                	<apex:dataList value="{!dailyCountryName}" var="countryName">
+												        <apex:outputText value="{!countryName}"/>
+												    </apex:dataList>
+					                            </td>
+							                </tr>
+							                </table>
+							        
+						                </td>
+						                <td width="10%">
+						                	&nbsp;
+						                </td>
+						                <td width="50%" style="padding-top:40px">
+			                		        <table width="100%">
+							                <tr>
+								                <td style="font-weight:bold">
+									                Select the day of the current week:
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:selectRadio value="{!daysOfWeek}" layout="pageDirection" style="width:50%;white-space:pre;">
+														<apex:selectOptions value="{!itemsDaysOfWeek}" />
+													</apex:selectRadio><p/>
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+									                Please download a WEEKLY report if you wish to report on DAILY items prior to this week. You may need to adjust your WEEKLY filter options in the Selection Criteria beforehand.
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<br/>
+									                <apex:commandButton action="{!dailyReportDownload}" value="Download Daily Report"/>
+									            </td>
+							                </tr>
+							                </table> 
+								            
+							            </td>
+						            </tr>
+					            	</table> 
+
+								</apex:pageBlockSection>
+			            	</apex:pageBlock>
+
+
+							<apex:pageBlock id="AMSBlock_step3" mode="edit" rendered="{!isStep3}">
+	                       		<apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
+			                		<!--apex:facet name="header">
+				                        <apex:outputpanel >
+				                            WEEKLY Bulletin
+				                        </apex:outputpanel>
+			                        </apex:facet-->
+		                        
+			                        
+					               	<table width="100%">
+					               	<tr>
+						                <td width="40%">
+
+						                	<table width="100%">
+							                <tr>
+                                                <td>
+                                                <apex:outputpanel >
+                                                        <span class="h4">Filter Options (WEEKLY)</span> <apex:commandButton action="{!goToStep1}" value="Edit Selection Criteria" style="margin-left:20px;vertical-align:bottom !important"/>
+                                                    </apex:outputpanel>
+									           </td>
+							                </tr>
+							                </table> 
+							                
+							                <table width="100%">
+							                <tr>
+								                <td width="50%" style="font-weight:bold">
+									                Subscription Status
+									            </td>
+							                </tr>
+							                <tr>
+								                <td align="center" class="labelCol" >
+								                	<b><u>{!IF(newFormWeekly.Suspend_Subscription__c,'Suspended', 'Active')}</u></b>
+									           </td>
+							                </tr>
+							                <tr>
+								                <td align="center">
+								                	<apex:outputField value="{!newFormWeekly.Opt_out_Bulletin__c}"/>
+									           </td>
+							                </tr>
+							                
+							                </table> 
+							                
+							                <br/>
+
+					               			<table width="100%">
+							                <tr>
+								                <td width="50%" style="font-weight:bold">
+									                Program
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Program_Passage__c}" />
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Program_Cargo__c}" />
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Program_CASS_Associates__c}" />
+									            </td>
+							                </tr>
+							                
+							                </table> 
+						               		
+							                <br/>
+
+						                    <table width="100%">
+							                <tr>
+								                <td width="50%" style="font-weight:bold">
+									                Agency Information
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Agency_Info_Irregularities__c}" />
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Agency_Info_Defaults__c}" />
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Agency_Info_Termination_Closures__c}" />
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Agency_Info_Reviews__c}" />
+									           </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Agency_Info_New_Aplication_Processes__c}" />
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Agency_Info_Agency_Changes__c}" />
+									           </td>
+							                </tr>
+							                </table> 
+
+							                <table width="100%">
+							                <tr>
+								                <td width="100%" style="font-weight:bold">
+									                Geographic Area
+									            </td>
+							                </tr>
+							               	<tr>
+								                <td>
+									                <apex:outputField value="{!newFormWeekly.Area_1__c}" label="Area 1 - North, Central, South America & Environs" />
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Area_2__c}" label="Area 2 - Europe, Middle East & Africa" />
+								                    
+									            </td>
+							                </tr>
+							                <tr>
+								                <td>
+								                	<apex:outputField value="{!newFormWeekly.Area_3__c}" label="Area 3 - Far East, Australia, New Zealand & Pacific Islands" />
+								                    
+									            </td>
+							                </tr>
+							                </table> 
+
+							                <table width="100%">
+							                <tr>
+								                <td width="100%" style="font-weight:bold">
+									                Countries
+									            </td>
+							                </tr>
+							                <tr>
+								                <td align="center">
+								                	<apex:dataList value="{!weeklyCountryName}" var="countryName">
+												        <apex:outputText value="{!countryName}"/>
+												    </apex:dataList>
+					                            </td>
+							                </tr>
+							                </table>
+
+							            </td>
+						                <td width="10%">
+						                	&nbsp;
+						                </td>
+						                <td width="50%" style="padding-top:35px">
+					                		<table width="100%">
+							               	<tr>
+								                <td>
+									                <table width="100%">
+									                <tr>
+										                <td style="font-weight:bold">
+											                Select week:
+											            </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<apex:selectList styleClass="contactcountry" id="week" style="width:70%" value="{!week}" size="9">
+							                                    <apex:selectOptions value="{!itemsWeeks}"/>
+							                                </apex:selectList>
+											           </td>
+									                </tr>
+									                <tr>
+										                <td>
+										                	<br/>
+											                <apex:commandButton action="{!weeklyReportDownload}" value="Download Weekly Report"/>
+											            </td>
+									                </tr>
+									               	</table> 
+								                </td>
+								            </tr>
+							            	</table> 			            	
+
+							            </td>
+						            </tr>
+					            	</table> 	
+
+			            		</apex:pageBlockSection>
+
+	                        </apex:pageBlock>   
+						</div>
+	                   
+	                </center>
+                </apex:form>
+             </div>   
+        </div>
+
+
+     </apex:outputText>
+    
+      
+
+           
+         </div>
+         <c:ISSP_CustomFooter />
+         </div>
+       
+    </body>  
+</html>
+
+</apex:page>

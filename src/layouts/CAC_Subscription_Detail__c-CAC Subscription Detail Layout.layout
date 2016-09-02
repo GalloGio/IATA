@@ -126,7 +126,7 @@
         <fields>Related_Application__c</fields>
         <fields>Date__c</fields>
         <relatedList>IEC_Compiled_Usage_Tracker__c.CAC_Subscription_Detail__c</relatedList>
-        <sortField>Date__c</sortField>
+        <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>

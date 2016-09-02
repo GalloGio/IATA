@@ -12624,7 +12624,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -12644,7 +12644,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/19/2013 6:00 PM</value>
+            <value>12/19/2013 11:00 PM</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -12778,7 +12778,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>AND(RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(DEF_Approval_Rejection__c))</formula>
+        <formula>AND(OR(RecordTypeId = &quot;012200000000DD9&quot;, RecordTypeId = &quot;0128E0000000Oob&quot;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13057,7 +13057,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>updates the last default action date when the reason for default is changed</description>
-        <formula>AND(RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED( Reason_for_Default__c ) )</formula>
+        <formula>AND(OR(RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED( Reason_for_Default__c ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13068,7 +13068,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>aND($RecordType.Name = &quot;SIDRA&quot;, ischanged(  DEF_Withdrawal_Approval_Rejection__c ))</formula>
+        <formula>aND(OR($RecordType.Name = &quot;SIDRA&quot;,$RecordType.Name = &quot;SIDRA Lite&quot;), ischanged(  DEF_Withdrawal_Approval_Rejection__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13099,7 +13099,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(  AG_Request_DEF_Withdrawal__c  ),  NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND(OR( RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED(  AG_Request_DEF_Withdrawal__c  ),  NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13114,7 +13114,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND(OR( RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13154,7 +13154,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
@@ -13327,8 +13327,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
-            <operation>contains</operation>
-            <value>SIDRA</value>
+            <operation>equals</operation>
+            <value>SIDRA,SIDRA BR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
@@ -13399,7 +13399,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4), AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6), AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8), AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10), AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c),OR( RecordType.Name = &quot;SIDRA&quot;,RecordType.Name = &quot;SIDRA Lite&quot;), OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13412,7 +13412,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Withdrawal_Approval_Rejection__c</field>
@@ -13458,7 +13458,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( $RecordType.Name = &quot;SIDRA&quot;, ISCHANGED(  AG_Request_IRR_Withdrawal__c   ),NOT(ISPICKVAL(  IRR_Withdrawal_Approval_Rejection__c , &quot;Approved&quot;)) )</formula>
+        <formula>AND( OR($RecordType.Name = &quot;SIDRA&quot;,$RecordType.Name = &quot;SIDRA Lite&quot;), ISCHANGED(  AG_Request_IRR_Withdrawal__c   ),NOT(ISPICKVAL(  IRR_Withdrawal_Approval_Rejection__c , &quot;Approved&quot;)) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13490,7 +13490,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.R_S_Confirm_IRRWD_Justifications__c</field>
@@ -13549,7 +13549,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Withdrawal_Approval_Rejection__c</field>
@@ -13574,7 +13574,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Withdrawal_Approval_Rejection__c</field>
@@ -13619,7 +13619,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Update_AIMS_IRR__c</field>
@@ -13684,7 +13684,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -13880,7 +13880,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Termination_date__c</field>
@@ -13922,7 +13922,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.TER_Approval_Rejection__c</field>
@@ -13969,7 +13969,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Calculate_ALL_Outs_Amounts_Termination__c</field>

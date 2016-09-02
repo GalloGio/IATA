@@ -204,6 +204,16 @@
                 <behavior>Edit</behavior>
                 <field>BusinessHoursId</field>
             </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <height>35</height>
+                <page>AirlineSuspensionCsTemplateMerge</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

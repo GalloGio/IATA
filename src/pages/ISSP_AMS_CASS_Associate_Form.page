@@ -527,7 +527,7 @@
                        <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
                        <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
                        <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
-                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
                    <apex:pageBlockSection columns="1">
                        <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
@@ -539,7 +539,7 @@
                        <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
                        <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
                        <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
-                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
                 </apex:pageBlockSection>
      
