@@ -8389,6 +8389,41 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Document_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Expired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Expiry_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_SAP_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Skip_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Subcategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>AmazonFile__c.File_Identifier__c</field>
         <readable>false</readable>
@@ -32232,6 +32267,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AmazonFile__c-AmazonFile Layout</layout>
+        <recordType>AmazonFile__c.EF_File</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AmazonFile__c-AmazonFile Layout</layout>
         <recordType>AmazonFile__c.File</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -35017,6 +35056,11 @@
         <default>false</default>
         <recordType>AmazonFile__c.AMS_File</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>AmazonFile__c.EF_File</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
