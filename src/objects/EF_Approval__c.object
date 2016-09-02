@@ -61,7 +61,6 @@
         <externalId>false</externalId>
         <label>Airline</label>
         <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Approval Temp Storages</relationshipLabel>
         <relationshipName>EF_Approval_Temp_Storages</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -78,17 +77,70 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>EF_Billing_Agreement__c</fullName>
+        <fullName>CCF_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>CCF Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contract__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Airline Billing Agreement</label>
-        <referenceTo>EF_Billing_Agreement__c</referenceTo>
-        <relationshipLabel>E&amp;F Approval Temp Storages</relationshipLabel>
+        <label>Contract</label>
+        <referenceTo>Contract</referenceTo>
         <relationshipName>EF_Approval_Temp_Storages</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Admin_Fee__c</fullName>
+        <externalId>false</externalId>
+        <label>Admin Fee</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>EF_Billing_Agreement__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Airline Billing Agreement</label>
+        <referenceTo>EF_Billing_Agreement__c</referenceTo>
+        <relationshipName>EF_Approval_Temp_Storages</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>EF_Billing_Frequency__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Frequency</globalPicklist>
+        <label>Billing Frequency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Group_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Group Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Location_ID__c</fullName>
@@ -96,7 +148,6 @@
         <externalId>false</externalId>
         <label>E&amp;F Location ID</label>
         <referenceTo>EF_Related_Records__c</referenceTo>
-        <relationshipLabel>E&amp;F Approval Temp Storages</relationshipLabel>
         <relationshipName>EF_Approval_Temp_Storages</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -104,12 +155,31 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>EF_Payment_Terms__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Payment_Terms</globalPicklist>
+        <label>Payment Terms</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Location_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Location Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_Currency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Location Currency</label>
         <referenceTo>EF_Location_Currency__c</referenceTo>
-        <relationshipLabel>E&amp;F Approval Temp Storages</relationshipLabel>
         <relationshipName>EF_Approval_Temp_Storages</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -134,7 +204,18 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
-    <label>E&amp;F Approval Temp Storage</label>
+    <fields>
+        <fullName>SAP_Contract_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SAP Contract Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>E&amp;F Approval Storage</label>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
@@ -146,7 +227,7 @@
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>E&amp;F Approval Temp Storages</pluralLabel>
+    <pluralLabel>E&amp;F Approval Storages</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
