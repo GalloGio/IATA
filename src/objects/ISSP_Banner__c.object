@@ -2292,12 +2292,33 @@ _blank = new window</description>
         <columns>CREATED_DATE</columns>
         <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
-        <columns>Zone_1_text__c</columns>
-        <columns>Zone_2_text__c</columns>
-        <columns>Zone_3_text__c</columns>
         <columns>Status__c</columns>
+        <columns>Publication_start_date__c</columns>
+        <columns>Publication_end_date__c</columns>
+        <columns>Country__c</columns>
+        <columns>Sector__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>active</fullName>
+        <columns>CREATED_DATE</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Publication_start_date__c</columns>
+        <columns>Publication_end_date__c</columns>
+        <columns>Country__c</columns>
+        <columns>Sector__c</columns>
+        <columns>Zone_1_text_hyperlink__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>Active</label>
         <language>en_US</language>
     </listViews>
     <nameField>

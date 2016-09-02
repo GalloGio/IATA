@@ -23,7 +23,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public String selectedCustomerType{get;set;}
 
     //Products available
-    public List<EComProduct_DTO> allProducts;
+    public List<EComProduct_DTO> allProducts; 
+    
+    
     private String searchCondition;
     public Integer totalNumberOfPages{get;set;}
     public List<Integer> pages{get;set;}
@@ -124,6 +126,11 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     {
         //-- Fetch ecom Products
         allProducts = Product_Sel.getEComProduct(null, false, searchCondition, sortBy); 
+
+        for(EComProduct_DTO prod : allProducts)
+        {
+            prod.ProductDesc = '';
+        }
 
          //-- Back to 1st page if product exist 
         if(allProducts.size() > 0) 
@@ -243,7 +250,9 @@ public with sharing class IEC_ProductListController extends IEC_PageController
                     searchCondition += ' AND ' + field + ' IN ('+s+') ';
                 }                
             }
-        }   
+        } 
+
+        System.debug('searchCondition::'+searchCondition);  
 
         queryProducts();
         refreshDisplayedProducts();

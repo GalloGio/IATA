@@ -120,6 +120,20 @@
         <value>Perform AML</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action5</shortDescription>
+        <value>Create Correction Case</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action6</shortDescription>
+        <value>Edit the accounts involved</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -342,6 +356,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP24</shortDescription>
         <value>Release FS (if any)</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP25</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP25</shortDescription>
+        <value>Validate Qualification Criteria (KC03)</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP3</fullName>
@@ -801,7 +822,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Button Pre Order</shortDescription>
-        <value>Pre Order</value>
+        <value>Pre-order</value>
     </labels>
     <labels>
         <fullName>Button_Previous</fullName>
@@ -1343,6 +1364,22 @@ Case description: {!Case.Description}
         <value>Data &amp; statistics</value>
     </labels>
     <labels>
+        <fullName>Data_Statistics_History</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Data Statistics History</shortDescription>
+        <value>History &gt; Data &amp; Stats</value>
+    </labels>
+    <labels>
+        <fullName>Data_Statistics_Subscriptions</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Data Statistics Subscriptions</shortDescription>
+        <value>Subscriptions &gt; Data &amp; Stats</value>
+    </labels>
+    <labels>
         <fullName>Date</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1680,7 +1717,8 @@ Message: {2}</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
-        <value>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores molestiae ipsam inventore quisquam minus maxime, explicabo voluptatum alias ipsum commodi sequi aliquid porro necessitatibus quis enim dicta rem nisi doloremque?</value>
+        <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
+You may retrieve the Quote details from the Account Information section.</value>
     </labels>
     <labels>
         <fullName>Go</fullName>
@@ -1732,6 +1770,15 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>Home</shortDescription>
         <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>Home_Page_New_Release_Msg</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Home Page New Release Msg.</shortDescription>
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more. 
+Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
     </labels>
     <labels>
         <fullName>IATA_Alpha</fullName>
@@ -2605,11 +2652,18 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>&lt;b&gt;Important&lt;/b&gt;: For fraudulence and security reason, your ID Card will be sent to the following address upon approval of the application (unless you are applying for change of agency):</value>
     </labels>
     <labels>
+        <fullName>IDCard_FundamentalsJourneyPricing_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Geography in Travel Planning</shortDescription>
+        <value>Interpreting fare rules and e-ticket data elements is key to satisfying and retaining customers. This course teaches the language of fare construction and fare rules so you provide your customers with the best advice and the lowest fare for their air itinerary. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg14.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_GeographyinTravelPlanning_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_GeographyinTravelPlanning_Description</shortDescription>
-        <value>Travel professionals and their customers know how challenging travel planning can be. Itineraries can be complex and time zones confusing. This course appeals to those with a passion for travel. An engaging Avatar teaches you the richness of the world&apos;s geography. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travel-geography-tttg53.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Travel professionals and their customers know how challenging travel planning can be. Itineraries can be complex and time zones confusing. This course appeals to those with a passion for travel. An engaging Avatar teaches you the richness of the world&apos;s geography. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/geography-travel-planning-tttg53.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_GoBackLoginPage</fullName>
@@ -2714,21 +2768,21 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlBSPlink_Description</shortDescription>
-        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8274%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Explore los procesos de facturación y el Plan de Liquidación (BSP) de informes y envío de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrá las habilidades para: Entender cómo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicación de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</shortDescription>
-        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8273%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Los informes y los procedimientos de facturación Agente BSP. Al completar este curso usted tendrá las habilidades para: Entender los conceptos básicos del sistema BSP; Referencia términos y definiciones BSP; Explicar el proceso de presentación de informes BSP; Ventas de informe a través del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroductiontoBSPLink_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroductiontoBSPLink_Description</shortDescription>
-        <value>Learn how to use BSPLink functionality to download reporting documents, interpret and reconcile transactions and report discrepancies or corrections. The course enables system users to access information and interprets data received in the agency&apos;s monthly billing reports. Grasping BSPLink functionality will make the agency back office productive in reconciling billing reports with other reporting systems used by the business. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/bsplink-tttg44.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Learn how to use BSPLink functionality to download reporting documents, interpret and reconcile transactions and report discrepancies or corrections. The course enables system users to access information and interprets data received in the agency&apos;s monthly billing reports. Grasping BSPLink functionality will make the agency back office productive in reconciling billing reports with other reporting systems used by the business. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduction-bsplink-tttg44.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_InvalidDateFormat</fullName>
@@ -2900,7 +2954,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
-        <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/tttg66fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Le niveau de satisfaction de la clientèle influence les décisions d&apos;achat et la fidélisation. L&apos;objectif de ce cours sur le service à la clientèle est de présenter les stratégies essentielles pour faire en sorte que le contact de première ligne avec le client constitue une expérience positive et mémorable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -2951,7 +3005,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description</shortDescription>
-        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=8276%2D01&amp;cs_catalog=Publications\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Aprenda sobre el proceso de presentación de informes del agente en el Plan de Facturación y Liquidación (BSP) y cómo interpretar los informes de facturación. Este módulo de aprendizaje es parte de un nuevo curso de seis módulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrá las habilidades para: Seguir con el proceso de presentación de informes BSP; Identificar los documentos de presentación de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturación; Interpretar los informes de facturación BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Match_IsNotTheAgent</fullName>
@@ -3447,6 +3501,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
 Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.</value>
     </labels>
     <labels>
+        <fullName>IDCard_RepricingExchangeReissue_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Repricing Exchange Reissue</shortDescription>
+        <value>The Ticket Repricing, Exchange and Reissue (TRER) course is an important companion for any successful Ticketing Agent. This course will give you a considerable advantage over your competition, enabling you to perform complex transactions such as revalidating, exchanging, or reissuing tickets with confidence. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/ticket-repricing-reissue-tttg91.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_RevenueConfirmation_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3479,7 +3540,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_SellingInternationalRailTransportation_Description</shortDescription>
-        <value>The expansion of dedicated high-speed rail lines has helped to increase the demand for rail transport year on year. Huge strides are being made to provide simple web-based booking systems which link to multiple railways. It&apos;s getting easier for the travel agent to take part in the rail revolution! More Details &lt;a href=\&quot; http://www.iata.org/training/courses/Pages/selling-rail-transport-tttg68.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>The expansion of dedicated high-speed rail lines has helped to increase the demand for rail transport year on year. Huge strides are being made to provide simple web-based booking systems which link to multiple railways. It&apos;s getting easier for the travel agent to take part in the rail revolution! More Details &lt;a href=\&quot; http://www.iata.org/training/courses/Pages/international-rail-transportation-tttg68.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Send_Picture_Link</fullName>
@@ -3536,6 +3597,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_Total</shortDescription>
         <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Travel_Agency_Fees_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card Travel Agency Fees</shortDescription>
+        <value>A fee-based business model is essential for travel agencies and significantly enhances their profitability. In this course you will learn the general trends and best practices in the implementation or setting of agency fees, the various types of fees collected by travel agencies, and the best way to communicate them to customers. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travel-agency-fees-tttg13.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_TrxDate</fullName>
@@ -7816,6 +7884,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>ASD</value>
     </labels>
     <labels>
+        <fullName>ISSP_Accept</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Accept</shortDescription>
+        <value>Accept</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Accept_Terms_Warning</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Accept Terms Warning</shortDescription>
+        <value>Please, accept terms and conditions</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Accepted_Future_Date</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -7871,6 +7955,38 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Account Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statements</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Statements</shortDescription>
+        <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Disclaimer</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
+        <value>NOTE: Kindly note that the balances are updated on the portal at least one business day after IATA&apos;s account has been credited</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Title</shortDescription>
+        <value>ICE - IATA Customer E-Statement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_not_approved</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account not approved</shortDescription>
+        <value>Account is not approved. You cannot see the info.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Activate</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -7917,6 +8033,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP Administrator</shortDescription>
         <value>Administrator</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Agency_Head_Office_code</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agency Head Office code</shortDescription>
+        <value>Agency Head Office code</value>
     </labels>
     <labels>
         <fullName>ISSP_Agent_Accredited</fullName>
@@ -8589,6 +8713,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Please confirm your personal information before proceeding</value>
     </labels>
     <labels>
+        <fullName>ISSP_Consolidated</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Consolidated</shortDescription>
+        <value>Consolidated</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Contact</fullName>
         <categories>S12.1, Portal</categories>
         <language>en_US</language>
@@ -8732,6 +8864,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Country concerned</value>
     </labels>
     <labels>
+        <fullName>ISSP_Country_Requirements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Country_Requirements</shortDescription>
+        <value>Country Requirements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Country_of_Publication</fullName>
         <categories>portal, S6</categories>
         <language>en_US</language>
@@ -8810,6 +8949,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Currency</shortDescription>
         <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Currency_Filter</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Currency Filter</shortDescription>
+        <value>Currency Filter</value>
     </labels>
     <labels>
         <fullName>ISSP_CurrentPassword</fullName>
@@ -8906,6 +9053,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Designator_Code_Question</shortDescription>
         <value>Does the Airline have IATA 2-character Airline designator code assigned?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Display_Records_per_page</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Display Records per page</shortDescription>
+        <value>Display _MENU_ records per page</value>
     </labels>
     <labels>
         <fullName>ISSP_Documents</fullName>
@@ -9551,6 +9706,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Error:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Excess</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Excess</shortDescription>
+        <value>Excess</value>
+    </labels>
+    <labels>
         <fullName>ISSP_External_Links</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -9743,6 +9906,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Filter by type</value>
     </labels>
     <labels>
+        <fullName>ISSP_Filter_by_Type_Of_Participation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Filter_by_Type_Of_Participation</shortDescription>
+        <value>Filter by type of participation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Fishing_Compliments</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9802,6 +9972,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Frozen_User_Message</shortDescription>
         <value>Your user is currently inactive because you haven&apos;t logged in for over 90 days.&lt;br/&gt;Do you want to reactivate your user?&lt;br/&gt;You will receive an email with a new password.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Fullpayment</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Fullpayment</shortDescription>
+        <value>Fullpayment</value>
     </labels>
     <labels>
         <fullName>ISSP_GSA_Airline_Country</fullName>
@@ -10515,6 +10693,22 @@ this is the tiess topic help</value>
         <value>en_US</value>
     </labels>
     <labels>
+        <fullName>ISSP_Last_Updated_on</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Last Updated on</shortDescription>
+        <value>Last Updated on</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Last_updated_statement</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Last updated statement</shortDescription>
+        <value>Last updated statement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Loading_Account</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10544,6 +10738,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_Location</shortDescription>
         <value>Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Location_Filter</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Location Filter</shortDescription>
+        <value>Location filter</value>
     </labels>
     <labels>
         <fullName>ISSP_Log_a_Case</fullName>
@@ -11002,6 +11204,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>No application available</value>
     </labels>
     <labels>
+        <fullName>ISSP_No_records_available</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP No records available</shortDescription>
+        <value>No records available</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Not_Authorized</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -11015,6 +11225,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_NoteWhenAccountFound</shortDescription>
         <value>If your account is not found, please, click on BACK to proceed with the registration process as General Public or modify your search criteria and try again</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Nothing_found</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Nothing found</shortDescription>
+        <value>Nothing found</value>
     </labels>
     <labels>
         <fullName>ISSP_Notification_Text1</fullName>
@@ -11201,6 +11419,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Page</value>
     </labels>
     <labels>
+        <fullName>ISSP_PageDescription_Country_Requirements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PageDescription_Country_Requirements</shortDescription>
+        <value>Consult BSP and CASS country requirements for airline participation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PageDescription_ISSP_AccessToService</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11283,6 +11508,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Passwords must match.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Past_Periods</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Past Periods</shortDescription>
+        <value>Past Periods</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Payment_Link_Description</fullName>
         <categories>ISSP_Homepage, s10</categories>
         <language>en_US</language>
@@ -11291,6 +11524,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
 Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Pending</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Pending</shortDescription>
+        <value>Pending</value>
     </labels>
     <labels>
         <fullName>ISSP_PendingApprovalClickEditToManage</fullName>
@@ -12262,6 +12503,14 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <value>Should be mandatory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Showing_page</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Showing page</shortDescription>
+        <value>Showing page _PAGE_ of _PAGES_</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Simplified_Interline_Settlement</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -12791,6 +13040,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Error: Please fill required fields with the correct format</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_filtered_from_total_records</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP filtered from total records</shortDescription>
+        <value>(filtered from _MAX_ total records)</value>
     </labels>
     <labels>
         <fullName>ISSP_generalError</fullName>
@@ -13786,10 +14043,11 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
     </labels>
     <labels>
         <fullName>My_Renewals</fullName>
+        <categories>Ecommerce</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>My_Renewals</shortDescription>
-        <value>My Renewals</value>
+        <value>Renewals &gt; Publications</value>
     </labels>
     <labels>
         <fullName>New</fullName>
@@ -15064,7 +15322,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PageTitleMyInvoices</shortDescription>
-        <value>View invoices</value>
+        <value>Invoices &gt; Data &amp; Stats</value>
     </labels>
     <labels>
         <fullName>PageTitleMyPaymentMethods</fullName>
@@ -15257,7 +15515,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PreOrderAddToCart</shortDescription>
-        <value>Pre order</value>
+        <value>Pre-order</value>
     </labels>
     <labels>
         <fullName>Pricing_model_Charges</fullName>
@@ -15411,6 +15669,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Public</value>
     </labels>
     <labels>
+        <fullName>PublicationQuotes</fullName>
+        <categories>Ecommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PublicationQuotes</shortDescription>
+        <value>Quotes  &gt; Publications</value>
+    </labels>
+    <labels>
         <fullName>Publications</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -15420,10 +15686,11 @@ Also, the package has changed the setting to prevent the creation of Contacts an
     </labels>
     <labels>
         <fullName>Publications_subscriptions</fullName>
+        <categories>Ecommerce</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Publications subscriptions</shortDescription>
-        <value>Publications Subscriptions</value>
+        <value>Subscriptions &gt; Publications</value>
     </labels>
     <labels>
         <fullName>PurchaseAsAutoRenew</fullName>
@@ -15851,7 +16118,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ShoppingCartFooterMsg</shortDescription>
-        <value>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt velit, aliquam dolorem voluptatum cumque quaerat error, quia quasi architecto quos maxime, deserunt eos illo illum dolor odit perferendis quidem magnam.</value>
+        <value>&amp;nbsp;</value>
     </labels>
     <labels>
         <fullName>ShoppingCartQtyMsg</fullName>
@@ -15942,7 +16209,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>StayInformedMessage</shortDescription>
-        <value>Stay Up-to-date on the latest industry trends and developments.</value>
+        <value>Stay up-to-date on the latest industry trends and developments.</value>
     </labels>
     <labels>
         <fullName>Stay_Informed</fullName>
@@ -16078,6 +16345,14 @@ title,Title,Name</value>
         <value>User name</value>
     </labels>
     <labels>
+        <fullName>VAT_Tax_Msg</fullName>
+        <categories>ECommerce</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VAT Tax Msg</shortDescription>
+        <value>Please enter VAT#, if applicable</value>
+    </labels>
+    <labels>
         <fullName>VAT_number</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -16136,7 +16411,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>View quotes</shortDescription>
-        <value>View quotes</value>
+        <value>View Quotes</value>
     </labels>
     <labels>
         <fullName>Warning_Empty_Cart</fullName>
@@ -16216,11 +16491,11 @@ title,Title,Name</value>
     </labels>
     <labels>
         <fullName>Welcome_Message</fullName>
-        <categories>Content</categories>
+        <categories>eCommerce Content</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Welcome Message</shortDescription>
-        <value>&lt;span class=&quot;text&quot;&gt;Welcome to &lt;/span&gt; &lt;span class=&quot;text&quot;&gt;Lorem ipsum dolor&lt;/span&gt;</value>
+        <value>&amp;nbsp;</value>
     </labels>
     <labels>
         <fullName>Welcome_Message1</fullName>
@@ -16265,7 +16540,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ZQuotes</shortDescription>
-        <value>ZQuotes</value>
+        <value>Quotes &gt; Data &amp; Stats</value>
     </labels>
     <labels>
         <fullName>Zip_code_cannot_be_empty</fullName>

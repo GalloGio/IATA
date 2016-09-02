@@ -34,6 +34,27 @@
     </actionOverrides>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>AM_Involved__c</fullName>
+        <externalId>false</externalId>
+        <label>Involved</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>AM_Responsible__c</fullName>
+        <externalId>false</externalId>
+        <label>Responsible</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>AM_Support_Required_from_Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Support Required from Account</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Call_TIme__c</fullName>
         <externalId>false</externalId>
         <label>Call Time (Min)</label>
@@ -94,6 +115,27 @@
             <sorted>false</sorted>
         </picklist>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Involved__c</fullName>
+        <externalId>false</externalId>
+        <label>Involved</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Responsible__c</fullName>
+        <externalId>false</externalId>
+        <label>Responsible</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Support_Required_from_Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Support Required from Account</label>
+        <required>false</required>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Task_Age_Days__c</fullName>

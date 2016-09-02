@@ -2,7 +2,8 @@ global class SalesOrder_Scheduler implements Schedulable
 {
 	global static String doSchedule(String CRON_EXP)
 	{
-		return System.Schedule('SAP Sales Order creation', CRON_EXP, new SalesOrder_Scheduler());
+		String jobName = (Test.isRunningTest())? 'Test_'+Datetime.now().time() : 'SAP Sales Order creation';
+		return System.Schedule(jobName, CRON_EXP, new SalesOrder_Scheduler());
 	}
 
 	global void execute(SchedulableContext sc) 

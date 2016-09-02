@@ -1,0 +1,68 @@
+<aura:component controller="AMP_KeyAccountPlanExtension">
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="activityName" type="String" />
+    <aura:attribute name="activityId" type="String" />
+    <aura:attribute name="activity" type="Objective__c" />
+    <aura:attribute name="milestones" type="Task[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:handler name="deleteMilestone" event="c:AMP_UpdateOrDeleteTask" action="c.handleDeleteMilestone" />
+    <aura:handler name="updateMilestone" event="c:AMP_UpdateOrDeleteTask" action="c.handleUpdateMilestone" />
+    <aura:registerEvent name="showMilestones" type="c:AMP_UpdateIssueOrPriority"/>
+    
+    <aura:registerEvent name="AMP_KAPActivityError" type="c:AMP_KAPActivityError"/>
+    
+    <aura:attribute name="newMilestone" type="Task"
+                    default="{     'sobjectType' : 'Task',
+                             'Subject': '',
+                             'Status': '',
+                             'WhatId': ''
+                             }"/>
+    
+    <div class="slds-card">
+        
+        <div class="slds-card__header slds-grid">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#task'}" class="slds-icon slds-icon-standard-task slds-icon--medium" />
+                </div>
+                <div class="slds-media__body slds-truncate">
+                    <span class="slds-text-heading--small">Milestones for activity: {!v.activityName}</span>
+                </div>
+            </div>
+            
+            <div class="slds-no-flex">
+                <div class="slds-button-group" role="group">
+                    <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addMilestone}">New</button>
+                </div>
+            </div>                
+        </div>
+        
+        <div class="slds-card__body">
+            
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
+                <thead>
+                    <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+                        <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate">Actions</span></th>
+                        <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Milestone</span></th>
+                        <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Responsible</span></th>
+                        <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Involved</span></th>
+                        <th scope="col" class="milestoneMediumColumn"><span class="slds-truncate">Support Required From Account</span></th>
+                        <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate">Milestone Status</span></th>
+                        <th scope="col" class="milestoneNarrowColumn"><span class="slds-truncate">End Date</span></th>
+                        <th scope="col" class="milestoneWideColumn"><span class="slds-truncate">Comments</span></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <aura:iteration items="{!v.milestones}" var="milestone" indexVar="index">
+                        <tr>
+                            <c:AMP_Milestone milestone="{!milestone}" index="{!index}"/>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</aura:component>

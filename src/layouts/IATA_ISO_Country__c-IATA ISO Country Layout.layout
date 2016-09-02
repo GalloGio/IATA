@@ -229,6 +229,10 @@
                 <behavior>Edit</behavior>
                 <field>VAT_Validation_Required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IEC_Zip_Postal_Code_required__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -301,6 +305,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Location_Class__c</fields>
+        <fields>Threshold__c</fields>
+        <relatedList>AMS_Country_Specific_Attribute__c.IATA_ISO_Country__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Product__c</fields>

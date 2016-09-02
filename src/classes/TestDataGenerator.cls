@@ -551,7 +551,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            insert orderItems;
+            database.insert(orderItems,false);
 
         return orderItems;
     }
@@ -729,7 +729,7 @@ public with sharing class TestDataGenerator
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
             products[x].ZProduct__c = zProducts[x].Id;
         }
-        insert products;
+        database.insert(products,false) ;
         System.debug('products generated::'+products);
 
         insert zRatePlans;
@@ -790,7 +790,7 @@ public with sharing class TestDataGenerator
             Product2 prod = products[x]; 
             zProduct.SAPProductMaterialNo__c = prod.SAP_Material_Number__c;
         }
-        insert zProducts;
+        database.insert( zProducts,false);
         
         //-- Generate RatePlans & Charges & Tiers
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
@@ -808,7 +808,7 @@ public with sharing class TestDataGenerator
             prod.ZProduct__c = zprod.Id;
         }
 
-        insert zRatePlans;
+        database.insert(zRatePlans,false) ;
         
         //Create Unit Price Charge & Discount for each Plan 
         for(zqu__ProductRatePlan__c rp : zRatePlans)
@@ -821,8 +821,8 @@ public with sharing class TestDataGenerator
             charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
             zCharges.addAll(charges);
         }
+        database.insert(zCharges,false) ;
 
-        insert zCharges;
         
         //-- Generate Tiers for Volume Prices 
         List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
@@ -839,8 +839,8 @@ public with sharing class TestDataGenerator
         }
         insert zTiers;
         System.debug('zTiers::'+zTiers);
-        
-        insert products;
+                database.insert(products,false) ;
+
         
         //-- Create PriceBookEntries for each product       
         for(Product2 p : products)
@@ -851,7 +851,8 @@ public with sharing class TestDataGenerator
                 UnitPrice = 20
             ));
         }
-        insert lst_pbe;
+                        database.insert(lst_pbe,false) ;
+
         return products;
     }
 
@@ -1164,7 +1165,7 @@ public with sharing class TestDataGenerator
             Web_Service_Username__c = 'WS_SFORCE'
         ));
 
-        database.insert(lst,false);
+        insert lst;
     }
 
 
@@ -1610,7 +1611,7 @@ public with sharing class TestDataGenerator
         );
 
         if(doInsert)
-            insert eventRelease;
+            Database.insert(eventRelease, false);
 
         return eventRelease;
     }

@@ -1,0 +1,28 @@
+.THIS .milestoneNarrowColumn{
+  width: 7%;
+    white-space: normal !important;
+}
+.THIS .milestoneMediumColumn{
+  width: 12%;
+}
+.THIS .milestoneWideColumn{
+  width: 21%;
+}
+.THIS .column-10p{
+  width: 10%;
+}
+.THIS .column-30p{
+  width: 30%;
+}
+.THIS td {
+  word-wrap: break-word;
+  /*overflow: hidden;*/
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+.THIS .slds-truncate {
+  max-width: 100% !important;
+  max-height: 3em;
+  white-space: normal !important;
+
+}

@@ -1,8 +1,8 @@
 public class Customer_DTO 
 {
-    private static Customer_DTO singleton = null;
+	private static Customer_DTO singleton = null;
 
-    public User sfUser { get; set; }
+	public User sfUser { get; set; }
     public Contact sfContact { get; set; }
     public Account sfAccount { get; set; }
     public String customerType { get; set; }
@@ -89,6 +89,9 @@ public class Customer_DTO
 
     public Boolean canPayByICH()
     {
+        // first validate if the customer is part of a Member Airline account
+        //if (sfAccount.Customer_Type__c != IECConstants.Account_ClientType_MemberAirline) return false;
+        
         //*** not eligible if not portal user
         if (sfContact == null) return false;
         
@@ -97,10 +100,13 @@ public class Customer_DTO
                               , Account.RecordType.DeveloperName, Account.Membership_status__c, Account.ICH_Member__c
                               , Account.Parent.RecordType.DeveloperName, Account.Parent.Membership_status__c, Account.Parent.ICH_Member__c
                          from Contact
-                         where Id = :sfContact.Id ];
-         if(checks.isEmpty())return false; 
+                         where Id = :sfContact.Id limit 1];
 
-         Contact check = checks[0];
+        if(checks.isEmpty()) return false; 
+
+        Contact check = checks[0];
+
+        
         //*** not eligile if contact is not approved
         if (check.User_IECPortal_Status__c != IECConstants.APPROVED_CONTACT_STATUS) return false;
         
@@ -137,45 +143,35 @@ public class Customer_DTO
         // check if Parent Account have access to ICH
         if (check.Account.ParentId != null && check.Account.Parent.ICH_Member__c == true) return true;
         
-        // first validate if the customer is part of a Member Airline account
-        //if (sfAccount.Customer_Type__c != IECConstants.Account_ClientType_MemberAirline) return false;
-        
-        // check if Parent Account have access to ICH
-        //if (sfAccount.ParentId != null) 
-        //{
-        //    Account oParentAccount = IECUserManager.getAccountById(sfAccount.ParentId);
-        //    if (oParentAccount != null && oParentAccount.ICH_Member__c) return true;
-        //}
-        
-        // Make sure that there is a SAP Account configured
+        // make sure that there is a SAP Account configured
         List<SAP_Account__c> lstSAPAcc = [SELECT SAP_ID__c FROM SAP_Account__c WHERE Account__c = :sfAccount.Id AND GDP__c = true];
         if (lstSAPAcc.size() == 0 || lstSAPAcc.get(0).SAP_ID__c == null) return false;
         
         // check if Account have access to ICH
-        return (sfAccount != null && sfAccount.ICH_Member__c);
+        return (sfAccount != null && sfAccount.ICH_Member__c == true);
     }
 
     public static Customer_DTO getLoggedCustomer()
     {
-        //-- If logged user 
-        if(UserInfo.getUserType() == 'PowerPartner')
-        {
-            if(singleton == null)
-            {
-                Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
+    	//-- If logged user 
+    	if(UserInfo.getUserType() == 'PowerPartner')
+    	{
+    		if(singleton == null)
+	    	{
+	    		Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
                 
                 //-- Build Customer addresses 
                 setCustomerAddresses(customer);
-                singleton = customer; 
-            }
+				singleton = customer; 
+	    	}
 
-            return singleton;
-        }
-        //-- Non logged user 
-        else
-        {
-            return null; 
-        }   
+	    	return singleton;
+    	}
+    	//-- Non logged user 
+    	else
+    	{
+    		return null; 
+    	}	
     }
 
     public static Customer_DTO getCustomerByUser(Id userId)

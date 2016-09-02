@@ -51,9 +51,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -145,7 +142,7 @@
         <label>Address Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
@@ -306,6 +303,14 @@
                 <behavior>Edit</behavior>
                 <field>Remittance_frequency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CCG_IRR_Distribution_list__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CCG_Participant__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -435,6 +440,14 @@
     </miniLayout>
     <relatedLists>
         <relatedList>RelatedAccountSalesTeam</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Address__c</fields>
+        <fields>Country__c</fields>
+        <fields>Type__c</fields>
+        <relatedList>Location__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
@@ -569,6 +582,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Accreditation_Endorsement_organisation__c</fields>
+        <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>OSCAR__c</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -288,6 +288,7 @@
 &quot;CASSLink Export&quot;, $Label.ISSP_CASSLink_Export,
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import,
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -445,7 +446,7 @@ Name
       Name = &quot;Resource Center&quot;,
       CONTAINS($UserRole.Name ,&quot;General Public&quot;)
    ),
-   Name = &quot;Payment Link&quot;,
+   
    Name = &quot;Resource Center&quot;
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

@@ -20,9 +20,9 @@ public virtual class IEC_PageController
 	public String currentPageName{get{
 		String pageName = ApexPages.CurrentPage().getUrl();  
 		pageName = pageName.replaceFirst('/apex/','');         
-		pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');  
+		/*pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');  
 		string[] pageNameExtra = pageName.split('%3F',0);   
-		pageName = pageNameExtra[0]; 
+		pageName = pageNameExtra[0]; */
 
 		return pageName;
 	}set;}  
@@ -248,17 +248,17 @@ public virtual class IEC_PageController
             /*Pagereference pr = Page.ISSP_Registration;
             pr.getParameters().put('sRefererCommunity','iec');*/
 
-            //String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'iec/IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'iec/IEC_Login';
+            //String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'IEC_Login';
             //Pagereference pr = Page.IECUserRegistration;
             //MM: I have changed the target registration page to the ISS registration page and added a parameter with the name of the initial call.
             Pagereference pr = Page.ISSP_Registration;
-            pr.getParameters().put('sRefererCommunity', 'iec/IEC_Login');
+            pr.getParameters().put('sRefererCommunity', 'IEC_Login');
             pr.getParameters().put('CommunityName','IEC');
 
 
             // add return URL as parameter if one was provided
             //if (retURL != null && retURL != '') {
-            pr.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter('iec/IEC_Login'));
+            pr.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter('IEC_Login'));
             //}
             
             pr.setRedirect(true);

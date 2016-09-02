@@ -190,7 +190,7 @@ public class IEC_ShoppingCartController extends IEC_PageController
 			return null;
 		}
 
-		PageReference catalogPage =  new PageReference('/iec/IEC_ProductList');
+		PageReference catalogPage =  new PageReference('/IEC_ProductList');
         	catalogPage.setRedirect(true);
         return catalogPage;
 	}
@@ -350,4 +350,6 @@ public class IEC_ShoppingCartController extends IEC_PageController
 
 		vfOrder.orderItems = IECOrder_Svc.getOrderItemsInCookie();
 	}
+
+
 }

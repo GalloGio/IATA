@@ -28,14 +28,17 @@ public with sharing class IEC_LoginController extends IEC_PageController {
             {
                 //Read username & password from post data
                 username = ApexPages.currentPage().getParameters().get('username');
-                password = ApexPages.currentPage().getParameters().get('password');
+                password = ApexPages.currentPage().getParameters().get('password'); 
 
                 String retUrl = (System.currentPageReference().getParameters().containsKey('retUrl'))
                     ? System.currentPageReference().getParameters().get('retUrl')
                     : 'IEC_Home';
-               
-                if(retUrl == 'null') retUrl = 'iec_Home';
-                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl+'?tt='+DateTime.now().getTime());                
+
+                String tt = '?tt=';
+                if(retUrl == 'null') {retUrl = 'iec_Home';}
+                if(retUrl != null && retUrl.contains('?')) tt = '&tt=';
+
+                Pagereference pr  = IECUserManager.login(username, password, '/'+retUrl + tt + DateTime.now().getTime());                
                 return pr ;
             }
 
@@ -57,11 +60,12 @@ public with sharing class IEC_LoginController extends IEC_PageController {
                 throw new IECApplicationException('The Password field is required.');
               
             if (username != null && username != '') {
-               
-                Pagereference pr  = IECUserManager.login(username, password, retURL+'?tt='+DateTime.now().getTime());
+                String tt = '?tt=';
+                if(retURL != null && retUrl.contains('?')) tt = '&tt=';
+
+                Pagereference pr  = IECUserManager.login(username, password, retURL + tt + DateTime.now().getTime());
                 return pr ;
             }
-        
                 
             return null;
         }
@@ -120,7 +124,7 @@ public with sharing class IEC_LoginController extends IEC_PageController {
             /*Pagereference pr = Page.ISSP_Registration;
             pr.getParameters().put('sRefererCommunity','iec');*/
 
-            String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'iec/IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'iec/IEC_Login';
+            String commingFromUrl = (paramReturnURL != null && paramReturnURL != '') ? 'IEC_Login?' + IECConstants.PARAM_RETURN_URL + '=' + paramReturnURL : 'IEC_Login';
             //Pagereference pr = Page.IECUserRegistration;
             //MM: I have changed the target registration page to the ISS registration page and added a parameter with the name of the initial call.
             Pagereference pr = Page.ISSP_Registration;
@@ -138,6 +142,4 @@ public with sharing class IEC_LoginController extends IEC_PageController {
         }
         catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
     }
-
-
 }

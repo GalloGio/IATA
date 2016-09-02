@@ -27,9 +27,28 @@
                     }
                 }
 
-                var updateQuantity = function(productCode, index){
-                	updateProductQuantity(productCode, $('#quantity-cart-item-'+index).val());
+                var updateQuantity = function(productCode, index, isInteger){
+                	
+                	var inputValue = isInt(Number($('#quantity-cart-item-'+index).val()));
+                	var updateQyt = true;
+                	if(isInteger){
+                		if(inputValue == false){
+                			updateQyt = false;
+                		}
+                	}
+                	if(updateQyt){
+                		updateProductQuantity(productCode, $('#quantity-cart-item-'+index).val());
+                	}else{
+                		$('.alert.success').css('display','None');
+                		$('#customError').css('display', 'block');
+                	}
+                	
                 }
+
+                var isInt = function(n){
+				    return Number(n) === n && n % 1 === 0;
+				}
+
             </script>
 
 		</head>
@@ -82,6 +101,37 @@
 
                                     <apex:actionFunction name="startCheckout" action="{!startCheckout}" status="startCheckoutStatus" reRender="inner_wrapper" />
 
+                                    <!-- Custom integer Error Message  -->
+                                    <apex:outputPanel id="customerMessageBlock">
+                                    <div id="customError" class="alert error" style="display: None;">
+										<span id="">
+											<span id="">
+												<div class="message errorM3" role="alert">
+													<table class="messageTable" style="padding:0px;margin:0px;" border="0" cellpadding="0" cellspacing="0">
+														<tbody>
+															<tr valign="top">
+																<td><img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR" /></td>
+																<td class="messageCell">
+																	<div id="j" class="messageText">
+																		<span id="" style="color:#cc0000">
+																			<h4>Error:</h4>
+																		</span>
+																		Invalid decimal<br />
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<td></td>
+																<td></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</span>
+										</span>
+									</div>
+									</apex:outputPanel>
+
 									<!-- Error Messages -->
 		        					<apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
 							        	<apex:pageMessages escape="false"/>
@@ -110,7 +160,7 @@
 							                
 							                <apex:variable var="itemCount" value="{!0}"/>
 							                <apex:variable var="totalAmount" value="{!0}"/>
-
+											
 							                <apex:repeat value="{!vfOrder.orderItems}" var="item">
 							                	<tr class="item">
 								                	<apex:variable var="itemCount" value="{!itemCount + 1}"/>
@@ -125,8 +175,9 @@
 								                	<td class="quantity" style="text-align: left!important;">
 								                		<label for="quantity-cart-item-{!itemCount}" class="input-label quantity">Quantity: </label>
 								                		<apex:variable value="1" var="inputNotDisabled" rendered="{!AND(item.IsCompliant,item.IECStaticCartQuantity == null)}">
-							                            	<input id="quantity-cart-item-{!itemCount}" type="text" class="user-input quantity js-input-quantity validate[custom[number]]" value="{!item.quantityStripped}"  />
-							                            	<a href="javascript:updateQuantity('{!item.productCode}', {!itemCount})">update</a>
+							                            	<input id="quantity-cart-item-{!itemCount}" type="number" class="user-input quantity js-input-quantity validate[custom[number]]" value="{!item.quantityStripped}" html-min="1" html-step="{!IF(item.IsQuantityInteger, '1', 'any')}" />
+							                            	<a href="javascript:updateQuantity('{!item.productCode}', {!itemCount}, {!item.IsQuantityInteger})">update</a>
+
 														</apex:variable>
 														<apex:variable value="0" var="inputDisabled" rendered="{!OR(NOT(item.IsCompliant) ,item.IECStaticCartQuantity != null)}">
 							                            	<input id="quantity-cart-item-{!itemCount}" type="text" class="user-input quantity js-input-quantity " disabled="true" value="{!item.quantityStripped}"  />
@@ -137,18 +188,33 @@
 								                		<apex:outputText value="{0, number, currency}">
 			                                                <apex:param value="{!item.unitPrice}" />
 			                                            </apex:outputText>
+
 								                	</td>
 								                	<td class="price total-price">
 								                		<apex:outputText value="{0, number, currency}">
-			                                                <apex:param value="{!item.subTotal}"/>
+			                                                <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
 			                                            </apex:outputText>
+			                                            
 								                	</td>	
-							                	</tr>	
+							                	</tr>
+							                	<apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
+												<tr class="promotion">
+													<td class="product-name" colspan="3"><i>Setup fee</i></td>
+													<td class="quantity"></td>
+													<td class="price item-price"></td>
+													<td class="price total-price">
+														<apex:outputText value="{0, number, currency}">
+			                                                <apex:param value="{!item.setupFee}" />
+			                                            </apex:outputText>
+													</td>
+												</tr>
+							                	</apex:variable>
+
 							                	<apex:variable var="totalAmount" value="{!totalAmount + item.subTotal}"/>			                	
 							                </apex:repeat>
 							                <tr class="total sub-total">
 							                    <td class="sub-total">Subtotal</td>
-							                    <td class="quantity" colspan="4">{!itemCount} items in shopping cart</td>
+							                    <td class="quantity" colspan="4">{!itemCount} item(s) in shopping cart</td>
 							                    <td class="price total-price">
 							                    	<apex:outputText value="{0, number, currency}">
 		                                                <apex:param value="{!totalAmount}"/>
@@ -160,7 +226,7 @@
 	        					</apex:form>
 
 								<div class="test">
-						            <p>{!$Label.ShoppingCartFooterMsg}</p>
+									<apex:outputText value="{!$Label.ShoppingCartFooterMsg}" escape="false" />
 						        </div>
 
 						        <div class="footer-actions">
@@ -199,6 +265,7 @@
 		    <script src="{!URLFOR($Resource.ValidationEngine, 'js/jquery.validationEngine.js')}"></script>
 
 			<script type="text/javascript">
+				
 				var openModal = function(elt){
 		    		$(elt).removeClass(className.hidden);
 		    		$('body').attr('data-is-modal-open', 'true');
@@ -212,6 +279,7 @@
 				$(document).ready(function(){
 					$("form").validationEngine();	
 				});
+
 			</script>
 		</body>
 

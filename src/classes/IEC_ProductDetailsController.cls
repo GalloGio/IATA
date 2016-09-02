@@ -71,10 +71,13 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		        return ret;
 		    }
 
+		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
+
+
 			bIsInStock 		= 	product.InventoryStatus == 'In stock';
 			bIsOutOfStock 	= 	product.InventoryStatus != 'In stock';
 			bIsPreOrder 	= 	(product.InventoryStatus != 'In stock' && !product.Is_Electronic_Product);
-			bIsDirectSales 	= 	(product.RegularPrice==null && product.CustomerPrice==null);
+			bIsDirectSales 	= 	((product.RegularPrice==null && product.CustomerPrice==null) || !sfProduct.Sell_through_eCommerce__c);
 
 			//Product discounts
 			discounts = new List<PriceDetail_DTO>();
@@ -130,14 +133,10 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	        }
 	        else 
 	        {
-	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/iec/IEC_ShoppingCart');	        	
+	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');	        	
 	        }
 		}	
-		catch(Exception e)
-		{
-			addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());
-			return null;
-		}
+		catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
 	}
 
 	/**************************************************************************************************************

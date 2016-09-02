@@ -396,7 +396,8 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;CASSLink Export&quot;, $Label.ISSP_CASSLink_Export, 
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import, 
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics, 
-&quot;ASD&quot;, $Label.ISSP_ASD, 
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
+&quot;ASD&quot;, $Label.ISSP_ASD,
 Name
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -467,6 +468,26 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Terms_Acceptance_Date__c</fullName>
+        <description>When the user accepted terms and conditions</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Terms_Acceptance__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if terms and conditions have been accepted</description>
+        <externalId>false</externalId>
+        <label>Terms Acceptance</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>allowAssignFinContactFlowChange__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Validation rule pevents Agency Portal Admins from directly changing the Rights for IFAP acccess. The Assign Financial Asssessment Flow can however set this flag to &quot;override&quot; the validation rule.</description>
@@ -479,6 +500,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     <label>Portal Service Access</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>

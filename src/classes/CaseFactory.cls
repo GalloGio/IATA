@@ -32,7 +32,8 @@ public with sharing class CaseFactory {
 		fsCase.Region__c = FSRecord.Region__c;
 		fsCase.BSPCountry__c = FSRecord.Account_Country__c;
 		fsCase.AccountId = FSRecord.Account__c;
-		fsCase.Type_of_customer__c = FSRecord.Account__r.Industry != null ? mapCustomerTypeMapping.get(FSRecord.Account__r.Industry) : null;
+		//fsCase.Type_of_customer__c = FSRecord.Account__r.Industry != null ? mapCustomerTypeMapping.get(FSRecord.Account__r.Industry) : null;
+		fsCase.Type_of_customer__c = FSRecord.Account__r.Type != null ? FSRecord.Account__r.Type : null;
 		fsCase.Cargo_Business__c =  FSRecord.Account__r.Industry != null ? mapCargoBusinessMapping.get(FSRecord.Account__r.Industry) : null;
 		
 		system.debug('Account Industry: ' + FSRecord.Account__r.Industry);

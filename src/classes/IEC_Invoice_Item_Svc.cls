@@ -89,17 +89,38 @@ public without sharing class IEC_Invoice_Item_Svc {
 		* Get Product prices based on charges on Invoice Items
 		*******************************************************/
 		Map<String, Decimal> mapSubZId_ProductPrice = new Map<String, Decimal>();
+		Map<String, Decimal> mapSubZId_ProductSetupFee = new Map<String, Decimal>();
         
         // Query the Subscription Product charges from the invoice to get actual prices (Prices on the invoice items are the real numbers, the one on the subscription charges are copy of what is on the product rate plan)
         List<Invoice_Item__c> lstInvoiceItem_ProdPrice = new IEC_Invoice_Item_Sel().getInvoiceItemsBySubZId(mapSubChrgProd.keySet());
 
+        // Determine what charge is setup fee charge
+		Set<String> setSetupFeeSubscriptionProductCharge = new Set<String>();
+		for (Invoice_Item__c ii : lstInvoiceItem_ProdPrice)
+			setSetupFeeSubscriptionProductCharge.add(ii.Subscription_Product_Charge_Zuora_ID__c);
+		List<Zuora__SubscriptionProductCharge__c> lstSetupFeeSubscriptionProductCharge = [select Zuora__Zuora_Id__c
+																						  from Zuora__SubscriptionProductCharge__c
+																						  where Zuora__Zuora_Id__c in :setSetupFeeSubscriptionProductCharge
+																						    and Zuora__Model__c = :IECConstants.ChargeModel_Zuora_FlatFeePricing];
+		setSetupFeeSubscriptionProductCharge.clear();
+		for (Zuora__SubscriptionProductCharge__c sf : lstSetupFeeSubscriptionProductCharge)
+			setSetupFeeSubscriptionProductCharge.add(sf.Zuora__Zuora_Id__c);
+
 		for (Invoice_Item__c oInvoiceItem : lstInvoiceItem_ProdPrice)
 		{
-			// Save the product price on the side to use it on the order item later
-			if (mapSubZId_ProductPrice.containsKey(oInvoiceItem.Subscription_Zuora_ID__c))
-				mapSubZId_ProductPrice.put(oInvoiceItem.Subscription_Zuora_ID__c, oInvoiceItem.Charge_Amount__c + mapSubZId_ProductPrice.get(oInvoiceItem.Subscription_Zuora_ID__c));
-			else
-				mapSubZId_ProductPrice.put(oInvoiceItem.Subscription_Zuora_ID__c, oInvoiceItem.Charge_Amount__c);
+			if (setSetupFeeSubscriptionProductCharge.contains(oInvoiceItem.Subscription_Product_Charge_Zuora_ID__c)) {
+				// Save the setup fee for product on the side to use it on the order item later
+				if (mapSubZId_ProductSetupFee.containsKey(oInvoiceItem.Subscription_Zuora_ID__c))
+					mapSubZId_ProductSetupFee.put(oInvoiceItem.Subscription_Zuora_ID__c, oInvoiceItem.Charge_Amount__c + mapSubZId_ProductSetupFee.get(oInvoiceItem.Subscription_Zuora_ID__c));
+				else
+					mapSubZId_ProductSetupFee.put(oInvoiceItem.Subscription_Zuora_ID__c, oInvoiceItem.Charge_Amount__c);
+			} else {
+				// Save the product price on the side to use it on the order item later
+				if (mapSubZId_ProductPrice.containsKey(oInvoiceItem.Subscription_Zuora_ID__c))
+					mapSubZId_ProductPrice.put(oInvoiceItem.Subscription_Zuora_ID__c, oInvoiceItem.Charge_Amount__c + mapSubZId_ProductPrice.get(oInvoiceItem.Subscription_Zuora_ID__c));
+				else
+					mapSubZId_ProductPrice.put(oInvoiceItem.Subscription_Zuora_ID__c, oInvoiceItem.Charge_Amount__c);
+			}
 		}
 		
 		Set<String> setProductRatePlanZId = new Set<String>();
@@ -113,9 +134,11 @@ public without sharing class IEC_Invoice_Item_Svc {
 		for (String sSubZId : mapSubChrgProd.keySet())
 		{
 			for (Zuora__SubscriptionProductCharge__c oSubChrg : mapSubChrgProd.get(sSubZId))
-			{				
-				// Save the product quantity on the side to use it on the order item later
-				mapSubZId_ProductQty.put(oSubChrg.Zuora__Subscription__r.Zuora__External_Id__c, oSubChrg.Zuora__Quantity__c);
+			{
+				// Save the product quantity on the side to use it on the order item later -> get maximum
+				if (!setSetupFeeSubscriptionProductCharge.contains(oSubChrg.Zuora__Zuora_Id__c))
+					if (!mapSubZId_ProductQty.containsKey(oSubChrg.Zuora__Subscription__r.Zuora__External_Id__c) || mapSubZId_ProductQty.get(oSubChrg.Zuora__Subscription__r.Zuora__External_Id__c) < oSubChrg.Zuora__Quantity__c)
+						mapSubZId_ProductQty.put(oSubChrg.Zuora__Subscription__r.Zuora__External_Id__c, oSubChrg.Zuora__Quantity__c);
 				
 				// Build array of ProductRatePlan Zuora Ids
 				setProductRatePlanZId.add(oSubChrg.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__r.zqu__ZuoraId__c);
@@ -185,7 +208,9 @@ public without sharing class IEC_Invoice_Item_Svc {
 			// Get the payment method
             String sPaymentMethod = '';
             if(oBillingAccount != null && oBillingAccount.Zuora__Default_Payment_Method__c != null && oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c != null)
-            	sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c);
+                sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__Default_Payment_Method__r.Zuora__Type__c);
+            if(sPaymentMethod == '' && oBillingAccount != null && oBillingAccount.Zuora__DefaultPaymentMethod__c != null)
+                sPaymentMethod = IECConstants.parsePaymentMethodTypeToTypeWithSpaces(oBillingAccount.Zuora__DefaultPaymentMethod__c);
 			
 			// Create the Order record
 			if (!mapSubZId_Order.containsKey(oSub.Zuora__External_Id__c))
@@ -241,7 +266,8 @@ public without sharing class IEC_Invoice_Item_Svc {
 		            OrderItem oOrderItem = new OrderItem (
 		                PriceBookEntryId = mapProdId_PBE.get(oProduct.Id).Id
 		                , Quantity = (mapSubZId_ProductQty.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ProductQty.get(oSub.Zuora__External_Id__c) : 1
-		                , UnitPrice = (mapSubZId_ProductPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ProductPrice.get(oSub.Zuora__External_Id__c) : 0
+		                , UnitPrice = ((mapSubZId_ProductPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ProductPrice.get(oSub.Zuora__External_Id__c) : 0)
+		                , Setup_Fee__c = mapSubZId_ProductSetupFee.get(oSub.Zuora__External_Id__c)
 		                , Charge_Shipping__c = oProduct.Charge_Shipping__c
 		                , Tax__c = (mapSubZId_TaxPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_TaxPrice.get(oSub.Zuora__External_Id__c) : 0
 		                , Freight_Charge__c = (mapSubZId_ShippingPrice.containsKey(oSub.Zuora__External_Id__c)) ? mapSubZId_ShippingPrice.get(oSub.Zuora__External_Id__c) : null
@@ -251,6 +277,7 @@ public without sharing class IEC_Invoice_Item_Svc {
 		                , Zuora_Subscription_Number__c = oSub.Name
 		                , IEC_Is_Paid__c = (sPaymentMethod == 'Credit Card' || sPaymentMethod == 'ICH')
 		            );
+		            oOrderItem.UnitPrice = 0.00 + (oOrderItem.UnitPrice / oOrderItem.Quantity);
 		            
 		            mapSubZId_OrderItem.put(oSub.Zuora__External_Id__c, oOrderItem);
 	            }

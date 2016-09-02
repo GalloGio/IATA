@@ -27,5 +27,6 @@
 	   </table>
    </apex:repeat>
    <apex:commandButton action="{!save}" value="Submit" oncomplete="window.close();parent.window.opener.location.reload();"/> 
- </apex:form> 
+ </apex:form>
+</div>
 </apex:page>

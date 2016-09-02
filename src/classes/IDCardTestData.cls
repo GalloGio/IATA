@@ -118,7 +118,7 @@ public with sharing class IDCardTestData{
         Account account7 = new Account();
         account7.RecordTypeId = rtidca;
         account7.Name = 'KeyAccount unLimited.';
-        account7.IATACode__c = '67504242';
+        account7.IATACode__c = '1234567';
         account7.Industry = 'Travel Agent';
         account7.IDCard_Key_Account__c = true;
         account7.ID_Card_Key_Account_Discount__c = 0;

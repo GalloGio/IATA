@@ -1,0 +1,98 @@
+<aura:component controller="AMP_KeyAccountPlanExtension"> 
+    <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="activity" type="Objective__c" />
+    <aura:attribute name="activityId" type="String" default=""/>
+    <aura:attribute name="activityName" type="String" default=""/>
+    <aura:attribute name="isActivityMode" type="Boolean" default="true"/>
+    <aura:attribute name="filterView" type="String" default="current"/>
+    <aura:attribute name="activities" type="Objective__c[]" />
+    <aura:attribute name="milestonesBackup" type="Task[]" />
+    <aura:attribute name="milestones" type="Task[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:handler name="deleteActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleDeleteActivity" />
+    <aura:handler name="updateActivity" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateActivity" />
+    <aura:handler name="showMilestones" event="c:AMP_UpdateIssueOrPriority" action="c.handleShowMilestones" />
+    
+    <aura:registerEvent name="AMP_KAPActivityError" type="c:AMP_KAPActivityError"/>
+
+    <aura:attribute name="newActivity" type="Objective__c"
+                    default="{     'sobjectType' : 'Objective__c',
+                             'Name': '',
+                             'Details__c': '',
+                             'Status__c': '',
+                             'Account_Issue_or_Priority__c': '',
+                             'Benefits_to_Account__c': '',
+                             'Deadline__c': '',
+                             'Account__c': 'accountId'
+                             }"/>
+
+    <div class="slds-card">
+        
+        <aura:if isTrue="{!v.isActivityMode}">
+            
+            <div class="slds-card__header slds-grid">
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/standard-sprite/svg/symbols.svg#event'}" class="slds-icon slds-icon-standard-event slds-icon--medium" />
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <span class="slds-text-heading--small">Activities</span>
+                    </div>
+                </div>
+                
+                <div class="slds-no-flex">
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button--neutral slds-col--bump-left slds-button--brand" aura:id="currentButton" onclick="{!c.showCurrent}">Current</button>
+                        <button class="slds-button slds-button--neutral slds-col--bump-left" aura:id="historyButton" onclick="{!c.showHistory}">History</button>
+                    	&nbsp;&nbsp;
+                        <button class="slds-button slds-button--neutral slds-col--bump-left" >
+                        	<a href="{!'/apex/AMP_KeyAccountPlanPrintable?accountId=' + v.accountId}">
+                            	Print
+                            </a>
+                        </button>
+                        &nbsp;&nbsp;
+                        <button class="slds-button slds-button--neutral slds-col--bump-left" onclick="{!c.addActivity}">New</button>
+                    </div>
+                </div>                
+            </div>
+            
+            <div class="slds-card__body">
+                
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
+                    <thead>
+                        <tr class="slds-text-heading--label slds-is-sortable slds-is-resizable">
+                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Actions</span></th>
+                            <th scope="col" class="mediumColumn"><span class="slds-truncate">Activity</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Description</span></th>
+                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Overall Status</span></th>
+                            <th scope="col" class="narrowColumn"><span class="slds-truncate">Deadline</span></th>
+                            <th scope="col" class="mediumColumn"><span class="slds-truncate">Account Issue or Priority</span></th>
+                            <th scope="col" class="wideColumn"><span class="slds-truncate">Benefits to the Account</span></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <aura:iteration items="{!v.activities}" var="activity" indexVar="index">
+                            <tr>
+                                <c:AMP_Activity activity="{!activity}" accountId="{!v.accountId}" index="{!index}"/>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                
+            </div>
+            
+            <aura:set attribute="else">
+                <button class="slds-button slds-button--neutral slds-m-around--small" onclick="{!c.setMM}" >
+                    <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#left'}" class="slds-button__icon slds-button__icon--left" />
+                    Back to Activities
+                </button>
+                
+                <c:AMP_Milestones accountId="{!v.accountId}" activity="{!v.activity}" activityId="{!v.activityId}" activityName="{!v.activityName}" milestones="{!v.milestones}"/>
+            </aura:set>
+        </aura:if>
+        
+    </div>
+    
+</aura:component>

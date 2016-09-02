@@ -129,6 +129,24 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>AMS_1_record</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Record__c</field>
+            <operation>contains</operation>
+            <value>001w000001W6eB6</value>
+        </filters>
+        <label>AMS - 1 record</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>AMS_Errors</fullName>
         <columns>NAME</columns>
         <columns>Log__c</columns>

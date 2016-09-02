@@ -28,6 +28,7 @@
     </style>
     <div class="container">
         <c:ISSP_CustomNavigation />
+        <apex:messages />
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!$Label.ISSP_Registration_PersonalInformation}</h3>
