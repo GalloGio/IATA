@@ -1,6 +1,5 @@
 <apex:page controller="MITA_AgreementsCtrl" sidebar="false">
 	<c:Loading />
-	<apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
 	<apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
 	<apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
 
