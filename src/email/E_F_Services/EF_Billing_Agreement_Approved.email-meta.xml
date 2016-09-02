@@ -7,6 +7,6 @@
     <subject>Billing Agreement changes approved</subject>
     <textOnly>Dear {!User.FirstName},
 
-your changes for an Airline Billing Agreement between {!EF_Billing_Agreement__c.Client__r.Name} and {!EF_Billing_Agreement__c.Airline__r.Name} have been approved.</textOnly>
+your changes for an Airline Billing Agreement have been approved.</textOnly>
     <type>custom</type>
 </EmailTemplate>

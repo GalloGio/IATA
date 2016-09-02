@@ -289,78 +289,6 @@ E&amp;F CRM Project</description>
         <fullName>Description</fullName>
         <trackHistory>true</trackHistory>
     </fields>
-	<fields>
-        <fullName>EF_Manager_Approval__c</fullName>
-        <description>Helper field for &quot;require approval&quot; functionality.</description>
-        <externalId>false</externalId>
-        <label>E&amp;F Manager Approval</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Recalled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>EF_Requested_Changes__c</fullName>
-        <externalId>false</externalId>
-        <label>E&amp;F Requested Changes</label>
-        <length>10000</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Html</type>
-        <visibleLines>10</visibleLines>
-    </fields>
-    <fields>
-        <fullName>EF_Require_Approval__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Helper field that gets set to TRUE if one of the Billing Agreements &quot;require approval&quot; fields gets changed.</description>
-        <externalId>false</externalId>
-        <label>E&amp;F Require Approval</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>EF_Send_to_SAP__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Helper field for &quot;require approval&quot; functionality.</description>
-        <externalId>false</externalId>
-        <label>Send to SAP</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>EF_Approve_Status__c</fullName>
-        <description>Helper field for &quot;require approval&quot; functionality.</description>
-        <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
-        <label>E&amp;F Approve Status</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-    </fields>
     <fields>
         <fullName>EF_Admin_Fee__c</fullName>
         <externalId>false</externalId>
@@ -370,6 +298,15 @@ E&amp;F CRM Project</description>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
         <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>EF_Approve_Status__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>E&amp;F Approve Status</label>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>EF_BSP_Periods__c</fullName>
@@ -520,6 +457,37 @@ E&amp;F CRM Project</description>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>EF_Manager_Approval__c</fullName>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Manager Approval</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recalled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_Payment_Currency__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
@@ -594,6 +562,24 @@ E&amp;F CRM Project</description>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>EF_Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Requested Changes</label>
+        <length>10000</length>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>EF_Require_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field that gets set to TRUE if one of the Billing Agreements &quot;require approval&quot; fields gets changed.</description>
+        <externalId>false</externalId>
+        <label>E&amp;F Require Approval</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>EF_SIS_Aggregator__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F SIS Aggregator</label>
@@ -602,6 +588,15 @@ E&amp;F CRM Project</description>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Send_to_SAP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Helper field for &quot;require approval&quot; functionality.</description>
+        <externalId>false</externalId>
+        <label>Send to SAP</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>EF_Trading_Partner__c</fullName>
