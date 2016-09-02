@@ -1,6 +1,20 @@
 public with sharing class EF_BaContractApprovalHelper
 {
 
+	public static void removeTempStorageRecordOnContractRejection(List<Contract> rejectedList)
+	{
+		Set<Id> rejectedIds = new Set<Id>();
+		for(Contract rejectedRecord : rejectedList)
+		{
+			rejectedIds.add(rejectedRecord.Id);
+		}
+		String query = 'select id, Contract__c from EF_Approval__c where Contract__c in :rejectedIds';
+
+		List<EF_Approval__c> storageList = Database.query(query);
+	    if(storageList.size() > 0)
+		    delete storageList;
+	}
+
 	public static void removeTempStorageRecordOnBaRejection(List<EF_Billing_Agreement__c> rejectedList)
 	{
 		Set<Id> rejectedIds = new Set<Id>();
@@ -13,6 +27,45 @@ public with sharing class EF_BaContractApprovalHelper
 		List<EF_Approval__c> storageList = Database.query(query);
 	    if(storageList.size() > 0)
 		    delete storageList;
+	}
+
+	public static void copyValuesFromTempStorageOnContractApproval(List<Contract> approvedList, List<String> fieldList)
+	{
+		Set<Id> approvedIds = new Set<Id>();
+		for(Contract approvedRecord : approvedList)
+		{
+			approvedIds.add(approvedRecord.Id);
+		}
+		String query = 'select id, Contract__c, ';
+		for(String f : fieldList)
+		{
+			query = query + f + ', ';
+		}
+		query = query.substring(0, query.length()-2);
+		query = query + ' from EF_Approval__c where Contract__c in :approvedIds order by createddate desc';
+		System.debug('***************** query: '+query);
+		List<EF_Approval__c> storageList = Database.query(query);
+		Map<Id, EF_Approval__c> storageMap = new Map<Id, EF_Approval__c>();
+		for(EF_Approval__c storageRecord : storageList)
+		{
+			if(storageMap.get(storageRecord.Contract__c) == null)
+			{
+				storageMap.put(storageRecord.Contract__c, storageRecord);
+			}
+		}
+
+		Map<String, Schema.SobjectField> fields = Contract.getSObjectType().getDescribe().fields.getMap();
+		for(Contract recordToUpdate : approvedList)
+		{
+	        for(String field : fieldList)
+	        {
+	            SObjectField f = fields.get(field);
+	            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
+	        }
+	        recordToUpdate.EF_Manager_Approval__c = 'Not Started';
+	    }
+
+	    delete storageList;
 	}
 
 	public static void copyValuesFromTempStorageOnBaApproval(List<EF_Billing_Agreement__c> approvedList, List<String> fieldList)
@@ -54,14 +107,49 @@ public with sharing class EF_BaContractApprovalHelper
 	    delete storageList;
 	}
 
+	public static List<Contract> identifyApprovedContracts(List<Contract> newValues, Map<Id, Contract> oldValues)
+	{
+		List<Contract> approvedList = new List<Contract>();
+		for(Contract newValue : newValues)
+		{
+			if(newValue.EF_Manager_Approval__c != null)
+			{
+				if(newValue.EF_Manager_Approval__c.equalsIgnoreCase('Approved') && oldValues.get(newValue.Id).EF_Manager_Approval__c.equalsIgnoreCase('In Progress'))
+				{
+					approvedList.add(newValue);
+				}
+			}
+		}
+		return approvedList;
+	}
+
+	public static List<Contract> identifyRejectedOrRecalledContracts(List<Contract> newValues, Map<Id, Contract> oldValues)
+	{
+		List<Contract> rejectedList = new List<Contract>();
+		for(Contract newValue : newValues)
+		{
+			if(newValue.EF_Manager_Approval__c != null)
+			{
+				if((newValue.EF_Manager_Approval__c.equalsIgnoreCase('Rejected') || newValue.EF_Manager_Approval__c.equalsIgnoreCase('Recalled')) && oldValues.get(newValue.Id).EF_Manager_Approval__c.equalsIgnoreCase('In Progress'))
+				{
+					rejectedList.add(newValue);
+				}
+			}
+		}
+		return rejectedList;
+	}
+
 	public static List<EF_Billing_Agreement__c> identifyApprovedBillingAgreements(List<EF_Billing_Agreement__c> newValues, Map<Id, EF_Billing_Agreement__c> oldValues)
 	{
 		List<EF_Billing_Agreement__c> approvedList = new List<EF_Billing_Agreement__c>();
 		for(EF_Billing_Agreement__c newValue : newValues)
 		{
-			if(newValue.Manager_Approval__c.equalsIgnoreCase('Approved') && oldValues.get(newValue.Id).Manager_Approval__c.equalsIgnoreCase('In Progress'))
+			if(newValue.Manager_Approval__c != null)
 			{
-				approvedList.add(newValue);
+				if(newValue.Manager_Approval__c.equalsIgnoreCase('Approved') && oldValues.get(newValue.Id).Manager_Approval__c.equalsIgnoreCase('In Progress'))
+				{
+					approvedList.add(newValue);
+				}
 			}
 		}
 		return approvedList;
@@ -72,13 +160,41 @@ public with sharing class EF_BaContractApprovalHelper
 		List<EF_Billing_Agreement__c> rejectedList = new List<EF_Billing_Agreement__c>();
 		for(EF_Billing_Agreement__c newValue : newValues)
 		{
-			if((newValue.Manager_Approval__c.equalsIgnoreCase('Rejected') || newValue.Manager_Approval__c.equalsIgnoreCase('Recalled')) && oldValues.get(newValue.Id).Manager_Approval__c.equalsIgnoreCase('In Progress'))
+			if(newValue.Manager_Approval__c != null)
 			{
-				rejectedList.add(newValue);
+				if((newValue.Manager_Approval__c.equalsIgnoreCase('Rejected') || newValue.Manager_Approval__c.equalsIgnoreCase('Recalled')) && oldValues.get(newValue.Id).Manager_Approval__c.equalsIgnoreCase('In Progress'))
+				{
+					rejectedList.add(newValue);
+				}
 			}
 		}
 		return rejectedList;
 	}
+
+	// this method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
+    public static boolean identifyContractChanges(Contract newValues, Contract oldValues, List<String> fieldList)
+    {
+    	String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Old value:</th><th border="1">New value:</th></tr>';
+    	boolean hasChanged = false;
+        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
+        for(String field : fieldList)
+        {
+            SObjectField f = fields.get(field);
+            if(newValues.get(field) != oldValues.get(field))
+            {
+            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
+                hasChanged = true;
+            }
+        }
+
+        htmlTable = htmlTable + '</table>';
+        if(hasChanged)
+        {
+        	System.debug('************ hasChanged: '+hasChanged + ' - ' + htmlTable);
+        	newValues.EF_Requested_Changes__c = htmlTable;
+        }
+        return hasChanged;
+    }
 
 	// this method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
     public static boolean identifyBillingAgreementChanges(EF_Billing_Agreement__c newValues, EF_Billing_Agreement__c oldValues, List<String> fieldList)
@@ -109,6 +225,16 @@ public with sharing class EF_BaContractApprovalHelper
         return hasChanged;
     }
 
+    public static void rollbackPreviousValues(Contract newValues, Contract oldValues, List<String> fieldList)
+    {
+        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
+        for(String field : fieldList)
+        {
+            SObjectField f = fields.get(field);
+            newValues.put(field, oldValues.get(field));
+        }
+    }
+
     public static void rollbackPreviousValues(EF_Billing_Agreement__c newValues, EF_Billing_Agreement__c oldValues, List<String> fieldList)
     {
         System.debug('*********** payment NEW: '+newValues.Payment_Method__c);
@@ -121,6 +247,20 @@ public with sharing class EF_BaContractApprovalHelper
         }
 
         System.debug('*************** new value rolled back: '+newValues.Payment_Method__c);
+    }
+
+    public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, Contract newValues, List<String> fieldList)
+    {
+        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
+        
+        for(String field : fieldList)
+        {
+            SObjectField f = fields.get(field);
+            approvalStorageRecord.put(field, newValues.get(field));
+        }
+        approvalStorageRecord.put('Contract__c', newValues.Id);
+        System.debug('********************** apr: '+approvalStorageRecord);
+        return approvalStorageRecord;
     }
 
     public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, EF_Billing_Agreement__c newValues, List<String> fieldList)

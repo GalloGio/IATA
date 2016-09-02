@@ -103,6 +103,15 @@ It contains a currency to make the correspondance between contract + location + 
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
+    <fields>
+        <fullName>Requested_Changes__c</fullName>
+        <externalId>false</externalId>
+        <label>Requested Changes</label>
+        <length>10000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
     <label>E&amp;F Location Currency</label>
     <nameField>
         <displayFormat>Loc-{00000000}</displayFormat>

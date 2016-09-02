@@ -6,13 +6,13 @@
         <type>owner</type>
     </allowedSubmitters>
     <approvalPageFields>
-        <field>Name</field>
-        <field>Billing_Currency__c</field>
-        <field>Client__c</field>
-        <field>EF_Location_ID__c</field>
-        <field>EF_Status__c</field>
-        <field>Payment_Method__c</field>
-        <field>Payment_Terms__c</field>
+        <field>ContractNumber</field>
+        <field>Owner</field>
+        <field>EF_Admin_Fee__c</field>
+        <field>EF_Billing_Currency__c</field>
+        <field>EF_Billing_Frequency__c</field>
+        <field>EF_Group_Code__c</field>
+        <field>CCF_Number__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
@@ -24,64 +24,63 @@
         <label>Step 1</label>
         <name>Step_1</name>
     </approvalStep>
-    <description>User story 778 pt. 2.</description>
-    <emailTemplate>E_F_Services/EF_Billing_Agreement_Approval_Request</emailTemplate>
+    <emailTemplate>E_F_Services/EF_Contract_Approval_Request</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
-            <field>EF_Billing_Agreement__c.Require_Approval__c</field>
+            <field>Contract.EF_Require_Approval__c</field>
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
-            <name>EF_Notify_BA_Owner_of_Manager_Approval</name>
+            <name>EF_Notify_Contract_Owner_of_Manager_Approval</name>
             <type>Alert</type>
         </action>
         <action>
-            <name>EF_Set_Approval_to_Approved</name>
+            <name>EF_Set_Contract_Approval_To_Approved</name>
             <type>FieldUpdate</type>
         </action>
         <action>
-            <name>EF_Set_Require_Approval_To_False</name>
+            <name>EF_Set_Contract_Require_Approval_False</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
-            <name>EF_Billing_Agreement_Rejected</name>
+            <name>EF_Notify_Contract_Owner_of_Manager_Rejection</name>
             <type>Alert</type>
         </action>
         <action>
-            <name>EF_Set_Approval_to_Rejected</name>
+            <name>EF_Set_Contract_Approval_To_Reject</name>
             <type>FieldUpdate</type>
         </action>
         <action>
-            <name>EF_Set_Require_Approval_To_False</name>
+            <name>EF_Set_Contract_Require_Approval_False</name>
             <type>FieldUpdate</type>
         </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
         <action>
-            <name>EF_Set_Approval_to_In_Progress</name>
+            <name>EF_Set_Contract_Approval_to_In_Progress</name>
             <type>FieldUpdate</type>
         </action>
     </initialSubmissionActions>
-    <label>EF Billing Agreement Approval</label>
+    <label>E&amp;F Contract Approval</label>
     <nextAutomatedApprover>
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
-        <userHierarchyField>EF_Billing_Agreement_Approver__c</userHierarchyField>
+        <userHierarchyField>EF_Contract_Approver__c</userHierarchyField>
     </nextAutomatedApprover>
     <recallActions>
         <action>
-            <name>EF_Set_Require_Approval_To_False</name>
+            <name>EF_Set_Contract_Approval_To_Recalled</name>
             <type>FieldUpdate</type>
         </action>
         <action>
-            <name>EF_Set_Require_Approval_To_Recalled</name>
+            <name>EF_Set_Contract_Require_Approval_False</name>
             <type>FieldUpdate</type>
         </action>
     </recallActions>
