@@ -115,45 +115,7 @@ public with sharing class AMS_MigrationToolHelper {
 
       	System.debug('Starting with flow ...');
 
-		Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0 wizardFlow = new Flow.Interview.OSCAR_Wizard_SIMPLEX_Automatic_v2_0(flowVarMap);
-		wizardFlow.start();
-
-		System.debug('Flow has ended...');
-
-		String oscarCaseId = (String)(wizardFlow.getVariableValue('OscarCaseId'));
-		String oscarId = (String)(wizardFlow.getVariableValue('OscarId'));
-
-		Case caseCreated = (Case)(wizardFlow.getVariableValue('CaseCreatedObject'));
-		AMS_OSCAR__c oscarCreated = (AMS_OSCAR__c)(wizardFlow.getVariableValue('CreatedOscarObject'));
-
-
-		System.debug('Oscar case id is ' + oscarCaseId);
-		System.debug('Oscar id is ' + oscarId);
 		
-		caseToProcess.ParentId = oscarCaseId;
-
-		update caseToProcess;
-
-		System.debug('Case updated.');
-
-		cont.oscarId = oscarId;
-		cont.oscarCaseId = oscarCaseId;
-		cont.oscarCreated = oscarCreated;
-		cont.caseCreated = caseCreated;
-		cont.processing = false;
-		cont.migrated = true;
-
-		if(accreditationObj == null)
-			accreditationObj = fetchAccreditation(oscarCaseId);
-
-		if(accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
-			
-			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
-			
-			update accreditationObj;
-		}
-
-		System.debug('Process finished.');
 
 		return cont;
 
