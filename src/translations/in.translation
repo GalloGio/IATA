@@ -3317,7 +3317,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NOC_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
+        <label>D: Kirimkan ke IATA</label>
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
