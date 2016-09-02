@@ -25716,6 +25716,65 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Role</picklist>
+            <values>
+                <fullName>Account Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accounts Receivable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dispute Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %28Other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales %26 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Support</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Services_Used__c</picklist>
             <values>
                 <fullName>BDG</fullName>
