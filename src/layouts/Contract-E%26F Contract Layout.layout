@@ -44,6 +44,10 @@
                 <behavior>Edit</behavior>
                 <field>Pricebook2Id</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -263,9 +267,15 @@
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Edit_Biling_Agreement_Status</customButtons>
         <fields>NAME</fields>
+        <fields>Status__c</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
+        <fields>Data_Currency__c</fields>
+        <fields>Payment_Method_Code__c</fields>
+        <fields>Payment_Currency__c</fields>
+        <fields>Billing_Currency__c</fields>
         <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
