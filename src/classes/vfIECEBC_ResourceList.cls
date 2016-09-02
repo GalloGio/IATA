@@ -1,15 +1,52 @@
 public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
     public static Integer ITEMS_PER_PAGE = 200;
     public Decimal STORAGE_CAPACITY=1; //in mg
+    public Decimal FILE_SIZE_MAX=1; //in meg
     private boolean firsttimepageload=true;
+
+    public boolean MessageFlag {
+        get {
+                if (MessageFlag==null) {
+                    MessageFlag=false;
+                }
+            return Messageflag;
+        }
+        private set;
+    }
+    public String MessageContent {get;set;}
+    
+    public boolean loadmoreimage{
+        get {
+         AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
+                       			Where Billing_Account__c=:vfIECEBC.billingAccount.Id];
+          
+          
+          Decimal mb=0;
+          for (AggregateResult ar : groupedResults)  {
+                //MB
+
+                if (ar.get('expr0')==null) continue;
+                mb = Decimal.ValueOf(String.ValueOf(ar.get('expr0')));
+                mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
+               
+            }
+           if (mb>=100) return false;
+           return true;
+          }
+      private set;  
+    }
     public vfIECEBC_ResourceList() {
         sortBy='CreatedDate Desc';
+        MessageFlag=false;
+        MessageContent='';
         UploadInit();
         List<EBC_Setup__c> setup = new List<EBC_Setup__c>();
-                setup=[Select Default_Storage_Capacity__c 
+                setup=[Select Default_Storage_Capacity__c,
+                       			Maximum_File_Size_Upload__c
                             From EBC_Setup__c
                             Limit 1];
         if (setup.size()>0) {STORAGE_CAPACITY=setup[0].Default_Storage_Capacity__c;}
+        if (setup.size()>0) {FILE_SIZE_MAX=setup[0].Maximum_File_Size_Upload__c;}
         List<Zuora__CustomerAccount__c> billingaccount = new List<Zuora__CustomerAccount__c>();
         billingaccount=[Select eBroadcast_Storage__c
                         From Zuora__CustomerAccount__c
@@ -23,7 +60,7 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
         if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
-        options.add(new SelectOption('CreatedDate DESC','Creation Date')); 
+        options.add(new SelectOption('CreatedDate DESC','Upload Date')); 
         options.add(new SelectOption('Image_size__c DESC','Image Size'));
         options.add(new SelectOption('Image_Type__c DESC','Image Type'));
         options.add(new SelectOption('Name ASC','Name'));
@@ -99,41 +136,55 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
     public String gaugepercent
     {
       get {
-         
+          
           AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
                        			Where Billing_Account__c=:vfIECEBC.billingAccount.Id];
           
           gaugepercent ='0%;';
+          Decimal mb=0;
           for (AggregateResult ar : groupedResults)  {
                 //MB
-                Decimal mb=0;
+
                 if (ar.get('expr0')==null) continue;
                 mb = Decimal.ValueOf(String.ValueOf(ar.get('expr0')));
                 mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
-                if (mb>100) mb=100;
-                gaugepercent =String.ValueOf(mb.Setscale(0))+ '%;';
+               
             }
-           
+           if (mb>=100) mb=100;
+           gaugepercent =String.ValueOf(mb.Setscale(0))+ '%;';
           
           return gaugepercent;
         }
       private set;  
     }
-     
+    public Pagereference ClearMessage()
+    {
+        MessageFlag=false;
+        MessageContent='';
+        return null;
+    }
     public Pagereference SaveAttachments()  
-    {  
-                
+    {
+        MessageFlag=false;
+        MessageContent='';
         try {
             IECEBC_Utility.createResourceForAttachment(attachment, vfIECEBC.billingAccount);
         } catch(IECEBC_Utility.Resource_Invalid_Attachment_Exception e) {
+            MessageFlag=true;
+            MessageContent=e.getMessage();
+            UploadInit();
             return null;
         } catch(IECEBC_Utility.Attachment_Size_Exceeds_Capacity_Exception e) {
+            MessageFlag=true;
+            MessageContent=e.getMessage();
             UploadInit();
             return null;
         } catch(IECEBC_Utility.Resource_Name_Already_Exists_Exception e) {
+            MessageFlag=true;
+            MessageContent=e.getMessage();
             UploadInit();
             return null;
-            }
+        }
         
         
         attachment.Name = String.valueOf('image.png');
@@ -141,12 +192,12 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
         attachment.IsPrivate = true;
             
         insert attachment;
-              
+        
         UploadInit();
         resetQuery();
         
-        return null;  
-    }  
+        return null;
+    }
     //Upload
     
 }

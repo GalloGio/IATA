@@ -29,8 +29,16 @@
                                 <li>{!c.EBC_Master_Filter__r.Name}</li>
                                 <li><strong class="js-campaign-status"><apex:outputField value="{!c.Status__c}" /></strong></li>
                                 <li>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">{!c.LastModifiedDate}</apex:outputText>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">{!c.Scheduled_Date__c}</apex:outputText>
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">
+                                        <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                            <apex:param value="{!c.LastModifiedDate}" /> 
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">
+                                         <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                            <apex:param value="{!c.Scheduled_Date__c}" /> 
+                                        </apex:outputText>
+                                    </apex:outputText>
                                 </li>
                             </ul>
                         </td>

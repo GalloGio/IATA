@@ -83,6 +83,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>E_Commerce_Base_Url__c</fullName>
+        <defaultValue>&quot;https://customer-portal-iata.force.com/iec&quot;</defaultValue>
+        <description>This is the community base url for the eBroadcast pages</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the community base url for the eBroadcast pages</inlineHelpText>
+        <label>E-Commerce Base Url</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Enhanced_Reporting_Product_Rate_Plan__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Rate plan containing the default information for Enhanced Reporting Add-On.</description>
@@ -95,6 +106,20 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Maximum_File_Size_Upload__c</fullName>
+        <defaultValue>1</defaultValue>
+        <description>Maximum File Size Upload in MegOctet</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Maximum File Size Upload in MegOctet</inlineHelpText>
+        <label>Maximum File Size Upload</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Member_Email_Block_Product__c</fullName>
@@ -237,6 +262,42 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Product_Category__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Product Category for EBC products. 
+This is used to get details such as Renewal_Window used for sending renewal offering email.
+That record should have name as defined in IECConstants.ProductCategory_SF_EBROADCAST.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product Category for EBC products. 
+This is used to get details such as Renewal_Window used for sending renewal offering email.</inlineHelpText>
+        <label>Product Category</label>
+        <referenceTo>Product_Category__c</referenceTo>
+        <relationshipLabel>EBC Setups</relationshipLabel>
+        <relationshipName>EBC_Setups</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Window__c</fullName>
+        <description>Number of days when the user can see the renewal option. 
+This is defined in Product Category.</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(TEXT(Product_Category__r.Renewal_Window__c))
+, null
+, VALUE(TEXT(Product_Category__r.Renewal_Window__c)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Number of days when the user can see the renewal option.
+This is defined in Product Category.</inlineHelpText>
+        <label>Renewal Window</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Storage_Product_Rate_Plan__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Rate plan containing the default information for Additional Storage Add-On.</description>
@@ -255,7 +316,15 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Default_Cost_per_E_mail__c</columns>
+        <columns>Default_Storage_Capacity__c</columns>
         <columns>Storage_Product_Rate_Plan__c</columns>
+        <columns>Enhanced_Reporting_Product_Rate_Plan__c</columns>
+        <columns>Member_Prepaid_Product_Rate_Plan_01__c</columns>
+        <columns>Member_Prepaid_Product_Rate_Plan_02__c</columns>
+        <columns>Member_Prepaid_Product_Rate_Plan_03__c</columns>
+        <columns>Member_Prepaid_Product_Rate_Plan_04__c</columns>
+        <columns>E_Commerce_Base_Url__c</columns>
+        <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
@@ -266,6 +335,12 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Setups</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Default_Cost_per_E_mail__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Default_Storage_Capacity__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Enhanced_Reporting_Product_Rate_Plan__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Storage_Product_Rate_Plan__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Maximum_File_Size_Upload__c</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>

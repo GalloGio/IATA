@@ -96,6 +96,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>External_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Geo_Condition__c</fullName>
         <description>Either the geo filters should be joined using AND or OR</description>
         <externalId>false</externalId>
@@ -184,6 +195,27 @@
         <columns>Number_of_Recipients__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>System_Generated_Lists</fullName>
+        <columns>NAME</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Refinement_Condition__c</columns>
+        <columns>Geo_Condition__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>Is_Global_Filter__c</columns>
+        <columns>IATA_Codes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Global_Filter__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>System Generated Lists</label>
         <language>en_US</language>
     </listViews>
     <nameField>

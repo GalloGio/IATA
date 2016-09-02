@@ -58,7 +58,7 @@
                                     
                                     <span class="custom-user-input file">
                                         <span class="button">Browse</span>
-                                        <apex:inputFile styleClass="user-input file js-input-file" id="file" value="{!attachment.body}" filename="{!attachment.name}"/>
+                                        <apex:inputFile styleClass="user-input file js-input-file" id="file" value="{!attachment.body}" contentType="{!attachment.contentType}" filename="{!attachment.name}"/>
                                         <input type="text" class="user-input text file-disabled" disabled=""/>
                                     </span>
                                 </label>
@@ -70,7 +70,7 @@
                                     <button class="text-link js-close-modal">Cancel</button>
                                 </li>
                                 <li>
-                                    <apex:commandButton value="Upload"  action="{!SaveAttachments}" styleClass="button wide"/>
+                                    <apex:commandButton value="Upload"  action="{!SaveAttachments}" styleClass="button wide" />
                                   
                                 </li>
                             </ul>
@@ -79,8 +79,33 @@
                    </apex:form>
             	</div>
             </div>
-            
-            
+            <apex:form rendered="{!MessageFlag}">
+                <div class="modal-container" id="js-modal">
+                    <div class="overlay"></div>
+                    <div class="modal-dialog" id="js-modal-dialog">                     
+                        <section id="js-modal-upload-resources" class="modal-content">
+                            <header class="modal-header">
+                                <h2 class="modal-title">Warning</h2>                                
+                            </header>            
+                            <div class="modal-body">
+                                <div class="field-group text">
+                                    <label>
+                                        <span class="input-label">{!MessageContent}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <footer class="modal-footer">
+                                <ul class="list actions">
+                                    <li>
+                                        <apex:commandButton value="Close"  action="{!ClearMessage}" styleClass="button" />                                  
+                                    </li>
+                                </ul>
+                            </footer>
+                        </section>
+                       
+                    </div>
+                </div>
+            </apex:form>
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
@@ -161,13 +186,44 @@
                         <table class="data-table manage-lists">
                             <tbody>
                                 <tr>
-                                    <th class="type">Preview</th>
-                                    <th class="name">Name</th>
+                                  
+                                    <th class="name" colspan="2">Resource Name</th>
                                     <th class="type">Type</th>
-                                    <th class="size">Size (KBytes)</th>
-                                    <th class="date created-on">Creation Date</th>
+                                    <th class="size">Size (Kb)</th>
+                                    <th class="date created-on">Upload Date</th>
                                 
-                                    <th class="actions"><a class="button wide js-open-modal" data-target-modal="#js-modal-upload-resources" href="#"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a></th>
+                                    <th class="actions">
+                                        
+                                        <a class="button wide js-open-modal" data-target-modal="#js-modal-upload-resources" href="#" id="actionupload"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
+                                        <apex:outputText rendered="{!NOT(loadmoreimage)}" >
+                                            <script type="text/javascript">
+                                                $ = jQuery;
+                                        		$('#actionupload').hide();
+                                            </script>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!loadmoreimage}" >
+                                            <script type="text/javascript">
+                                                $ = jQuery;
+                                        		$('#actionupload').show();
+                                                $('#actionupload').off("click");
+                                                $('.js-open-modal').on('click', function(event) {
+                                                if (!$(this).hasClass('select')) {
+                                                    event.preventDefault();
+                                        
+                                                    if (!$(this).hasClass('disabled')) {
+                                                        var targetModal = $(this).data('target-modal');
+                                                        $('.modal-content').addClass(className.hidden);
+                                                        $(targetModal).removeClass(className.hidden);
+                                                        
+                                                            $('#js-modal').removeClass(className.hidden);
+                                                            body.attr('data-is-modal-open', 'true');
+                                                      
+                                                    }
+                                                    }
+                                                 });
+                                             </script>
+                                        </apex:outputText>
+                                    </th>
                                 </tr>
                                 
                                 <apex:repeat value="{!filters}" var="i">
@@ -194,7 +250,11 @@
                                         <td class="size">
                                             <apex:outputField value="{!i.Size_KBytes__c}" />
                                         </td>
-                                        <td class="date created-on">{!i.CreatedDate}</td>
+                                        <td class="date created-on">
+                                            <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                <apex:param value="{!i.CreatedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
                                         
                                         <td class="actions">                                     
                                     		<a href="#" data-target-item-id="{!i.Id}" name="item-action"><i class="fa fa-trash fa-4" aria-hidden="true"></i></a>

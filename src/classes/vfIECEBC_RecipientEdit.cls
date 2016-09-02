@@ -78,7 +78,28 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
         
         return null;
     }
-    
+    private Set<String> SelectionAllowed {
+        get {
+            if (SelectionAllowed==null) {
+               
+                SelectionAllowed = new Set<String>();
+            }
+            return SelectionAllowed;
+        }
+        private set;
+    }
+    public Boolean isIDCARDSelectionAllowed {
+        get {
+            return true;
+        }
+        private set;
+    }
+    public Boolean isCodeSelectionAllowed {
+        get {
+            return true;
+        }
+        private set;
+    }
     public Boolean isSaved {
         get {
             if (isSaved == null) isSaved = false;
@@ -289,9 +310,9 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
         get {
             if (refinementFilters == null) {
                 refinementFilters = new List<EBC_Customer_Filter__c>();
-                addRefinementFilter();
+                
             }
-            
+            if (refinementFilters.size()==0) refinementFilters.add(new EBC_Customer_Filter__c());
             return refinementFilters;
         }
         set;

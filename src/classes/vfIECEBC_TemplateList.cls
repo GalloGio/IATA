@@ -4,7 +4,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
     public vfIECEBC_TemplateList() {
         sortBy='CreatedDate Desc';
     }
-    
+      
     public override List<SelectOption> getSortByOptions() {
         List<SelectOption> options = new List<SelectOption>();
         if (getIsFirstTimeLoadPage()) options.add(new SelectOption('CreatedDate DESC','Sort by'));
@@ -16,7 +16,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         return options;
        
     }
-    public PageReference Duplicate(){
+    public PageReference Duplicate(){ 
         EBC_Template__c original = [
             Select
             	Id,
@@ -24,7 +24,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
 	            Audience__c,
 	            Parent_Template__c,
 	            RecordTypeId
-                    From EBC_Template__c
+            From EBC_Template__c
             Where
             	Id = :selectedItem.Id
         ];
@@ -82,6 +82,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         if (firsttimepageload) {firsttimepageload=false; return true;}
         return false;}
     
+    public String newTemplateCustomCode { get; set;} 
     public EBC_Template__c newTemplate {
         get {
             if (newTemplate == null) {
@@ -112,6 +113,10 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
             return newTemplateStepNumber;
         }
         set;
+    }
+    public void ResetWizard() {
+        newTemplateFieldsValidity =null;
+        newTemplateStepNumber=null;
     }
     public Map<String, Boolean>  newTemplateFieldsValidity {
         get {
@@ -159,7 +164,11 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
                 	Id = :selectedTemplateId
             ];
             
+            /*if (parentTemplate.RecordType.DeveloperName != 'Global') {
+                newTemplate.Parent_Template__c = parentTemplate.Parent_Template__c;
+            } else {*/
                 newTemplate.Parent_Template__c = parentTemplate.Id;
+            //}
         }
         
         insert newTemplate;
@@ -176,8 +185,12 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
             insert a;
         }
         
+        if (newTemplate.Parent_Template__c != null) {
             pr = new PageReference('/iec/IECEBC_MosaicoEditor');
             pr.getParameters().put('id', newTemplate.Id);
+        } else {
+            pr = new PageReference('/' + newTemplate.Id);
+        }
         
         pr.setRedirect(true);
         

@@ -26,13 +26,23 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
 	}
     
     public PageReference deleteItem() {
-        delete selectedItem;
+        try {
+            delete selectedItem;
+        }catch (DMLException e){
+            
+        }
+        
         clear();
         return null;
     }
     
     public PageReference save() {
-        update selectedItem;
+        try {
+            update selectedItem;
+        }catch (DMLException e){
+            
+        }
+        
         clear();
         return null;
     }

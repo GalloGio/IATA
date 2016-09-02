@@ -2,6 +2,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public ApexPages.StandardController con { get; set; }
     public EBC_Template__c template { get; set; }
     
+    class Template_Not_Using_Mosaico_Template_Exception extends Exception{}
     class Resource_Not_Ready_Exception extends Exception{}
     
     public Attachment metadata {
@@ -29,7 +30,13 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public vfIECEBC_MosaicoEditor(ApexPages.StandardController stdController) {        
         this.con = stdController;
         
+        stdController.addFields(new List<String>{'Parent_Template__c'});
+        
         this.template = (EBC_Template__c)stdController.getRecord();
+        
+        if (String.isBlank(this.template.Parent_Template__c)) {
+            throw new Template_Not_Using_Mosaico_Template_Exception('This campaign is not using a Mosaico template');
+        }
         
         for(Attachment a : [Select Id, Name, Body From Attachment Where ParentId = :this.template.Id]) {
             if (a.Name == 'metadata.json') this.metadata = a;

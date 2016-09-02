@@ -22,7 +22,17 @@ public class IECEBC_Utility {
         insert a;
     }
     
-    
+    public static void FileSizeMaximum(){
+        List<EBC_Setup__c> setup = new List<EBC_Setup__c>();
+                setup=[Select Default_Storage_Capacity__c,
+                       			Maximum_File_Size_Upload__c
+                            From EBC_Setup__c
+                            Limit 1];
+        if (setup.size()>0) {STORAGE_CAPACITY=setup[0].Default_Storage_Capacity__c;}
+        if (setup.size()>0) {FILE_SIZE_MAX=setup[0].Maximum_File_Size_Upload__c;}
+        
+        
+    }
     public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId) {
         EBC_Master_Filter__c masterFilter = [
             SELECT Id,
@@ -142,6 +152,7 @@ public class IECEBC_Utility {
     
     
     public static Decimal STORAGE_CAPACITY=1; //in mg
+    public static Decimal FILE_SIZE_MAX=1; //in mg
     
     public static Decimal getBillingAccountCurrentStorageUsage(Id billingAccountId) {
         AggregateResult[] groupedResults = [Select Sum(Image_Size__c) From EBC_Resource__c
@@ -162,16 +173,28 @@ public class IECEBC_Utility {
     public class Resource_Name_Already_Exists_Exception extends Exception{}
     
     public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
-		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('Attachment must have a name and not be blank');
-        
+		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('Attachment must have a valid name or name too long (max 80 characters).');
+        if (a.name.length()>80) throw new Resource_Invalid_Attachment_Exception('Attachment name must have be less 80 characters long.');
+        String types = a.Name.right(3);
+        String typel = a.Name.right(4);
+        String typen='';
+        Set<String> extension = new Set<String>{'jpg', 'jpeg', 'gif', 'png', 'tiff', 'bmp'};
+        if (extension.contains(types)) typen=types; 
+        if (extension.contains(typel)) typen=typel; 
+        if (typen.equals('')) throw new Resource_Invalid_Attachment_Exception('Attachment extension must be of the following type: .jpg, .jpeg, .gif, .png, .tiff, .bmp');
+        FileSizeMaximum();
         // Checking capacity
         Decimal mb = getBillingAccountCurrentStorageUsage(billingAccount.Id);
         String bodyEncoded = EncodingUtil.base64Encode(a.body);  
         Decimal mk = bodyEncoded.length();
-        //mb = mb +mk;
+        
+        //file larger than maximum allowed
+        if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)');
+        
+        mb = mb +mk;
         mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
         if (mb>=105) {
-            throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds capacity');
+            throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds total storage capacity allowed ('+String.ValueOf(STORAGE_CAPACITY)+' MB.)');
         }
         
         // Checking if file name is already used
@@ -180,17 +203,17 @@ public class IECEBC_Utility {
                        			Where name=:a.name
                        			and Billing_Account__c=:billingAccount.Id
                        Limit 1];
-        if (resourcelist.Size()>0) {
-            throw new Resource_Name_Already_Exists_Exception('A resource with the same name already exists');
-        }
+       // if (resourcelist.Size()>0) {
+        //    throw new Resource_Name_Already_Exists_Exception('A resource with the same name already exists');
+        //}
         
         // Create EBC Resource
-        //String typen = a.Name.right(3);
+        
         EBC_Resource__c res = new EBC_Resource__c();
         res.Billing_Account__c=billingAccount.Id;
         res.name = a.name;
         res.Image_Size__c = bodyEncoded.length();
-        //AttachmentParentRec.Image_Type__c = typen; Why?
+        res.Image_Type__c = typen; 
         insert res;
         
         a.ParentId = res.Id;
@@ -283,7 +306,7 @@ public class IECEBC_Utility {
         
         private set;
     } // end of ebcNonMemberProductRatePlanIdList getter/setter
-    
+
     // renewalPageUrl return the complete URL for the renewal page from the community page
     public static String renewalPageUrl {
         get {

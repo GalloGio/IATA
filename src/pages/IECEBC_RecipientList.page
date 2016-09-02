@@ -226,8 +226,16 @@
                                             </apex:outputPanel>
                                         </td>
                                         <td class="type">{!i.Audience__c}</td>
-                                        <td class="date created-on">{!i.CreatedDate}</td>
-                                        <td class="date last-edited">{!i.LastModifiedDate}</td>
+                                        <td class="date created-on">
+                                            <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                <apex:param value="{!i.CreatedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        <td class="date last-edited">
+                                            <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
+                                                <apex:param value="{!i.LastModifiedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
                                         <td class="actions">
                                             
                                             <div class="custom-user-input select">
@@ -253,6 +261,7 @@
             
             
             <apex:form >
+                <Center>
                 <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
                     Page
                     <div class="custom-user-input select">
@@ -264,6 +273,7 @@
                     </div>
                     of {!maxPage}
                 </apex:outputPanel>
+                </Center>
             </apex:form>
             <!-- End of Page Content -->
         </apex:define>

@@ -135,9 +135,18 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
     }
     
     public PageReference pageLoad() {
-        // Check if the current step is allowed and if not, redirect to the last allowed step
-		if (campaign.Maximum_Allowed_Step__c < currentStepNumber) return getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
+        PageReference pr = null;
         
-        return null;
+        // Check if the current step is allowed and if not, redirect to the last allowed step
+        if (campaign.Maximum_Allowed_Step__c == 4 && currentStepNumber == 5 && !campaign.EBC_Design__r.Is_Tested__c ) {
+            pr = getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
+            String url = pr.getUrl() + (pr.getUrl().indexOf('?') == -1 ? '?' : '&') + 'notice=sendtest_needed';
+            System.debug(url);
+            
+            pr = new PageReference(url);
+            pr.setRedirect(true);
+        } else if (campaign.Maximum_Allowed_Step__c < currentStepNumber) pr = getPRByStepNumber(Integer.valueOf(campaign.Maximum_Allowed_Step__c), true);
+        
+        return pr;
     }
 }
