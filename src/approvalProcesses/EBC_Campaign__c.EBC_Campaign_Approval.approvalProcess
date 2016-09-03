@@ -11,7 +11,6 @@
         <field>Owner</field>
         <field>EBC_Design__c</field>
         <field>EBC_Master_Filter__c</field>
-        <field>EBC_Selected_Template__c</field>
         <field>From_Name__c</field>
         <field>Google_Analytics_Tracking_Code__c</field>
         <field>Is_Google_Analytics_Tracker_Active__c</field>
