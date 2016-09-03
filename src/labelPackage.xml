@@ -14,10 +14,6 @@
     </types>
     <types>
         <members>*</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>Translations</name>
     </types>
     <version>37.0</version>
