@@ -31,18 +31,15 @@
 
 
 <target name="deployCode"> 
-  <echo level="info">creating new folder</echo>
-  <antcallback target="deldir" />
-   <mkdir dir="${basedir}/Code"/>
+    <echo level="info">creating new folder</echo>
+    <antcallback target="deldir" />
+    <mkdir dir="${basedir}/Code"/>
+    
+    
+    <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
+    <antcallback target="deployStaticResource" />
   
-
-
- <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
-
-      
-      <antcallback target="deployLabelFolder" />
-  
-  </target> 
+</target> 
 
 
 <target name="deployCodeProd"> 
@@ -108,6 +105,26 @@
       
       <antcallback target="deployCodeLocal" />
   </target>
+
+  
+<target name="deployStaticResource"> 
+    <echo level="info">deploy static resources</echo>
+    <antcallback target="deldir" />
+    <mkdir dir="${basedir}/Code"/>
+    
+    <for list="${staticResource.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+             <fileset dir="${basedir}/src/@{param}">
+             </fileset>
+          </move>
+       </sequential>
+    </for>
+    
+    <move file="${basedir}/src/staticPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+    <antcallback target="deployLabelFolder" />
+</target> 
+
 
 <target name="deployLabelFolder"> 
   <echo level="info">creating new label folder</echo>
@@ -285,6 +302,8 @@
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
         <antcallback target="getLabel" />
     </target>
+
+
 
 
 
