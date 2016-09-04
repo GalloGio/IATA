@@ -4,11 +4,13 @@ public class EF_BillingAgreementHandler
     
     public static void startApprovalProcesses(List<EF_Billing_Agreement__c> baList)
     {
+        Set<Id> processedAgreementsIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : baList)
         {
             if(ba.Require_Approval__c)
             {
                 EF_BaContractApprovalHelper.submitForApproval(ba.Id, UserInfo.getUserId(), '');
+                processedAgreementsIds.add(ba.Id);
             }
         }
     }
@@ -223,9 +225,9 @@ public class EF_BillingAgreementHandler
         Set<Id> contractIdSet = new Set<Id>();
 
         for (EF_Billing_Agreement__c rel : relationshipList) {
-        	
-        	EF_Billing_Agreement__c oldRel = (relationshipOldMap != null && relationshipOldMap.containsKey(rel.Id) ? relationshipOldMap.get(rel.Id) : new EF_Billing_Agreement__c());
-        	
+            
+            EF_Billing_Agreement__c oldRel = (relationshipOldMap != null && relationshipOldMap.containsKey(rel.Id) ? relationshipOldMap.get(rel.Id) : new EF_Billing_Agreement__c());
+            
             if ((rel.Data_Currency__c != null && rel.Data_Currency__c != oldRel.Data_Currency__c) ||
                 (rel.Payment_Currency__c != null && rel.Payment_Currency__c != oldRel.Payment_Currency__c)) {
                 
@@ -246,38 +248,38 @@ public class EF_BillingAgreementHandler
                 
                 // Data_Currency__c validation
                 if (rel.Data_Currency__c != null) {
-                	
-	                if (cont.EF_Data_Currency__c != null) {
-	                    
-	                    values = new Set<String>(cont.EF_Data_Currency__c.split(';'));
-	                } else {
-	                    
-	                    values = new Set<String>();
-	                }
-	                
-	                if (values.contains(rel.Data_Currency__c) == false) {
-	                    
-	                    rel.Data_Currency__c.addError(errorMessage);
-	                }
+                    
+                    if (cont.EF_Data_Currency__c != null) {
+                        
+                        values = new Set<String>(cont.EF_Data_Currency__c.split(';'));
+                    } else {
+                        
+                        values = new Set<String>();
+                    }
+                    
+                    if (values.contains(rel.Data_Currency__c) == false) {
+                        
+                        rel.Data_Currency__c.addError(errorMessage);
+                    }
                 }
                 
                 values = null;
                 
                 // Payment_Currency__c validation
                 if (rel.Payment_Currency__c != null) {
-                	
-	                if (cont.EF_Payment_Currency__c != null) {
-	                    
-	                    values = new Set<String>(cont.EF_Payment_Currency__c.split(';'));
-	                } else {
-	                    
-	                    values = new Set<String>();
-	                }
-	                
-	                if (values.contains(rel.Payment_Currency__c) == false) {
-	                    
-	                    rel.Payment_Currency__c.addError(errorMessage);
-	                }	
+                    
+                    if (cont.EF_Payment_Currency__c != null) {
+                        
+                        values = new Set<String>(cont.EF_Payment_Currency__c.split(';'));
+                    } else {
+                        
+                        values = new Set<String>();
+                    }
+                    
+                    if (values.contains(rel.Payment_Currency__c) == false) {
+                        
+                        rel.Payment_Currency__c.addError(errorMessage);
+                    }   
                 }
             }
         }
@@ -295,5 +297,21 @@ public class EF_BillingAgreementHandler
             return run;
         }
     }
-    
+
+    public static void setClientFromRelatedContract(List<EF_Billing_Agreement__c> agreementList) {
+
+        Set <Id> contractIdSet = new Set <Id> ();
+        for(EF_Billing_Agreement__c ba: agreementList){
+            contractIdSet.add(ba.Contract__c);
+        }
+
+        Map<Id, Contract> contractMap = new Map<Id, Contract> ([select Id, AccountId from Contract where Id in: contractIdSet]);
+
+        for(EF_Billing_Agreement__c ba : agreementList) {
+            if(contractMap.containsKey(ba.Contract__c)){
+                ba.Client__c = contractMap.get(ba.Contract__c).AccountId;
+            }            
+
+        }
+    }
 }
