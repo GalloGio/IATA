@@ -26,9 +26,9 @@
             <apex:variable var="isbglinkonly" value="{!if(ban.bannerItem.Background_image_url_link__c != '' , 'true','false')}"/>
            
            <apex:outputLink rendered="{!isbglinkonly}" target="{!ban.bannerItem.Background_image_url_link_target__c}" value="{!ban.bannerItem.Background_image__c}">
-           <a href="{!ban.bannerItem.Background_image_url_link__c}">
+           <a target="{!ban.bannerItem.Background_image_url_link_target__c}" href="{!ban.bannerItem.Background_image_url_link__c}">
            <apex:image id="bgimage" value="{!ban.bannerItem.Background_image__c}" width="358px" height="271px"  rendered="{!isbglinkonly}"/>
-           </a>
+           </a> 
            </apex:outputLink>
             
            <!-- usemap="#bglink"
