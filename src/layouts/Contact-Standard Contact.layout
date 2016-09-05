@@ -170,7 +170,6 @@
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
-    
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
