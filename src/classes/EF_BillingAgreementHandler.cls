@@ -4,13 +4,11 @@ public class EF_BillingAgreementHandler
     
     public static void startApprovalProcesses(List<EF_Billing_Agreement__c> baList)
     {
-        Set<Id> processedAgreementsIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : baList)
         {
             if(ba.Require_Approval__c)
             {
                 EF_BaContractApprovalHelper.submitForApproval(ba.Id, UserInfo.getUserId(), '');
-                processedAgreementsIds.add(ba.Id);
             }
         }
     }
