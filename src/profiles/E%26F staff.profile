@@ -22161,7 +22161,6 @@
         <field>EF_Billing_Agreement__c.Airline__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Allow_Billing_Agreements__c</field>
@@ -22195,11 +22194,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Data_Currency__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.EF_Billing_Agreement__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

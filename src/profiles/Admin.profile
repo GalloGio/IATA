@@ -22187,11 +22187,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.EF_Billing_Agreement__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.EF_Location_ID__c</field>
         <readable>true</readable>
