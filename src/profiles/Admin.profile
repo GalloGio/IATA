@@ -1543,6 +1543,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EF_AccountTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_BillingAgreementHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
