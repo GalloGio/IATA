@@ -2,6 +2,7 @@ public class EF_BillingAgreementHandler
 {
     private static boolean run = true;   
     
+    // Submits E&F Billing Agreements for approval processing if the helper field is set to TRUE
     public static void startApprovalProcesses(List<EF_Billing_Agreement__c> baList)
     {
         for(EF_Billing_Agreement__c ba : baList)
@@ -13,19 +14,22 @@ public class EF_BillingAgreementHandler
         }
     }
 
-
+    // Identifies and handles both Approved, Rejected and Recalled approvals 
     public static void handleApprovedAndRejectedApprovals(List<EF_Billing_Agreement__c> newValues, Map<Id, EF_Billing_Agreement__c> oldValues)
     {
+        // Find the Custom Setting values for "Approval Required" fields and...
         List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
         List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
         List<EF_Billing_Agreement__c> approvedList = EF_BaContractApprovalHelper.identifyApprovedBillingAgreements(newValues, oldValues);
         List<EF_Billing_Agreement__c> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledBillingAgreements(newValues, oldValues);
         if(approvedList.size() > 0)
         {
+            // If approval occurred, copies the approved values from temporary storage onto the record itself
             EF_BaContractApprovalHelper.copyValuesFromTempStorageOnBaApproval(approvedList, fields);
         }
         if(rejectedList.size() > 0)
         {
+            // Or if rejected or recalled, simply ignore the changes and get rid of the temp storage record
             EF_BaContractApprovalHelper.removeTempStorageRecordOnBaRejection(rejectedList);
         }
     }
@@ -283,6 +287,7 @@ public class EF_BillingAgreementHandler
         }
     }
 
+    // helper method to stop Billing Agreement Trigger from running more than once per update
     public static boolean runOnce()
     {
         if(run)
@@ -295,7 +300,7 @@ public class EF_BillingAgreementHandler
             return run;
         }
     }
-
+    
     public static void setClientFromRelatedContract(List<EF_Billing_Agreement__c> agreementList) {
 
         Set <Id> contractIdSet = new Set <Id> ();

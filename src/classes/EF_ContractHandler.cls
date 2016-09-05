@@ -2,6 +2,7 @@ public class EF_ContractHandler
 {
     private static boolean run = true;   
     
+     // Submits E&F Contracts for approval processing if the helper field is set to TRUE
     public static void startApprovalProcesses(List<Contract> cList)
     {
         for(Contract c : cList)
@@ -13,28 +14,30 @@ public class EF_ContractHandler
         }
     }
 
-
+    // Identifies and handles both Approved, Rejected and Recalled approvals 
     public static void handleApprovedAndRejectedApprovals(List<Contract> newValues, Map<Id, Contract> oldValues)
     {
+    	// Find the Custom Setting values for "Approval Required" fields and...
         List<EF_Approve_Fields__c> fieldList = [select id, name, Contract_Fields__c from EF_Approve_Fields__c where Name = 'Contract'];
         List<String> fields = fieldList.get(0).Contract_Fields__c.split(',');
         List<Contract> approvedList = EF_BaContractApprovalHelper.identifyApprovedContracts(newValues, oldValues);
         List<Contract> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledContracts(newValues, oldValues);
         if(approvedList.size() > 0)
         {
+        	// If approval occurred, copies the approved values from temporary storage onto the record itself
             EF_BaContractApprovalHelper.copyValuesFromTempStorageOnContractApproval(approvedList, fields);
         }
         if(rejectedList.size() > 0)
         {
+        	// Or if rejected or recalled, simply ignore the changes and get rid of the temp storage record
             EF_BaContractApprovalHelper.removeTempStorageRecordOnContractRejection(rejectedList);
         }
     }
 
     
-
     public static void handleWithApprovalAccountUpdates(Map<Id, Contract> newContracts, Map<Id, Contract> oldContracts)
     {
-    	// Find if the User belongs to CS Specialist group
+    	// Find if the User belongs to CS Specialist group, because that is the only group requiring special attention
     	if(isUserCsSpecialist())
     	{
 	        // Create a list of EF Approval records that will be stored in the system to contain the UPDATED versions of Contract
@@ -71,12 +74,13 @@ public class EF_ContractHandler
 			for(Contract c : contractList)
 	        {
 	            c.EF_Require_Approval__c = true;
-	            c.EF_Approve_Status__c = 'Inactive';
+	            c.EF_Status__c = 'Inactive';
 	        }
 		}        
         
     }
 
+    // Used to identify is the running user belongs to Client Services Specialists role inside E&F
     public static boolean isUserCsSpecialist()
     {
     	Id userId = UserInfo.getUserId();
@@ -84,7 +88,7 @@ public class EF_ContractHandler
     	if(currentUsers.size() > 0)
     	{
     		User currentUser = currentUsers.get(0);
-    		if(currentUser.EF_User_Role__c.equalsIgnoreCase('CS Specialist'))
+    		if(currentUser.EF_User_Role__c.equalsIgnoreCase('Client Services Specialists'))
     			return true;
     	}
     	return false;
