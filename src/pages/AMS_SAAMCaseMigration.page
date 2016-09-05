@@ -1,4 +1,9 @@
-<apex:page showHeader="true" sidebar="true" controller="AMS_SAAMCaseMigrationController" tabStyle="Case" title="AMS - SAAM Case Migration" docType="html-5.0">
+<apex:page>
+
+</apex:page>
+
+<!--
+ showHeader="true" sidebar="true" controller="AMS_SAAMCaseMigrationController" tabStyle="Case" title="AMS - SAAM Case Migration" docType="html-5.0">
 	
 	<apex:form id="caseFilters">
 		<apex:pageBlock title="SAAM Case Migration" >
@@ -62,7 +67,7 @@
 
 				<apex:column headerValue="Results">
 					<apex:outputText value="{!container.errorMessage}" rendered="{!container.hasError}"/>
-					<!-- <apex:outputPanel rendered="{!AND(container.migrated, NOT(container.hasError)}"> -->
+					
 				</apex:column>
 
 
@@ -71,14 +76,13 @@
 			<apex:outputPanel layout="block" style="text-align: right; margin-top: 5px;" rendered="{!saamCases.size > 0}">
 				<apex:commandLink action="{!first}"		value="<< First"	rendered="{!pageNumber > 1}" reRender="caseTable"/>&nbsp;
 				<apex:commandLink action="{!previous}"	value="< Previous"	rendered="{!pageNumber > 1}" reRender="caseTable"/>&nbsp;
-				Page <apex:input size="2" type="number" value="{!pageNumber}" html-min="1" html-max="{!saamCases.size}"><!-- disabled="{!saamCases.size == 1}" causes page to crash, waiting for https://success.salesforce.com/issues_view?id=a1p30000000T4hBAAS --><apex:actionSupport event="onchange" reRender="caseTable"/></apex:input> of {!saamCases.size}&nbsp;
+				Page <apex:input size="2" type="number" value="{!pageNumber}" html-min="1" html-max="{!saamCases.size}"><apex:actionSupport event="onchange" reRender="caseTable"/></apex:input> of {!saamCases.size}&nbsp;
 				<apex:commandLink action="{!next}"		value="Next >"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 				<apex:commandLink action="{!last}"		value="Last >>"		rendered="{!pageNumber < saamCases.size}" reRender="caseTable"/>&nbsp;
 			</apex:outputPanel>
 			
 			<apex:outputPanel layout="block" styleClass="loading-backdrop" rendered="{!processing}"/>
 			<apex:image value="/../img/loading32.gif" styleClass="loading-img" rendered="{!processing}"/>
-			<!-- <apex:image value="{!URLFOR($Resource.loadinggif)}" styleClass="loading-img" rendered="{!processing}"/> -->
 
 			<style>
 				.pos-relative{ position: relative; }
@@ -105,9 +109,6 @@
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 
-		<!-- <apex:actionPoller rendered="{!processing}" reRender="caseTable, pageMessages" action="{!migrateCases}" interval="5" status="Loading" /> -->
-		<!-- <c:Loading /> -->
-
 		<apex:actionFunction reRender="caseTable, pageMessages" name="migrateCases" action="{!migrateCases}" oncomplete="migrate();" />		
 
 		<script type="text/javascript">
@@ -121,3 +122,4 @@
 
 	
 </apex:page>
+-->
