@@ -7,6 +7,7 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
     after delete, 
     after undelete) {
 
+        
         if (Trigger.isBefore && (Trigger.isUpdate || Trigger.isInsert)) {
             // checks if location chosen has been set in Contract Location Currency.
             EF_BillingAgreementHandler.checkLocationCurrency(Trigger.new);
@@ -14,7 +15,9 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             EF_BillingAgreementHandler.preventAgreementCreationForNotAllowed(Trigger.new);
             if(Trigger.isInsert)
             {
+                
                 EF_BillingAgreementHandler.handleWithApprovalAccountInserts(Trigger.new);
+                EF_BillingAgreementHandler.setClientFromRelatedContract(Trigger.new);
             } else
             {
                 EF_BillingAgreementHandler.handleWithApprovalAccountUpdates(Trigger.newMap, Trigger.oldMap);
@@ -23,6 +26,8 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             
         } else if (Trigger.isAfter)
         {
+
+           
             Set<Id> withApprovalIds = EF_BillingAgreementHandler.findIdsOfWithApprovalBillingAgreements(Trigger.new);
             if(EF_BillingAgreementHandler.runOnce() && withApprovalIds.size() > 0)
             {
