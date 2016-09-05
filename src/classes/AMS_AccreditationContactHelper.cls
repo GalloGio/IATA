@@ -243,6 +243,16 @@ public with sharing class AMS_AccreditationContactHelper
         con.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
         return con;
     }
+
+    public static Account populateNewAccountFields(Account acc, AMS_Accreditation_Contact__c ac)
+    {
+        acc.Name = ac.Name;
+        acc.Legal_Name__c = ac.Name;
+        acc.Registration_Number__c = ac.Registration_Number__c;
+        acc.RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account');
+
+        return acc;
+    }
     
     public static String loadFieldsDynamically(String SobjectApiName)
     {
