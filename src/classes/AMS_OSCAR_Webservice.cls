@@ -207,8 +207,10 @@ global class AMS_OSCAR_Webservice {
         }catch (Exception ex) {
             if (ex.getMessage().contains('ISSP_ContactUpdaetPortalUser'))
                 return Label.AMS_Duplicate_Username;
-            else
-                return ex.getMessage();
+            else{
+                String errorMessage = AMS_Utils.errorMessageBeautifyer(ex);
+                return errorMessage;
+            }
         }
     }
 

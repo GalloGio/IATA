@@ -474,27 +474,38 @@ public with sharing class AMS_AccreditationContactController {
             {
                 splitValues = wrapped.dateJoined.split('-');
                 wrapped.ac.Date_joined_agency__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Date_joined_agency__c = null;
             }
             if(wrapped.prev1From != null && wrapped.prev1From != '')
             {
                 splitValues = wrapped.prev1From.split('-');
                 wrapped.ac.Prev_Job1_From__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job1_From__c = null;
             }
             if(wrapped.prev1To != null && wrapped.prev1To != '')
             {
                 splitValues = wrapped.prev1To.split('-');
                 wrapped.ac.Prev_Job1_To__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job1_To__c = null;
             }
             if(wrapped.prev2From != null && wrapped.prev2From != '')
             {
                 splitValues = wrapped.prev2From.split('-');
                 wrapped.ac.Prev_Job2_From__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job2_From__c = null;
             }
             if(wrapped.prev2To != null && wrapped.prev2To != '')
             {
                 splitValues = wrapped.prev2To.split('-');
                 wrapped.ac.Prev_Job2_To__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job2_To__c = null;
             }
+
         }
     }
     
