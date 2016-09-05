@@ -175,10 +175,11 @@
                                                 <h4><apex:outputText value="{!labels['lblCombo']}" escape="false" /></h4>
                                                 <ul class="list product">
                                                     <apex:repeat value="{!product.ProductComponent}" var="prod">
-                                                        <apex:variable var="icon" value="img/components/icons/{!LOWER(SUBSTITUTE(product.Media,' ','_'))}.png" />
-                                                        <li class="icon {!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
-                                                        style="min-height:40px;background: url({!URLFOR($Resource.EcommerceAssets, icon)}) no-repeat 0 0">
-                                                            <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                        <!-- <apex:variable var="icon" value="img/components/icons/{!LOWER(SUBSTITUTE(product.Media,' ','_'))}.png" /> -->
+                                                        <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
+                                                            <!-- background: url({!URLFOR($Resource.EcommerceAssets, icon)}) no-repeat 0 0 -->
+                                                            <!-- <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4> -->
+                                                            <h4 class="item-name">{!prod.ProductName}</h4>
                                                             <div class="item-description">{!prod.ProductShortDesc}</div>
                                                         </li>
                                                     </apex:repeat>
@@ -246,15 +247,27 @@
                             </section>
 
                             <div class="more-products">
-                                <apex:variable var="relatedProducts" value="1" rendered="{! AND(product.ProductComponent!=null, product.ProductComponent.size > 0)}">
+                                <!-- <apex:variable var="relatedProducts" value="1" rendered="{! AND(product.ProductComponent!=null, product.ProductComponent.size > 0)}">
                                     <section class="group-container related-products">
                                         <h3 class="group-title icon chevron-triple-right">Related products and services</h3>
                                         
                                         <ul class="list product">
                                             <apex:repeat value="{!product.ProductComponent}" var="prod">
-                                                <apex:variable var="icon" value="img/components/icons/{!LOWER(SUBSTITUTE(product.Media,' ','_'))}.png" />
-                                                <li class="icon {!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
-                                                style="min-height:40px;background: url({!URLFOR($Resource.EcommerceAssets, icon)}) no-repeat 0 0">
+                                                <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
+                                                    <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
+                                                    <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </section>
+                                </apex:variable> -->
+                                <apex:variable var="relatedProducts" value="1" rendered="{! AND(lstRelatedProducts!=null, lstRelatedProducts.size > 0)}">
+                                    <section class="group-container related-products">
+                                        <h3 class="group-title icon chevron-triple-right">Related products and services</h3>
+                                        
+                                        <ul class="list product">
+                                            <apex:repeat value="{!lstRelatedProducts}" var="prod">
+                                                <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}">
                                                     <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
                                                     <div class="item-description">{!prod.ProductShortDesc}</div>
                                                 </li>
@@ -267,11 +280,12 @@
                                     <h3 class="group-title icon chevron-triple-right">You may also like</h3>
                                     <ul class="list product">
                                         <apex:repeat value="{!recommendedProducts}" var="prod">
-                                            <apex:variable var="icon" value="img/components/icons/{!LOWER(SUBSTITUTE(product.Media,' ','_'))}.png" />
-                                            <li class="icon {!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
-                                            style="min-height:40px;background: url({!URLFOR($Resource.EcommerceAssets, icon)}) no-repeat 0 0">
+                                            <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
+                                            style="min-height:40px;">
                                                 <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
-                                                <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                <apex:variable var="shortDesc" value="1" rendered="{!prod.ProductShortDesc != null && prod.ProductShortDesc != ''}">
+                                                    <div class="item-description">{!prod.ProductShortDesc}</div>
+                                                </apex:variable>
                                             </li>
                                         </apex:repeat>
                                     </ul>
