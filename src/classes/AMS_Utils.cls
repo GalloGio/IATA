@@ -91,6 +91,10 @@ public without sharing class AMS_Utils {
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
 
+    //Record Types
+    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
 
@@ -106,6 +110,12 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
@@ -310,12 +320,12 @@ public without sharing class AMS_Utils {
         String sRes = '';
 
         if (sChangeCode.equalsIgnoreCase('NEW')) {
-            sRes = 'in progress';
+            sRes = AACC_INPROGRESS;
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
-            sRes = 'finalized';
+            sRes = AACC_FINALIZED;
         }
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
-            sRes = 'disapproved';
+            sRes = AACC_DISAPPROVED;
         }
         
         return sRes;
@@ -583,12 +593,11 @@ public without sharing class AMS_Utils {
         if (oscar != null)
             oscarId = oscar.Id;
 
-        System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
-
         Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
                 OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
                 Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
 
+        System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
 
 
@@ -596,9 +605,9 @@ public without sharing class AMS_Utils {
         String newVal = getIATAReadableStatus(changeCode.status);
 
 
-        System.debug('Change code status is ' + changeCode.status);
-        System.debug('Account status is ' + oscarAgency.Status__c);
-        System.debug('New val is ' + newVal);
+        System.debug(loggingLevel.ERROR, 'Change code status is ' + changeCode.status);
+        System.debug(loggingLevel.ERROR, 'Account status is ' + oscarAgency.Status__c);
+        System.debug(loggingLevel.ERROR, 'New val is ' + newVal);
 
 
         if (newVal <> oscarAgency.Status__c && newVal != null) {
@@ -607,9 +616,22 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
-        if( aacNEW.Change_Code__c == 'FIN' ){
+        if( aacNEW.Change_Code__c == 'NEW' ){
+            oscar.First_Step_Completed__c = true;
+
+            if(Trigger.isExecuting && Trigger.isAfter) update oscar; //normally won't pass here because method is called on before update
+        }
+
+        if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+        if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+        if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+            for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+        }
+
+        if( aacNEW.Change_Code__c == 'FIN' && oscar.First_Step_Completed__c){
             
             oscarAgency.Is_AIMS_Account__c = true;
+            oscarAgency.Accreditation_Date__c = Date.Today();            
             toReturn = oscarAgency;
         }
 
@@ -755,8 +777,6 @@ public without sharing class AMS_Utils {
     public static void copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
 
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
-
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 
         System.debug('Copying Data from Staging to Account');
 
