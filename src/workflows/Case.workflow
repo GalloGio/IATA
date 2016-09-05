@@ -607,18 +607,6 @@
         <template>unfiled$public/Clicktools_Contact_Email_VN</template>
     </alerts>
     <alerts>
-        <fullName>DPC_Close_Notification_to_Contact</fullName>
-        <description>DPC - Close Notification to Contact</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>CaseManagement/DPC_Close_Notification_to_Contact</template>
-    </alerts>
-    <alerts>
         <fullName>DPC_Email_notification_to_Case_owner_action_required</fullName>
         <description>DPC - Email notification to Case owner action required</description>
         <protected>false</protected>
@@ -11009,26 +10997,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>True</value>
         </criteriaItems>
         <description>The query is reopened (in progress)</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>DPC - Close Notification to Contact</fullName>
-        <actions>
-            <name>DPC_Close_Notification_to_Contact</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>DPC Service Request</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Notification to DPC contact when DPC Service Request case is closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
