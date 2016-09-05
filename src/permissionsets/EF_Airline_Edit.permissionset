@@ -16802,16 +16802,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Billed_Account__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Billing_Account__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Billing_Currency__c</field>
         <readable>false</readable>
     </fieldPermissions>
