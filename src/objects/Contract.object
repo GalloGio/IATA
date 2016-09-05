@@ -119,7 +119,6 @@ E&amp;F CRM Project</description>
         <label>Base URL</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -310,15 +309,6 @@ E&amp;F CRM Project</description>
         <type>Percent</type>
     </fields>
     <fields>
-        <fullName>EF_Approve_Status__c</fullName>
-        <description>Helper field for &quot;require approval&quot; functionality.</description>
-        <externalId>false</externalId>
-        <globalPicklist>EF_Status</globalPicklist>
-        <label>E&amp;F Approve Status</label>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
         <fullName>EF_BSP_Periods__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F BSP Periods</label>
@@ -474,7 +464,7 @@ E&amp;F CRM Project</description>
         <picklist>
             <picklistValues>
                 <fullName>Not Started</fullName>
-                <default>true</default>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>In Progress</fullName>
@@ -607,6 +597,15 @@ E&amp;F CRM Project</description>
         <label>Send to SAP</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>EF_Status__c</fullName>
+        <description>Status for E&amp;F. will be changed automatically when an account is inactivated for E&amp;F, and can be changed manually too.</description>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Status</globalPicklist>
+        <label>E&amp;F Status</label>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>EF_Trading_Partner__c</fullName>

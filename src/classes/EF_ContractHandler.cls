@@ -71,7 +71,7 @@ public class EF_ContractHandler
 			for(Contract c : contractList)
 	        {
 	            c.EF_Require_Approval__c = true;
-	            c.EF_Approve_Status__c = 'Inactive';
+	            c.EF_Status__c = 'Inactive';
 	        }
 		}        
         
