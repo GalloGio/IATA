@@ -422,11 +422,12 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <customButtons>Mass_Update_Contracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
-        <fields>CONTRACT.STATUS</fields>
+        <fields>EF_Status__c</fields>
         <relatedList>RelatedContractList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -434,7 +435,7 @@
         <fields>NAME</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
-        <fields>EF_Status__c</fields>
+        <fields>Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>
@@ -446,7 +447,7 @@
         <fields>NAME</fields>
         <fields>Airline__c</fields>
         <fields>Contract__c</fields>
-        <fields>EF_Status__c</fields>
+        <fields>Status__c</fields>
         <fields>Payment_Method_Code__c</fields>
         <fields>Data_Currency__c</fields>
         <fields>Billing_Currency__c</fields>

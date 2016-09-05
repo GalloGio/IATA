@@ -2942,6 +2942,18 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <width>500</width>
     </webLinks>
     <webLinks>
+        <fullName>Mass_Update_Contracts</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Mass Update Contracts</masterLabel>
+        <openType>sidebar</openType>
+        <page>EF_MassUpdateContract</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
         <fullName>SIS_SAP_Client_Request</fullName>
         <availability>online</availability>
         <description>E&amp;F. Merge Document to Request to SIS and SAP to create a client</description>
