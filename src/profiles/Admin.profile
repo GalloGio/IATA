@@ -1543,11 +1543,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EF_BaContractApprovalHelper</apexClass>
+		<apexClass>EF_BaContractApprovalHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BaContractApprovalHelperTest</apexClass>
+        <enabled>true</enabled>
+	</classAccesses>
+	 <classAccesses>
+		<apexClass>EF_AccountTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

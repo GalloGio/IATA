@@ -428,7 +428,7 @@
         <displayType>massActionButton</displayType>
         <height>600</height>
         <linkType>page</linkType>
-        <masterLabel>Edit Status</masterLabel>
+        <masterLabel>Mass Update Billing Agreement</masterLabel>
         <openType>sidebar</openType>
         <page>EF_UpdateBillingAgreement</page>
         <protected>false</protected>

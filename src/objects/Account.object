@@ -76460,6 +76460,18 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorMessage>Max of 30 Chars to Passenger Agencies</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>PreventEFStatusActiveIfParentInactive</fullName>
+        <active>true</active>
+        <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
+        <errorConditionFormula>AND(
+    ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),
+    ISCHANGED(EF_Status__c),
+    ISPICKVAL(EF_Status__c, &apos;Active&apos;)
+  )</errorConditionFormula>
+        <errorDisplayField>EF_Status__c</errorDisplayField>
+        <errorMessage>Account can&apos;t be Active for E&amp;F becaue Parent E&amp;F Status is Inactive</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Reason_for_creation_is_required</fullName>
         <active>true</active>
         <description>Reason for creation is required if airline or agency account</description>

@@ -1543,12 +1543,16 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EF_BaContractApprovalHelper</apexClass>
+		<apexClass>EF_BaContractApprovalHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BaContractApprovalHelperTest</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	 <classAccesses>
+		<apexClass>EF_AccountTriggerHandler</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BillingAgreementHandler</apexClass>
