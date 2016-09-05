@@ -19,6 +19,8 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	public Boolean bIsDirectSales{get;set;}
 	public Boolean bIsProductCompliant{get;set;}
 
+	public List<EComProduct_DTO> lstRelatedProducts {get;set;}
+
 	//Available Discounts for the product 
 	public List<PriceDetail_DTO> discounts{get;set;}
 
@@ -70,6 +72,26 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		        ret.setRedirect(true);
 		        return ret;
 		    }
+
+		    //set the list of Related Products
+		    lstRelatedProducts = new List<EComProduct_DTO>();
+		    List<Recommended_Product__c> lstRecommendedProducts = [Select Id, Related_Product__r.Name, Related_Product__r.Short_Description__c, 
+		    															Related_Product__c, Related_Product__r.SAP_Material_Number__c 
+		    														FROM Recommended_Product__c 
+		    														where Product__c =:product.ProductId
+		    													];
+		    if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
+		    	for(Recommended_Product__c recomProd : lstRecommendedProducts){
+		    		EComProduct_DTO ecomProd = new EComProduct_DTO();
+		    		ecomProd.ProductId = String.valueOf(recomProd.Related_Product__c).left(15);
+		    		ecomProd.ProductNumber = recomProd.Related_Product__r.SAP_Material_Number__c;
+		    		ecomProd.ProductName = recomProd.Related_Product__r.Name;
+		    		ecomProd.ProductShortDesc = recomProd.Related_Product__r.Short_Description__c;
+		    		lstRelatedProducts.add(ecomProd);
+		    	}
+		    }
+
+
 
 		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
 

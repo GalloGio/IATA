@@ -3308,7 +3308,7 @@ and
         <name>ISSP_AMS_NOC_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
+        <label>D: Envie para a IATA</label>
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
