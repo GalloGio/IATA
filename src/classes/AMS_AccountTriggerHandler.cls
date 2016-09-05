@@ -31,17 +31,18 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
         for(Account ag : accs){
-	if(!disallowedSources.contains(ag.Source_System__c))
-       	{
-		if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+	       if(!disallowedSources.contains(ag.Source_System__c)){
+		      if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
 
-			setCassNumberOnHO(ag);
+                    setCassNumberOnHO(ag);
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
                     }
                 }
             }
+
+            prepopulateAbbreviatedFields(ag, null);
         }
     }
 
@@ -74,6 +75,7 @@ public class AMS_AccountTriggerHandler {
                     ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
                 }
             }
+            prepopulateAbbreviatedFields(ag, oldMap.get(ag.Id));
         }
 
        System.debug('Start CASS verification');
@@ -432,5 +434,29 @@ public class AMS_AccountTriggerHandler {
             return true;
         }
         return false;
+    }
+
+
+
+
+    public static void prepopulateAbbreviatedFields(Account a, Account olda){
+        
+        Integer length = 0;
+        if(AMS_Utils.LocationClassCARGO.contains(a.Location_Class__c))    length = 60;
+        else if(AMS_Utils.LocationClassPASSENGER.contains(a.Location_Class__c))   length = 30;
+        
+        
+        if(olda==null || a.Abbreviated_address__c == null || a.BillingStreet!=olda.BillingStreet){
+            String str = a.BillingStreet;
+            if(str!=null && str.length()>length) str = str.substring(0,length);
+            a.Abbreviated_address__c = str;
+        }
+
+        if(olda==null || a.Abbreviated_name__c == null || a.Name!=olda.Name){
+            String str = a.Name;
+            if(str!=null && str.length()>length) str = str.substring(0,length);
+            a.Abbreviated_name__c = str;
+        }
+        
     }
 }
