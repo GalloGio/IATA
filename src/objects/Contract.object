@@ -2820,6 +2820,19 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         <searchResultsAdditionalFields>CONTRACT.NAME</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>EF_Contract_For_CS_Role_only</fullName>
+        <active>true</active>
+        <description>Only roles Manager, Business Development, Head, Client Services and Client Services Specialists can modify E&amp;F Contracts.</description>
+        <errorConditionFormula>AND
+(
+    RecordType.DeveloperName = &apos;EF_Contract&apos;, 
+      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Manager, Business Development&apos;)),
+      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Head, Client Services&apos;)),
+      NOT(ISPICKVAL($User.EF_User_Role__c, &apos;Client Services Specialists&apos;))
+)</errorConditionFormula>
+        <errorMessage>Only Client Services Specialists, Client Services Head and Business Development Managers can modify E&amp;F Contracts.</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
         <availability>online</availability>

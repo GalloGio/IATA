@@ -1,6 +1,7 @@
 public with sharing class EF_BaContractApprovalHelper
 {
 
+	// Used for Contract approval rejection process 
 	public static void removeTempStorageRecordOnContractRejection(List<Contract> rejectedList)
 	{
 		Set<Id> rejectedIds = new Set<Id>();
@@ -15,6 +16,7 @@ public with sharing class EF_BaContractApprovalHelper
 		    delete storageList;
 	}
 
+	// Used for E&F Billing Agreement approval rejection process
 	public static void removeTempStorageRecordOnBaRejection(List<EF_Billing_Agreement__c> rejectedList)
 	{
 		Set<Id> rejectedIds = new Set<Id>();
@@ -29,6 +31,7 @@ public with sharing class EF_BaContractApprovalHelper
 		    delete storageList;
 	}
 
+	// Copies approved, future values of a Contract onto the Contract record from Temp Storage and then deleted the temp record
 	public static void copyValuesFromTempStorageOnContractApproval(List<Contract> approvedList, List<String> fieldList)
 	{
 		Set<Id> approvedIds = new Set<Id>();
@@ -43,7 +46,6 @@ public with sharing class EF_BaContractApprovalHelper
 		}
 		query = query.substring(0, query.length()-2);
 		query = query + ' from EF_Approval__c where Contract__c in :approvedIds order by createddate desc';
-		System.debug('***************** query: '+query);
 		List<EF_Approval__c> storageList = Database.query(query);
 		Map<Id, EF_Approval__c> storageMap = new Map<Id, EF_Approval__c>();
 		for(EF_Approval__c storageRecord : storageList)
@@ -68,6 +70,7 @@ public with sharing class EF_BaContractApprovalHelper
 	    delete storageList;
 	}
 
+	// Copies approved, future values of a Billing Agreement onto the Billing Agreement record from Temp Storage and then deleted the temp record
 	public static void copyValuesFromTempStorageOnBaApproval(List<EF_Billing_Agreement__c> approvedList, List<String> fieldList)
 	{
 		Set<Id> approvedIds = new Set<Id>();
@@ -107,6 +110,7 @@ public with sharing class EF_BaContractApprovalHelper
 	    delete storageList;
 	}
 
+	// Utilizes helper field (EF_Manager_Approval__c) that gets updated through the approval final actions to identify records that got approved
 	public static List<Contract> identifyApprovedContracts(List<Contract> newValues, Map<Id, Contract> oldValues)
 	{
 		List<Contract> approvedList = new List<Contract>();
@@ -123,6 +127,7 @@ public with sharing class EF_BaContractApprovalHelper
 		return approvedList;
 	}
 
+	// Utilizes helper field (EF_Manager_Approval__c) that gets updated through the approval final actions to identify records that got rejected or were recalled
 	public static List<Contract> identifyRejectedOrRecalledContracts(List<Contract> newValues, Map<Id, Contract> oldValues)
 	{
 		List<Contract> rejectedList = new List<Contract>();
@@ -171,7 +176,8 @@ public with sharing class EF_BaContractApprovalHelper
 		return rejectedList;
 	}
 
-	// this method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
+	// This method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
+	// The htmlTable is set to be a rich-text helper field that can be placed in emails to approvers to list them what key elements changed their values.
     public static boolean identifyContractChanges(Contract newValues, Contract oldValues, List<String> fieldList)
     {
     	String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Old value:</th><th border="1">New value:</th></tr>';
@@ -190,13 +196,13 @@ public with sharing class EF_BaContractApprovalHelper
         htmlTable = htmlTable + '</table>';
         if(hasChanged)
         {
-        	System.debug('************ hasChanged: '+hasChanged + ' - ' + htmlTable);
         	newValues.EF_Requested_Changes__c = htmlTable;
         }
         return hasChanged;
     }
 
-	// this method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
+	// This method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
+    // The htmlTable is set to be a rich-text helper field that can be placed in emails to approvers to list them what key elements changed their values.
     public static boolean identifyBillingAgreementChanges(EF_Billing_Agreement__c newValues, EF_Billing_Agreement__c oldValues, List<String> fieldList)
     {
     	String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Old value:</th><th border="1">New value:</th></tr>';
@@ -215,16 +221,12 @@ public with sharing class EF_BaContractApprovalHelper
         htmlTable = htmlTable + '</table>';
         if(hasChanged)
         {
-        	System.debug('************ hasChanged: '+hasChanged + ' - ' + htmlTable);
         	newValues.Requested_Changes__c = htmlTable;
-        } else
-        {
-        	System.debug('************ hasChanged: '+hasChanged + ' - ' + htmlTable);
-        	//newValues.Requested_Changes__c = '';
         }
         return hasChanged;
     }
 
+    // After storing to-be-approved values into temp storage record, this method is run to get the fields set to their original values on the record that is not yet approved
     public static void rollbackPreviousValues(Contract newValues, Contract oldValues, List<String> fieldList)
     {
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
@@ -237,18 +239,15 @@ public with sharing class EF_BaContractApprovalHelper
 
     public static void rollbackPreviousValues(EF_Billing_Agreement__c newValues, EF_Billing_Agreement__c oldValues, List<String> fieldList)
     {
-        System.debug('*********** payment NEW: '+newValues.Payment_Method__c);
-        System.debug('*********** payment OLD: '+oldValues.Payment_Method__c);
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
         for(String field : fieldList)
         {
             SObjectField f = fields.get(field);
             newValues.put(field, oldValues.get(field));
         }
-
-        System.debug('*************** new value rolled back: '+newValues.Payment_Method__c);
     }
 
+    // Loop over for any changes to key elements and put any changes into a temp storage record along with the parent Contract ID
     public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, Contract newValues, List<String> fieldList)
     {
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
@@ -259,10 +258,10 @@ public with sharing class EF_BaContractApprovalHelper
             approvalStorageRecord.put(field, newValues.get(field));
         }
         approvalStorageRecord.put('Contract__c', newValues.Id);
-        System.debug('********************** apr: '+approvalStorageRecord);
         return approvalStorageRecord;
     }
 
+    // Loop over for any changes to key elements and put any changes into a temp storage record along with the parent Billing Agreement ID
     public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, EF_Billing_Agreement__c newValues, List<String> fieldList)
     {
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
@@ -273,7 +272,6 @@ public with sharing class EF_BaContractApprovalHelper
             approvalStorageRecord.put(field, newValues.get(field));
         }
         approvalStorageRecord.put('EF_Billing_Agreement__c', newValues.Id);
-        System.debug('********************** apr: '+approvalStorageRecord);
         return approvalStorageRecord;
     }
 

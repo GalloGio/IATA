@@ -67,4 +67,13 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EF_Set_Contract_Status_to_Active</fullName>
+        <field>EF_Status__c</field>
+        <literalValue>Active</literalValue>
+        <name>E&amp;F Set Contract Status to Active</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
 </Workflow>

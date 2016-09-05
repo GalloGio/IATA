@@ -35,7 +35,7 @@
         <fullName>EF_Set_Approval_to_In_Progress</fullName>
         <field>Manager_Approval__c</field>
         <literalValue>In Progress</literalValue>
-        <name>E&amp;F Set Approval to In Progress</name>
+        <name>E&amp;F Set BA Approval to In Progress</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -45,6 +45,15 @@
         <field>Manager_Approval__c</field>
         <literalValue>Rejected</literalValue>
         <name>E&amp;F Set Approval to Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EF_Set_Billing_Agreement_To_Active</fullName>
+        <field>Status__c</field>
+        <literalValue>Active</literalValue>
+        <name>E&amp;F Set Billing Agreement To Active</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

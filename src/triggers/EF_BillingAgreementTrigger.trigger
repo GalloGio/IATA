@@ -15,7 +15,6 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             EF_BillingAgreementHandler.preventAgreementCreationForNotAllowed(Trigger.new);
             if(Trigger.isInsert)
             {
-                
                 EF_BillingAgreementHandler.handleWithApprovalAccountInserts(Trigger.new);
                 EF_BillingAgreementHandler.setClientFromRelatedContract(Trigger.new);
             } else
@@ -26,8 +25,6 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             
         } else if (Trigger.isAfter)
         {
-
-           
             Set<Id> withApprovalIds = EF_BillingAgreementHandler.findIdsOfWithApprovalBillingAgreements(Trigger.new);
             if(EF_BillingAgreementHandler.runOnce() && withApprovalIds.size() > 0)
             {
