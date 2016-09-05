@@ -1,0 +1,42 @@
+<apex:page standardController="Contract" recordSetVar="bas" tabStyle="Contract" extensions="tenPageExtension">
+    <apex:form >
+        <apex:pageBlock title="EditBilling Agreement " mode="edit">
+             <apex:pageMessages />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            
+            
+            <apex:pageBlockTable value="{!selected}" var="c">
+                <apex:column value="{!c.Name}"/>
+                <apex:column value="{!c.Contract_Name__c}"/>
+                <apex:column headerValue="Status">
+                    <apex:inputField value="{!c.EF_Status__c}"/>
+                </apex:column>
+                <apex:column headerValue="Group Code">
+                    <apex:inputField value="{!c.EF_Group_Code__c}"/>
+                </apex:column>
+                <apex:column headerValue="Trading Partner">
+                    <apex:inputField value="{!c.EF_Trading_Partner__c}"/>
+                </apex:column>
+                <apex:column headerValue="Payment Terms">
+                    <apex:inputField value="{!c.EF_Payment_Terms__c}"/>
+                </apex:column>
+                <apex:column headerValue="Data Currency">
+                    <apex:inputField value="{!c.EF_Data_Currency__c}"/>
+                </apex:column>
+                <apex:column headerValue="Payment Currency">
+                    <apex:inputField value="{!c.EF_Payment_Currency__c}"/>
+                </apex:column>
+                                
+            </apex:pageBlockTable>  
+            
+             <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            
+        </apex:pageBlock>
+    </apex:form>
+    </apex:page>
