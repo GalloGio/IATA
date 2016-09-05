@@ -21558,7 +21558,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contract.EF_Send_to_SAP__c</field>
+        <field>Contract.EF_Trading_Partner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
