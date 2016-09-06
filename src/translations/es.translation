@@ -3331,7 +3331,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NOC_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC StepD ProgressBar --></label>
+        <label>D: Envío a la IATA</label>
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>

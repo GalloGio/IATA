@@ -211,6 +211,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -461,6 +471,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -707,6 +727,16 @@
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -1106,6 +1136,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1356,6 +1396,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1602,6 +1652,16 @@
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -1861,6 +1921,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -2112,6 +2182,16 @@
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -9006,7 +9086,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Membership_SITA__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Membership SITA</label>
+        <label>SITA Member</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -66973,6 +67053,13 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorMessage>The Field/Head Office is mandatory for airlines</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>General_Public_Admin_only</fullName>
+        <active>true</active>
+        <description>Only administrators can edit General Public accounts</description>
+        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) ||  CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot;) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>IATACode_IsMandatory</fullName>
         <active>false</active>
         <description>Iata code it&apos;s mandatory</description>
@@ -67015,7 +67102,7 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
                 RecordType.DeveloperName = &apos;IATA_Airline&apos;,
                 NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
                 NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
-                NOT($User.Profile_Name__c =&apos;Business Administrator&apos;),
+                NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
                 NOT($User.Profile_Name__c =&apos;Developer&apos;)),
                 TRUE ,FALSE)</errorConditionFormula>
         <errorMessage>The airline is a member and the name or the billing address cannot be edited. Only MER is allowed.</errorMessage>
@@ -67102,6 +67189,26 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
         <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>APXTConga4__Conga_Mail_Merge</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>false</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>450</height>
+        <isResizable>false</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Merge</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Account.Id}</url>
+        <width>625</width>
+    </webLinks>
     <webLinks>
         <fullName>ATWOnline</fullName>
         <availability>online</availability>

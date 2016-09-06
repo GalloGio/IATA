@@ -6,11 +6,11 @@
     </types>
     <types>
         <members>*</members>
-        <name>Group</name>
+        <name>GlobalPicklist</name>
     </types>
     <types>
         <members>*</members>
-        <name>StaticResource</name>
+        <name>Group</name>
     </types>
     <types>
         <members>*</members>
