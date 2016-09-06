@@ -131,6 +131,16 @@
     <pluralLabel>E&amp;F Contact Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>StatusMustBeConsistentWithEFStatusConta</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISPICKVAL(Status__c, &apos;Active&apos;),
+  ISPICKVAL(Contact__r.EF_Status__c, &apos;Inactive&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Mass_Update_Contact_Billing_Agreement</fullName>
         <availability>online</availability>
