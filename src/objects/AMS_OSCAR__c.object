@@ -1732,6 +1732,26 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>First_Step_Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>First Step Completed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>First_Step_Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>First Step Completed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Flag_Data_to_Account__c</fullName>
         <defaultValue>false</defaultValue>
         <description>when checked means that the Staging Data was copied to the account with sucess, if not checked means that the Staging Data needs to be  copied to the account!</description>
