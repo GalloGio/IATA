@@ -88,8 +88,11 @@ public class EF_ContractHandler
     	if(currentUsers.size() > 0)
     	{
     		User currentUser = currentUsers.get(0);
-    		if(currentUser.EF_User_Role__c.equalsIgnoreCase('Client Services Specialists'))
-    			return true;
+    		if(currentUser.EF_User_Role__c != null)
+    		{
+    			if(currentUser.EF_User_Role__c.equalsIgnoreCase('Client Services Specialists'))
+    				return true;
+			}
     	}
     	return false;
     }

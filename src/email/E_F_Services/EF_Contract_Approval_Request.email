@@ -9,4 +9,4 @@ The following key-fields have changed:<br/>
 <br/><br/>
 
 Please review the record and approve or reject the changes by 
-<a href="{!Contract.Base_URL__c}{!EF_Billing_Agreement__c.Id}">clicking here</a>.
+<a href="{!Contract.Base_URL__c}{!Contract.Id}">clicking here</a>.
