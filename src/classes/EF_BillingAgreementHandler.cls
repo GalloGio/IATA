@@ -19,7 +19,11 @@ public class EF_BillingAgreementHandler
     {
         // Find the Custom Setting values for "Approval Required" fields and...
         List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
-        List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+        List<String> fields = new List<String>();
+        if(fieldList.size() > 0)
+            fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+        else
+            fields.add('Id');
         List<EF_Billing_Agreement__c> approvedList = EF_BaContractApprovalHelper.identifyApprovedBillingAgreements(newValues, oldValues);
         List<EF_Billing_Agreement__c> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledBillingAgreements(newValues, oldValues);
         if(approvedList.size() > 0)
