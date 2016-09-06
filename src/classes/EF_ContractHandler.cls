@@ -19,7 +19,11 @@ public class EF_ContractHandler
     {
     	// Find the Custom Setting values for "Approval Required" fields and...
         List<EF_Approve_Fields__c> fieldList = [select id, name, Contract_Fields__c from EF_Approve_Fields__c where Name = 'Contract'];
-        List<String> fields = fieldList.get(0).Contract_Fields__c.split(',');
+        List<String> fields = new List<String>();
+        if(fieldList.size() > 0)
+            fields = fieldList.get(0).Contract_Fields__c.split(',');
+        else
+            fields.add('Id');
         List<Contract> approvedList = EF_BaContractApprovalHelper.identifyApprovedContracts(newValues, oldValues);
         List<Contract> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledContracts(newValues, oldValues);
         if(approvedList.size() > 0)
