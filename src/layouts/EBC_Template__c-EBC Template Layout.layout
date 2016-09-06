@@ -21,10 +21,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>lastCounter__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Template_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -33,11 +29,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>TypeOfTemplate__c</field>
+                <field>Parent_Template__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Template_Ready__c</field>
+                <behavior>Edit</behavior>
+                <field>External_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Tested__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -52,10 +52,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>No_of_attachments__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -94,24 +90,21 @@
         <fields>Billing_Account__c</fields>
         <fields>Audience__c</fields>
         <fields>Is_Reusable__c</fields>
-        <fields>No_of_attachments__c</fields>
-        <fields>TypeOfTemplate__c</fields>
         <fields>Template_Name__c</fields>
-        <fields>Template_Ready__c</fields>
-        <relatedLists>
-            <fields>NAME</fields>
-            <relatedList>EBC_Campaign__c.EBC_Design__c</relatedList>
-        </relatedLists>
         <relatedLists>
             <relatedList>RelatedNoteList</relatedList>
         </relatedLists>
     </miniLayout>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>EBC_Campaign__c.EBC_Design__c</relatedList>
+        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
+        <fields>NAME</fields>
+        <fields>EBC_Resource__c.NAME</fields>
+        <fields>EBC_Resource__c.Image_Type__c</fields>
+        <fields>EBC_Resource__c.Image_Size__c</fields>
+        <fields>EBC_Resource__c.Is_Ready__c</fields>
+        <relatedList>EBC_Template_Resource__c.EBC_Template__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
