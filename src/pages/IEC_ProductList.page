@@ -184,7 +184,6 @@
 														Edition: {!prod.Edition} <br />
 														Language: {!prod.Language}
 													</p>
-													<p class="item-description"></p>
 													<p class="item-description">{!prod.ProductShortDesc}</p>
 													
 													<!-- Scenario 1: In Stock -->
