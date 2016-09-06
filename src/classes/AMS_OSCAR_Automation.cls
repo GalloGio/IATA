@@ -21,6 +21,7 @@ public with sharing class AMS_OSCAR_Automation
                     oscar.Sanity_check_received__c = Date.today();
                     oscar.Sanity_check_deadline__c = oscar.Sanity_check_received__c + 15;
                     oscar.Sanity_check_results__c = 'Passed';
+                    oscar.First_Step_Completed__c = true;
                     res = True;
                     
                 }
@@ -1227,6 +1228,22 @@ public with sharing class AMS_OSCAR_Automation
                 res = False;
             }
             return res;
+        }
+    }
+
+    public class AMS_OSCAR_Step29_succeeded implements IClassFactory
+    {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar)
+        {
+            try{
+                if(oscar != null && !oscar.Apply_Penalty_Fee__c){
+                    oscar.Apply_Penalty_Fee__c = true;
+                    return true; 
+                }
+            }catch(Exception e){
+                system.debug('ERROR: '+e);
+            }
+            return false;
         }
     }
     
