@@ -16,9 +16,9 @@ global class AMS_EBulletinReportWebservice {
 			String csv = getHeader() + '\n' + getRecords();
 
 			ContentVersion file = new ContentVersion(
-				  title = 'testChangeCodes.csv',
+				  title = 'testChangeCodes_2.csv',
 				  versionData = Blob.valueOf( csv ),
-				  pathOnClient = '/testChangeCodes.csv'
+				  pathOnClient = '/testChangeCodes_2.csv'
 				);
 			 
 			insert file;

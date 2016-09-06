@@ -75,19 +75,19 @@ private class AMS_ChangeCodesHelperTest {
 		changeCode2.reasonDesc  = 'Accredited-Meets Criteria.';
 		changeCode2.status  = null;
 
-		AMS_ChangeCodes_Utils.ObjectChange objChange1 = new AMS_ChangeCodes_Utils.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
-		AMS_ChangeCodes_Utils.ObjectChange objChange2 = new AMS_ChangeCodes_Utils.ObjectChange('Case','Name','new Value Name Case','old Value Name Case' );
+		AMS_ChangeCodesHelper.ObjectChange objChange1 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
+		AMS_ChangeCodesHelper.ObjectChange objChange2 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name','new Value Name Case','old Value Name Case' );
 
-		AMS_ChangeCodes_Utils.ObjectChange objChange3 = new AMS_ChangeCodes_Utils.ObjectChange('Account','Name2','new Value Name 2' ,'old Value Name 2' );
-		AMS_ChangeCodes_Utils.ObjectChange objChange4 = new AMS_ChangeCodes_Utils.ObjectChange('Case','Name2','new Value Name Case 2','old Value Name Case 2' );
+		AMS_ChangeCodesHelper.ObjectChange objChange3 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name2','new Value Name 2' ,'old Value Name 2' );
+		AMS_ChangeCodesHelper.ObjectChange objChange4 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name2','new Value Name Case 2','old Value Name Case 2' );
 
-		List <AMS_ChangeCodes_Utils.ObjectChange> objChangeList = new List <AMS_ChangeCodes_Utils.ObjectChange>{objChange1,objChange2};
+		List <AMS_ChangeCodesHelper.ObjectChange> objChangeList = new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2};
 
-		AMS_ChangeCodes_Utils.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodes_Utils.ObjectChangesStruct(new List <AMS_ChangeCodes_Utils.ObjectChange>{objChange1,objChange2});
-		AMS_ChangeCodes_Utils.ObjectChangesStruct objChangeListStruct2 = new AMS_ChangeCodes_Utils.ObjectChangesStruct(new List <AMS_ChangeCodes_Utils.ObjectChange>{objChange3,objChange4});
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2});
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct2 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange3,objChange4});
 
 
-		AMS_ChangeCodes_Utils.createAAChangeCodes(new List<AMS_ChangeCodes_Utils.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
+		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
 		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null}, 
 		                                          new List<Account> {acc1,acc2}, 
 		                                          false);

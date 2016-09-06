@@ -256,10 +256,10 @@ public class AMS_AccountTriggerHandler {
 
         }
 
-        List<AMS_ChangeCodes_Utils.ObjectChangesStruct> objectChanges = AMS_ChangeCodes_Utils.convertAccountToObjectChanges(accountChanges);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
 
-        AMS_ChangeCodes_Utils.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
 
     }
 

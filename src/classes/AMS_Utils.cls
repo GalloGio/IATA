@@ -610,6 +610,7 @@ public without sharing class AMS_Utils {
         if( aacNEW.Change_Code__c == 'FIN' ){
             
             oscarAgency.Is_AIMS_Account__c = true;
+            oscarAgency.Accreditation_date__c = date.today();
             toReturn = oscarAgency;
         }
 
@@ -920,7 +921,7 @@ public without sharing class AMS_Utils {
 
         Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
-
+        
         //DT: Reindented and added 3 fields for addresses
         // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'

@@ -46,18 +46,34 @@ public class AMS_EBulletinReportHelper {
 
 		Map<String, Schema.SObjectField> fieldMap  = Schema.getGlobalDescribe().get(objectBaseQuery).getDescribe().Fields.getMap();
 
+		List<wrapperLabel> wLList = new List<wrapperLabel>();
+
+		Set<String> uniqueObj = new set <String>{objectBaseQuery};
+
+
 		for (AMS_EBulletin_Setting__mdt EBulletinSetting : EBulletinSettingsList)
 		{
 			fieldsList.add(EBulletinSetting.Label);
 				
-			system.debug('fieldMap: ' + fieldMap);
 			system.debug('EBulletinSetting.Label: ' + EBulletinSetting.Label);
-			
-			system.debug('fieldMap: ' + fieldMap);
 
-			headersList.add(fieldMap.get(EBulletinSetting.Label).getDescribe().getLabel());
+			wrapperLabel wL = new wrapperLabel(objectBaseQuery,EBulletinSetting.Label,fieldMap);
+
+			wLList.add(wL);
+
+			//Objects to Recover Field Mapping
+			uniqueObj.add(wL.sObjName); 
+
+			//headersList.add(fieldMap.get(EBulletinSetting.Label).getDescribe().getLabel());
 			
 		}
+
+		// Object , FieldMap
+
+		for(wrapperLabel wL : processFieldMaps(wLList,uniqueObj)) headersList.add(wL.fieldLabel);
+
+		system.debug('wdList: ' + wLList);
+		
 
 		fieldsQuery = convertToCSV(fieldsList, ',');
 		headerCSV   = convertToCSV(headersList, csvFormat);
@@ -82,7 +98,7 @@ public class AMS_EBulletinReportHelper {
 		{
 			List<String> recordList = processParentDependecies(fieldsList,ccHist);
 			
-			recordsCSV += AMS_EBulletinReportHelper.convertToCSV(recordList, csvFormat) + '\n';
+			recordsCSV += convertToCSV(recordList, csvFormat) + '\n';
 
 		}
 
@@ -112,7 +128,7 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Process Parent Objects fields (up to 5 Parents?)
 	*/
-	private static List<String> processParentDependecies(List<String> fieldsListToProcess,Agency_Applied_Change_code__c ccHist)
+	private List<String> processParentDependecies(List<String> fieldsListToProcess,Agency_Applied_Change_code__c ccHist)
 	{
 		List<String> recordList = new List <String>();
 
@@ -123,19 +139,11 @@ public class AMS_EBulletinReportHelper {
 
 			if(field.contains('.'))
 			{
-				List <String> strList = field.split('\\.');
-				integer lastPos = strList.size() -1;
-
-				for(integer i = 0 ; i < lastPos ; i++) //avoid last element
-				{				
-					sObj = sObj.getSObject(strList.get(i));
-					if (sObj == null)
-						break;
-				}
+				wrapperData wDObj = new wrapperData(sObj,field);
 				
 				recordList.add(
 					String.valueOf(
-						(sObj == null || sObj.get(strList.get(lastPos)) == null ) ? '' :sObj.get(strList.get(lastPos))
+						(wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
 						)
 					);
 			}
@@ -149,5 +157,99 @@ public class AMS_EBulletinReportHelper {
 		}
 		return recordList;
 	}
+/** 
+		 Process Field Maps
+	*/
+	private static List<wrapperLabel> processFieldMaps(List<wrapperLabel> wLList, Set<String> uniqueObj)
+	{
+		Map<String,Map<String, Schema.SObjectField>> usedFieldMaps = new Map<String,Map<String, Schema.SObjectField>> ();
+
+		for(String obj : uniqueObj){
+			system.debug('obj:' + obj);
+			usedFieldMaps.put(obj,Schema.getGlobalDescribe().get(obj).getDescribe().Fields.getMap());
+		}		
+
+		for(wrapperLabel wL: wLList) 
+		{
+			system.debug('wL.sObjName:' + wL.sObjName);
+			system.debug('wL.fieldName:' + wL.fieldName);
+			system.debug('wL.fieldLabel:' + wL.fieldLabel);
+			wL.setFieldLabel(usedFieldMaps.get(wL.sObjName).get(wL.fieldName).getDescribe().getLabel());
+		}
+		return wLList;
+	}
+
+
+	/** 
+	 Wrapper Object for Mapping the Entity for Field 
+	 Example : change_code__r.Account__r.name 
+
+	*/
+	private class wrapperData {
+		
+		private sObject sObj{get;set;}
+        private String fieldName{get;set;}
+  	/** 
+		 Get Object for the Field  (up to 5 Parents?)
+	*/
+        private wrapperData(SObject sObjParent, String field){
+
+           	List <String> strList = field.split('\\.');
+			integer lastPos = strList.size() -1;
+		
+			sObject sObj = sObjParent;
+
+			for(integer i = 0 ; i < lastPos ; i++) //avoid last element
+			{				
+				sObj = sObj.getSObject(strList.get(i));
+			}
+
+			this.sObj   = sObj;
+			this.fieldName = strList.get(lastPos); 
+
+        }
+
+	}
+
+	/** 
+	 Wrapper Object for Mapping the Labels for Entities  
+	 Example : change_code__r.Account__r.name 
+
+	*/
+	private class wrapperLabel {
+		
+		private String sObjName{get;set;}
+        private String fieldName{get;set;}
+  		private String fieldLabel{get;set;}
+
+        private wrapperLabel(String sObjParentName, String field, Map<String, Schema.SObjectField> fieldMap){
+
+           	List <String> strList = field.split('\\.');
+			integer lastPos = strList.size() -1;
+
+			String sObjName = sObjParentName;
+
+
+			if (lastPos>0) 
+				{
+				if(strList.get(lastPos -1 ) == 'Parent')
+					lastPos--;
+				sObjName  = fieldMap.get(strList.get(lastPos -1 ).replace('__r','__c')).getDescribe().getReferenceTo()[0].getDescribe().Name;
+				system.debug('strList.get(lastPos -1 ): ' + strList.get(lastPos -1 ));
+				}
+
+			system.debug('sObjName: ' + sObjName);
+			this.sObjName   = sObjName;
+			this.fieldName = strList.get(strList.size() -1); 
+
+        }
+
+        private void setFieldLabel(String fieldLabel){
+        	this.fieldLabel = fieldLabel;
+        }
+
+	}
+
+
 
 }
