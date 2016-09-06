@@ -584,4 +584,4 @@ Name
         <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
-</CustomObject> 
+</CustomObject>
