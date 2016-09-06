@@ -119,6 +119,22 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Files</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>350</height>
+                <page>EF_Billing_Agreement_Attachment_List</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Contact__c</fields>

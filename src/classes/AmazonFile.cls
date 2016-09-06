@@ -82,6 +82,34 @@ public class AmazonFile {
 	public String getRecordTypeDeveloperName() {
 		return amazonFile == null? null: this.amazonFile.RecordType.DeveloperName;
 	}
+
+	public String getEFCategory() {
+		return amazonFile==null? '': this.amazonFile.EF_Category__c;
+	}
+
+	public String getEFSubcategory() {
+		return amazonFile==null? '': this.amazonFile.EF_Subcategory__c;
+	}
+
+	public String getEFSAPNumber() {
+		return amazonFile==null? '': this.amazonFile.EF_SAP_Number__c;
+	}
+
+	public Date getEFDocumentDate() {
+		return amazonFile==null? null: this.amazonFile.EF_Document_Date__c;
+	}
+
+	public Date getEFExpiryDate() {
+		return amazonFile==null? null: this.amazonFile.EF_Expiry_Date__c;
+	}
+
+	public Boolean getEFExpired() {
+		return amazonFile==null? null: this.amazonFile.EF_Expired__c;
+	}
+
+	public Boolean getEFSkipValidation() {
+		return amazonFile==null? null: this.amazonFile.EF_Skip_Validation__c;
+	}
     
 	// for compatibility with AmazonFinancial.page
 	public PageReference deleteFile() {
