@@ -412,7 +412,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             if(updatedOscar.Type_of_Change__c != null) tocList.addAll(updatedOscar.Type_of_change__c.split(';'));
 
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
-            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] !tocList.contains(AMS_Utils.LEGAL_STATUS) - ' + (!tocList.contains(AMS_Utils.LEGAL_STATUS)));
 
             if(
                 !tocList.contains(AMS_Utils.OWNERSHIP_IATA)

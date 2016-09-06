@@ -913,13 +913,7 @@
           "Actions": [],
           "Automations": [{
             "Status": "Passed",
-            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded",
-            "ChangeCode": {
-              "Name": "LNF",
-              "ReasonCode": "03",
-              "MemoText": "Penalty fee applied",
-              "ReasonDesc": "PENALTY FEE APPLIED"
-            }
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded"
           }],
           "DisplayFields": [
             "Apply_Penalty_Fee__c",
