@@ -445,7 +445,7 @@ Name
    AND(
       Name = &quot;Resource Center&quot;,
       CONTAINS($UserRole.Name ,&quot;General Public&quot;)
-   ),   
+   ),
     Name = &quot;Payment link&quot;,
    Name = &quot;Resource Center&quot;
 )</formula>
