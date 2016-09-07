@@ -6,11 +6,11 @@ public with sharing class vfIECHomePage extends IECPageController {
 	public String sURLProdMDP		{get; set;}
 	public String sURLProdEBro 		{get; set;}
 	
-	public Boolean bProdAccessCACPro 	{get; set;}
-	public Boolean bProdAccessGAD	 	{get; set;}
-	public Boolean bProdAccessGSS 		{get; set;}
-	public Boolean bProdAccessMDP		{get; set;}
-	public Boolean bProdAccessEBro 		{get; set;} // ProductAccess is enabled for EBC in ProductAccess and Zuora__CustomerAccount__c
+	public Boolean bProdAccessCACPro    {get; set;}
+	public Boolean bProdAccessGAD       {get; set;}
+	public Boolean bProdAccessGSS       {get; set;}
+	public Boolean bProdAccessMDP       {get; set;}
+	public Boolean bProdAccessEBro      {get; set;} // ProductAccess is enabled for EBC in ProductAccess and Zuora__CustomerAccount__c
 	public Boolean bProdAccessCACWeb      {get; set;}
 	public Boolean bProdAccessPAL      {get; set;}
 	public Boolean bProdAccessCAL      {get; set;}
@@ -54,6 +54,7 @@ public with sharing class vfIECHomePage extends IECPageController {
 	/**
 	 * triggered when the page loads
 	 */
+	public /*PageReference*/ void pageLoad() {
 		if (isUserLoggedIn) {
 			validUserProfile();
 			
@@ -67,7 +68,6 @@ public with sharing class vfIECHomePage extends IECPageController {
 			bProdAccessPAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_PAL) != -1);
 			bProdAccessCAL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_CAL) != -1);
 			bProdAccessASL = (IECApplicationsManager.ContactHasAccessToProductCategory(loggedCustomer.RelatedContact.Id, IECConstants.ProductCategory_SF_ASL) != -1);
-        	return pgRef;
             //return null;
         }/*else{
             PageReference pgRef = new PageReference('/IEC_Login?returl=/IEC_MyServices');
