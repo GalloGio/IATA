@@ -150,7 +150,7 @@
         <filters>
             <field>Account__c</field>
             <operation>equals</operation>
-            <value>REXTUR VIAGENS E TURISMO LTDA.</value>
+            <value>WUHAN XIANGSHENG AIR SERVICE CO.,LTD</value>
         </filters>
         <label>AMS 1 agency</label>
         <language>en_US</language>
