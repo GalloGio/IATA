@@ -3778,6 +3778,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Airline_Master_List</fullName>
+        <field>Reason1__c</field>
+        <literalValue>Airline Master List and Details</literalValue>
+        <name>Airline Master List</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Approval_Date_Today</fullName>
         <description>Updates the Approval Date with today&apos;s date</description>
         <field>Approval_Date_cr__c</field>
@@ -11359,6 +11368,29 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>E-mail to Case - ICH Help Desk</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Email from ibsps%40acca%2Ecom%2Ecn</fullName>
+        <actions>
+            <name>Airline_Master_List</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DPC_Update_case_area</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SuppliedEmail</field>
+            <operation>equals</operation>
+            <value>ibsps@acca.com.cn</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
