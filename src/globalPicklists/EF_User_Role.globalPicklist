@@ -9,7 +9,7 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Manager, Airline Services & Head, Business Delivery</fullName>
+        <fullName>Manager, Airline Services &amp; Head, Business Delivery</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
@@ -25,7 +25,7 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Manager, Invoicing & Accounting & Data Transformation</fullName>
+        <fullName>Manager, Invoicing &amp; Accounting &amp; Data Transformation</fullName>
         <default>false</default>
     </globalPicklistValues>
     <masterLabel>E&amp;F User Role</masterLabel>
