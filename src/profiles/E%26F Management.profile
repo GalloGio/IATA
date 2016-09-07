@@ -43138,9 +43138,8 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
         <personAccountDefault>true</personAccountDefault>
-	<recordType>Contract.EF_Contract</recordType>
+		<recordType>Contract.EF_Contract</recordType>
 		<default>true</default>
         <visible>true</visible>
     </recordTypeVisibilities>

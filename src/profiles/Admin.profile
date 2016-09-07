@@ -44411,7 +44411,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Contract.EF_Contract</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
