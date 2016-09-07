@@ -360,7 +360,7 @@
  )
 )</errorConditionFormula>
         <errorMessage>The contact chosen must have a value for the following fields:
-First Name, Last Name, Job Title, Email and Account Name. Please complete these information and try again.</errorMessage>
+First Name, Last Name, Title, Email and Account Name. Please complete these information and try again.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Group_Type</fullName>

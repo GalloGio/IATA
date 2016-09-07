@@ -217,7 +217,7 @@
         
         
         <div class="slds-card__footer">
-            <ui:inputCheckbox label="Show All" aura:id="showAllCheckBox" change="{!c.refreshIssues}"/>
+            <ui:inputCheckbox label="Show Closed" aura:id="showAllCheckBox" change="{!c.refreshIssues}"/>
         </div>
         
     </div>

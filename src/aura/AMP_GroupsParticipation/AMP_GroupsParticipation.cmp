@@ -27,7 +27,7 @@
                     <tr class="headerRow" >
                         <th style="width: 17%;"><span>IATA Group Name</span></th>
                         <th style="width: 12%;"><span>IATA Group Owner</span></th>
-                        <th style="width: 30%;"><span>Mission of IATA Group</span></th>
+                        <th style="width: 30%;"><span>Mission of IATA Group (Reg/Div Groups Only)</span></th>
                         <th style="width: 11%;"><span>Role Within Group</span></th>
                         <th style="width: 5%;"><span>Salut.</span></th>
                         <th style="width: 8%;"><span>First Name</span></th>
