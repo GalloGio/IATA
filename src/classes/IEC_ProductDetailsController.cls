@@ -79,6 +79,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 		    															Related_Product__c, Related_Product__r.SAP_Material_Number__c 
 		    														FROM Recommended_Product__c 
 		    														where Product__c =:product.ProductId
+		    														  and Related_Product__r.Display_to_ECommerce__c = true
 		    													];
 		    if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
 		    	for(Recommended_Product__c recomProd : lstRecommendedProducts){
