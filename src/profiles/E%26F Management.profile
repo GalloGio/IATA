@@ -43132,7 +43132,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
@@ -43141,7 +43141,6 @@
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
 	<recordType>Contract.EF_Contract</recordType>
-		<default>true</default>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

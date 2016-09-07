@@ -22252,6 +22252,7 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Location_Code_Details__c</field>
         <field>EF_Billing_Agreement__c.Manager_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -38207,6 +38208,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contract-Contract Layout</layout>
+        <recordType>Contract.EF_Contract</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contract-Contract Layout</layout>
         <recordType>Contract.MACS_General</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -42229,14 +42234,14 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Contract.EF_Contract</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
