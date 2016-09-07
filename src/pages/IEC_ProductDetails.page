@@ -276,20 +276,20 @@
                                     </section>
                                 </apex:variable>
 
-                                <section class="group-container you-may-also-like">
+                                <!--section class="group-container you-may-also-like">
                                     <h3 class="group-title icon chevron-triple-right">You may also like</h3>
                                     <ul class="list product">
                                         <apex:repeat value="{!recommendedProducts}" var="prod">
                                             <li class="{!LOWER(SUBSTITUTE(product.Media,' ','_'))}" 
                                             style="min-height:40px;">
                                                 <h4 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h4>
-                                                <apex:outputPanel rendered="{!prod.ProductShortDesc != null && prod.ProductShortDesc != ''}">
+                                                <apex:variable var="shortDesc" value="1" rendered="{!prod.ProductShortDesc != null && prod.ProductShortDesc != ''}">
                                                     <div class="item-description">{!prod.ProductShortDesc}</div>
-                                                </apex:outputPanel>
+                                                </apex:variable>
                                             </li>
                                         </apex:repeat>
                                     </ul>
-                                </section>
+                                </section-->
                             </div>
                         </apex:outputPanel>
 
