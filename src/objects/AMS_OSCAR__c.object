@@ -3641,6 +3641,114 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <label>OSCAR</label>
+    <listViews>
+        <fullName>Africa_ME_OSCAR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Africa &amp; ME [OSCAR]</label>
+        <queue>Africa_ME_OSCAR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - A&amp;P</label>
+        <queue>AgencyManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAfricaME_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Africa &amp; ME</label>
+        <queue>AgencyManagementAfricaME</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementAmericas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Americas</label>
+        <queue>AgencyManagementAmericas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyManagementChinaNAsia_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - China &amp; N. Asia</label>
+        <queue>AgencyManagementChinaNAsia</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Americas_OSCAR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Americas [OSCAR]</label>
+        <queue>Americas_OSCAR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Asia_Pacific_OSCAR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Asia &amp; Pacific [OSCAR]</label>
+        <queue>Asia_Pacific_OSCAR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Management - Europe</label>
+        <queue>CasesACCEuropeOffOnshore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>China_N_Asia_OSCAR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>China &amp; N. Asia [OSCAR]</label>
+        <queue>China_N_Asia_OSCAR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Europe_OSCAR_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Europe [OSCAR]</label>
+        <queue>Europe_OSCAR</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FDS_Agency_Assistant_Managers_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FDS Agency Assistant Managers</label>
+        <queue>FDS_Agency_Assistant_Managers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>FDS_Agency_Managers_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>FDS Agency Managers</label>
+        <queue>FDS_Agency_Managers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>OSCAR Name</label>
         <trackFeedHistory>false</trackFeedHistory>
