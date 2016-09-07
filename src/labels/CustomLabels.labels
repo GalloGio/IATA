@@ -134,6 +134,20 @@
         <value>Edit the accounts involved</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action7</shortDescription>
+        <value>Create SIDRA Lite</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action8</shortDescription>
+        <value>Create Commissioner Case</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_DISAPPROVAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -188,6 +202,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR MASTERDATA</shortDescription>
         <value>Master Data</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_PENALTY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR PENALTY</shortDescription>
+        <value>Penalty</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Process_A1</fullName>
@@ -363,6 +384,34 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP25</shortDescription>
         <value>Validate Qualification Criteria (KC03)</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP26</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP26</shortDescription>
+        <value>Late/Absence NOC - Suspend/Terminate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP27</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP27</shortDescription>
+        <value>Late/Absence NOC - Reactivate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP28</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP28</shortDescription>
+        <value>Late/Absence NOC - Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP29</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP29</shortDescription>
+        <value>Late/Absence NOC - Penalty Fee</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP3</fullName>
@@ -677,6 +726,24 @@
         <protected>false</protected>
         <shortDescription>BSPLink_Description</shortDescription>
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
+    </labels>
+    <labels>
+        <fullName>Bank_Transfer_Payment_terms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bank Transfer Payment terms</shortDescription>
+        <value>&lt;p&gt;
+&lt;b&gt;Payment terms&lt;/b&gt;&lt;br /&gt;
+Payment required on receipt of this Payment Advice
+&lt;/p&gt;
+&lt;p&gt;
+	&lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
+	ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
+	Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
+&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Tax Information&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Any applicable tax shall be self-assessed by the client.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>Bank_transfer_validation_for_auto_renew</fullName>

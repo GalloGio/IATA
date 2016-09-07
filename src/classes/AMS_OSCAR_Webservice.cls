@@ -238,4 +238,96 @@ global class AMS_OSCAR_Webservice {
         }
     }
 
+    WebService static String createSIDRALite(String oscarId){
+
+        String result = '';
+
+        try{
+
+            ID sidraLiteRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+            if(oscar!=null && oscar.size()>0){
+
+                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
+
+                if(oscarCommCase == null){
+                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
+                    return 'ERROR: ' + result;
+                }
+
+                Case sidraCase = new Case(RecordTypeId = sidraLiteRecType, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Late/Absence NOC – ' + oscar[0].Account__r.Name, OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name);
+
+                insert sidraCase;
+
+                /*AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                changeCode.name = 'SRM';
+                changeCode.reasonCode = '91';
+                changeCode.memoText = 'to be defined';
+                changeCode.reasonDesc  = 'SIDRA LITE CREATED';
+                changeCode.status  = '7';
+
+                Account acct = new Account(Id = oscar[0].Account__c);
+                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);*/
+
+                oscar[0].STEP26__c = 'In Progress';
+                update oscar;
+
+                return sidraCase.Id;
+
+            }
+
+            return 'ERROR: OSCAR not found.';
+
+        }catch(Exception ex){
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+        
+    }
+
+    WebService static String createCommissionerCase(String oscarId){
+
+        String result = '';
+
+        try{
+
+            ID commisionerCaseRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
+
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
+            if(oscar!=null && oscar.size()>0){
+
+                /*Not applicable, comissioner case can be created to passenger agencies on some situations
+                if(!AMS_Utils.LocationClassCARGO.contains(oscar[0].Account__r.Location_Class__c)){
+                    result = 'Commisoner Case can only be opened on cargo agencies';
+                    return 'ERROR: ' + result;
+                }
+                */
+
+                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
+
+                if(oscarCommCase == null){
+                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
+                    return 'ERROR: ' + result;
+                }
+
+                Case newCase = new Case(RecordTypeId = commisionerCaseRecType, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Late/Absence NOC – ' + oscar[0].Account__r.Name, OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name, Reason1__c = 'Commissioner Review', Visible_on_ISS_Portal__c = false);
+
+                insert newCase;
+
+                oscar[0].STEP26__c = 'In Progress';
+                update oscar;
+
+                return newCase.Id;
+
+            }
+
+            return 'ERROR: OSCAR not found.';
+
+        }catch(Exception ex){
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+        
+    }
+
 }
