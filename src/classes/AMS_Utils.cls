@@ -619,7 +619,7 @@ public without sharing class AMS_Utils {
         if( aacNEW.Change_Code__c == 'NEW' ){
             oscar.First_Step_Completed__c = true;
 
-            if(Trigger.isExecuting && Trigger.isAfter) update oscar; //normally won't pass here because method is called on before update
+            if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via
         }
 
         if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
