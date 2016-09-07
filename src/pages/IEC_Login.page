@@ -49,12 +49,20 @@
 					    <div class="inner-wrapper">
 
 					        <h1 class="page-title">{!$Label.Login}</h1>
-					        <apex:outputPanel id="errorMessage">
-				                <!-- <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block"> -->
-						        	<apex:pageMessages escape="false"/>
-					        	<!-- </apex:outputPanel> -->
-				            </apex:outputPanel>
-					        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus ut eveniet, ab. Laboriosam eligendi temporibus ut neque, debitis voluptatibus repudiandae voluptates, itaque mollitia magni sequi minima, aliquid, repellat recusandae. Ratione!</p> -->
+                            <apex:outputPanel id="errorMessage">
+					        
+						        <apex:outputPanel rendered="{!!hasConfirm}" layout="block">
+					                <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+							        	<apex:pageMessages escape="false"/>
+						        	</apex:outputPanel>
+					            </apex:outputPanel>
+					            <apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
+	                                <apex:pageMessages escape="false"/>
+	                            </apex:outputPanel>
+
+                            </apex:outputPanel>
+                            
+				            
 					        <apex:form >
 					        <div class="form-login">
 					            <div class="field-group text">
