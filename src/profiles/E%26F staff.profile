@@ -22252,9 +22252,6 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Location_Code_Details__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
         <field>EF_Billing_Agreement__c.Manager_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -42232,14 +42229,14 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Contract.EF_Contract</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
