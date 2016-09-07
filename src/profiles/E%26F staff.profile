@@ -38139,10 +38139,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contract-Contract Layout</layout>
-        <recordType>Contract.EF_Contract</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Contract-Contract Layout</layout>
         <recordType>Contract.MACS_General</recordType>
     </layoutAssignments>
     <layoutAssignments>
