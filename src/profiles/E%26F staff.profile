@@ -22253,6 +22253,8 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Location_Code_Details__c</field>
+    </fieldPermissions>
+    <fieldPermissions>
         <field>EF_Billing_Agreement__c.Manager_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
