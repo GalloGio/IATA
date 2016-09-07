@@ -4,178 +4,172 @@
  ******************************************************************************************************************/
 public with sharing class IEC_ProductDetailsController extends IEC_PageController
 {
-	//Page parameters
+    //Page parameters
     public Map<String, String> pageParams;
 
     //Page Labels 
     public Map<String, String> labels { get; set; }
 
-	//Product to display
-	public EComProduct_DTO product{get;set;}
-	public List<EComProduct_DTO> recommendedProducts{get;set;}
-	public Boolean bIsInStock{get;set;}
-	public Boolean bIsOutOfStock{get;set;}
-	public Boolean bIsPreOrder{get;set;}
-	public Boolean bIsDirectSales{get;set;}
-	public Boolean bIsProductCompliant{get;set;}
+    //Product to display
+    public EComProduct_DTO product{get;set;}
+    public List<EComProduct_DTO> recommendedProducts{get;set;}
+    public Boolean bIsInStock{get;set;}
+    public Boolean bIsOutOfStock{get;set;}
+    public Boolean bIsPreOrder{get;set;}
+    public Boolean bIsDirectSales{get;set;}
+    public Boolean bIsProductCompliant{get;set;}
 
-	public List<EComProduct_DTO> lstRelatedProducts {get;set;}
+    public List<EComProduct_DTO> lstRelatedProducts {get;set;}
 
-	//Available Discounts for the product 
-	public List<PriceDetail_DTO> discounts{get;set;}
+    //Available Discounts for the product 
+    public List<PriceDetail_DTO> discounts{get;set;}
 
-	/**************************************************************************************************************
+    /**************************************************************************************************************
      *  IEC_ProductDetailsController: Class Constructor                                                           *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-	public IEC_ProductDetailsController() 
-	{
-		//Fetch Page params 
-		pageParams = ApexPages.currentPage().getParameters();
+    public IEC_ProductDetailsController() 
+    {
+        //Fetch Page params 
+        pageParams = ApexPages.currentPage().getParameters();
 
-		labels = Utility.buildMapFromString(Label.Labels_IECProductDetail, '\n', ':');
+        labels = Utility.buildMapFromString(Label.Labels_IECProductDetail, '\n', ':');
 
-	}
+    }
 
-	/**************************************************************************************************************
+    /**************************************************************************************************************
      *  onLoadAction: method calls when page loaded                                                               *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-	public PageReference onLoadAction()
-	{
-		String productNumber = (pageParams.containsKey('id')) ? pageParams.get('id') : '';
-		String searchCond = '  SAP_Material_Number__c=\''+productNumber+'\' ';
-		String recommendedCond = '  (SAP_Material_Number__c!=\''+productNumber+'\' AND Recommended__c=true) ';
+    public PageReference onLoadAction()
+    {
+        String productNumber = (pageParams.containsKey('id')) ? pageParams.get('id') : '';
+        String searchCond = '  SAP_Material_Number__c=\''+productNumber+'\' ';
+        String recommendedCond = '  (SAP_Material_Number__c!=\''+productNumber+'\' AND Recommended__c=true) ';
 
-		List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false);
+        List<EComProduct_DTO> products = Product_Sel.getEComProduct(null, true, searchCond, null, false);
 
-		List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false); 
-		recommendedProducts = new List<EComProduct_DTO>();
-		for(Integer x = 0; x < lst_recommendedProducts.size(); x++)
-		{
-			if(x<5){
-				recommendedProducts.add(lst_recommendedProducts[x]);
-			}else{
-				break;
-			}
-		}
+        List<EComProduct_DTO> lst_recommendedProducts = Product_Sel.getEComProduct(null, true, recommendedCond, 'Recommended_Ranking__c', false); 
+        recommendedProducts = new List<EComProduct_DTO>();
+        for(Integer x = 0; x < lst_recommendedProducts.size(); x++)
+        {
+            if(x<5){
+                recommendedProducts.add(lst_recommendedProducts[x]);
+            }else{
+                break;
+            }
+        }
 
-		if(products.size() >0)
-		{
-			product = products[0];
-			Date dt = Date.today();
+        if(products.size() >0)
+        {
+            product = products[0];
+            Date dt = Date.today();
 
-			if(product.ProductInfoId != null)
-		    {
-		        //-- Redirect to 3B detail View 
-		        PageReference ret = new PageReference('/IEC_ProductDetail?id=' + productNumber);
-		        ret.setRedirect(true);
-		        return ret;
-		    }
+            if(product.ProductInfoId != null)
+            {
+                //-- Redirect to 3B detail View 
+                PageReference ret = new PageReference('/IEC_ProductDetail?id=' + productNumber);
+                ret.setRedirect(true);
+                return ret;
+            }
 
-		    //set the list of Related Products
-		    lstRelatedProducts = new List<EComProduct_DTO>();
-		    List<Recommended_Product__c> lstRecommendedProducts = [Select Id, Related_Product__r.Name, Related_Product__r.Short_Description__c, 
-		    															Related_Product__c, Related_Product__r.SAP_Material_Number__c 
-		    														FROM Recommended_Product__c 
-		    														where Product__c =:product.ProductId
-		    														  and Related_Product__r.Display_to_ECommerce__c = true
-		    													];
-		    if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
-		    	for(Recommended_Product__c recomProd : lstRecommendedProducts){
-		    		EComProduct_DTO ecomProd = new EComProduct_DTO();
-		    		ecomProd.ProductId = String.valueOf(recomProd.Related_Product__c).left(15);
-		    		ecomProd.ProductNumber = recomProd.Related_Product__r.SAP_Material_Number__c;
-		    		ecomProd.ProductName = recomProd.Related_Product__r.Name;
-		    		ecomProd.ProductShortDesc = recomProd.Related_Product__r.Short_Description__c;
-		    		lstRelatedProducts.add(ecomProd);
-		    	}
-		    }
+            //set the list of Related Products
+            lstRelatedProducts = new List<EComProduct_DTO>();
+            List<Recommended_Product__c> lstRecommendedProducts = [Select Id, Related_Product__r.Name, Related_Product__r.Short_Description__c, 
+                                                                        Related_Product__c, Related_Product__r.SAP_Material_Number__c 
+                                                                    FROM Recommended_Product__c 
+                                                                    where Product__c =:product.ProductId
+                                                                ];
+            if(lstRecommendedProducts != null && lstRecommendedProducts.size() > 0){
+                for(Recommended_Product__c recomProd : lstRecommendedProducts){
+                    EComProduct_DTO ecomProd = new EComProduct_DTO(); ecomProd.ProductId = String.valueOf(recomProd.Related_Product__c).left(15); ecomProd.ProductNumber = recomProd.Related_Product__r.SAP_Material_Number__c; ecomProd.ProductName = recomProd.Related_Product__r.Name; ecomProd.ProductShortDesc = recomProd.Related_Product__r.Short_Description__c; lstRelatedProducts.add(ecomProd);
+                }
+            }
 
 
 
-		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
+            Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
 
 
-			bIsInStock 		= 	product.InventoryStatus == 'In stock';
-			bIsOutOfStock 	= 	product.InventoryStatus != 'In stock';
-			bIsPreOrder 	= 	(product.InventoryStatus != 'In stock' && !product.Is_Electronic_Product);
-			bIsDirectSales 	= 	((product.RegularPrice==null && product.CustomerPrice==null) || !sfProduct.Sell_through_eCommerce__c);
+            bIsInStock      =   product.InventoryStatus == 'In stock';
+            bIsOutOfStock   =   product.InventoryStatus != 'In stock';
+            bIsPreOrder     =   (product.InventoryStatus != 'In stock' && !product.Is_Electronic_Product);
+            bIsDirectSales  =   ((product.RegularPrice==null && product.CustomerPrice==null) || !sfProduct.Sell_through_eCommerce__c);
 
-			//Product discounts
-			discounts = new List<PriceDetail_DTO>();
-			if (product.PriceInfo != null) 
-			{
-				//Standard discount
-	            discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.standardPrice, null, false));
-	            
-	            //Pre sale discount
-	            discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.preSalePrice, null, false));
+            //Product discounts
+            discounts = new List<PriceDetail_DTO>();
+            if (product.PriceInfo != null) 
+            {
+                //Standard discount
+                discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.standardPrice, null, false));
+                
+                //Pre sale discount
+                discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.preSalePrice, null, false));
 
-	            if(loggedCustomer != null)
-	            {
-	            	//Customer Type discount
-	            	discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.customerPrice, loggedCustomer.sfAccount.Customer_Type__c, true));
+                if(loggedCustomer != null)
+                {
+                    //Customer Type discount
+                    discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.customerPrice, loggedCustomer.sfAccount.Customer_Type__c, true));
 
-	            	//region Discounts 
-	            	discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.regionPrice, loggedCustomer.sfAccount.Region_formula__c, true));
+                    //region Discounts 
+                    discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.regionPrice, loggedCustomer.sfAccount.Region_formula__c, true));
 
-	            	//Country Discounts
-	            	discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.countryPrice, loggedCustomer.sfAccount.BillingCountry, true));
-	            }
-	        }
+                    //Country Discounts
+                    discounts.addAll(Order_Svc.getDiscountPlans(product.PriceInfo.countryPrice, loggedCustomer.sfAccount.BillingCountry, true));
+                }
+            }
 
-	        //Validate Product compliance 
-	        validateCountryCompliance();
+            //Validate Product compliance 
+            validateCountryCompliance();
             if (!bIsProductCompliant) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
             
-		}
-		else
-		{
-			//Product not found
-			addErrorMessage(Label.Product_Not_Found);
-		}
+        }
+        else
+        {
+            //Product not found
+            addErrorMessage(Label.Product_Not_Found);
+        }
 
 
-		selected_mega_menu = 'publications';
-		return null;
-	}
+        selected_mega_menu = 'publications';
+        return null;
+    }
 
-	/**************************************************************************************************************
-     *  addToCart: method calls when customer click on “Add To Cart” button 									  *
+    /**************************************************************************************************************
+     *  addToCart: method calls when customer click on “Add To Cart” button                                       *
      *  Author: David Daboué                                                                                      *  
      **************************************************************************************************************/
-	public PageReference addToCart()
-	{
-		try
-		{
-			if (!bIsProductCompliant)
-	        {
-	        	addErrorMessage(labels.get('msgErrorProductNotCompliant'));
-				return null;
-	        }
-	        else 
-	        {
-	        	return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');	        	
-	        }
-		}	
-		catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
-	}
+    public PageReference addToCart()
+    {
+        try
+        {
+            if (!bIsProductCompliant)
+            {
+                addErrorMessage(labels.get('msgErrorProductNotCompliant'));
+                return null;
+            }
+            else 
+            {
+                return IECOrder_Svc.addCartToCookie(product.ProductNumber, product.OrderQuantity,'/IEC_ShoppingCart');              
+            }
+        }   
+        catch(Exception e){addErrorMessage(e.getMessage() + ' - ' +e.getStackTraceString());return null;}
+    }
 
-	/**************************************************************************************************************
-     *  validateCountryCompliance: method call to validate that the current product is country compliant 		  *
+    /**************************************************************************************************************
+     *  validateCountryCompliance: method call to validate that the current product is country compliant          *
      *  Author: Samy - David Daboué                                                                               *  
      **************************************************************************************************************/
-	public void validateCountryCompliance()
-	{
-		Set<String> countryCodes = new Set<String>();
-	    	
-		if(loggedCustomer != null)
-		{
-			if (!String.isBlank(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c);
-			if (!String.isBlank(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c);
-		}
+    public void validateCountryCompliance()
+    {
+        Set<String> countryCodes = new Set<String>();
+            
+        if(loggedCustomer != null)
+        {
+            if (!String.isBlank(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.BillTo_Location__r.ISO_Country_Code__c);
+            if (!String.isBlank(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c)) countryCodes.add(loggedCustomer.sfContact.ShipTo_Location__r.ISO_Country_Code__c);
+        }
         
         bIsProductCompliant = Product_Svc.IsProductAndCountryCompliant(Product.ProductId, countryCodes);
-	}
+    }
 }
