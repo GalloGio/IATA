@@ -172,6 +172,10 @@
                 <behavior>Readonly</behavior>
                 <field>Days_passed_until_submission_for_approva__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Closest_Action_Plan_due_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

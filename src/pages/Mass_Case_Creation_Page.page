@@ -1,7 +1,7 @@
 <apex:page controller="clsMassCaseCreationController" sidebar="false" id="massCaseCreationPage">
  
   <apex:form id="massCaseCreationForm">
- 
+  <c:Loading />
   <apex:pageBlock title="Batch Case creation" mode="edit">
  
   <apex:pageMessages id="errors" />
@@ -567,7 +567,7 @@
        <!--action="{!MassCaseCreate}"  action="{!MassCaseCreateSendEmail}" -->
             <apex:pageBlockButtons >
            
-                <apex:commandButton value="Create Cases Only"  onclick="validateOpenCases('false');"   rerender="results, errors" disabled="{!isCreateCasesIsDisabled}"  /> <!-- salvo disabled="{!isCreateCasesIsDisabled}" -->
+                <apex:commandButton value="Create Cases Only"  onclick="validateOpenCases('false'),startLoading();"   rerender="results, errors" disabled="{!isCreateCasesIsDisabled}"  status="loading" oncomplete="stopLoading();" /> <!-- salvo disabled="{!isCreateCasesIsDisabled}" -->
                 <apex:commandButton value="Create Cases and Send Emails" onclick="validateOpenCases('true');" rerender="results, errors" disabled="{!isSendEmailIsDisabled}" />
                 <apex:commandButton value="Extract CSV" onclick="extractXLS();"  />
                           <script>
