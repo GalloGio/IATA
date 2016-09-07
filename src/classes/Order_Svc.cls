@@ -1020,7 +1020,7 @@ public without sharing class Order_Svc
 
     public static Mail_DTO newMailDTO(Id targetId, id whatid,list<String> recipients){
         Mail_DTO mail = new Mail_DTO();
-        mail.targetObjectId = targetId; //order.ShipToContactId;
+        //mail.targetObjectId = targetId; //order.ShipToContactId;
         //WhatId is not available for sending emails to UserIds.
         mail.whatId = whatid;
         mail.templateId = Utility.getTextSetting('Order sold templateId for managers');
