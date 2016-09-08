@@ -2491,16 +2491,6 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Account_Management_key_contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>used for account management program to flag key contacts.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>used for account management program to flag key contacts.</inlineHelpText>
-        <label>Account Management key contact</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Account_site__c</fullName>
         <externalId>false</externalId>
         <formula>Account.Site</formula>
