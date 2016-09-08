@@ -86,16 +86,15 @@ public class AMS_OSCARTriggerHandler {
 
 			List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
-			validateTypeOfChange(oscarsToValidate, configs);
-
+	
 			List<AMS_OSCAR__c> oscarsToProcess = getAgencyChangeOSCARSToProcess(oscarsToValidate);
 
-			if (oscarsToProcess.size() > 0)
+			if (oscarsToProcess.size() > 0 && validateTypeOfChange(oscarsToValidate, configs))
 				processAgencyChanges(oscarsToProcess, configs);
 		}
 	}
 
-	public static void validateTypeOfChange(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
+	public static boolean validateTypeOfChange(List<AMS_OSCAR__c> oscars, List<Map<String, String>> configs) {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
@@ -104,7 +103,11 @@ public class AMS_OSCARTriggerHandler {
 		for (AMS_OSCAR__c oscar : oscars) {
 
 			if (oscar.Type_of_change__c <> oldMap.get(oscar.Id).Type_of_change__c && oldMap.get(oscar.Id).STEP6__c == AMS_Utils.PASSED)
-				oscar.addError('Type of Change cannot be changed after Sanity Check is passed.');
+				{
+					oscar.addError('Type of Change cannot be changed after Sanity Check is passed.');
+					return false;
+				}
+
 
 
 			if (oscar.Type_of_change__c <> oldMap.get(oscar.Id).Type_of_change__c || oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
@@ -114,8 +117,12 @@ public class AMS_OSCARTriggerHandler {
 					if (notApplicableSteps != null)
 						AMS_AgencyChangesConfigHelper.setNotApplicableSteps(notApplicableSteps, oscarStepsApiName, oscar);
 				}
+				else{
+					return false;
+				}
 			}
 		}
+		return true;
 	}
 
 	public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
@@ -186,7 +193,7 @@ public class AMS_OSCARTriggerHandler {
 		List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
 
 		//store all the updates to be made on account as consequence of migration of data from staging area to master data
-		List<Account> accountsToUpdate = new List<Account>();
+		Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 
 		//this structure contains all the hierarchy relationships that need to be inserted/updated/deleted
 		List<AMS_HierarchyHelper.HierarchyStruct> hierarchyChanges = new List<AMS_HierarchyHelper.HierarchyStruct>();
@@ -322,28 +329,28 @@ public class AMS_OSCARTriggerHandler {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on sanity Check.');
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, new Set<Id> {oscar.Account__c, hierarchyHO}));
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c, hierarchyHO}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c, hierarchyHO}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 					}
 					//need to apply two different Sets of Change Codes. One for Oscar Account and other for process details
 					else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() > 0) {
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesAffected));
 
 						//data migration for agencies in the process detail(only types of change that cascade should be considered)
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, cascadingTOCs, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, cascadingTOCs, accounts, oscarOnlineAccreditation));
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, new Set<Id> {oscar.Account__c}));
 
 						//data migration to happen only on the OScar Account(ALL types of change present in the OSCAR should be considered)
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 
 					} else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() == 0) {
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, new Set<Id> {oscar.Account__c}));
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
 						agenciesAffected.add(oscar.Account__c);
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesAffected));
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 
 					}
 
@@ -374,26 +381,26 @@ public class AMS_OSCARTriggerHandler {
 						System.debug('AGENCY CHANGES: Processing Location Type Change Codes on Authorize Approval.');
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, new Set<Id> {oscar.Account__c, hierarchyHO}));
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c, hierarchyHO}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c, hierarchyHO}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 					} else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() > 0) {
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesAffected));
 
 						//data migration for agencies in the process detail(only types of change that cascade should be considered)
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, cascadingTOCs, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, cascadingTOCs, accounts, oscarOnlineAccreditation));
 
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, new Set<Id> {oscar.Account__c}));
 
 						//data migration to happen only on the OScar Account(ALL types of change present in the OSCAR should be considered)
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 
 					} else if (nonCascadingTOCs.length() > 0 && cascadingTOCs.length() == 0) {
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, new Set<Id> {oscar.Account__c}));
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, new Set<Id> {oscar.Account__c}, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
 						agenciesAffected.add(oscar.Account__c);
 						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesAffected));
-						accountsToUpdate.addAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesAffected, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
 					}
 
 					//APPLY HIERARCHY CHANGES
@@ -464,6 +471,8 @@ public class AMS_OSCARTriggerHandler {
 
 		Savepoint sp = Database.setSavepoint();
 
+		List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = new List<AMS_ChangeCodesHelper.ObjectChangesStruct> ();
+
 		try {
 
 			List<Account> accsToUpdateFromCC = new List<Account>();
@@ -478,14 +487,20 @@ public class AMS_OSCARTriggerHandler {
 				for (AMS_Utils.Container c : changesContainer) {
 					changeCodes.addAll(c.changeCodes);
 					accts.addAll(c.accts);
+					
+					for(Account acc : c.accts)
+					{
+						objectChanges.add(accountsToUpdate.get(acc));
+					}
+
 					theoscars.addAll(c.oscars);
 				}
-
 				//create change codes
-				accsToUpdateFromCC = AMS_Utils.createAAChangeCodes(changeCodes, theoscars, accts, false);
+
+				accsToUpdateFromCC = AMS_ChangeCodesHelper.createAAChangeCodes(objectChanges,changeCodes, theoscars, accts, false);
 			}
 
-			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, accountsToUpdate);
+			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountsToUpdate.keySet()));
 
 			if (!mergedAccountUpdate.isEmpty()) {
 				update mergedAccountUpdate;
