@@ -616,19 +616,23 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
-        if( aacNEW.Change_Code__c == 'NEW' ){
-            oscar.First_Step_Completed__c = true;
+        if(oscar != null){
 
-            if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
-        }
+            if( aacNEW.Change_Code__c == 'NEW' ){
+                oscar.First_Step_Completed__c = true;
 
-        if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
-        if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
-        if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
-            for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
-        }
+                if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
+            }
+            
+            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-        if( aacNEW.Change_Code__c == 'FIN' && oscar.First_Step_Completed__c){
+            if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+                for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+            }
+        }        
+
+        if( aacNEW.Change_Code__c == 'FIN'){
             
             oscarAgency.Is_AIMS_Account__c = true;
 
