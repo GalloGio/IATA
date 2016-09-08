@@ -39,25 +39,22 @@ public class EF_BillingAgreementHandler
     }
 
     // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
-    public static void handleWithApprovalAccountUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
+    public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
     {
-        Set<Id> accountIds = new Set<Id>();
+        Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : newAgreements.values())
         {
             // add both Client and Customer (Airline) into the Set, so that both will be queried for
-            accountIds.add(ba.Client__c);
-            accountIds.add(ba.Airline__c);
+            contractIds.add(ba.Contract__c);
         }
 
-        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
-        if(accountsInvolved.size() > 0)
+        Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        if(contractsInvolved.size() > 0)
         {
             List<EF_Billing_Agreement__c> agreementsToApprove = new List<EF_Billing_Agreement__c>();
             for(EF_Billing_Agreement__c allAgreements : newAgreements.values())
             {
-                if(accountsInvolved.get(allAgreements.Client__c) != null)
-                    agreementsToApprove.add(allAgreements);
-                else if(accountsInvolved.get(allAgreements.Airline__c) != null)
+                if(contractsInvolved.get(allAgreements.Contract__c) != null)
                     agreementsToApprove.add(allAgreements);
             }
 
@@ -89,38 +86,37 @@ public class EF_BillingAgreementHandler
     // For after insert trigger to find out if any of the attached Accounts is set to "Allow Billing Agreements with Approval"
     public static Set<Id> findIdsOfWithApprovalBillingAgreements(List<EF_Billing_Agreement__c> agreementList)
     {
-        Set<Id> accountIds = new Set<Id>();
+        Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            accountIds.add(ba.Client__c);
-            accountIds.add(ba.Airline__c);
+            contractIds.add(ba.Contract__c);
         }
 
         Set<Id> withApprovalIds = new Set<Id>();
-        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            withApprovalIds.add(ba.Id);
+            if(contractsInvolved.get(ba.Contract__c) != null)
+                withApprovalIds.add(ba.Id);
         }
         return withApprovalIds;
     }
 
     // Queries for any Accounts that do only allow Billing Agreements to be created with approval
-    public static void handleWithApprovalAccountInserts(List<EF_Billing_Agreement__c> agreementList)
+    public static void handleWithApprovalContractInserts(List<EF_Billing_Agreement__c> agreementList)
     {
-        Set<Id> accountIds = new Set<Id>();
+        Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             // add both Client and Customer (Airline) into the Set, so that both will be queried for
-            accountIds.add(ba.Client__c);
-            accountIds.add(ba.Airline__c);
+            contractIds.add(ba.Contract__c);
         }
 
         // Find if any of the related accounts doesn't allow billing agreements to be created without approval and force-start an approval process
-        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            if(accountsInvolved.get(ba.Client__c) != null || accountsInvolved.get(ba.Airline__c) != null)
+            if(contractsInvolved.get(ba.Contract__c) != null)
             {
                 ba.Require_Approval__c = true;
                 ba.Status__c = 'Inactive';
@@ -128,6 +124,7 @@ public class EF_BillingAgreementHandler
         }
     }
 
+    /*
     // Queries for any Accounts that do not allow Billing Agreements and displays an error message to the User.
     public static void preventAgreementCreationForNotAllowed(List<EF_Billing_Agreement__c> agreementList)
     {
@@ -154,6 +151,7 @@ public class EF_BillingAgreementHandler
             }
         }
     }
+    */
 
     //checks if location chosen has been set in Contract Location Currency.
     public static void checkLocationCurrency (List<EF_Billing_Agreement__c> relationshipList){

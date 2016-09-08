@@ -65,6 +65,7 @@ public with sharing class EF_TestDataFactory
         	Budget_Section__c='aaaa',
         	CCF_Amount__c=250000,
         	ContractTerm=12,
+            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('EF Contract').getRecordTypeId(),
         	StartDate= Date.today(),
         	Type__c='Revenue'
         	);

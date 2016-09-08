@@ -309,6 +309,14 @@ E&amp;F CRM Project</description>
         <type>Percent</type>
     </fields>
     <fields>
+        <fullName>EF_Allow_Billing_Agreements__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>EF_Allow_Billing_Agreements</globalPicklist>
+        <label>E&amp;F Allow Billing Agreements</label>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>EF_BSP_Periods__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F BSP Periods</label>
@@ -2245,6 +2253,21 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Allow_Billing_Agreements</picklist>
+            <values>
+                <fullName>Allowed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Allowed with Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Allowed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

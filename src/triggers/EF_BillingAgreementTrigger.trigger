@@ -12,14 +12,14 @@ trigger EF_BillingAgreementTrigger on EF_Billing_Agreement__c (
             // checks if location chosen has been set in Contract Location Currency.
             EF_BillingAgreementHandler.checkLocationCurrency(Trigger.new);
             EF_BillingAgreementHandler.checkCurrencyFromContract(Trigger.new, Trigger.oldMap);
-            EF_BillingAgreementHandler.preventAgreementCreationForNotAllowed(Trigger.new);
+            // EF_BillingAgreementHandler.preventAgreementCreationForNotAllowed(Trigger.new);
             if(Trigger.isInsert)
             {
-                EF_BillingAgreementHandler.handleWithApprovalAccountInserts(Trigger.new);
+                EF_BillingAgreementHandler.handleWithApprovalContractInserts(Trigger.new);
                 EF_BillingAgreementHandler.setClientFromRelatedContract(Trigger.new);
             } else
             {
-                EF_BillingAgreementHandler.handleWithApprovalAccountUpdates(Trigger.newMap, Trigger.oldMap);
+                EF_BillingAgreementHandler.handleWithApprovalContractUpdates(Trigger.newMap, Trigger.oldMap);
                 EF_BillingAgreementHandler.handleApprovedAndRejectedApprovals(Trigger.new, Trigger.oldMap);
             }
             
