@@ -249,14 +249,39 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
-                Case oscarCommCase = [select Id from Case where OSCAR__c =: oscar[0].Id limit 1];
+                Case oscarCommCase = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id limit 1];
 
                 if(oscarCommCase == null){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
 
-                Case sidraCase = new Case(RecordTypeId = sidraLiteRecType, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Late/Absence NOC – ' + oscar[0].Account__r.Name, OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name);
+                Case sidraCase = new Case();
+                sidraCase.RecordTypeId = sidraLiteRecType;
+                //sidraCase.OSCAR__c = oscar[0].Id;
+                sidraCase.Subject = 'SIDRA Lite – Non-Compliance due to "' + oscarCommCase.Reason1__c + '"';
+                sidraCase.ParentId = oscarCommCase.Id;
+                sidraCase.AccountId = oscar[0].Account__c;
+                sidraCase.ContactId = oscarCommCase.ContactId;
+                sidraCase.Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c;
+                sidraCase.BSPCountry__c = oscarCommCase.BSPCountry__c;
+                sidraCase.Reason1__c = 'Late/Absence of Notification of Change';
+                //sidraCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
+                //sidraCase.SIDRA_Lite_Default_Date__c = Date.Today();
+                sidraCase.Reason_for_Default__c = 'Disapproval of Change';
+                sidraCase.Total_Irregularities__c = String.ValueOf(oscarCommCase.account.Accumulated_Irregularities__c);
+
+                Date lastDayOfNextMonth = AMS_Utils.lastDayOfMonth(Date.today().addMonths(1));
+                if (AMS_Utils.IsWeekendDay(lastDayOfNextMonth, 'Late NOC - '+oscarCommCase.Region__c)) {
+                    lastDayOfNextMonth = AMS_Utils.AddBusinessDays(lastDayOfNextMonth, 1, 'Late NOC - '+oscarCommCase.Region__c);
+                }
+                sidraCase.Termination_date_manual_entry__c = lastDayOfNextMonth;
+
+                if ( oscarCommCase.account.Type=='IATA Passenger Sales Agent' || oscarCommCase.account.Type=='Domestic Agent' ) {
+                    sidraCase.BSP_CASS__c = 'BSP';
+                } else {
+                    sidraCase.BSP_CASS__c = 'CASS';
+                }
 
                 insert sidraCase;
 
