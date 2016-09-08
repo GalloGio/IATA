@@ -6145,8 +6145,8 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Target_Progress__c</customTabListAdditionalFields>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
         <lookupDialogsAdditionalFields>Division__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Region__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Area__c</lookupDialogsAdditionalFields>

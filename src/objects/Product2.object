@@ -1706,7 +1706,7 @@
         <label>Image</label>
         <picklist>
             <picklistValues>
-                <fullName>Book</fullName>
+                <fullName>book</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1722,11 +1722,11 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Card</fullName>
+                <fullName>card</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CD-ROM</fullName>
+                <fullName>cd-rom</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1738,7 +1738,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DVD</fullName>
+                <fullName>dvd</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1754,15 +1754,15 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Folder</fullName>
+                <fullName>folder</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Kit</fullName>
+                <fullName>kit</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Labels</fullName>
+                <fullName>labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1778,11 +1778,11 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>PDF</fullName>
+                <fullName>pdf</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Poster</fullName>
+                <fullName>poster</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -5134,10 +5134,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Image__c</picklist>
             <values>
-                <fullName>Book</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book CD-ROM Web download</fullName>
                 <default>false</default>
             </values>
@@ -5147,18 +5143,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Book and Web Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CD-ROM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DVD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5178,31 +5162,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Folder</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Kit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Memory Stick</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF %26 Excel files</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5214,7 +5178,35 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>cd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>dvd</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5223,6 +5215,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7277,10 +7277,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Image__c</picklist>
             <values>
-                <fullName>Book</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book CD-ROM Web download</fullName>
                 <default>false</default>
             </values>
@@ -7290,18 +7286,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Book and Web Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CD-ROM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DVD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7321,31 +7305,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Folder</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Kit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Memory Stick</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF %26 Excel files</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7357,7 +7321,35 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>cd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>dvd</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7366,6 +7358,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9380,10 +9380,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Image__c</picklist>
             <values>
-                <fullName>Book</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book CD-ROM Web download</fullName>
                 <default>false</default>
             </values>
@@ -9393,18 +9389,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Book and Web Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CD-ROM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DVD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9424,31 +9408,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Folder</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Kit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Memory Stick</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF %26 Excel files</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9460,7 +9424,35 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>cd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>dvd</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9469,6 +9461,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
                 <default>false</default>
             </values>
             <values>
