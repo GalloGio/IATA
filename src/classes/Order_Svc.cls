@@ -2057,23 +2057,6 @@ public without sharing class Order_Svc
             }        
         }
 
-        //Change the Payments status to Cancel 
-        List<Zuora.zObject> paymentCancel = new List<Zuora.zObject>();
-        for(String payId : refId){
-            Zuora.zObject payment = new Zuora.zObject('Payment');
-            payment.setValue('Id',payId);
-            payment.setValue('Status','Canceled');
-            paymentCancel.add(payment);
-        }
-        try{
-            if(paymentCancel.size() > 0)
-            {
-                List<Zuora.zApi.SaveResult> updatePay = ZuoraUtil.zupdate(paymentCancel);
-            }
-        }catch(Exception ex){
-            lstErrors.add(IECErrorLogger.createErrorLog('Order_Svc/deleteZuoraSubscription',JSON.serialize(paymentCancel),ex.getMessage(),ex.getStackTraceString()));
-        }
-
         //Delete Payments
         try{
             if(refId.size() > 0){ List<Zuora.zApi.DeleteResult> deleteTrans = ZuoraUtil.zdelete('Payment',refId); }
