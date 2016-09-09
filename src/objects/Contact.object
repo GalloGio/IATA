@@ -90,7 +90,7 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableEnhancedLookup>true</enableEnhancedLookup>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <fieldSets>
         <fullName>DSE__DS_ContactAddressFields</fullName>
@@ -2183,6 +2183,7 @@
         <label>AIMS_ID</label>
         <length>40</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -2196,6 +2197,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <label>AIMS Qualification Code</label>
         <length>1</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -2223,6 +2225,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2245,6 +2248,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2254,6 +2258,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <label>Employee Name</label>
         <length>80</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -2277,6 +2282,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -2312,6 +2318,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2386,6 +2393,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2394,6 +2402,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <externalId>false</externalId>
         <label>Registration Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -2403,6 +2412,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <label>SIMPLEX</label>
         <length>10</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -2412,6 +2422,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <externalId>false</externalId>
         <label>Start Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -2420,6 +2431,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <externalId>false</externalId>
         <label>Termination Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -2428,6 +2440,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Valid</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2436,6 +2449,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is Manager</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2444,6 +2458,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is Ticketing Agent</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2452,6 +2467,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>APCS profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2460,11 +2476,13 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>APJC Participant</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>AccountId</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -2489,16 +2507,6 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Account_Management_key_contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>used for account management program to flag key contacts.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>used for account management program to flag key contacts.</inlineHelpText>
-        <label>Account Management key contact</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Account_site__c</fullName>
@@ -2527,6 +2535,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -2537,6 +2546,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <externalId>false</externalId>
         <label>Additional Email</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
@@ -2546,6 +2556,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Agency Share Confirmation</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2730,6 +2741,7 @@ Received from AIMS and needed in synchronization file but never displayed and up
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -2772,6 +2784,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Agent Credit Risk Manager</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2792,6 +2805,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <description>Check box used to allow saving of Contact when an IDCard is active</description>
         <externalId>false</externalId>
         <label>Allow Contact LastName Change</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2800,6 +2814,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Approving Manager&apos;s Email</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
@@ -2810,6 +2825,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <label>Approving Manager&apos;s Name</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -2949,16 +2965,19 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>AssistantName</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>AssistantPhone</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -2966,6 +2985,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>BSP/CASS Payment contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -2979,11 +2999,13 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <relationshipLabel>Contacts</relationshipLabel>
         <relationshipName>Contacts</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Birthdate</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -3005,6 +3027,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3013,6 +3036,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Call Status Update</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -3043,6 +3067,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3051,6 +3076,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Comments</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3059,6 +3085,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 10</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3067,6 +3094,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 1</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3075,6 +3103,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 2</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3083,6 +3112,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 3</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3091,6 +3121,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 4</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3099,6 +3130,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 5</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3107,6 +3139,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 6</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3115,6 +3148,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 7</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3123,6 +3157,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 8</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3131,11 +3166,13 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Campaign Info 9</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
     <fields>
         <fullName>CanAllowPortalSelfReg</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -3144,6 +3181,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <label>Catherine Conference</label>
         <length>250</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -3155,6 +3193,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <inlineHelpText>This field is maintained by Central Billing users, and can only be edited by them.</inlineHelpText>
         <label>Central Billing Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -3163,6 +3202,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Comment</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3201,6 +3241,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -3211,6 +3252,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <label>First Community</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -3221,6 +3263,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Confidential Address</label>
         <length>500</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>8</visibleLines>
@@ -3231,6 +3274,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Confidential Phone 1</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -3240,6 +3284,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Confidential Phone 2</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -3248,6 +3293,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Contact Old Email</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
@@ -3273,6 +3319,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <inlineHelpText>This field describes any details about the changes done to contacts on mass clean up / relocation exercises. for instance, could be &quot;moved as part of domain match exercise FDS May 2016&quot;</inlineHelpText>
         <label>Contact cleanup remarks</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -3282,6 +3329,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <description>Specifies if the contact receives an email when an associated ICCS case is set to Closed.</description>
         <externalId>false</externalId>
         <label>Contact on Close Case</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -3293,6 +3341,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <label>Contact previous account ID</label>
         <length>18</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -3302,6 +3351,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
         <externalId>false</externalId>
         <label>Converted Lead Notes</label>
         <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>6</visibleLines>
@@ -4313,6 +4363,7 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -4348,6 +4399,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>CtAdmin</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -4356,11 +4408,13 @@ IF(Account.IATACode__c != &apos;&apos;
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>CtSales</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -4368,6 +4422,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Delete after April 28/2009</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5370,6 +5425,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5381,6 +5437,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <externalId>false</externalId>
         <inlineHelpText>Cloud Customer 360: used internally</inlineHelpText>
         <label>Cloud Customer 360 Process</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5403,6 +5460,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <externalId>false</externalId>
         <inlineHelpText>Cloud Customer 360: synchronize Contact data with Bean</inlineHelpText>
         <label>Synchronize</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5415,6 +5473,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <label>Domain</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -5442,6 +5501,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5450,15 +5510,18 @@ IF(Account.IATACode__c != &apos;&apos;
         <externalId>false</externalId>
         <label>Date of Birth</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
         <fullName>Department</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>Description</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -5466,6 +5529,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Authorized Signatory</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5474,6 +5538,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Designated IFAP Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5482,6 +5547,7 @@ IF(Account.IATACode__c != &apos;&apos;
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Designated Portal Admin</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5524,12 +5590,14 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>DoNotCall</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -5571,6 +5639,7 @@ IF(Account.IATACode__c != &apos;&apos;
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5628,6 +5697,7 @@ Formula field that copies the E&amp;F Type.</description>
         <externalId>false</externalId>
         <globalPicklist>EF_Role</globalPicklist>
         <label>E&amp;F Role</label>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -5652,6 +5722,7 @@ Formula field that copies the E&amp;F Type.</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -5661,7 +5732,8 @@ Formula field that copies the E&amp;F Type.</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>E&amp;F Signatory</label>
-        <trackHistory>false</trackHistory>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -5680,11 +5752,13 @@ Formula field that copies the E&amp;F Type.</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Email</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -5692,6 +5766,7 @@ Formula field that copies the E&amp;F Type.</description>
         <externalId>false</externalId>
         <label>Email Status Update</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -5726,6 +5801,7 @@ Formula field that copies the E&amp;F Type.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5734,6 +5810,7 @@ Formula field that copies the E&amp;F Type.</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Espiritu Survey Answered</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5742,11 +5819,13 @@ Formula field that copies the E&amp;F Type.</description>
         <externalId>false</externalId>
         <label>FAX National</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
     <fields>
         <fullName>Fax</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -5776,6 +5855,7 @@ Formula field that copies the E&amp;F Type.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5786,6 +5866,7 @@ Formula field that copies the E&amp;F Type.</description>
 IFAP Application.</description>
         <externalId>false</externalId>
         <label>Financial Assessment Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -5806,6 +5887,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5880,6 +5962,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5998,6 +6081,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -6007,6 +6091,7 @@ IFAP Application.</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>GDP Profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6025,6 +6110,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6033,15 +6119,18 @@ IFAP Application.</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Global Governance Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>HasOptedOutOfEmail</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>HasOptedOutOfFax</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -6053,6 +6142,7 @@ IFAP Application.</description>
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -6066,6 +6156,7 @@ IFAP Application.</description>
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -6079,6 +6170,7 @@ IFAP Application.</description>
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -6089,6 +6181,7 @@ IFAP Application.</description>
         <description>Used for cleaning</description>
         <externalId>false</externalId>
         <label>Has Contact Roles (Opportunities)</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6099,12 +6192,14 @@ IFAP Application.</description>
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>HomePhone</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -6130,6 +6225,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6166,6 +6262,7 @@ IFAP Application.</description>
         <relationshipLabel>Contacts</relationshipLabel>
         <relationshipName>Contacts</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -6178,6 +6275,7 @@ IFAP Application.</description>
         <relationshipLabel>Contacts (ISO Shipping Country)</relationshipLabel>
         <relationshipName>Contacts1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -6190,6 +6288,7 @@ IFAP Application.</description>
         <relationshipLabel>Contacts (ISO Shipping State)</relationshipLabel>
         <relationshipName>Contacts1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -6249,6 +6348,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6304,6 +6404,7 @@ IFAP Application.</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6313,6 +6414,7 @@ IFAP Application.</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>ICCS Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6325,6 +6427,7 @@ TotalRows-Successes-Errors</description>
         <label>IDCard Batch Status</label>
         <length>20</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -6334,6 +6437,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>ID Card Holder</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6356,6 +6460,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6364,6 +6469,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>IDcard Email</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
@@ -6392,6 +6498,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6419,6 +6526,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6450,6 +6558,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6481,6 +6590,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -6491,6 +6601,7 @@ TotalRows-Successes-Errors</description>
         <description>To identify all the clients for MGR</description>
         <externalId>false</externalId>
         <label>IRMS Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6499,6 +6610,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>IRSM Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6522,6 +6634,7 @@ TotalRows-Successes-Errors</description>
         <relationshipLabel>Contacts</relationshipLabel>
         <relationshipName>Contacts</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -6563,6 +6676,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>ISS Profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6571,6 +6685,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Industry Areas of Involvement</label>
         <length>30000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -6581,6 +6696,7 @@ TotalRows-Successes-Errors</description>
         <inlineHelpText>Date of last feedback received from completed survey</inlineHelpText>
         <label>Instant Survey - Last feedback received</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -6590,6 +6706,7 @@ TotalRows-Successes-Errors</description>
         <inlineHelpText>Timestamp on when survey is sent to customer</inlineHelpText>
         <label>Instant Survey - Last survey sent</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>DateTime</type>
     </fields>
@@ -6600,6 +6717,7 @@ TotalRows-Successes-Errors</description>
         <label>Instant Survey opt-out</label>
         <length>7</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -6610,6 +6728,7 @@ TotalRows-Successes-Errors</description>
         <description>InvoiceWorks</description>
         <externalId>false</externalId>
         <label>InvoiceWorks Customer</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6618,6 +6737,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Invoicing Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6626,11 +6746,13 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is from migration</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Jigsaw</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -6638,6 +6760,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>LCAG Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6744,6 +6867,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -6760,6 +6884,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Last synchronization</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>DateTime</type>
     </fields>
@@ -6860,6 +6985,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6890,6 +7016,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -6898,6 +7025,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>MACS Profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6906,6 +7034,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>MER Profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6951,6 +7080,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -6960,6 +7090,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>MITA Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -6969,6 +7100,7 @@ TotalRows-Successes-Errors</description>
         <label>Teletype</label>
         <length>30</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7004,11 +7136,13 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
     <fields>
         <fullName>MailingAddress</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -7017,6 +7151,7 @@ TotalRows-Successes-Errors</description>
         <description>To manage opt ins on marketing comms</description>
         <externalId>false</externalId>
         <label>Marketing Communications Opt in</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7106,6 +7241,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7115,6 +7251,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Main Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7124,6 +7261,7 @@ TotalRows-Successes-Errors</description>
         <label>Middle Initial</label>
         <length>1</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7151,6 +7289,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7178,6 +7317,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7205,6 +7345,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -7214,11 +7355,13 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Mobile National</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
     <fields>
         <fullName>MobilePhone</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -7229,12 +7372,14 @@ TotalRows-Successes-Errors</description>
         <precision>2</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Name</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -7242,6 +7387,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>New ASD Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7250,6 +7396,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>New Admin Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7258,6 +7405,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>New BSPLink Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7266,6 +7414,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>New CASSLink Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7274,6 +7423,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>New SIS Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7283,6 +7433,7 @@ TotalRows-Successes-Errors</description>
         <label>Notification Template</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7293,20 +7444,24 @@ TotalRows-Successes-Errors</description>
         <label>Customer ID</label>
         <length>10</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>OtherAddress</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>OtherPhone</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>OwnerId</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -7349,6 +7504,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <inlineHelpText>Maintained by Governance</inlineHelpText>
         <label>PAPGCJ Participant</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7358,6 +7514,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <inlineHelpText>maintained by FDS Governance</inlineHelpText>
         <label>PSG Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7366,6 +7523,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>PAConf Representative</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7387,11 +7545,13 @@ TotalRows-Successes-Errors</description>
         <relationshipLabel>Contacts</relationshipLabel>
         <relationshipName>Contacts</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Phone</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -7400,6 +7560,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Phone National</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -7409,6 +7570,7 @@ TotalRows-Successes-Errors</description>
         <label>Phone - CCITT</label>
         <length>15</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7419,6 +7581,7 @@ TotalRows-Successes-Errors</description>
         <label>Portal Inactivation Reason</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7428,6 +7591,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Portal User Inactive more than 90 days</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7504,6 +7668,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7544,6 +7709,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7586,6 +7752,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -7595,6 +7762,7 @@ TotalRows-Successes-Errors</description>
         <description>This box serves as a flag to show whether this is the primary contact for the account. Introduced by the Account Management project.</description>
         <externalId>false</externalId>
         <label>Primary Contact</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7645,6 +7813,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -8431,6 +8600,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -8441,12 +8611,14 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Related to Accounts</label>
         <length>4096</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>ReportsToId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -8455,6 +8627,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Revenue Confirmation</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8474,6 +8647,7 @@ TotalRows-Successes-Errors</description>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -8483,6 +8657,7 @@ TotalRows-Successes-Errors</description>
         <label>SIS ID</label>
         <length>50</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -8492,6 +8667,7 @@ TotalRows-Successes-Errors</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>SFO Profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8622,6 +8798,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -8644,6 +8821,7 @@ TotalRows-Successes-Errors</description>
         <label>Search Code</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -8675,6 +8853,7 @@ TotalRows-Successes-Errors</description>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
@@ -8686,6 +8865,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <inlineHelpText>If Checked a workFlow will trigger an email to send an email reminder to this contact to renew his/her ID Card.</inlineHelpText>
         <label>SendIDCardRenewalNotice</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8695,6 +8875,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Senior Contact - Email</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
@@ -8704,6 +8885,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Senior Contact - Fax</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -8712,6 +8894,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Senior Contact - Mobile</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -8720,6 +8903,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Senior Contact - Other Phone</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -8729,6 +8913,7 @@ TotalRows-Successes-Errors</description>
         <externalId>false</externalId>
         <label>Senior Contact - Phone</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
     </fields>
@@ -8849,6 +9034,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <relationshipLabel>Contacts (ShipTo Location)</relationshipLabel>
         <relationshipName>Contacts1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -8868,6 +9054,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Solicitation Flag</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8877,6 +9064,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>Source Customer ID</label>
         <length>50</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -8887,6 +9075,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <externalId>false</externalId>
         <label>Source System</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -8934,6 +9123,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>3</visibleLines>
@@ -8943,6 +9133,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>StB Profile</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8989,6 +9180,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9047,6 +9239,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9057,6 +9250,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -9068,6 +9262,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -9096,6 +9291,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9105,6 +9301,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>Tax 1 ID</label>
         <length>30</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9115,6 +9312,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>Tax 2 ID</label>
         <length>30</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9150,6 +9348,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -9159,6 +9358,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tax Subscriber</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -9168,12 +9368,14 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>Time</label>
         <length>10</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Title</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -9191,6 +9393,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9245,6 +9448,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9254,6 +9458,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>Type of Product</label>
         <length>250</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9264,6 +9469,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>UIR</label>
         <length>8</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9285,6 +9491,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>UserPortalStatusChange_Action</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9321,6 +9528,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9355,6 +9563,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9365,6 +9574,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>VAT Country Code</label>
         <length>2</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9386,6 +9596,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>VER Number 2</label>
         <length>15</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>true</unique>
@@ -9397,6 +9608,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
@@ -9408,6 +9620,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>WebStar ID</label>
         <length>40</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>true</unique>
@@ -9419,6 +9632,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>Zuora Billing Acount Id</label>
         <length>40</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9429,6 +9643,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <externalId>false</externalId>
         <label>Confidential Email</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Email</type>
         <unique>false</unique>
@@ -9438,6 +9653,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <externalId>false</externalId>
         <label>list Dangerous Goods Awareness</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -9460,6 +9676,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9470,6 +9687,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <label>County</label>
         <length>32</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -10785,6 +11003,7 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             <group>IATATTBS</group>
         </sharedTo>
     </listViews>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>GDP_Contact</fullName>
