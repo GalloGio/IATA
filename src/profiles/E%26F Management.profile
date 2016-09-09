@@ -20097,11 +20097,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Contact.Account_Management_key_contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Account_site__c</field>
         <readable>true</readable>
