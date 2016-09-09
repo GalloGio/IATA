@@ -446,13 +446,15 @@ public class AMS_AccountTriggerHandler {
         else if(AMS_Utils.LocationClassPASSENGER.contains(a.Location_Class__c))   length = 30;
         
         
-        if(olda==null || a.Abbreviated_address__c == null || a.BillingStreet!=olda.BillingStreet){
+        if((olda==null && a.Abbreviated_address==null) ||
+           (olda!=null && a.BillingStreet!=olda.BillingStreet && a.Abbreviated_address__c==olda.Abbreviated_address__c)){
             String str = a.BillingStreet;
             if(str!=null && str.length()>length) str = str.substring(0,length);
             a.Abbreviated_address__c = str;
         }
 
-        if(olda==null || a.Abbreviated_name__c == null || a.Name!=olda.Name){
+        if((olda==null && a.Abbreviated_name__c == null) || 
+           (olda!=null && a.Name!=olda.Name && a.Abbreviated_name__c==olda.Abbreviated_name__c)){
             String str = a.Name;
             if(str!=null && str.length()>length) str = str.substring(0,length);
             a.Abbreviated_name__c = str;
