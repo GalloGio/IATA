@@ -1,8 +1,8 @@
 public class Customer_DTO 
 {
-	private static Customer_DTO singleton = null;
+    private static Customer_DTO singleton = null;
 
-	public User sfUser { get; set; }
+    public User sfUser { get; set; }
     public Contact sfContact { get; set; }
     public Account sfAccount { get; set; }
     public String customerType { get; set; }
@@ -153,25 +153,25 @@ public class Customer_DTO
 
     public static Customer_DTO getLoggedCustomer()
     {
-    	//-- If logged user 
-    	if(UserInfo.getUserType() == 'PowerPartner')
-    	{
-    		if(singleton == null)
-	    	{
-	    		Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
+        //-- If logged user 
+        if(UserInfo.getUserType() == 'PowerPartner')
+        {
+            if(singleton == null)
+            {
+                Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
                 
                 //-- Build Customer addresses 
                 setCustomerAddresses(customer);
-				singleton = customer; 
-	    	}
+                singleton = customer; 
+            }
 
-	    	return singleton;
-    	}
-    	//-- Non logged user 
-    	else
-    	{
-    		return null; 
-    	}	
+            return singleton;
+        }
+        //-- Non logged user 
+        else
+        {
+            return null; 
+        }   
     }
 
     public static Customer_DTO getCustomerByUser(Id userId)
@@ -184,6 +184,8 @@ public class Customer_DTO
             customer.sfContact = Contact_Sel.getContactById(new Set<Id> {customer.sfUser.ContactId}).get(customer.sfUser.ContactId);
             customer.sfAccount = aSelector.getAccountById(customer.sfContact.AccountId);
             customer.customerType = customer.sfAccount.Customer_Type__c;
+            if (String.isBlank(customer.customerType))
+                customer.customerType = IECConstants.PARAM_CUSTOMERTYPE_DEFAULT;
 
         return customer;
     }
