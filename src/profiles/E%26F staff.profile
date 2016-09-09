@@ -1544,14 +1544,18 @@
     </classAccesses>
     <classAccesses>
 		<apexClass>EF_BaContractApprovalHelper</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BaContractApprovalHelperTest</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
 	</classAccesses>
 	 <classAccesses>
 		<apexClass>EF_AccountTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+	 <classAccesses>
+		<apexClass>EF_AccountTriggerHandlerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1563,8 +1567,12 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EF_ContactHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_ContractHandler</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_LocationCurrencyHandler</apexClass>
@@ -1572,7 +1580,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EF_LocationCurrencyTriggerTest</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_MaterialLineItemHandler</apexClass>
@@ -1584,7 +1592,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EF_TestDataFactory</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ENV</apexClass>
