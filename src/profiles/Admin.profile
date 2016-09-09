@@ -1554,12 +1554,20 @@
 		<apexClass>EF_AccountTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+	 <classAccesses>
+		<apexClass>EF_AccountTriggerHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>EF_BillingAgreementHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BillingAgreementTriggerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_ContactHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -44987,7 +44995,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>EF_Related_Records__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>E_F_Asset__c</tab>
