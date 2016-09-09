@@ -533,7 +533,7 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-
+/* DESCOUTINUED - TO BE REMOVED AFTER TESTING
 
     public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
@@ -618,18 +618,17 @@ public without sharing class AMS_Utils {
 
         if(oscar != null){
 
-            if( aacNEW.Change_Code__c == 'NEW' ){
-                oscar.First_Step_Completed__c = true;
+        if( aacNEW.Change_Code__c == 'NEW' ){
+            oscar.First_Step_Completed__c = true;
 
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
-            }
-            
-            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+        }
 
-            if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
-            if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
-                for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
-            }
+        if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+        if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+        if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+            for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+        }
         }        
 
         if( aacNEW.Change_Code__c == 'FIN'){
@@ -643,6 +642,7 @@ public without sharing class AMS_Utils {
 
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
+    */
 
     public static String getIATAReadableStatus(String endorsmentCode) {
 
@@ -935,15 +935,19 @@ public without sharing class AMS_Utils {
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static List<Account> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        List<Account> accountsToUpdate = new List<Account>();
+        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
+
         //DT: Reindented and added 3 fields for addresses
+        // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -1010,20 +1014,46 @@ public without sharing class AMS_Utils {
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
+
+
                 for(Id accId: accountsAffected){
+
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
                     Account acc = accounts.get(accId);
 
                     for(String accFieldApiName: accountFieldNewValue.keySet())
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    {
+                        
+                        Schema.SObjectField field = Schema.SObjectType.Account.fields.getMap().get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                        system.debug('Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('Field Type to migrate to account: ' + fldType);
 
-                    accountsToUpdate.add(acc);
+                     
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+                           
+                        String oldValue = String.valueOf(acc.get(accFieldApiName));
+                        String newValue =  String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue));
+                            
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    }
+
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+ 
+                    accountsToUpdate.put(acc,acctChangesStruct);
                 }
 
         }
 
     return accountsToUpdate;
 
-}
+    }
 
 //get Inspections from oscar
     public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
