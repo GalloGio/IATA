@@ -147,7 +147,7 @@
         <fullName>EF_Document_Date__c</fullName>
         <defaultValue>TODAY()</defaultValue>
         <externalId>false</externalId>
-        <label>Document Date</label>
+        <label>E&amp;F Document Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -157,7 +157,7 @@
         <fullName>EF_Expired__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Expired</label>
+        <label>E&amp;F Expired</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -165,7 +165,7 @@
     <fields>
         <fullName>EF_Expiry_Date__c</fullName>
         <externalId>false</externalId>
-        <label>Expiry Date</label>
+        <label>E&amp;F Expiry Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -174,7 +174,7 @@
     <fields>
         <fullName>EF_SAP_Number__c</fullName>
         <externalId>false</externalId>
-        <label>SAP Number</label>
+        <label>E&amp;F SAP Number</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -186,7 +186,7 @@
         <fullName>EF_Skip_Validation__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Skip Validation</label>
+        <label>E&amp;F Skip Validation</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -628,6 +628,17 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>sObject_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>sObject Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>AmazonFile</label>
     <listViews>

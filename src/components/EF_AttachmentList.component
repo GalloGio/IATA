@@ -1,4 +1,4 @@
-<apex:component controller="ENFAttachmentListController" allowDML="true" >
+<apex:component controller="EF_AttachmentListController" allowDML="true" >
     <apex:attribute name="sobjectId" description="id" type="Id" required="true" assignTo="{!id}" />
     	
     <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
@@ -7,14 +7,13 @@
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
     <script>
     // Get the Root URL dynamically
         var pageMainUrl = window.location.protocol + "//" + window.location.hostname;
 
         function getS3LInk(fileName) {
             startLoading();
-            GenericAttachmentListController.getExpiringLink(fileName,function(result, event){
+            EF_AttachmentListController.getExpiringLink(fileName,function(result, event){
                 var result2= result.replace("&amp;","&");
                 var newWin = window.open(result2);
                 if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
@@ -29,7 +28,7 @@
                 return false;
             }
             startLoading();
-            GenericAttachmentListController.deleteAttachment(id, fullName,function(result, event){
+            EF_AttachmentListController.deleteAttachment(id, fullName,function(result, event){
                 if (!result) alert("{!$Label.Delete_Attachment_Error}");
                 refreshList();
             }, {timeout: 120000} );
@@ -45,7 +44,6 @@
     <!-- upload scripts -->
 
     <script>
-    	var fileIdentifierPick;
     	var fileCounter = {
     		value: 0,
     		reset: function(val) {	value = val; },
@@ -62,11 +60,11 @@
 
     		fileInput.bind("change", function() {
     			startLoading();
-    			uploadFiles(this.files, $('[id$=fileIdentifierPick]').val());
+    			uploadFiles(this.files);
     		});
     	});
 
-    	function uploadFiles(files, fileIdentifierPick) {
+    	function uploadFiles(files) {
             
             try{
             	$( '#dialog' ).dialog('destroy');
@@ -74,7 +72,7 @@
             
     		fileCounter.reset(files.length); 
     		$.each(files, function(i, file) {
-    			uploadFile(file, fileIdentifierPick);
+    			uploadFile(file);
     		});
     	}
 
@@ -82,8 +80,8 @@
     		$("#file-field").click();
     	}
 
-    	function uploadFile(file, fileIdentifierPick) {
-    		ENFAttachmentListController.createUploadFile("{!sobjectId}",file.name,file.type, file.size, '{!amazonPath}', '{!credentialName}', function(result, event){
+    	function uploadFile(file) {
+    		EF_AttachmentListController.createUploadFile("{!sobjectId}",file.name,file.type, file.size, '{!amazonPath}', '{!credentialName}', function(result, event){
     			if(event.type == "exception") {
     				alert("Exception!!");
     				stopLoading();
@@ -107,13 +105,13 @@
     			reader.readAsArrayBuffer(file);
     			reader.onload = function(e) {
     				var arrayBuffer = reader.result;
-    				remoteFunctionPut(credentialNames, file, reader.result, fileIdentifierPick);
+    				remoteFunctionPut(credentialNames, file, reader.result);
     			};
     		}, {buffer: true, escape: true, timeout: 120000} );
 
     	}
 
-    	function remoteFunctionPut(credentialNames, file, fileBody, fileIdentifierPick) {
+    	function remoteFunctionPut(credentialNames, file, fileBody) {
     		var amazonFilePath = credentialNames.endpoint+credentialNames.bucketName+'/'+credentialNames.fullFileNameEncoded;
     		sforce.connection.sessionId = "{!$Api.Session_ID}";
     		sforce.connection.init("{!$Api.Session_ID}", amazonFilePath);
@@ -163,7 +161,7 @@
 
     		xhr.send(fileBody);
 
-    		callToCreateAmazonFileObject(file, credentialNames.fullFileName, fileIdentifierPick);
+    		callToCreateAmazonFileObject(file, credentialNames.fullFileName);
     	}
 
     	function getResponseFromXML(response) {
@@ -175,14 +173,29 @@
     		}
     	}
 
-     	function callToCreateAmazonFileObject(file, path, fileIdentifierPick) {
-    		if(fileIdentifierPick == null){
-                fileIdentifierPick = '';
-            }
-     		ENFAttachmentListController.createAmazonFileObject(path, file.size,"{!sobjectId}", "AMS_File", fileIdentifierPick, "Internal", function(result, event){});
+     	function callToCreateAmazonFileObject(file, path) {
+     	
+			var efCategory = $("[id$='dataToSubmit_EF_Category__c']").val();
+			var efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']").val();
+			var efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']").val();
+			var efExpired = $("[id$='dataToSubmit_EF_Expired__c']").val();
+			var efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']").val();
+			
+     		EF_AttachmentListController.createAmazonFileObject(
+     			path,
+     			file.size,
+     			"{!sobjectId}",
+     			"EF_File",
+     			efCategory,
+     			efSubCategory,
+     			efExpiryDate,
+     			efExpired,
+     			efSapNumber,
+     			function(result, event){}
+   			);
      	}
 
-        function uploadAmsFile() {
+        function uploadEfFile() {
 
             if(validateInputs()) {
                 
@@ -195,13 +208,23 @@
             
         function validateInputs() {
 
-            return $('[id$=fileIdentifierPick]').val() != null && $('[id$=fileIdentifierPick]').val() != '';
+			var efCategory = $("[id$='dataToSubmit_EF_Category__c']").val();
+			var efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']").val();
+			var efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']").val();
+			var efExpired = $("[id$='dataToSubmit_EF_Expired__c']").val();
+			var efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']").val();
+
+			if (efCategory == '' || efSubCategory == '') {
+				
+				return false;
+			}
+
+            return true;
         }
         
         function openDialog() {
 
-            $('[id$=fileIdentifierPick]').prop('selectedIndex',0);
-            $( '#dialog' ).dialog({modal: true, close: function( event, ui ) {$( '#dialog' ).dialog('destroy');}});
+            $( '#dialog' ).dialog({width: '650px', modal: true, close: function( event, ui ) {$( '#dialog' ).dialog('destroy');}});
         }
     </script>
 
@@ -219,8 +242,8 @@
                     <apex:commandButton value="{!$Label.Select_File}" title="Select File" onclick="openDialog(); return false;" immediate="true" />
             	</apex:outputPanel>
 
-                <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
-                <!-- <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
+                <!-- <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
+                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
                 <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" /> -->
             </apex:pageblockButtons>
 
@@ -244,10 +267,10 @@
                     </apex:outputPanel>
 
                     <!-- DEL ACTION -->
-                    <!-- <apex:outputPanel >
+                    <apex:outputPanel >
                         &nbsp;|&nbsp;
                         <apex:outputLink style="color:#015ba7; cursor: pointer;" onclick="return deleteAttachment('{!attach.Id}','{!attach.fullName}');" >{!$Label.Del}</apex:outputLink>
-                    </apex:outputPanel> -->
+                    </apex:outputPanel>
 
                     <!-- MAKE PUBLIC ACTION -->
                     <!-- <apex:outputPanel >
@@ -297,34 +320,35 @@
 			<input id="file-field" multiple="true" name="file" style="display: none;" type="file" />
 
 			<apex:pageBlock title="{!$Label.Description_Edit}" mode="edit" tabStyle="AmazonFile__c" >
+
 			    <apex:pageBlockButtons location="top" >
-			        <input class="btn" id="btnUpload" value="{!$Label.Upload_File}" type="submit" onclick="uploadAmsFile(); return false;" />
+			        <input class="btn" id="btnUpload" value="{!$Label.Upload_File}" type="submit" onclick="uploadEfFile(); return false;" />
 			    </apex:pageBlockButtons>
-			    <apex:pageBlockSection columns="1" >
+			    <apex:pageBlockSection columns="1">
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Category__c.Label}"/>
-			            <apex:inputField value="{!amazonFileToUpload.EF_Category__c}" />
+			            <apex:inputField id="dataToSubmit_EF_Category__c" value="{!amazonFileToUpload.EF_Category__c}" />
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Subcategory__c.Label}"/>
-			            <apex:inputField value="{!amazonFileToUpload.EF_Subcategory__c}" />
+			            <apex:inputField id="dataToSubmit_EF_Subcategory__c" value="{!amazonFileToUpload.EF_Subcategory__c}" />
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expiry_Date__c.Label}"/>
-			            <apex:inputField value="{!amazonFileToUpload.EF_Expiry_Date__c}" />
+			            <apex:inputField id="dataToSubmit_EF_Expiry_Date__c" value="{!amazonFileToUpload.EF_Expiry_Date__c}" />
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expired__c.Label}"/>
-			            <apex:inputField value="{!amazonFileToUpload.EF_Expired__c}" />
+			            <apex:inputField id="dataToSubmit_EF_Expired__c" value="{!amazonFileToUpload.EF_Expired__c}" />
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_SAP_Number__c.Label}"/>
-			            <apex:inputField value="{!amazonFileToUpload.EF_SAP_Number__c}" />
+			            <apex:inputField id="dataToSubmit_EF_SAP_Number__c" value="{!amazonFileToUpload.EF_SAP_Number__c}"/>
 			        </apex:pageBlockSectionItem>
 
 			    </apex:pageBlockSection>

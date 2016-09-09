@@ -1,5 +1,7 @@
 global with sharing class EF_AttachmentListController {
 	
+	public static Boolean runningForEF{get;set;}
+	
     public String uploader {get;set;}
     public String source {get;set;}
     public Boolean scroll {get;set;}
@@ -42,6 +44,11 @@ global with sharing class EF_AttachmentListController {
 		}
 	}
 	
+	public EF_AttachmentListController() {
+		
+		runningForEF = true;
+	}
+	
 	/**
 		check all assignTo calls have been done and execute initial methods
 	**/
@@ -65,6 +72,7 @@ global with sharing class EF_AttachmentListController {
 		Refresh the list of file attachments
 	**/
 	public Pagereference refreshList() {
+
 		try {
 			this.listAttachments = WrapperAttach.getListAttachments(this.id);
 			this.listAttachments.sort();
@@ -79,6 +87,9 @@ global with sharing class EF_AttachmentListController {
 	**/
 	@RemoteAction
 	global static string getExpiringLink(string fileName ) {
+		
+		EF_AttachmentListController.runningForEF = true;
+		
 		Integer secondsValid = 300;
 		String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
 		return link;
@@ -89,6 +100,9 @@ global with sharing class EF_AttachmentListController {
 	**/
 	@RemoteAction
 	global static boolean deleteAttachment(string strId, String fullName) {
+		
+		EF_AttachmentListController.runningForEF = true;
+		
 		String idType = String.ValueOf(Id.valueOf(strId).getSObjectType());
 		Boolean result = false;
 		if (idType.equals('Attachment')) {
@@ -179,7 +193,8 @@ global with sharing class EF_AttachmentListController {
 		return pageref.getUrl();
 	}
 	
-		public PageReference callEditAttachment() {
+	public PageReference callEditAttachment() {
+				
 		for ( WrapperAttach attach: listAttachments ) {
 			if (attach.id == this.editAttachmentId) {
 				this.editAttachment = attach;
@@ -220,6 +235,9 @@ global with sharing class EF_AttachmentListController {
 
     @RemoteAction
     global static UploadFile createUploadFile(String id, String filenameupload, String contentType, Long filesize, String folder, String credentialName) {
+        
+        EF_AttachmentListController.runningForEF = true;
+        
         AmazonCredentials credential = AmazonCredentials.getCredentials(credentialName);
 
         // remove all repeated spaces
@@ -260,16 +278,25 @@ global with sharing class EF_AttachmentListController {
     }
 
     @RemoteAction
-    global static boolean createAmazonFileObject(String amazonKey, Long filesize, String parentId, String recordType, String fileIdentifierPick, String source) {
+    global static boolean createAmazonFileObject(String amazonKey, Long filesize, String parentId, String recordType, 
+    												String efCategory, String efSubCategory, String efExpiryDate, Boolean efExpired, String efSapNumber) {
+        
+        EF_AttachmentListController.runningForEF = true;
+        
         try {
             list<String> parts = amazonKey.split('/');
             String filename = parts.isEmpty()? '': parts.get( parts.size() - 1 );
 
             AmazonFile__c amazonFile = new AmazonFile__c(
                 Name = filename,
+                sObject_Id__c = parentId,
                 Full_Name_Unique__c = amazonKey,
-                Source__c = source,
-                File_Identifier_picklist__c = fileIdentifierPick,
+                EF_Category__c = efCategory,
+                EF_Subcategory__c = efSubCategory,
+                EF_Document_Date__c = System.today(),
+                EF_Expired__c = efExpired,
+                //EF_Expiry_Date__c = Date.valueOf(efExpiryDate),
+                EF_SAP_Number__c = efSapNumber,
                 Size_MB__c = filesize* 0.000001 //convert to MB
             );
 
@@ -283,6 +310,7 @@ global with sharing class EF_AttachmentListController {
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
             }
+            
             upsert amazonFile;
 
             return true;
