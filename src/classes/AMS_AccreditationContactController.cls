@@ -61,9 +61,9 @@ public with sharing class AMS_AccreditationContactController {
                 for(AMS_Accreditation_Contact__c acTemp : acList){
 
                     if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company'){
-                        accountsToLoadSetId.add(acTemp.Company__c);
-                        accountsToLoadSetNumber.add(acTemp.Registration_number__c);
-                        accountsToLoadSetIATACode.add(acTemp.IATACode__c);
+                        if(acTemp.Company__c != null) accountsToLoadSetId.add(acTemp.Company__c);
+                        if(acTemp.Registration_number__c != null) accountsToLoadSetNumber.add(acTemp.Registration_number__c);
+                        if(acTemp.IATACode__c != null) accountsToLoadSetIATACode.add(acTemp.IATACode__c);
                     }
                 }
                 
