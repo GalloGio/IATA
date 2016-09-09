@@ -9,6 +9,17 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
     	}
     }
     public String limitToAudience { get; set; }
+    
+    public Boolean isEditable {
+        get {
+            if (!String.isBlank(filterId)) { 
+                List<EBC_Campaign__c> blockingCampaign = [Select Id From EBC_Campaign__c Where EBC_Master_Filter__c = :filterId and (Status__c = 'PENDING_APPROVAL' or Status__c = 'APPROVED')];
+                return blockingCampaign.size() == 0;
+            }
+            return true;
+        }
+    }
+    
     public EBC_Master_Filter__c newFilter { 
         get {
             if (newFilter == null) {
@@ -107,7 +118,10 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
         }
         set;
     }
+    public class ProtectedRecord_Exception extends Exception{}
     public PageReference save() {
+        if (!isEditable) throw new ProtectedRecord_Exception('This list is associated to an active campaign and cannot be edited until the campaign is sent.');
+        
         Boolean isUpdate = !String.isBlank(newFilter.Id);
         
         if (String.isBlank(newFilter.Name)) {

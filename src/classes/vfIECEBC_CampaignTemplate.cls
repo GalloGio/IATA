@@ -33,7 +33,17 @@ public class vfIECEBC_CampaignTemplate extends vfIECEBC_Controller {
             d.Id = campaign.EBC_Design__c;
         }
         
-        if (!String.isBlank(selectedTemplate)) d.Parent_Template__c = selectedTemplate;
+        if (!String.isBlank(selectedTemplate)) { 
+            EBC_Template__c t = [Select Id, RecordType.DeveloperName  From EBC_Template__c Where Id = :selectedTemplate];
+            if (t.RecordType.DeveloperName != 'Global') {
+                d = vfIECEBC_TemplateList.duplicate(selectedTemplate, campaign.Name, billingAccount.Id, false);
+                
+		        campaign.EBC_Design__c = d.Id;
+                return ;
+            }
+            
+            d.Parent_Template__c = selectedTemplate;
+        }
         
         upsert d;
         

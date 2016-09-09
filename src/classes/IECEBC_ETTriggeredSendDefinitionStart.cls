@@ -9,12 +9,12 @@ public class IECEBC_ETTriggeredSendDefinitionStart {
             '<UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
             +'<Objects xsi:type="TriggeredSendDefinition">'
             +'<ObjectID xsi:nil="true"/>'
-            +'<CustomerKey>'+ TriggeredParam +'</CustomerKey>'
+            +'<CustomerKey>'+ IECEBC_ETHelper.xmlEncode(TriggeredParam) +'</CustomerKey>'
             +'<TriggeredSendStatus>Active</TriggeredSendStatus>'
             +'</Objects>'
             +'</UpdateRequest>';
         
-        req.setTimeout(60000);
+        req.setTimeout(IECEBC_ETInit.TimeOut);
         IECEBC_ETHelper.SetSoapRequest(req, 'Update', bodyContent);
         
         HTTPResponse res = http.send(req);
@@ -34,8 +34,7 @@ public class IECEBC_ETTriggeredSendDefinitionStart {
 
     }
     
-    public static void updateTriggeredSendDefinition( String TriggeredParam, String contactType, String campaignName, String objectTSD_ID)
-    {        
+    public static void updateTriggeredSendDefinition( String TriggeredParam, String contactType, String campaignName, String objectTSD_ID)  {        
         HttpRequest req = new HttpRequest();
         Http http = new Http();
         system.debug('le triggered Name est '+ TriggeredParam);
@@ -43,12 +42,12 @@ public class IECEBC_ETTriggeredSendDefinitionStart {
             '<UpdateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
             +'<Objects xsi:type="TriggeredSendDefinition">'
             +'<ObjectID xsi:nil="true"/>'
-            +'<CustomerKey>'+ TriggeredParam +'</CustomerKey>'
+            +'<CustomerKey>'+ IECEBC_ETHelper.xmlEncode(TriggeredParam) +'</CustomerKey>'
             +'<TriggeredSendStatus>Active</TriggeredSendStatus>'
             +'</Objects>'
             +'</UpdateRequest>';
         
-        req.setTimeout(60000);
+        req.setTimeout(IECEBC_ETInit.TimeOut);
         IECEBC_ETHelper.SetSoapRequest(req, 'Update', bodyContent);
         
         HTTPResponse res = http.send(req);
@@ -59,7 +58,6 @@ public class IECEBC_ETTriggeredSendDefinitionStart {
             system.debug('Triggered Send Definition activated ' );
         }else{
             system.debug('This is a bad request, can not activate Triggered send!');
-        }       
-
+        }      
     }
 }

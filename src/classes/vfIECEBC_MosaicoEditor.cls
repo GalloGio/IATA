@@ -47,6 +47,10 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     
     webService static Boolean saveTemplate(Id templateId, String metadataContent, String JSONContent, String xHtmlContent) {
         EBC_Template__c t = [Select Id, (Select Id, Name From Attachments) From EBC_Template__c Where Id = :templateId AND OwnerId = :UserInfo.getUserId()];
+        Blob previousOutput;
+        List<Attachment> previousHtmlAttachment = [Select Id, Body From Attachment Where ParentId = :templateId AND name = 'template.html'];
+        if (previousHtmlAttachment.size() > 0) previousOutput = previousHtmlAttachment[0].Body;
+        
         
         delete [Select Id From EBC_Template_Resource__c Where EBC_Template__c = :t.Id];        
         
@@ -79,7 +83,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         }
         newAttachments.add(a);
         
-        // Metadata
+        // Html
 		xHtmlContent = xHtmlContent.replaceAll('/iec/services/apexrest/Resources/(00P[a-zA-Z0-9]{15})', '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
 
         Pattern p = Pattern.compile(vfIECEBC_Template.regexImagePlaceholder);
@@ -100,6 +104,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         a.Name = 'template.html';
         a.ContentType = 'text/html';
         a.Body = Blob.valueOf(xHtmlContent);
+        Boolean previousOutputChanged = previousOutput != a.Body;
         a.ParentId = t.Id;
         if (t.Attachments.size() > 0) {
             for(Attachment existingAttachment : t.Attachments) {
@@ -110,8 +115,10 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         
         upsert newAttachments;
         
-        t.Is_Tested__c = false;
-        update t;
+        if (previousOutputChanged) {
+        	t.Is_Tested__c = false;
+        	update t;
+        }
         
         return true;
     }
@@ -121,6 +128,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
             Select
                 Id,
                 External_Id__c,
+            	TriggSend_Id__c,
                 Name,
             	Audience__c
             From EBC_Template__c
@@ -138,10 +146,13 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
             IECEBC_ETTemplateCreate.updateEmailTemplate(template.External_Id__c, 'This is a rendering test for eBroadcast', body, 'HTML');
         }
         
-        String mailingId = 'TEST_' + template.Id + '_'+IECEBC_Utility.generateRandomString(12);
+        String mailingId = template.TriggSend_Id__c;
+        if (String.isBlank(mailingId)) mailingId = 'TEST_' + template.Id;
         
-        IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, '10691121', '82684d06-ff62-e611-8844-0025b3d7f36a');
-        IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
+        if (String.isBlank(template.TriggSend_Id__c)) {
+            IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, template.External_Id__c, 'Default', '27f87e21-4ed1-e511-9e76-8cdcd4af9375');
+            IECEBC_ETTriggeredSendDefinitionStart.updateTriggeredSendDefinition(mailingId);
+        }
         
         Map<String, String> attributes = new Map<String, String>();
         attributes.put('AGENCY_NAME', 'John Doe Inc.');
@@ -160,6 +171,11 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         IECEBC_ETEmailSend.sendSingleEmail(mailingId, email, attributes);
         
         template.Is_Tested__c = true;
+        
+        if (String.isBlank(template.TriggSend_Id__c)) {
+            template.TriggSend_Id__c = mailingId;
+        }
+        
         update template;
     }
 }

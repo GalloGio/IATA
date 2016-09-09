@@ -5,24 +5,28 @@ public class IECEBC_ETPortfolioCreate {
         
         Http http = new Http();
    
-        string xml ='<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'+
-            '<s:Header>'+
-            '<a:Action s:mustUnderstand="1">Create</a:Action>'+
-            '<a:MessageID>urn:uuid:db7625ad-b909-48f7-a9e6-9819f5bd3ddb</a:MessageID>'+
-            '<a:ReplyTo>'+
-            '<a:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</a:Address>' +
-            '</a:ReplyTo>'+
-            '<a:To s:mustUnderstand="1">https://webservice.test.exacttarget.com/Service.asmx</a:To>'+
-            '<o:Security xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" s:mustUnderstand="1">'+            
-            '<o:UsernameToken>'+
-            '<o:Username>kejia.hu@cgi.com</o:Username>'+
-            '<o:Password>password1234%</o:Password>'+
-            '</o:UsernameToken>'+
-            '</o:Security>'+
-            '</s:Header>'+
-            '<s:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
-            '<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'+
-            '<Options/>';
+        string xml = ''
+            + '<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
+            + '<s:Header>'
+            + '<a:Action s:mustUnderstand="1">Create</a:Action>'
+            + '<a:MessageID>urn:uuid:db7625ad-b909-48f7-a9e6-9819f5bd3ddb</a:MessageID>'
+            + '<a:ReplyTo>'
+            + '<a:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</a:Address>' 
+            + '</a:ReplyTo>'
+            + '<a:To s:mustUnderstand="1">'
+            + IECEBC_ETInit.ProductionEndpoint
+        	+ '</a:To>'
+            + '<o:Security xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" s:mustUnderstand="1">'
+            + '<o:UsernameToken>'
+            + '<o:Username>kejia.hu@cgi.com</o:Username>'
+            + '<o:Password>Alban2016%</o:Password>'
+            + '</o:UsernameToken>'
+            + '</o:Security>'
+            + '</s:Header>'
+            + '<s:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+            + '<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'
+            + '<Options/>'
+            ;
         
         for(String filename : filenameToUrl.keySet()) {
             xml += ''+
@@ -53,7 +57,7 @@ public class IECEBC_ETPortfolioCreate {
         System.debug(xml);
         
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://webservice.test.exacttarget.com/Service.asmx');
+        req.setEndpoint(IECEBC_ETInit.ProductionEndpoint);
         req.setMethod('POST');
         req.setHeader('SOAPAction','Create');
         req.setHeader('Content-Type','text/xml;charset=UTF-8');
@@ -75,8 +79,7 @@ public class IECEBC_ETPortfolioCreate {
             throw new UnexpectedResponse_Exception('Unexpected Response');
         }      
     }  
-    
-    
+      
     public static void CreateListPortfolioObjects(String restWS, String EBCResourceId){
     	List<Attachment> attList = [SELECT Id, Name, Body, ContentType FROM Attachment WHERE ParentId = :EBCResourceId];
         Integer i = 0;
@@ -97,11 +100,13 @@ public class IECEBC_ETPortfolioCreate {
             '<a:ReplyTo>'+
             '<a:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</a:Address>' +
             '</a:ReplyTo>'+
-            '<a:To s:mustUnderstand="1">https://webservice.test.exacttarget.com/Service.asmx</a:To>'+
+            '<a:To s:mustUnderstand="1">' +            
+            IECEBC_ETInit.ProductionEndpoint +       	
+        	'</a:To>'+
             '<o:Security xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" s:mustUnderstand="1">'+            
             '<o:UsernameToken>'+
             '<o:Username>kejia.hu@cgi.com</o:Username>'+
-            '<o:Password>password1234%</o:Password>'+
+            '<o:Password>Alban2016%</o:Password>'+
             '</o:UsernameToken>'+
             '</o:Security>'+
             '</s:Header>'+
@@ -118,25 +123,22 @@ public class IECEBC_ETPortfolioCreate {
             '<ns1:ModifiedDate xsi:nil="true"/>'+
             '<ns1:ObjectID xsi:nil="true"/>'+
             '<ns1:URN>' + 
-            'https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/'
-            +
-            	restWS + '/' 
-            +            
-            	attachmentId
-            +
+            IECEBC_ETInit.IECRestAPI +
+            IECEBC_ETHelper.xmlEncode(restWS) +
+            '/' + 
+            IECEBC_ETHelper.xmlEncode(attachmentId) +
             '</ns1:URN>'+
             '</ns1:Source>'+
-            '<ns1:FileName>' +
-            
-            	fileName +            
-             
+            '<ns1:FileName>' +            
+            	IECEBC_ETHelper.xmlEncode(fileName) +  
             '</ns1:FileName>'+
             '</ns1:Objects>' +
             '</CreateRequest>'+
             '</s:Body>'+
             '</s:Envelope>';
+        
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://webservice.test.exacttarget.com/Service.asmx');
+        req.setEndpoint(IECEBC_ETInit.ProductionEndpoint);
         req.setMethod('POST');
         req.setHeader('SOAPAction','Create');
         req.setHeader('Content-Type','text/xml;charset=UTF-8');

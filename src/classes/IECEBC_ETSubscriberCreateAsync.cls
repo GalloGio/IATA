@@ -22,7 +22,7 @@ global class IECEBC_ETSubscriberCreateAsync {
         
         tagsList +='<Lists>'
             + '<PartnerKey xsi:nil="true" />'
-            +'<ID>'+ListId+'</ID>'
+            +'<ID>'+IECEBC_ETHelper.xmlEncode(ListId)+'</ID>'
             +'<ObjectID xsi:nil="true" />'
             +'</Lists>';
         
@@ -54,7 +54,7 @@ global class IECEBC_ETSubscriberCreateAsync {
             tags +
            '</CreateRequest>';
         
-        req.setTimeout(100000);
+        req.setTimeout(IECEBC_ETInit.TimeOut);
         IECEBC_ETHelper.SetSoapRequest(req, 'Create', bodyContent);
 
         system.debug('Body create subscribers: ' + req.getBody());
@@ -75,8 +75,7 @@ global class IECEBC_ETSubscriberCreateAsync {
     
     // This method is no more needed
     @Future(callout=true)
-    public static void createSubscribers(String campaignName,String contactType,Id emailTempId)
-    {
+    public static void createSubscribers(String campaignName,String contactType,Id emailTempId) {
         // http instances and string variables
         HttpRequest req = new HttpRequest();
         Http http = new Http();
@@ -88,9 +87,10 @@ global class IECEBC_ETSubscriberCreateAsync {
             if (subscribers.size() > 1){
                 String ListName = campaignName;
                 String IdList = IECEBC_ETListCreate.createList(ListName);
+                system.debug('la list est '+ IdList);
                 tagsList +='<Lists>'
                     + '<PartnerKey xsi:nil="true" />'
-                    +'<ID>'+IdList+'</ID>'
+                    +'<ID>'+IECEBC_ETHelper.xmlEncode(IdList)+'</ID>'
                     +'<ObjectID xsi:nil="true" />'
                     +'</Lists>';
             }
@@ -103,11 +103,11 @@ global class IECEBC_ETSubscriberCreateAsync {
                 tags +='<Objects xsi:type="Subscriber">'+
                     tagsList 
                     +   '<ObjectID xsi:nil="true"> </ObjectID>'
-                    +'<EmailAddress>'+sEmail+'</EmailAddress>'
-                    +'<SubscriberKey>'+sEmail+'</SubscriberKey>'
+                    +'<EmailAddress>'+IECEBC_ETHelper.xmlEncode(sEmail)+'</EmailAddress>'
+                    +'<SubscriberKey>'+IECEBC_ETHelper.xmlEncode(sEmail)+'</SubscriberKey>'
                     +'<Attributes>'
                     +'<Name>ExternalId</Name>'
-                    +'<Value>'+sId+'</Value>'
+                    +'<Value>'+IECEBC_ETHelper.xmlEncode(sId)+'</Value>'
                     +'</Attributes>'
                     +'<PartnerKey xsi:nil="true"/>'
                     +'</Objects>';
@@ -121,7 +121,7 @@ global class IECEBC_ETSubscriberCreateAsync {
                 String IdList = IECEBC_ETListCreate.createList(ListName);
                 tagsList +='<Lists>'
                     + '<PartnerKey xsi:nil="true" />'
-                    +'<ID>'+IdList+'</ID>'
+                    +'<ID>'+IECEBC_ETHelper.xmlEncode(IdList)+'</ID>'
                     +'<ObjectID xsi:nil="true" />'
                     +'</Lists>';
             }
@@ -133,11 +133,11 @@ global class IECEBC_ETSubscriberCreateAsync {
                 tags +='<Objects xsi:type="Subscriber">'
                     +tagsList
                     +'<ObjectID xsi:nil="true"> </ObjectID>'
-                    +'<EmailAddress>'+ sEmail +'</EmailAddress>'
-                    +'<SubscriberKey>'+ sEmail +'</SubscriberKey>'
+                    +'<EmailAddress>'+ IECEBC_ETHelper.xmlEncode(sEmail) +'</EmailAddress>'
+                    +'<SubscriberKey>'+ IECEBC_ETHelper.xmlEncode(sEmail) +'</SubscriberKey>'
                     +'<Attributes>'
                     +'<Name>ExternalId</Name>'
-                    +'<Value>'+sId+'</Value>'
+                    +'<Value>'+IECEBC_ETHelper.xmlEncode(sId)+'</Value>'
                     +'</Attributes>'
                     +'<PartnerKey xsi:nil="true"/>'
                     +'</Objects>';
@@ -150,7 +150,7 @@ global class IECEBC_ETSubscriberCreateAsync {
             tags +
            '</CreateRequest>';
         
-        req.setTimeout(100000);
+        req.setTimeout(IECEBC_ETInit.TimeOut);
         IECEBC_ETHelper.SetSoapRequest(req, 'Create', bodyContent);
 
         system.debug('Body create subscribers: ' + req.getBody());
@@ -163,4 +163,5 @@ global class IECEBC_ETSubscriberCreateAsync {
            IECEBC_ETTemplateCreate.createEmailTemplate(emailTempId,campaignName, contactType);
         }
     }
+    
 }

@@ -41,9 +41,13 @@ public class vfIECEBC_RecipientList extends vfIECEBC_Abstract_List {
         
         insert customerFilters;
         
+        PageReference pr = new PageReference('/iec/IECEBC_Recipient?id=' + cloned.Id);
+        pr.setRedirect(true);
+        return pr;
+        /*
         clear();
         
-        return null;
+        return null;*/
     }
 
     

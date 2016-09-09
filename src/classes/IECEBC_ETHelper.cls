@@ -1,7 +1,7 @@
 public class IECEBC_ETHelper {
     // escape XML
     public static String xmlEncode(String input) {
-        String str = input.escapeXml(); // escaped and protected from any kind of injection.
+        String str = (String.isBlank(input) ? '' : input.escapeXml()); // escaped and protected from any kind of injection.
         return str;
     }
     
@@ -18,7 +18,9 @@ public class IECEBC_ETHelper {
             + '<wsa:ReplyTo>'
             + '<wsa:Address>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:Address>'
             + '</wsa:ReplyTo>'
-            + '<wsa:To>https://webservice.test.exacttarget.com/Service.asmx</wsa:To>'
+            + '<wsa:To>'
+            + IECEBC_ETInit.ProductionEndpoint
+        	+ '</wsa:To>'
             + '<wsse:Security soap:mustUnderstand="1">'
             + '<wsse:UsernameToken wsu:Id="SecurityToken-8ab9d52b-cf40-465b-9464-1a7c7f000460">'
             + '<wsse:Username>'            
@@ -54,10 +56,10 @@ public class IECEBC_ETHelper {
                         +'<Options/>'
                         +'<Objects xsi:type="TriggeredSendDefinition">'
                         +'<CustomerKey>'
-                        + triggeredParam 
+                        + xmlEncode(triggeredParam)
                         +'</CustomerKey>'
                         +'<Name>'
-                        + triggeredParam 
+                        + xmlEncode(triggeredParam)
                         +'</Name>'
                         +'<SendClassification>'
                         +'<ObjectID>82684d06-ff62-e611-8844-0025b3d7f36a</ObjectID>'
@@ -68,7 +70,7 @@ public class IECEBC_ETHelper {
                         +'</SendClassification>'
                         +'<Email>'
                         +'<ID>'
-                        + templateId 
+                        + xmlEncode(templateId)
                         +'</ID>'
                         +'<ObjectID xsi:nil="true"/>'
                         +'</Email>'
@@ -104,7 +106,7 @@ public class IECEBC_ETHelper {
             + '<Property>Name</Property>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + emailTemplateName            
+            + xmlEncode(emailTemplateName)            
             + '</Value>'
             + '</Filter>'
             + '</RetrieveRequest>'
@@ -127,7 +129,7 @@ public class IECEBC_ETHelper {
             + '<Property>Status</Property>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + status
+            + xmlEncode(status)
             + '</Value>'
             + '</Filter>'
             + '</RetrieveRequest>'
@@ -159,7 +161,7 @@ public class IECEBC_ETHelper {
             + '<Property>CategoryID</Property>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + categoryId
+            + xmlEncode(categoryId)
             + '</Value>'
             + '</Filter>'
             + '</RetrieveRequest>'
@@ -193,7 +195,7 @@ public class IECEBC_ETHelper {
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + categoryId
+            + xmlEncode(categoryId)
             + '</Value>'
             + '</LeftOperand>'
             + '<LogicalOperator>AND</LogicalOperator>'
@@ -201,7 +203,7 @@ public class IECEBC_ETHelper {
             + '<Property>FileName</Property>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + fileName
+            + xmlEncode(fileName)
             + '</Value>'
             + '</RightOperand>'            
             + '</Filter>'
@@ -234,7 +236,7 @@ public class IECEBC_ETHelper {
             + '<Property>FileName</Property>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + fileName
+            + xmlEncode(fileName)
             + '</Value>'            
             + '</Filter>'
             + '</RetrieveRequest>'
@@ -270,12 +272,11 @@ public class IECEBC_ETHelper {
     }
     
     // create xml for TS Summary retrieve request
-    public static String retrieveRequestTriggeredSendSummary(String triggeredSendName){
+    public static String retrieveRequestTriggeredSendSummary(String triggeredSendExternalKey){
         return '<RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">'
             + '<RetrieveRequest>'
             + '<ObjectType>TriggeredSendSummary</ObjectType>'
             + '<Properties>Sent</Properties>'
-            + '<Properties>CustomerKey</Properties>'
             + '<Properties>CustomerKey</Properties>'
             + '<Properties>NotSentDueToOptOut</Properties>'
             + '<Properties>NotSentDueToUndeliverable</Properties>'
@@ -294,7 +295,27 @@ public class IECEBC_ETHelper {
             + '<Property>CustomerKey</Property>'
             + '<SimpleOperator>equals</SimpleOperator>'
             + '<Value>'
-            + triggeredSendName
+            + xmlEncode(triggeredSendExternalKey)
+            + '</Value>'
+            + '</Filter>'
+            + '</RetrieveRequest>'
+            + '</RetrieveRequestMsg>';
+    }
+    
+    // create xml for TS retrieve request
+    public static String retrieveRequestTriggeredSend(String triggeredSendName){
+        return '<RetrieveRequestMsg xmlns="http://exacttarget.com/wsdl/partnerAPI">'
+            + '<RetrieveRequest>'
+            + '<ObjectType>TriggeredSendDefinition</ObjectType>'
+            + '<Properties>CustomerKey</Properties>'
+            + '<Properties>Name</Properties>'
+            + '<Properties>TriggeredSendStatus</Properties>'
+            + '<Properties>ObjectID</Properties>'
+            + '<Filter xsi:type="ns1:SimpleFilterPart" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">'
+            + '<Property>Name</Property>'
+            + '<SimpleOperator>equals</SimpleOperator>'
+            + '<Value>'
+            + xmlEncode(triggeredSendName)
             + '</Value>'
             + '</Filter>'
             + '</RetrieveRequest>'
@@ -304,7 +325,7 @@ public class IECEBC_ETHelper {
     // create xml for Soap request header
     public static void setSoapRequestHeader(HttpRequest req, String soapAction){        
         // set header        
-        req.setEndpoint('https://webservice.test.exacttarget.com/Service.asmx');
+        req.setEndpoint(IECEBC_ETInit.ProductionEndpoint);
         req.setMethod('POST');
         req.setHeader('SOAPAction', soapAction);
         req.setHeader('Content-Type', 'text/xml;charset=UTF-8');
@@ -313,7 +334,7 @@ public class IECEBC_ETHelper {
     // create xml for Soap request
     public static void setSoapRequest(HttpRequest req, String soapAction, String bodyContent){        
         // set header        
-        req.setEndpoint('https://webservice.test.exacttarget.com/Service.asmx');
+        req.setEndpoint(IECEBC_ETInit.ProductionEndpoint);
         req.setMethod('POST');
         req.setHeader('SOAPAction', soapAction);
         req.setHeader('Content-Type', 'text/xml;charset=UTF-8');

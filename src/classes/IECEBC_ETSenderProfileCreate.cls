@@ -7,18 +7,18 @@ public class IECEBC_ETSenderProfileCreate {
     
     class UnexpectedResponse_Exception extends Exception{}
     
-    public Static String createSenderProfile(){
+    public Static String createSenderProfile(String name, String customerKey, String fromName, String fromEmail){
         String SenderProfileId = '';
         
         //Using SF current user for sender information 
         
         //From name = User full name in SF (To be comfirm by Abdella)
-        String userName = userInfo.getName();
+        //String userName = userInfo.getName();
         // Sender Customer Key is same as User SF ID
-        Id userId = userInfo.getUserId(); 
+        //Id userId = userInfo.getUserId(); 
         
         //From email = User Email in SF (To be comfirm by Abdella)
-        String userEmail = userInfo.getUserEmail();
+        //String userEmail = userInfo.getUserEmail();
         String senderKey = ''; //contain Customer Key that will be used in Send Classification 
         
         String bodyContent = 
@@ -26,10 +26,10 @@ public class IECEBC_ETSenderProfileCreate {
             '<Objects xsi:type="SenderProfile">' +
             '<PartnerKey xsi:nil="true"/>' +
             '<ObjectID xsi:nil="true"/>' +
-            '<Name>' + userId + '</Name>' +
-            '<CustomerKey>' + userId + '</CustomerKey>' +
-            '<FromName>' + userName + '</FromName>' +
-            '<FromAddress>' + userEmail + '</FromAddress>' +
+            '<Name>' + IECEBC_ETHelper.xmlEncode(name) + '</Name>' +
+            '<CustomerKey>' + IECEBC_ETHelper.xmlEncode(customerKey) + '</CustomerKey>' +
+            '<FromName>' + IECEBC_ETHelper.xmlEncode(fromName) + '</FromName>' +
+            '<FromAddress>' + IECEBC_ETHelper.xmlEncode(fromEmail) + '</FromAddress>' +
             ' </Objects>' +
             '</CreateRequest>';
         

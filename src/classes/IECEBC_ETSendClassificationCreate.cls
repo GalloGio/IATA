@@ -8,27 +8,27 @@ public class IECEBC_ETSendClassificationCreate {
     
     class UnexpectedResponse_Exception extends Exception{}
     
-    public Static String createSendClassification(){
+    public Static String createSendClassification(String name, String customerKey, String senderCustomerKey){
         
         String sendClassificationId = '';
         //Define Sender Profile as the user who send the emails (To be comfirm by Abdella)
-        String senderCustomerKey = IECEBC_ETSenderProfileCreate.createSenderProfile();
+        //String senderCustomerKey = IECEBC_ETSenderProfileCreate.createSenderProfile();
         //Using a default ET Delivery profile : Shawi_DP
         //Shawi_DP contans default Delivery information of the account: IP address, Header, Footer
-        String deliveryCustomerKey = 'Shawi_DP';
+        String deliveryCustomerKey = 'eBroadcast'; 
         String bodyContent = 
             '<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">' + 
             '<Options/>' + 
             '<Objects xsi:type="SendClassification">' + 
             '<PartnerKey xsi:nil="true" />' + 
             '<ObjectID xsi:nil="true" />'+ 
-            '<Name>API Creation Test From Sandbox</Name>' + 
-            '<CustomerKey>API_Creation_Test_From_Sandbox</CustomerKey>' + 
+            '<Name>' + IECEBC_ETHelper.xmlEncode(name) + '</Name>' + 
+            '<CustomerKey>' + IECEBC_ETHelper.xmlEncode(customerKey) + '</CustomerKey>' + 
             '<SenderProfile>' + 
-            '<CustomerKey>' + senderCustomerKey + '</CustomerKey>' + 
+            '<CustomerKey>' + IECEBC_ETHelper.xmlEncode(senderCustomerKey) + '</CustomerKey>' + 
             '</SenderProfile>' + 
             '<DeliveryProfile>' + 
-            '<CustomerKey>' + deliveryCustomerKey +'</CustomerKey>' + 
+            '<CustomerKey>' + IECEBC_ETHelper.xmlEncode(deliveryCustomerKey) +'</CustomerKey>' + 
             '</DeliveryProfile>' + 
             '</Objects>' + 
             '</CreateRequest>';
@@ -52,8 +52,6 @@ public class IECEBC_ETSendClassificationCreate {
         } else{
             System.debug(res);
             throw new UnexpectedResponse_Exception('Unexpected Response');
-        } 
-        
-    }   
-    
+        }         
+    }  
 }

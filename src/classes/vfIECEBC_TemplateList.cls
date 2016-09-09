@@ -16,7 +16,8 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         return options;
        
     }
-    public PageReference Duplicate(){ 
+    
+    public static EBC_Template__c duplicate(Id templateId, String name, Id billingAccountId, Boolean isReusable) {
         EBC_Template__c original = [
             Select
             	Id,
@@ -26,16 +27,16 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
 	            RecordTypeId
             From EBC_Template__c
             Where
-            	Id = :selectedItem.Id
+            	Id = :templateId
         ];
         List<Attachment> originalAttachments = [Select Id, Name, ContentType, Body From Attachment Where ParentId = :original.Id];
         
         EBC_Template__c newTemplate = new EBC_Template__c();
-        newTemplate.Name = ((EBC_Template__c)selectedItem).Name;
+        newTemplate.Name = name;
         newTemplate.RecordTypeId = original.RecordTypeId;
-        newTemplate.Billing_Account__c = billingAccount.Id;
+        newTemplate.Billing_Account__c = billingAccountId;
         newTemplate.Audience__c = original.Audience__c; 
-        newTemplate.Is_Reusable__c = true;
+        newTemplate.Is_Reusable__c = isReusable;
         newTemplate.Parent_Template__c = original.Parent_Template__c;
         insert newTemplate;
         
@@ -51,6 +52,11 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         
         if (newAttachments.size() > 0) insert newAttachments;
         
+        return newTemplate;
+    }
+    
+    public PageReference Duplicate(){ 
+        duplicate(selectedItem.Id, ((EBC_Template__c)selectedItem).Name, billingAccount.Id, true);
         
         resetQuery();
         return null;

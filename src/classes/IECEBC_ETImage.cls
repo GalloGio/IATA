@@ -16,9 +16,9 @@ public class IECEBC_ETImage {
             + IECEBC_ETHelper.retrieveRequestImage(fileName) 
             + IECEBC_ETHelper.createXMLFooter()              
         );  
-        System.debug(req.getBody());
-        req.setTimeout(5000);        
-        system.debug('ImageStatus request body: ' + req.getBody());
+        //System.debug(req.getBody());
+        req.setTimeout(IECEBC_ETInit.TimeOut);        
+        //system.debug('ImageStatus request body: ' + req.getBody());
         // get response
         HTTPResponse response = http.send(req);        
         System.debug(response.getBody());
@@ -107,7 +107,7 @@ public class IECEBC_ETImage {
             + IECEBC_ETHelper.retrieveRequestPortfolio(categoryId, fileName) // category id of the portfolio folder
             + IECEBC_ETHelper.createXMLFooter()              
         );                
-        req.setTimeout(5000);        
+        req.setTimeout(IECEBC_ETInit.TimeOut);        
         
         // get response
         HTTPResponse response = http.send(req);        
