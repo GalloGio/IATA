@@ -107,7 +107,7 @@ public class AMS_ChangeCodesHelper {
 
     /** 
 
-	 Create Change Codes
+	 Create Change Codes NEW Method that creates Change Code History Objects
 
 	*/
 
@@ -191,6 +191,13 @@ public class AMS_ChangeCodesHelper {
              return accountsToUpdateList;
     }
 
+   /** 
+
+     (TO BE REMOVED) Old method from AMS_Utils
+
+    */
+
+
     public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
@@ -241,7 +248,7 @@ public class AMS_ChangeCodesHelper {
 
 
     /** 
-	 Add Change Code to be Created
+	 Add Change Code to be Created NeW method with Change Code History
 	*/
 
     private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
@@ -253,34 +260,33 @@ public class AMS_ChangeCodesHelper {
         if (oscar != null)
             oscarId = oscar.Id;
 
-        System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
-
         Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
                 OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
                 Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
 
+        System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
 
-		List<AMS_Agency_A_Change_code_History__c> changeCodeFielsHistory = new List <AMS_Agency_A_Change_code_History__c>();
+        List<AMS_Agency_A_Change_code_History__c> changeCodeFielsHistory = new List <AMS_Agency_A_Change_code_History__c>();
 
         for (ObjectChange change : objectChangesByChangeCode.changes){
 
-        	system.debug('aacNEW.id : ' + aacNEW.id);
-        	system.debug('change.objectAPI : ' + change.objectAPI);
-        	system.debug('change.fieldAPI  : ' + change.fieldAPI );
-			system.debug('change.newValue: ' + change.newValue);                	
-			system.debug('change.oldValue: ' + change.oldValue);
+            system.debug('aacNEW.id : ' + aacNEW.id);
+            system.debug('change.objectAPI : ' + change.objectAPI);
+            system.debug('change.fieldAPI  : ' + change.fieldAPI );
+            system.debug('change.newValue: ' + change.newValue);                    
+            system.debug('change.oldValue: ' + change.oldValue);
 
-        	AMS_Agency_A_Change_code_History__c aacNEWHistory = 
-				        	new AMS_Agency_A_Change_code_History__c(
-													Agency_Applied_Change_Code__c = null 			    , //ID will be added after the Insert
-													Object_API_Name__c 			  = change.objectAPI 	,
-													Field_API_Name__c             = change.fieldAPI     ,
-													Field_New_Value__c			  = change.newValue	   	,
-													Field_Old_Value__c			  = change.oldValue		);
+            AMS_Agency_A_Change_code_History__c aacNEWHistory = 
+                            new AMS_Agency_A_Change_code_History__c(
+                                                    Agency_Applied_Change_Code__c = null                , //ID will be added after the Insert
+                                                    Object_API_Name__c            = change.objectAPI    ,
+                                                    Field_API_Name__c             = change.fieldAPI     ,
+                                                    Field_New_Value__c            = change.newValue     ,
+                                                    Field_Old_Value__c            = change.oldValue     );
 
 
-        	changeCodeFielsHistory.add(aacNEWHistory);
+            changeCodeFielsHistory.add(aacNEWHistory);
         }
 
 
@@ -288,9 +294,9 @@ public class AMS_ChangeCodesHelper {
         String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
-        System.debug('Change code status is ' + changeCode.status);
-        System.debug('Account status is ' + oscarAgency.Status__c);
-        System.debug('New val is ' + newVal);
+        System.debug(loggingLevel.ERROR, 'Change code status is ' + changeCode.status);
+        System.debug(loggingLevel.ERROR, 'Account status is ' + oscarAgency.Status__c);
+        System.debug(loggingLevel.ERROR, 'New val is ' + newVal);
 
 
         if (newVal <> oscarAgency.Status__c && newVal != null) {
@@ -298,11 +304,42 @@ public class AMS_ChangeCodesHelper {
             oscarAgency.Status__c = newVal;
             toReturn = oscarAgency;
         }
+        
+        if(oscar != null){
 
+            if( aacNEW.Change_Code__c == 'NEW' ){
+                oscar.First_Step_Completed__c = true;
+
+                if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
+            }
+            
+            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+
+            if( oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+                for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+            }
+        }        
+
+        if( aacNEW.Change_Code__c == 'FIN'){
+                
+                oscarAgency.Is_AIMS_Account__c = true;
+
+                oscarAgency.Accreditation_Date__c = Date.Today();            
+
+                toReturn = oscarAgency;
+            }
+        
         return new ChangeCodeStruct(aacNEW, toReturn,changeCodeFielsHistory);
     }
 
-     //Change Code Utils
+
+
+    /** 
+    (TO BE REMOVED) Add Change Code to be Created OLD method without Change Code History
+    */
+
+
     private static ChangeCodeStruct createAAChangeCode(AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
 
         Account toReturn = null;
@@ -312,12 +349,11 @@ public class AMS_ChangeCodesHelper {
         if (oscar != null)
             oscarId = oscar.Id;
 
-        System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
-
         Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
                 OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
                 Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
 
+        System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
 
 
@@ -325,9 +361,9 @@ public class AMS_ChangeCodesHelper {
         String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
-        System.debug('Change code status is ' + changeCode.status);
-        System.debug('Account status is ' + oscarAgency.Status__c);
-        System.debug('New val is ' + newVal);
+        System.debug(loggingLevel.ERROR, 'Change code status is ' + changeCode.status);
+        System.debug(loggingLevel.ERROR, 'Account status is ' + oscarAgency.Status__c);
+        System.debug(loggingLevel.ERROR, 'New val is ' + newVal);
 
 
         if (newVal <> oscarAgency.Status__c && newVal != null) {
@@ -336,7 +372,23 @@ public class AMS_ChangeCodesHelper {
             toReturn = oscarAgency;
         }
 
-        if( aacNEW.Change_Code__c == 'FIN' ){
+        if(oscar != null){
+
+            if( aacNEW.Change_Code__c == 'NEW' ){
+                oscar.First_Step_Completed__c = true;
+
+                if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
+            }
+            
+            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+
+            if( oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+                for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+            }
+        }        
+
+        if( aacNEW.Change_Code__c == 'FIN'){
             
             oscarAgency.Is_AIMS_Account__c = true;
             oscarAgency.Accreditation_date__c = date.today();
