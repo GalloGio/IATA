@@ -381,6 +381,10 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- Bank Transfer Payment terms --></label>
+        <name>Bank_Transfer_Payment_terms</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Bank transfer validation for auto renew --></label>
         <name>Bank_transfer_validation_for_auto_renew</name>
     </customLabels>
