@@ -276,7 +276,7 @@
                                     </section>
                                 </apex:variable>
 
-                                <section class="group-container you-may-also-like">
+                                <!--section class="group-container you-may-also-like">
                                     <h3 class="group-title icon chevron-triple-right">You may also like</h3>
                                     <ul class="list product">
                                         <apex:repeat value="{!recommendedProducts}" var="prod">
@@ -289,7 +289,7 @@
                                             </li>
                                         </apex:repeat>
                                     </ul>
-                                </section>
+                                </section-->
                             </div>
                         </apex:outputPanel>
 

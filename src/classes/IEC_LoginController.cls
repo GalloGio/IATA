@@ -117,7 +117,7 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                 /*ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'A new password has been sent to ' + resetPasswordEmail));
                 resetPasswordEmail = '';*/
                 //Redirect the Customer to the login page
-                Pagereference pageRef = new Pagereference('/iec/iec_Login?resetPasswordEmail=' + resetPasswordEmail);
+                Pagereference pageRef = new Pagereference('/iec_Login?resetPasswordEmail=' + resetPasswordEmail);
                 pageRef.setRedirect(true);
                 return pageRef;
             }
