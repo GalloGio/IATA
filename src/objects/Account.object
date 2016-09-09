@@ -9086,7 +9086,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Membership_SITA__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Membership SITA</label>
+        <label>SITA Member</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -30655,6 +30655,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DDS_Status__c</picklist>
+            <values>
+                <fullName>No Reply</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Opt-Out</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>multinational</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

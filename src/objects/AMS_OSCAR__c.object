@@ -10285,7 +10285,13 @@ alert(&apos; Failed to generate a new IATA CODE. Please contact your administrat
         <masterLabel>Manage Attachments</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>javascript:srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);</url>
+        <url>{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)} 
+
+if (sforce.console.isInConsole()) {
+srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
+} else {
+window.location.href = &quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;;
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Set_Ownership</fullName>

@@ -679,6 +679,24 @@
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
     </labels>
     <labels>
+        <fullName>Bank_Transfer_Payment_terms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bank Transfer Payment terms</shortDescription>
+        <value>&lt;p&gt;
+&lt;b&gt;Payment terms&lt;/b&gt;&lt;br /&gt;
+Payment required on receipt of this Payment Advice
+&lt;/p&gt;
+&lt;p&gt;
+	&lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
+	ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
+	Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
+&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Tax Information&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Any applicable tax shall be self-assessed by the client.&lt;/p&gt;</value>
+    </labels>
+    <labels>
         <fullName>Bank_transfer_validation_for_auto_renew</fullName>
         <language>en_US</language>
         <protected>false</protected>
