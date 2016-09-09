@@ -294,7 +294,7 @@ global class AMS_OSCAR_Webservice {
                 changeCode.status  = '7';
 
                 Account acct = new Account(Id = oscar[0].Account__c);
-                AMS_Utils.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);*/
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);*/
 
                 oscar[0].STEP26__c = 'In Progress';
                 update oscar;
