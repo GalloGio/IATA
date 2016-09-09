@@ -90,6 +90,89 @@
         <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
+        <fullName>Marketingalertofnewdeals</fullName>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
+        <description>MACS alert of new deals over 10K</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesAssistantDirectorAmericas</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesAssistantDirectorAsiaPac</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesAssistantDirectorEurope</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesDirector</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesDirectorBIITCO</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>abulkheirk@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>astridgec@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ayarik@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>heinickem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hubblem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>itania@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kikanor@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mccorleys@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mckayt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>siponenp@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wangw@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>webbj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MarketingPAX/MMAlertonClosedDeals</template>
+    </alerts>
+    <alerts>
         <fullName>Opportunity_Notify_Ben_Barrocas</fullName>
         <description>Opportunity: Notify Ben Barrocas</description>
         <protected>false</protected>
@@ -331,6 +414,17 @@
         <active>true</active>
         <description>Identifies an opportunity closing in IATA&apos;s Europe RCT</description>
         <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Europe&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Russia and CIS&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>MACS - Close Deal Notification %28RCRM%29</fullName>
+        <actions>
+            <name>Marketingalertofnewdeals</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000</description>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

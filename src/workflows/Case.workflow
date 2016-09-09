@@ -5055,6 +5055,16 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ICCS_Update_Status_to_Complete</fullName>
+        <description>ICCS: Update Status to Complete</description>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>ICCS: Update Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ICH_Case_Area</fullName>
         <description>Set case area to ICH</description>
         <field>CaseArea__c</field>
@@ -12240,6 +12250,81 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>ICCS_Update Status to Complete</fullName>
+        <actions>
+            <name>ICCS_Update_Status_to_Complete</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND ( (4 AND 5 AND 6) OR ((7 OR 8) AND 9 AND 10) OR (11 AND 12 AND 13))</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ASP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>FDS - Update Authorized Signatories Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Change Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Replacement for Exec. Officer specifically</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Banking Resolution applied</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Banking Resolution</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Addition</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Replacement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures,ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures checked,ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Deletion</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ID Card - ITDI Notification</fullName>
         <actions>
             <name>ITDI_Email_Alert</name>
@@ -14934,6 +15019,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -14946,14 +15039,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

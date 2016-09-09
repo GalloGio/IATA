@@ -260,6 +260,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -531,6 +541,16 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -970,6 +990,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1245,6 +1275,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>LeadSource</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1516,6 +1556,16 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -6290,6 +6340,42 @@ TotalRows-Successes-Errors</description>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEC_Migration_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>IEC - temporary field for data migration - to delete when complete</description>
+        <externalId>true</externalId>
+        <label>IEC_Migration_Key</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>INFA_AV__Mailing_Address_Validation_Status__c</fullName>
+        <defaultValue>&quot;Not Verified&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Mailing Address Validation Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>INFA_AV__Other_Address_Validation_Status__c</fullName>
+        <defaultValue>&quot;Not Verified&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Other Address Validation Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -26500,10 +26586,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <lookupDialogsAdditionalFields>Use_Contact__c</lookupDialogsAdditionalFields>
         <lookupFilterFields>FULL_NAME</lookupFilterFields>
         <lookupFilterFields>CONTACT.EMAIL</lookupFilterFields>
-        <lookupFilterFields>00Nw0000008UgKG</lookupFilterFields>
+        <lookupFilterFields>Services__c</lookupFilterFields>
         <lookupFilterFields>ACCOUNT.NAME</lookupFilterFields>
-        <lookupFilterFields>00N20000000jRaV</lookupFilterFields>
-        <lookupFilterFields>00N20000000pQXa</lookupFilterFields>
+        <lookupFilterFields>Status__c</lookupFilterFields>
+        <lookupFilterFields>Use_Contact__c</lookupFilterFields>
         <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
@@ -27150,6 +27236,70 @@ myuser={!User.Id}</url>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/500/e?retURL=/{!Contact.Id}&amp;def_contact_id={!Contact.Id}&amp;cas14=IFAP user management query&amp;cas6=IFAP user management query&amp;cas15=Customer requests information on how to access the financial assessments portal.&amp;00N20000000h4cK={!Account.BillingCountry}&amp;00N20000000h23T=IFAP User Management&amp;00N20000000gzqc={!Account.Site}&amp;00N20000000h1xp=Risk Management&amp;def_account_id={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>INFA_AV__Verify_Mailing_Address</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Verify Mailing Address</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if((&apos;{!JSENCODE(Contact.MailingCountry) }&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.MailingCountry)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.MailingStreet)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.MailingStreet)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.MailingCity)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.MailingCity)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.MailingState)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.MailingState)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.MailingPostalCode)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.MailingPostalCode)}&apos;==null)) 
+{ 
+var url=&quot;/apex/INFA_AV__selectaddress?id=&quot;+&quot;{!Contact.Id}&quot;+&quot;&amp;type=&quot;+&quot;contact&quot;+&quot;&amp;mode=1&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100&apos;); 
+//window.top.location.reload(true); 
+} 
+else if(&apos;{!Contact.INFA_AV__Mailing_Address_Validation_Status__c}&apos; != &apos;Address Verified&apos;) 
+{ 
+if((&apos;{!JSENCODE(Contact.MailingCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.MailingCountry)}&apos;==null) &amp;&amp;((&apos;{!JSENCODE(Contact.MailingStreet)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.MailingStreet)}&apos;!=null) ||(&apos;{!JSENCODE(Contact.MailingCity)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.MailingCity)}&apos;!=null) ||(&apos;{!JSENCODE(Contact.MailingState)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.MailingState)}&apos;!=null) ||(&apos;{!JSENCODE(Contact.MailingPostalCode)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.MailingPostalCode)}&apos;!=null))) 
+{ 
+alert(&apos;Mailing Country is mandatory&apos;); 
+} 
+else 
+{ 
+var url=&quot;/apex/INFA_AV__verifyAddress?id=&quot;+&quot;{!Contact.Id}&quot;+&quot;&amp;type=&quot;+&quot;contact&quot;+&quot;&amp;mode=1&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100,scrollbars=yes&apos;); 
+//window.top.location.reload(true); 
+} 
+} 
+else if(&apos;{!Contact.INFA_AV__Mailing_Address_Validation_Status__c}&apos; == &apos;Address Verified&apos;) 
+{ 
+alert(&apos;Mailing address is already verified&apos;); 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>INFA_AV__Verify_Other_Address</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Verify Other Address</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if((&apos;{!JSENCODE(Contact.OtherCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.OtherCountry)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.OtherStreet)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.OtherStreet)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.OtherCity)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.OtherCity)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.OtherState)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.OtherState)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Contact.OtherPostalCode)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.OtherPostalCode)}&apos;==null)) 
+{ 
+var url=&quot;/apex/INFA_AV__selectaddress?id=&quot;+&quot;{!Contact.Id}&quot;+&quot;&amp;type=&quot;+&quot;contact&quot;+&quot;&amp;mode=2&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100&apos;); 
+//window.top.location.reload(true); 
+} 
+else if(&apos;{!Contact.INFA_AV__Other_Address_Validation_Status__c}&apos;!=&apos;Address Verified&apos;) 
+{ 
+if((&apos;{!JSENCODE(Contact.OtherCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Contact.OtherCountry)}&apos;==null) &amp;&amp;((&apos;{!JSENCODE(Contact.OtherStreet)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.OtherStreet)}&apos;!=null) ||(&apos;{!JSENCODE(Contact.OtherCity)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.OtherCity)}&apos;!=null) ||(&apos;{!JSENCODE(Contact.OtherState)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.OtherState)}&apos;!=null) ||(&apos;{!JSENCODE(Contact.OtherPostalCode)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Contact.OtherPostalCode)}&apos;!=null))) 
+{ 
+alert(&apos;Other Country is mandatory&apos;); 
+} 
+else 
+{ 
+var url=&quot;/apex/INFA_AV__verifyAddress?id=&quot;+&quot;{!Contact.Id}&quot;+&quot;&amp;type=&quot;+&quot;contact&quot;+&quot;&amp;mode=2&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100,scrollbars=yes&apos;); 
+//window.top.location.reload(true); 
+} 
+} 
+else if(&apos;{!Contact.INFA_AV__Other_Address_Validation_Status__c}&apos;==&apos;Address Verified&apos;) 
+{ 
+alert(&apos;Other address is already verified&apos;); 
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Load_Member_Contacts</fullName>

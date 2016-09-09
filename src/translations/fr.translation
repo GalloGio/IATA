@@ -1504,6 +1504,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_IDCardAlreadyExistsError</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_IDCardAppDetails --></label>
+        <name>IDCard_IDCardAppDetails</name>
+    </customLabels>
+    <customLabels>
         <label>La demande de Carte n&apos;a pas été trouvée</label>
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
@@ -1823,6 +1827,10 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
     <customLabels>
         <label>REQUÊTE DE CARTE D&apos;IDENTITÉ EN ATTENTE</label>
         <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH2 --></label>
+        <name>IDCard_PendingIdCardAppH2</name>
     </customLabels>
     <customLabels>
         <label>Vous devez sélectionner au mois une carte à commander et/ou rejeter pour poursuivre.</label>
@@ -5593,6 +5601,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
+    </customLabels>
+    <customLabels>
         <label>Documents</label>
         <name>ISSP_Documents</name>
     </customLabels>
@@ -6726,7 +6738,9 @@ Si vous continuez à avoir des problèmes d&apos;inscription au Portail Clientè
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <label>Aucune organisation n&apos;a été trouvée pour ces critères de recherche. Veuillez modifier votre recherche et essayez à nouveau ou cliquez sur &quot;Créer Nouveau&quot; pour créer un nouveau registre de votre compagnie aérienne. 
+&lt;br/&gt;&lt;br/&gt; 
+Si vous continuez à avoir des problèmes d&apos;inscription au Portail Clientèle IATA, veuillez consulter notre &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;guide pratique&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>

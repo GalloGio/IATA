@@ -1488,6 +1488,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_IDCardAlreadyExistsError</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_IDCardAppDetails --></label>
+        <name>IDCard_IDCardAppDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_IDCardAppNotFound --></label>
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
@@ -1803,6 +1807,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
     <customLabels>
         <label><!-- IDCard_PendingIdCardAppH1 --></label>
         <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH2 --></label>
+        <name>IDCard_PendingIdCardAppH2</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -5560,6 +5568,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
+    </customLabels>
+    <customLabels>
         <label>파일</label>
         <name>ISSP_Documents</name>
     </customLabels>
@@ -6692,7 +6704,9 @@ IATA 커스터머 포털 이용에 문제가 지속되는 경우 IATA (blank?) �
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <label>검색조건에 맞는 단체가 없습니다. 조건을 변경하시어 다시 한 번 검색 해 주시기 바랍니다. 또는 Create New 버튼을 클릭하시어 새로운 회사기록을 생성 해 주시기 바랍니다.
+&lt;br/&gt;&lt;br/&gt;
+IATA 커스터머 포털 이용에 문제가 지속되는 경우 IATA (blank?) 에 문의주시기 바랍니다.&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;웹서비스 장애 해결&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>

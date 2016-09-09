@@ -1488,6 +1488,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_IDCardAlreadyExistsError</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_IDCardAppDetails --></label>
+        <name>IDCard_IDCardAppDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_IDCardAppNotFound --></label>
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
@@ -1803,6 +1807,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
     <customLabels>
         <label><!-- IDCard_PendingIdCardAppH1 --></label>
         <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH2 --></label>
+        <name>IDCard_PendingIdCardAppH2</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -5558,6 +5566,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
+    </customLabels>
+    <customLabels>
         <label>Documentos</label>
         <name>ISSP_Documents</name>
     </customLabels>
@@ -6690,7 +6702,9 @@ Caso continuar experimentando problemas ao registrar no Portal IATA por favor co
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <label>Nenhuma organização foi encontrada atraves deste critério de busca. Por favor modifique sua busca e tente novamente ou clique em Criar Novo para criar um perfil de nova companhia.
+&lt;br/&gt;&lt;br/&gt;
+Caso continuar experimentando problemas ao registrar no Portal IATA por favor consulte nosso&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;guia de solução de problemas&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>

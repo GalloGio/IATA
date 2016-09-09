@@ -211,6 +211,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -461,6 +471,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -707,6 +727,16 @@
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -1106,6 +1136,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1356,6 +1396,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1602,6 +1652,16 @@
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -1861,6 +1921,16 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>MasterRecordId</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -2112,6 +2182,16 @@
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastReferencedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastViewedDate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
@@ -7876,6 +7956,45 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>IEC_Migration_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>IEC - temporary field for data migration - to delete when complete</description>
+        <externalId>true</externalId>
+        <label>IEC_Migration_Key</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>INFA_AV__Billing_Address_Validation_Status__c</fullName>
+        <defaultValue>&quot;Not Verified&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Billing Address Validation Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>INFA_AV__Shipping_Address_Validation_Status__c</fullName>
+        <defaultValue>&quot;Not Verified&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Shipping Address Validation Status</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ISS_SIS_TC_Accepted_Date__c</fullName>
@@ -23225,6 +23344,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Field_Head_Office__c</picklist>
             <values>
                 <fullName>Branch</fullName>
@@ -25787,6 +25921,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28372,6 +28521,68 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Field_Head_Office__c</picklist>
             <values>
                 <fullName>Branch</fullName>
@@ -28537,6 +28748,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>-</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30588,6 +30806,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Due_Diligence_Status__c</picklist>
             <values>
                 <fullName>Cleared</fullName>
@@ -30970,6 +31203,261 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance%2FRepair%2FOverhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer%2FSeller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Parts%2FAvionics%2FSystems%2FSafety Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport%2FAirport Management%2FAirport Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automobile%2FEngine Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo%2FLogistics Services%2FFreight Forwarder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemical %26 Gas Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compliance%2FRegulatory%2FSafety%2FTesting Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant%2FLaw Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Defense%2FSecurity%2FWeapons%2FAmmunition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educational Institution%2FLibrary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering%2FArchitectural%2FConstruction Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment%2FMuseums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flavouring %26 Fragrances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent %28GSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government Agency%2FAviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling%2FFueling%2FGround Power%2FAirline Catering%2FFBO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology%2FTelecommunications%2FElectronics Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry%2FWatches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Services%2FHealth%2FResearch%2FPharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mining %26 Metals Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Packaging%2FLabeling%2FTransport Containers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printing %26 Ink Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pyrotechnics%2FSpecial Effects Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Nations%2FOther NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste Management%2FRemediation%2FTreatment%2FEnvironmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wholesaler of stamps%2C coins%2C %26 paper money</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36471,6 +36959,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Due_Diligence_Status__c</picklist>
             <values>
                 <fullName>Cleared</fullName>
@@ -39317,6 +39820,2191 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>IATA_Airline_Account</fullName>
+        <active>true</active>
+        <description>Used for Accounts uploaded from ACLI and DPC Systems</description>
+        <label>IATA Airline Account</label>
+        <picklistValues>
+            <picklist>ACLI_Status__c</picklist>
+            <values>
+                <fullName>xx</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>yy</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Attorneys</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultancy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS %2F CRS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inspector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newspaper</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newswire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other suppliers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRIN agents %28individuals%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Registered Fuel Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Research Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Student</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TV%2FRadio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket Document Distributor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ticket Printer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel %26 Tourism</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSPCountry_del__c</picklist>
+            <values>
+                <fullName>Albania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>All European BSPs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Andorra</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Argentina</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Austria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Azerbaijan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bahamas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belgium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Belize</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Benin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bolivia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bosnia and Herzegovina</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Botswana</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Brazil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>British Virgin Islands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgaria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Burkina Faso</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cameroon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Canada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cayman Islands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Colombia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Congo %28Brazzaville%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Costa Rica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cote d%27Ivoire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Croatia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cyprus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Czech Republic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Denmark</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dominican Republic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Eastern Caribbean</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecuador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Egypt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>El Salvador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estonia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ethiopia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>France</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gabon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Germany</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ghana</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greece</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Guatemala</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Haiti</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Honduras</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hungary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iceland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ireland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Israel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Italy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jamaica</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jordan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kenya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kuwait</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Latvia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lebanon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lesotho</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liechtenstein</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lithuania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Luxembourg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Macedonia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malawi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mali</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Malta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mauritania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mauritius</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mexico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moldova</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montenegro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morocco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mozambique</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Namibia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Netherlands</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nicaragua</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nigeria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Norway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Panama</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paraguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Peru</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Poland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portugal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Romania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saudi Arabia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senegal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Serbia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slovakia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slovenia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Spain</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swaziland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sweden</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Switzerland</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Syria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tanzania</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Togo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tunisia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turkey</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Turks and Caicos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uganda</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ukraine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Arab Emirates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Uruguay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Venezuela</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yemen</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Zambia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Zimbabwe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_Participant_in_new__c</picklist>
+            <values>
+                <fullName>AD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ML</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TZ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>XK</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ZW</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_Participation_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Field_Head_Office__c</picklist>
+            <values>
+                <fullName>Branch</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Headquarter</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Fin_statements_submission_deadline__c</picklist>
+            <values>
+                <fullName>April</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>August</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>December</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>February</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>January</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>July</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>June</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>March</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>May</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>November</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>October</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Area__c</picklist>
+            <values>
+                <fullName>1 - Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 - EMEA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 - Asia Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4 - China</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Industry</picklist>
+            <values>
+                <fullName>Airline</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>InvoiceWorks_Type_of_Customer__c</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Participating Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Participating Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Power Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance%2FRepair%2FOverhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer%2FSeller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Parts%2FAvionics%2FSystems%2FSafety Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport%2FAirport Management%2FAirport Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automobile%2FEngine Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo%2FLogistics Services%2FFreight Forwarder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemical %26 Gas Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compliance%2FRegulatory%2FSafety%2FTesting Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant%2FLaw Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Defense%2FSecurity%2FWeapons%2FAmmunition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educational Institution%2FLibrary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering%2FArchitectural%2FConstruction Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment%2FMuseums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flavouring %26 Fragrances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent %28GSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government Agency%2FAviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling%2FFueling%2FGround Power%2FAirline Catering%2FFBO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology%2FTelecommunications%2FElectronics Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry%2FWatches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Services%2FHealth%2FResearch%2FPharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mining %26 Metals Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Packaging%2FLabeling%2FTransport Containers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printing %26 Ink Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pyrotechnics%2FSpecial Effects Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Nations%2FOther NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste Management%2FRemediation%2FTreatment%2FEnvironmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wholesaler of stamps%2C coins%2C %26 paper money</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Ownership</picklist>
+            <values>
+                <fullName>Cooperative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - For-Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - Not-For-Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation - Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Liability Company %28LLC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Corporate %2F Individuals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Rating</picklist>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enhanced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Middle East %26 North Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Strategic_Partnership_Areas__c</picklist>
+            <values>
+                <fullName>2D Bar Code</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Recovery</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Advisors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alternative Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage%2FAutomatic Identification Stds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Base Fee Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CUSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Standards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering %26 Maintenance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Verifiers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fast Travel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Taxation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inflight Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interline Tariffs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance%2C Repair and Overhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meteorological</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Standards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp Services %26 Airside Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regional Infrastructure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Risk Management and Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Fuel Group</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Partners</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unit Load Devices</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>World Air Transport Summit %2F AGM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>e-freight</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>ATC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CANSO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Couriers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inspector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low-cost carrier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member airline supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NISI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SSI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Office__c</picklist>
+            <values>
+                <fullName>Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third Party Managed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>IATA_Airline_BR</fullName>
         <active>true</active>
         <description>The new record type for ALL Airline Branches with NEW data model - Use this for all Airlines Branches</description>
@@ -40901,6 +43589,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Field_Head_Office__c</picklist>
             <values>
                 <fullName>Branch</fullName>
@@ -41131,6 +43834,261 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance%2FRepair%2FOverhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer%2FSeller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Parts%2FAvionics%2FSystems%2FSafety Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport%2FAirport Management%2FAirport Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automobile%2FEngine Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo%2FLogistics Services%2FFreight Forwarder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemical %26 Gas Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compliance%2FRegulatory%2FSafety%2FTesting Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant%2FLaw Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Defense%2FSecurity%2FWeapons%2FAmmunition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educational Institution%2FLibrary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering%2FArchitectural%2FConstruction Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment%2FMuseums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flavouring %26 Fragrances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent %28GSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government Agency%2FAviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling%2FFueling%2FGround Power%2FAirline Catering%2FFBO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology%2FTelecommunications%2FElectronics Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry%2FWatches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Services%2FHealth%2FResearch%2FPharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mining %26 Metals Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Packaging%2FLabeling%2FTransport Containers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printing %26 Ink Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pyrotechnics%2FSpecial Effects Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Nations%2FOther NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste Management%2FRemediation%2FTreatment%2FEnvironmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wholesaler of stamps%2C coins%2C %26 paper money</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -44882,6 +47840,57 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -44897,6 +47906,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45165,6 +48189,261 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance%2FRepair%2FOverhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer%2FSeller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Parts%2FAvionics%2FSystems%2FSafety Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport%2FAirport Management%2FAirport Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automobile%2FEngine Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo%2FLogistics Services%2FFreight Forwarder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemical %26 Gas Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compliance%2FRegulatory%2FSafety%2FTesting Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant%2FLaw Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Defense%2FSecurity%2FWeapons%2FAmmunition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educational Institution%2FLibrary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering%2FArchitectural%2FConstruction Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment%2FMuseums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flavouring %26 Fragrances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent %28GSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government Agency%2FAviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling%2FFueling%2FGround Power%2FAirline Catering%2FFBO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology%2FTelecommunications%2FElectronics Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry%2FWatches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Services%2FHealth%2FResearch%2FPharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mining %26 Metals Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Packaging%2FLabeling%2FTransport Containers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printing %26 Ink Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pyrotechnics%2FSpecial Effects Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Nations%2FOther NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste Management%2FRemediation%2FTreatment%2FEnvironmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wholesaler of stamps%2C coins%2C %26 paper money</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48936,6 +52215,53 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53211,6 +56537,68 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Accredited Training Center %28ATC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accredited Training Schools %28ATS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employee %28commercial purposes%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Employees %28work related reason%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Training %26 Development Institute</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Gold%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Platinum%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Field_Head_Office__c</picklist>
             <values>
                 <fullName>Branch</fullName>
@@ -53540,6 +56928,261 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Members_Sub_Category__c</picklist>
+            <values>
+                <fullName>Air Traffic Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Maintenance%2FRepair%2FOverhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer%2FSeller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Parts%2FAvionics%2FSystems%2FSafety Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline - Scheduled Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Ground Support Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport%2FAirport Management%2FAirport Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alcohol or Tobacco Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Animal Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Auditing Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Automobile%2FEngine Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Battery Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bookseller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo%2FLogistics Services%2FFreight Forwarder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemical %26 Gas Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Compliance%2FRegulatory%2FSafety%2FTesting Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultant%2FLaw Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consumer Goods Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Loyalty Program</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Defense%2FSecurity%2FWeapons%2FAmmunition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ecommerce System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educational Institution%2FLibrary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering%2FArchitectural%2FConstruction Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment%2FMuseums</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flavouring %26 Fragrances</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent %28GSA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government Agency%2FAviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handling%2FFueling%2FGround Power%2FAirline Catering%2FFBO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotels and Accomodations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industrial Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology%2FTelecommunications%2FElectronics Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry%2FWatches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Market Research and Development</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masonry Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Services%2FHealth%2FResearch%2FPharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Military Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mining %26 Metals Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations and Management Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Packaging%2FLabeling%2FTransport Containers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Police and Law Enforcement Agencies</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Printing %26 Ink Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publication Re-seller</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pyrotechnics%2FSpecial Effects Industry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Accounting Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales and Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sporting Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training in Aviation or Transport of Dangerous Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency and Tour Operators</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Nations%2FOther NGOs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waste Management%2FRemediation%2FTreatment%2FEnvironmental Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wholesaler of stamps%2C coins%2C %26 paper money</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55461,6 +59104,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58257,6 +61915,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62266,6 +65939,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Due_Diligence_Status__c</picklist>
             <values>
                 <fullName>Cleared</fullName>
@@ -64903,7 +68591,58 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
         <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
     </validationRules>
-    
+    <webLinks>
+        <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
+        <availability>online</availability>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT ***
+
+OAuth buttons require additional setup. Please see the Composer Installation Guide for more details.
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Composer Configuration Guide for details.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>660</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer (OAuth)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/APXTConga4__Conga_Composer
+?id={!Account.Id}</url>
+        <width>900</width>
+    </webLinks>
+    <webLinks>
+        <fullName>APXTConga4__Conga_Mail_Merge</fullName>
+        <availability>online</availability>
+        <description>*** DO NOT USE THIS BUTTON ON A PAGE LAYOUT ***
+
+COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. Then add optional parameters to finely tune the button&apos;s behavior. See the Conga Configuration Guide for details.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>false</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>450</height>
+        <isResizable>false</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Account.Id}</url>
+        <width>625</width>
+    </webLinks>
     <webLinks>
         <fullName>ATWOnline</fullName>
         <availability>online</availability>
@@ -65226,6 +68965,70 @@ myuser={!User.Id}</url>
         <showsStatus>false</showsStatus>
         <url>/servlet/servlet.FileDownload?file=015200000002o5K</url>
         <width>600</width>
+    </webLinks>
+    <webLinks>
+        <fullName>INFA_AV__Verify_Billing_Address</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Verify Billing Address</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if((&apos;{!JSENCODE(Account.BillingCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.BillingCountry)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.BillingStreet)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.BillingStreet)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.BillingCity)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.BillingCity)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.BillingState)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.BillingState)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.BillingPostalCode)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.BillingPostalCode)}&apos;==null)) 
+{ 
+var url=&quot;/apex/INFA_AV__selectaddress?id=&quot;+&quot;{!Account.Id}&quot;+&quot;&amp;type=&quot;+&quot;account&quot;+&quot;&amp;mode=1&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100&apos;); 
+//window.top.location.reload(true); 
+} 
+else if(&apos;{!Account.INFA_AV__Billing_Address_Validation_Status__c}&apos;!=&apos;Address Verified&apos;) 
+{ 
+if((&apos;{!JSENCODE(Account.BillingCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.BillingCountry)}&apos;==null) &amp;&amp;((&apos;{!JSENCODE(Account.BillingStreet)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.BillingStreet)}&apos;!=null) ||(&apos;{!JSENCODE(Account.BillingCity)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.BillingCity)}&apos;!=null) ||(&apos;{!JSENCODE(Account.BillingState)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.BillingState)}&apos;!=null) ||(&apos;{!JSENCODE(Account.BillingPostalCode)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.BillingPostalCode)}&apos;!=null))) 
+{ 
+alert(&apos;Billing Country is mandatory&apos;); 
+} 
+else 
+{ 
+var url=&quot;/apex/INFA_AV__verifyAddress?id=&quot;+&quot;{!Account.Id}&quot;+&quot;&amp;type=&quot;+&quot;account&quot;+&quot;&amp;mode=1&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100,scrollbars=yes&apos;); 
+//window.top.location.reload(true); 
+} 
+} 
+else if(&apos;{!Account.INFA_AV__Billing_Address_Validation_Status__c}&apos;==&apos;Address Verified&apos;) 
+{ 
+alert(&apos;Billing Address is already verified&apos;); 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>INFA_AV__Verify_Shipping_Address</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Verify Shipping Address</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if((&apos;{! JSENCODE(Account.ShippingCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.ShippingCountry)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.ShippingStreet)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.ShippingStreet)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.ShippingCity)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.ShippingCity)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.ShippingState)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.ShippingState)}&apos;==null) &amp;&amp;(&apos;{!JSENCODE(Account.ShippingPostalCode)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.ShippingPostalCode)}&apos;==null)) 
+{ 
+var url=&quot;/apex/INFA_AV__selectaddress?id=&quot;+&quot;{!Account.Id}&quot;+&quot;&amp;type=&quot;+&quot;account&quot;+&quot;&amp;mode=2&quot;; 
+var val = window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100&apos;); 
+//window.top.location.reload(true); 
+} 
+else if(&apos;{!Account.INFA_AV__Shipping_Address_Validation_Status__c}&apos;!=&apos;Address Verified&apos;)
+{
+if((&apos;{!JSENCODE(Account.ShippingCountry)}&apos;==&apos;&apos; || &apos;{!JSENCODE(Account.ShippingCountry)}&apos;==null) &amp;&amp;((&apos;{!JSENCODE(Account.ShippingStreet)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.ShippingStreet)}&apos;!=null) ||(&apos;{!JSENCODE(Account.ShippingCity)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.ShippingCity)}&apos;!=null) ||(&apos;{!JSENCODE(Account.ShippingState)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.ShippingState)}&apos;!=null) ||(&apos;{!JSENCODE(Account.ShippingPostalCode)}&apos;!=&apos;&apos; &amp;&amp; &apos;{!JSENCODE(Account.ShippingPostalCode)}&apos;!=null))) 
+{ 
+alert(&apos;Shipping Country is mandatory&apos;); 
+}
+else
+{
+var url=&quot;/apex/INFA_AV__verifyAddress?id=&quot;+&quot;{!Account.Id}&quot;+&quot;&amp;type=&quot;+&quot;account&quot;+&quot;&amp;mode=2&quot;; 
+var val =window.open(url,&apos;&apos;,&apos;width=850,height=490,left=250,top=100,scrollbars=yes&apos;); 
+//window.top.location.reload(true); 
+}
+}
+else if(&apos;{!Account.INFA_AV__Shipping_Address_Validation_Status__c}&apos;==&apos;Address Verified&apos;) 
+{ 
+alert(&apos;Shipping Address is already verified&apos;); 
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Key_Account_Plan</fullName>

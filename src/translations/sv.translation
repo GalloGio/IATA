@@ -1481,6 +1481,10 @@
         <name>IDCard_IDCardAlreadyExistsError</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_IDCardAppDetails --></label>
+        <name>IDCard_IDCardAppDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_IDCardAppNotFound --></label>
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
@@ -1795,6 +1799,10 @@
     <customLabels>
         <label><!-- IDCard_PendingIdCardAppH1 --></label>
         <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH2 --></label>
+        <name>IDCard_PendingIdCardAppH2</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -5539,6 +5547,10 @@
     <customLabels>
         <label><!-- ISSP Display Records per page --></label>
         <name>ISSP_Display_Records_per_page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Documents --></label>

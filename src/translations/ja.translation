@@ -1488,6 +1488,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_IDCardAlreadyExistsError</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_IDCardAppDetails --></label>
+        <name>IDCard_IDCardAppDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_IDCardAppNotFound --></label>
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
@@ -1803,6 +1807,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
     <customLabels>
         <label><!-- IDCard_PendingIdCardAppH1 --></label>
         <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH2 --></label>
+        <name>IDCard_PendingIdCardAppH2</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -5559,6 +5567,10 @@ and
         <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
+    </customLabels>
+    <customLabels>
         <label>ドキュメント</label>
         <name>ISSP_Documents</name>
     </customLabels>
@@ -6691,7 +6703,9 @@ IATA Customer Portalの登録へ続いて問題が生じている場合は、こ
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <label>こちらの検索条件では組織が見つかりません。検索を修正し再度試されるか、または新規会社情報を作成する為に新規作成をクリックして下さい。
+&lt;br/&gt;&lt;br/&gt;
+IATA Customer Portalの登録へ続いて問題が生じている場合は、こちらへご相談下さい。&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;問題解決ガイド&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>

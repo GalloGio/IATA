@@ -1485,6 +1485,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_IDCardAlreadyExistsError</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_IDCardAppDetails --></label>
+        <name>IDCard_IDCardAppDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_IDCardAppNotFound --></label>
         <name>IDCard_IDCardAppNotFound</name>
     </customLabels>
@@ -1800,6 +1804,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
     <customLabels>
         <label><!-- IDCard_PendingIdCardAppH1 --></label>
         <name>IDCard_PendingIdCardAppH1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_PendingIdCardAppH2 --></label>
+        <name>IDCard_PendingIdCardAppH2</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard  Pending Apps Missing Args --></label>
@@ -5556,6 +5564,10 @@ and
         <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
+    </customLabels>
+    <customLabels>
         <label>เอกสาร</label>
         <name>ISSP_Documents</name>
     </customLabels>
@@ -6688,7 +6700,9 @@ and
         <name>ISSP_NoRecordsFoundCreateAgency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoRecordsFoundCreateAgency2 --></label>
+        <label>ไม่พบองค์กรตามเกณฑ์การค้นหา กรุณาปรับเกณฑ์หรือ เลือกสร้างใหม่ เพื่อสร้างข้อมูลองค์กร
+&lt;br/&gt;&lt;br/&gt;
+หากคุณยังพบปัญหาในการลงทะเบียน IATA Customer Portal กรุณาติดต่อ&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;คู่มือแก้ปัญหา&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>

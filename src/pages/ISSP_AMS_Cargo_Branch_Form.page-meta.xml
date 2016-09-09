@@ -6,7 +6,7 @@
     <label>ISSP_AMS_Cargo_Branch_Form</label>
     <packageVersions>
         <majorNumber>6</majorNumber>
-        <minorNumber>30</minorNumber>
+        <minorNumber>40</minorNumber>
         <namespace>DSE</namespace>
     </packageVersions>
 </ApexPage>

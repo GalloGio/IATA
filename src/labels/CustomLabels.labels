@@ -2722,6 +2722,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>An ID Card has already been created for this ID Card Application.</value>
     </labels>
     <labels>
+        <fullName>IDCard_IDCardAppDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_IDCardAppDetails</shortDescription>
+        <value>ID Card Application Details</value>
+    </labels>
+    <labels>
         <fullName>IDCard_IDCardAppNotFound</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3281,6 +3288,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <protected>false</protected>
         <shortDescription>IDCard_PendingIdCardAppH1</shortDescription>
         <value>Pending ID Card Application</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_PendingIdCardAppH2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_PendingIdCardAppH2</shortDescription>
+        <value>Pending ID Card Application Details</value>
     </labels>
     <labels>
         <fullName>IDCard_Pending_Apps_Missing_Args</fullName>
@@ -10459,6 +10473,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Display Records per page</shortDescription>
         <value>Display _MENU_ records per page</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Document_Category</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Document_Category</shortDescription>
+        <value>Document Category</value>
     </labels>
     <labels>
         <fullName>ISSP_Documents</fullName>

@@ -369,10 +369,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>POP_Validity_Check_DEFWD__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>DEF_Withdrawal_Approval_Rejection__c</field>
             </layoutItems>
             <layoutItems>
@@ -763,7 +759,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000FCOJ</masterLabel>
+        <masterLabel>00h7E000000JLzQ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>1</sizeY>
         <summaryLayoutItems>
