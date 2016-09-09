@@ -251,6 +251,29 @@
             padding: 43px 20px;
         }
     }
+
+    .less-space {
+        th,
+        td {
+            padding: 15px 20px;
+        }
+    }
+
+    .title {
+        th,
+        td {
+            padding: 15px 20px 0;
+        }
+    }
+
+    .no-space {
+        th,
+        td {
+            padding: 0 20px 15px;
+        }
+    }
+
+
     .total {
         th,
         td {
@@ -378,4 +401,48 @@
 
 .start-end-date {
     font-size: 1.4rem;
+}
+
+.table-confirmation {
+    .sub-total,
+    .tax {
+        th,
+        td {
+            background: #e9f2f3;
+        }
+    }
+
+    .sub-total {
+        th,
+        td {
+            border-top: 1px solid #2a3940;
+        }
+    }
+
+    th,
+    td {
+        border-bottom: 0;
+    }
+
+}
+
+.charge-name {
+    margin-left: 1em;
+}
+
+.item-details {
+    font-size: 1.4rem;
+
+    .fa {
+        color: #2ca4b2;
+    }
+
+    .title-label {
+        font-weight: bold;
+    }
+
+    .item-box {
+        color: #666;
+        margin-left: 16px;
+    }
 }

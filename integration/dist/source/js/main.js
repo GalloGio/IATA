@@ -39,6 +39,23 @@ jQuery(document).ready(function($) {
         }
     });
 
+    $('.js-enable-accordion').on('click', function() {
+        var self = $(this),
+            parent = self.parents('.js-accordion'),
+            target = self.data('target');
+        
+        if ($(this).is(':checked')) {
+            $(target).removeClass('is-disabled');
+            parent.find('.accordion-panel[data-index="1"], .accordion-title[data-index="1"]').removeClass('is-open');
+            parent.find('.accordion-panel[data-index="3"], .accordion-title[data-index="3"]').addClass('is-open');
+        } else {
+            $(target).addClass('is-disabled');
+            // parent.find('.accordion-panel, .accordion-title').addClass('is-open');
+            parent.find('.accordion-panel[data-index="1"], .accordion-title[data-index="1"]').addClass('is-open');
+            parent.find('.accordion-panel[data-index="3"], .accordion-title[data-index="3"]').removeClass('is-open');
+        }
+
+    });
 
 
     var element = $('.is-sticky-container');
@@ -148,7 +165,7 @@ jQuery(document).ready(function($) {
     /*  Tooltip                                 */
     /* ---------------------------------------- */
 
-    $('.js-tooltip').on('vclick click', function(event) {
+    $(document).on('vclick click', '.js-tooltip', function(event) {
         event.preventDefault();
         $(this).next().toggleClass(className.open);
     });
@@ -260,7 +277,12 @@ jQuery(document).ready(function($) {
     stickyFooter();
 
     $('.js-accordion').on('click', '.accordion-title', function() {
-        $(this).toggleClass(className.open).next().toggleClass(className.open);
+        
+        if ($(this).is('.is-disabled')) {
+        } else {
+            $(this).toggleClass(className.open).next().toggleClass(className.open);
+        }
+
         stickyFooter();
     });
     

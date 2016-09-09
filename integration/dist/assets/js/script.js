@@ -9830,7 +9830,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-/*! jQuery UI - v1.11.4 - 2016-03-24
+/* jQuery UI - v1.11.4 - 2016-03-24
 * http://jqueryui.com
 * Includes: core.js, datepicker.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
@@ -9846,7 +9846,7 @@ return jQuery;
 		factory( jQuery );
 	}
 }(function( $ ) {
-/*!
+/*
  * jQuery UI Core 1.11.4
  * http://jqueryui.com
  *
@@ -12639,6 +12639,23 @@ jQuery(document).ready(function($) {
         }
     });
 
+    $('.js-enable-accordion').on('click', function() {
+        var self = $(this),
+            parent = self.parents('.js-accordion'),
+            target = self.data('target');
+        
+        if ($(this).is(':checked')) {
+            $(target).removeClass('is-disabled');
+            parent.find('.accordion-panel[data-index="1"], .accordion-title[data-index="1"]').removeClass('is-open');
+            parent.find('.accordion-panel[data-index="3"], .accordion-title[data-index="3"]').addClass('is-open');
+        } else {
+            $(target).addClass('is-disabled');
+            // parent.find('.accordion-panel, .accordion-title').addClass('is-open');
+            parent.find('.accordion-panel[data-index="1"], .accordion-title[data-index="1"]').addClass('is-open');
+            parent.find('.accordion-panel[data-index="3"], .accordion-title[data-index="3"]').removeClass('is-open');
+        }
+
+    });
 
 
     var element = $('.is-sticky-container');
@@ -12689,16 +12706,7 @@ jQuery(document).ready(function($) {
 
     var stickyElementContainerWidth,
         stickyElementPositionTop;
-	// Start:Add-on Abdellah to solve Sticky Section Issue
-        if ($('.sub-container.payment-confirmation').length) {
-            var targetStickyElement = $(document).find('#paymentconfirmation');
-            stickyElementContainerWidth = targetStickyElement.width();
-            stickyElementPositionTop = targetStickyElement.offset().top;
- 
-        }
-    // End:Add-on Abdellah to solve Sticky Section Issue
-    
-    $(document).on('click', '.js-tabs .tabs a', function(event) {
+    $('.js-tabs').on('click', '.tabs a', function(event) {
         event.preventDefault();
         var self = $(this),
         parent = self.parents('.js-tabs'),
@@ -12757,7 +12765,7 @@ jQuery(document).ready(function($) {
     /*  Tooltip                                 */
     /* ---------------------------------------- */
 
-    $('.js-tooltip').on('vclick click', function(event) {
+    $(document).on('vclick click', '.js-tooltip', function(event) {
         event.preventDefault();
         $(this).next().toggleClass(className.open);
     });
@@ -12809,11 +12817,11 @@ jQuery(document).ready(function($) {
         }
     });
     
-    $(document).on('click', '.js-template-list .user-input', function() {
+    $('.js-template-list').on('click', '.user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
-    $(document).on('click', '.js-checkbox-list .user-input', function() {
+    $('.js-checkbox-list').on('click', '.user-input', function() {
         var self = $(this);
         self.parents('.list-item').toggleClass(className.selected).siblings().removeClass(className.selected).find('.user-input').prop('checked', false);
     });
@@ -12869,7 +12877,12 @@ jQuery(document).ready(function($) {
     stickyFooter();
 
     $('.js-accordion').on('click', '.accordion-title', function() {
-        $(this).toggleClass(className.open).next().toggleClass(className.open);
+        
+        if ($(this).is('.is-disabled')) {
+        } else {
+            $(this).toggleClass(className.open).next().toggleClass(className.open);
+        }
+
         stickyFooter();
     });
     
@@ -12951,7 +12964,7 @@ jQuery(document).ready(function($) {
         closeModal();
     });
 
-    $(document).on('click', '.js-close-modal', function(event) {
+    $('#js-modal').on('click', '.js-close-modal', function(event) {
         event.preventDefault();
         closeModal();
     });

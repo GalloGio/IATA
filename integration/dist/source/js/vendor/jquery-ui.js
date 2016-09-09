@@ -1,4 +1,4 @@
-/*! jQuery UI - v1.11.4 - 2016-03-24
+/* jQuery UI - v1.11.4 - 2016-03-24
 * http://jqueryui.com
 * Includes: core.js, datepicker.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
@@ -14,7 +14,7 @@
 		factory( jQuery );
 	}
 }(function( $ ) {
-/*!
+/*
  * jQuery UI Core 1.11.4
  * http://jqueryui.com
  *

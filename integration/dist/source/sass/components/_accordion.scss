@@ -2,6 +2,10 @@
     border-top: 1px solid #23828c;
     border-bottom: 1px solid #23828c;
     padding: 1px 0;
+
+    &.no-border {
+        border: 0;
+    }
 }
 
 .accordion-title {
@@ -25,6 +29,15 @@
         &::after {
             content: '\f068';
             color: #fff;
+        }
+    }
+
+    &.is-disabled {
+        cursor: default;
+        background: #f2f2f2;
+
+        &::after {
+            color: #ccc;
         }
     }
 }
