@@ -8,7 +8,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
         
 		
         if((olda==null && a.Abbreviated_address__c == null)  || 
-            (olda!=null && a.Branch_Office_Street_name_number__c!=olda.Branch_Office_Street_name_number__c && a.Abbreviated_address__c==olda.Abbreviated_address__c){
+            (olda!=null && a.Branch_Office_Street_name_number__c!=olda.Branch_Office_Street_name_number__c && a.Abbreviated_address__c==olda.Abbreviated_address__c)){
             String str = a.Branch_Office_Street_name_number__c;
             if(str!=null && str.length()>length) str = str.substring(0,length);
             a.Abbreviated_address__c = str;
