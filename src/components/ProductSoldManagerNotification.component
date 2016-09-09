@@ -67,7 +67,7 @@
 	            Ship-to Name
 	        </td>
 	        <td>
-	            {!order.ShipToContact_First_Name__c} {!order.ShipToContact_Last_Name__c}
+	            {!order.BillToAccount_Name__c}
 	        </td>
 	    </tr>
 	    <tr>
