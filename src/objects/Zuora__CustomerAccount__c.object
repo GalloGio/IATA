@@ -158,6 +158,17 @@
         <label>Billing Accounts</label>
     </fieldSets>
     <fields>
+        <fullName>Account_Contact_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Zuora__Account__c + &apos;|&apos; + Contact__c</formula>
+        <label>Account &amp; Contact ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>CRMContactID__c</fullName>
         <externalId>false</externalId>
         <label>CRM Contact ID</label>
@@ -1011,6 +1022,29 @@ IF(  ISPICKVAL(Zuora__Default_Payment_Method__r.Zuora__CreditCardType__c, &quot;
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>eBroadcast_Audience_Selection__c</fullName>
+        <description>The field allows IATA Admin to select to which audience the billing account has access to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The field allows IATA Admin to select to which audience the billing account has access to.</inlineHelpText>
+        <label>eBroadcast Audience Selection</label>
+        <picklist>
+            <picklistValues>
+                <fullName>IATA/IATAN ID Cardholders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Numeric Codes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>eBroadcast_Email_Balance__c</fullName>
         <externalId>false</externalId>
         <label>eBroadcast Email Balance</label>
@@ -1031,6 +1065,21 @@ IF(  ISPICKVAL(Zuora__Default_Payment_Method__r.Zuora__CreditCardType__c, &quot;
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>eBroadcast_Storage_Usage__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Current Storage Usage for eBroadcast. The storage is used to store the templates and assets (e.g. images)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Current Storage Usage for eBroadcast</inlineHelpText>
+        <label>eBroadcast Storage Usage</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>eBroadcast_Storage__c</fullName>

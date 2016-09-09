@@ -99,6 +99,9 @@
                                                     <div class="title">Manage Services</div>
                                                     <ul class="list">
                                                         <li>
+                                                            <a href="https://{!$Site.Domain}{!$Page.IECEBC_Dashboard}">View dashboard</a>
+                                                        </li>
+                                                        <li>
                                                             <a href="https://{!$Site.Domain}{!$Page.IECEBC_Campaign}">Create campaign</a>
                                                         </li>
                                                         <li>
