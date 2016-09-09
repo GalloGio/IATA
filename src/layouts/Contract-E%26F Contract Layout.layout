@@ -280,6 +280,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>EF_Related_Records__c.NAME</fields>
+        <fields>EF_Related_Records__c.FIR_Code_Name__c</fields>
         <relatedList>FIR_Code__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
