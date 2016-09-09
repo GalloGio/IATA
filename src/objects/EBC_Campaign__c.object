@@ -156,6 +156,17 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>External_Id__c</fullName>
+        <externalId>true</externalId>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>From_Name__c</fullName>
         <description>The Email Sender Name</description>
         <externalId>false</externalId>
@@ -431,6 +442,10 @@ The value is determined by ExactTarget, and this is is only populated once a cam
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>STARTED</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>SENT</fullName>
                 <default>false</default>
             </picklistValues>
@@ -441,7 +456,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
