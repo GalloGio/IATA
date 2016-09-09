@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>Sales_Channel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_IATA_Ticket_Tax_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -1434,6 +1434,27 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EF_Account_Disallow_BA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Disallow Account Relationships</shortDescription>
+        <value>The selected Client or Airline has E&amp;F setting for &quot;Allow Airline Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please change this before creating a new Billing Agreement or select a different Account.</value>
+    </labels>
+    <labels>
+        <fullName>EF_Currency_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Currency Not In Contract Error</shortDescription>
+        <value>The currency select needs to be present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>EF_Line_Item_Not_In_Contract_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
+        <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
         <language>en_US</language>
         <protected>false</protected>
