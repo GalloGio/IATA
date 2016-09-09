@@ -34,7 +34,7 @@
                 <script src="{!URLFOR($Resource.Mosaico, '/dist/vendor/tinymce.min.js')}"></script>
                 <script src="{!URLFOR($Resource.Mosaico, '/dist/mosaico.min.js')}?v=0.14"></script>
                 <script>
-                
+                var globalViewModel;
                 tinymce.PluginManager.add('iataMergeField', function(editor, url) {
                     // Add a button that opens a window
                     editor.addButton('iataMergeField', {
@@ -108,6 +108,9 @@
                         	console.log('viewModel.logoPath', viewModel.logoPath);
                             viewModel.logoPath = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
                         },
+                        function(viewModel) {
+                        	globalViewModel = viewModel;
+                        },
                         
                         function(viewModel) {
                             viewModel.loadGallery = function(a, b, c, d) {
@@ -153,15 +156,24 @@
 									xHtml = xHtml.replace(imagePathRegex, '{EBCResource' + '{' + '$1' + '}' + '/EBCResource}');
                                     */
                                     
-                                    sforce.apex.execute("vfIECEBC_MosaicoEditor","saveTemplate", {
-                                        templateId: '{!template.Id}',
-                                        metadataContent: viewModel.exportMetadata(),
-                                        JSONContent: viewModel.exportJSON(),
-                                        xHtmlContent: viewModel.exportHTML()
-                                    });
                                     
-                                    viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                    viewModel.notifier.options.onShown = function() {
+                                    	viewModel.notifier.options.onShown = null;
+                                            
+                                        sforce.apex.execute("vfIECEBC_MosaicoEditor","saveTemplate", {
+                                            templateId: '{!template.Id}',
+                                            metadataContent: viewModel.exportMetadata(),
+                                            JSONContent: viewModel.exportJSON(),
+                                            xHtmlContent: viewModel.exportHTML()
+                                        });
+                                        
+                                        viewModel.notifier.clear();
+                                        viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                    }
+                                    
+                                    viewModel.notifier.info(viewModel.t("Please wait while saving template..."), null, {timeOut: null});
                                 } catch(er) {
+                                    viewModel.notifier.clear();
                                     viewModel.notifier.error(viewModel.t('Saving failed. Please try again in a few moment or contact us.'));
                                     console.log(er);
                                 }
@@ -182,18 +194,29 @@
                                 testCmd.enabled(false);
                                 
                                 try {
-                                    var email = window.prompt(viewModel.t("Insert here the recipient email address"), viewModel.t('beausoleilm@cubicmedia.ca'));
+                                    var email = window.prompt(viewModel.t("Insert here the recipient email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
                                     
-                                    sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
-                                        templateId: '{!template.Id}',
-                                        email: email
-                                    });
                                     
-                                    viewModel.notifier.success(viewModel.t("Test email sent, see vfIECEBC_MosaicoEditor.sendTest()"));
+                                    viewModel.notifier.options.onShown = function() {
+                                    	viewModel.notifier.options.onShown = null;
+                                            
+                                        sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
+                                            templateId: '{!template.Id}',
+                                            email: email
+                                        });
+                                        
+                                        viewModel.notifier.clear();
+                                        viewModel.notifier.success(viewModel.t("Test email sent successfully."));
+                                    }
+                                    
+                                    viewModel.notifier.info(viewModel.t("Please wait while sending a test email..."), null, {timeOut: null});
+                                    
                                     
                                 } catch(e) {
                                     //vfIECEBC_Template.ResourceNotReady_Exception
                                     console.log(e);
+                                    
+                                    viewModel.notifier.clear();
                                     if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
                                         viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
                                         console.log(e);
@@ -225,6 +248,7 @@
                         emailProcessorBackend: basePath+'/dl/',
                         titleToken: "MOSAICO Responsive Email Designer",
                         fileuploadConfig: {
+                            disableImageResize: true,
                             multipart: false,
                             url: '/services/apexrest/MosaicoUploads',
                             headers: {

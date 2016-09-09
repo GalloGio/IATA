@@ -28,7 +28,6 @@ global class vfIECEBC_MosaicoUploads extends vfIECEBC_Controller {
         
         Matcher m = Pattern.compile('^attachment; filename="(.*)"$').matcher(req.headers.get('Content-Disposition'));
         m.matches();
-        
         Attachment a = new Attachment (
             Body = req.requestBody,
             ContentType = req.headers.get('Content-Type'),
@@ -36,16 +35,17 @@ global class vfIECEBC_MosaicoUploads extends vfIECEBC_Controller {
             OwnerId = UserInfo.getUserId(),
             IsPrivate = true
         );
-        
+        String errorMessage = '';
         try {
-            IECEBC_Utility.createResourceForAttachment(a, billingAccount);
-            insert a;
-            res.responseBody = Blob.valueOf(getResourcesJSON(billingAccount.Id, a.ParentId));
-        } catch(Exception e) {
-            String errorMessage = 'Unknown error';
-            if (e instanceof IECEBC_Utility.Attachment_Size_Exceeds_Capacity_Exception) errorMessage = 'File size exceeds capacity. Please purchase extra disk space.';
-            if (e instanceof IECEBC_Utility.Resource_Name_Already_Exists_Exception) errorMessage = 'A file with that name already exists. Please rename before uploading.';
+            errorMessage=IECEBC_Utility.insertResourceForAttachment(a, billingAccount);
+            if (errorMessage=='') insert a;
             
+            if (errorMessage=='') res.responseBody = Blob.valueOf(getResourcesJSON(billingAccount.Id, a.ParentId));
+        } catch(Exception e) {
+            errorMessage = 'Unknown error';
+        }
+       
+        if (errorMessage!='') {
             res.responseBody = Blob.valueOf(JSON.serialize(new Map<String, Object>{
                 'files' => new List<Object>{
                     new Map<String, Object>{
@@ -56,6 +56,7 @@ global class vfIECEBC_MosaicoUploads extends vfIECEBC_Controller {
                 }
             }));
         }
+        a=new Attachment();
     }
 
     

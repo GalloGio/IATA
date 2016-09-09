@@ -37,6 +37,9 @@
                             </div>
                         </div>
                         <script type="text/javascript">
+                    if (window.location.search.indexOf('notice=sendtest_needed') !== -1) {
+                        alert('You must execute "Send a Test Email" before continue');
+                    }
                         var isCallbackAvailable = false;
                         function onEditorLoaded() {
                             var isLoaded = false;
