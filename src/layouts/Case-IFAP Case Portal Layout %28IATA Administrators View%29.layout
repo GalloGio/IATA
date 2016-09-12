@@ -6,7 +6,7 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
-    <customButtons>SIDRAlite_Create_Non_Compliance</customButtons>
+    <customButtons>SIDRA_Lite_Action</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Share</excludeButtons>

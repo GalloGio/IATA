@@ -12265,8 +12265,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ICCS_Create_Status_to_Complete</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND (3 OR 4) AND 5 AND 6</booleanFilter>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5) AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -12288,14 +12288,19 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Airline joining</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Acceptance_checklist__c</field>
-            <operation>includes</operation>
-            <value>ASP - ID Copies (2) &amp; Signatures checked,ASP - Contacts Updated,ASP - Signatures Validated,ASP - Banking Resolution applied</value>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Update Package</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Documentation_received__c</field>
             <operation>includes</operation>
             <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures,ASP - List of Contacts (ICCS - AP),ASP - Banking Resolution</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures checked,ASP - Signatures Validated,ASP - Banking Resolution applied</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
