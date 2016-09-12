@@ -3902,6 +3902,29 @@ The product will only appear on the Online Store when the date entered in this f
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>GDP_Subscritpion_to_Zuora_RPT</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Product_Manager_lookup__c</columns>
+        <columns>IEC_Subscribe_to_Zuora__c</columns>
+        <columns>Available_for_Subscription__c</columns>
+        <columns>Number_of_months_of_subscription__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <label>GDP/Subscritpion to Zuora RPT</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>IDOSalesProducts</fullName>
         <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
         <columns>PRODUCT2.NAME</columns>
