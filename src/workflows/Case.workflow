@@ -607,18 +607,6 @@
         <template>unfiled$public/Clicktools_Contact_Email_VN</template>
     </alerts>
     <alerts>
-        <fullName>DPC_Close_Notification_to_Contact</fullName>
-        <description>DPC - Close Notification to Contact</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>CaseManagement/DPC_Close_Notification_to_Contact</template>
-    </alerts>
-    <alerts>
         <fullName>DPC_Email_notification_to_Case_owner_action_required</fullName>
         <description>DPC - Email notification to Case owner action required</description>
         <protected>false</protected>
@@ -5015,6 +5003,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ICCS_Create_Status_to_Complete</fullName>
+        <description>ICCS: Create Status to Complete</description>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>ICCS: Create Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ICCS_Set_Eligibility_Checkbox</fullName>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox</description>
         <field>Eligibility_Documents_Checklist_approved__c</field>
@@ -5064,6 +5062,16 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <name>ICCS Unique Case - Open</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>ICCS_Update_Status_to_Complete</fullName>
+        <description>ICCS: Update Status to Complete</description>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>ICCS: Update Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -11012,26 +11020,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>DPC - Close Notification to Contact</fullName>
-        <actions>
-            <name>DPC_Close_Notification_to_Contact</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>DPC Service Request</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Notification to DPC contact when DPC Service Request case is closed.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>DPC - Email Alert to Case Owner Action Required</fullName>
         <actions>
             <name>DPC_Email_notification_to_Case_owner_action_required</name>
@@ -12272,6 +12260,126 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>ICCS_Create Status to Complete</fullName>
+        <actions>
+            <name>ICCS_Create_Status_to_Complete</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4 OR 5) AND 6 AND 7</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ASP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>FDS - Create Authorized Signatories Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Addition</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Airline joining</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Update Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures,ASP - List of Contacts (ICCS - AP),ASP - Banking Resolution</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures checked,ASP - Signatures Validated,ASP - Banking Resolution applied</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ICCS_Update Status to Complete</fullName>
+        <actions>
+            <name>ICCS_Update_Status_to_Complete</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND ( (4 AND 5 AND 6) OR ((7 OR 8) AND 9 AND 10) OR (11 AND 12 AND 13))</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ASP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>FDS - Update Authorized Signatories Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Change Request</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Replacement for Exec. Officer specifically</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Banking Resolution applied</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Banking Resolution</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Addition</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Replacement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures,ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures checked,ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Change__c</field>
+            <operation>equals</operation>
+            <value>ASP - Signatory Deletion</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ID Card - ITDI Notification</fullName>
         <actions>
             <name>ITDI_Email_Alert</name>
@@ -12624,7 +12732,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -12644,7 +12752,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/19/2013 6:00 PM</value>
+            <value>12/19/2013 11:00 PM</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -12778,7 +12886,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>AND(RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(DEF_Approval_Rejection__c))</formula>
+        <formula>AND(OR(RecordTypeId = &quot;012200000000DD9&quot;, RecordTypeId = &quot;0128E0000000Oob&quot;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13057,7 +13165,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>updates the last default action date when the reason for default is changed</description>
-        <formula>AND(RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED( Reason_for_Default__c ) )</formula>
+        <formula>AND(OR(RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED( Reason_for_Default__c ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13068,7 +13176,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>aND($RecordType.Name = &quot;SIDRA&quot;, ischanged(  DEF_Withdrawal_Approval_Rejection__c ))</formula>
+        <formula>aND(OR($RecordType.Name = &quot;SIDRA&quot;,$RecordType.Name = &quot;SIDRA Lite&quot;), ischanged(  DEF_Withdrawal_Approval_Rejection__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13099,7 +13207,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(  AG_Request_DEF_Withdrawal__c  ),  NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND(OR( RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED(  AG_Request_DEF_Withdrawal__c  ),  NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13114,7 +13222,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND(OR( RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13154,7 +13262,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
@@ -13327,8 +13435,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
-            <operation>contains</operation>
-            <value>SIDRA</value>
+            <operation>equals</operation>
+            <value>SIDRA,SIDRA BR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
@@ -13399,7 +13507,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4), AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6), AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8), AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10), AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c),OR( RecordType.Name = &quot;SIDRA&quot;,RecordType.Name = &quot;SIDRA Lite&quot;), OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13412,7 +13520,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Withdrawal_Approval_Rejection__c</field>
@@ -13458,7 +13566,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( $RecordType.Name = &quot;SIDRA&quot;, ISCHANGED(  AG_Request_IRR_Withdrawal__c   ),NOT(ISPICKVAL(  IRR_Withdrawal_Approval_Rejection__c , &quot;Approved&quot;)) )</formula>
+        <formula>AND( OR($RecordType.Name = &quot;SIDRA&quot;,$RecordType.Name = &quot;SIDRA Lite&quot;), ISCHANGED(  AG_Request_IRR_Withdrawal__c   ),NOT(ISPICKVAL(  IRR_Withdrawal_Approval_Rejection__c , &quot;Approved&quot;)) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13490,7 +13598,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.R_S_Confirm_IRRWD_Justifications__c</field>
@@ -13549,7 +13657,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Withdrawal_Approval_Rejection__c</field>
@@ -13574,7 +13682,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.IRR_Withdrawal_Approval_Rejection__c</field>
@@ -13619,7 +13727,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Update_AIMS_IRR__c</field>
@@ -13684,7 +13792,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -13880,7 +13988,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
+            <value>SIDRA,SIDRA BR,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Termination_date__c</field>
@@ -13922,7 +14030,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.TER_Approval_Rejection__c</field>
@@ -13969,7 +14077,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Calculate_ALL_Outs_Amounts_Termination__c</field>
@@ -14966,6 +15074,14 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -14978,14 +15094,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

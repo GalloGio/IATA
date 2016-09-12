@@ -138,6 +138,51 @@
         <label>AMS</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>AMS_1_account</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>RelationShip__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>equals</operation>
+            <value>TEST SALESORDER NEW</value>
+        </filters>
+        <label>AMS - 1 account</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_laurentiu</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>RelationShip__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>AMS Agency Updates laurentiu</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Account__c</columns>
+        <columns>RelationShip__c</columns>
+        <columns>Update_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>A-{00000000}</displayFormat>
         <label>Code</label>

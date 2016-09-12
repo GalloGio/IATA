@@ -149,6 +149,7 @@ Constant Class
     public static final Map<String,String> caseTypeMap = new Map<String,String>{
         'DPC Service Request'   => 'DPCSR',
             'IATA Service Request'  => 'IATASR',
+            'IATA Financial Review' => 'IFAP',
             'Application Change Request (DPC Systems - locked)' => 'ACR',
             'Application Change Request (DPC Systems) - ACCA'  => 'ACR',
             'Cases - SIS Help Desk' => 'SIS',
@@ -157,7 +158,9 @@ Constant Class
             'IDFS Airline Participation Process' => 'AP',
             'Process' => 'CSP',
             'Invoicing Collection Cases' => 'ICC',
-            'SAAM' => 'SAAM'
+            'SAAM' => 'SAAM',
+            'OSCAR Communication' => 'OSCAR',
+            'SIDRA' => 'SIDRA'
             };
                 
     // Case Status Names Map: Case.Status => internal code

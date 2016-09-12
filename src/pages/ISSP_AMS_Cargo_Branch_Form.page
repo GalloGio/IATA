@@ -194,6 +194,15 @@
       });
 
     }
+    
+    function closeUpdateOwnerModal() {
+
+        $j(function() {
+            $j( '#updateOwnerModal' ).modal('hide');
+            clearForm('{!$Component.updateOwner}', '{!$Component.updateOwner.contactBlock.contactcountry}');
+      });
+
+    }
 
     function closeModalWithConsoleLogComment() {
 
@@ -262,6 +271,13 @@
         $j(function() {
             $j( '#addNewContactModal').modal('show');
 
+      });
+    }
+                   
+     function showUpdateOwnerDialog() {
+        $j(function() {
+            $j( '#updateOwnerModal').modal('show');
+            $j( '.datePicker').css('position','fixed');
       });
     }
 
@@ -396,6 +412,7 @@
                
             <apex:actionFunction name="cancelTrainedStaffUpdate" action="{!cancelTrainedStaff}" status="WaitingStatus" reRender="newTrainedStaff"/>
             <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact"/>
+            <apex:actionFunction name="cancelOwnerUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="updateOwner"/>
             <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                 <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
             </apex:actionfunction> 
@@ -448,6 +465,7 @@
                             <apex:outputlabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
                             <apex:outputField value="{!hqAccount.VAT_Number__c}"/>
                         </apex:pageblocksectionitem>
+                        <apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
                     </apex:pageBlockSection>
                  </apex:outputPanel>
                 <span id="nav_two"></span>
@@ -532,13 +550,6 @@
                             </apex:outputpanel>
                         </apex:pageblocksectionitem>
                
-
-                    
-
-
-                    <!-- <apex:inputField value="{!newForm.Branch_Office_FAX__c}" /> -->
-                     <!-- problematic -->
-       
                 </apex:pageBlockSection>
                     <apex:pageBlockSectionItem rendered="{!isocountry.EACP_Country__c}">
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_your_firm_handling_Dangerous_Goods__c.Label}"/>
@@ -580,7 +591,7 @@
                        <apex:inputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalPostalCode"/>
                        <apex:inputField value="{!newForm.Local_Physical_Address_Province__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalProvince"/>
                        <apex:inputField value="{!newForm.Local_Physical_Address_Area__c}" onChange="copyPhysicalAddress()" styleClass="PhysicalArea"/>
-                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
                    <apex:pageBlockSection columns="1">
                        <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
@@ -592,7 +603,7 @@
                        <apex:inputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
                        <apex:inputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
                        <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
-                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+                       <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
                 </apex:pageBlockSection>
                   
@@ -612,14 +623,15 @@
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                            {!$Label.ISSP_AMS_Not_Listed_Msg}
                         </div>
-                        <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_Add_Person}</apex:commandLink>
+                        <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!IF(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Manager)}</apex:commandLink>
                                 
                            <apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon"  id="contactList" styleClass="table-hover table table-condensed table-responsive">
                                <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}"/></apex:column>
                             <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}"/> 
                             <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/>
                             <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>
-                            <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}"/>    
+                            <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}"/>   
+                     		<apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" style="text-align:center"/>
                             <apex:column value="{!agencycon.CASS_contact__c}" style="text-align:center">
                                 <apex:facet name="header"><apex:outputText escape="false" value="CASS Contact"/></apex:facet>
                             </apex:column>                      
@@ -636,13 +648,17 @@
                                             {!$Label.ISSP_AMS_Loading_Contact}    
                                     </apex:facet>
                                 </apex:actionStatus>
-                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog();" rerender="contactList, newContact">
+                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog();" rerender="contactList, newContact" rendered="{!NOT(agencycon.Agency_owner__c)}">
+                                    <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
+                                </apex:commandLink>
+                                <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog();" rerender="contactList, updateOwner" rendered="{!agencycon.Agency_owner__c}">
                                     <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                                 </apex:commandLink>
                             </apex:column>
                             <apex:column >
-                                <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash"/>
-                            </apex:column>                           
+                                <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" rendered="{!NOT(agencycon.Agency_owner__c)}"/>
+                            </apex:column>
+                                                 
                             <apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
                                                                         <div class="col-md-5">
                                                                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
@@ -655,11 +671,41 @@
                                                                           
                             </apex:column>
                         </apex:pageBlockTable>
-                        <apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" rerender="contactList"> 
-                            <apex:param value="" name="recordId" assignTo="{!editContactId}" />
-                        </apex:actionFunction>
-                     
-                        </apex:pageBlockSection>                     
+                         <apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" rerender="contactList"> 
+                            	<apex:param value="" name="recordId" assignTo="{!editContactId}" />
+                        	</apex:actionFunction>
+                        </apex:pageBlockSection>
+                
+                <div id="multi-owners" style="{!IF(AND(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', newForm.ISSP_AMS_Legal_Status__c !=null), 'border: 0px !important;', 'display:none')}">
+                 <apex:pageBlockSection columns="1">
+                     <div class="bg-info col-md-12" style="margin-top:15px;"><strong>3.2 COMPANIES</strong></div>
+                     <div class="col-md-12">
+                           <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
+                       </div>
+                     <apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!List_AgencyCompanies.size==0}"/>
+                     <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive" rendered="{!List_AgencyCompanies.size>0}">
+                            <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
+                            <apex:column value="{!agencycon.Registration_number__c}"/>
+                            <apex:column value="{!agencycon.IATACode__c}"/>
+                            <apex:column value="{!agencycon.Financial_interest__c}"/>
+                     </apex:pageBlockTable>
+                        
+                  </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1">
+                    <div class="bg-info col-md-12" style="margin-top:15px;"><strong>3.3 SUMMARY OF OWNERSHIP</strong></div>
+                    <div class="col-md-12">
+                           <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Ownership}" escape="false"/>
+                       </div>
+                        <apex:pageBlockTable value="{!List_Ownership_Summary}" var="owner"  id="ownerList" styleClass="table-hover table table-condensed table-responsive">
+                            <apex:column headerValue="{!$Label.ISSP_Owner}" value="{!owner.Name}"/>
+                            <apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_PAX_Person}" rendered="{!owner.RecordType.DeveloperName!='Company'}"/>
+                            <apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!$Label.ISSP_AMS_PAX_Company}" rendered="{!owner.RecordType.DeveloperName=='Company'}"/>
+                            <apex:column footerValue="{!ROUND(Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}"/>
+                     </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                </div>
+                
+                
                        
                 <span id="nav_four"></span>
                 <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="sectionfour">
@@ -1018,6 +1064,61 @@
 </div>
     
 </apex:form>
+        
+<!-- Modal Update Agency Owner - Person (for Branches) -->
+<apex:form id="updateOwner">
+<div class="modal fade" id="updateOwnerModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" onclick="cancelOwnerUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Add_Person}</h4>
+      </div>
+      
+      <apex:pageMessages id="theMessages" />
+       
+      <div class="modal-body">
+          <apex:pageBlock id="contactBlock">
+            <apex:pageBlockSection id="contactSection" columns="4">
+                <apex:pageBlockSectionItem id="contactItemOwner" labelStyle="font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
+                    <apex:inputCheckBox value="{!newContact.Agency_owner__c}" disabled="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel >CASS Contact</apex:outputLabel>
+                    <apex:inputField value="{!newContact.CASS_contact__c}" />
+                </apex:pageBlockSectionItem>           
+                 <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel id="roleContactTitle">{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}</apex:outputLabel>
+                    <apex:inputField value="{!newContact.Agency_role__c}" id="dom"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                    <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
+                    <apex:inputField value="{!newContact.Authorised_signatory__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
+                    <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
+                    <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>      
+          </apex:pageBlock>
+      </div>
+      
+      <div class="modal-footer">
+        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+            oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');"
+            onclick="this.disabled='disabled';"
+            reRender="contactList, ownerList, theMessages">
+            <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
+         </apex:commandButton>&nbsp;
+        <button type="button" class="btn btn-default" onclick="cancelOwnerUpdate();$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+      </div>
+              
+    </div>
+  </div>
+</div>
+    
+</apex:form>        
         
 
         

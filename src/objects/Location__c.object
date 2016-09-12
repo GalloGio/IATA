@@ -604,7 +604,7 @@
     <sharingModel>Read</sharingModel>
     <validationRules>
         <fullName>No_Change_On_Account</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Forbid update in Account</description>
         <errorConditionFormula>AND(NOT(ISNEW())
   , NOT(ISBLANK(PRIORVALUE(SAP_Id__c)))

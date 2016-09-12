@@ -39,6 +39,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     public Boolean showPrevious{get;set;}
     public Boolean showNext{get;set;}
     public Integer currentPageNumber{get;set;}
+    public Integer previousPageNumber{get;set;}
    
     public String sortBy{get;set;}
     public List<SelectOption> sortingFields{get;set;}
