@@ -10,7 +10,7 @@
   *
   * Version: 1.0
   * History: 
-  *   2016-08-31 -sl: initial version prior to move the content of vfIECEBC_TestSuite
+  *   2016-09-11 -sl: initial version prior to move the content of vfIECEBC_TestSuite, no extra insert on createTestUser
   *
   * Public Methods:
   *  - createTestUser()
@@ -84,7 +84,7 @@ public with sharing class IECEBC_TestUtility {
 		// create users 
 		
 		oUser = IECTestUtil.createSampleGuestUserAndLogin();
-		insert oUser; // i am not sure why is should do it here
+		//insert oUser; // i am not sure why this was required before, it should not need additional insert here
 		
 		System.assertNotEquals(null, oUser.Username, 'User.Username should not be null for user:'+ oUser);
 		System.assertNotEquals(null, oUser.ContactId, 'User.ContactId should not be null for user:'+ oUser);
