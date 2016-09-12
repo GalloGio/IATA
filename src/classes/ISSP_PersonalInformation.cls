@@ -70,13 +70,9 @@ public with sharing class ISSP_PersonalInformation {
         popContact();
         accountType=' Company ';
 
-        if (con.Account.Top_Parent__c == null) { //User is from HQ  Account
-            if(con.Account.IATACode__c!=null && con.Account.Location_Type__c=='HO' && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c=='Approved')
-                isHOAccredited = true; //This is an accredited  Agency Account    
-        } else { //Get Id for HQ Account when user's Account is a branch office
-             if(con.Account.Top_Parent__r.IATACode__c!=null && con.Account.Top_Parent__r.Location_Type__c=='HO' && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c=='Approved')
-                isHOAccredited = true; //This is an accredited  Agency Account
-        }
+        //Is this user's account accredited
+        if(con.Account.IATACode__c!=null && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accredited' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
+        	isHOAccredited = true; //This is an accredited Agency Account    
         
         OpenDebts = string.valueof(con.Account.Overdue_Invoices_Indicator__c );
         
@@ -198,7 +194,7 @@ public with sharing class ISSP_PersonalInformation {
         try {
             isEditMode = false;
             if(isHOAccredited && bIsMinorChangeEnabled){
-                ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
+             //   ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
             }
             update con.Account;
             popContact();  

@@ -103,7 +103,7 @@
                     </apex:outputPanel>
                 </apex:column>
 
-                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}" rendered="{!uploader == 'AMS_File'}">
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}" rendered="{!OR(uploader == 'AMS_File', isPortal)}">
                     <apex:outputText value="{!attach.reviewStatus}"/>
                 </apex:column>
 
