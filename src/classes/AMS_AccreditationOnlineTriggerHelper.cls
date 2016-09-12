@@ -15,7 +15,7 @@ public class AMS_AccreditationOnlineTriggerHelper {
         }
 
         if((olda==null && a.Abbreviated_name__c == null) || 
-            (olda==null && a.Account_Name__c!=olda.Account_Name__c && a.Abbreviated_name__c == olda.Abbreviated_name__c)){
+            (olda!=null && a.Account_Name__c!=olda.Account_Name__c && a.Abbreviated_name__c == olda.Abbreviated_name__c)){
             String str = a.Account_Name__c;
             if(str!=null && str.length()>length) str = str.substring(0,length);
             a.Abbreviated_name__c = str;
