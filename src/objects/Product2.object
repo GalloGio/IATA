@@ -10454,6 +10454,7 @@ The product will only appear on the Online Store when the date entered in this f
         <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Manager__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Manager__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Product_Section__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Line_of_Business__c</lookupDialogsAdditionalFields>

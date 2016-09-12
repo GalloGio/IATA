@@ -484,7 +484,9 @@ private class Order_Svc_Test
         //Order_Svc.orderSubscription(new set<Id>{orders[0].Id},orderPy,payMethod);
 
         //Cover creation of new Zuora Account
-        Contact contact2 = TestDataGenerator.generateContacts(account.Id, 1, true)[0];
+        Contact contact2 = TestDataGenerator.generateContacts(account.Id, 1, false)[0];
+        contact2.Email = 'wazza@iata.org';
+        insert contact2;
         orders[0].BillToContactId = contact2.Id;
         update orders[0];
         //Order_Svc.orderSubscription(new set<Id>{orders[0].Id},orderPy,payMethod);
