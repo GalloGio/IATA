@@ -1,0 +1,10 @@
+<apex:component >
+    <div class="group-container use-html-code">
+        <p>Instructions go here:</p>
+        <ul class="list caret-right">
+            <li>Click on Basic Template tab</li>
+            <li>Choose Empty Template</li>
+            <li>...</li>
+        </ul>
+    </div>
+</apex:component>

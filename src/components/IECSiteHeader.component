@@ -121,9 +121,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                else
                  { document.write('<a href="{!$Site.BaseUrl}" class="header__navigation-link">Products  <i class="fa fa-caret-down"></i></a>');}           
             </script>   
-            
-            
-           
+              
           <apex:form >
               <div class="navigation-dropdown">             <!--  style="background-image:url({!$Resource.IEC_dropdownnavy})"  -->
                 <!--<apex:outputpanel layout="none" rendered="{!bAvailGSS}"><a href="{!$Site.BaseUrl}/IEC_SearchResults?site-search={!sProdGSS}" class="navigation-dropdown__link">Global Systems Solutions</a></apex:outputpanel>-->
@@ -135,7 +133,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </div>
           </apex:form>
           
-        </li>
+        </li> 
 
         <li class="header__navigation-li">
             <script>           

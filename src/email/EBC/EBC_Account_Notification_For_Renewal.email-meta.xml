@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is a renewal notification email, sent at Renewal_Window date before Zuora__NextRenewalDate__c</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EBC Account Notification For Renewal</name>
+    <style>none</style>
+    <subject>It&apos;s time to renew your eBroadcast Subscription</subject>
+    <textOnly>IATA eBroadcast Account
+
+Time to renew your eBroadcast account
+
+Notification dated {!EBC_Account_Notification__c.Notification_Date__c}. Please renew by {!EBC_Account_Notification__c.{!EBC_Account_Notification__c.Next_Renewal_Date__c}}
+
+Username: {!EBC_Account_Notification__c.Username__c}
+
+Account Name: {!EBC_Account_Notification__c.Billing_Account_Name__c}
+
+Account Status: {!EBC_Account_Notification__c.EBC_Account_Status__c}
+
+Account Balance: {!EBC_Account_Notification__c.Email_Balance__c} emails available
+
+Current Rate Plan: {!EBC_Account_Notification__c.EBC_Rate_Plan_Name__c}
+Expires {!EBC_Account_Notification__c.Subscription_End_Date__c}
+
+Renew your eBroadcast subscription
+
+© International Air Transport Association, All Rights Reserved.
+800 Place Victoria • Montreal, Quebec • H4Z 1M1 Canada</textOnly>
+    <type>custom</type>
+</EmailTemplate>

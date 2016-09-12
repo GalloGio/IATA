@@ -1,0 +1,31 @@
+<apex:page standardController="EBC_Campaign__c" extensions="vfIECEBC_Cart" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
+	<apex:composition template="IECEBC_Layout">
+        <apex:define name="pageHeadAdditions">
+            <!-- Start of Page <head> -->
+            <title>
+                eBroadcast Campaign - 
+                Test page
+            </title>
+            <!-- End of Page </head> -->
+        </apex:define>
+        <apex:define name="pageScriptAdditions">
+            
+        </apex:define>
+        <apex:define name="pageContent">
+            <!-- Start of Page Content -->
+            <main class="main-content">
+                <div class="inner-wrapper">
+                    <h1 class="page-title">This is a test page</h1>
+            		
+                    <apex:form >
+                        <apex:commandButton value="Buy now" action="{!addToCart}">
+                            <apex:param name="selectedratePlanInformationId" value="a4S8E0000000gdj" assignTo="{!selectedRatePlanInformationId}"/>
+                        </apex:commandButton>
+                    </apex:form>
+                    
+                    <apex:include pageName="IECShoppingCart" />
+                </div>
+            </main>
+        </apex:define>
+    </apex:composition>
+</apex:page>

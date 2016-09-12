@@ -1,0 +1,53 @@
+public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller 
+{
+    public String audience { get; set; }
+    
+    public List<EBC_Template__c> globalTemplates {
+        get {
+            
+            if(globalTemplates == null) {
+                globalTemplates = [
+                    SELECT
+                        Id,
+                        Name,
+                        (Select Id, Name From Attachments where Name = '/edres/_full.png')
+                    FROM EBC_Template__c
+                    WHERE
+                        Recordtype.DeveloperName = 'Global' AND 
+                        Audience__c = :audience
+                ];
+            }
+            
+            return globalTemplates;
+        }
+        set;
+    }
+    public List<EBC_Template__c> userEditableTemplates {
+        get {  
+            if (userEditableTemplates == null) {
+                userEditableTemplates = [
+                    Select
+                    	Id,
+                    	Name,
+                    	(Select
+                         	Id,
+                         	Name
+                         From Attachments)
+                    from EBC_Template__c
+                    where Is_Reusable__c = true
+                        and OwnerId =: userinfo.getUserId()
+                        and RecordType.DeveloperName != 'Global'
+                        and Audience__c = :audience
+                ];
+            }
+            return userEditableTemplates;
+        }
+        set;
+    }
+    public Id selectedTemplate{get;set;}
+    public vfIECEBC_TemplateCreation()
+    {
+        selectedTemplate = null;
+        //getUserSavedTemplates();  
+    }
+}
