@@ -5003,6 +5003,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ICCS_Create_Status_to_Complete</fullName>
+        <description>ICCS: Create Status to Complete</description>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+        <name>ICCS: Create Status to Complete</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ICCS_Set_Eligibility_Checkbox</fullName>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox</description>
         <field>Eligibility_Documents_Checklist_approved__c</field>
@@ -12247,6 +12257,46 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <active>true</active>
         <description>Notify the Case Contact on ICCS CitiDirect AFRD cases that the steps 1 and 2 of the process are completed and the RefNB is filled in.</description>
         <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_CitiDirect&apos;,    ISPICKVAL( CaseArea__c , &apos;ICCS - Assign AFRD CitiDirect Rights&apos;),    INCLUDES( Acceptance_checklist__c , &apos;1. AFRD - Entitlement requested&apos;),    INCLUDES( Acceptance_checklist__c , &apos;2. AFRD - Delivery Option set up&apos;),    External_Reference_Number__c &lt;&gt; &apos;&apos; , Do_Not_Send_Notification__c = false )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ICCS_Create Status to Complete</fullName>
+        <actions>
+            <name>ICCS_Create_Status_to_Complete</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND 2 AND (3 OR 4) AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ASP Management</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>FDS - Create Authorized Signatories Package</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Addition</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Airline joining</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Acceptance_checklist__c</field>
+            <operation>includes</operation>
+            <value>ASP - ID Copies (2) &amp; Signatures checked,ASP - Contacts Updated,ASP - Signatures Validated,ASP - Banking Resolution applied</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Documentation_received__c</field>
+            <operation>includes</operation>
+            <value>ASP - Request Letter,ASP - ID Copies (2) &amp; Signatures,ASP - List of Contacts (ICCS - AP),ASP - Banking Resolution</value>
+        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
