@@ -39188,10 +39188,6 @@
         <recordType>Contract.EF_Client_Agreement</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contract-E%26F Contract Layout</layout>
-        <recordType>Contract.EF_Contract</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contract-RCRM Contract Layout</layout>
         <recordType>Contract.RCRM_Contract</recordType>
     </layoutAssignments>
@@ -43123,12 +43119,6 @@
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Contract.EF_Client_Agreement</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <personAccountDefault>true</personAccountDefault>
-		<recordType>Contract.EF_Contract</recordType>
-		<default>true</default>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
