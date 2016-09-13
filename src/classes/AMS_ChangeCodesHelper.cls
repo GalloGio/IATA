@@ -262,13 +262,9 @@ public class AMS_ChangeCodesHelper {
 
         Id oscarId = null;
 
-        Boolean usedOnEBulletin = true;
         if (oscar != null)
-        {
             oscarId = oscar.Id;
-            usedOnEBulletin = oscar.process__c == AMS_Utils.new_MSO ? false : true;
-        }
-
+        
         String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
         Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
@@ -280,7 +276,6 @@ public class AMS_ChangeCodesHelper {
             , Reason_Code__c = changeCode.reasonCode
             , Reason_Description__c = changeCode.reasonDesc
             , Source__c = source
-            , Published_on_Ebulletin__c = usedOnEBulletin
         );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
