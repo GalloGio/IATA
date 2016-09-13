@@ -6191,6 +6191,7 @@ For each section below either:&lt;br/&gt;
 &lt;li&gt;Notify IATA of the Change and update your Agency Details&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;</value>
+    </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_StepD_ProgressBar</fullName>
         <categories>ISSP, Portal, AMS</categories>
