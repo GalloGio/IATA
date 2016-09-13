@@ -69,7 +69,6 @@ public class EF_ContractHandler
     	}
     }
 
-
     // If user is a CS Specialist, make the Contract inactive and require approval
     public static void handleWithApprovalAccountInserts(List<Contract> contractList)
     {
@@ -80,8 +79,7 @@ public class EF_ContractHandler
 	            c.EF_Require_Approval__c = true;
 	            c.EF_Status__c = 'Inactive';
 	        }
-		}        
-        
+		}
     }
 
     // Used to identify is the running user belongs to Client Services Specialists role inside E&F
