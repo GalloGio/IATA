@@ -535,6 +535,15 @@ E.g. in the last test email was sent last April 1 at 9pm, this stores the total 
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>EBC_Approvers_EBC_Campaign</fullName>
+        <filterScope>Queue</filterScope>
+        <label>eBroadcast Approvers</label>
+        <queue>EBC_Approvers</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>eBroadcast Campaign Name</label>
         <trackHistory>false</trackHistory>

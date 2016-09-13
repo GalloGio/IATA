@@ -1,6 +1,6 @@
 public without sharing class ISSP_Ctrl_AccountStatements {
 
-  public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
+  public static final String APP_NAME = 'ICE ï¿½ IATA Customer E-Statement';
 
   public ContentVersion faq {get;set;}
   public ContentVersion document {get;set;}

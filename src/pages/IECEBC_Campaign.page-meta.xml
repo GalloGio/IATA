@@ -4,4 +4,9 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>IECEBCCampaign</label>
+    <packageVersions>
+        <majorNumber>2</majorNumber>
+        <minorNumber>70</minorNumber>
+        <namespace>Zuora</namespace>
+    </packageVersions>
 </ApexPage>
