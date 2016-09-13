@@ -1,5 +1,125 @@
 public class EF_MaterialLineItemHandler {
     
+    public static void emailIfMaterialChanges(List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap)
+    {
+        List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
+        List<EF_Material_Line_Item__c> toDisallowList = new List<EF_Material_Line_Item__c>();
+        List<EF_Material_Line_Item__c> baMaterials = new List<EF_Material_Line_Item__c>();
+        boolean isCsSpecialist = EF_ContractHandler.isUserCsSpecialist();
+        Set<Id> relatedBaIdSet = new Set<Id>();
+        Set<Id> relevantProductIds = new Set<Id>();
+        Map<Id, Product2> relevantProducts;
+
+        for(EF_Material_Line_Item__c mat : materialLineItemList)
+        {
+            // Only tracking changes to Material field...
+            if(mat.EF_Material__c != materialLineItemOldMap.get(mat.id).EF_Material__c)
+            {
+                relevantProductIds.add(mat.EF_Material__c);
+                if(materialLineItemOldMap.get(mat.id).EF_Material__c != null)
+                    relevantProductIds.add(materialLineItemOldMap.get(mat.id).EF_Material__c);
+
+                // For Contracts, only the ones edited by Customer Services Spealists should be put to approval processing
+                if(mat.Contract__c != null && isCsSpecialist)
+                {
+                    toApproveList.add(mat);
+                }
+                else if(mat.EF_Relationship__c != null)
+                {
+                    // Billing Agreements might require an approval based on related Contract__r.EF_Allow_Billing_Agreements__c value (Allowed with Approval)
+                    baMaterials.add(mat);
+                    relatedBaIdSet.add(mat.Id);
+                }
+            }
+        }
+
+        if(toApproveList.size() == 0 && baMaterials.size() == 0)
+        {
+            return;
+        }
+
+        // Find all Contracts related to the Billing Agreements to include Allow with Approval records
+        List<EF_Material_Line_Item__c> matList = [select EF_Material__r.Name, Name, Contract__c, EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c from EF_Material_Line_Item__c where id in :relatedBaIdSet];
+        for(EF_Material_Line_Item__c mat : matList)
+        {
+            if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+            {
+                toApproveList.add(mat);
+            }
+            if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c.equalsIgnoreCase('Not Allowed'))
+            {
+                toDisallowList.add(mat);
+            }
+        }
+
+        // Notify the approvers for Contract and BA Material Line changes. A html-table listing will be provided if more than one line changes at time. 
+        if(toApproveList.size() > 0)
+        {
+            relevantProducts = new Map<Id, Product2>([select id, name from Product2 where Id in :relevantProductIds]);
+            notifyRelevantApprover(toApproveList, materialLineItemOldMap, relevantProducts);
+        }
+
+        // Throw an exception if the Contract has turned into "Don't allow Billing Agreements" despite at one point BA and Materials were added
+        if(toDisallowList.size() > 0)
+        {
+            for(EF_Material_Line_Item__c disallowed : toDisallowList)
+            {
+                throw new EF_BaContractApprovalHelper.ApprovalException('The Billing Agreement record is not editable, because the related Contract is set to not to allow Billing Agreements');
+            }
+        }
+    }
+
+    // Constructs two email html-bodies to be sent to User's Contract and Billing Agreement approvers
+    private static void notifyRelevantApprover(List<EF_Material_Line_Item__c> changeList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap, Map<Id, Product2> relevantProducts)
+    {
+        String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
+        User u = [select EF_Contract_Approver__r.email, EF_Billing_Agreement_Approver__r.email, FirstName, LastName from User where Id = :UserInfo.getUserId()];
+        String emailBody = 'Dear team member, <br/><br/>the following Materials have been changed by '+u.FirstName+' '+u.LastName+':<br/><br/>';
+        emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Old value:</th><th border="1">New value:</th></tr>';
+        
+        String contractBody = emailBody;
+        String baBody = emailBody;
+        boolean sendContract = false;
+        boolean sendBa = false;
+
+        // Go through the list of all changed Material Line Items and create an table row per item based on if the material line is related to a Contract or a BA
+        for(EF_Material_Line_Item__c line : changeList)
+        {
+            if(line.Contract__c != null)
+            {
+                sendContract = true;
+                contractBody = contractBody + constructEmailRow(line, relevantProducts.get(materialLineItemOldMap.get(line.Id).EF_Material__c), relevantProducts.get(line.EF_Material__c), baseUrl);
+            }
+            else if(line.EF_Material__c != null)
+            {
+                sendBa = true;
+                baBody = baBody + constructEmailRow(line, relevantProducts.get(materialLineItemOldMap.get(line.Id).EF_Material__c), relevantProducts.get(line.EF_Material__c), baseUrl);
+            }
+        }
+
+        contractBody = contractBody + '</table>';
+        baBody = baBody + '</table>';
+
+        // Only send an email to Contract approver if there were changes to Contracts' Materials
+        if(sendContract)
+        {
+            Utility.sendEmail(new List<String>{u.EF_Contract_Approver__r.email}, 'E&F CRM: Changes to Material Line Items', contractBody, true, null);
+        }
+
+        // Only send an email to BA approver if there were changes to BA' Materials
+        if(sendBa)
+        {
+            Utility.sendEmail(new List<String>{u.EF_Billing_Agreement_Approver__r.email}, 'E&F CRM: Changes to Material Line Items', baBody, true, null);
+        }
+    }
+
+    // Can be used to add more items per line apart from Material Name. If so, add the fields also to query on line 42.
+    private static String constructEmailRow(EF_Material_Line_Item__c line, Product2 oldValue, Product2 newValue, String baseUrl)
+    {
+        String htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">'+oldValue.Name+'</td><td border="1">'+newValue.Name+'</td></tr>';
+        return htmlRow;
+    }
+
     public static void checkBillingAgreementContractItems (List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap) {
     
         List<EF_Material_Line_Item__c> workdata = new List<EF_Material_Line_Item__c>();
