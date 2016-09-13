@@ -3,7 +3,7 @@
 		//Fetch the expense list from the Apex controller
 		var action = component.get("c.getIssuesAndPriorities");
 		var accountId = component.get("v.accountId");
-		component.set("v.editMode", false);
+		// component.set("v.editMode", false);
 
 		var showAllCheckBox = component.find("showAllCheckBox");
 		var showAll = showAllCheckBox.get("v.value");
