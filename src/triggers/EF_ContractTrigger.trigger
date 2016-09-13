@@ -8,7 +8,7 @@ trigger EF_ContractTrigger on Contract (
 	after undelete)
 {
 		Set<Id> efContractRecordTypes = new Set<Id>();
-		Id efContractRtId = AMS_Utils.getId('Contract', 'EF_Contract');
+		Id efContractRtId = AMS_Utils.getId('Contract', 'EF_Client_Agreement');
 		if(efContractRtId != null)
 			efContractRecordTypes.add(efContractRtId);
 		
