@@ -511,6 +511,14 @@
         <value>Address</value>
     </labels>
     <labels>
+        <fullName>Address_Line_2</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address_Line_2</shortDescription>
+        <value>Address 2</value>
+    </labels>
+    <labels>
         <fullName>Address_creation_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15774,7 +15782,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ReleaseDateMessage</shortDescription>
-        <value>This title will be released on</value>
+        <value>This title will be effective on</value>
     </labels>
     <labels>
         <fullName>Renewal_Number</fullName>
