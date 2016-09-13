@@ -1273,6 +1273,21 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>EF_Allow_Billing_Agreements__c</picklist>
+            <values>
+                <fullName>Allowed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Allowed with Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Allowed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_BSP_Periods__c</picklist>
             <values>
                 <fullName>1</fullName>
