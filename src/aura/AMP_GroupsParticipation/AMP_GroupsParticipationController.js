@@ -9,7 +9,7 @@
 			});
 			action.setCallback(this, function(a) {
 				 var participants = a.getReturnValue();
-				 
+
 				 var state = a.getState();
 				 var ParticipantWrappers = new Array();
 				 if (component.isValid() && state === "SUCCESS") {
@@ -58,8 +58,8 @@
                          previousUnder = currentUnder;
 					 }
 
-						component.set("v.participants", participants);
-						
+						// component.set("v.participants", participants);
+
 						component.set("v.ParticipantWrappers", ParticipantWrappers);
 
 				 }
