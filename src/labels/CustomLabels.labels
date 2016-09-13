@@ -6186,11 +6186,11 @@ For each section below either:&lt;br/&gt;
 &lt;ul&gt;
 &lt;li&gt;Confirm that the Agency Details are correct&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;OR&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;Notify IATA of the Change and update your Agency Details&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;</value>
-    </labels>
     <labels>
         <fullName>ISSP_AMS_NOC_StepD_ProgressBar</fullName>
         <categories>ISSP, Portal, AMS</categories>
@@ -6252,7 +6252,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change3</shortDescription>
-        <value>Where the Transferor is employed by, or retains a financial or benificial interest, directory or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
+        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_acount_details</fullName>
@@ -6686,6 +6686,62 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_TC</shortDescription>
         <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‘Company information’ above to make these statements and file this document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CASS</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CASS</shortDescription>
+        <value>I hereby certify that the foregoing statements, including statements made in any attachments hereto, are true and correct to the best of my knowledge and belief, and that I am authorized by the firm identified in Section 1 to make these statements and file this document.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CGO</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CGO</shortDescription>
+        <value>The transferor has informed the Transferee of the need to comply the Cargo Agency Rules if the Transferee wishes to be entered on the IATA Agency Cargo List as a Registered Agent.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CGO2</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CGO2</shortDescription>
+        <value>In accordance with one of the requirements of the Cargo Agency Rules, the Transferee hereby undertakes that it accepted joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Cargo Agency Agreement as at the date the transfer of ownership takes place.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CGO3</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CGO3</shortDescription>
+        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the Agent following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Cargo Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Cargo Agency Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_EACP</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change EACP</shortDescription>
+        <value>The transferor has informed the Transferee of the need to comply with the European Air Cargo Programme Rules if the Transferee wishes to be entered on the European Air Cargo Directory as a Registered Intermediary.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_EACP2</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change EACP2</shortDescription>
+        <value>In accordance with one of the requirements of the European Air Cargo Programme Rules, the Transferee hereby undertakes that it accepted joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Cargo Intermediary Agreement as at the date the transfer of ownership takes place.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_EACP3</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change EACP3</shortDescription>
+        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Cargo Intermediary Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Cargo Intermediary Agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Transferee</fullName>

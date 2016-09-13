@@ -35,6 +35,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public string sector {get; set;}
     public string sectorDisplay {get; set;}
     public string sectorValue {get; set;}
+    public string agencyCategory {get; set;}
     public string baseUrl {get; set;}
     public string step1GoToNumber {get; set;}
 
@@ -225,6 +226,7 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('issp ams con ' + con);
 
         sector = con.Account.Sector__c;
+        agencyCategory = con.Account.Category__c;
 
         if (con.Account.Top_Parent__c == null) { //User is from HQ Account
             vHQAccountId = con.AccountId;
