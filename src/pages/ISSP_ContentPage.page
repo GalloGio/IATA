@@ -87,7 +87,7 @@
         },
         aaSorting : [], // disable sorting from title (default) and consider the sorting of the ContentVersions from Controller 
         initComplete: function () { 
-            var setOfDistinctCountries = []; 
+            var setOfDistinctCountries = [];
             var allCountriesOfPublication ='{!allCountriesList}';
             var allLanguages ='{!allLanguagesList}';
             var allFileTypes ='{!allFileTypesList}';
@@ -99,7 +99,7 @@
             allFileTypes = allFileTypes.replace(/]|\[/g, '');
             allDocumentCategory = allDocumentCategory.replace(/]|\[/g, '');
           
-            this.api().columns([2,5]).every( function (columnIndex) {// search only available for country of publication and document category columns
+            this.api().columns([5,2]).every( function (columnIndex) {// search only available for country of publication and document category columns
                        
                 var column = this;
                 var select = $('<select><option value="">'+'-None-'+'</option></select>')
@@ -191,7 +191,8 @@
                 {
                     for(var j = 0; j < setOfOptions.length; j++){
                         // add selected attribute to the line of the user country to be the default option on the picklist
-                        var selected = setOfOptions[j] === userCountry ? 'selected' : ''; 
+                        //var selected = setOfOptions[j] === userCountry ? 'selected' : '';
+                        var selected = setOfOptions[j];  
                         select.append("<option "+selected+" value=\"" + setOfOptions[j] + "\">" + setOfOptions[j] + "</option>");
                     }
                     
@@ -263,10 +264,10 @@
                                             <input type="text" class="form-control" id="searchInput_" placeholder="{!$Label.ISSP_Search}"/>
                                         </div>
                                      </div>
-                                    <div class="col-md-4" id="leftFilter">
+                                    <div class="col-md-3" id="leftFilter">
                                       <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass="resetButton btn btn-danger btn-block" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/>
                                      </div>
-                                     <div class="col-md-8" id="resulttable">
+                                     <div class="col-md-9" id="resulttable">
                                         <div class="panel panel-default">
                                             <!---------------------DOCUMENTS TABLE------------------------->
                                             <!--<apex:pageblock mode="edit" id="results">-->
