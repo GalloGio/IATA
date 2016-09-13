@@ -8329,14 +8329,6 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <value>Please ensure that the updated % Total Ownership equals 100%.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_Q3_Contact_Details</fullName>
-        <categories>ISSP AMS NoC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_NoC_Q3_Contact_Details</shortDescription>
-        <value>Contact Details</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NoC_Summary_Updated_Ownership</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -10529,20 +10521,20 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Created Date</value>
     </labels>
     <labels>
-        <fullName>ISSP_Currency</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Currency</shortDescription>
-        <value>Currency</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Currency_filter</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Currency Filter</shortDescription>
         <value>Currency Filter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Currency</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Currency</shortDescription>
+        <value>Currency</value>
     </labels>
     <labels>
         <fullName>ISSP_CurrentPassword</fullName>
