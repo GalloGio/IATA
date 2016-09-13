@@ -1236,7 +1236,7 @@ public with sharing class AMS_OSCAR_Automation
         {
             try{
                 if(oscar != null && !oscar.Apply_Penalty_Fee__c){
-                    oscar.Apply_Penalty_Fee__c = true;
+                    //oscar.Apply_Penalty_Fee__c = true;
                     return true; 
                 }
             }catch(Exception e){
