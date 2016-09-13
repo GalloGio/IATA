@@ -1273,7 +1273,7 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>EF_Allow_Billing_Agreements__c</picklist>
+            <picklist>EF_Allow_Billing_Agreements</picklist>
             <values>
                 <fullName>Allowed</fullName>
                 <default>false</default>
