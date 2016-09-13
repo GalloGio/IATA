@@ -12,23 +12,29 @@ public class EF_MaterialLineItemHandler {
 
         for(EF_Material_Line_Item__c mat : materialLineItemList)
         {
-            // Only tracking changes to Material field...
-            if(mat.EF_Material__c != materialLineItemOldMap.get(mat.id).EF_Material__c)
+            if(mat.Id != null && materialLineItemOldMap != null)
             {
-                relevantProductIds.add(mat.EF_Material__c);
-                if(materialLineItemOldMap.get(mat.id).EF_Material__c != null)
-                    relevantProductIds.add(materialLineItemOldMap.get(mat.id).EF_Material__c);
+                if(materialLineItemOldMap.get(mat.id) != null)
+                {
+                    // Only tracking changes to Material field...
+                    if(mat.EF_Material__c != materialLineItemOldMap.get(mat.id).EF_Material__c)
+                    {
+                        relevantProductIds.add(mat.EF_Material__c);
+                        if(materialLineItemOldMap.get(mat.id).EF_Material__c != null)
+                            relevantProductIds.add(materialLineItemOldMap.get(mat.id).EF_Material__c);
 
-                // For Contracts, only the ones edited by Customer Services Spealists should be put to approval processing
-                if(mat.Contract__c != null && isCsSpecialist)
-                {
-                    toApproveList.add(mat);
-                }
-                else if(mat.EF_Relationship__c != null)
-                {
-                    // Billing Agreements might require an approval based on related Contract__r.EF_Allow_Billing_Agreements__c value (Allowed with Approval)
-                    baMaterials.add(mat);
-                    relatedBaIdSet.add(mat.Id);
+                        // For Contracts, only the ones edited by Customer Services Spealists should be put to approval processing
+                        if(mat.Contract__c != null && isCsSpecialist)
+                        {
+                            toApproveList.add(mat);
+                        }
+                        else if(mat.EF_Relationship__c != null)
+                        {
+                            // Billing Agreements might require an approval based on related Contract__r.EF_Allow_Billing_Agreements__c value (Allowed with Approval)
+                            baMaterials.add(mat);
+                            relatedBaIdSet.add(mat.Id);
+                        }
+                    }
                 }
             }
         }
