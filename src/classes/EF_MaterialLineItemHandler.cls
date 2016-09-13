@@ -107,13 +107,13 @@ public class EF_MaterialLineItemHandler {
         baBody = baBody + '</table>';
 
         // Only send an email to Contract approver if there were changes to Contracts' Materials
-        if(sendContract)
+        if(sendContract && u.EF_Contract_Approver__r.email != null)
         {
             Utility.sendEmail(new List<String>{u.EF_Contract_Approver__r.email}, 'E&F CRM: Changes to Material Line Items', contractBody, true, null);
         }
 
         // Only send an email to BA approver if there were changes to BA' Materials
-        if(sendBa)
+        if(sendBa && u.EF_Billing_Agreement_Approver__r.email != null)
         {
             Utility.sendEmail(new List<String>{u.EF_Billing_Agreement_Approver__r.email}, 'E&F CRM: Changes to Material Line Items', baBody, true, null);
         }
