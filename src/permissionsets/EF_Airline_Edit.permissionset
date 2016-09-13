@@ -32681,7 +32681,7 @@
     </recordTypeVisibilities>
 	<recordTypeVisibilities>
         <recordType>Account.Operator</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.IATA</recordType>
