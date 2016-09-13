@@ -65,7 +65,8 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 			Where id = :UserInfo.getUserId()];
 
 		// check account status before doing anything to allow or reject access to info
-		if (this.currentUser.Contact.Account.Status__c != 'Approved') {
+		if (this.currentUser.Contact.Account.Status__c != 'Approved' &&
+			this.currentUser.Contact.Account.Status__c != 'Changes Processed') {
 			this.listMessages.add(Label.ISSP_Account_not_approved);
 			return;
 		}
@@ -90,7 +91,7 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		this.lastUpdatedOn = Datetime.newInstance(1900, 1, 1);
 		for (Account_Statement__c statement: this.listStatements) {
 			//String key = statement.Period__c + statement.Group__c + statement.Operation__c;
-			String key = statement.Period__c + statement.Group__c;
+			String key = statement.Period__c + statement.Group__c + statement.CurrencyIsoCode;
 			WrapperStatement wrapper = mapWrapper.get(key);
 			if (wrapper == null) {
 				wrapper = new WrapperStatement(statement);
