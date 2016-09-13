@@ -264,10 +264,19 @@ public class AMS_ChangeCodesHelper {
 
         if (oscar != null)
             oscarId = oscar.Id;
+        
+        String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
-        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
-                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
-                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
+            Active__c = isActive
+            , Account__c = oscarAgency.Id
+            , Change_Code__c = changeCode.name
+            , OSCAR__c = oscarId
+            , Bulletin_Information__c = changeCode.memoText
+            , Reason_Code__c = changeCode.reasonCode
+            , Reason_Description__c = changeCode.reasonDesc
+            , Source__c = source
+        );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
@@ -354,9 +363,18 @@ public class AMS_ChangeCodesHelper {
         if (oscar != null)
             oscarId = oscar.Id;
 
-        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
-                OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
-                Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
+        String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
+
+        Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
+            Active__c = isActive
+            , Account__c = oscarAgency.Id
+            , Change_Code__c = changeCode.name
+            , OSCAR__c = oscarId
+            , Bulletin_Information__c = changeCode.memoText
+            , Reason_Code__c = changeCode.reasonCode
+            , Reason_Description__c = changeCode.reasonDesc
+            , Source__c = source
+        );
 
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
