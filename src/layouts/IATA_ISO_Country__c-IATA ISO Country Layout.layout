@@ -25,10 +25,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DDS_Enabled__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Sanctioned_Country__c</field>
             </layoutItems>
         </layoutColumns>
