@@ -24,7 +24,7 @@
         </apex:pageBlockSection>
         
         <!-- ************************* section 1 for HO ************************* -->
-        <apex:pageBlockSection columns="2" id="SectionOne" rendered="{!amsOfficeType == 'HO'}" collapsible="false">
+        <apex:pageBlockSection columns="2" id="SectionOne" rendered="{!AND(amsOfficeType == 'HO', newCase.Reason1__c!='New BR Abroad')}" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel >
                     {!$Label.ISSP_AMS_STEP_3_1_HO_Title}
@@ -52,7 +52,7 @@
         <apex:pageBlockSection columns="2" id="SectionTwo" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel >
-                    {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_2_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                    {!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_STEP_3_2_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right" rendered="{!amsOfficeType == 'HO'}"/>
 					<!---
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1-For-Branch" style="float:right" rendered="{!amsOfficeType != 'HO'}"/>
@@ -63,18 +63,21 @@
             <apex:outputField label="{!IF(amsOfficeType='HO',IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label), $Label.ISSP_CompanyName)}" value="{!hqAccount.Name}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.TradeName__c.Label}" value="{!hqAccount.TradeName__c}"/>
 
-            <apex:outputText label="{!IF(AND(amsOfficeType='HO',newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_Step3_Office_FullAddress, $Label.ISSP_AMS_Step3_HO_Full_Address)}" value="{!hqAccount.BillingStreet} 
-                    {!hqAccount.BillingCity} {!hqAccount.BillingPostalCode} 
-                    {!hqAccount.BillingState} {!hqAccount.BillingCountry} "/>
+            <apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!IF(AND(amsOfficeType='HO',newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_Step3_Office_FullAddress, $Label.ISSP_AMS_Step3_HO_Full_Address)}">
+           		<apex:param value="{!hqAccount.BillingStreet}" />
+             	<apex:param value="{!hqAccount.BillingCity}{!IF(hqAccount.BillingPostalCode!='', ', ' + hqAccount.BillingPostalCode, '')}" />
+              	<apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
+       		</apex:outputText>
+            
             <apex:outputField label="{!$ObjectType.Account.fields.Website.Label}" value="{!hqAccount.Website}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.Phone.Label}" value="{!hqAccount.Phone}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.Email__c.Label}" value="{!hqAccount.Email__c}"/>
+            <apex:outputField label="{!$Label.ISSP_Registration_BusinessPhone}" value="{!hqAccount.Phone}"/>
+            <apex:outputField label="{!$Label.ISSP_Office_Email}" value="{!hqAccount.Email__c}"/>
             
 			<apex:outputField label="{!$ObjectType.Account.fields.Mobile__c.Label}" value="{!hqAccount.Mobile__c}"/>
 		    <apex:outputField label="{!$ObjectType.Account.fields.Fax.Label}" value="{!hqAccount.Fax}"/>
 
-            <apex:outputField label="{!$ObjectType.Account.fields.IATACode__c.Label}" value="{!hqAccount.IATACode__c}" rendered="{!amsOfficeType != 'HO'}"/> <!-- displaying for branch only -->
-
+            <apex:outputField label="{!$ObjectType.Account.fields.IATACode__c.Label}" value="{!hqAccount.IATACode__c}" rendered="{!amsOfficeType == 'Branch'}"/> <!-- displaying for branch only -->
+			<apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{0,date, MMMM d,  yyyy}" rendered="{!AND(NOT(ISNULL(newForm.ISSP_AMS_Pax_Office_Open_Date__c)),amsOfficeType == 'HO')}">
                         <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" /> <!-- displaying for HO only -->
             </apex:outputText>
@@ -93,70 +96,47 @@
        
         </apex:pageBlockSection>
 
-        <apex:pageBlockSection columns="2" collapsible="false" >
-            <apex:outputText value="{!$Label.ISSP_AMS_Branch_Office_address_details}" style="font-weight:bold" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
-                       
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}" value="{!newForm.Branch_Office_Street_name_number__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}" value="{!newForm.Branch_Office_City__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}" value="{!newForm.Branch_Office_Postal_code__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputField label="{!$Label.ISSP_Country}" value="{!isocountry.Name}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}" value="{!newForm.Branch_Office_Phone__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_FAX__c.Label}" value="{!newForm.Branch_Office_FAX__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Email__c.Label}" value="{!newForm.Branch_Office_Email__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
-        </apex:pageBlockSection>
-
-        <!-- ************************* section 2 for branch ************************* -->                  
-        <apex:pageBlockSection columns="2" id="SectionTwoForBranch" rendered="{!amsOfficeType != 'HO'}" collapsible="false">
+       
+        <!-- ************************* section 2 for Branch & Branch Abroad ************************* -->                  
+        <apex:pageBlockSection columns="2" id="SectionTwoForBranch" rendered="{!OR(NOT(amsOfficeType=='HO'),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
             <apex:facet name="header">
                 <apex:outputpanel >
                     {!$Label.ISSP_AMS_STEP_3_2_Title}
                     <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                 </apex:outputpanel>                       
             </apex:facet>
-            <tr><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_1}</strong></td></tr>
-            <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}"/>
-			<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
-            <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_when_incorporated__c.Label}" value="{0,date, MMMM d,  yyyy}" rendered="{!AND(newForm.ISSP_AMS_Legal_Status__c == 'Corporation')}">
-                <apex:param value="{!newForm.ISSP_AMS_when_incorporated__c}" />
-            </apex:outputText> 
-
-            <apex:outputField rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_where_incorporated__c.Label}" value="{!newForm.ISSP_AMS_where_incorporated__c}"/>
-
-            <apex:outputText rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Entity_with_listed_shares__c.Label}" value="{!CASE(newForm.ISSP_AMS_Entity_with_listed_shares__c,'Yes', $Label.ISSP_Yes, 'No', $Label.ISSP_No,'')}"/>
-            <apex:outputtext rendered="{!(newForm.ISSP_AMS_Legal_Status__c != 'Corporation')}"><!--empty: move following field to next row --></apex:outputtext>
-            <span class="summary-subsection">      
-            	<apex:outputText value="{!$Label.ISSP_AMS_Is_this_branch_office}" style="font-weight:bold"/>
-                <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>    
-                <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Wholly_owned_by_this_Head_Office__c.Label}" value="{!CASE(newForm.Wholly_owned_by_this_Head_Office__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}"/>
-                <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Wholly_managed_by_this_Head_Office__c.Label}" value="{!CASE(newForm.Wholly_managed_by_this_Head_Office__c,'Yes', $Label.ISSP_Yes, 'No', $Label.ISSP_No, '')}"/>
- 			</span>                
+            <tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','none','')}"><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_1}</strong></td></tr>
+            <apex:outputtext rendered="{!amsOfficeType=='Branch'}"><!--empty: move following field to next row --></apex:outputtext>
             
-			<tr><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_2}</strong></td></tr>
+           	<apex:outputText value="{!$Label.ISSP_AMS_Is_this_branch_office}" style="font-weight:bold" rendered="{!amsOfficeType=='Branch'}"/>
+          	<apex:outputtext rendered="{!amsOfficeType=='Branch'}"><!--empty: move following field to next row --></apex:outputtext>    
+         	<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Wholly_owned_by_this_Head_Office__c.Label}" value="{!CASE(newForm.Wholly_owned_by_this_Head_Office__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" rendered="{!amsOfficeType=='Branch'}"/>
+           	<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Wholly_managed_by_this_Head_Office__c.Label}" value="{!CASE(newForm.Wholly_managed_by_this_Head_Office__c,'Yes', $Label.ISSP_Yes, 'No', $Label.ISSP_No, '')}" rendered="{!amsOfficeType=='Branch'}"/>            
+           
+			<tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','none','')}"><td colspan="4" class="bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_2}</strong></td></tr>
+          	 
             <apex:outputText escape="false" label="{!$Label.ISSP_AMS_Step3_OnlineAgency}" value="{!CASE(newForm.ISSP_AMS_Online_Agency_Application__c,'Yes', $Label.ISSP_Yes, 'No', $Label.ISSP_No,'')}"/>
-            <apex:inputField value="{!newForm.ISSP_AMS_Online_Agency_URL__c}" rendered="{newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes'}"/>
-            
             <apex:outputField rendered="{!newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Online_Agency_URL__c.Label}" value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>
+            
             <apex:outputtext rendered="{!newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes'}"><!--empty: move following field to next row --></apex:outputtext>
-            <apex:outputPanel rendered="{!(newForm.Wholly_owned_by_this_Head_Office__c!='Yes')}">
+            <apex:outputPanel rendered="{!AND(newForm.Wholly_owned_by_this_Head_Office__c!='Yes', amsOfficeType=='Branch')}">
             	<tr><td colspan="4"><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg_Branch}</strong></td></tr>
 			 </apex:outputPanel>
-            	<apex:outputtext rendered="{!(newForm.Wholly_owned_by_this_Head_Office__c!='Yes')}"><!--empty: move following field to next row --></apex:outputtext>
-            	<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" rendered="{!(newForm.Wholly_owned_by_this_Head_Office__c!='Yes')}"/>
-            	<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}" rendered="{!(newForm.Wholly_owned_by_this_Head_Office__c!='Yes')}"/>
+            	
+          	<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" rendered="{!AND(newForm.Wholly_owned_by_this_Head_Office__c!='Yes',amsOfficeType=='Branch')}"/>
+            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}" rendered="{!AND(newForm.Wholly_owned_by_this_Head_Office__c!='Yes',amsOfficeType=='Branch')}"/>
 			
+            <apex:outputtext rendered="{!newCase.Reason1__c=='New BR Abroad'}"><!--empty: move following field to next row --></apex:outputtext>
+            <apex:pageblocksectionitem rendered="{!newCase.Reason1__c=='New BR Abroad'}">
+           		<apex:outputlabel value="* {!$ObjectType.Account.fields.Legal_name__c.Label}" />
+               	<apex:outputfield value="{!newForm.Account_Name__c}"/>
+          	</apex:pageblocksectionitem>
+          	<apex:outputfield value="{!newForm.Trade_Name__c}" rendered="{!newCase.Reason1__c=='New BR Abroad'}"/>
+            
         </apex:pageBlockSection>
 
         <span class="summary-subsection">
-            <apex:pageBlockSection rendered="{!amsOfficeType != 'HO'}" collapsible="false">
+            <apex:pageBlockSection rendered="{!OR(amsOfficeType != 'HO', newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
                   
                     <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{0,date, MMMM d,  yyyy}">
                         <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
@@ -176,7 +156,7 @@
         </span>
 
         <span class="summary-subsection">
-            <apex:pageBlockSection rendered="{!amsOfficeType != 'HO'}" collapsible="false">
+            <apex:pageBlockSection rendered="{!OR(NOT(amsOfficeType=='HO'),newCase.Reason1__c=='New BR Abroad')}" collapsible="false">
                 <apex:outputText value="{!$Label.ISSP_AMS_Branch_Office_address_details}" style="font-weight:bold"/>
 
                 <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
@@ -221,7 +201,7 @@
                <apex:outputField value="{!newForm.Local_Physical_Address_Postal_Code__c}" />
                <apex:outputField value="{!newForm.Local_Physical_Address_Province__c}" />
                <apex:outputField value="{!newForm.Local_Physical_Address_Area__c}" />
-               <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+               <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
            </apex:pageBlockSection>
            <apex:pageBlockSection columns="1">
                <apex:outputText value="{!txtLocalAgencyDetailsCorrespondenceAddress}" style="font-weight:bold; font-size:110%"/>
@@ -233,7 +213,7 @@
                <apex:outputField value="{!newForm.Local_Postal_Address_Postal_Code__c}" styleClass="PostalPostalCode"/>
                <apex:outputField value="{!newForm.Local_Postal_Address_Province__c}" styleClass="PostalProvince"/>
                <apex:outputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
-               <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
+               <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
            </apex:pageBlockSection>
         </apex:pageBlockSection>
 
