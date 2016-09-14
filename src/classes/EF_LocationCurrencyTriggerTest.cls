@@ -48,19 +48,21 @@ private class EF_LocationCurrencyTriggerTest {
             );
         
         insert client;
-        
+                
         //create contract
         Contract contract = new Contract (
-            accountId = client.Id,
-            CCF_Number__c = '1',
-            Budget_Section__c ='aaaa',
-            CCF_Amount__c = 250000,
-            ContractTerm = 12,
-            StartDate = Date.today(),
-            Type__c ='Revenue'
-            );
+        	accountId= client.Id,
+        	CCF_Number__c= '1',
+        	Budget_Section__c='aaaa',
+        	CCF_Amount__c=250000,
+        	ContractTerm=12,
+            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+        	StartDate= Date.today(),
+        	Type__c='Revenue',
+            EF_Status__c='Active'
+        	);
+        
         insert contract;
-
     }
 
     @isTest static void EF_LocationCurrencyTrigger_AddFirstLocationCurrency() {
@@ -257,7 +259,7 @@ private class EF_LocationCurrencyTriggerTest {
             delete efl_3;
         	delete efl_2;        	
         Test.stopTest();
-        
+                       
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client'];               
         
         System.assertEquals(ctAfter.EF_Billing_Currency__c, null);
@@ -297,6 +299,6 @@ private class EF_LocationCurrencyTriggerTest {
         
         Contract ctAfter = [select Id, AccountId, Account.Name, EF_Billing_Currency__c from Contract where Account.Name = 'Test Account Client'];               
         
-        System.assertEquals(ctAfter.EF_Billing_Currency__c, 'USD;GBP;GBP');
+        System.assertEquals(ctAfter.EF_Billing_Currency__c, 'USD;GBP');
     }       
 }
