@@ -2,7 +2,6 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>temp for EBC apps</description>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Account_Notification__c.Billing_Account_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12,7 +11,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Account_Notification__c.Contact_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -52,7 +50,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Account_Notification__c.Next_Renewal_Date_String__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -62,7 +59,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Account_Notification__c.Notification_Date_String__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -92,7 +88,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Account_Notification__c.Subscription_End_Date_String__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -162,67 +157,54 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Audience__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Campaign_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.EBC_Design__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.EBC_Master_Filter__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Exact_Target_Campaign_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Google_Analytics_Tracking_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Google_Analytics_Tracker_Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Maximum_Allowed_Step__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Number_of_Recipients__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Scheduled_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -237,7 +219,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Customer_Filter__c.Field_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -277,27 +258,22 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Audience__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Geo_Condition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.IATA_Codes__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -307,97 +283,78 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Number_of_Recipients__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Refinement_Condition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.Default_Google_Analytics_Tracker__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.Monthly_Account_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.Notify_On_Send__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.PrimaryContact_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.PrimaryContact_Company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.PrimaryContact_Job_Title__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Preference__c.PrimaryContact_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Height__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Image_Size__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Image_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Image_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Is_Ready__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Size_KBytes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Thumbnail_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Width__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -409,11 +366,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EBC_Setup__c.Default_Storage_Capacity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EBC_Setup__c.ET_Last_EventDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -478,21 +430,10 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EBC_Setup__c.Pay_Exact_Amount_PAYG_Member__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EBC_Setup__c.Pay_Exact_Amount_PAYG_Non_Member__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EBC_Setup__c.Product_Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Setup__c.Renewal_Window__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -507,125 +448,98 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Template__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Template__c.External_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Template__c.Is_Reusable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Template__c.Is_Tested__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Template__c.Parent_Template__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Products_Account_View__c.Email_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Add_On_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Audience_Selection__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Email_Balance__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Storage_Usage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Storage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Trusted_Sender__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Cost_Per_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Currency_Cost_Per_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Email_Credit_Current_Offering__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Email_Credit_Standard__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_PrePaid_Emails__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_SubscriptionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <label>00-3b eBroadcast Admin</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Account_Notification__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Application_Filter__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Campaign__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -634,99 +548,71 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Customer_Filter__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Email_Exclusion__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Master_Filter__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Preference__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Resource__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Setup__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Template_Resource__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowRead>true</allowRead>
+        <object>Account</object>
+    </objectPermissions>
+    <objectPermissions>
+        <allowRead>true</allowRead>
+        <object>zqu__ZProduct__c</object>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Template__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>ID_Card__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>Zuora__CustomerAccount__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>zqu__ProductRatePlan__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>EBC_Template__c.Global</recordType>

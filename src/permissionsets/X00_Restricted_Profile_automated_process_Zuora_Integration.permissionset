@@ -13,7 +13,6 @@ The changes were added during EBC development (since 20160808)</description>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Email_Balance__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -43,7 +42,6 @@ The changes were added during EBC development (since 20160808)</description>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Currency_Cost_Per_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -70,20 +68,22 @@ The changes were added during EBC development (since 20160808)</description>
     <label>00 - Restricted Profile - automated process - Zuora Integration</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>Zuora__CustomerAccount__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>zqu__ProductRatePlan__c</object>
-        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowRead>true</allowRead>
+        <object>Account</object>
+    </objectPermissions>
+    <objectPermissions>
+        <allowRead>true</allowRead>
+        <object>zqu__ZProduct__c</object>
     </objectPermissions>
 </PermissionSet>

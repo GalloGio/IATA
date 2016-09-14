@@ -10,7 +10,6 @@
     </classAccesses>
     <custom>true</custom>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Data_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20,12 +19,10 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Geo_Condition__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35,12 +32,10 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Number_of_Recipients__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Refinement_Condition__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50,22 +45,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Application_Filter__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Master_Filter__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
         <apexPage>IECEBC_AccountEmailBlocks</apexPage>
@@ -125,10 +111,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>IECEBC_Dashboard</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>IECEBC_ETGraph</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

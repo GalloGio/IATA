@@ -41,10 +41,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>vfIECEBC_CampaignConfirmPAYG</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>vfIECEBC_CampaignList</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -121,147 +117,118 @@
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.AIMS_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Accreditation_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Endorsed_Accredited_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Last_change_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Last_re_inspection_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Original_approval_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Related_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Related_GDP_Products_Account_View__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Accreditation__c.WebStar_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Activity__c.Activity_Date_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Activity__c.Activity_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Activity__c.EBC_Campaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Activity__c.New_Balance__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Activity__c.Total_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Audience__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Data_Source_Object__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Data_Source_Value_Field__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Data_Source_Where_Clause__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Data_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Filter_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Filter_Field__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Filter_RelatedList_Field__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Filter_RelatedList__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Application_Filter__c.Search_Level__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Audience__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Campaign_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -276,7 +243,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Exact_Target_Campaign_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -291,77 +257,62 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step1_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step1_Writable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step2_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step2_Writable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step3_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step3_Writable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step4_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step4_Writable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step5_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step5_Writable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Is_Step6_Valid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Maximum_Allowed_Step__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Notification_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Number_of_Recipients__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Scheduled_Date_Valid_Until__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -376,17 +327,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Test_Email_Last_Send_Time_Stamp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Test_Email_Total_Sent_On_Stamp_Period__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Campaign__c.Test_Email_Total_Sent_Today__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -401,7 +349,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Customer_Filter__c.Field_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -436,7 +383,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Master_Filter__c.Is_Global_Filter__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -491,7 +437,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Height__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -506,27 +451,22 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Image_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Is_Ready__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Size_KBytes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Thumbnail_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>EBC_Resource__c.Width__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -561,52 +501,42 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.AIMS_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.Full_Phone_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.ISD_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.Phone_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.Related_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.Related_GDP_Products_Account_View__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.STD_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Phone__c.WebStar_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>GDP_Products_Account_View__c.Preferred_Language__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -641,172 +571,117 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Add_On_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Email_Balance__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Product_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>Zuora__CustomerAccount__c.eBroadcast_Trusted_Sender__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Cost_Per_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Currency_Cost_Per_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Email_Credit_Current_Offering__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_Email_Credit_Standard__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_PrePaid_Emails__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
         <field>zqu__ProductRatePlan__c.EBC_SubscriptionType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <label>0 - eBroadcast Portal User</label>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>Accreditation__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Activity__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Application_Filter__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Campaign__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Customer_Filter__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Master_Filter__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Preference__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Resource__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>EBC_Template__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>GDP_Phone__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>GDP_Products_Account_View__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>Zuora__CustomerAccount__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>zqu__ProductRatePlan__c</object>
-        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowRead>true</allowRead>
+        <object>zqu__ZProduct__c</object>
     </objectPermissions>
     <pageAccesses>
         <apexPage>IECEBC_AccountEmailBlocks</apexPage>
@@ -846,14 +721,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>IECEBC_CampaignList</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>IECEBC_CampaignPayment</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>IECEBC_CampaignPayment2</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -898,10 +765,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>IECEBC_ResourceList</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>IECEBC_Template</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
