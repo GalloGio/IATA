@@ -132,7 +132,13 @@
     <validationRules>
         <fullName>CannotAddInactiveContact</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(ISNEW(), ISPICKVAL(Contact__r.EF_Status__c,&apos;Inactive&apos;))</errorConditionFormula>
+        <errorConditionFormula>AND(
+  ISNEW(),
+  OR( 
+   ISBLANK(TEXT(Contact__r.EF_Status__c)),
+    ISPICKVAL(Contact__r.EF_Status__c,&apos;Inactive&apos;)
+  )
+)</errorConditionFormula>
         <errorMessage>The contact selected is Inactive for E&amp;F and can&apos;t be selected</errorMessage>
     </validationRules>
     <validationRules>
