@@ -79,7 +79,7 @@
         var table = $(".docsTable").DataTable( { 
         //pagination and show entries at the bottom of the table
         "dom": '<"search"f><"top">rt<"bottom"ilp><"clear">',
-        pagingType: "full_numbers",
+        pagingType: "numbers",
         
        // customize the label of search box
         oLanguage: {
