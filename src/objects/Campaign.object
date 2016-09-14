@@ -710,7 +710,7 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <masterLabel>Export Campaign Members</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>window.open(&apos;/00Ow0000004xKDZ?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);</url>
+        <url>window.open(&apos;/00O7E000000KUim?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);</url>
     </webLinks>
     <webLinks>
         <fullName>Export_Renewal_Notification_Headers</fullName>
@@ -724,7 +724,7 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
 	alert(&quot;Renewal Notifications have not been generated yet, please generate them and try again.&quot;);
 }
 else {
-	window.open(&apos;/00Ow0000004xKDg?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);
+	window.open(&apos;/00O7E000000KUit?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);
 }</url>
     </webLinks>
     <webLinks>
@@ -739,7 +739,7 @@ else {
 	alert(&quot;Renewal Notifications have not been generated yet, please generate them and try again.&quot;);
 }
 else {
-	window.open(&apos;/00Ow0000004xKDf?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);
+	window.open(&apos;/00O7E000000KUis?pv0={!Campaign.Id}&apos;, &apos;_blank&apos;);
 }</url>
     </webLinks>
     <webLinks>

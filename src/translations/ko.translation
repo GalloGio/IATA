@@ -9162,7 +9162,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Response_message</name>
     </customLabels>
     <customLabels>
-        <label>https://iata.my.salesforce.com</label>
+        <label><!-- SF Base URL --></label>
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>

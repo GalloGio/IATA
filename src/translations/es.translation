@@ -9199,7 +9199,7 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>Response_message</name>
     </customLabels>
     <customLabels>
-        <label>https://iata.my.salesforce.com</label>
+        <label><!-- SF Base URL --></label>
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>

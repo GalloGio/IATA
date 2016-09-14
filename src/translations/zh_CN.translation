@@ -9153,7 +9153,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Response_message</name>
     </customLabels>
     <customLabels>
-        <label>https://iata.my.salesforce.com</label>
+        <label><!-- SF Base URL --></label>
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>

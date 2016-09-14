@@ -1301,14 +1301,14 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey</shortDescription>
-        <value>badd8e1a2a943be9aa3ff20196908357</value>
+        <value>40fcec49995534468ec9f7530666c73b</value>
     </labels>
     <labels>
         <fullName>Cybersource_AccessKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_AccessKey_USD</shortDescription>
-        <value>1c5d8466812a3ce1946cc71ac83a1321</value>
+        <value>590a009144d932de83b716056f302423</value>
     </labels>
     <labels>
         <fullName>Cybersource_MerchantId</fullName>
@@ -1329,28 +1329,28 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_ProfileId</shortDescription>
-        <value>iata_idcard_SA_LIVE</value>
+        <value>0BE9F8A9-5959-4A46-94F9-8289041F21A5</value>
     </labels>
     <labels>
         <fullName>Cybersource_ProfileId_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_ProfileId_USD</shortDescription>
-        <value>iata_mad1_SA_LIVE</value>
+        <value>4E75C0D2-1148-471F-AC0B-5ED13AF818F2</value>
     </labels>
     <labels>
         <fullName>Cybersource_SecurityKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource Security key CAD</shortDescription>
-        <value>5de12d2c2d0f4c68a9eed42bf27881a9ff8aded0ad8e4c7dacbb8c61a6a33d38dcc96252710e427cbeeac8183b772f97a4635ee4bbf240f3ac1b587b0feb3bf54f0a56e976514f6a9e6328889569419f62a1cba6bda046ae820f5ae8233a9686a5c5b0295dfe46e8b41c58fc4ad5d9a23b572747d24542ac94406521add7cf8e</value>
+        <value>76b4fad3d3394292a17621e20af7a551d0187bb2807647ad97916590540a74b008bb968aa1ea4929a0fd14a6a99d5bf8b7f4ba1fce84449fb5b0626af2f1e96741437863a4184d78b78d895fb68d71af22bed77d57c343fba02d2f60264b1f39ba8544d9117f4dcaa98dbcb6b67de7fa28f7ba5e72c94ffe8cf16cd5f9f7e47b</value>
     </labels>
     <labels>
         <fullName>Cybersource_SecurityKey_USD</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Cybersource_SecurityKey_USD</shortDescription>
-        <value>334d9c99edb842ae9a4bc7e969992b23a37570c8cfeb481ab3d362d4a6de6a85830392eb871e480d8d5d5aac2a568ae69d395c49311e4028906d6034028df30037bd0c78f48a4c429e0f4949c16ae74b89a0ce2a4a74435b8d80bdf82a0ecc59f00af3867cf046cf90aa5931f082380149967071f0964e2ba293d714e4d748d9</value>
+        <value>7d79de16f8d44af3982edd3aa136a8d8345026ab5fe44cb6aea32f4062a8597a96bce4072331499c9cf92883b89b039fe1a3ed3411da4c50b40c8ec717e7b6fcf8112c4aeffb4d5fb7ab23e282bfcdca5a4ca89a51b34cb0b3da1fe1d84d507d02d5553e82c74d1d872b10e3d6d61771507f4a9fca524e248f26fadeeb3bc919</value>
     </labels>
     <labels>
         <fullName>Cybersource_SerialNumber</fullName>
@@ -2478,7 +2478,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Cybersourcelink</shortDescription>
-        <value>https://secureacceptance.cybersource.com/pay</value>
+        <value>https://testsecureacceptance.cybersource.com/pay</value>
     </labels>
     <labels>
         <fullName>IDCard_DOB</fullName>
@@ -17461,7 +17461,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SF Base URL</shortDescription>
-        <value>https://iata.my.salesforce.com</value>
+        <value>https://iata--preprod.cs86.my.salesforce.com</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>

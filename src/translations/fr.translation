@@ -9198,7 +9198,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>Response_message</name>
     </customLabels>
     <customLabels>
-        <label>https://iata.my.salesforce.com</label>
+        <label><!-- SF Base URL --></label>
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>
