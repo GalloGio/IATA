@@ -39252,7 +39252,7 @@
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Related_Records__c-E%26F Location Code Page Layout</layout>
+        <layout>EF_Related_Records__c-E%26F Location Page Layout</layout>
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
     <layoutAssignments>
