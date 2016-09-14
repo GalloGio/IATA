@@ -39,7 +39,7 @@
                                         <button class="text-link js-close-modal">Cancel</button>
                                     </li>
                                     <li>
-                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="Confirm" reRender="itemList" oncomplete="closeModal();" />
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!deleteItem}" styleClass="button" value="Confirm" reRender="itemList,paginator" oncomplete="closeModal();" />
                                     </li>
                                 </ul>
                             </footer>
@@ -91,7 +91,7 @@
                                         <button class="text-link js-close-modal">Cancel</button>
                                     </li>
                                     <li>
-                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!duplicate}" styleClass="button" value="Confirm" reRender="itemList" oncomplete="closeModal();" />
+                                        <apex:commandLink onclick="jQuery('body').css('cursor', 'wait');" action="{!duplicate}" styleClass="button" value="Confirm" reRender="itemList,paginator" oncomplete="closeModal();" />
                                     </li>
                                 </ul>
                             </footer>
@@ -236,7 +236,7 @@
                 </div>
             </main>
             
-            
+            <apex:outputPanel id="paginator">
             <apex:form >
                 <Center>
                 <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
@@ -252,6 +252,7 @@
                 </apex:outputPanel>
                 </Center>
             </apex:form>
+            </apex:outputPanel>
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>

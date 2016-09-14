@@ -174,7 +174,7 @@ Dedicated to the eBroadcast application.</description>
         <externalId>false</externalId>
         <inlineHelpText>This field will specify the field to search in relation to the filter.</inlineHelpText>
         <label>Filter Field</label>
-        <length>50</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

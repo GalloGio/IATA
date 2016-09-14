@@ -2,6 +2,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
     public ApexPages.StandardController con { get; set; }
     public EBC_Template__c template { get; set; }
     
+    class RejectedSubscriber_Exception extends Exception{}
     class Template_Not_Using_Mosaico_Template_Exception extends Exception{}
     class Resource_Not_Ready_Exception extends Exception{}
     
@@ -157,6 +158,7 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
         Map<String, String> attributes = new Map<String, String>();
         attributes.put('AGENCY_NAME', 'John Doe Inc.');
         attributes.put('SFID', '1234');
+        attributes.put('EMAIL', email);
         
         if (template.Audience__c == 'Agency') {
             attributes.put('AGENCY_STATE', 'New York');
@@ -168,14 +170,21 @@ global class vfIECEBC_MosaicoEditor extends vfIECEBC_Controller {
             attributes.put('AGENT_LASTNAME', 'Doe');
         }
         
-        IECEBC_ETEmailSend.sendSingleEmail(mailingId, email, attributes);
+        IECEBC_ETEmailSend.sendSingleEmail(mailingId, 'TEST_' + email, attributes);
         
-        template.Is_Tested__c = true;
-        
-        if (String.isBlank(template.TriggSend_Id__c)) {
-            template.TriggSend_Id__c = mailingId;
+        if (IECEBC_ETEmailSend.failureDetails == null) {
+            template.Is_Tested__c = true;
+            
+            if (String.isBlank(template.TriggSend_Id__c)) {
+                template.TriggSend_Id__c = mailingId;
+            }
+            
+            update template;
+        } else {
+            for(String emailAddress : IECEBC_ETEmailSend.failureDetails.keySet()) {
+                System.debug(IECEBC_ETEmailSend.failureDetails.get(emailAddress));
+                throw new RejectedSubscriber_Exception('Email Address Rejected');
+            }
         }
-        
-        update template;
     }
 }

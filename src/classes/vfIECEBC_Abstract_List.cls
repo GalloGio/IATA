@@ -28,9 +28,11 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
     public PageReference deleteItem() {
         try {
             delete selectedItem;
+            
         }catch (DMLException e){
             
         }
+        resetPaging();
         
         clear();
         return null;
@@ -56,7 +58,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
         set {
             page = value;
             
-            offset = (page * itemsPerPage) - itemsPerPage;
+            offset = null;
             
             items = null;
         }
@@ -111,7 +113,7 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
 
     public Integer offset {
         get {
-            if (offset == null) offset = 0;
+            if (offset == null) offset = (page * itemsPerPage) - itemsPerPage;
             return offset;
         }
         set;
@@ -148,12 +150,14 @@ public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
         itemsCount = null;
         items = null;
         maxPage = null;
+        offset = null;
         //page = 1;
     }
     public void clear() {
         itemsCount = null;
         items = null;
         maxPage = null;
+        offset = null;
         if (page > maxPage) {
             page = maxPage;
         }

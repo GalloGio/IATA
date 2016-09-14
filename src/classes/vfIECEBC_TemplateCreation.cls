@@ -37,7 +37,7 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                     where Is_Reusable__c = true
                         and OwnerId =: userinfo.getUserId()
                         and RecordType.DeveloperName != 'Global'
-                        and Audience__c = :audience
+                        and (Audience__c = :audience or Audience__c = 'Neutral')
                 ];
             }
             return userEditableTemplates;

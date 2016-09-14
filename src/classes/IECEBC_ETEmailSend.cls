@@ -2,11 +2,13 @@ public class IECEBC_ETEmailSend {
     /*class UnexpectedResponse_Exception extends Exception{
         public String ErrorMessage {get; set;} 
     }*/
+    
+    public static Map<String, String> failureDetails;
 
     // send single email
-    public static void sendSingleEmail(String TriggeredParam, String email, Map<String, String> attributes){
+    public static void sendSingleEmail(String TriggeredParam, String subscriberKey, Map<String, String> attributes){
         sendMassEmail(TriggeredParam, new Map<String, Map<String, String>>{
-            email => attributes
+            subscriberKey => attributes
         });
     }
     public static void sendMassEmail(String TriggeredParam, Map<String, Map<String, String>> recipients){
@@ -15,14 +17,15 @@ public class IECEBC_ETEmailSend {
         Http http = new Http();
         String tags ='';
         
-        for(String email : recipients.keySet()) {
+        for(String subscriberKey : recipients.keySet()) {
+            Map<String, String> attributes = recipients.get(subscriberKey);
             tags +='<Subscribers>'
-                +'<EmailAddress>'+IECEBC_ETHelper.xmlEncode(email)+'</EmailAddress>'
-                +'<SubscriberKey>'+IECEBC_ETHelper.xmlEncode(email)+'</SubscriberKey>'
-                ;
+                +'<EmailAddress>'+IECEBC_ETHelper.xmlEncode(attributes.get('EMAIL'))+'</EmailAddress>'
+                +'<SubscriberKey>'+IECEBC_ETHelper.xmlEncode(subscriberKey)+'</SubscriberKey>';
             
-            Map<String, String> attributes = recipients.get(email);
             for(String key : attributes.keySet()) {
+                if (key == 'EMAIL') continue;
+                
                 tags+='<Attributes><Name>'+IECEBC_ETHelper.xmlEncode(key)+'</Name><Value>'+IECEBC_ETHelper.xmlEncode(attributes.get(key))+'</Value></Attributes>';
             }
             
@@ -58,17 +61,22 @@ public class IECEBC_ETEmailSend {
                 System.debug(response.getBody());
                 // if status code not OK (Error)
                 if (IECEBC_ETHelper.parse(response, 'StatusCode') != 'OK') {
-                    // get errorCode and errorMessage
-                    errorCode = IECEBC_ETHelper.parse(response, 'ErrorCode');
-                    errorMessage = IECEBC_ETHelper.parse(response, 'StatusMessage');                    
-                    // Email failed validation                     
-                    if (IECEBC_ETHelper.parse(response, 'ErrorCode') == '7000') {
-                        displayMessage = 'Email Failed Validation: Invalid Place Holder';
-                        // throw InvalidPlaceHolderException  
-                        throw new IECEBC_ExceptionHandler.InvalidPlaceHolder_Exception(errorMessage);                        
-                    }else{
-                        displayMessage = 'Unexpected Response';
-                        throw new IECEBC_ExceptionHandler.UnexpectedResponse_Exception(displayMessage);   	
+                    
+                    try {
+                        failureDetails = getFailuresDetails(response.getBody());
+                    } catch(Exception e) {
+                        // get errorCode and errorMessage
+                        errorCode = IECEBC_ETHelper.parse(response, 'ErrorCode');
+                        errorMessage = IECEBC_ETHelper.parse(response, 'StatusMessage');                    
+                        // Email failed validation                     
+                        if (IECEBC_ETHelper.parse(response, 'ErrorCode') == '7000') {
+                            displayMessage = 'Email Failed Validation: Invalid Place Holder';
+                            // throw InvalidPlaceHolderException  
+                            throw new IECEBC_ExceptionHandler.InvalidPlaceHolder_Exception(errorMessage);                        
+                        }else{
+                            displayMessage = 'Unexpected Response';
+                            throw new IECEBC_ExceptionHandler.UnexpectedResponse_Exception(displayMessage);   	
+                        }
                     }
                 }
                 // else
@@ -98,6 +106,30 @@ public class IECEBC_ETEmailSend {
          	IECEBC_ExceptionHandler.saveExceptionLog();
         }
     } 
+    
+    public static Map<String, String> getFailuresDetails(String xml) {
+        Map<String, String> failures = new Map<String, String>();
+        
+        Dom.Document doc = new Dom.Document();
+        doc.load(xml);
+        
+        Dom.XMLNode envelope = doc.getRootElement();
+        String SOAPns = envelope.getNamespaceFor ('soap');
+        String ETns = 'http://exacttarget.com/wsdl/partnerAPI';
+        Dom.XMLNode body = envelope.getChildElement('Body', SOAPns);
+        Dom.XMLNode createResponse = body.getChildElement('CreateResponse', ETns);
+        Dom.XMLNode results = createResponse.getChildElement('Results', ETns);
+        for(Dom.XMLNode child : results.getChildElements()) {
+            if (child.getName() != 'SubscriberFailures') continue;
+            
+            String email = IECEBC_ETHelper.walkThrough(child, 'EmailAddress');
+            String error = IECEBC_ETHelper.walkThrough(child, 'ErrorDescription');
+            
+            failures.put(email, error);
+        }
+        
+        return failures;
+    }
     
     // Send emails using : email template Id, List Id
     // @ todo in case of Plan B

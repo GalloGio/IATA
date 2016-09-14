@@ -29,7 +29,6 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
             Where
             	Id = :templateId
         ];
-        List<Attachment> originalAttachments = [Select Id, Name, ContentType, Body From Attachment Where ParentId = :original.Id];
         
         EBC_Template__c newTemplate = new EBC_Template__c();
         newTemplate.Name = name;
@@ -40,6 +39,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         newTemplate.Parent_Template__c = original.Parent_Template__c;
         insert newTemplate;
         
+        List<Attachment> originalAttachments = [Select Id, Name, ContentType, Body From Attachment Where ParentId = :original.Id];
         List<Attachment> newAttachments = new List<Attachment>();
         for(Attachment a : originalAttachments) {
             newAttachments.add(new Attachment(
@@ -52,14 +52,26 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         
         if (newAttachments.size() > 0) insert newAttachments;
         
+        List<EBC_Template_Resource__c > originalTemplateResources = [Select Id, EBC_Resource__c From EBC_Template_Resource__c Where EBC_Template__c = :original.Id];
+        List<EBC_Template_Resource__c > newTemplateResources = new List<EBC_Template_Resource__c>();
+        for(EBC_Template_Resource__c a : originalTemplateResources) {
+            newTemplateResources.add(new EBC_Template_Resource__c(
+                EBC_Resource__c = a.EBC_Resource__c,
+                EBC_Template__c = newTemplate.Id
+            ));
+        }
+        
+        if (newTemplateResources.size() > 0) insert newTemplateResources;
+        
         return newTemplate;
     }
     
     public PageReference Duplicate(){ 
-        duplicate(selectedItem.Id, ((EBC_Template__c)selectedItem).Name, billingAccount.Id, true);
+        EBC_Template__c nTemplate = duplicate(selectedItem.Id, ((EBC_Template__c)selectedItem).Name, billingAccount.Id, true);
         
-        resetQuery();
-        return null;
+        PageReference pr = new PageReference('/iec/IECEBC_TemplateEdit?id=' + nTemplate.Id);
+        pr.setRedirect(true);
+        return pr;
     }
     private String getQuery(Boolean isCountOnly) {
         List<String> fields = new List<String>();
@@ -192,7 +204,7 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         }
         
         if (newTemplate.Parent_Template__c != null) {
-            pr = new PageReference('/iec/IECEBC_MosaicoEditor');
+            pr = new PageReference('/iec/IECEBC_TemplateEdit');
             pr.getParameters().put('id', newTemplate.Id);
         } else {
             pr = new PageReference('/' + newTemplate.Id);

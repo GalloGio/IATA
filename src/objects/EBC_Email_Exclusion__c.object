@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>The Email Address to opt out</description>
+        <externalId>true</externalId>
+        <inlineHelpText>The Email Address to opt out</inlineHelpText>
+        <label>Email</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Other Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Related_Agency__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>GDP Product Account View that received the email that result in an exclusion</description>
+        <externalId>false</externalId>
+        <inlineHelpText>GDP Product Account View that received the email that result in an exclusion</inlineHelpText>
+        <label>Related Agency</label>
+        <referenceTo>GDP_Products_Account_View__c</referenceTo>
+        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
+        <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_Agent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>ID Card that received the email that result in an exclusion</description>
+        <externalId>false</externalId>
+        <inlineHelpText>ID Card that received the email that result in an exclusion</inlineHelpText>
+        <label>Related Agent</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
+        <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Source_Campaign__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Source Campaign</label>
+        <referenceTo>EBC_Campaign__c</referenceTo>
+        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
+        <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>Type of exclusion</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Type of exclusion</inlineHelpText>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>OPTOUT</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HARDBOUNCE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OTHER</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Unsubscribe_From__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>The billing account that the client wants to unsubscribe. Empty means unsbuscribe from all.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The billing account that the client wants to unsubscribe. Empty means unsbuscribe from all.</inlineHelpText>
+        <label>Unsubscribe From</label>
+        <referenceTo>Zuora__CustomerAccount__c</referenceTo>
+        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
+        <relationshipName>EBC_Email_Exclusions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>EBC Email Exclusion</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>EBC Exclusion Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>EBC Email Exclusions</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

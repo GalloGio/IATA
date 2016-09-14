@@ -43,7 +43,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         
         String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, 'test@cubicmedia.ca'); //@todo
         String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
-         
+        
         System.debug('IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition');
         System.debug(mailingId);
         System.debug(templateExternalId);
@@ -69,15 +69,17 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 if (previousBatchEmail.contains(a.Email_Address__c) || currentBatchEmail.contains(a.Email_Address__c)) continue;
                     
                 
-                params.put(a.Email_Address__c, new Map<String, String>{
+                params.put(campaignId + '_' + a.Email_Address__c, new Map<String, String>{
                     'SFID' => a.Id,
+                    'CAMPAIGN_ID' => campaignId,
+                    'EMAIL' => a.Email_Address__c,
                     'AGENCY_NAME' => a.Trading_Name__c,
                         
                     'AGENCY_STATE' => a.State_Province__c,
                     'AGENCY_COUNTRY' => a.Country_Name__c,
                     'AGENCY_ACCREDITATIONCLASS' => a.Accreditation_Class__c,
                     'AGENCY_LOCATIONTYPE' => a.Location_Type_Name__c
-                });
+                }); 
                 
                 currentBatchEmail.add(a.Email_Address__c);
             } else if (i instanceof Id_Card__c) {
@@ -85,8 +87,10 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 newPreviousBatchEmail.add(a.Email__c);
                 if (previousBatchEmail.contains(a.Email__c) || currentBatchEmail.contains(a.Email__c)) continue;
                 
-                params.put(a.Email__c, new Map<String, String>{
+                params.put(campaignId + '_' + a.Email__c, new Map<String, String>{
                     'SFID' => a.Id,
+                    'CAMPAIGN_ID' => campaignId,
+                    'EMAIL' => a.Email__c,
                     'AGENCY_NAME' => a.Agency_Name__c,
                     'AGENT_FIRSTNAME' => a.FirstName__c,
                     'AGENT_LASTNAME' => a.LastName__c
@@ -102,6 +106,31 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         System.debug('IECEBC_ETEmailSend.sendMassEmail');
         if (params.size() > 0) {
         	IECEBC_ETEmailSend.sendMassEmail(mailingId, params);
+            System.debug(IECEBC_ETEmailSend.failureDetails);
+            if (IECEBC_ETEmailSend.failureDetails != null) {
+                List<EBC_Email_Exclusion__c> excls = new List< EBC_Email_Exclusion__c>();
+                for(String failureKey : IECEBC_ETEmailSend.failureDetails.keySet()) {
+                    EBC_Email_Exclusion__c excl = new EBC_Email_Exclusion__c();
+                    excl.Email__c = failureKey;
+                    excl.Type__c  = 'OTHER';
+                    excl.Other_Reason__c = IECEBC_ETEmailSend.failureDetails.get(failureKey);
+                    excl.Source_Campaign__c = campaignId;
+                    
+                    if (params.containsKey(failureKey) && params.containsKey(failureKey) && params.get(failureKey).containsKey('SFID')) {
+	                    String sfId = params.get(failureKey).get('SFID');
+                        
+                        if (sfId != null && sfId.left(3) == GDP_Products_Account_View__c.sobjecttype.getDescribe().getKeyPrefix()) {
+                            excl.Related_Agency__c = sfId;
+                        } else if (sfId != null && sfId.left(3) == ID_Card__c.sobjecttype.getDescribe().getKeyPrefix()) {
+                            excl.Related_Agent__c = sfId;
+                        }
+                    }
+                        
+                    excls.add(excl);
+                }
+                System.debug(excls); 
+                if (excls.size() > 0) insert excls;
+            }
         }
         
         // Send the mailing to scope

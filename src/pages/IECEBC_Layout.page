@@ -211,6 +211,9 @@
                         </div>
                     </div>
                 </footer>
+                <script type="text/javascript">
+                    jQuery(".page-footer").css("position", "relative");
+                </script>
                 <!--
                 <div class="modal-container is-hidden" id="js-modal">
                     <div class="overlay"></div>

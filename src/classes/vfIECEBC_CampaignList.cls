@@ -1,4 +1,4 @@
-public class vfIECEBC_CampaignList {
+public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
     public Boolean isLimitedComponent {
         get {
             if (isLimitedComponent == null) isLimitedComponent = false;
@@ -60,6 +60,40 @@ public class vfIECEBC_CampaignList {
         clear();
         
         return null;
+    }
+    
+    public PageReference duplicate() {
+        EBC_Campaign__c oCampaign = [
+            Select
+                Id,
+                Account__c,
+                Billing_Account__c,
+	            EBC_Master_Filter__c,
+                //			EBC_Master_Filter__c,
+                // Exact_Target_Campaign_Id__c  wtf is that?
+                From_Name__c,
+                Google_Analytics_Tracking_Code__c,
+                Is_Google_Analytics_Tracker_Active__c,
+                Subject__c,
+            	
+                EBC_Design__c
+            From EBC_Campaign__c
+            Where Id = :selectedCampaign.Id
+        ];
+        
+        EBC_Template__c nDesign = vfIECEBC_TemplateList.duplicate(oCampaign.EBC_Design__c, selectedCampaign.Name, billingAccount.Id, false);
+        //EBC_Master_Filter__c nFilter = vfIECEBC_RecipientList.duplicate(oCampaign.EBC_Master_Filter__c, 'new name');
+        
+        EBC_Campaign__c nCampaign = oCampaign.clone(false, true, false, false);
+        nCampaign.Name = selectedCampaign.Name;
+        nCampaign.EBC_Design__c = nDesign.Id;
+        //nCampaign.EBC_Master_Filter__c = nFilter.Id;
+        nCampaign.Status__c = 'DRAFT';
+        insert nCampaign;
+        
+        PageReference pr = new PageReference('/iec/IECEBC_Campaign?id=' + nCampaign.Id);
+        pr.setRedirect(true);
+        return pr;
     }
      
     public Integer page {
@@ -125,8 +159,6 @@ public class vfIECEBC_CampaignList {
         
         return options;
     }
-
-    public PageReference doNothing() { return null; }
     
     public Integer offset {
         get {

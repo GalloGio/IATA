@@ -138,11 +138,11 @@
                                         <apex:outputPanel id="newTemplateNameField" layout="block" styleClass="field-group text template-name">
                                             <label>
                                                 <span class="input-label">Please provide a template name</span>
-                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newTemplate.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="template-name" html-data-max-length="{!$ObjectType.EBC_Template__c.fields.Template_Name__c.length}" required="true" />
+                                                <apex:inputField type="text" styleClass="user-input text js-remaining-characters" value="{!newTemplate.Name}" html-data-target-element=".js-remaining-count" html-data-target-id="template-name" html-data-max-length="{!$ObjectType.EBC_Template__c.fields.Name.length}" required="true" />
                                             </label>
                                             <BR/>
                                             <span class="input-remaining">
-                                                <span class="js-remaining-count" data-id="template-name">{!$ObjectType.EBC_Template__c.fields.Template_Name__c.length}</span>
+                                                <span class="js-remaining-count" data-id="template-name">{!$ObjectType.EBC_Template__c.fields.Name.length}</span>
                                             </span>
                                             
                                             <apex:outputText rendered="{!isSaved}">

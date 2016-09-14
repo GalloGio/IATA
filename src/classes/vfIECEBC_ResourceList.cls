@@ -79,6 +79,8 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
             fields.add('Name');
             fields.add('Image_Type__c');
             fields.add('Image_Size__c');
+            fields.add('Thumbnail_URL__c');
+            fields.add('Image_URL__c');
             fields.add('Size_KBytes__c');
             fields.add('CreatedDate');
             fields.add('LastModifiedDate'); 

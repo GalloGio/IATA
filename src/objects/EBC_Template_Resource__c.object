@@ -81,16 +81,6 @@
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
-    <fields>
-        <fullName>Is_Ready__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Is image uploaded on Mosiaico</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Is image uploaded on Mosiaico</inlineHelpText>
-        <label>Is Ready</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
     <label>EBC Template Resource</label>
     <nameField>
         <label>EBC Template Resource Name</label>

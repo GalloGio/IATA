@@ -142,7 +142,7 @@
                                 enabled: ko.observable(true)
                             };
                             
-                            saveCmd.execute = function() {
+                            saveCmd.execute = function(preventMessage) {
                                 saveCmd.enabled(false);
                                 viewModel.metadata.changed = Date.now();
                                 if (typeof viewModel.metadata.key == 'undefined') {
@@ -167,11 +167,13 @@
                                             xHtmlContent: viewModel.exportHTML()
                                         });
                                         
-                                        viewModel.notifier.clear();
-                                        viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                        if (undefined == preventMessage || !preventMessage) {
+                                            viewModel.notifier.clear();
+                                            viewModel.notifier.success(viewModel.t('Successfully saved.'));
+                                        }
                                     }
                                     
-                                    viewModel.notifier.info(viewModel.t("Please wait while saving template..."), null, {timeOut: null});
+                                    viewModel.notifier.info(viewModel.t("Please wait while saving..."), null, {timeOut: null});
                                 } catch(er) {
                                     viewModel.notifier.clear();
                                     viewModel.notifier.error(viewModel.t('Saving failed. Please try again in a few moment or contact us.'));
@@ -193,38 +195,43 @@
                             testCmd.execute = function() {
                                 testCmd.enabled(false);
                                 
-                                try {
-                                    var email = window.prompt(viewModel.t("Insert here the recipient email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
-                                    
-                                    
+                                var email = window.prompt(viewModel.t("Insert here the recipient email address"), '{!JSENCODE(preferences.PrimaryContact_Email__c)}');
+                                
+                                if (email != null) {
                                     viewModel.notifier.options.onShown = function() {
-                                    	viewModel.notifier.options.onShown = null;
-                                            
-                                        sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
-                                            templateId: '{!template.Id}',
-                                            email: email
-                                        });
+                                        viewModel.notifier.options.onShown = null;
                                         
-                                        viewModel.notifier.clear();
-                                        viewModel.notifier.success(viewModel.t("Test email sent successfully."));
+                                        
+                                        try {
+                                            sforce.apex.execute("vfIECEBC_MosaicoEditor","sendTest", {
+                                                templateId: '{!template.Id}',
+                                                email: email
+                                            });
+                                            
+                                            viewModel.notifier.clear();
+                                            viewModel.notifier.success(viewModel.t("Test email sent successfully."));
+                                        } catch(e) {
+                                            //vfIECEBC_Template.ResourceNotReady_Exception
+                                            console.log(e);
+                                            
+                                            viewModel.notifier.clear();
+                                            if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
+                                                console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('RejectedSubscriber_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Email Address has been rejected'));
+                                                console.log(e);
+                                            } else {
+                                                viewModel.notifier.error(viewModel.t('Unknown error!'));
+                                                console.log(e);
+                                            }
+                                        }
+                                        
                                     }
                                     
                                     viewModel.notifier.info(viewModel.t("Please wait while sending a test email..."), null, {timeOut: null});
-                                    
-                                    
-                                } catch(e) {
-                                    //vfIECEBC_Template.ResourceNotReady_Exception
-                                    console.log(e);
-                                    
-                                    viewModel.notifier.clear();
-                                    if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
-                                        viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
-                                        console.log(e);
-                                    } else {
-                                        viewModel.notifier.error(viewModel.t('Unknown error!'));
-                                        console.log(e);
-                                    }
                                 }
+                                    
                                 
                                 testCmd.enabled(true);
                             };

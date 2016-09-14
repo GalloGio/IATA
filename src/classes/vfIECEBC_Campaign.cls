@@ -122,6 +122,12 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
         return getPRByStepNumber(currentStepNumber, true);
     }
     
+    public PageReference saveAsTemplate() {
+        vfIECEBC_TemplateList.duplicate(campaign.EBC_Design__c, 'Template based on ' + campaign.Name, billingAccount.Id, true);
+        
+        return null;
+    }
+    
     public PageReference saveAndContinue() {
         PageReference pr = this.con.save();
         

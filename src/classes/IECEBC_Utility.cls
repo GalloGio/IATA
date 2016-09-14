@@ -39,6 +39,7 @@ public class IECEBC_Utility {
             Audience__c,
             Geo_Condition__c,
             Refinement_Condition__c,
+            Billing_Account__c,
             IATA_Codes__c,
             (
                 Select Id,
@@ -189,7 +190,7 @@ public class IECEBC_Utility {
         Decimal mk = bodyEncoded.length();
         
         //file larger than maximum allowed
-        if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)'+String.ValueOf(bodyEncoded.length()));
+        if ((mk/(1024*1024)>FILE_SIZE_MAX)) throw new Attachment_Size_Exceeds_Capacity_Exception('Attachment size exceeds Maximum File Size allowed ('+String.ValueOf(FILE_SIZE_MAX)+' MB.)');
         
         mb = mb +mk;
         mb = (mb / (STORAGE_CAPACITY * 1024*1024))*100;
