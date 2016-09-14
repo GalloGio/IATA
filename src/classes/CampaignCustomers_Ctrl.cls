@@ -33,9 +33,13 @@ public class CampaignCustomers_Ctrl
     public Decimal maxUnit{get;set;}
     public Decimal minVolume{get;set;}
     public Decimal maxVolume{get;set;} 
+
+    public String msg {get; set;}
+    public List<String> prodWithoutStdPrice {get;set;}
     
     public CampaignCustomers_Ctrl()
     {
+
         String strFilter;
         
         //-- Init data 
@@ -80,7 +84,11 @@ public class CampaignCustomers_Ctrl
 
     //Method called when click on  Generate Campaign Members button 
     public void generateCampaignMembers()
-    {
+    {   
+
+        msg = '';
+        prodWithoutStdPrice = new List<String>();
+
         //-- Build SOQL to retrieve OrderItems 
         String query = 'SELECT Order.BillToContactId, Product__c, Quantity, Invoice_Date__c FROM OrderItem WHERE Order.Type in (\'Order\', \'History\') ';
 
@@ -89,6 +97,28 @@ public class CampaignCustomers_Ctrl
         {
             List<String> selectedProductNumbers = new List<String>(); 
             List<Campaign_Product__c> campaignProducts2Save = new List<Campaign_Product__c>();
+
+            //Verified if the selectedProducts have standard price
+            for(Product2 p : selectedProducts){
+                selectedProductNumbers.add(p.SAP_Material_Number__c);
+            }
+
+            Boolean selectedProductWithStdPrice = true;
+            
+            //Get the products price info
+            Map<String, PriceInfo_DTO> priceMap = new Product_Sel().getProductPriceInfo(new Set<String>(selectedProductNumbers), null, null, null, true);
+            for(String prodNumber : selectedProductNumbers){
+                PriceInfo_DTO priceInfo = priceMap.get(prodNumber);
+                //Verified if the product have Standard price
+                if((priceInfo != null && priceInfo.standardPrice == null) || priceInfo == null){
+                    prodWithoutStdPrice.add(prodNumber);
+                }                
+            }
+
+            if(prodWithoutStdPrice.size() > 0){
+                msg = 'Make sure these products have standard prices <br /> ' + String.join(prodWithoutStdPrice, ', ') + '<br /> <br /> ';
+                return;
+            }
 
             //-- Find selected products last ersions 
             Set<Id> productsOrdered = new Set<Id>(); 
@@ -99,7 +129,7 @@ public class CampaignCustomers_Ctrl
 
             for(Product2 p : selectedProducts)
             {
-                selectedProductNumbers.add(p.SAP_Material_Number__c);
+                //selectedProductNumbers.add(p.SAP_Material_Number__c);
                 Product2 lastVersion = productLastVersion.get(p.Id);
                 campaignProducts2Save.add(new Campaign_Product__c(
                     Campaign__c = campaignId, 
@@ -164,11 +194,11 @@ public class CampaignCustomers_Ctrl
           
             for(Integer x = 0; x < availableProducts.size(); x++)
             {
-                Product2 p = availableProducts[x];
+              Product2 p = availableProducts[x];
 
-                //-- Move p from available to selected products
-                if(setProductsNumbers.contains(p.SAP_Material_Number__c)) selectedProducts.add(p);
-                else newAvailableProducts.add(p);
+            //-- Move p from available to selected products
+              if(setProductsNumbers.contains(p.SAP_Material_Number__c)) selectedProducts.add(p);
+              else newAvailableProducts.add(p);
             }
 
             availableProducts = newAvailableProducts; 
@@ -191,9 +221,9 @@ public class CampaignCustomers_Ctrl
             
             for(Integer x = 0; x < selectedProducts.size(); x++)
             {
-                Product2 p = selectedProducts[x];
+              Product2 p = selectedProducts[x];
 
-                //-- Move p from selected to available products                
+              //-- Move p from selected to available products                
                 if(setProductsNumbers.contains(p.SAP_Material_Number__c)) availableProducts.add(p);
                 else newSelectedProducts.add(p);                
             }
