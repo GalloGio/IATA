@@ -76286,10 +76286,21 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
         <errorConditionFormula>AND(
       RecordType.DeveloperName=&apos;Operator&apos;, 
-      AND( ISCHANGED(EF_SIS_Code_Verified__c), EF_SIS_Code_Verified__c=false ) 
+  EF_SIS_Code_Verified__c=false 
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
         <errorMessage>SIS Verified can&apos;t be unchecked if Record Type is Operator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>EF_CantSetSISVerifiedIfSISCodeEmpty</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+   EF_SIS_Code_Verified__c=true,
+   OR(ISBLANK(EF_SIS_Code__c), ISBLANK(EF_SIS_Designator__c))
+   
+)</errorConditionFormula>
+        <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
+        <errorMessage>SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>EF_SIS_Location_ID_format_check</fullName>
