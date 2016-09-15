@@ -59,22 +59,41 @@ public class EF_AccountTriggerHandler {
 		if(!contracts2Inactivate.isEmpty()){
 			try{ update contracts2Inactivate; 
 				if(!BA2Inactivate.isEmpty() && run){ 
-                    inactiveEFBillingAgreement(BA2Inactivate); 
+                    Set<Id> emptySet = new Set<Id>();
+                    inactiveEFBillingAgreement(BA2Inactivate, emptySet); 
                 }
                 else if (childAccsList.size()>0 && run){
                     run=false; 
                     inactiveChildAccounts(childAccsList);
                 }
 			}catch(Exception e){System.debug('## Error inactivating EF Contracts ' +e);}
+		}else{
+			if(!inactiveAccsSet.isEmpty() && run){ 
+                 	Set<Id> emptySet = new Set<Id>();
+                    inactiveEFBillingAgreement(emptySet, inactiveAccsSet); 
+                }
+                else if (childAccsList.size()>0 && run){
+                    run=false; 
+                    inactiveChildAccounts(childAccsList);
+                }
 		}
 	}
 
-	public static void inactiveEFBillingAgreement(Set <Id> BASet){
+	public static void inactiveEFBillingAgreement(Set <Id> BASet, Set <Id> AccSet ){
 
 		List <EF_Contact_Relationship__c> BAContacs2InactList = new List <EF_Contact_Relationship__c> ();
 
-		Map <Id, EF_Billing_Agreement__c> baMap = new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c, 
-			(Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
+		Map <Id, EF_Billing_Agreement__c> baMap = new Map <Id, EF_Billing_Agreement__c> ();
+        
+		System.debug('#### calling the method with parameters  ' + BASet +'----'+ AccSet );
+        
+		if(!BASet.isEmpty() && AccSet.isEmpty()){
+            System.debug('#### on the first if');
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c,  (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
+		}else if(BASet.isEmpty() && !AccSet.isEmpty()){
+            System.debug('#### on the second if');
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c, Airline__c, (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Airline__c in: AccSet]);
+		}
 
 		for(EF_Billing_Agreement__c ba: baMap.values()){
 			ba.Status__c='Inactive';
