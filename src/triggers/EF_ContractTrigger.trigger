@@ -14,13 +14,16 @@ trigger EF_ContractTrigger on Contract (
 		
 		List<Contract> efContractList = new List<Contract>();
 		Map<Id, Contract> efContractMap = new Map<Id, Contract>();
-		for(Contract c : Trigger.new)
+		if(Trigger.new != null)
 		{
-			if(c.RecordTypeId == efContractRtId)
+			for(Contract c : Trigger.new)
 			{
-				efContractList.add(c);
-				if(c.Id != null)
-					efContractMap.put(c.Id, c);
+				if(c.RecordTypeId == efContractRtId)
+				{
+					efContractList.add(c);
+					if(c.Id != null)
+						efContractMap.put(c.Id, c);
+				}
 			}
 		}
 
@@ -31,6 +34,7 @@ trigger EF_ContractTrigger on Contract (
                 EF_ContractHandler.handleWithApprovalAccountInserts(efContractList);
             } else
             {
+            	EF_ContractHandler.validateContractCurrencyRemoval(Trigger.new, Trigger.oldMap);
                 EF_ContractHandler.handleWithApprovalAccountUpdates(efContractMap, Trigger.oldMap);
                 EF_ContractHandler.handleApprovedAndRejectedApprovals(efContractList, Trigger.oldMap);
             }
@@ -42,5 +46,4 @@ trigger EF_ContractTrigger on Contract (
 				EF_ContractHandler.startApprovalProcesses(efContractList);
             }
         }
-
 }

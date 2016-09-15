@@ -67,7 +67,7 @@ public class EF_BillingAgreementHandler
             // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
             for(EF_Billing_Agreement__c ba : agreementsToApprove)
             {
-                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields))
+                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields, false))
                 {
                     EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), ba, fields);
                     ba.Require_Approval__c = true;
@@ -114,44 +114,22 @@ public class EF_BillingAgreementHandler
 
         // Find if any of the related accounts doesn't allow billing agreements to be created without approval and force-start an approval process
         Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        
+        // Get the list of fields that require Approval from Custom Settings and place them in a List
+        List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+        List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+
+        // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             if(contractsInvolved.get(ba.Contract__c) != null)
             {
                 ba.Require_Approval__c = true;
                 ba.Status__c = 'Inactive';
+                EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, null, fields, true);
             }
         }
     }
-
-    /*
-    // Queries for any Accounts that do not allow Billing Agreements and displays an error message to the User.
-    public static void preventAgreementCreationForNotAllowed(List<EF_Billing_Agreement__c> agreementList)
-    {
-        String errorMessage = Label.EF_Account_Disallow_BA;
-        Set<Id> accountIds = new Set<Id>();
-        for(EF_Billing_Agreement__c ba : agreementList)
-        {
-            // add both Client and Customer (Airline) into the Set, so that both will be queried for
-            accountIds.add(ba.Client__c);
-            accountIds.add(ba.Airline__c);
-        }
-
-        // Find if any of the related accounts doesn't allow billing agreements to be created and throw an error
-        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Not Allowed']);
-        for(EF_Billing_Agreement__c ba : agreementList)
-        {
-            if(accountsInvolved.containsKey(ba.Client__c))
-            {
-                ba.Client__c.addError(errorMessage);
-            }
-            else if(accountsInvolved.containsKey(ba.Airline__c))
-            {
-                ba.Airline__c.addError(errorMessage);
-            }
-        }
-    }
-    */
 
     //checks if location chosen has been set in Contract Location Currency.
     public static void checkLocationCurrency (List<EF_Billing_Agreement__c> relationshipList){

@@ -38,6 +38,7 @@ public with sharing class EF_BaContractApprovalHelper
 		for(Contract approvedRecord : approvedList)
 		{
 			approvedIds.add(approvedRecord.Id);
+			approvedRecord.EF_Status__c = 'Active';
 		}
 		String query = 'select id, Contract__c, ';
 		for(String f : fieldList)
@@ -47,27 +48,30 @@ public with sharing class EF_BaContractApprovalHelper
 		query = query.substring(0, query.length()-2);
 		query = query + ' from EF_Approval__c where Contract__c in :approvedIds order by createddate desc';
 		List<EF_Approval__c> storageList = Database.query(query);
-		Map<Id, EF_Approval__c> storageMap = new Map<Id, EF_Approval__c>();
-		for(EF_Approval__c storageRecord : storageList)
+		if(storageList.size() > 0)
 		{
-			if(storageMap.get(storageRecord.Contract__c) == null)
+			Map<Id, EF_Approval__c> storageMap = new Map<Id, EF_Approval__c>();
+			for(EF_Approval__c storageRecord : storageList)
 			{
-				storageMap.put(storageRecord.Contract__c, storageRecord);
+				if(storageMap.get(storageRecord.Contract__c) == null)
+				{
+					storageMap.put(storageRecord.Contract__c, storageRecord);
+				}
 			}
+
+			Map<String, Schema.SobjectField> fields = Contract.getSObjectType().getDescribe().fields.getMap();
+			for(Contract recordToUpdate : approvedList)
+			{
+		        for(String field : fieldList)
+		        {
+		            SObjectField f = fields.get(field);
+		            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
+		        }
+		        recordToUpdate.EF_Manager_Approval__c = 'Not Started';
+		    }
+
+		    delete storageList;
 		}
-
-		Map<String, Schema.SobjectField> fields = Contract.getSObjectType().getDescribe().fields.getMap();
-		for(Contract recordToUpdate : approvedList)
-		{
-	        for(String field : fieldList)
-	        {
-	            SObjectField f = fields.get(field);
-	            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
-	        }
-	        recordToUpdate.EF_Manager_Approval__c = 'Not Started';
-	    }
-
-	    delete storageList;
 	}
 
 	// Copies approved, future values of a Billing Agreement onto the Billing Agreement record from Temp Storage and then deleted the temp record
@@ -77,6 +81,7 @@ public with sharing class EF_BaContractApprovalHelper
 		for(EF_Billing_Agreement__c approvedRecord : approvedList)
 		{
 			approvedIds.add(approvedRecord.Id);
+			approvedRecord.Status__c = 'Active';
 		}
 		String query = 'select id, EF_Billing_Agreement__c, ';
 		for(String f : fieldList)
@@ -87,27 +92,30 @@ public with sharing class EF_BaContractApprovalHelper
 		query = query + ' from EF_Approval__c where EF_Billing_Agreement__c in :approvedIds order by createddate desc';
 		System.debug('***************** query: '+query);
 		List<EF_Approval__c> storageList = Database.query(query);
-		Map<Id, EF_Approval__c> storageMap = new Map<Id, EF_Approval__c>();
-		for(EF_Approval__c storageRecord : storageList)
+		if(storageList.size() > 0)
 		{
-			if(storageMap.get(storageRecord.EF_Billing_Agreement__c) == null)
+			Map<Id, EF_Approval__c> storageMap = new Map<Id, EF_Approval__c>();
+			for(EF_Approval__c storageRecord : storageList)
 			{
-				storageMap.put(storageRecord.EF_Billing_Agreement__c, storageRecord);
+				if(storageMap.get(storageRecord.EF_Billing_Agreement__c) == null)
+				{
+					storageMap.put(storageRecord.EF_Billing_Agreement__c, storageRecord);
+				}
 			}
+
+			Map<String, Schema.SobjectField> fields = EF_Billing_Agreement__c.getSObjectType().getDescribe().fields.getMap();
+			for(EF_Billing_Agreement__c recordToUpdate : approvedList)
+			{
+		        for(String field : fieldList)
+		        {
+		            SObjectField f = fields.get(field);
+		            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
+		        }
+		        recordToUpdate.Manager_Approval__c = 'Not Started';
+		    }
+
+		    delete storageList;
 		}
-
-		Map<String, Schema.SobjectField> fields = EF_Billing_Agreement__c.getSObjectType().getDescribe().fields.getMap();
-		for(EF_Billing_Agreement__c recordToUpdate : approvedList)
-		{
-	        for(String field : fieldList)
-	        {
-	            SObjectField f = fields.get(field);
-	            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
-	        }
-	        recordToUpdate.Manager_Approval__c = 'Not Started';
-	    }
-
-	    delete storageList;
 	}
 
 	// Utilizes helper field (EF_Manager_Approval__c) that gets updated through the approval final actions to identify records that got approved
@@ -178,20 +186,32 @@ public with sharing class EF_BaContractApprovalHelper
 
 	// This method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
 	// The htmlTable is set to be a rich-text helper field that can be placed in emails to approvers to list them what key elements changed their values.
-    public static boolean identifyContractChanges(Contract newValues, Contract oldValues, List<String> fieldList)
+    public static boolean identifyContractChanges(Contract newValues, Contract oldValues, List<String> fieldList, boolean isInsert)
     {
     	String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Old value:</th><th border="1">New value:</th></tr>';
     	boolean hasChanged = false;
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        for(String field : fieldList)
+        if(isInsert)
         {
-            SObjectField f = fields.get(field);
-            if(newValues.get(field) != oldValues.get(field))
-            {
-            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
+	        for(String field : fieldList)
+	        {
+	            SObjectField f = fields.get(field);
+            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">--</td><td border="1">'+newValues.get(field)+'</td></tr>';
                 hasChanged = true;
-            }
-        }
+	        }
+	    }
+        else
+        {
+	        for(String field : fieldList)
+	        {
+	            SObjectField f = fields.get(field);
+	            if(newValues.get(field) != oldValues.get(field))
+	            {
+	            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
+	                hasChanged = true;
+	            }
+	        }
+	    }
 
         htmlTable = htmlTable + '</table>';
         if(hasChanged)
@@ -203,20 +223,32 @@ public with sharing class EF_BaContractApprovalHelper
 
 	// This method identifies if any of the "key elements" of a Billing Agreement record has changed. If even one has, proceed with Approval processing.
     // The htmlTable is set to be a rich-text helper field that can be placed in emails to approvers to list them what key elements changed their values.
-    public static boolean identifyBillingAgreementChanges(EF_Billing_Agreement__c newValues, EF_Billing_Agreement__c oldValues, List<String> fieldList)
+    public static boolean identifyBillingAgreementChanges(EF_Billing_Agreement__c newValues, EF_Billing_Agreement__c oldValues, List<String> fieldList, boolean isInsert)
     {
     	String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Old value:</th><th border="1">New value:</th></tr>';
     	boolean hasChanged = false;
         Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        for(String field : fieldList)
+        if(isInsert)
         {
-            SObjectField f = fields.get(field);
-            if(newValues.get(field) != oldValues.get(field))
-            {
-            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
+        	for(String field : fieldList)
+	        {
+	            SObjectField f = fields.get(field);
+            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">--</td><td border="1">'+newValues.get(field)+'</td></tr>';
                 hasChanged = true;
-            }
+	        }
         }
+        else
+        {
+	        for(String field : fieldList)
+	        {
+	            SObjectField f = fields.get(field);
+	            if(newValues.get(field) != oldValues.get(field))
+	            {
+	            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
+	                hasChanged = true;
+	            }
+	        }
+	    }
 
         htmlTable = htmlTable + '</table>';
         if(hasChanged)

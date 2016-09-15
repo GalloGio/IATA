@@ -2,6 +2,151 @@ public class EF_ContractHandler
 {
     private static boolean run = true;   
     
+
+    // Ensure's that any changes to Contract's Currency fields won't cause data-inconsistency for Billing Agreements
+    public static void validateContractCurrencyRemoval(List<Contract> newLines, Map<Id, Contract> contractOldMap)
+    {
+		// Ignore new inserts and only activate code on Update or Deletion
+        if(contractOldMap != null)
+        {
+            List<EF_Billing_Agreement__c> baList = [select id, name, Billing_Currency__c, Data_Currency__c, Payment_Currency__c, Contract__c from EF_Billing_Agreement__c where Status__c = 'Active' and Contract__c in :contractOldMap.keySet()];
+            
+            Set<String> dataCurrencies = new Set<String>();
+            Set<String> billingCurrencies = new Set<String>();
+            Set<String> paymentCurrencies = new Set<String>();
+
+
+            Map<Id, Set<String>> contractDataCurrenciesMap = new Map<Id, Set<String>>();
+            Map<Id, Set<String>> contractBillingCurrenciesMap = new Map<Id, Set<String>>();
+            Map<Id, Set<String>> contractPaymentCurrenciesMap = new Map<Id, Set<String>>();
+
+            Map<Id, List<String>> errorDataCurrencyListingMap = new Map<Id, List<String>>();
+            Map<Id, List<String>> errorBillingCurrencyListingMap = new Map<Id, List<String>>();
+            Map<Id, List<String>> errorPaymentCurrencyListingMap = new Map<Id, List<String>>();
+
+            for(EF_Billing_Agreement__c ba : baList)
+            {
+                if(contractDataCurrenciesMap.containsKey(ba.Contract__c))
+                {
+                    contractDataCurrenciesMap.get(ba.Contract__c).addAll(ba.Data_Currency__c.split(';'));
+                }
+                else
+                {
+                    dataCurrencies.addAll(ba.Data_Currency__c.split(';'));
+                    contractDataCurrenciesMap.put(ba.Contract__c, dataCurrencies);
+                }
+
+                if(contractBillingCurrenciesMap.containsKey(ba.Contract__c))
+                {
+                    contractBillingCurrenciesMap.get(ba.Contract__c).addAll(ba.Billing_Currency__c.split(';'));
+                }
+                else
+                {
+                    billingCurrencies.addAll(ba.Billing_Currency__c.split(';'));
+                    contractBillingCurrenciesMap.put(ba.Contract__c, billingCurrencies);
+                }
+
+                if(contractPaymentCurrenciesMap.containsKey(ba.Contract__c))
+                {
+                    contractPaymentCurrenciesMap.get(ba.Contract__c).addAll(ba.Payment_Currency__c.split(';'));
+                }
+                else
+                {
+                    paymentCurrencies.addAll(ba.Payment_Currency__c.split(';'));
+                    contractPaymentCurrenciesMap.put(ba.Contract__c, paymentCurrencies);
+                }
+            }
+
+            
+            for(Contract c : newLines)
+            {
+            	Set<String> currentDataCurrencies = new Set<String>();
+            	currentDataCurrencies.addAll(c.EF_Data_Currency__c.split(';'));
+            	Set<String> currentBillingCurrencies = new Set<String>();
+            	currentBillingCurrencies.addAll(c.EF_Billing_Currency__c.split(';'));
+            	Set<String> currentPaymentCurrencies = new Set<String>();
+            	currentPaymentCurrencies.addAll(c.EF_Payment_Currency__c.split(';'));
+            	
+            	if(contractDataCurrenciesMap.get(c.Id) != null)
+            	{
+	            	for(String baDataCurrency : contractDataCurrenciesMap.get(c.Id))
+	            	{
+	            		if(!currentDataCurrencies.contains(baDataCurrency))
+	            		{
+	            			if(errorDataCurrencyListingMap.containsKey(c.Id))
+			                {
+			                    errorDataCurrencyListingMap.get(c.Id).add(baDataCurrency);
+			                }
+			                else
+			                {
+			                	List<String> errorList = new List<String>();
+			                	errorList.add(baDataCurrency);
+			                    errorDataCurrencyListingMap.put(c.Id, errorList);
+			                }
+	            		}
+	            	}
+	            }
+
+	            if(contractBillingCurrenciesMap.get(c.Id) != null)
+            	{
+	            	for(String baBillingCurrency : contractBillingCurrenciesMap.get(c.Id))
+	            	{
+	            		if(!currentBillingCurrencies.contains(baBillingCurrency))
+	            		{
+	            			if(errorBillingCurrencyListingMap.containsKey(c.Id))
+			                {
+			                    errorBillingCurrencyListingMap.get(c.Id).add(baBillingCurrency);
+			                }
+			                else
+			                {
+			                	List<String> errorList = new List<String>();
+			                	errorList.add(baBillingCurrency);
+			                    errorBillingCurrencyListingMap.put(c.Id, errorList);
+			                }
+	            		}
+	            	}
+	            }
+
+	            if(contractPaymentCurrenciesMap.get(c.Id) != null)
+	            {
+	            	for(String baPaymentCurrency : contractPaymentCurrenciesMap.get(c.Id))
+	            	{
+	            		if(!currentPaymentCurrencies.contains(baPaymentCurrency))
+	            		{
+	            			if(errorPaymentCurrencyListingMap.containsKey(c.Id))
+			                {
+			                    errorPaymentCurrencyListingMap.get(c.Id).add(baPaymentCurrency);
+			                }
+			                else
+			                {
+			                	List<String> errorList = new List<String>();
+			                	errorList.add(baPaymentCurrency);
+			                    errorPaymentCurrencyListingMap.put(c.Id, errorList);
+			                }
+	            		}
+	            	}
+				}
+            }
+
+            for(Contract c : newLines)
+            {	
+            	if(errorDataCurrencyListingMap.get(c.Id) != null)
+            	{
+	            	c.EF_Data_Currency__c.addError('Can not update Data Currency list, because the following currencies are used in Billing Agreements: '+errorDataCurrencyListingMap.get(c.Id));
+	            }
+	            if(errorBillingCurrencyListingMap.get(c.Id) != null)
+            	{
+	            	c.EF_Billing_Currency__c.addError('Can not update Billing Currency list, because the following currencies are used in Billing Agreements: '+errorBillingCurrencyListingMap.get(c.Id));
+	            }
+	            if(errorPaymentCurrencyListingMap.get(c.Id) != null)
+            	{
+	            	c.EF_Payment_Currency__c.addError('Can not update Payment Currency list, because the following currencies are used in Billing Agreements: '+errorPaymentCurrencyListingMap.get(c.Id));
+	            }
+            }
+        }
+    }
+
+
      // Submits E&F Contracts for approval processing if the helper field is set to TRUE
     public static void startApprovalProcesses(List<Contract> cList)
     {
@@ -53,7 +198,7 @@ public class EF_ContractHandler
 	        // If there are any Contracts that require approval, start the process to temporarily store them into another object
 	        for(Contract c : newContracts.values())
 	        {
-	            if(EF_BaContractApprovalHelper.identifyContractChanges(c, oldContracts.get(c.Id), fields))
+	            if(EF_BaContractApprovalHelper.identifyContractChanges(c, oldContracts.get(c.Id), fields, false))
 	            {
 	                EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), c, fields);
 	                c.EF_Require_Approval__c = true;
@@ -74,10 +219,15 @@ public class EF_ContractHandler
     {
 		if(isUserCsSpecialist())
 		{
+			// Get the list of fields that require Approval from Custom Settings and place them in a List
+        	List<EF_Approve_Fields__c> fieldList = [select id, name, Contract_Fields__c from EF_Approve_Fields__c where Name = 'Contract'];
+        	List<String> fields = fieldList.get(0).Contract_Fields__c.split(',');
+
 			for(Contract c : contractList)
 	        {
 	            c.EF_Require_Approval__c = true;
 	            c.EF_Status__c = 'Inactive';
+	            EF_BaContractApprovalHelper.identifyContractChanges(c, null, fields, true);
 	        }
 		}
     }

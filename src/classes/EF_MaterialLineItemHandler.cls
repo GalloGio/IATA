@@ -1,5 +1,71 @@
 public class EF_MaterialLineItemHandler {
     
+    public static void validateContractMaterialRemoval(List<EF_Material_Line_Item__c> newLines, Map<Id, EF_Material_Line_Item__c> materialLineItemOldMap, boolean isUpdate)
+    {
+        // Ignore new inserts and only activate code on Update or Deletion
+        if(materialLineItemOldMap != null)
+        {
+            // Place the Contracts into a set to be queried for
+            Set<Id> affectedContractIds = new Set<Id>();
+            for(EF_Material_Line_Item__c mat : materialLineItemOldMap.values())
+            {
+                if(mat.Contract__c != null)
+                    affectedContractIds.add(mat.Contract__c);
+            }
+
+            // Because the point is to prevent deletion of Contract's Material Line Items that exist on Billing Agreements as well, 
+            // we can get a list of all Material Line Items related to Contract from which a Material is being deleted from
+            List<EF_Material_Line_Item__c> materialsInBAs = [select id, name, EF_Material__c, EF_Relationship__c, EF_Relationship__r.Contract__c from EF_Material_Line_Item__c where EF_Relationship__r.Contract__c in :affectedContractIds];
+            Set<Id> materialIds = new Set<Id>();
+            // Create a map that contains all Contracts as keys and a list of Materials belonging to Billing Agreements in the value
+            Map<Id, Set<Id>> contractMaterialsMap = new Map<Id, Set<Id>>();
+            for(EF_Material_Line_Item__c materialLineItem : materialsInBAs)
+            {
+                if(contractMaterialsMap.containsKey(materialLineItem.EF_Relationship__r.Contract__c))
+                {
+                    contractMaterialsMap.get(materialLineItem.EF_Relationship__r.Contract__c).add(materialLineItem.EF_Material__c);
+                }
+                else
+                {
+                    materialIds.add(materialLineItem.EF_Material__c);
+                    contractMaterialsMap.put(materialLineItem.EF_Relationship__r.Contract__c, materialIds);
+                }
+            }
+
+            // Loop through the items and try to find the to-be-deleted Material from the map => If found, throw an error
+            if(!isUpdate)
+            {
+                for(EF_Material_Line_Item__c mat : materialLineItemOldMap.values())
+                {
+                    if(mat.Contract__c != null)
+                    {
+                        if(contractMaterialsMap.get(mat.Contract__c).contains(mat.EF_Material__c))
+                        {
+                            mat.addError('Deletion of Material Line Item was not possible due to the same Material being used in at least one Airline Billing Agreement related to the Contract record.');
+                        }
+                    }
+                }
+            }
+
+            // Loop through the items and try to find the to-be-used Material from the map => If not found, throw an error
+            if(isUpdate)
+            {
+                for(EF_Material_Line_Item__c mat : newLines)
+                {
+
+                    if(mat.Contract__c != null)
+                    {
+                        if(!contractMaterialsMap.get(mat.Contract__c).contains(mat.EF_Material__c) && contractMaterialsMap.get(mat.Contract__c).contains(materialLineItemOldMap.get(mat.id).EF_Material__c))
+                        {
+                            mat.EF_Material__c.addError('Unable to change Material type due to the current material being used in at least one Airline Billing Agreement related to the Contract record.');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     public static void emailIfMaterialChanges(List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap)
     {
         List<EF_Material_Line_Item__c> toApproveList = new List<EF_Material_Line_Item__c>();
@@ -48,13 +114,16 @@ public class EF_MaterialLineItemHandler {
         List<EF_Material_Line_Item__c> matList = [select EF_Material__r.Name, Name, Contract__c, EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c from EF_Material_Line_Item__c where id in :relatedBaIdSet];
         for(EF_Material_Line_Item__c mat : matList)
         {
-            if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+            if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c != null)
             {
-                toApproveList.add(mat);
-            }
-            if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c.equalsIgnoreCase('Not Allowed'))
-            {
-                toDisallowList.add(mat);
+                if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c.equalsIgnoreCase('Allowed with Approval'))
+                {
+                    toApproveList.add(mat);
+                }
+                if(mat.EF_Relationship__r.Contract__r.EF_Allow_Billing_Agreements__c.equalsIgnoreCase('Not Allowed'))
+                {
+                    toDisallowList.add(mat);
+                }
             }
         }
 
