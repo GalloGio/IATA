@@ -11635,11 +11635,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.EF_Allow_Billing_Agreements__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Account.EF_Annual_Revenue_USD__c</field>
         <readable>true</readable>
@@ -21502,6 +21497,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_Admin_Fee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_Allow_Billing_Agreements__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
