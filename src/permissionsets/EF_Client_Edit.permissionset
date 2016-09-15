@@ -14857,11 +14857,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Contact.Account_Management_key_contact__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Contact.Account_site__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -16802,16 +16797,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Billed_Account__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Billing_Agreement__c.Billing_Account__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>EF_Billing_Agreement__c.Billing_Currency__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -16908,21 +16893,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Material_Line_Item__c.EF_Relationship__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Material__c.Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Material__c.IATA_Ticket_Tax_Code__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EF_Material__c.SAP_Code__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32715,11 +32685,11 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Account.Airport</recordType>
+        <recordType>Account.GDP_Account</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.GDP_Account</recordType>
+	 <recordTypeVisibilities>
+        <recordType>Account.Operator</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

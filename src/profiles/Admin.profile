@@ -191,6 +191,22 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>AmazonFile</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AmazonFileTrgHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentListControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_BillingAgreementHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -200,6 +216,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EF_MaterialLineItemHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>WrapperAttach</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
@@ -8442,6 +8462,11 @@
         <editable>false</editable>
         <field>AmazonFile__c.isPublic__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.sObject_Id__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -36520,6 +36545,10 @@
         <recordType>ContentVersion.Translations</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
+    <pageAccesses>
+        <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>ACCA_Service_Request__c.Agent_Group_Maintenance</recordType>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
+	<types>
         <members>*</members>
         <name>GlobalPicklist</name>
     </types>
@@ -38,7 +38,22 @@
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+		<members>E_F_Services/EF_Contract_Rejected</members>
+        <members>E_F_Services/EF_Contract_Approval_Request</members>
+        <members>E_F_Services/EF_Contract_Approved</members>
+		<members>E_F_Services/EF_Billing_Agreement_Rejected</members>
+        <members>E_F_Services/EF_Billing_Agreement_Approval_Request</members>
+        <members>E_F_Services/EF_Billing_Agreement_Approved</members>
+        <members>unfiled$public/EF_Contact_Deactivation_Notification</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
+        <members>EF_Airline_Edit</members>
+        <members>EF_Client_Edit</members>
+        <members>EF_Contract_Creation</members>
+        <members>EF_Contract_Update</members>
+        <members>EF_Management</members>
+        <members>EF_Staff</members>
         <name>PermissionSet</name>
     </types>
 	<types>
@@ -53,9 +68,5 @@
         <members>*</members>
         <name>Queue</name>
     </types> 
-	<types>
-        <members>Admin</members>
-        <name>Profile</name>
-    </types>
     <version>37.0</version>
 </Package>
