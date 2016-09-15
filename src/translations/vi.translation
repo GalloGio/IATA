@@ -303,6 +303,10 @@
         <name>Address_Line_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- Address_Line_2 --></label>
+        <name>Address_Line_2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address creation error --></label>
         <name>Address_creation_error</name>
     </customLabels>
@@ -727,7 +731,7 @@
         <name>Cybersource_ProfileId_USD</name>
     </customLabels>
     <customLabels>
-        <label><!-- Cybersource Security key CAD --></label>
+        <label><!-- Cybersource_SecurityKey --></label>
         <name>Cybersource_SecurityKey</name>
     </customLabels>
     <customLabels>
@@ -5643,6 +5647,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label><!-- ISSP Display Records per page --></label>
         <name>ISSP_Display_Records_per_page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
     </customLabels>
     <customLabels>
         <label>Văn bản</label>

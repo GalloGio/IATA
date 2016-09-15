@@ -10644,6 +10644,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Display _MENU_ records per page</value>
     </labels>
     <labels>
+        <fullName>ISSP_Document_Category</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Document_Category</shortDescription>
+        <value>Document Category</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Documents</fullName>
         <categories>Portal Resources</categories>
         <language>en_US</language>
@@ -18760,13 +18768,5 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Document_Category</fullName>
-        <categories>Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Document_Category</shortDescription>
-        <value>Document Category</value>
     </labels>
 </CustomLabels>
