@@ -45,6 +45,7 @@
 						 var pWrapper = {
 							 Rowspan : rowspan,
                              Under : previousUnder != currentUnder ? currentUnder : '',
+							 GroupId : participants[i].Local_Governance__c,
 							 GroupName : participants[i].Local_Governance__r.Name,
 							 GroupOwner : ownerName,
 							 Mission : participants[i].Local_Governance__r.Mission__c,
