@@ -224,7 +224,7 @@
 			    <apex:form id="facilitypage">
 				    <div class="panel-primary">
 					    <div class="panel-heading head_panel_green">
-		            		<h3 class="panel-title">Facilities</h3>
+		            		<h3 class="panel-title">{!$Label.ISSP_AMS_Facilities}</h3>
 		        		</div>
 		        		<apex:pageBlock >
 		        			<apex:pageBlockButtons >
@@ -235,7 +235,7 @@
 		            		<apex:pageBlockSection id="facilitiesSection" columns="2">
 		            			<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Facility Name" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_Facilities_Facility_Name}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Name}" styleClass="col-md-6" required="true"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -243,7 +243,7 @@
                                 
 			            		<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="{!IF(facilityRecordTypeName = 'Warehouse'," * Warehouse Full Address","* Office Full Address")}" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!IF(facilityRecordTypeName = 'Warehouse',$Label.ISSP_AMS_FACILITIES_Warehouse_Full_Address,$Label.ISSP_AMS_FACILITIES_Office_Full_Address)}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Office_Full_Address__c}" styleClass="col-md-6" required="true"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -251,19 +251,19 @@
                                 
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Type of Premises" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Type_of_Premises}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Type_of_Premises__c}" styleClass="col-md-6" required="true"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 							</apex:pageBlockSection>
                             
 							<apex:pageBlockSection columns="2">
-								<apex:outputText style="font-weight:bold;font-size:110%" value="Size" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
+								<apex:outputText style="font-weight:bold;font-size:110%" value="{!$Label.ISSP_AMS_FACILITIES_Size}" rendered="{!NOT(isocountry.EACP_Country__c)}"/>
                                 <apex:outputText rendered="{!NOT(isocountry.EACP_Country__c)}"/>
                                 
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!NOT(isocountry.EACP_Country__c)}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="a) Total area" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_a}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Total_Area__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -271,7 +271,7 @@
                                 
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!NOT(isocountry.EACP_Country__c)}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="b) Area used for Air freight" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_b}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Area_used_for_Air_freight__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -279,35 +279,35 @@
                                 
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="c) Doc Areas" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_c}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Doc_Areas__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="d) Ceiling height" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_d}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Ceiling_height__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="e) Type" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_e}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Type__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="f) Accessibility to vehicles" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_f}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Accessibility_to_vehicles__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse', NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="g) Number of overhead doors" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_g}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Number_of_overhead_doors__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -316,7 +316,7 @@
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
 			            				<apex:inputHidden value="{!consignments}" id="Are_Consignments" />
-				            			<apex:outputLabel value="* Are consignments made ready for carriage at this service point?" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q1}" styleClass="col-md-6"/>
 										<apex:inputField id="areConsignments" value="{!facilityInContext.Are_Consignments_made_ready__c}" styleClass="col-md-6"  onchange="togglePageItem(this.value, 'f1c1');" required="true"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -325,7 +325,7 @@
 								<apex:outputPanel id="f1c1" style="display:none">
 									<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!isocountry.EACP_Country__c}">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* If any of the functions involved in the preparation of cargo ready for carriage are outsourced or leased by your company, please provide details" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q2}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Any_functions_involved_in_preperations__c}" styleClass="col-md-6" />
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -333,28 +333,28 @@
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Distance from nearest Airport" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Distance_from_nearest_Airport}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Distance_from_nearest_Airport__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Warehouse'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Distance from nearest Office" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Distance_from_nearest_Office}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Distance_from_nearest_Office__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Warehouse'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!NOT(isocountry.EACP_Country__c)}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Date on which this location was opened for business" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q3}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Date_location_opened_for_business__c}"  onclick="showPastDates();"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!NOT(isocountry.EACP_Country__c)}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="List airports serviced by this facility" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q4}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.List_airports_serviced_by_this_facility__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -362,16 +362,16 @@
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!NOT(isocountry.EACP_Country__c)}">
 			            			<apex:outputPanel styleClass="row">
 			            				<apex:inputHidden value="{!isleased}" id="Is_Leased" />
-				            			<apex:outputLabel value="{!IF(facilityRecordTypeName = 'Warehouse',"Is the warehouse leased?","Is the office leased?")}" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!IF(facilityRecordTypeName = 'Warehouse',$Label.ISSP_AMS_FACILITIES_Is_the_warehouse_leased,$Label.ISSP_AMS_FACILITIES_Is_the_office_leased)}" styleClass="col-md-6"/>
 										<apex:inputField id="isLeasedItem" value="{!facilityInContext.Is_the_office_warehouse_leased__c}" styleClass="col-md-6" onchange="togglePageItem(this.value, 'isleased1');togglePageItem(this.value, 'isleased2');togglePageItem(this.value, 'isleased3');togglePageItem(this.value, 'isleased4')"/>
-										<span class="col-md-12 alert alert-warning display-none" role="alert" id="leasedOffice">You will be required to upload a copy of the lease on Step D</span>
+										<span class="col-md-12 alert alert-warning display-none" role="alert" id="leasedOffice">{!$Label.ISSP_AMS_FACILITIES_TEXT1}</span>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!NOT(isocountry.EACP_Country__c)}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:outputPanel id="isleased1" style="display:none" rendered="{!NOT(isocountry.EACP_Country__c)}">
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Name of lessor" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Name_of_lessor}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Name_of_lessor__c}" styleClass="col-md-6"/>
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -380,7 +380,7 @@
 								<apex:outputPanel id="isleased2" style="display:none" rendered="{!NOT(isocountry.EACP_Country__c)}">
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Duration of lease" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Duration_of_lease}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Duration_of_lease__c}" styleClass="col-md-6" />
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -389,7 +389,7 @@
 								<apex:outputPanel id="isleased3" style="display:none" rendered="{!NOT(isocountry.EACP_Country__c)}">
 									<apex:pageBlockSectionItem labelStyle="width:50%">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Date lease expires" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Date_lease_expires}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Date_lease_expires__c}" onclick="showFutureDates();"  />
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -398,7 +398,7 @@
 								<apex:outputPanel id="isleased4" style="display:none" rendered="{!NOT(isocountry.EACP_Country__c)}">
 									<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Other pertinent details" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Other_pertinent_details}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Other_pertinent_details__c}" styleClass="col-md-6" />
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -407,16 +407,16 @@
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
 			            				<apex:inputHidden value="{!issubcontractor}" id="Is_Subcontractor" />
-				            			<apex:outputLabel value="Is the warehouse sub-contracted?" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q5}" styleClass="col-md-6"/>
 										<apex:inputField id="isSubcontractorItem" value="{!facilityInContext.Is_the_warehouse_sub_contracted__c}" styleClass="col-md-6"  onchange="togglePageItem(this.value, 'issubcontractor1');togglePageItem(this.value, 'issubcontractor2');togglePageItem(this.value, 'issubcontractor3')"/>
-										<span class="col-md-12 alert alert-warning display-none" role="alert" id="warehouseSubcontracted">You will be required to upload a copy of the sub-contract agreement at Step D</span>
+										<span class="col-md-12 alert alert-warning display-none" role="alert" id="warehouseSubcontracted">{!$Label.ISSP_AMS_FACILITIES_TEXT2}</span>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:outputPanel id="issubcontractor1" style="display:none">
 									<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Name of sub-contractor" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Name_of_subcontractor}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Name_of_sub_contractor__c}" styleClass="col-md-6"/>
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -425,7 +425,7 @@
 								<apex:outputPanel id="issubcontractor2" style="display:none">
 									<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Duration of contract" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Duration_of_contract}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Duration_of_contract__c}" styleClass="col-md-6" />
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -434,7 +434,7 @@
 								<apex:outputPanel id="issubcontractor3" style="display:none">
 									<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}">
 				            			<apex:outputPanel styleClass="row">
-					            			<apex:outputLabel value="* Date agreement expires" styleClass="col-md-6"/>
+					            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Date_agreement_expires}" styleClass="col-md-6"/>
 											<apex:inputField value="{!facilityInContext.Date_agreement_expires__c}" onclick="showFutureDates();"/>
 										</apex:outputPanel>
 									</apex:pageBlockSectionItem>
@@ -442,66 +442,66 @@
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Office',NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Is the office open to the general public ?" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q6}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Is_the_office_open_to_the_general_public__c}" onchange="togglePageItem(this.value, 'officehours');" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
                                 <apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Office',NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
                                 <apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Office',NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row" id="officehours" style="display:{!IF(facilityInContext.Is_the_office_open_to_the_general_public__c=='Yes', '', 'none')}">
-				            			<apex:outputLabel value="What are the normal business hours and days of the week that this location is open to the public?" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q7}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.General_Public_Opening_Hours__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Is the warehouse open to the general public?" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Q8}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Is_warehouse_open_to_general_public__c}" styleClass="col-md-6" />
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!AND(facilityRecordTypeName = 'Warehouse',NOT(isocountry.EACP_Country__c))}"><!--empty: move following field to next row --></apex:outputtext>
 							</apex:pageBlockSection>
 							<apex:pageBlockSection columns="2" >
-								<apex:outputText style="font-weight:bold;font-size:110%" value="Which of the following are available?" rendered="{!facilityRecordTypeName = 'Office'}"/><apex:outputText rendered="{!facilityRecordTypeName = 'Office'}"/>
+								<apex:outputText style="font-weight:bold;font-size:110%" value="{!$Label.ISSP_AMS_FACILITIES_Q9}" rendered="{!facilityRecordTypeName = 'Office'}"/><apex:outputText rendered="{!facilityRecordTypeName = 'Office'}"/>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Telephone" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Telephone}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Telephone__c}" styleClass="col-md-6" required="{!IF(facilityRecordTypeName = 'Office',true,false)}"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Email" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Email}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Email__c}" styleClass="col-md-6" required="{!IF(facilityRecordTypeName = 'Office',true,false)}"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Website" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Website}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Website__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Fax" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Fax}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Fax__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Automated export accounting" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Automated_export_accounting}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Automated_export_accounting__c}" styleClass="col-md-6" required="{!IF(facilityRecordTypeName = 'Office',true,false)}"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Automated export documentation" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Automated_export_documentation}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Automated_export_documentation__c
 										}" styleClass="col-md-6" required="{!IF(facilityRecordTypeName = 'Office',true,false)}"/>
 									</apex:outputPanel>
@@ -509,7 +509,7 @@
                                 <apex:outputtext rendered="{!facilityRecordTypeName = 'Office'}"><!--empty: move following field to next row --></apex:outputtext>
                                 <apex:pageBlockSectionItem labelStyle="width:50%" rendered="{!facilityRecordTypeName = 'Office'}">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* Alarm system" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Alarm_system}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Alarm_system__c}" styleClass="col-md-6" required="{!IF(facilityRecordTypeName = 'Office',true,false)}"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -517,66 +517,66 @@
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 							</apex:pageBlockSection>
 							<apex:pageBlockSection columns="2" rendered="{!facilityRecordTypeName = 'Warehouse'}">
-								<apex:outputText style="font-weight:bold;font-size:110%" value="List of warehouse equipment available for processing air cargo"/><apex:outputText />
+								<apex:outputText style="font-weight:bold;font-size:110%" value="{!$Label.ISSP_AMS_FACILITIES_TEXT3}"/><apex:outputText />
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Scales Number" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Scales_Number}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Scales_Number__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Scales Type" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Scales_Type}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Scales_Type__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Scales Max. Weight" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Scales_Max_Weight}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Scales_Max_Weight__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Forklift Number" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Forklift_Number}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Forklift_Number__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Forklift Type" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Forklift_Type}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Forklift_Type__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Forklift Max. Weight" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Forklift_Max_Weight}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Forklift_Max_Weight__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Other Equipment Number" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Other_Equipment_Number}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Other_equipment_Number__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Other Equipment Type" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Other_Equipment_Type}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Other_equipment_Type__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="Other Equipment Max Weight" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_Other_Equipment_Max_Weight}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.Other_equipment_Max_Weight__c}" styleClass="col-md-6"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
@@ -584,17 +584,17 @@
 								
 							</apex:pageBlockSection>
 							<apex:pageBlockSection columns="2"  rendered="{!facilityRecordTypeName = 'Warehouse'}">
-								<apex:outputText style="font-weight:bold;font-size:110%" value="Is warehouse fitted with:"/><apex:outputText />
+								<apex:outputText style="font-weight:bold;font-size:110%" value="{!$Label.ISSP_AMS_FACILITIES_Q10}"/><apex:outputText />
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* An alarm system" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_An_alarm_system}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.An_alarm_system__c}" styleClass="col-md-6" required="true"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 								<apex:pageBlockSectionItem labelStyle="width:50%">
 			            			<apex:outputPanel styleClass="row">
-				            			<apex:outputLabel value="* A sprinkler system" styleClass="col-md-6"/>
+				            			<apex:outputLabel value="{!$Label.ISSP_AMS_FACILITIES_sprinkler_system}" styleClass="col-md-6"/>
 										<apex:inputField value="{!facilityInContext.A_sprinkler_system__c}" styleClass="col-md-6" required="{!IF(facilityRecordTypeName = 'Warehouse',true,false)}"/>
 									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
