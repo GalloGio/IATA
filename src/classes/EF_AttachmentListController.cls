@@ -215,15 +215,15 @@ global with sharing class EF_AttachmentListController {
 		return pageref.getUrl();
 	}
 	
-	public PageReference callEditAttachment() {
+	public void callEditAttachment() {
 				
 		for ( WrapperAttach attach: listAttachments ) {
 			if (attach.id == this.editAttachmentId) {
 				this.editAttachment = attach;
-				return  null;
+				System.debug(loggingLevel.Debug, '____ [cls EF_AttachmentListController - callEditAttachment] editAttachment.fileAmazon.amazonFile.EF_Expired__c - ' + editAttachment.fileAmazon.amazonFile.EF_Expired__c);
+				return;
 			}
 		}
-		return null;
 	}
 
 	/**

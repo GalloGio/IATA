@@ -271,7 +271,7 @@
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Edit_Biling_Agreement_Status</customButtons>
+        <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
         <fields>Status__c</fields>
         <fields>Client__c</fields>

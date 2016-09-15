@@ -423,16 +423,15 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <webLinks>
-        <fullName>Edit_Biling_Agreement_Status</fullName>
+        <fullName>Edit_All</fullName>
         <availability>online</availability>
         <displayType>massActionButton</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Mass Update Billing Agreement</masterLabel>
-        <openType>sidebar</openType>
-        <page>EF_UpdateBillingAgreement</page>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
     </webLinks>
     <validationRules>
         <fullName>EF_Prevent_Update_From_General_Access</fullName>
