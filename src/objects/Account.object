@@ -76285,7 +76285,7 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
         <active>true</active>
         <description>Can&apos;t set to false SIS Verified if Record Type is Operator</description>
         <errorConditionFormula>AND(
-      RecordType.DeveloperName=&apos;Operator&apos;, 
+  OR(RecordType.DeveloperName=&apos;Operator&apos;, RecordType.DeveloperName=&apos;Others&apos;),
   EF_SIS_Code_Verified__c=false 
 )</errorConditionFormula>
         <errorDisplayField>EF_SIS_Code_Verified__c</errorDisplayField>
