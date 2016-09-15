@@ -70,12 +70,7 @@
     <fields>
         <fullName>Allow_Billing_Agreements__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-     AND(
-        ISPICKVAL(Client__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;), 
-        ISPICKVAL(Airline__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;)
-       ), &apos;Allowed&apos;, &apos;Other&apos;
-)</formula>
+        <formula>IF(ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;),&apos;Allowed&apos;, &apos;Other&apos;)</formula>
         <label>Allow Billing Agreements</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

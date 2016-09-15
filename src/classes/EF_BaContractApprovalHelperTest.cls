@@ -4,14 +4,12 @@ private class EF_BaContractApprovalHelperTest
 	@isTest static void testBillingAgreementCreation_StartsApprovalProcess()
 	{
 		EF_TestDataFactory.createBaseData();
-		Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
-		Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
-		Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+		Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
+		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
+		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
-		customer.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		client.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		update customer;
-		update client;
+		contract.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
+		update contract;
 
 		List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 		System.assertEquals(0, pwiList.size());
@@ -32,9 +30,9 @@ private class EF_BaContractApprovalHelperTest
 	@isTest static void testBillingAgreementUpdateKeyField_StartsApprovalProcessCreateEFapprovalRecord()
 	{
 		EF_TestDataFactory.createBaseData();
-		Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
-		Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
-		Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+		Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
+		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
+		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
 		List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 		System.assertEquals(0, pwiList.size());
@@ -50,10 +48,8 @@ private class EF_BaContractApprovalHelperTest
 		ba.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
 		insert ba;
 
-		customer.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		client.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		update customer;
-		update client;
+		contract.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
+		update contract;
 
 		ba.Payment_Method__c = 'Bank Transfer';
 		update ba;
@@ -69,9 +65,9 @@ private class EF_BaContractApprovalHelperTest
 	@isTest static void testBillingAgreementChangeApproval_updateBaDeleteRecord()
 	{
 		EF_TestDataFactory.createBaseData();
-		Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
-		Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
-		Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+		Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
+		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
+		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
 		List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 		System.assertEquals(0, pwiList.size());
@@ -87,10 +83,8 @@ private class EF_BaContractApprovalHelperTest
 		ba.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
 		insert ba;
 
-		customer.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		client.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		update customer;
-		update client;
+		contract.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
+		update contract;
 
 		ba.Payment_Method__c = 'Bank Transfer';
 		update ba;
@@ -119,9 +113,9 @@ private class EF_BaContractApprovalHelperTest
 	@isTest static void testBillingAgreementChangeRejection_rollbackBA()
 	{
 		EF_TestDataFactory.createBaseData();
-		Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
-		Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
-		Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+		Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
+		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
+		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
 		List<ProcessInstanceWorkItem> pwiList = [SELECT Id, ActorId, ProcessInstance.TargetObjectId	FROM ProcessInstanceWorkitem];
 		System.assertEquals(0, pwiList.size());
@@ -137,10 +131,8 @@ private class EF_BaContractApprovalHelperTest
 		ba.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
 		insert ba;
 
-		customer.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		client.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
-		update customer;
-		update client;
+		contract.EF_Allow_Billing_Agreements__c = 'Allowed with Approval';
+		update contract;
 
 		ba.Payment_Method__c = 'Bank Transfer';
 		update ba;

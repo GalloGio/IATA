@@ -213,10 +213,6 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EF_Allow_Billing_Agreements__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>EF_Effective_Date__c</field>
             </layoutItems>

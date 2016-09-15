@@ -9,14 +9,12 @@ private class EF_BillingAgreementTriggerTest {
 
 	@isTest static void testDisallowBillingAgreementsThrowsAnError()
 	{
-		Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
-		Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
-		Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+		Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
+		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
+		Account client = [select Id, Name from Account where Name = 'Test Account client'];
 		
-		customer.EF_Allow_Billing_Agreements__c = 'Not Allowed';
-		client.EF_Allow_Billing_Agreements__c = 'Not Allowed';
-		update customer;
-		update client;
+		contract.EF_Allow_Billing_Agreements__c = 'Not Allowed';
+		update contract;
 
 		// Try to create a billing agreement, but expect that to fail
 		EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();

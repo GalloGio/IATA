@@ -22,7 +22,6 @@ private class EF_AccountTriggerHandlerTest {
             EF_type__c = 'E&F Client',
             EF_Status__c = 'Active',
             EF_Effective_Date__c = Date.today(),
-            EF_Allow_Billing_Agreements__c = 'Allowed',
             Reason_for_creation__c = 'new client needed'
             );
         
@@ -41,7 +40,6 @@ private class EF_AccountTriggerHandlerTest {
             EF_type__c = 'E&F Client',
             EF_Status__c = 'Active',
             EF_Effective_Date__c = Date.today(),
-            EF_Allow_Billing_Agreements__c = 'Allowed',
             Reason_for_creation__c = 'new client needed'
             );
                        
@@ -52,7 +50,6 @@ private class EF_AccountTriggerHandlerTest {
             Category__c = 'ANSP',
             EF_type__c = 'E&F Operator',
             EF_Status__c = 'Active',
-            EF_Allow_Billing_Agreements__c = 'Allowed',
             EF_Effective_Date__c = Date.today(),
             Reason_for_creation__c = 'new customer needed'
             );
@@ -64,7 +61,6 @@ private class EF_AccountTriggerHandlerTest {
             Category__c = 'ANSP',
             EF_type__c = 'E&F Operator',
             EF_Status__c = 'Active',
-            EF_Allow_Billing_Agreements__c = 'Allowed',
             EF_Effective_Date__c = Date.today(),
             Reason_for_creation__c = 'new customer needed'
             );
@@ -89,6 +85,7 @@ private class EF_AccountTriggerHandlerTest {
             Budget_Section__c='aaaa',
             CCF_Amount__c=250000,
             ContractTerm=12,
+            EF_Allow_Billing_Agreements__c = 'Allowed',
             StartDate= Date.today(),
             Type__c='Revenue',
             EF_Status__c = 'Active'
@@ -101,6 +98,7 @@ private class EF_AccountTriggerHandlerTest {
             Budget_Section__c='aaaa',
             CCF_Amount__c=250000,
             ContractTerm=12,
+            EF_Allow_Billing_Agreements__c = 'Allowed',
             StartDate= Date.today(),
             Type__c='Revenue',
             EF_Status__c = 'Active'
