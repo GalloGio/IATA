@@ -95,6 +95,22 @@
         padding: 6px 8px 6px 6px;
         margin: 4px 20px;
     }
+
+.customPopup {
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    left: 25%;
+    top: 30%;
+    font-size: 11pt;
+    padding: 10px;
+    position: absolute;
+    z-index: 9999;
+    width: 800px;
+}
+.btn {
+    float: right;
+}
 </style>
 <Script>
     function setCookie(c_name,value,exdays)
@@ -125,6 +141,25 @@
         setCookie('apex__idcard_portal_lang', document.getElementById('{!$Component.idcardForm.langSelect}').value, 365);
         window.location.reload();
     }
+
+    function getSelectedContact2(type)
+    {
+        alert(type);
+        var $radio = $('input[name=group1]:checked');
+        alert($radio);
+        var updateDay = $radio.val();
+        alert(updateDay);
+        var id = $radio.attr('id');
+        alert(id);
+        alert('showpopup' + type +  id);
+        showPopup(type,id);
+    }
+    function callClosePopup()
+        {
+            closePopup();
+            document.getElementById('{!$Component.idcardForm.theHiddenInput}').value = '';
+        }
+
 </Script>
 </head>
 
@@ -191,8 +226,11 @@
                 <apex:inputText id="txtIATACodeLocation" value="{!NewAgencyCode}" />
                 </apex:outputPanel>
                 </apex:pageBlockSection>            
-
-                     <apex:pageBlockButtons location="bottom">                        
+                                        <apex:actionFunction name="showPopup" action="{!showPopup}" >
+                            <apex:param name="myaction" value="" />
+                            <apex:param name="selected" value="" />
+                        </apex:actionFunction>   
+                     <apex:pageBlockButtons location="bottom">
                             <center>
                                 <table style="cellspacing: 15px">
                                 <tr>
@@ -301,7 +339,7 @@
                             </table>
                         </apex:column>
                     </apex:pageBlockTable>              
-                    <apex:pageBlockButtons location="bottom">                        
+                    <apex:pageBlockButtons location="bottom">                         
                             <table style="cellspacing: 15px;width: auto">
                                 <tr>
                                      <td>
@@ -311,14 +349,52 @@
                                         <!--<apex:commandButton id="btnBack2" value="{!$Label.IDCard_Back}" action="{!back}" style="width:100px;"/>-->
                                       </td>
                                       <td>
-                                         <apex:commandLink action="{!Confirm}" id="Confirm" styleClass="btn-BlueButtonWAR">
+                                         <apex:commandLink action="{!showPopup}"  styleClass="btn-BlueButtonWAR"  style="width:100px;" rerender="popup" >
                                              <span>{!$Label.IDCard_Confirm_Replacement}</span>
                                          </apex:commandLink>
-                                        <!--<apex:commandButton action="{!Confirm}" value="{!$Label.IDCard_Confirm_Replacement}" id="Confirm" style="width:100px;"/>-->
+                                        <!--<apex:commandButton action="{!Confirm}" value="{!$Label.IDCard_Confirm_Replacement}" id="Confirm" style="width:100px;"/> action="{!Confirm}" id="Confirm"-->
+                                   <!-- <apex:commandLink value="show popup" action="{!showPopup}" rerender="popup" status="status"/>-->
+
                                     </td>
                                 </tr>
                             </table>
+
+                            <apex:outputPanel id="popup"> 
+                                <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
+                                         <apex:commandButton value="X" title="Close the popup" onclick="callClosePopup();" styleClass="closeButton" rerender="popInnerOutputPnl,Msgs"/>
+                                             <apex:pageblockSection columns="1">      
+                                                 <apex:pageBlockSectionItem >  
+                                                    <apex:outputLabel value="{!$Label.IDCard_Fraudulence_and_Security}" escape="false" style="color:black"/>
+                                                 </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
+                                                    <apex:outputText value="{!theAddress[0]}" label="" style="color:black;"/>
+                                                </apex:pageblockSectionItem>
+                                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
+                                                    <apex:outputText value="{!theAddress[1]}" label="" style="color:black;"/>
+                                                </apex:pageblockSectionItem>
+                                                   <apex:pageBlockSectionItem dataStyle="text-align:center;">
+                                                    <apex:outputText value="{!theAddress[4]},{!theAddress[2]}" label="" style="color:black;"/>
+                                                </apex:pageblockSectionItem>
+                                                <apex:pageBlockSectionItem dataStyle="text-align:center;">
+                                                    <apex:outputText value="{!theAddress[3]}" label="" style="color:black;"/>
+                                                </apex:pageblockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="color:black"/>
+                                                </apex:pageblockSectionItem>                                
+                                         </apex:pageblockSection>
+                                             <apex:commandLink action="{!Confirm}" value="Continue..." styleClass="btn" rerender="popInnerOutputPnl"/>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                                    
                     </apex:pageBlockButtons>
+
+                    <apex:pageBlockTable value="{!myContacts}" var="c" id="agents2" styleClass="multipleAgenciesPBT">
+                        <apex:outputText value="{!myContact}" />
+                            <apex:column width="30px" rendered="{!myContacts.size != 1}">
+                                <apex:facet name="header"></apex:facet>
+                                <input type="radio" name="group1" id="{!c.con.Id}"/>
+                            </apex:column>
+                    </apex:pageBlockTable>
                 </apex:pageBlock>
                 </div>
                 </center>
@@ -329,8 +405,5 @@
 <c:IDCard_footerComponent /> 
     
 </body>
-
-
-
-    </html>
+</html>
 </apex:page>

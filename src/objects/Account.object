@@ -67131,6 +67131,7 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
                 RecordType.DeveloperName = &apos;IATA_Airline&apos;,
                 NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
                 NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
+                  NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
                 NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
                 NOT($User.Profile_Name__c =&apos;Developer&apos;)),
                 TRUE ,FALSE)</errorConditionFormula>
