@@ -18750,4 +18750,12 @@ title,Title,Name</value>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>ISSP_Document_Category</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Document_Category</shortDescription>
+        <value>Document Category</value>
+    </labels>
 </CustomLabels>
