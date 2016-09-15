@@ -3,6 +3,8 @@ public with sharing class EF_TestDataFactory
     
     public static void createBaseData()
     {
+        createCustomSettings();
+
         List <EF_Related_Records__c> locationList = new List <EF_Related_Records__c> ();
         EF_Related_Records__c locationMain = new EF_Related_Records__c(name='Main',
             recordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId() 
@@ -66,6 +68,9 @@ public with sharing class EF_TestDataFactory
             CCF_Amount__c=250000,
             ContractTerm=12,
             EF_Allow_Billing_Agreements__c = 'Allowed',
+            EF_Billing_Currency__c = 'USD;QAR',
+            EF_Payment_Currency__c = 'USD;QAR',
+            EF_Data_Currency__c = 'USD;QAR',
             RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
             StartDate= Date.today(),
             Type__c='Revenue',
@@ -83,6 +88,18 @@ public with sharing class EF_TestDataFactory
         
         EF_Approve_Fields__c approvalBillingAgreementFields = new EF_Approve_Fields__c(Name='BillingAgreement', Billing_Agreement_Fields__c='Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c');
         insert approvalBillingAgreementFields;
+    }
+
+    public static void createCustomSettings()
+    {
+        EF_Approve_Fields__c appr1 = new EF_Approve_Fields__c();
+        appr1.Billing_Agreement_Fields__c = 'Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c,Location_Code__c';
+        appr1.Name = 'BillingAgreement';
+        EF_Approve_Fields__c appr2 = new EF_Approve_Fields__c();
+        appr2.Contract_Fields__c = 'EF_Payment_Terms__c,EF_Billing_Frequency__c,EF_Admin_Fee__c,CCF_Number__c,EF_Group_Code__c';
+        appr2.Name = 'Contract';
+        List<EF_Approve_Fields__c> approvals = new List<EF_Approve_Fields__c>{appr1, appr2};
+        insert approvals;
     }
 
     public static User getEfStaffUser(String efUserRole)
