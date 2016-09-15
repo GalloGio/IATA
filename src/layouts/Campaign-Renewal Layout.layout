@@ -198,9 +198,18 @@
         <relatedList>Campaign_Product__c.Campaign__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Order__c</fields>
+        <fields>Error_Message__c</fields>
+        <fields>Member__c</fields>
+        <relatedList>IEC_Renewal_notice_log__c.Campaign__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
         <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.TYPE</fields>
+        <fields>IEC_Order_Quantity__c</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <fields>ORDER.BILL_TO_CONTACT</fields>
         <relatedList>Order.Campaign__c</relatedList>
