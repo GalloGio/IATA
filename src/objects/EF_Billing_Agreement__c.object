@@ -417,18 +417,14 @@
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
-    <webLinks>
-        <fullName>Edit_Biling_Agreement_Status</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Mass Update Billing Agreement</masterLabel>
-        <openType>sidebar</openType>
-        <page>EF_UpdateBillingAgreement</page>
-        <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
-    </webLinks>
+    <validationRules>
+        <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
+        <active>true</active>
+        <description>Prevents the creation or update of Billing Agreements if Contract is set to not to allow billing agreements.</description>
+        <errorConditionFormula>ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Not Allowed&apos;)</errorConditionFormula>
+        <errorDisplayField>Contract__c</errorDisplayField>
+        <errorMessage>The selected Contract record has &quot;Allow Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please choose a different Contract or update the currently selected Contract to allow Billing Agreements.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>EF_Prevent_Update_From_General_Access</fullName>
         <active>true</active>
@@ -444,4 +440,16 @@
 )</errorConditionFormula>
         <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>Edit_Biling_Agreement_Status</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Mass Update Billing Agreement</masterLabel>
+        <openType>sidebar</openType>
+        <page>EF_UpdateBillingAgreement</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
 </CustomObject>
