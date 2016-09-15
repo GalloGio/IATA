@@ -1,28 +1,132 @@
 public class EF_BillingAgreementHandler 
 {
-    // Queries for any Accounts that do not allow Billing Agreements and displays an error message to the User.
-    public static void preventAgreementCreationForNotAllowed(List<EF_Billing_Agreement__c> agreementList)
+    private static boolean run = true;   
+    
+    // Submits E&F Billing Agreements for approval processing if the helper field is set to TRUE
+    public static void startApprovalProcesses(List<EF_Billing_Agreement__c> baList)
     {
-        String errorMessage = Label.EF_Account_Disallow_BA;
-        Set<Id> accountIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : baList)
+        {
+            if(ba.Require_Approval__c)
+            {
+                EF_BaContractApprovalHelper.submitForApproval(ba.Id, UserInfo.getUserId(), '');
+            }
+        }
+    }
+
+    // Identifies and handles both Approved, Rejected and Recalled approvals 
+    public static void handleApprovedAndRejectedApprovals(List<EF_Billing_Agreement__c> newValues, Map<Id, EF_Billing_Agreement__c> oldValues)
+    {
+        // Find the Custom Setting values for "Approval Required" fields and...
+        List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+        List<String> fields = new List<String>();
+        if(fieldList.size() > 0)
+            fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+        else
+            fields.add('Id');
+        List<EF_Billing_Agreement__c> approvedList = EF_BaContractApprovalHelper.identifyApprovedBillingAgreements(newValues, oldValues);
+        List<EF_Billing_Agreement__c> rejectedList = EF_BaContractApprovalHelper.identifyRejectedOrRecalledBillingAgreements(newValues, oldValues);
+        if(approvedList.size() > 0)
+        {
+            // If approval occurred, copies the approved values from temporary storage onto the record itself
+            EF_BaContractApprovalHelper.copyValuesFromTempStorageOnBaApproval(approvedList, fields);
+        }
+        if(rejectedList.size() > 0)
+        {
+            // Or if rejected or recalled, simply ignore the changes and get rid of the temp storage record
+            EF_BaContractApprovalHelper.removeTempStorageRecordOnBaRejection(rejectedList);
+        }
+    }
+
+    // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
+    public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
+    {
+        Set<Id> contractIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : newAgreements.values())
+        {
+            // add both Client and Customer (Airline) into the Set, so that both will be queried for
+            contractIds.add(ba.Contract__c);
+        }
+
+        Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        if(contractsInvolved.size() > 0)
+        {
+            List<EF_Billing_Agreement__c> agreementsToApprove = new List<EF_Billing_Agreement__c>();
+            for(EF_Billing_Agreement__c allAgreements : newAgreements.values())
+            {
+                if(contractsInvolved.get(allAgreements.Contract__c) != null)
+                    agreementsToApprove.add(allAgreements);
+            }
+
+            // Create a list of EF Approval records that will be stored in the system to contain the UPDATED versions of Billing Agreements
+            List<EF_Approval__c> approvalStorageList = new List<EF_Approval__c>();
+            // Get the list of fields that require Approval from Custom Settings and place them in a List
+            List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+            List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+
+            // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
+            for(EF_Billing_Agreement__c ba : agreementsToApprove)
+            {
+                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields, false))
+                {
+                    EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), ba, fields);
+                    ba.Require_Approval__c = true;
+                    approvalStorageList.add(approval);
+                    EF_BaContractApprovalHelper.rollbackPreviousValues(ba, oldAgreements.get(ba.Id), fields);
+                }
+            }
+
+            if(approvalStorageList.size() > 0)
+            {
+                insert approvalStorageList;
+            }
+        }
+    }
+
+    // For after insert trigger to find out if any of the attached Accounts is set to "Allow Billing Agreements with Approval"
+    public static Set<Id> findIdsOfWithApprovalBillingAgreements(List<EF_Billing_Agreement__c> agreementList)
+    {
+        Set<Id> contractIds = new Set<Id>();
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            contractIds.add(ba.Contract__c);
+        }
+
+        Set<Id> withApprovalIds = new Set<Id>();
+        Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        for(EF_Billing_Agreement__c ba : agreementList)
+        {
+            if(contractsInvolved.get(ba.Contract__c) != null)
+                withApprovalIds.add(ba.Id);
+        }
+        return withApprovalIds;
+    }
+
+    // Queries for any Accounts that do only allow Billing Agreements to be created with approval
+    public static void handleWithApprovalContractInserts(List<EF_Billing_Agreement__c> agreementList)
+    {
+        Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             // add both Client and Customer (Airline) into the Set, so that both will be queried for
-            accountIds.add(ba.Client__c);
-            accountIds.add(ba.Airline__c);
+            contractIds.add(ba.Contract__c);
         }
 
-        // Find if any of the related accounts doesn't allow billing agreements to be created and throw an error
-        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Not Allowed']);
+        // Find if any of the related accounts doesn't allow billing agreements to be created without approval and force-start an approval process
+        Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        
+        // Get the list of fields that require Approval from Custom Settings and place them in a List
+        List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+        List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+
+        // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
         for(EF_Billing_Agreement__c ba : agreementList)
         {
-            if(accountsInvolved.containsKey(ba.Client__c))
+            if(contractsInvolved.get(ba.Contract__c) != null)
             {
-                ba.Client__c.addError(errorMessage);
-            }
-            else if(accountsInvolved.containsKey(ba.Airline__c))
-            {
-                ba.Airline__c.addError(errorMessage);
+                ba.Require_Approval__c = true;
+                ba.Status__c = 'Inactive';
+                EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, null, fields, true);
             }
         }
     }
@@ -103,9 +207,9 @@ public class EF_BillingAgreementHandler
         Set<Id> contractIdSet = new Set<Id>();
 
         for (EF_Billing_Agreement__c rel : relationshipList) {
-        	
-        	EF_Billing_Agreement__c oldRel = (relationshipOldMap != null && relationshipOldMap.containsKey(rel.Id) ? relationshipOldMap.get(rel.Id) : new EF_Billing_Agreement__c());
-        	
+            
+            EF_Billing_Agreement__c oldRel = (relationshipOldMap != null && relationshipOldMap.containsKey(rel.Id) ? relationshipOldMap.get(rel.Id) : new EF_Billing_Agreement__c());
+            
             if ((rel.Data_Currency__c != null && rel.Data_Currency__c != oldRel.Data_Currency__c) ||
                 (rel.Payment_Currency__c != null && rel.Payment_Currency__c != oldRel.Payment_Currency__c)) {
                 
@@ -126,41 +230,71 @@ public class EF_BillingAgreementHandler
                 
                 // Data_Currency__c validation
                 if (rel.Data_Currency__c != null) {
-                	
-	                if (cont.EF_Data_Currency__c != null) {
-	                    
-	                    values = new Set<String>(cont.EF_Data_Currency__c.split(';'));
-	                } else {
-	                    
-	                    values = new Set<String>();
-	                }
-	                
-	                if (values.contains(rel.Data_Currency__c) == false) {
-	                    
-	                    rel.Data_Currency__c.addError(errorMessage);
-	                }
+                    
+                    if (cont.EF_Data_Currency__c != null) {
+                        
+                        values = new Set<String>(cont.EF_Data_Currency__c.split(';'));
+                    } else {
+                        
+                        values = new Set<String>();
+                    }
+                    
+                    if (values.contains(rel.Data_Currency__c) == false) {
+                        
+                        rel.Data_Currency__c.addError(errorMessage);
+                    }
                 }
                 
                 values = null;
                 
                 // Payment_Currency__c validation
                 if (rel.Payment_Currency__c != null) {
-                	
-	                if (cont.EF_Payment_Currency__c != null) {
-	                    
-	                    values = new Set<String>(cont.EF_Payment_Currency__c.split(';'));
-	                } else {
-	                    
-	                    values = new Set<String>();
-	                }
-	                
-	                if (values.contains(rel.Payment_Currency__c) == false) {
-	                    
-	                    rel.Payment_Currency__c.addError(errorMessage);
-	                }	
+                    
+                    if (cont.EF_Payment_Currency__c != null) {
+                        
+                        values = new Set<String>(cont.EF_Payment_Currency__c.split(';'));
+                    } else {
+                        
+                        values = new Set<String>();
+                    }
+                    
+                    if (values.contains(rel.Payment_Currency__c) == false) {
+                        
+                        rel.Payment_Currency__c.addError(errorMessage);
+                    }   
                 }
             }
         }
     }
+
+    // helper method to stop Billing Agreement Trigger from running more than once per update
+    public static boolean runOnce()
+    {
+        if(run)
+        {
+            run = false;
+            return true;
+        }
+        else
+        {
+            return run;
+        }
+    }
     
+    public static void setClientFromRelatedContract(List<EF_Billing_Agreement__c> agreementList) {
+
+        Set <Id> contractIdSet = new Set <Id> ();
+        for(EF_Billing_Agreement__c ba: agreementList){
+            contractIdSet.add(ba.Contract__c);
+        }
+
+        Map<Id, Contract> contractMap = new Map<Id, Contract> ([select Id, AccountId from Contract where Id in: contractIdSet]);
+
+        for(EF_Billing_Agreement__c ba : agreementList) {
+            if(contractMap.containsKey(ba.Contract__c)){
+                ba.Client__c = contractMap.get(ba.Contract__c).AccountId;
+            }            
+
+        }
+    }
 }

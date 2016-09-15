@@ -6,13 +6,13 @@
     <letterhead>IATADynamicSkyLetterhead</letterhead>
     <name>E&amp;F_Contact Deactivation Notification</name>
     <style>freeForm</style>
-    <subject>E&amp;F Contact {!Contact.Name} of Account {!Account.Name} has been deactivated</subject>
+    <subject>E&amp;F contact {!Contact.Name} of the account {!Account.Name} has been deactivated</subject>
     <textOnly>Note that this is an automatic message. Please do not respond to this email.
 
 
 Dear E&amp;F member,
 
-Please note that the contact {!Contact.Name} has been deactivated (new status: {!Contact.Status__c}).
+Please note that the E&amp;F contact {!Contact.Name} of the account {!Account.Name} has been deactivated (new status: {!Contact.Status__c}).
 
 
 Best regards,

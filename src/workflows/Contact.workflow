@@ -13,13 +13,26 @@
         <template>ISS_Portal/Notify_Admin_of_user_creationVF</template>
     </alerts>
     <alerts>
-        <fullName>EF_Email_notification_on_EF_Contact_Deactivation</fullName>
+        <fullName>EF_Email_Notification_On_Client_EF_Contact_Deactivation</fullName>
         <ccEmails>efs@iata.org</ccEmails>
-        <description>E&amp;F : Email notification on E&amp;F Contact Deactivation</description>
+        <description>E&amp;F : Email Notification On Client E&amp;F Contact Deactivation</description>
         <protected>false</protected>
         <recipients>
-            <recipient>E_F</recipient>
-            <type>role</type>
+            <recipient>EF_Client_Users_Group</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</fullName>
+        <ccEmails>efs@iata.org</ccEmails>
+        <description>E&amp;F : Email Notification On Operator E&amp;F Contact Deactivation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>EF_Operator_Users_Group</recipient>
+            <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -228,9 +241,34 @@
         <protected>false</protected>
     </fieldUpdates>
     <rules>
-        <fullName>E%26F %3A Notification On Contact Deactivation</fullName>
+        <fullName>E%26F %3A Notification On Client Contact Deactivation</fullName>
         <actions>
-            <name>EF_Email_notification_on_EF_Contact_Deactivation</name>
+            <name>EF_Email_Notification_On_Client_EF_Contact_Deactivation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.Status__c</field>
+            <operation>equals</operation>
+            <value>Left Company / Relocated,Retired,Inactive</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.EF_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Client</value>
+        </criteriaItems>
+        <description>Notification of deactivated client E&amp;F contact</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>E%26F %3A Notification On Operator Contact Deactivation</fullName>
+        <actions>
+            <name>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</name>
             <type>Alert</type>
         </actions>
         <active>true</active>
@@ -244,7 +282,12 @@
             <operation>equals</operation>
             <value>Left Company / Relocated,Retired,Inactive</value>
         </criteriaItems>
-        <description>Notification of deactivated E&amp;F contact</description>
+        <criteriaItems>
+            <field>Account.EF_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Operator</value>
+        </criteriaItems>
+        <description>Notification of deactivated operator E&amp;F contact</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

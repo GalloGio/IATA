@@ -13,6 +13,10 @@
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Contract_Name__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -21,11 +25,11 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>CCF_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -40,6 +44,10 @@
                 <behavior>Edit</behavior>
                 <field>Pricebook2Id</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>EF_Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -47,7 +55,7 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>CCF_Amount__c</field>
             </layoutItems>
             <layoutItems>
@@ -59,7 +67,7 @@
                 <field>CustomerSignedDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>StartDate</field>
             </layoutItems>
             <layoutItems>
@@ -67,7 +75,7 @@
                 <field>EndDate</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>ContractTerm</field>
             </layoutItems>
             <layoutItems>
@@ -152,6 +160,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_DT_Specialist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Allow_Billing_Agreements__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -259,10 +271,23 @@
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Edit_Biling_Agreement_Status</customButtons>
         <fields>NAME</fields>
+        <fields>Status__c</fields>
         <fields>Client__c</fields>
         <fields>Airline__c</fields>
+        <fields>Data_Currency__c</fields>
+        <fields>Payment_Method_Code__c</fields>
+        <fields>Payment_Currency__c</fields>
+        <fields>Billing_Currency__c</fields>
         <relatedList>EF_Billing_Agreement__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EF_Related_Records__c.NAME</fields>
+        <fields>EF_Related_Records__c.FIR_Code_Name__c</fields>
+        <fields>EF_Related_Records__c.Type__c</fields>
+        <relatedList>FIR_Code__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CreatedDate</fields>

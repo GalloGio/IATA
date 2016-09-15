@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -97,6 +93,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Role</globalPicklist>
         <label>Role</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -117,6 +114,7 @@
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -131,4 +129,38 @@
     <pluralLabel>E&amp;F Contact Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>CannotAddInactiveContact</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISNEW(),
+  OR( 
+   ISBLANK(TEXT(Contact__r.EF_Status__c)),
+    ISPICKVAL(Contact__r.EF_Status__c,&apos;Inactive&apos;)
+  )
+)</errorConditionFormula>
+        <errorMessage>The contact selected is Inactive for E&amp;F and can&apos;t be selected</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>StatusMustBeConsistentWithEFStatusConta</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  ISPICKVAL(Status__c, &apos;Active&apos;),
+  ISPICKVAL(Contact__r.EF_Status__c, &apos;Inactive&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Status can&apos;t be active if Contact E&amp;F Status is Inactive</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Mass_Update_Contact_Billing_Agreement</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Mass Update Contact Billing Agreement</masterLabel>
+        <openType>sidebar</openType>
+        <page>EF_MassUpdateBAContacts</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
 </CustomObject>
