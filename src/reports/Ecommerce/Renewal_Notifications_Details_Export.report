@@ -88,6 +88,15 @@
         <field>OrderItem.SubTotal__c</field>
     </columns>
     <columns>
+        <field>Order.Total_handling_charges__c</field>
+    </columns>
+    <columns>
+        <field>Order.Total_Freight_Charge__c</field>
+    </columns>
+    <columns>
+        <field>Order.Taxes__c</field>
+    </columns>
+    <columns>
         <field>Order.Renewal_Notification_URL__c</field>
     </columns>
     <currency>USD</currency>
@@ -95,7 +104,12 @@
         <criteriaItems>
             <column>Order.Campaign_ID__c</column>
             <operator>equals</operator>
-            <value>701g0000000hDuS</value>
+            <value>701g0000000hFWW</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_TYPE</column>
+            <operator>equals</operator>
+            <value>Renewal Notification</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
