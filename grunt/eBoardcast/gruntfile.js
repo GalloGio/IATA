@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         options: {
           maxPoll: 5000,
           pollWaitMillis: 5000,
-          apiVersion: 31.0
+          apiVersion: 37.0
         },
         // specify one retrieve target 
         projecttroisb: {

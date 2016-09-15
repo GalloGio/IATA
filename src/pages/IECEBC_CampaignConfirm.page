@@ -37,9 +37,9 @@
 											<td style="text-align:right;">
 												<div class="item-value">
 													<strong>
-														<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!ebcCampaign.Number_of_Recipients__c}" /></apex:outputText>
+														<apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!numberOfRecipients}" /></apex:outputText>
 													</strong>
-													<span class="unit"> {!IF(ebcCampaign.Number_of_Recipients__c>1,'emails',' email')}</span>
+													<span class="unit"> {!IF(numberOfRecipients>1,'emails',' email')}</span>
 												</div>
 											</td>
 											</tr>

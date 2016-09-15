@@ -61,7 +61,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 						//, CreatedDate
 						//, CurrencyIsoCode
 						//, EBC_Design__c
-						//, EBC_Master_Filter__c
+						, EBC_Master_Filter__c
 						//, EBC_Selected_Template__c
 						//, Exact_Target_Campaign_Id__c
 						//, From_Name__c
@@ -107,6 +107,25 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		acctRatePlan = new vfIECEBC_AccountRatePlan();
 		acctEmailBlock.minimumEmailBlockPurchaseSize = Integer.valueOf(ebcCampaign.Number_of_Recipients__c) - Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c);
 	} // end of initialization
+	
+    public Integer numberOfRecipients {
+        get{
+            if (numberOfRecipients == null) {
+                HttpRequest req = new HttpRequest();
+                req.setEndpoint('https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/RecipientsCount/' + ebcCampaign.EBC_Master_Filter__c);
+                req.setMethod('GET');
+                req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+                
+                Http http = new Http();
+                HTTPResponse res = http.send(req);
+                
+                ebcCampaign.Number_of_Recipients__c = numberOfRecipients = Integer.valueOf(res.getBody());
+                update ebcCampaign;
+            }
+            return numberOfRecipients;
+        }
+        set;
+    }
 	
 	
 	// ========================================================================
