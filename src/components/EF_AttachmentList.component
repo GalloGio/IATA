@@ -7,9 +7,21 @@
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <style type="text/css">
+        div.datePicker{
+            z-index: 500;
+        }
+    </style>
+
     <script>
     // Get the Root URL dynamically
         var pageMainUrl = window.location.protocol + "//" + window.location.hostname;
+
+        function refreshList() {
+            startLoading();
+            refreshListServer();
+        }
 
         function getS3LInk(fileName) {
             startLoading();
@@ -39,6 +51,34 @@
             window.top.location=page;
             return false;
         }
+
+        $.fn.isBound = function(type, fn) {
+            try{
+                var data = jQuery._data(this[0], 'events')[type];
+            }catch(err){
+                console.error(err);
+                return false;
+            }
+            
+            console.info("bound events:");
+            console.info(data);
+
+            if (data === undefined || data.length === 0) {
+                return false;
+            }
+
+            //return (-1 !== $.inArray(fn, data));
+
+            for (var i = 0; i < data.length; i++) {
+
+                console.info('Is '+fn+' on '+type+' bound? '+ (data[i].handler.toString() === fn.toString() && data[i].type === type) );
+                if (data[i].handler.toString() === fn.toString() && data[i].type === type) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
     </script>
 
     <!-- upload scripts -->
@@ -55,13 +95,15 @@
     		}
     	}
 
+        function onButtonClicked() {
+            startLoading();
+            uploadFiles(this.files);
+        }
+
     	$( document ).ready(function() {
     		var fileInput = $("#file-field");
 
-    		fileInput.bind("change", function() {
-    			startLoading();
-    			uploadFiles(this.files);
-    		});
+    		fileInput.bind("change", onButtonClicked);
     	});
 
     	function uploadFiles(files) {
@@ -77,7 +119,13 @@
     	}
 
     	function browseFiles() {
-    		$("#file-field").click();
+            var fileInput = $("#file-field");
+
+            if (!fileInput.isBound('change', onButtonClicked)) {
+                fileInput.bind("change", onButtonClicked);
+            };
+
+    		fileInput.click();
     	}
 
     	function uploadFile(file) {
@@ -174,25 +222,31 @@
     	}
 
      	function callToCreateAmazonFileObject(file, path) {
+
+            startLoading();
      	
 			var efCategory = $("[id$='dataToSubmit_EF_Category__c']").val();
 			var efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']").val();
 			var efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']").val();
 			var efExpired = $("[id$='dataToSubmit_EF_Expired__c']").val();
 			var efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']").val();
-			
+			 
+            console.warn('efSubCategory: '+efSubCategory);
+
      		EF_AttachmentListController.createAmazonFileObject(
      			path,
      			file.size,
      			"{!sobjectId}",
      			"EF_File",
      			efCategory,
-     			efSubCategory,
+     			($("[id$='dataToSubmit_EF_Subcategory__c']").prop("disabled") ? '' : efSubCategory),
      			efExpiryDate,
      			efExpired,
      			efSapNumber,
      			function(result, event){}
    			);
+
+            //refreshList();
      	}
 
         function uploadEfFile() {
@@ -207,17 +261,18 @@
         }
             
         function validateInputs() {
+			
+            var $efCategory = $("[id$='dataToSubmit_EF_Category__c']");
+            var $efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']");
+            var $efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']");
+            var $efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']");
+            var $efExpired = $("[id$='dataToSubmit_EF_Expired__c']");
 
-			var efCategory = $("[id$='dataToSubmit_EF_Category__c']").val();
-			var efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']").val();
-			var efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']").val();
-			var efExpired = $("[id$='dataToSubmit_EF_Expired__c']").val();
-			var efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']").val();
+			if ($efCategory.val() == '' || $efSubCategory.val() == '') return false;
 
-			if (efCategory == '' || efSubCategory == '') {
-				
-				return false;
-			}
+            if($efSapNumber.prop("required") && $efSapNumber.val() == '') return false;
+            if($efExpiryDate.prop("required") && $efExpiryDate.val() == '') return false;
+            if($efExpired.prop("required") && !$efExpired.prop("checked")) return false;
 
             return true;
         }
@@ -226,12 +281,49 @@
 
             $( '#dialog' ).dialog({width: '650px', modal: true, close: function( event, ui ) {$( '#dialog' ).dialog('destroy');}});
         }
+
+        function bindRequirements() {
+            var $efCategory = $("[id$='dataToSubmit_EF_Category__c']");
+            var $efSubCategory = $("[id$='dataToSubmit_EF_Subcategory__c']");
+            var $efSapNumber = $("[id$='dataToSubmit_EF_SAP_Number__c']");
+            var $efExpiryDate = $("[id$='dataToSubmit_EF_Expiry_Date__c']");
+            var $efExpired = $("[id$='dataToSubmit_EF_Expired__c']");
+
+            var catSelection = $efCategory.val() + '.' + $efSubCategory.val()
+
+            console.info('catSelection: '+catSelection);
+
+            var sapNumberRequired = jQuery.parseJSON('{!sapNumberRequiredJSON}');
+            var expiryDateRequired = jQuery.parseJSON('{!expiryDateRequiredJSON}');
+            var expiredRequired = jQuery.parseJSON('{!expiredRequiredJSON}');
+            
+            if( jQuery.inArray(catSelection, sapNumberRequired) > -1 ) toggleRequired($efSapNumber, true);
+            else toggleRequired($efSapNumber, false);
+
+            if( jQuery.inArray(catSelection, expiryDateRequired) > -1 ) toggleRequired($efExpiryDate, true);
+            else toggleRequired($efExpiryDate, false);
+
+            if( jQuery.inArray(catSelection, expiredRequired) > -1 ) toggleRequired($efExpired, true);
+            else toggleRequired($efExpired, false);
+
+        }
+
+        function toggleRequired(input, required) {
+            var requiredBlock = input.prev();
+            if(input.parent().hasClass('dateInput')) requiredBlock = input.parent().prev();
+
+            console.info(requiredBlock);
+
+            input.prop("required", required);
+            requiredBlock.toggle(required);
+        }
     </script>
 
     <c:Loading />
 
     <apex:form id="mainform" >
-        <apex:actionFunction name="refreshList" action="{!refreshList}"  rerender="mainform" status="loading" oncomplete="stopLoading();" />
+    	
+        <apex:actionFunction name="refreshListServer" action="{!refreshList}" rerender="mainform" oncomplete="stopLoading();"/>
         <apex:pageMessages />
 
         <apex:pageblock id="fileList" title="{!$Label.Attachments}" >
@@ -328,27 +420,36 @@
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Category__c.Label}"/>
-			            <apex:inputField id="dataToSubmit_EF_Category__c" value="{!amazonFileToUpload.EF_Category__c}" />
+			            <apex:inputField id="dataToSubmit_EF_Category__c" value="{!amazonFileToUpload.EF_Category__c}" onchange="bindRequirements();" />
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Subcategory__c.Label}"/>
-			            <apex:inputField id="dataToSubmit_EF_Subcategory__c" value="{!amazonFileToUpload.EF_Subcategory__c}" />
+			            <apex:inputField id="dataToSubmit_EF_Subcategory__c" value="{!amazonFileToUpload.EF_Subcategory__c}" onchange="bindRequirements();" />
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expiry_Date__c.Label}"/>
-			            <apex:inputField id="dataToSubmit_EF_Expiry_Date__c" value="{!amazonFileToUpload.EF_Expiry_Date__c}" />
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+    			            <apex:inputField id="dataToSubmit_EF_Expiry_Date__c" value="{!amazonFileToUpload.EF_Expiry_Date__c}" />
+                        </apex:outputPanel>
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_Expired__c.Label}"/>
-			            <apex:inputField id="dataToSubmit_EF_Expired__c" value="{!amazonFileToUpload.EF_Expired__c}" />
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+    			            <apex:inputField id="dataToSubmit_EF_Expired__c" value="{!amazonFileToUpload.EF_Expired__c}" />
+                        </apex:outputPanel>
 			        </apex:pageBlockSectionItem>
 
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.EF_SAP_Number__c.Label}"/>
-			            <apex:inputField id="dataToSubmit_EF_SAP_Number__c" value="{!amazonFileToUpload.EF_SAP_Number__c}"/>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock hidden" />
+    			            <apex:inputField id="dataToSubmit_EF_SAP_Number__c" value="{!amazonFileToUpload.EF_SAP_Number__c}"/>
+                        </apex:outputPanel>
 			        </apex:pageBlockSectionItem>
 
 			    </apex:pageBlockSection>

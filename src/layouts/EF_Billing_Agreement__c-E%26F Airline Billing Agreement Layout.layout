@@ -129,7 +129,7 @@
                 <height>350</height>
                 <page>EF_Billing_Agreement_Attachment_List</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

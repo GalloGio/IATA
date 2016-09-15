@@ -6,6 +6,25 @@ global with sharing class EF_AttachmentListController {
     public String source {get;set;}
     public Boolean scroll {get;set;}
 
+    public String sapNumberRequiredJSON{
+    	get{
+    		return AmazonFileTrgHelper.sapNumberRequiredJSON;
+    	}
+    	set;
+    }
+    public String expiryDateRequiredJSON{
+    	get{
+    		return AmazonFileTrgHelper.expiryDateRequiredJSON;
+    	}
+    	set;
+    }
+    public String expiredRequiredJSON{
+    	get{
+    		return AmazonFileTrgHelper.expiredRequiredJSON;
+    	}
+    	set;
+    }
+
     public static final Long MAX_FILE_SIZE = 20971520; // 20 MB
 
 	public String amazonURL  {
@@ -74,8 +93,11 @@ global with sharing class EF_AttachmentListController {
 	public Pagereference refreshList() {
 
 		try {
+			EF_AttachmentListController.runningForEF = true;
 			this.listAttachments = WrapperAttach.getListAttachments(this.id);
 			this.listAttachments.sort();
+
+			amazonFileToUpload = null;
 		} catch (Exception e ) {
 			TransformationHelper.sendEmailSupport('FATAL: EF_AttachmentListController in function refreshList()  ' ,'STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
 		}
@@ -287,6 +309,8 @@ global with sharing class EF_AttachmentListController {
             list<String> parts = amazonKey.split('/');
             String filename = parts.isEmpty()? '': parts.get( parts.size() - 1 );
 
+            System.debug(loggingLevel.Debug, '____ [cls EF_AttachmentListController - createAmazonFileObject] efExpiryDate - ' + efExpiryDate);
+
             AmazonFile__c amazonFile = new AmazonFile__c(
                 Name = filename,
                 sObject_Id__c = parentId,
@@ -295,7 +319,7 @@ global with sharing class EF_AttachmentListController {
                 EF_Subcategory__c = efSubCategory,
                 EF_Document_Date__c = System.today(),
                 EF_Expired__c = efExpired,
-                //EF_Expiry_Date__c = Date.valueOf(efExpiryDate),
+                EF_Expiry_Date__c = (String.isEmpty(efExpiryDate) ? null : Date.parse(efExpiryDate)),
                 EF_SAP_Number__c = efSapNumber,
                 Size_MB__c = filesize* 0.000001 //convert to MB
             );

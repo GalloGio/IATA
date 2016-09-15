@@ -11,6 +11,6 @@ trigger AmazonFileTrg on AmazonFile__c (
     if(Trigger.isAfter && Trigger.isUndelete) {
     	AmazonFileTrgHelper.AfterUndelete(trigger.NewMap);
     }else if(Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)){
-    	//AmazonFileTrgHelper.checkEFRequiredFields(trigger.NewMap, trigger.OldMap);
+    	AmazonFileTrgHelper.checkEFRequiredFields(trigger.NewMap);
     }
 }
