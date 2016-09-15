@@ -38272,11 +38272,11 @@
         <layout>EF_Related_Records__c-E%26F Related Records Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Related_Records__c-E%26F Related Records Layout</layout>
+        <layout>EF_Related_Records__c-E%26F FIR Code Page Layout</layout>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Related_Records__c-E%26F Related Records Layout</layout>
+        <layout>EF_Related_Records__c-E%26F Location Page Layout</layout>
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -39694,7 +39694,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Related_Contact__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -42223,7 +42223,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

@@ -161,6 +161,10 @@
                 <behavior>Edit</behavior>
                 <field>EF_DT_Specialist__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Allow_Billing_Agreements__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

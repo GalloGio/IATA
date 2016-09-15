@@ -39245,14 +39245,14 @@
         <recordType>EF_Material_Line_Item__c.Relationship_Line_Item</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Related_Records__c-E%26F FIR Code Page Layout</layout>
+        <layout>EF_Related_Records__c-E%26F Related Records Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EF_Related_Records__c-E%26F FIR Code Page Layout</layout>
         <recordType>EF_Related_Records__c.FIR_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Related_Records__c-E%26F FIR Code Page Layout</layout>
+        <layout>EF_Related_Records__c-E%26F Location Page Layout</layout>
         <recordType>EF_Related_Records__c.Location</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -40595,12 +40595,12 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Related_Contact__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -43116,7 +43116,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
