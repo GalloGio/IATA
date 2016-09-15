@@ -3746,7 +3746,16 @@ and
         <name>ISSP_AMS_NOC_Current_Location</name>
     </customLabels>
     <customLabels>
-        <label>Pour chaque rubrique ci-dessous, veuillez soit : Confirmer que les coordonnées de l’agence sont correctes, SOIT signaler à l’IATA toute modification et mise à jour des coordonnées de votre agence</label>
+        <label>&lt;div&gt;
+Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;Confirmer que les coordonnées de l’agence sont correctes,&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;SOIT&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;signaler à l’IATA toute modification et mise à jour des coordonnées de votre agence&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</label>
         <name>ISSP_AMS_NOC_Instructions</name>
     </customLabels>
     <customLabels>
@@ -3770,7 +3779,7 @@ and
         <name>ISSP_AMS_Name_of_employer</name>
     </customLabels>
     <customLabels>
-        <label>Autres informations</label>
+        <label>4. Autres informations</label>
         <name>ISSP_AMS_NoC_Additional_Information</name>
     </customLabels>
     <customLabels>
