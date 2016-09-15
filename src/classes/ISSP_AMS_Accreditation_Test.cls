@@ -970,7 +970,7 @@ private class ISSP_AMS_Accreditation_Test
             Double ownership_total = ctrl.Curr_Ownership_Total;
             ownership_total = ctrl.Prev_Ownership_Total;
             
-            ctrl.agencyCodesConcerned = new List<String> {'12345678'};
+            ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.amsOfficeType = 'Branch';
             ctrl.sector = 'Cargo Agent';
             ctrl.iatacode = '12345678';
@@ -1143,7 +1143,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.brAccountId = parent.Id;
             
             ctrl.getBranchAccounts();
-            ctrl.agencyCodesConcerned = new List<String> {'12345678'};
+            ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Is_change_location__c = true;
             ctrl.newForm.Is_change_legal_name__c = true;
             ctrl.newForm.Is_change_ownership_or_shareholding__c = true;
@@ -1314,7 +1314,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.brAccountId = parent.Id;
             
             ctrl.getBranchAccounts();
-            ctrl.agencyCodesConcerned = new List<String> {'12345678'};
+            ctrl.agencyCodesConcerned = new List<SelectOption>();
             ctrl.newForm.Is_change_location__c = true;
             ctrl.newForm.Is_change_legal_name__c = true;
             ctrl.newForm.Is_change_ownership_or_shareholding__c = true;
@@ -2323,7 +2323,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.isHOAccredited  = true;
             ctrl.getOfficeTypes();
 
-            ctrl.con.Account.Category__c = 'CASS Associate';
+            ctrl.con.Account.Category__c = 'CASS Associates';
             ctrl.getOfficeTypes();
 
             ctrl.con.Account.Category__c = 'Courier';

@@ -59,6 +59,10 @@
         .modalrow {
             padding-top:10px;
         }
+                 
+        input + label {
+            font-weight:normal;
+        }
             
         ul li, ol li {
             margin-left: inherit;
@@ -143,7 +147,7 @@
             .col3 {width:50%;vertical-align: text-top;}
             
             .col1_inner {width:25%; vertical-align: text-top;}
-       		.col2_inner {width:25%; vertical-align: text-top;}
+            .col2_inner {width:25%; vertical-align: text-top;}
                    
              .row1 {padding-bottom:16px; vertical-align: text-top;}
     </style>
@@ -154,6 +158,7 @@
             var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
             var vOfficeType = '{!newCase.Reason1__c}';
             console.log('vOfficeType '+vOfficeType);
+            console.log('Default country '+ defaultHQCountry);
             var operationType = '{!sectorvalue}';
             var hasPermission = true;
             
@@ -240,9 +245,6 @@
                     hasPermission = true;
                 }
             }
-
-
-
             
             function gotoStep1(myValue, nextStep) {
             defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
@@ -393,6 +395,7 @@
       function getCountryFromController() {
         $('#brcountry').text("{!amsAllLangCountryLabel}");
         $('[id$=countrySelected]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+        //$('[id$=countrySelected]').val('');
       }
       </script>
     </apex:outputPanel>
@@ -409,8 +412,8 @@
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">
-                    {!IF(NOT(isNoticeOfChange), $Label.ISSP_AMS_Step1_Title,
-                    $Label.ISSP_AMS_NoC_Request_for_Change)
+                    {!IF(NOT(isNoticeOfChange), lblStep1Title,
+                    lblNoCRequest)
                     }</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
@@ -419,31 +422,31 @@
         <div class="progress">
           
             <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                {!IF(NOT(isNoticeOfChange), $Label.ISSP_AMS_Step1_ProgressBar, $Label.ISSP_AMS_NoC_StepA)}
+                {!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!$Label.ISSP_AMS_Step2_ProgressBar}" id="Next2">
+                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');if(hasPermission != true) return false;" value="{!lblStepB}" id="Next2">
                     <apex:param value="2" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" value="{!IF(NOT(isNoticeOfChange),$Label.ISSP_AMS_Step3_ProgressBar, $Label.ISSP_AMS_NoC_StepC)}" id="Next3">
+                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '3');if(hasPermission != true) return false;" value="{!IF(NOT(isNoticeOfChange),lblStepC, lblNoCStepC)}" id="Next3">
                     <apex:param value="3" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4">
+                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '4');if(hasPermission != true) return false;" value="{!lblStepD}" id="Next4">
                     <apex:param value="4" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%;">
-                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NOC_StepD_ProgressBar, $Label.ISSP_AMS_Step5_ProgressBar)}" id="Next5">
+                <apex:commandLink styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '5');if(hasPermission != true) return false;" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5">
                     <apex:param value="5" assignTo="{!step1GoToNumber}" name="step1GoToNumber"/>
                 </apex:commandLink>
             </div>
          
         </div> 
-        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="officetypelist,langGSA,chinatypeofagent">
+        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="langGSA,officetypelist,chinatypeofagent">
             <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
         </apex:actionFunction>
         <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
@@ -485,7 +488,7 @@
                         <apex:selectRadio style="width:35%" id="operationType" value="{!sectorValue}" onchange="refreshOfficeTypes(this.value)"> <!--onchange="refreshOfficeTypes(this.value);"-->
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
-                            <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/--> 
+                            <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/ --> 
                         </apex:selectRadio>
                     </div>
                     </div>
@@ -516,8 +519,10 @@
                 </apex:outputpanel> 
             </apex:outputPanel>
             
-                <apex:outputpanel rendered="{!isNoticeOfChange}">
-						<!--
+            
+
+                            <apex:outputpanel rendered="{!isNoticeOfChange}">
+                        <!--
                                 <apex:outputPanel rendered="{!isBankAccountChange==false}">
                                     <div class="form-group">
                                         <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
@@ -545,55 +550,57 @@
                                         </div>
                                     </div>
                                 </apex:outputText>
-								-->
+                                -->
                     
                                 <apex:outputpanel >
                                     <div class="form-group">
                                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_NoC_Change_for}</label>
                                     <div class="col-lg-9" style="padding-top:7px">
-                                        <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
+                                        <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
                                             <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" />
-                                            <apex:selectOption itemValue="HO - All Branches" itemLabel="Head Office & All Branch Offices" rendered="{!BranchAccounts.size>=1}" />
-                                            <apex:selectOption itemValue="HO - Selected Branches" itemLabel="Head Office & one or more Branch Offices" rendered="{!BranchAccounts.size>=1}"/>
-                                            <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!BranchAccounts.size>=1}"/>
+                                            <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}" />
+                                            <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
+                                            <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
                                         </apex:selectRadio>
                                     </div>
                                     </div>
 
                                     <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only'), '', 'none')}">
                                     <div class="form-group"> 
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}</label>
+                                        <label for="approval focus" class="col-lg-3 control-label"></label>
                                         <div class="col-lg-9">
-                                            <apex:selectList label="{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}" styleClass="form-control" style="width:55%" multiselect="true" value="{!agencyCodesConcerned}" size="3"> 
-                                                <apex:selectOptions value="{!BranchAccounts}"/>
-                                            </apex:selectList>
-                                           
+                                            <c:MultiselectPicklist leftLabel="{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}" 
+                                                                   leftOptions="{!BranchAccounts}"
+                                                                   rightLabel="{!$Label.ISSP_AMS_Selected_Branch_Offices}"
+                                                                   rightOptions="{!agencyCodesConcerned}"
+                                                                   size="8"
+                                                                   width="300px"
+                                            />
                                         </div>
                                     </div>  
                                     </apex:outputPanel>
                                 </apex:outputpanel>
-                        </apex:outputpanel>          
+                            </apex:outputpanel>          
             
-
-                            
-                             <div class="form-group">
-                            <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
-                            <apex:inputHidden value="{!newCase.IFAP_Country_ISO__c}"/>
-                            <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">                               
-                                <apex:selectList id="countrySelected" required="true" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
-                                        <apex:selectOptions value="{!countryISOCodeList}"/>
-                                </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                            <div class="form-group">
+                                <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
                                 
-                            </div>
-                            <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
-                                <apex:outputText value="{!amsAllLangCountryLabel}"/>
-                            </div>
+                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">                               
+                                    <apex:selectList id="countrySelected" required="true" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                            <apex:selectOptions value="{!countryISOCodeList}"/>
+                                    </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                </div>
+                                
+                                <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
+                                    <apex:outputText value="{!amsAllLangCountryLabel}"/>
+                                </div>
                             </div>
 
-                         
-                            <apex:outputpanel id="langGSA">
-                            <apex:outputpanel rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}">
-                                <div class="form-group">
+                            <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
+                            <apex:outputpanel id="langGSA" >
+                            <apex:outputpanel rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+         
+                                <div class="form-group"> 
                                 <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
                                 <div class="col-lg-9">
                                     <apex:selectList styleClass="form-control" style="width:15%;float:left;" id="applylanguage" size="1" value="{!applyLanguage}" >
@@ -603,13 +610,16 @@
                                 </div>
                                 </div>
                             </apex:outputpanel>
+                       
+                            
                             <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">  
                             <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                 <div class="form-group" id="isGSA">
                                     <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
                                     <div class="col-lg-9" style="padding-top:7px">
                                         <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" required="{!isGSARequired }">
-                                            <apex:selectoptions value="{!isGSAList}" />
+                                            <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
+                                            <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
                                         </apex:selectradio>
                                     </div>
                                 </div>
@@ -629,7 +639,7 @@
                     });
 
                     toggleCountries($('[id$=officetypelist]').val());
-        
+                    
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
                 </script>
@@ -645,26 +655,31 @@
      <apex:outputText rendered="{!isStep2}">
         <div class="panel-primary">
             <div class="panel-heading head_panel_green">
-                <h3 class="panel-title">{!IF(isNoticeOfChange, $Label.ISSP_AMS_NoC_Request_for_Change,                    
-                    IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, 'Application for Approval as' + IF(BEGINS(newForm.Agent_Type__c, 'I'), ' an ', ' a ') + newForm.Agent_Type__c))}</h3>
+                <h3 class="panel-title">
+                    <!-- IMPORTANT - If new Agent_Type__c are created we need to add here the new Label-->
+                    {!IF(isNoticeOfChange, lblNoCRequest,                    
+                            IF(BEGINS(sectorValue,'Travel_Agent'), lblPAXTitle, 
+                                IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), lblCargoTitle,
+                                    IF(BEGINS(newForm.Agent_Type__c,'EACP Intermediary'), lblEACPTitle, 
+                                        lblCASSTitle))))}</h3>
             </div>
             <div class="panel-body" id="body-enquiries">
                 <apex:form >
                 <div class="progress">
                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!IF(NOT(isNoticeOfChange),$Label.ISSP_AMS_Step1_ProgressBar, $Label.ISSP_AMS_NoC_StepA)}" id="Prev1"/>
+                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" id="Prev1"/>
                     </div>
                     <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                        {!$Label.ISSP_AMS_Step2_ProgressBar}
+                        {!lblStepB}
                     </div>
                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange),$Label.ISSP_AMS_Step3_ProgressBar, $Label.ISSP_AMS_NoC_StepC)}" id="Next3"/>
+                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!IF(NOT(isNoticeOfChange), lblStepC, lblNoCStepC)}" id="Next3"/>
                     </div>
                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4"/>
+                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Next4"/>
                     </div>
                      <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NOC_StepD_ProgressBar, $Label.ISSP_AMS_Step5_ProgressBar)}" id="Next5"/>
+                        <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNoCStepD, lblStepE)}" id="Next5"/>
                     </div>
                 </div>
                 </apex:form>
@@ -726,19 +741,19 @@
         <apex:form >
         <div class="progress">
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_AMS_Step1_ProgressBar}" id="Prev1"/>
+                <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 25%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!$Label.ISSP_AMS_Step2_ProgressBar}" id="Prev2"/>
+                <apex:commandLink styleclass="btn btn-default" action="{!goToStep2}" value="{!lblStepB}" id="Prev2"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!$Label.ISSP_AMS_Step3_ProgressBar}" id="Prev3"/>
+                <apex:commandLink styleclass="btn btn-default" action="{!goToStep3}" value="{!lblStepC}" id="Prev3"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 16%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
-                <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Prev4"/>
+                <apex:commandLink styleclass="btn btn-default" action="{!goToStep4}" value="{!lblStepD}" id="Prev4"/>
             </div>
              <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                {!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NOC_StepD_ProgressBar, $Label.ISSP_AMS_Step5_ProgressBar)}
+                {!IF(AND(isNoticeOfChange, newForm.Is_change_ownership_or_shareholding__c), lblNoCStepD, lblStepE)}
             </div>
         </div>
        </apex:form>
@@ -846,15 +861,18 @@
             <div class="col-md-12"></div>
             <div class="apcontainer">
                 <apex:include pageName="{!includedSummaryPage}" rendered="{!isStep5}" />
-                <apex:form >
+                <apex:form id="NoCForm">
+                <apex:pageMessages />
                 <apex:pageBlock >
                 <!-- Accept terms and conditions -->   
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
                     <div class="aplabel">
                         <apex:outputText rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_Change1}"/>
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_Change2}"/>  
-                            <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_Bank_Change3}"/> 
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, $Label.ISSP_AMS_NoC_TC_Change_CGO), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
+                            <br/><br/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, $Label.ISSP_AMS_NoC_TC_Change_CGO2), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
+                            <br/><br/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, $Label.ISSP_AMS_NoC_TC_Change_CGO3), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/> 
                         </apex:outputText>  
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC}" rendered="{!newForm.Is_change_ownership_or_shareholding__c==false}"/>                                     
                     <br/>
@@ -863,9 +881,18 @@
                 </apex:pageBlockSection>  
                 <br/>
                 <div style="text-align:center;">
-                    <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}"/>
-                    <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right"/>
+                    <apex:actionStatus id="buttonLoadingStep5">
+                        <apex:facet name="stop"><apex:outputPanel >
+                    	<apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5"/>
+                    	<apex:commandButton action="{!goToFinalStep}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep5" reRender="NoCForm"/>
+                    	<apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5"/>
+                 	</apex:outputPanel></apex:facet>
+                    <apex:facet name="start"><apex:outputPanel >
+                        <apex:commandButton value="{!$Label.ISSP_Back}" disabled="true"/>
+                    	<apex:commandButton value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true"/>
+                    	<apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                    </apex:outputPanel></apex:facet>
+                    </apex:actionStatus>
                 </div>
                 
               
@@ -902,11 +929,11 @@
            
            
            <br/> <br/> 
-            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!newCase.CaseNumber}</a>.
+            {!$Label.ISSP_AMS_StepFinal_Your_CaseNumber} <a href="/ISSP_Case?caseId={!newCase.Id}" target="_self">{!newCase.CaseNumber}</a>.
             <br/><br/>
-                <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
+                <a href="/ISSP_Case?caseId={!newCase.Id}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!$Label.ISSP_AMS_StepFinal_In_Addition} <a href="/ISSP_CaseList" target="_blank">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+           {!$Label.ISSP_AMS_StepFinal_In_Addition} <a href="/ISSP_CaseList" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>

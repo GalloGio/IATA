@@ -91,6 +91,12 @@ public class CampaignCustomers_Ctrl_Test
 		Test.startTest();
 			ctrl.generateCampaignMembers();
 		
+		//Create Campaign Members
+		CampaignMember cm = new CampaignMember(
+			CampaignId = campaigns[0].Id,
+			ContactId = usr.ContactId
+		);
+		insert cm;
 
 		//-- Generate Campaign_Member_Product__c to validate no-duplicates 
 		//String key = ctrl.campaignId+'_'+contacts[0].Id+'_'+products[0].Id; 
@@ -124,13 +130,30 @@ public class CampaignCustomers_Ctrl_Test
 
 		Campaign campaign = [select id, Campaign_AutoNumber__c from Campaign where id =:campaigns[0].Id ];
 
+		System.debug('campaign ' + campaign);
+
+		List<Campaign_Member_Product__c> lstCampaignMemberProduct = [select id, Product__c from Campaign_Member_Product__c where Campaign__c =:campaign.Id];
+		System.debug('lstCampaignMemberProduct ' + lstCampaignMemberProduct);
+
+		Campaign_Product__c cp = new Campaign_Product__c(
+			Campaign__c = campaigns[0].Id,
+			Product__c = lstCampaignMemberProduct[0].Product__c,
+			Product_Last_Version__c = lstCampaignMemberProduct[0].Product__c
+		);
+		insert cp;
+
 		CampaignProduct_Sel  campProdSel = new CampaignProduct_Sel();
 		campProdSel.getProductIdsByCampaign(new Set<Id>{campaigns[0].Id});
+		//System.debug('campProdSel ' + campProdSel);
+		campaign.Generate_Members_Completed_On__c = Datetime.now();
+		update campaign;
 
+
+		
 		Campaign_Svc.generateRenewalNotice(campaign.Id, campaign.Campaign_AutoNumber__c);
 Test.stopTest();
 		//Cover generateRenewalNotice
-		Campaign_Svc.generateRenewalNotice(campaigns[0].Id, campaigns[0].Campaign_AutoNumber__c);
+		//Campaign_Svc.generateRenewalNotice(campaigns[0].Id, campaigns[0].Campaign_AutoNumber__c);
 
 		////Cover the sendBatchFinishNotification Class in CampaignMember_Svc
 		//List<EmailTemplate> lstEmailTemplate = TestDataGenerator.generateTemplate(1, false);
