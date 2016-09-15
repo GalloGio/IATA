@@ -159,12 +159,10 @@
     <label>EBC Template</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>Is_Reusable__c</columns>
         <columns>NAME</columns>
-        <columns>Template_Name__c</columns>
+        <columns>Audience__c</columns>
         <columns>RECORDTYPE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <columns>CREATEDBY_USER</columns>
+        <columns>Is_Reusable__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
