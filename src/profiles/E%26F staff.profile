@@ -219,6 +219,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RelatedListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>WrapperAttach</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -34663,6 +34667,10 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <recordTypeVisibilities>

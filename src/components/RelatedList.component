@@ -20,26 +20,26 @@
     <!-- Relative URLS using the '$Action.' notation cannot be dynamic as there is no way to merge the object name in to the Action method, this must be defined by user of this component -->
     <apex:attribute name="urlForNewRecord" type="String" description="Please define the URL for new record creation. For example: '{!URLFOR($Action.Opportunity.New,Account.Id)}'." required="false"/>
 
-	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
     <script>
-    	
-    	function updateSelected(className, value) {
-debugger;
-		    // loop all rows
-		    $("table tbody tr").each(function() {
-		        // on a row, find the checkbox and change the values if it's checked
-		        if($(this).find(".selectedCheckbox").prop("checked")) {
-		            $(this).find("."+className).val(value);
-		        } 
-		    });
-		}
-    
-    	function redirectNew() {
-    		window.location.href = "{!urlForNewRecord}";
+        
+        function updateSelected(className, value) {
 
-    		return false;
-    	}
+            // loop all rows
+            $(".targetTable tbody tr").each(function() {
+                // on a row, find the checkbox and change the values if it's checked
+                if($(this).find(".selectedCheckbox").prop("checked")) {
+                    $(this).find("."+className).val(value);
+                } 
+            });
+        }
+    
+        function redirectNew() {
+            window.location.href = "{!urlForNewRecord}";
+
+            return false;
+        }
     </script>
 
     <apex:pageBlock title="{!objectDescribe.LabelPlural}" mode="detail" id="pageBlock">
@@ -61,26 +61,26 @@ debugger;
 
         <!-- Only show table if there are records returned -->
         <!-- Mass Updater -->
-        <apex:pageBlock title="Mass Update Values" rendered="{!massUpdateValues}">
-	        <apex:pageBlockTable title="Mass Update Values" value="{!topRecord}" var="r" rendered="{!OR(NOT(ISNULL(records)),records.size > 0)}">
-	            <!-- Loop through list of field names to dynamically render the correct columns -->
-	            <apex:repeat value="{!updatableFields}" var="fld">
-	                <!-- Set correct style alignment based on values stored in fieldAlignMap -->
-	                <apex:column headerClass="{!fieldAlignMap[fld]}" styleClass="{!fieldAlignMap[fld]}">
-	                    <apex:facet name="header">
-	                        <apex:outputPanel layout="block" styleClass="clickableHeader">
-	                            <!-- Display header value valued on nameLabelMap ie: (AccountId -> Acount) -->
-	                            <apex:outputText value="{!nameLabelMap[fld]}"/>
-	                        </apex:outputPanel>
-	                    </apex:facet>
-	                    <!-- Render field as an Output field if it's not updatable or input field if it's updatable -->
-	                    <apex:inputField value="{!r[fld]}" onchange="updateSelected('{!fld}', this.value);"/>
-	                </apex:column>
-	            </apex:repeat>
-	        </apex:pageBlockTable>
+        <apex:pageBlock title="Mass Update Values" rendered="{!massUpdateValues && inLineEditMode}">
+            <apex:pageBlockTable title="Mass Update Values" value="{!topRecord}" var="r" rendered="{!OR(NOT(ISNULL(records)),records.size > 0)}">
+                <!-- Loop through list of field names to dynamically render the correct columns -->
+                <apex:repeat value="{!updatableFields}" var="fld">
+                    <!-- Set correct style alignment based on values stored in fieldAlignMap -->
+                    <apex:column headerClass="{!fieldAlignMap[fld]}" styleClass="{!fieldAlignMap[fld]}">
+                        <apex:facet name="header">
+                            <apex:outputPanel layout="block" styleClass="clickableHeader">
+                                <!-- Display header value valued on nameLabelMap ie: (AccountId -> Acount) -->
+                                <apex:outputText value="{!nameLabelMap[fld]}"/>
+                            </apex:outputPanel>
+                        </apex:facet>
+                        <!-- Render field as an Output field if it's not updatable or input field if it's updatable -->
+                        <apex:inputField value="{!r[fld]}" onchange="updateSelected('{!fld}', this.value);"/>
+                    </apex:column>
+                </apex:repeat>
+            </apex:pageBlockTable>
         </apex:pageBlock>
         <!-- Records -->
-        <apex:pageBlockTable title="Records" value="{!records}" var="r" rendered="{!OR(NOT(ISNULL(records)),records.size > 0)}">
+        <apex:pageBlockTable styleClass="targetTable" title="Records" value="{!records}" var="r" rendered="{!OR(NOT(ISNULL(records)),records.size > 0)}">
             <apex:column headerValue="Action" rendered="{!IF(AND(hideActionLinkEdit,hideActionLinkDel),false,true)}" styleClass="actionColumn">
                 <apex:outputPanel layout="None"  rendered="{!IF(hideActionLinkEdit,false,true)}" >
                     <apex:outputLink value="/{!r.Id}/e?retURL={!$CurrentPage.url}" styleClass="actionLink">Edit</apex:outputLink>
@@ -93,10 +93,10 @@ debugger;
                 </apex:commandLink>
             </apex:column>
 
-            <apex:column headerValue="Select" rendered="{!massUpdateValues}">
-				<input id="{!r['Id']}" class="selectedCheckbox" type="checkbox" value="false"/>
+            <apex:column headerValue="Select" rendered="{!massUpdateValues && inLineEditMode}">
+                <input id="{!r['Id']}" class="selectedCheckbox" type="checkbox" value="false"/>
             </apex:column>
-			
+            
             <!-- Loop through list of field names to dynamically render the correct columns -->
             <apex:repeat value="{!fieldNames}" var="fld">
                 <!-- Set correct style alignment based on values stored in fieldAlignMap -->
