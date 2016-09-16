@@ -104,10 +104,6 @@
                 <behavior>Readonly</behavior>
                 <field>Invoicing_and_Collection__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Logo_File_ID__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -178,10 +174,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Comments_Reason_for_creation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
             <layoutItems>
@@ -217,6 +209,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Region_formula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Comments_Reason_for_creation__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -439,6 +435,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ACLI_SAP_Id__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
