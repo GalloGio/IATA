@@ -774,13 +774,13 @@ public without sharing class AMS_Utils {
     }
 
 
-    public static void copyDataToAccount(List<AMS_OSCAR__c> oscars) {
-        copyDataToAccount(oscars, true);
+    public static List<AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccount(List<AMS_OSCAR__c> oscars) {
+        return copyDataToAccount(oscars, true);
     }
 
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static void copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
+    public static List<AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
 
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
@@ -855,8 +855,7 @@ public without sharing class AMS_Utils {
 
         List<Map<String, String>> configs = AMS_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
-
-
+        List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
 
         for (AMS_OSCAR__c oscar : oscars) {
 
@@ -868,24 +867,45 @@ public without sharing class AMS_Utils {
 
             if (acc != null && onlineAcc != null) {
 
-                for (String key : fieldsMapping.keySet()) {
-                    String value = fieldsMapping.get(key);
-                    acc.put(key, onlineAcc.get(value));
-                    System.debug(key + ':' + onlineAcc.get(value));
+                List<AMS_ChangeCodesHelper.ObjectChange> accChanges = new List<AMS_ChangeCodesHelper.ObjectChange>();
+
+                for (String accfield : fieldsMapping.keySet()) {
+                    String onlineAccField = fieldsMapping.get(accfield);
+                    Object newValue = onlineAcc.get(onlineAccField);
+
+                    if( acc.get(accfield) != newValue ){
+                        
+                        if(AMS_AccountTriggerHandler.minorChangesAccountFields.contains(accfield.toLowerCase())){
+                            accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', accfield, String.valueOf(acc.get(accfield)), String.valueOf(newValue)));
+                        }
+
+                        acc.put(accfield, newValue);
+                    }
+                    
+                    System.debug(accfield + ':' + newValue);
+                }
+
+                if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
+                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.Shipping_ISO_State__r.Name));
+                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                }
+                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
+                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingCountry', acc.ShippingCountry, onlineAcc.Shipping_ISO_Country__r.Name));
+                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
                 }
 
                 acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
                 acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
                 acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
                 acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
-                acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
                 acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
 
+
+                changes.add(new Ams_ChangeCodesHelper.ObjectChangesStruct(accChanges));
             }
 
         }
@@ -900,11 +920,15 @@ public without sharing class AMS_Utils {
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
 
+            return changes;
+
         } catch (Exception ex) {
             System.debug('Exception: ' + ex);
             Database.rollback(sp);
             throw ex;
         }
+
+        return null;
         
     }
 
