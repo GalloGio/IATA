@@ -134,7 +134,7 @@ public class EF_LocationCurrencyHandler {
 			for(Contract c: mapContract.values()) {
 				String billCurr = c.EF_Billing_Currency__c;
 
-                String resultingBillCur;
+                String resultingBillCur = '';
                
                 if(contractWithCurrToBeRemoved.containsKey(c.Id) && billCurr != null) {
 					resultingBillCur = billCurr.remove(contractWithCurrToBeRemoved.get(c.Id));

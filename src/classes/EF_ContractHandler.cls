@@ -28,32 +28,43 @@ public class EF_ContractHandler
             {
                 if(contractDataCurrenciesMap.containsKey(ba.Contract__c))
                 {
-                    contractDataCurrenciesMap.get(ba.Contract__c).addAll(ba.Data_Currency__c.split(';'));
+                    if(ba.Data_Currency__c != null)
+                    	contractDataCurrenciesMap.get(ba.Contract__c).addAll(ba.Data_Currency__c.split(';'));
                 }
                 else
                 {
-                    dataCurrencies.addAll(ba.Data_Currency__c.split(';'));
-                    contractDataCurrenciesMap.put(ba.Contract__c, dataCurrencies);
+                	if(ba.Data_Currency__c != null)
+                	{
+                    	dataCurrencies.addAll(ba.Data_Currency__c.split(';'));
+                    	contractDataCurrenciesMap.put(ba.Contract__c, dataCurrencies);
+                	}
                 }
 
                 if(contractBillingCurrenciesMap.containsKey(ba.Contract__c))
                 {
-                    contractBillingCurrenciesMap.get(ba.Contract__c).addAll(ba.Billing_Currency__c.split(';'));
+                	if(ba.Billing_Currency__c != null)
+ 	                   contractBillingCurrenciesMap.get(ba.Contract__c).addAll(ba.Billing_Currency__c.split(';'));
                 }
                 else
                 {
-                    billingCurrencies.addAll(ba.Billing_Currency__c.split(';'));
-                    contractBillingCurrenciesMap.put(ba.Contract__c, billingCurrencies);
+                	if(ba.Billing_Currency__c != null)
+                	{
+                    	billingCurrencies.addAll(ba.Billing_Currency__c.split(';'));
+                    	contractBillingCurrenciesMap.put(ba.Contract__c, billingCurrencies);
+                    }
                 }
-
                 if(contractPaymentCurrenciesMap.containsKey(ba.Contract__c))
                 {
-                    contractPaymentCurrenciesMap.get(ba.Contract__c).addAll(ba.Payment_Currency__c.split(';'));
+                	if(ba.Payment_Currency__c != null)
+	                    contractPaymentCurrenciesMap.get(ba.Contract__c).addAll(ba.Payment_Currency__c.split(';'));
                 }
                 else
                 {
-                    paymentCurrencies.addAll(ba.Payment_Currency__c.split(';'));
-                    contractPaymentCurrenciesMap.put(ba.Contract__c, paymentCurrencies);
+                	if(ba.Payment_Currency__c != null)
+                	{
+                    	paymentCurrencies.addAll(ba.Payment_Currency__c.split(';'));
+                    	contractPaymentCurrenciesMap.put(ba.Contract__c, paymentCurrencies);
+                    }
                 }
             }
 
@@ -61,11 +72,14 @@ public class EF_ContractHandler
             for(Contract c : newLines)
             {
             	Set<String> currentDataCurrencies = new Set<String>();
-            	currentDataCurrencies.addAll(c.EF_Data_Currency__c.split(';'));
+            	if(c.EF_Data_Currency__c != null)
+	            	currentDataCurrencies.addAll(c.EF_Data_Currency__c.split(';'));
             	Set<String> currentBillingCurrencies = new Set<String>();
-            	currentBillingCurrencies.addAll(c.EF_Billing_Currency__c.split(';'));
+            	if(c.EF_Billing_Currency__c != null)
+	            	currentBillingCurrencies.addAll(c.EF_Billing_Currency__c.split(';'));
             	Set<String> currentPaymentCurrencies = new Set<String>();
-            	currentPaymentCurrencies.addAll(c.EF_Payment_Currency__c.split(';'));
+            	if(c.EF_Payment_Currency__c != null)
+	            	currentPaymentCurrencies.addAll(c.EF_Payment_Currency__c.split(';'));
             	
             	if(contractDataCurrenciesMap.get(c.Id) != null)
             	{
