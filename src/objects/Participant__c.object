@@ -411,4 +411,13 @@ First Name, Last Name, Title, Email and Account Name. Please complete these info
 )</errorConditionFormula>
         <errorMessage>The Title in the Contact is empty and you therefore cannot save this record. First edit the Contact record and add the Title, then create this APJC Participant record.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Verified_Account</fullName>
+        <active>true</active>
+        <description>The Account needs to be verified</description>
+        <errorConditionFormula>OR( ISPICKVAL (Contact__r.Account.ACLI_Status__c,&apos;Inactive company&apos;), 
+NOT(OR( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot; || Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Agency&quot; || Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;)) 
+)</errorConditionFormula>
+        <errorMessage>The Participant must come from a verified Account</errorMessage>
+    </validationRules>
 </CustomObject>
