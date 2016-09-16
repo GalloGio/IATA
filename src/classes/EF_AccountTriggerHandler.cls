@@ -5,6 +5,9 @@ public class EF_AccountTriggerHandler {
 
 	public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap) {
 
+        //
+        // Will contain all the accountId's that have been inactivated.
+        //
 		Set<Id> inactiveAccsSet = new Set<Id> ();
 		
 		for(Account a: accs){
@@ -12,8 +15,11 @@ public class EF_AccountTriggerHandler {
 				inactiveAccsSet.add(a.Id);
 			}
 		}
-
-		//check if account has child accounts 
+        
+        //
+		// Check if account has child accounts
+		// The child account will be inactivated too.
+		//
 		Map <Id, Account> childAccsMap = new Map <Id, Account> ([Select Id, EF_Status__c, ParentId from Account where ParentId in: inactiveAccsSet]);
 		
 		if(!childAccsMap.isEmpty() && run){
@@ -23,7 +29,10 @@ public class EF_AccountTriggerHandler {
                 childAccsList.add(a); //we'll update at the end, when all the other records have been updated.
                              
 			}
-			
+            
+            //
+            // Add the child id's too
+            // 
 			inactiveEFContracts(inactiveAccsSet);
 
 		}else if(!inactiveAccsSet.isEmpty() && run){
@@ -39,7 +48,7 @@ public class EF_AccountTriggerHandler {
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
 		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, 
 			(Select Id, Status__c from EF_Relationships__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
-
+        
 		List <Contract> contracts2Inactivate = new List <Contract> ();
 		Set <Id> BA2Inactivate = new Set <Id> ();
 
