@@ -49,7 +49,7 @@
         if (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}'))
         {
             
-            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value)).trim();
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));
             var middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemMiddleInitial.txtMiddleInitial}').value)).trim().toUpperCase();
             var firstName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value) );            
             var displayName = "";
@@ -145,6 +145,20 @@
             }
         } 
         
+    }
+
+    function firstToUpperCase() {
+
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value));   
+        var upperFirstName = firstName.substr(0, 1).toUpperCase() + firstName.substr(1);
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemFirstName.txtFirstName}').value = upperFirstName;
+    }
+    
+    function lastToUpperCase() {
+
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value));   
+        var upperLastName = lastName.substr(0, 1).toUpperCase() + lastName.substr(1);
+        document.getElementById('{!$Component.idcardForm.pb1.section1.itemLastName.txtLastName}').value = upperLastName;
     }
     
     
@@ -389,7 +403,7 @@ reRender="panelContactInfo, ErrorMsgs" />
                                                 <apex:outputPanel styleClass="requiredBlock" layout="block" />
                                                     <apex:inputField styleClass="outputText2" id="txtLastName"
                                                     value="{!IDCardApplicationNR.Last_Name__c}"
-                                                    onkeyup="calculateDisplayedName();" />
+                                                    onkeyup="calculateDisplayedName();lastToUpperCase();" />
                                                         </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                     <apex:outputText value="" />
@@ -399,7 +413,7 @@ reRender="panelContactInfo, ErrorMsgs" />
                                                                     <apex:outputPanel styleClass="requiredBlock" layout="block" />
                                                                         <apex:inputField styleClass="outputText2" id="txtFirstName" 
                                                                         value="{!IDCardApplicationNR.First_Name__c}"
-                                                                        onkeyup="calculateDisplayedName();" />
+                                                                        onkeyup="calculateDisplayedName();firstToUpperCase();" />
                                                                             </apex:outputPanel>
                                                                         </apex:pageBlockSectionItem>
                                                                         <script> 

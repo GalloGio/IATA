@@ -125,6 +125,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         } 
         else return true;
     }
+
+    function firstToUpperCase() {
+
+        var firstName = (this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value);  
+        var upperFirstName = firstName.substr(0, 1).toUpperCase() + firstName.substr(1);
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtFIRSTNAME}').value = upperFirstName;
+    }
+    
+    function lastToUpperCase() {
+        var lastName = (this.document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value);
+        var upperLastName = lastName.substr(0, 1).toUpperCase() + lastName.substr(1);
+        document.getElementById('{!$Component.idcardForm.pb1.sec1.txtLASTNAME}').value = upperLastName;
+    }
 </script>
     
     <apex:outputpanel id="reloadCaptcha">       
@@ -177,10 +190,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div id="panelLoginWPI"> 
                     <div id="PInfo_Submenu" class="LogSubMenuPanel">
                         <hr class="Thick" />
-                        <apex:pageBlock >
+                        <apex:pageBlock id="pb1">
                             <apex:pageMessages id="Msgs2" escape="false" />
                             <apex:outputLabel for="txtLabel"/>
-                            <apex:pageBlockSection >   
+                            <apex:pageBlockSection id="sec1">   
                                 <apex:panelGrid columns="2">
                                    
                                     <apex:outputLabel value="{!$Label.IDCard_IATA_Code_Of_Location}:"
@@ -193,13 +206,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <apex:outputLabel value="{!$Label.IDCard_LastName}" for="txtLASTNAME" styleClass="labels" />
                                     <apex:outputPanel styleClass="requiredInput" layout="block">
                                         <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                        <apex:inputText id="txtLASTNAME" value="{!LNAME}" label="{!$Label.IDCard_LastName}" onkeyup="if (/\d/g.test(this.value)) this.value = this.value.replace(/\d/g,'')" onKeyDown="return removeNums(event,this);"/>
+                                        <apex:inputText id="txtLASTNAME" value="{!LNAME}" label="{!$Label.IDCard_LastName}" onkeyup="if (/\d/g.test(this.value)) this.value = this.value.replace(/\d/g,'');lastToUpperCase();" onKeyDown="return removeNums(event,this);"/>
                                     </apex:outputPanel>
                                 
                                     <apex:outputLabel value="{!$Label.IDCard_FirstName}" for="txtFIRSTNAME" styleClass="labels" />
                                     <apex:outputPanel styleClass="requiredInput" layout="block">
                                         <apex:outputPanel styleClass="requiredBlock" layout="block" />
-                                        <apex:inputText id="txtFIRSTNAME" value="{!FNAME}"  label="{!$Label.IDCard_FirstName}" onkeyup="if (/\d/g.test(this.value)) this.value = this.value.replace(/\d/g,'')" onKeyDown="return removeNums(event,this);"/>
+                                        <apex:inputText id="txtFIRSTNAME" value="{!FNAME}"  label="{!$Label.IDCard_FirstName}" onkeyup="if (/\d/g.test(this.value)) this.value = this.value.replace(/\d/g,'');firstToUpperCase();" onKeyDown="return removeNums(event,this);"/>
                                     </apex:outputPanel>
 
                                     <apex:outputLabel value="{!$Label.IDCard_DOB}" for="txtDOB" styleClass="labels" />

@@ -12886,7 +12886,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SCE</description>
-        <formula>AND(OR(RecordTypeId = &quot;012200000000DD9&quot;, RecordTypeId = &quot;0128E0000000Oob&quot;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
+        <formula>AND(OR(RecordType.DeveloperName = &quot;SIDRA&quot;, RecordType.DeveloperName = &quot;SIDRA_Lite&quot;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

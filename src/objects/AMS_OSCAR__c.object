@@ -3337,6 +3337,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>Pending Validation</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackFeedHistory>false</trackFeedHistory>
@@ -5268,6 +5272,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %28Closed%29</fullName>
                 <default>false</default>
             </values>
@@ -6897,6 +6905,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Accepted_Pending Docs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8539,6 +8551,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %28Closed%29</fullName>
                 <default>false</default>
             </values>
@@ -10120,6 +10136,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Accepted_Pending Docs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>

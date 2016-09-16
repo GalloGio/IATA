@@ -62,7 +62,7 @@
         if (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}'))
         {      
             
-            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value)).trim();   
+            var lastName = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));   
             var middleInitial = "";
             /*if (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}') != null)
                         middleInitial = (removeDiacritics (this.document.getElementById('{!$Component.idcardForm.pb1.txtMiddleInitial}').innerHTML)).trim().replace(".","").toUpperCase();*/
@@ -121,6 +121,19 @@
         };
     }            
     
+    function firstToUpperCase() {
+
+        var firstName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value));   
+        var upperFirstName = firstName.substr(0, 1).toUpperCase() + firstName.substr(1);
+        document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').value = upperFirstName;
+    }
+    
+    function lastToUpperCase() {
+
+        var lastName = (removeDiacritics(this.document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value));   
+        var upperLastName = lastName.substr(0, 1).toUpperCase() + lastName.substr(1);
+        document.getElementById('{!$Component.idcardForm.pb1.txtLastName}').value = upperLastName;
+    }
     
     function isConfirmRevenuePosition(selectedPositionPicklist) {               
         var positionList =["Director","Manager","Employee","Independent Consultant/Broker","Sole Owner","Partner","Shareholder"];
@@ -345,6 +358,8 @@ value="{!IDCardApplicationRR.Last_Name__c}"
 onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
 </apex:outputPanel>
 </td>
+
+
 </tr>-->
                                         <tr>
                                             <td colspan="4" style="text-align: right">   
@@ -365,7 +380,7 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                                 <apex:outputPanel styleClass="requiredInput" layout="block">
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
                                                     <apex:inputField id="txtLastName" value="{!IDCardApplicationRR.Last_Name__c}"
-                                                                     onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
+                                                                     onkeyup="calculateDisplayedName();lastToUpperCase()" styleclass="outputText2" />
                                                 </apex:outputPanel>   
                                             </td>
                                         </tr>
@@ -376,8 +391,12 @@ onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
                                             <td>
                                                 <apex:outputPanel styleClass="requiredInput" layout="block">
                                                     <apex:outputPanel styleClass="requiredBlock" layout="block"  style="height:23px; margin-left: 3px;" />
-                                                    <apex:inputField id="txtFirstName"  value="{!IDCardApplicationRR.First_Name__c}" onkeyup="calculateDisplayedName();" styleclass="outputText2"/>
+                                                    <apex:inputField id="txtFirstName"  value="{!IDCardApplicationRR.First_Name__c}" onkeyup="calculateDisplayedName();firstToUpperCase();" styleclass="outputText2"/>
                                                 </apex:outputPanel>
+                                                <script> 
+                                                    if({!IsNewApplication}==false)
+                                                    document.getElementById('{!$Component.idcardForm.pb1.txtFirstName}').setAttribute('readonly', 'readonly');
+                                                </script>
                                                 
                                             </td>
                                         </tr>
