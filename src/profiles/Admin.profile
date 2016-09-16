@@ -45097,7 +45097,7 @@
         <tab>E_F_Asset__c</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
-     <tabVisibilities>
+    <tabVisibilities>
         <tab>Ecommerce_Site_Link__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>

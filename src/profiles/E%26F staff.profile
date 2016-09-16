@@ -975,10 +975,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AcliSyncBatch</apexClass>
-        <enabled>false</enabled>
-	</classAccesses>
-    <classAccesses>
         <apexClass>AmazonFileTrgHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
