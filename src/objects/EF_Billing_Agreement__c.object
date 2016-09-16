@@ -451,16 +451,4 @@
 )</errorConditionFormula>
         <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
     </validationRules>
-    <webLinks>
-        <fullName>Edit_Biling_Agreement_Status</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Mass Update Billing Agreement</masterLabel>
-        <openType>sidebar</openType>
-        <page>EF_UpdateBillingAgreement</page>
-        <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
-    </webLinks>
 </CustomObject>
