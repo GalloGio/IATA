@@ -39246,7 +39246,7 @@
         <recordType>EF_Material_Line_Item__c.Contract_Line_Item</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EF_Material_Line_Item__c-E%26F Material Line Item for Contract Layout</layout>
+        <layout>EF_Material_Line_Item__c-E%26F Material Line Item for Relationship Layout</layout>
         <recordType>EF_Material_Line_Item__c.Relationship_Line_Item</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -40393,7 +40393,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -40402,7 +40402,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
