@@ -3,10 +3,10 @@ public class EF_MaterialLineItemHandler {
     // Check is the material Item that is in the BillingAgreement exists in the contract.
     //
     public static void checkBillingAgreementContractItems (List<EF_Material_Line_Item__c> materialLineItemList, Map<Id,EF_Material_Line_Item__c> materialLineItemOldMap) {
-    
+        
         List<EF_Material_Line_Item__c> workdata = new List<EF_Material_Line_Item__c>();
         Set<Id> baIdSet = new Set<Id>();
-    
+                    
         //
         // Get all the new material lines and Billing agreements
         //
@@ -18,12 +18,12 @@ public class EF_MaterialLineItemHandler {
                 (materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Relationship__c != materialLineItemOldMap.get(mli.Id).EF_Relationship__c) ||
                 (materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Material__c != materialLineItemOldMap.get(mli.Id).EF_Material__c) 
                ) {
-                
+                   
                 workdata.add(mli);
                 baIdSet.add(mli.EF_Relationship__c);
             }
         }
-        
+                        
         if (workdata.size() > 0) {
             
             Map<Id, Id> mliToContractMap = new Map<Id, Id>();

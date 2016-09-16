@@ -152,8 +152,7 @@ private class EF_AccountTriggerHandlerTest {
         contacts.add(customer1Contact);
         contacts.add(customer2Contact);
         insert contacts;
-        
-        
+                
         //Create contact billing agreement relationships
         List<EF_Contact_Relationship__c> relationships = new List<EF_Contact_Relationship__c>();
         
