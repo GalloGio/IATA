@@ -190,7 +190,7 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
-     <classAccesses>
+    <classAccesses>
         <apexClass>ACliMassUpdate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -860,6 +860,38 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AcliUpdateBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AcliWrapper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AddCampaignMemberController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AddCampaignMemberControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Address_DTO</apexClass>
+        <enabled>true</enabled>
+     </classAccesses>
+     <classAccesses>
+        <apexClass>AgentStatusExtension</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirlineBranchController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirlineInputHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirlineInputHandlerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -43939,6 +43971,11 @@
         <recordType>AP_Process_Form__c.CASS_Joining</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
+     <recordTypeVisibilities>
+         <default>false</default>
+        <recordType>Account.Operator</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.GDP_Account</recordType>
@@ -44972,6 +45009,10 @@
         <tab>CSS_Tracking__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
+     <tabVisibilities>
+        <tab>Campaign_Customers</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
     <tabVisibilities>
         <tab>Campaign_Notification</tab>
         <visibility>DefaultOn</visibility>
@@ -45046,11 +45087,15 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>EF_Related_Records__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>E_F_Asset__c</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+     <tabVisibilities>
+        <tab>Ecommerce_Site_Link__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>EmailTemplate__c</tab>
