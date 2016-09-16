@@ -190,7 +190,7 @@
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
-     <classAccesses>
+    <classAccesses>
         <apexClass>ACliMassUpdate</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -751,11 +751,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AWSTools</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AmazonFile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-     <classAccesses>
+    <classAccesses>
         <apexClass>AWSToolsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AcliSyncBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -823,6 +831,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AcliSyncBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AcliJavaToolTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -839,6 +851,22 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AcliUpdateBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AddCampaignMemberController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AddCampaignMemberControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AcliWrapper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+	<classAccesses>
         <apexClass>AcliParser</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -959,8 +987,16 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Address_DTO</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EF_AttachmentListControllerTest</apexClass>
         <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AgentStatusExtension</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EF_BillingAgreementHandler</apexClass>
@@ -41494,6 +41530,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>UploadPageiFrame</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -43536,8 +43576,8 @@
         <enabled>true</enabled>
         <name>ApiEnabled</name>
     </userPermissions>
-     <userPermissions>
-         <enabled>true</enabled>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ChatterEnabledForUser</name>
     </userPermissions>
     <userPermissions>

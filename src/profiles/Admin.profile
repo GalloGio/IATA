@@ -877,8 +877,8 @@
     <classAccesses>
         <apexClass>Address_DTO</apexClass>
         <enabled>true</enabled>
-     </classAccesses>
-     <classAccesses>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AgentStatusExtension</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -43668,6 +43668,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>thai</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -43971,8 +43975,8 @@
         <recordType>AP_Process_Form__c.CASS_Joining</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-     <recordTypeVisibilities>
-         <default>false</default>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account.Operator</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -45009,7 +45013,7 @@
         <tab>CSS_Tracking__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
-     <tabVisibilities>
+    <tabVisibilities>
         <tab>Campaign_Customers</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
