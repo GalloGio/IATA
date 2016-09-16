@@ -3559,7 +3559,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Closed (Closed)</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3596,6 +3596,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </picklistValues>
             <picklistValues>
                 <fullName>Pending Validation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed (Closed)</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -5540,7 +5544,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7153,7 +7157,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8792,7 +8796,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10376,7 +10380,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10557,7 +10561,13 @@ alert(&apos; Failed to generate a new IATA CODE. Please contact your administrat
         <masterLabel>Manage Attachments</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>javascript:srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);</url>
+        <url>{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)} 
+
+if (sforce.console.isInConsole()) { 
+srcUp(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
+} else { 
+window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;); 
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Set_Ownership</fullName>

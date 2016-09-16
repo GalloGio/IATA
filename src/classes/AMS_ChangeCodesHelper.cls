@@ -70,11 +70,16 @@ public class AMS_ChangeCodesHelper {
 			
 			List <ObjectChange> ObjectChangeList = new List <ObjectChange> ();
 
-			for(AMS_RecordCreatorWebservice.AccountChanges changes : accountChange.changes){
+			for(AMS_RecordCreatorWebservice.AccountChanges changes : accountChange.changes)
+            {
 
-				ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
-				ObjectChangeList.add(objChange);
-
+                ObjectChange objChange = new ObjectChange('Account',changes.accountFieldAPI, changes.oldValue, changes.newValue);
+                
+                if(changes.accountFieldAPI.equalsIgnoreCase('TradeName__c'))
+                    objChangesStructList.add(new ObjectChangesStruct(new List <ObjectChange>{objChange}));
+                else
+                    ObjectChangeList.add(objChange);
+                
 			}
 
 			objChangesStructList.add(new ObjectChangesStruct(ObjectChangeList));
