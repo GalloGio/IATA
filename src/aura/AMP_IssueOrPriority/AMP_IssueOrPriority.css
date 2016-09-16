@@ -1,28 +1,6 @@
 .THIS .hidden{
   display: none;
 }
-.THIS .popup-button, .THIS .popup {
-  position: relative;
-  z-index: 10;
-}
-.THIS .popup {
-  width: 170%;
-  left: -70%;
-  border: 2px solid black;
-  background: white;
-  /*z-index: 10;*/
-}
 .THIS .fillFullWidth {
   width: 100%;
-}
-.THIS .show-more-button {
-    position: absolute !important;
-    right: 0%;
-    bottom: 0%;
-}
-.THIS .slds-popover {
-    position: absolute !important;
-    top: 90px;
-    left: 7px;
-    white-space: normal;
 }
