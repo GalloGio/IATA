@@ -44492,11 +44492,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Contract.EF_Contract</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Contract.MACS_General</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
