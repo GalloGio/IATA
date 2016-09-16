@@ -1,0 +1,13 @@
+<apex:page standardController="Contract"> <!--  recordSetVar="dummy" -->
+	<apex:form >
+		<c:RelatedList objectName="EF_Billing_Agreement__c"
+			parentFieldName="Contract__c"
+			parentFieldId="{!Contract.Id}"		
+			fieldsCSV="Name,Airline__c,Client__c,Data_Currency__c,Invoice_Distribution_Method__c,Payment_Currency__c,Payment_Method__c" 
+			editableFieldsCSV="Data_Currency__c,Invoice_Distribution_Method__c,Payment_Currency__c,Payment_Method__c" 
+			updateAllOrNone="false" 
+			defaultEditAll="true" 
+			massUpdateInputs="true"
+			hideActionLinkEdit="true"/>
+	</apex:form>
+</apex:page>

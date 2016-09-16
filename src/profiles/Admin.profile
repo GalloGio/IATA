@@ -895,6 +895,38 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AmazonFile</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AmazonFileTrgHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_AttachmentListControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_BillingAgreementHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_MaterialLineItemHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EF_MaterialLineItemHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>WrapperAttach</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AirlineSFundsManagementController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -13430,6 +13462,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AmazonFile__c.EF_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Document_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Expired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Expiry_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_SAP_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Skip_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Subcategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmazonFile__c.File_Identifier__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13457,6 +13524,11 @@
         <editable>false</editable>
         <field>AmazonFile__c.isPublic__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.sObject_Id__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -22181,6 +22253,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Approval__c.SAP_Contract_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Billed_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37477,6 +37559,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AmazonFile__c-AmazonFile Layout</layout>
+        <recordType>AmazonFile__c.EF_File</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AmazonFile__c-AmazonFile Layout</layout>
         <recordType>AmazonFile__c.File</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -43585,6 +43671,10 @@
         <apexPage>thai</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>ACCA_Service_Request__c.Agent_Group_Maintenance</recordType>
@@ -44016,6 +44106,11 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>AmazonFile__c.EF_File</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>AmazonFile__c.File</recordType>
         <visible>false</visible>
@@ -44394,6 +44489,11 @@
         <default>true</default>
         <recordType>Contract.EF_Client_Agreement</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Contract.EF_Contract</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

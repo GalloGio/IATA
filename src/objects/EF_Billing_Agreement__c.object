@@ -417,6 +417,17 @@
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Edit_All</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
+    </webLinks>
     <validationRules>
         <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
         <active>true</active>
