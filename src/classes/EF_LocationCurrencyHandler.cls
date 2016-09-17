@@ -32,17 +32,22 @@ public class EF_LocationCurrencyHandler {
                         lc.Location_ID__c.addError('The location chosen has already been added to the contract.');
                     }
                 } else {
-                    //System.debug(Logginglevel.ERROR, '#### lc.EF_Billing_Currency__c ' + lc.EF_Billing_Currency__c);
-                    //System.debug(Logginglevel.ERROR, '#### mapContract.get(lc.Contract__c).EF_Billing_Currency__c ' + mapContract.get(lc.Contract__c).EF_Billing_Currency__c);                                 
                     if(mapContract.get(lc.Contract__c).EF_Billing_Currency__c!= null && !mapContract.get(lc.Contract__c).EF_Billing_Currency__c.contains(lc.EF_Billing_Currency__c)){
                         mapContract.get(lc.Contract__c).EF_Billing_Currency__c = mapContract.get(lc.Contract__c).EF_Billing_Currency__c + ';' + lc.EF_Billing_Currency__c;
                     }				
+                    
 				}
 			}
 		} else {// the contract has no location currencies 
+           
             for(EF_Location_Currency__c lc: locationCurrencyList) {
+               if(mapContract.get(lc.Contract__c).EF_Billing_Currency__c==null){
 				mapContract.get(lc.Contract__c).EF_Billing_Currency__c = lc.EF_Billing_Currency__c;
+               }else if(!mapContract.get(lc.Contract__c).EF_Billing_Currency__c.contains(lc.EF_Billing_Currency__c)){
+                   mapContract.get(lc.Contract__c).EF_Billing_Currency__c = mapContract.get(lc.Contract__c).EF_Billing_Currency__c + ';' + lc.EF_Billing_Currency__c;
             }			
+		}
+        
 		}
         
         try{
