@@ -43,7 +43,7 @@
     <applicationVisibilities>
         <application>E_F</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>ExactTarget</application>
@@ -22258,11 +22258,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Billed_Account__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Billing_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
