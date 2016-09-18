@@ -3,172 +3,185 @@ public class EF_MaterialLineItemTriggerTest {
 
     @testSetup 
     static void setup() {
-        //create account 
-        Account client = new Account(
-            Name='Test Account client',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
-            Sector__c = 'IATA Supplier',
-            Category__c = 'ANSP',
-            EF_type__c = 'E&F Client',
-            EF_Status__c = 'Active',
-            EF_Effective_Date__c = Date.today(),
-            Reason_for_creation__c = 'new client needed'
-            );
         
-        insert client;
-
-        //create account 
-        Account client2 = new Account(
-            Name='Test Account client 2',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
-            Sector__c = 'IATA Supplier',
-            Category__c = 'ANSP',
-            EF_type__c = 'E&F Client',
-            EF_Status__c = 'Active',
-            EF_Effective_Date__c = Date.today(),
-            Reason_for_creation__c = 'new client needed'
-            );
+        User u = EF_TestDataFactory.getEfStaffUser('Head, Client Services');
+        EF_TestDataFactory.createCustomSettings();
         
-        insert client2;
-
-        //create account
-        Account client3 = new Account(
-            Name='Test Account client 3',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
-            Sector__c = 'IATA Supplier',
-            Category__c = 'ANSP',
-            EF_type__c = 'E&F Client',
-            EF_Status__c = 'Active',
-            EF_Effective_Date__c = Date.today(),
-            Reason_for_creation__c = 'new client needed'
-            );
-        
-        insert client3;
-
-        //create account 
-        Account customer = new Account(
-            Name='Test Account customer',
-            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
-            Sector__c = 'IATA Supplier',
-            Category__c = 'ANSP',
-            EF_type__c = 'E&F Operator',
-            EF_Status__c = 'Active',
-            EF_Effective_Date__c = Date.today(),
-            Reason_for_creation__c = 'new customer needed'
-            );
-        
-        insert customer;        
+    	System.runAs(u){
+            
+            List <Account> accList = new List <Account> ();
+            
+            //create account 
+            Account client = new Account(
+                Name='Test Account client',
+                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                Sector__c = 'IATA Supplier',
+                Category__c = 'ANSP',
+                EF_type__c = 'E&F Client',
+                EF_Status__c = 'Active',
+                EF_Effective_Date__c = Date.today(),
+                Reason_for_creation__c = 'new client needed'
+                );
+            
+            accList.add(client);
+    
+            //create account 
+            Account client2 = new Account(
+                Name='Test Account client 2',
+                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                Sector__c = 'IATA Supplier',
+                Category__c = 'ANSP',
+                EF_type__c = 'E&F Client',
+                EF_Status__c = 'Active',
+                EF_Effective_Date__c = Date.today(),
+                Reason_for_creation__c = 'new client needed'
+                );
+            
+            accList.add(client2);
+    
+            //create account
+            Account client3 = new Account(
+                Name='Test Account client 3',
+                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                Sector__c = 'IATA Supplier',
+                Category__c = 'ANSP',
+                EF_type__c = 'E&F Client',
+                EF_Status__c = 'Active',
+                EF_Effective_Date__c = Date.today(),
+                Reason_for_creation__c = 'new client needed'
+                );
+            
+            accList.add(client3);
+    
+            //create account 
+            Account customer = new Account(
+                Name='Test Account customer',
+                RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId(),
+                Sector__c = 'IATA Supplier',
+                Category__c = 'ANSP',
+                EF_type__c = 'E&F Operator',
+                EF_Status__c = 'Active',
+                EF_Effective_Date__c = Date.today(),
+                Reason_for_creation__c = 'new customer needed'
+                );
+            
+            accList.add(customer);
+            insert accList;
+                    
+            //create contract
+            Contract contract = new Contract (
+                accountId = client.Id,
+                CCF_Number__c = '1',
+                Budget_Section__c ='aaaa',
+                CCF_Amount__c = 250000,
+                ContractTerm = 12,
+                RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+                StartDate = Date.today(),
+                Type__c ='Revenue',
+                EF_Status__c = 'Active',
+                EF_Billing_Currency__c = 'AED',
+                EF_Data_Currency__c = 'AED',
+                EF_Payment_Currency__c = 'AED'
+                );
+            insert contract;
+    
+            //create contract
+            Contract contract2 = new Contract (
+                accountId = client2.Id,
+                CCF_Number__c = '1',
+                Budget_Section__c ='aaaa',
+                CCF_Amount__c = 250000,            
+                ContractTerm = 12,
+                RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
+                StartDate = Date.today(),
+                Type__c ='Revenue',
+                EF_Status__c = 'Active'
+                );
+            insert contract2;
+    		
+            List <Product2> prodList = new List <Product2> ();
+            Product2 prd = new Product2 (
+                Name = 'Test product 1',
+                Product_Segment__c = 'TBA',
+                Product_Marketing_Manager__c = 'Eve-Marie Morgo',
+                Family = 'Accreditation',
+                Line_of_Business__c = 'Advertising'            
+            );                
+            
+            prodList.add(prd);    
                 
-        //create contract
-        Contract contract = new Contract (
-            accountId = client.Id,
-            CCF_Number__c = '1',
-            Budget_Section__c ='aaaa',
-            CCF_Amount__c = 250000,
-            ContractTerm = 12,
-            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
-            StartDate = Date.today(),
-            Type__c ='Revenue',
-            EF_Status__c = 'Active',
-            EF_Billing_Currency__c = 'AED',
-            EF_Data_Currency__c = 'AED',
-            EF_Payment_Currency__c = 'AED'
+            Product2 prd2 = new Product2 (
+                Name = 'Test product 2',
+                Product_Segment__c = 'TBA',
+                Product_Marketing_Manager__c = 'Eve-Marie Morgo',
+                Family = 'Accreditation',
+                Line_of_Business__c = 'Advertising'            
+            );                
+            
+            prodList.add(prd2);
+            
+            Product2 prd3 = new Product2 (
+                Name = 'Test product 3',
+                Product_Segment__c = 'TBA',
+                Product_Marketing_Manager__c = 'Eve-Marie Morgo',
+                Family = 'Accreditation',
+                Line_of_Business__c = 'Advertising'            
+            );                
+            
+            prodList.add(prd3);
+            insert prodList;
+            
+    
+            EF_Related_Records__c loc = new EF_Related_Records__c (
+                RecordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId(),
+                name = 'Main'               
             );
-        insert contract;
-
-        //create contract
-        Contract contract2 = new Contract (
-            accountId = client2.Id,
-            CCF_Number__c = '1',
-            Budget_Section__c ='aaaa',
-            CCF_Amount__c = 250000,            
-            ContractTerm = 12,
-            RecordTypeId = Schema.SObjectType.Contract.getRecordTypeInfosByName().get('E&F Client Agreement').getRecordTypeId(),
-            StartDate = Date.today(),
-            Type__c ='Revenue',
-            EF_Status__c = 'Active'
+            
+            insert loc;
+                    
+            EF_Location_Currency__c locCurr = new EF_Location_Currency__c (
+                EF_Billing_Currency__c = 'AED',
+                Contract__c = contract.id,
+                Location_ID__c = loc.id                
             );
-        insert contract2;
-
-        Product2 prd = new Product2 (
-            Name = 'Test product 1',
-            Product_Segment__c = 'TBA',
-            Product_Marketing_Manager__c = 'Eve-Marie Morgo',
-            Family = 'Accreditation',
-            Line_of_Business__c = 'Advertising'            
-        );                
-        
-    	insert prd;    
-	        
-        Product2 prd2 = new Product2 (
-            Name = 'Test product 2',
-            Product_Segment__c = 'TBA',
-            Product_Marketing_Manager__c = 'Eve-Marie Morgo',
-            Family = 'Accreditation',
-            Line_of_Business__c = 'Advertising'            
-        );                
-        
-    	insert prd2;
-        
-        Product2 prd3 = new Product2 (
-            Name = 'Test product 3',
-            Product_Segment__c = 'TBA',
-            Product_Marketing_Manager__c = 'Eve-Marie Morgo',
-            Family = 'Accreditation',
-            Line_of_Business__c = 'Advertising'            
-        );                
-        
-    	insert prd3;
-        
-
-        EF_Related_Records__c loc = new EF_Related_Records__c (
-            RecordTypeId = Schema.SObjectType.EF_Related_Records__c.getRecordTypeInfosByName().get('Location').getRecordTypeId(),
-        	FIR_Code_Name__c = 'Location 1',
-            Type__c = 'FIR'
-        );
-        
-        insert loc;
-                
-        EF_Location_Currency__c locCurr = new EF_Location_Currency__c (
-            EF_Billing_Currency__c = 'AED',
-            Contract__c = contract.id,
-            Location_ID__c = loc.id,
-            Requested_Changes__c = 'aaaaaaa'
-        );
-        
-		insert locCurr;                               
-        
-        EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c (
-        	EF_Location_ID__c = loc.id,
-            Contract__c = contract.id,
-            Data_Currency__c = 'AED',            
-            Payment_Method__c = 'Credit Card',
-            Location_Code__c = '1234',
-            Airline__c = customer.id,
-            EF_Status__c = 'Active',
-            Billing_Currency__c = 'AED',
-            Payment_Currency__c = 'AED',
-            Payment_Terms__c = '30 days after invoice date',
-            Invoice_Distribution_Method__c = 'Electronic Via Platform'           
-        );
-        
-        insert rel;    
-
-		EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
-            RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId(),
-            Contract__c = contract.id,
-            EF_Material__c = prd.id            
+            
+            insert locCurr;                               
+            
+            EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c (
+                EF_Location_ID__c = loc.id,
+                Contract__c = contract.id,
+                Data_Currency__c = 'AED',            
+                Payment_Method__c = 'Credit Card',
+                Location_Code__c = '1234',
+                Airline__c = customer.id,
+                EF_Status__c = 'Active',
+                Billing_Currency__c = 'AED',
+                Payment_Currency__c = 'AED',
+                Payment_Terms__c = '30 days after invoice date',
+                Invoice_Distribution_Method__c = 'Electronic Via Platform'           
             );
-        
-		insert mli;
-        
-		EF_Material_Line_Item__c mli2 = new EF_Material_Line_Item__c(
-            RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId(),
-            Contract__c = contract.id,
-            EF_Material__c = prd3.id            
-            );
-        
-		insert mli2;
+            
+            insert rel;    
+    		
+            List <EF_Material_Line_Item__c> mliList = new List <EF_Material_Line_Item__c> ();
+            EF_Material_Line_Item__c mli = new EF_Material_Line_Item__c(
+                RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId(),
+                Contract__c = contract.id,
+                EF_Material__c = prd.id            
+                );
+            
+            mliList.add(mli);
+            
+            EF_Material_Line_Item__c mli2 = new EF_Material_Line_Item__c(
+                RecordTypeId = Schema.SObjectType.EF_Material_Line_Item__c.getRecordTypeInfosByName().get('Contract Line Item').getRecordTypeId(),
+                Contract__c = contract.id,
+                EF_Material__c = prd3.id            
+                );
+            
+             mliList.add(mli2);
+            insert mliList;
+            
+        }
         
     }
 
