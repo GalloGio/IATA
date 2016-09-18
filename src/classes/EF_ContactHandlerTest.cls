@@ -15,8 +15,8 @@ private class EF_ContactHandlerTest {
     @isTest static void testInactiveEFContact()
     {
         Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
-        Account customer = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account customer'];
-        Account client = [select Id, Name, EF_Allow_Billing_Agreements__c from Account where Name = 'Test Account client'];
+        Account customer = [select Id, Name  from Account where Name = 'Test Account customer'];
+        Account client = [select Id, Name from Account where Name = 'Test Account client'];
         
       	Contact cont = new Contact();
         cont.RecordTypeId = schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
