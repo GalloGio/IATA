@@ -108,7 +108,7 @@ public class EF_LocationCurrencyHandler {
         }		
 	}       
     
-    
+    /*
     public static void manageDeleteLocationCurrency (List <EF_Location_Currency__c> deletedLocationCurrencyList){
         
         //get set for Contract
@@ -130,9 +130,6 @@ public class EF_LocationCurrencyHandler {
                                                                 (select Id, EF_Location_ID__c, EF_Location_ID__r.Name, Contract__c from EF_Relationships__r where EF_Location_ID__c in: locationIdSet) 
                                                               from Contract where Id in: contractIdSet]);
         Boolean weCanDelete = false;
-        /*for(){
-            
-        }*/
         
         //if(weCanDelete){
         if(contractWithCurrToBeRemoved != null) {
@@ -147,12 +144,91 @@ public class EF_LocationCurrencyHandler {
                }
 			}
 		}
-            
+        
+        
         try{
             update mapContract.values();
         }catch(Exception e){
             System.debug('#### exception updating contracts ' + e);
         }         
     }
+    */
+
+    /*
+     *  on DELETION of whole Location Currency record => don't allow if the same location ID exists on BA
+        on UPDATE of Billing Currency on Location Currency record => don't allow if the same location ID exists on BA
+
+        TODO: on successful UPDATE or DELETE of Location Currency record => update the Contract's Billing Currency listing
+    */
+    public static void validateLocationCurrencyRemoval(List<EF_Location_Currency__c> newLines, Map<Id, EF_Location_Currency__c> locationOldMap)
+    {
+        boolean isDeletion = false;
+        if(newLines == null)
+            isDeletion = true;
+
+        if(locationOldMap != null)
+        {
+            Set<Id> contractIds = new Set<Id>();
+            for(EF_Location_Currency__c locationCurrencyId : locationOldMap.values())
+            {
+                contractIds.add(locationCurrencyId.Contract__c);
+            }
+
+            List<EF_Billing_Agreement__c> baList = [select id, name, Billing_Currency__c, EF_Location_ID__c, Contract__c from EF_Billing_Agreement__c where Status__c = 'Active' and Contract__c in :contractIds];
+            
+            Set<Id> locationIds = new Set<Id>();
+
+            Map<Id, Set<Id>> contractLocationIdsMap = new Map<Id, Set<Id>>();
+            Map<Id, List<Id>> errorLocationIdListingMap = new Map<Id, List<Id>>();
+
+            for(EF_Billing_Agreement__c ba : baList)
+            {
+                if(contractLocationIdsMap.containsKey(ba.Contract__c))
+                {
+                    if(ba.EF_Location_ID__c != null)
+                    {
+                        contractLocationIdsMap.get(ba.Contract__c).add(ba.EF_Location_ID__c);
+                    }
+                }
+                else
+                {
+                    if(ba.EF_Location_ID__c != null)
+                    {
+                        locationIds.add(ba.EF_Location_ID__c);
+                        contractLocationIdsMap.put(ba.Contract__c, locationIds);
+                    }
+                }
+            }
+
+            System.debug('*********** locationIds: '+locationIds);
+            System.debug('*********** contractLocationIdsMap: '+contractLocationIdsMap);
+            System.debug('*********** errorLocationIdListingMap: '+errorLocationIdListingMap);
+
+            if(isDeletion)
+            {
+                for(EF_Location_Currency__c loc : locationOldMap.values())
+                {
+                    System.debug('*********** locationIds: '+locationIds);
+                    System.debug('***********         loc: '+loc.Location_ID__c);
+                    if(locationIds.contains(loc.Location_ID__c))
+                    {
+                        throw new EF_BaContractApprovalHelper.ApprovalException('Can not delete the Location Currency, because it is being used on one or more Billing Agreement records.');
+                    }
+                }
+            }
+            else
+            {
+                for(EF_Location_Currency__c loc : newLines)
+                {
+                    if(locationIds.contains(loc.Location_ID__c))
+                    {
+                        throw new EF_BaContractApprovalHelper.ApprovalException('Can not update the Location Currency, because the current value '+locationOldMap.get(loc.Id).EF_Billing_Currency__c+' is being used on one or more Billing Agreement records.');
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }

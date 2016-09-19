@@ -13,11 +13,12 @@ trigger EF_LocationCurrencyTrigger on EF_Location_Currency__c (
 	    	EF_LocationCurrencyHandler.manageNewLocationCurrency(Trigger.new, 'insert');
 	    
         } else if(Trigger.isBefore && Trigger.isUpdate){ 
-            EF_LocationCurrencyHandler.manageUpdateLocationCurrency();
+            EF_LocationCurrencyHandler.manageNewLocationCurrency(Trigger.new, 'update');
         }
-          else if (Trigger.isBefore && Trigger.isDelete) {     
+          if (Trigger.isBefore) {     
 	    	//Delete billing currency from contract
-	    	EF_LocationCurrencyHandler.manageDeleteLocationCurrency(Trigger.old);
+	    	EF_LocationCurrencyHandler.validateLocationCurrencyRemoval(Trigger.new, Trigger.oldMap);
+	    	//EF_LocationCurrencyHandler.manageDeleteLocationCurrency(Trigger.old);
 	     
 		}
 
