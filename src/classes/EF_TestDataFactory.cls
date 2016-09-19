@@ -79,15 +79,13 @@ public with sharing class EF_TestDataFactory
         insert contract;
 
         //create location currencies
+        EF_Related_Records__c mainLocation = [select Id, Name from EF_Related_Records__c where Name='Main' limit 1];
         EF_Location_Currency__c locCurrency = new EF_Location_Currency__c (
             Contract__c = contract.Id,
-            Location_ID__c = [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id,
+            Location_ID__c = mainLocation.Id,
             EF_Billing_Currency__c='QAR'
             );
         insert locCurrency;
-        
-        EF_Approve_Fields__c approvalBillingAgreementFields = new EF_Approve_Fields__c(Name='BillingAgreement', Billing_Agreement_Fields__c='Airline__c,Billing_Currency__c,EF_Location_ID__c,Payment_Currency__c,Payment_Method__c');
-        insert approvalBillingAgreementFields;
     }
 
     public static void createCustomSettings()
@@ -100,6 +98,37 @@ public with sharing class EF_TestDataFactory
         appr2.Name = 'Contract';
         List<EF_Approve_Fields__c> approvals = new List<EF_Approve_Fields__c>{appr1, appr2};
         insert approvals;
+    }
+
+    public static User getEfProfileAndRole(Integer profileNumber, Integer roleNumber)
+    {
+        User myUser = [select id, EF_User_Role__c, ProfileId from User where Id = :UserInfo.getUserId()];
+        List<Profile> efProfileIds = [select id from Profile where Name like 'E&F%' order by Name asc];
+        
+        User u1 = new User(FirstName='Test1 User',Division='UnitTest',Manager=myUser,
+                           EF_Billing_Agreement_Approver__c=myUser.Id,
+                           EF_Contract_Approver__c=myUser.Id, 
+                           License_Cost_Center__c='AAA000AA00',
+                           Username='efUnit@test.ch', LastName='Test1', 
+                           Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', 
+                           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
+                           EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
+        if(efProfileIds.size() == 2)
+        {
+            u1.ProfileId = efProfileIds.get(profileNumber).Id;
+        }
+        Map<Integer, String> roleNumberNameMap = new Map<Integer, String>();
+        roleNumberNameMap.put(1,'Manager, Business Development');
+        roleNumberNameMap.put(2,'Head, Client Services');
+        roleNumberNameMap.put(3,'Manager, Airline Services & Head, Business Delivery');
+        roleNumberNameMap.put(4,'Client Services Specialists');
+        roleNumberNameMap.put(5,'Airline Services Specialists');
+        roleNumberNameMap.put(6,'E&F General Access');
+        roleNumberNameMap.put(7,'Manager, Invoicing & Accounting & Data Transformation');
+
+        u1.EF_User_Role__c = roleNumberNameMap.get(roleNumber);
+        insert u1;
+        return u1;
     }
 
     public static User getEfStaffUser(String efUserRole)
