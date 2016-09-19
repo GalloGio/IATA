@@ -10,7 +10,7 @@
 public class vfIECEBC extends IECPageController {
 	
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
-	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';	
+	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';	 
 	
 	
 	public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];

@@ -5,31 +5,29 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
         private set;
     }
     
-    public PageReference submitForApproval() {
-        campaign.Notification_Email__c = vfIECEBC.pref.PrimaryContact_Email__c;
-        update campaign;
-        
-        // Create an approval request for the account
-        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
-        //req1.setComments('Submitting request for approval.');
-        req1.setObjectId(campaign.id);
-        
-        // Submit on behalf of a specific submitter
-        req1.setSubmitterId(UserInfo.getUserId());
-        // Submit the record to specific process and skip the criteria evaluation
-        req1.setProcessDefinitionNameOrId('EBC_Campaign_Approval');
-        if (Test.isRunningTest()) {
-        	req1.setSkipEntryCriteria(true);
-        }
-        // Submit the approval request for the account
-        Approval.ProcessResult result = Approval.process(req1);
-        // Verify the result
-        System.assert(result.isSuccess());
-         
-
-    
-        return null;
-    }
+	public Integer numberOfRecipients {
+		get{
+			if (numberOfRecipients == null) {
+				HttpRequest req = new HttpRequest();
+				req.setEndpoint('https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/RecipientsCount/' + campaign.EBC_Master_Filter__c);
+				req.setMethod('GET');
+				req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+				
+				Http http = new Http();
+				HTTPResponse res = http.send(req);
+				
+                if (campaign.Number_of_Recipients__c != Integer.valueOf(res.getBody())) {
+                    EBC_Campaign__c tmpCamp = new EBC_Campaign__c();
+                    tmpCamp.Id = campaign.Id;
+                    campaign.Number_of_Recipients__c = tmpCamp.Number_of_Recipients__c = Integer.valueOf(res.getBody());
+                    update tmpCamp;
+                }
+                numberOfRecipients = Integer.valueOf(campaign.Number_of_Recipients__c);
+			}
+			return numberOfRecipients;
+		}
+		set;
+	}
     
     private Map<Integer, PageReference> stepToPageReference = new Map<Integer, PageReference>{
         1 => Page.IECEBC_Campaign,

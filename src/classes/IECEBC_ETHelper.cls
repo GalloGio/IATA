@@ -370,6 +370,136 @@ public class IECEBC_ETHelper {
         }
     }
     
+    
+    // Parse the XML list to get a node value
+    public static List<Map<String, String>> parseListMap(HttpResponse res, List<String> elts) { 
+            
+        List<Map<String, String>> MyListMap = new List<Map<String, String>>();
+        DOM.Document doc = new DOM.Document();      
+          try {
+            doc.load(res.getBody());    
+            DOM.XMLNode root = doc.getRootElement();
+                return   walkThrough(root, elts, MyListMap);
+            
+          } catch (System.XMLException e) {  // invalid XML
+              System.debug(e.getMessage());
+           
+          }
+                return null;
+    }
+    
+    
+    // walk through the xml file and get the Map of value for the node retrieve in a specific list. This Map is return as a List
+    public static List<Map<String, String>> walkThrough(DOM.XMLNode node, List<String> elts, List<Map<String, String>> myListMap) {
+        
+     String result = '\n';
+     List<String> myResult = new List<String>();
+     Map<String, String> MyResult1 = new  Map<String, String>();
+        
+     if (node.getNodeType() == DOM.XMLNodeType.ELEMENT) {
+         
+         result += 'Element: ' + node.getName();
+         
+         if (node.getText().trim() != '') {
+             result += ', text=' + node.getText().trim();
+         }
+         
+         for (Dom.XMLNode child: node.getChildElements()) {
+             
+             walkThrough(child, elts, myListMap);
+             
+                 for(String n: elts){
+                    if(child.getName() == n){
+                        
+                       myResult1.put(n, child.getText()); //Add new item element in the Map 
+                     
+                    }
+             	}  
+        }
+             if(myResult1.size() > 0){
+                 MyListMap.add(myResult1); // add a Map in the List of Nap
+                 
+                 //system.debug('le size du map est : '+ MyListMap.size()); 
+                //system.debug('le resultat final est : '+ MyListMap);     
+              }   
+          
+        return MyListMap;
+      }
+            
+      return null;  //should never reach here 
+    }
+
+    
+
+
+   /*
+    
+    // class to retrieve Bounce Event subscribers
+    public class SubscriberProperties {
+        public String SubscriberKey {get; set;}
+        public String SMTPReason {get; set;}
+        public String EventDate {get; set;}       
+    }
+    
+    // parse xml response to get Object (properties == nodenames) values
+    public static Map<String, SubscriberProperties> parseMap(HttpResponse res, SubscriberProperties sp) {
+        Map<String, SubscriberProperties> mapSP = new Map<String, SubscriberProperties>();
+        Dom.Document doc = new Dom.Document();
+        doc.load(res.getBody());  
+        try {              
+            DOM.XMLNode root = doc.getRootElement();
+            return walkThroughMap(root, mapSP);
+        } catch (System.XMLException e) {  // invalid XML
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
+    
+    // walk through the xml file and get the list of values of a node    
+    public static Map<String, SubscriberProperties> walkThroughMap(DOM.XMLNode node, Map<String, SubscriberProperties> mapSP) {                
+        if (node.getNodeType() == DOM.XMLNodeType.ELEMENT) {
+            SubscriberProperties sp = new SubscriberProperties();
+            String mapKey = '';
+            
+            List<dom.Xmlnode> nodesList = node.getChildren();
+            
+            for (dom.Xmlnode i : nodesList)
+            {
+                if (node.getName() == 'SubscriberKey') {                
+                    sp.SubscriberKey = node.getText().trim();
+                    mapKey = sp.SubscriberKey;                
+                }
+                if (node.getName() == 'SMTPReason') {
+                    sp.SMTPReason = node.getText().trim();
+                } 
+                if (node.getName() == 'EventDate') {
+                    sp.EventDate = node.getText().trim();
+                }                 
+            }
+                            
+            // put into Map
+            mapSP.put(mapKey, sp);
+            // continue searching
+            for (Dom.XMLNode child: node.getChildElements()) {
+                
+               // for(String key : mapSP.keySet()){
+                
+                mapSP = walkThroughMap(child, mapSP);
+                
+                 //   if(child.getName() == mapSP.get(key)){
+                       //system.debug('le resultat de map est ' + mapSP.get(key)); 
+                        // mapSP.put(mapKey, sp);
+                        
+                  //  }
+               // }
+            }
+            return mapSP;
+        }
+        return null;  //should never reach here 
+    }  
+    
+    */
+    
     // parse xml response to get map<nodename, value> of TS Summary
     public static void parseMapTriggeredSendSummary(HttpResponse res, Map<String, String> tssMap) {
         // map for errors log
@@ -391,7 +521,7 @@ public class IECEBC_ETHelper {
             }
         }       
     }
-    
+            
     // walk through the xml file and get the list of values of a node
     public static List<String> walkThroughList(DOM.XMLNode node, String nodeName, List<String> ls) {                
         if (node.getNodeType() == DOM.XMLNodeType.ELEMENT) {
@@ -424,4 +554,19 @@ public class IECEBC_ETHelper {
         }
         return 'Node not found';  //should never reach here 
     }
+    
+    
+    
+    // convert ET dateTime to GMT Time zone
+    
+    public static DateTime ConvertETDate (String dateT){
+        
+        DateTime myDate = DateTime.Parse(dateT.substring(5,7)+'/'+dateT.substring(8,10)+'/'+dateT.substring(0,4)+' '+dateT.substring(11,16)+' AM');
+        
+        
+        return myDate;
+        
+    }
+    
+    
 }

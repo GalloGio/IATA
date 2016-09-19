@@ -109,24 +109,6 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		acctEmailBlock.minimumEmailBlockPurchaseSize = Integer.valueOf(ebcCampaign.Number_of_Recipients__c) - Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c);
 	} // end of initialization
 	
-	public Integer numberOfRecipients {
-		get{
-			if (numberOfRecipients == null) {
-				HttpRequest req = new HttpRequest();
-				req.setEndpoint('https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/RecipientsCount/' + ebcCampaign.EBC_Master_Filter__c);
-				req.setMethod('GET');
-				req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
-				
-				Http http = new Http();
-				HTTPResponse res = http.send(req);
-				
-				ebcCampaign.Number_of_Recipients__c = numberOfRecipients = Integer.valueOf(res.getBody());
-				update ebcCampaign;
-			}
-			return numberOfRecipients;
-		}
-		set;
-	}
 	
 	
 	// ========================================================================
@@ -299,5 +281,53 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		return paymentPage;
 	}
 	
+    public class NotEnoughCredits_Exception extends Exception{}
 	
+    public PageReference debitCredits() {
+        rereadBillingAccount();
+        
+        if (newEmailBalance < 0) throw new NotEnoughCredits_Exception('Not Enough Credits');
+        EBC_Activity__c a = new EBC_Activity__c();
+        a.Activity_Date_Time__c = Datetime.now();
+        a.Activity_Type__c = 'Send';
+        a.EBC_Campaign__c = ebcCampaign.Id;
+        a.New_Balance__c = newEmailBalance;
+        a.Related_Billing_Account__c = billingAccount.Id;
+        a.Total_Count__c = -1 * Integer.valueOf(ebcCampaign.Number_of_Recipients__c);
+        
+        insert a;
+        
+        submitForApproval();
+        
+        PageReference pr = new PageReference('/IECEBC_Dashboard');
+        pr.setRedirect(true);
+        return pr;
+    }
+    
+    
+    private void submitForApproval() {
+        EBC_Campaign__c c = new EBC_Campaign__c();
+        c.Id = ebcCampaign.Id;
+        c.Notification_Email__c = vfIECEBC.pref.PrimaryContact_Email__c;
+        update c;
+        
+        // Create an approval request for the account
+        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
+        //req1.setComments('Submitting request for approval.');
+        req1.setObjectId(ebcCampaign.Id);
+        
+        // Submit on behalf of a specific submitter
+        req1.setSubmitterId(UserInfo.getUserId());
+        // Submit the record to specific process and skip the criteria evaluation
+        req1.setProcessDefinitionNameOrId('EBC_Campaign_Approval');
+        if (Test.isRunningTest()) {
+        	req1.setSkipEntryCriteria(true);
+        }
+        // Submit the approval request for the account
+        Approval.ProcessResult result = Approval.process(req1);
+        // Verify the result
+        System.assert(result.isSuccess());
+    }
+    
+    
 }

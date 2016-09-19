@@ -1,4 +1,5 @@
 <apex:page standardController="EBC_Template__c" extensions="vfIECEBC_MosaicoEditor" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false">
+    <apex:variable var="isCustomHtml" value="{!BEGINS(EBC_Template__c.Parent_Template__r.External_Id__c, 'customhtml-') == true}" />
     <apex:outputText rendered="{!ISBLANK(EBC_Template__c.Id)}">
         Invalid Parameters
     </apex:outputText>
@@ -76,6 +77,14 @@
                     plugins:  ["paste", "iataMergeField"],
                     toolbar2: "iataMergeField"
                 }
+                
+                
+                <apex:outputText rendered="{!isCustomHtml}">
+                    ko.bindingHandlers.wysiwyg.fullOptions = {
+                        toolbar1: 'code',
+                        plugins: ["code"]
+                    }
+                </apex:outputText>
     
                 
                 //var window.mosaicoSave;
@@ -104,14 +113,11 @@
                     if (basePath.lastIndexOf('/') > 0) basePath = basePath.substr(0, basePath.lastIndexOf('/'));
                     var plugins = [
                         function(viewModel) {
-                        	console.log('viewModel', viewModel);
-                        	console.log('viewModel.logoPath', viewModel.logoPath);
                             viewModel.logoPath = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
                         },
                         function(viewModel) {
                         	globalViewModel = viewModel;
                         },
-                        
                         function(viewModel) {
                             viewModel.loadGallery = function(a, b, c, d) {
                                 viewModel.galleryLoaded('loading');
@@ -159,7 +165,6 @@
                                     
                                     viewModel.notifier.options.onShown = function() {
                                     	viewModel.notifier.options.onShown = null;
-                                            
                                         sforce.apex.execute("vfIECEBC_MosaicoEditor","saveTemplate", {
                                             templateId: '{!template.Id}',
                                             metadataContent: viewModel.exportMetadata(),
@@ -167,7 +172,7 @@
                                             xHtmlContent: viewModel.exportHTML()
                                         });
                                         
-                                        if (undefined == preventMessage || !preventMessage) {
+                                        if (typeof(preventMessage) != 'boolean') {
                                             viewModel.notifier.clear();
                                             viewModel.notifier.success(viewModel.t('Successfully saved.'));
                                         }
@@ -239,10 +244,14 @@
                             viewModel.test = testCmd;
                         },
                         
+                        <apex:outputText rendered="{!isCustomHtml}">
+                        function(viewModel) {
+                            viewModel.showToolbox = false;
+                        
+                        	setTimeout("jQuery('#ko_preheaderBlock_1 > :first').click()", 1000); 
+                        },
+                        </apex:outputText>
                         function(viewModel){
-                            console.log(viewModel);
-                            
-                            
                         	if (undefined != parent && undefined !== parent.onEditorLoaded) {
                             	parent.onEditorLoaded();
                             }
@@ -270,7 +279,13 @@
                 
                 
                 </script>
-                
+                <apex:outputText rendered="{!isCustomHtml}">
+                    <style>
+                        #showGallery,
+                        [for="showGallery"],
+                        .fa-picture-o { display: none !important; }
+                    </style>
+                </apex:outputText>
                 <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/mosaico-material.min.css')}?v=0.10" />
                 <link rel="stylesheet" href="{!URLFOR($Resource.Mosaico, '/dist/vendor/notoregular/stylesheet.css')}" />
             </head>
