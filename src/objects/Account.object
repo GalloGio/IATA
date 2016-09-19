@@ -7398,6 +7398,11 @@ Controlled picklist of E&amp;FStatus</description>
         <picklist>
             <controllingField>EF_Status__c</controllingField>
             <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+                <controllingFieldValues>Active</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Bankrupt</fullName>
                 <default>false</default>
                 <controllingFieldValues>Inactive</controllingFieldValues>
