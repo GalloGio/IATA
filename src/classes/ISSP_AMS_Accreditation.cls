@@ -518,7 +518,18 @@ public without sharing class ISSP_AMS_Accreditation {
         isNoticeOfChange = false;
 
         newCase = DAL_ISSP.getCase(attachCtrl.tmpCase.Id);
+        isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
         fetchAMSProcessForm();
+        
+        popContact();  //Get the contact details of currently logged in user
+        
+         if (con.Account.Top_Parent__c == null) { //User is from HQ Account
+            vHQAccountId = con.AccountId;
+            fetchHQAccountDetails();
+        } else { //Get Id for HQ Account when user's Account is a branch office
+            vHQAccountId = con.Account.Top_Parent__c;
+            fetchHQAccountDetails();
+        }
 
         if (newForm != null) {
             SYSTEM.DEBUG('Accreditation NewForm.Operation_Type__c 1: ' + newForm.Operation_Type__c);

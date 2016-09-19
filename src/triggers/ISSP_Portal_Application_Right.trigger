@@ -56,9 +56,9 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
         	else if (trigger.isUpdate){
                 Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
                 if (access.Right__c != oldAccess.Right__c){
-		            if (access.Right__c == 'Access Denied'){
-		            	contactRemove2FAIdSet.add(access.Contact__c);
-		            }
+                    if (oldAccess.Right__c == 'Access Granted' && access.Right__c == 'Access Denied'){
+                        contactRemove2FAIdSet.add(access.Contact__c);
+                    }
 		            else if (access.Right__c == 'Access Granted'){
 		            	system.debug('Adding id from update');
 		            	contactFedIdMap.put(access.Contact__c, tdAppName);
