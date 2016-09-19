@@ -173,26 +173,20 @@ public class EF_BillingAgreementHandler
            
             //check if location chosen in relationship is present in Contract Location Currencies
             for(EF_Billing_Agreement__c r: relWithLocation){
-                
                 if(mapLocationsInLocationCurrency.isEmpty() && r.EF_Location_ID__c!=null){
                    r.EF_Location_ID__c.addError('Please set before location currencies on contract.');
                 }else{
                     if(!mapLocationsInLocationCurrency.containsKey(r.EF_Location_ID__c)){
                         r.EF_Location_ID__c.addError('Location chosen is not allowed. It has not been defined in Contract as a valid location.');
                     }else{
-                        if(mapRelationshipsInContract.containsKey(r.EF_Location_ID__c)){
-
-                           //LDC 08222016 This case should not be blocked, r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
-                            
-                        }else{
                             for(EF_Location_Currency__c lc: contractMap.get(r.Contract__c).EF_Locations_Currencies__r){
-                                System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
+                                //System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
                                 if(r.EF_Location_ID__c== lc.Location_ID__c){
                                     // set currency in relationship as the one defined on the locationCurrency
                                     r.Billing_Currency__c = lc.EF_Billing_Currency__c;
                                 }
                             }
-                        }
+                       
                     }
                 }
             }
