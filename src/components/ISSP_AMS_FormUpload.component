@@ -25,11 +25,14 @@
                                     </apex:outputText>
                                 </div>
                                 <div class="col-md-4">
+                                    <apex:variable var="reviewStatuses" value="{!''}{!reviewStatusMap}" />
+                                    <apex:variable var="FileIdInReviewStatusus" value="{!reqIdentifier}=true"/>
+                                    
                                     <apex:outputText rendered="{!reqRequired!=null}">
-                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC',reviewStatusMap[reqIdentifier]==false)}">
+                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', !CONTAINS(reviewStatuses, FileIdInReviewStatusus))}">
                                             <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';"/>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC',reviewStatusMap[reqIdentifier])}">
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', CONTAINS(reviewStatuses, FileIdInReviewStatusus))}">
                                             <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';" disabled="true"/>
                                         </apex:outputText>
                                     </apex:outputText>
