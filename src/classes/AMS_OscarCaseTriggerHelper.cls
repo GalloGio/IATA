@@ -278,8 +278,8 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c : (List<Case>)Trigger.new){
             Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
             if(c.RecordTypeId == sidraRecTypeId){
-                if(c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Withdrawal_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRWDCases.add(c);
-                if(c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
+                if(c.Update_AIMS_IRRWITH__c != null && c.IRR_Withdrawal_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Withdrawal_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRWDCases.add(c);
+                if(c.Update_AIMS_IRR__c != null && c.IRR_Approval_Rejection__c == 'Approved' && (Trigger.isInsert || cOld.IRR_Approval_Rejection__c != 'Approved') && caseIrregularityCreated.add(c.Id)) IRRCases.add(c);
             }
         }
 
