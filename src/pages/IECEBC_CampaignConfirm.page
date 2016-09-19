@@ -338,11 +338,6 @@
                                     </apex:outputText>
                                 </apex:form>
                                 
-                                <!--
-<div class="group-container payment-info">
-<c:IECEBC_PaymentInformation id="paymentInformationComponent" />
-</div>								
--->
                             </section>
                             
                             <section class="columns sub-container payment-confirmation" id="paymentconfirmation">
