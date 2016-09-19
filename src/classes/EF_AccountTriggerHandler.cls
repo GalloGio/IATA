@@ -5,6 +5,9 @@ public class EF_AccountTriggerHandler {
 
 	public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap) {
 
+        //
+        // Will contain all the accountId's that have been inactivated.
+        //
 		Set<Id> inactiveAccsSet = new Set<Id> ();
 		
 		for(Account a: accs){
@@ -12,8 +15,11 @@ public class EF_AccountTriggerHandler {
 				inactiveAccsSet.add(a.Id);
 			}
 		}
-
-		//check if account has child accounts 
+        
+        //
+		// Check if account has child accounts
+		// The child account will be inactivated too.
+		//
 		Map <Id, Account> childAccsMap = new Map <Id, Account> ([Select Id, EF_Status__c, ParentId from Account where ParentId in: inactiveAccsSet]);
 		
 		if(!childAccsMap.isEmpty() && run){
@@ -23,7 +29,10 @@ public class EF_AccountTriggerHandler {
                 childAccsList.add(a); //we'll update at the end, when all the other records have been updated.
                              
 			}
-			
+            
+            //
+            // Add the child id's too
+            // 
 			inactiveEFContracts(inactiveAccsSet);
 
 		}else if(!inactiveAccsSet.isEmpty() && run){
@@ -39,7 +48,7 @@ public class EF_AccountTriggerHandler {
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
 		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, 
 			(Select Id, Status__c from EF_Relationships__r) from Contract where AccountId in: inactiveAccsSet and RecordTypeId =: contractRTId]);
-
+        
 		List <Contract> contracts2Inactivate = new List <Contract> ();
 		Set <Id> BA2Inactivate = new Set <Id> ();
 
@@ -59,22 +68,41 @@ public class EF_AccountTriggerHandler {
 		if(!contracts2Inactivate.isEmpty()){
 			try{ update contracts2Inactivate; 
 				if(!BA2Inactivate.isEmpty() && run){ 
-                    inactiveEFBillingAgreement(BA2Inactivate); 
+                    Set<Id> emptySet = new Set<Id>();
+                    inactiveEFBillingAgreement(BA2Inactivate, emptySet); 
                 }
                 else if (childAccsList.size()>0 && run){
                     run=false; 
                     inactiveChildAccounts(childAccsList);
                 }
 			}catch(Exception e){System.debug('## Error inactivating EF Contracts ' +e);}
+		}else{
+			if(!inactiveAccsSet.isEmpty() && run){ 
+                 	Set<Id> emptySet = new Set<Id>();
+                    inactiveEFBillingAgreement(emptySet, inactiveAccsSet); 
+                }
+                else if (childAccsList.size()>0 && run){
+                    run=false; 
+                    inactiveChildAccounts(childAccsList);
+                }
 		}
 	}
 
-	public static void inactiveEFBillingAgreement(Set <Id> BASet){
+	public static void inactiveEFBillingAgreement(Set <Id> BASet, Set <Id> AccSet ){
 
 		List <EF_Contact_Relationship__c> BAContacs2InactList = new List <EF_Contact_Relationship__c> ();
 
-		Map <Id, EF_Billing_Agreement__c> baMap = new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c, 
-			(Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
+		Map <Id, EF_Billing_Agreement__c> baMap = new Map <Id, EF_Billing_Agreement__c> ();
+        
+		System.debug('#### calling the method with parameters  ' + BASet +'----'+ AccSet );
+        
+		if(!BASet.isEmpty() && AccSet.isEmpty()){
+            System.debug('#### on the first if');
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c,  (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Id in: BASet]);
+		}else if(BASet.isEmpty() && !AccSet.isEmpty()){
+            System.debug('#### on the second if');
+			baMap= new Map <Id, EF_Billing_Agreement__c> ([select Id, Status__c, Airline__c, (Select Id, Status__c from EF_Contact_Relationships__r) from EF_Billing_Agreement__c where Airline__c in: AccSet]);
+		}
 
 		for(EF_Billing_Agreement__c ba: baMap.values()){
 			ba.Status__c='Inactive';

@@ -116,12 +116,6 @@
                 <behavior>Edit</behavior>
                 <field>Fax</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ShippingAddress</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Email__c</field>
@@ -129,6 +123,12 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Website</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ShippingAddress</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -204,6 +204,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>EF_SubStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAP_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -340,6 +344,26 @@
         </layoutColumns>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>Quality__c</fields>
+        <fields>ACCOUNT.SITE</fields>
+        <fields>ACCOUNT.ADDRESS1_CITY</fields>
+        <fields>ACCOUNT.PHONE1</fields>
+        <fields>ACCOUNT.ADDRESS1_COUNTRY</fields>
+        <fields>CORE.USERS.LAST_NAME</fields>
+        <relatedList>Account.Top_Parent__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>Quality__c</fields>
+        <fields>ACCOUNT.SITE</fields>
+        <fields>ACCOUNT.ADDRESS1_CITY</fields>
+        <fields>ACCOUNT.PHONE1</fields>
+        <fields>ACCOUNT.ADDRESS1_COUNTRY</fields>
+        <fields>CORE.USERS.LAST_NAME</fields>
+        <relatedList>Account.Cargo_Agency__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Issues__c</fields>

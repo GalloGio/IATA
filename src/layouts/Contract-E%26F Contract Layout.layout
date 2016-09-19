@@ -131,6 +131,10 @@
                 <behavior>Readonly</behavior>
                 <field>EF_Payment_Terms_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Allow_Billing_Agreements__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -267,7 +271,7 @@
         <relatedList>EF_Location_Currency__c.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Edit_Biling_Agreement_Status</customButtons>
+        <customButtons>Edit_All</customButtons>
         <fields>NAME</fields>
         <fields>Status__c</fields>
         <fields>Client__c</fields>

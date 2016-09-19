@@ -40,7 +40,7 @@ public class EF_BillingAgreementHandler
 
     // Queries for any Accounts that do only allow Billing Agreements to be updated with approval
     public static void handleWithApprovalContractUpdates(Map<Id, EF_Billing_Agreement__c> newAgreements, Map<Id, EF_Billing_Agreement__c> oldAgreements)
-    {
+    { /*
         Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : newAgreements.values())
         {
@@ -67,7 +67,7 @@ public class EF_BillingAgreementHandler
             // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
             for(EF_Billing_Agreement__c ba : agreementsToApprove)
             {
-                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields))
+                if(EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, oldAgreements.get(ba.Id), fields, false))
                 {
                     EF_Approval__c approval = EF_BaContractApprovalHelper.fillTemporaryApprovalStorage(new EF_Approval__c(), ba, fields);
                     ba.Require_Approval__c = true;
@@ -80,7 +80,7 @@ public class EF_BillingAgreementHandler
             {
                 insert approvalStorageList;
             }
-        }
+        }*/
     }
 
     // For after insert trigger to find out if any of the attached Accounts is set to "Allow Billing Agreements with Approval"
@@ -105,7 +105,7 @@ public class EF_BillingAgreementHandler
     // Queries for any Accounts that do only allow Billing Agreements to be created with approval
     public static void handleWithApprovalContractInserts(List<EF_Billing_Agreement__c> agreementList)
     {
-        Set<Id> contractIds = new Set<Id>();
+       /* Set<Id> contractIds = new Set<Id>();
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             // add both Client and Customer (Airline) into the Set, so that both will be queried for
@@ -114,48 +114,26 @@ public class EF_BillingAgreementHandler
 
         // Find if any of the related accounts doesn't allow billing agreements to be created without approval and force-start an approval process
         Map<Id, Contract> contractsInvolved = new Map<Id, Contract>([select id, EF_Allow_Billing_Agreements__c from Contract where Id in :contractIds and EF_Allow_Billing_Agreements__c = 'Allowed with Approval']);
+        
+        // Get the list of fields that require Approval from Custom Settings and place them in a List
+        List<EF_Approve_Fields__c> fieldList = [select id, name, Billing_Agreement_Fields__c from EF_Approve_Fields__c where Name = 'BillingAgreement'];
+        List<String> fields = fieldList.get(0).Billing_Agreement_Fields__c.split(',');
+
+        // If there are any Billing Agreements that require approval, start the process to temporarily store them into another object
         for(EF_Billing_Agreement__c ba : agreementList)
         {
             if(contractsInvolved.get(ba.Contract__c) != null)
             {
                 ba.Require_Approval__c = true;
                 ba.Status__c = 'Inactive';
+                EF_BaContractApprovalHelper.identifyBillingAgreementChanges(ba, null, fields, true);
             }
-        }
+        }*/
     }
-
-    /*
-    // Queries for any Accounts that do not allow Billing Agreements and displays an error message to the User.
-    public static void preventAgreementCreationForNotAllowed(List<EF_Billing_Agreement__c> agreementList)
-    {
-        String errorMessage = Label.EF_Account_Disallow_BA;
-        Set<Id> accountIds = new Set<Id>();
-        for(EF_Billing_Agreement__c ba : agreementList)
-        {
-            // add both Client and Customer (Airline) into the Set, so that both will be queried for
-            accountIds.add(ba.Client__c);
-            accountIds.add(ba.Airline__c);
-        }
-
-        // Find if any of the related accounts doesn't allow billing agreements to be created and throw an error
-        Map<Id, Account> accountsInvolved = new Map<Id, Account>([select id, EF_Allow_Billing_Agreements__c from Account where Id in :accountIds and EF_Allow_Billing_Agreements__c = 'Not Allowed']);
-        for(EF_Billing_Agreement__c ba : agreementList)
-        {
-            if(accountsInvolved.containsKey(ba.Client__c))
-            {
-                ba.Client__c.addError(errorMessage);
-            }
-            else if(accountsInvolved.containsKey(ba.Airline__c))
-            {
-                ba.Airline__c.addError(errorMessage);
-            }
-        }
-    }
-    */
 
     //checks if location chosen has been set in Contract Location Currency.
     public static void checkLocationCurrency (List<EF_Billing_Agreement__c> relationshipList){
-
+       
         //check if relationship records have location.
         List <EF_Billing_Agreement__c> relWithLocation = new List <EF_Billing_Agreement__c>();
 
@@ -195,26 +173,20 @@ public class EF_BillingAgreementHandler
            
             //check if location chosen in relationship is present in Contract Location Currencies
             for(EF_Billing_Agreement__c r: relWithLocation){
-                
                 if(mapLocationsInLocationCurrency.isEmpty() && r.EF_Location_ID__c!=null){
                    r.EF_Location_ID__c.addError('Please set before location currencies on contract.');
                 }else{
                     if(!mapLocationsInLocationCurrency.containsKey(r.EF_Location_ID__c)){
                         r.EF_Location_ID__c.addError('Location chosen is not allowed. It has not been defined in Contract as a valid location.');
-                    }else{
-                        if(mapRelationshipsInContract.containsKey(r.EF_Location_ID__c)){
-
-                           //LDC 08222016 This case should not be blocked, r.EF_Location_ID__c.addError('Location chosen has already been set for another relationship');
-                            
-                        }else{
+                    }else{                       
                             for(EF_Location_Currency__c lc: contractMap.get(r.Contract__c).EF_Locations_Currencies__r){
-                                System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
+                                //System.debug('#### REL loc Id ' + r.EF_Location_ID__c + r.EF_Location_ID__r.Name + ' --- location Currency ' + lc.Location_ID__c + lc.Location_ID__r.Name);
                                 if(r.EF_Location_ID__c== lc.Location_ID__c){
                                     // set currency in relationship as the one defined on the locationCurrency
                                     r.Billing_Currency__c = lc.EF_Billing_Currency__c;
                                 }
                             }
-                        }
+                       
                     }
                 }
             }

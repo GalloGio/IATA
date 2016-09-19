@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -71,10 +67,7 @@
         <fullName>Allow_Billing_Agreements__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
-     AND(
-        ISPICKVAL(Client__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;), 
-        ISPICKVAL(Airline__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;)
-       ), &apos;Allowed&apos;, &apos;Other&apos;
+        ISPICKVAL(Contract__r.EF_Allow_Billing_Agreements__c, &apos;Allowed&apos;), &apos;Allowed&apos;, &apos;Other&apos;
 )</formula>
         <label>Allow Billing Agreements</label>
         <required>false</required>
@@ -96,32 +89,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Billed_Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Billed Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Relationships (Billed Account)</relationshipLabel>
-        <relationshipName>EF_Relationships_Billed_Account</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Billing_Account__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Billing Account</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>E&amp;F Relationships</relationshipLabel>
-        <relationshipName>EF_Relationships_Billing_Account</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Billing_Agreement_Name__c</fullName>
         <externalId>false</externalId>
         <label>Billing Agreement Name</label>
@@ -137,6 +104,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -184,6 +152,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -214,6 +183,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -247,6 +217,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -302,6 +273,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -311,6 +283,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -350,6 +323,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -389,6 +363,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -429,6 +404,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -436,8 +412,20 @@
     <label>E&amp;F Airline Billing Agreement</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Agreement_Name__c</columns>
+        <columns>Client__c</columns>
+        <columns>Airline__c</columns>
+        <columns>Contract__c</columns>
+        <columns>Status__c</columns>
+        <columns>Data_Currency__c</columns>
+        <columns>Billing_Currency__c</columns>
+        <columns>Payment_Currency__c</columns>
+        <columns>Payment_Method__c</columns>
+        <columns>Payment_Terms__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>E&amp;F ABA-{0000}{MM}{YY}</displayFormat>
@@ -464,15 +452,14 @@
         <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
     </validationRules>
     <webLinks>
-        <fullName>Edit_Biling_Agreement_Status</fullName>
+        <fullName>Edit_All</fullName>
         <availability>online</availability>
         <displayType>massActionButton</displayType>
-        <height>600</height>
-        <linkType>page</linkType>
-        <masterLabel>Mass Update Billing Agreement</masterLabel>
-        <openType>sidebar</openType>
-        <page>EF_UpdateBillingAgreement</page>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
     </webLinks>
 </CustomObject>
