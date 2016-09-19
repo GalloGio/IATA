@@ -20,15 +20,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>TC_Comments__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ICAO_designator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EF_Additional_SAP_Nr__c</field>
+                <field>Field_Head_Office__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -234,6 +230,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Tax_ID_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Additional_SAP_Nr__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAP_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
