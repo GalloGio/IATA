@@ -53,12 +53,14 @@ public class EF_MaterialLineItemHandler {
             {
                 for(EF_Material_Line_Item__c mat : newLines)
                 {
-
                     if(mat.Contract__c != null)
                     {
-                        if(!contractMaterialsMap.get(mat.Contract__c).contains(mat.EF_Material__c) && contractMaterialsMap.get(mat.Contract__c).contains(materialLineItemOldMap.get(mat.id).EF_Material__c))
+                        if(contractMaterialsMap.get(mat.Contract__c) != null)
                         {
-                            mat.EF_Material__c.addError('Unable to change Material type due to the current material being used in at least one Airline Billing Agreement related to the Contract record.');
+                            if(!contractMaterialsMap.get(mat.Contract__c).contains(mat.EF_Material__c) && contractMaterialsMap.get(mat.Contract__c).contains(materialLineItemOldMap.get(mat.id).EF_Material__c))
+                            {
+                                mat.EF_Material__c.addError('Unable to change Material type due to the current material being used in at least one Airline Billing Agreement related to the Contract record.');
+                            }
                         }
                     }
                 }
@@ -249,19 +251,20 @@ public class EF_MaterialLineItemHandler {
                 
                 cont = contracts.get(mliToContractMap.get(mli.Id));
                 found = false;
-                
-                if (cont.EF_Material_Line_Items__r != null) {
-                    
-                    for (EF_Material_Line_Item__c contractMLI : cont.EF_Material_Line_Items__r) {
+                if(cont != null)
+                {
+                    if (cont.EF_Material_Line_Items__r != null) {
                         
-                        if (contractMLI.EF_Material__c == mli.EF_Material__c) {
+                        for (EF_Material_Line_Item__c contractMLI : cont.EF_Material_Line_Items__r) {
                             
-                            found = true;
-                            break;
+                            if (contractMLI.EF_Material__c == mli.EF_Material__c) {
+                                
+                                found = true;
+                                break;
+                            }
                         }
                     }
                 }
-                
                 if (found == false) {
                     
                     mli.addError(Label.EF_Line_Item_Not_In_Contract_Error);
