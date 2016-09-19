@@ -1,0 +1,491 @@
+<apex:component controller="vfIECEBC_PaymentComponentController" allowDML="true">
+	<apex:attribute name="paymentTokenParam" type="String" description="Payment Token" assignTo="{!paymentToken}"/>
+	<apex:outputText id="postAttributeReadInitCall" rendered="{!init}" />
+	
+	<h1 class="page-title">Payment</h1>
+	
+	<apex:form id="messageForm">
+		<apex:pageMessages id="msg"/>
+	</apex:form>
+	
+	<script>
+		function selectPaymentMethod( methodName, creditCardExternalId)
+		{
+			console.log( 'selectPaymentMethod: ( methodName:' + methodName + ' ; cardExtId:'+ creditCardExternalId + ')') ;
+		}
+		
+		/*
+		$j = jQuery.noConflict();
+		
+		function showLoading() {
+			$j('.ajaxloader').show();
+		}
+		
+		function hideLoading() {
+			$j('.ajaxloader').hide();
+		}
+		
+		*/
+		
+	</script>
+	
+	<!--
+	<apex:actionStatus id="statusId" onstart="showLoading();" onstop="hideLoading();" />
+	-->
+	
+	
+	<div class="row row-payment">
+		<section class="columns main-container campaign-cost">
+			<apex:form id="campaignConfirmBillingDetailForm" rendered="{!isPaymentTokenValid}">
+				<div class="accordion-container no-border js-accordion">
+					<dl class="list">
+						<dt class="accordion-title is-open" data-index="1">Confirm billing details</dt>
+						<dd class="accordion-panel is-open" data-index="1">
+							<p>These are the details we will use on your invoice. Please confirm them before proceeding with payment.</p>
+							<table class="data-table table-contact-info">
+								<tbody>
+									<tr>
+										<th>Contact name</th>
+										<td>
+											<apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}">
+											</apex:outputField>
+											<apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text">
+											</apex:inputField>
+											<apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text">
+											</apex:inputField>
+										</td>
+									</tr>
+									<tr>
+										<th>Job Title</th>
+										<td>
+											<apex:outputText rendered="{!!editMode}" value="{!billingAccount.Contact__r.Title}">
+											</apex:outputText>
+											<apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" styleClass="user-input text">
+											</apex:inputText>
+											<!-- <input type="type" class="user-input text" value="Lorem ipsum dolor"> -->
+										</td>
+									</tr>
+									<tr>
+										<th>Company/Organization</th>
+										<td>
+											<apex:outputText value="{!billingAccount.Name}" styleClass="{!IF(editMode,'disabled-user-input text','')}">
+											</apex:outputText>
+											
+											
+											<!-- <input type="type" class="user-input text" value="IATA Travel Agencies"> -->
+										</td>
+									</tr>
+									<tr>
+										<th>Address</th>
+										<td>
+											<apex:outputText rendered="{!!editMode}">
+												{!oBillingAddress.Street__c} <br/>
+												{!oBillingAddress.City__c} <br/>
+												{!oBillingAddress.ISO_State_Name__c} <br/>
+												{!oBillingAddress.ZipCode__c} <br/>
+												{!oBillingAddress.ISO_Country_Name__c} 
+											</apex:outputText>
+											
+											<apex:outputPanel rendered="{!editMode}">
+											
+												<div class="field-group text inline">
+													<label>
+														<span class="input-label">Street</span>
+														<apex:inputField value="{!oBillingAddress.Street__c}" styleClass="user-input text" >
+														</apex:inputField>
+													</label>
+												</div>
+												
+												<div class="field-group text inline">
+													<label>
+														<span class="input-label">Postal code</span>
+														<apex:inputField value="{!oBillingAddress.ZipCode__c}" styleClass="user-input text">
+														</apex:inputField>
+													</label>
+												</div>
+												
+												<div class="field-group text inline">
+													<label>
+														<span class="input-label">City</span>
+														<apex:inputField value="{!oBillingAddress.City__c}" styleClass="user-input text">
+														</apex:inputField>
+													</label>
+												</div>
+												
+												<div class="field-group select inline">
+													<span class="input-label">Country</span>
+													<div class="custom-user-input select">
+														<i class="icon angle-down"></i>
+														
+														<apex:selectList style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}" value="{!oBillingAddress.ISO_Country__c}" size="1"  
+															styleClass="user-input select" 
+														>
+															<apex:selectOptions value="{!lstISOCountries}"/>
+															<apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelBillingStatesProvince" />
+														</apex:selectList>
+														
+													</div>
+												</div>
+												<div class="field-group select inline">
+													<apex:outputPanel id="panelBillingStatesProvince" rendered="true">
+														<span class="input-label">State / Province</span>
+														<div class="custom-user-input select">
+															<i class="icon angle-down"></i>
+															
+															<apex:selectList style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}"
+																title="Country" 
+																value="{!oBillingAddress.ISO_State__c}" 
+																size="1"  styleClass="user-input select">
+																<apex:selectOptions value="{!lstStateProvince}" />
+															</apex:selectList>  
+														</div>
+														
+													</apex:outputPanel>
+												</div>
+												
+											</apex:outputPanel>
+										</td>
+									</tr>
+									
+									<tr>
+										<th>Phone</th>
+										<td>
+											<apex:outputText rendered="{!!editMode}" value="{!oPaymentBillingContact.Phone}">
+											</apex:outputText>
+											<apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}">
+											</apex:inputText>
+										</td>
+									</tr>
+									<tr>
+										<th>Email</th>
+										<td>
+											<apex:outputLink value="mailto:{!oPaymentBillingContact.Email}" styleClass="{!IF(editMode,'disabled-user-input text','')}">
+												{!oPaymentBillingContact.Email}
+											</apex:outputLink>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="footer-actions text-right">
+								<!--
+								<a href="#" class="button secondary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit billing information</a>
+												 styleClass="button secondary" html-aria-hidden="true">
+								
+									<i class="fa fa-pencil-square-o" aria-hidden="true">
+										::before
+									</i>
+								-->
+								
+								<apex:commandButton action="{!clickEditButton}" rendered="{!!editMode}" 
+													value="Edit billing information"
+													reRender="campaignConfirmBillingDetailForm,footerActionForm,msg"
+													styleClass="button secondary fa fa-pencil-square-o"
+													status="statusId"
+													/>
+								<apex:commandButton action="{!clickSaveBillingDetailButton}" rendered="{!editMode}" 
+													value="Save" 
+													reRender="campaignConfirmBillingDetailForm,footerActionForm,msg"
+													status="statusId"
+													styleClass="button secondary"/>
+								</div>
+						</dd>
+						<dt class="accordion-title is-open" data-index="2">Terms and conditions</dt>
+						<dd class="accordion-panel is-open" data-index="2">
+							<p>Please read the Terms and Conditions before proceeding with payment.</p>
+							<div class="checkbox-box">
+								<div class="custom-user-input checkbox">
+									<input class="user-input checkbox js-enable-accordion" data-target="#accordion-payment-method" type="checkbox" id="terms-and-conditions"/>
+									<label class="custom-checkbox" for="terms-and-conditions"><i class="icon"></i></label>
+								</div>
+								<label class="input-label" for="terms-and-conditions">I agree to the CheckACode Profesionnal <a href="#">Terms &amp; Conditions</a></label>
+							</div>
+						</dd>
+						<dt class="accordion-title is-disabled" data-index="3" id="accordion-payment-method">Payment method</dt>
+						<dd class="accordion-panel" data-index="3">
+							<div class="group-container payment-info">
+								<h3 class="group-title">Payment information</h3>
+								<div class="box box-payment-type js-payment-method">
+									<div class="field-group radio inline">
+										<apex:outputPanel id="paymentWithCreditCardPanel" rendered="{!isPayableWithCreditCard}">
+											<div class="radio-box">
+												<div class="custom-user-input radio">
+													<input class="user-input radio" type="radio" name="pay-by2" id="pay-by-credit-card2" value="creditCard" checked=""/>
+													<label class="custom-radio" for="pay-by-credit-card2"><i class="icon"></i></label>
+												</div>
+												<label class="input-label" for="pay-by-credit-card2">Credit card</label>
+											</div>
+										</apex:outputPanel>
+										<apex:outputPanel id="paymentWithICHPanel" rendered="{!isPayableWithICH}">
+											<div class="radio-box">
+												<div class="custom-user-input radio">
+													<input class="user-input radio" type="radio" name="pay-by2" id="pay-by-ich2" value="ich"
+															onClick="selectPaymentMethod('ICH', '');"
+														/>
+													<label class="custom-radio" for="pay-by-ich2"><i class="icon"></i></label>
+												</div>
+												<label class="input-label" for="pay-by-ich2">ICH</label>
+											</div>
+										</apex:outputPanel>
+										<apex:outputPanel id="paymentWithBankTransferPanel" rendered="{!isPayableWithBankTransfer}">
+											<div class="radio-box">
+												<div class="custom-user-input radio">
+													<input class="user-input radio" type="radio" name="payment-method" id="payment-method-bank" value="bank"
+															onClick="selectPaymentMethod('BANK_TRANSFER', '');"
+														/>
+													<label class="custom-radio" for="payment-method-bank"><i class="icon"></i></label>
+												</div>
+												<label class="input-label" for="payment-method-bank">Bank transfer</label>
+											</div>
+										</apex:outputPanel>
+									</div>
+								</div>
+								
+								<div class="payment-method-container">
+									<table class="data-table table-saved-cards js-card-data-table">
+										<tbody>
+											<tr class="heading">
+												<th class="card">Saved cards</th>
+												<th class="name">Card holder names</th>
+												<th class="date" colspan="2">Expires</th>
+											</tr>
+											<!-- -->
+											
+											<apex:repeat value="{!paymentMethods}" var="cc" rendered="{!isPayableWithCreditCard}">
+												<tr class="{!IF(cc.zId!=cc.zId,'item', 'item is-selected')}">
+													<td class="card">
+														<div class="field-group radio">
+															<div class="radio-box">
+																<div class="custom-user-input radio">
+																	<input class="user-input radio" type="radio" name="pay-by2-card-type" 
+																			id="pay-by-credit-card2-saved-card-1-{!cc.zId}" checked=""
+																			onClick="selectPaymentMethod('CREDIT_CARD', '{!cc.zId}');"
+																		/>
+																	<label class="custom-radio" for="pay-by-credit-card2-saved-card-1-{!cc.zId}"><i class="icon"></i></label>
+																</div>
+																<label class="input-label" for="pay-by-credit-card2-saved-card-1-{!cc.zId}">
+																	<apex:variable var="ccLogo" value="img/components/icons/credit-card/{!cc.creditCardType}.png"/>  
+																	<span class="card-image">
+																		<img src="{!URLFOR($Resource.EcommerceAssets, ccLogo)}" alt="{!cc.creditCardType}"/>
+																	</span>
+																	<span class="card-name">
+																		<strong>{!cc.creditCardType}</strong>
+																		<span class="ending-number">{!cc.creditCardMaskNumber}</span>
+																	</span>
+																</label>
+															</div>
+														</div>
+													</td>
+													<td class="name">
+														{!cc.creditCardHolderName}
+													</td>
+													<td class="date">
+														 <apex:outputText value="{0, number,00}"><apex:param value="{!cc.creditCardExpirationMonth}"/></apex:outputText>/{!cc.creditCardExpirationYear}
+													</td>
+													<td class="action">
+														<apex:outputPanel rendered="{!(defaultPaymentExternalId!=cc.zId)}" >
+															<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
+														</apex:outputPanel>
+													</td>
+												</tr>
+											</apex:repeat>
+											
+											<!-- -- >
+											<tr class="item is-selected">
+												<td class="card">
+													<div class="field-group radio">
+														<div class="radio-box">
+															<div class="custom-user-input radio">
+																<input class="user-input radio" type="radio" name="pay-by2-card-type" id="pay-by-credit-card2-saved-card-1" checked=""/>
+																<label class="custom-radio" for="pay-by-credit-card2-saved-card-1"><i class="icon"></i></label>
+															</div>
+															<label class="input-label" for="pay-by-credit-card2-saved-card-1">
+																<span class="card-image">
+																	<img src="{!URLFOR($Resource.EcommerceAssets, 'img/components/icons/credit-card/Visa.png')}" alt="VISA"/>
+																</span>
+																<span class="card-name">
+																	<strong>VISA</strong>
+																	<span class="ending-number">ending in 1234</span>
+																</span>
+															</label>
+														</div>
+													</div>
+												</td>
+												<td class="name">
+													Jonathan Doelipsum
+												</td>
+												<td class="date">
+													04/18
+												</td>
+												<td class="action">
+													<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
+												</td>
+											</tr>
+											<tr class="item">
+												<td class="card">
+													<div class="field-group radio">
+														<div class="radio-box">
+															<div class="custom-user-input radio">
+																<input class="user-input radio" type="radio" name="pay-by2-card-type" id="pay-by-credit-card2-saved-card-2"/>
+																<label class="custom-radio" for="pay-by-credit-card2-saved-card-2"><i class="icon"></i></label>
+															</div>
+															<label class="input-label" for="pay-by-credit-card2-saved-card-2">
+																<span class="card-image">
+																	<img src="{!URLFOR($Resource.EcommerceAssets, 'img/components/icons/credit-card/MasterCard.png')}" alt="VISA"/>
+																</span>
+																<span class="card-name">
+																	<strong>MASTERCARD</strong>
+																	<span class="ending-number">ending in 5148</span>
+																</span>
+															</label>
+														</div>
+													</div>
+												</td>
+												<td class="name">
+													Milli Max
+												</td>
+												<td class="date">
+													03/17
+												</td>
+												<td class="action">
+													<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
+												</td>
+											</tr>
+											<tr class="item">
+												<td class="card">
+													<div class="field-group radio">
+														<div class="radio-box">
+															<div class="custom-user-input radio">
+																<input class="user-input radio" type="radio" name="pay-by2-card-type" id="pay-by-credit-card2-saved-card-3"/>
+																<label class="custom-radio" for="pay-by-credit-card2-saved-card-3"><i class="icon"></i></label>
+															</div>
+															<label class="input-label" for="pay-by-credit-card2-saved-card-3">
+																<span class="card-image">
+																	<img src="{!URLFOR($Resource.EcommerceAssets, 'img/components/icons/credit-card/AmericanExpress.png')}" alt="VISA"/>
+																</span>
+																<span class="card-name">
+																	<strong>AMEX</strong>
+																	<span class="ending-number">ending in 8957 <i class="text-error">(expired)</i></span>
+																</span>
+															</label>
+														</div>
+													</div>
+												</td>
+												<td class="name">
+													Jonathan Doelipsum
+												</td>
+												<td class="date">
+													04/18
+												</td>
+												<td class="action">
+													<a class="js-open-modal" data-target-modal="#js-modal-delete-credit-card" href="#">Remove</a>
+												</td>
+											</tr>
+				-->
+				
+										</tbody>
+									</table>
+									
+									<div class="footer table-actions">
+										<a class="icon plus js-open-modal" data-target-modal="#js-modal-add-credit-card" href="#">Add card</a>
+									</div>
+								</div>
+							</div>
+						
+						</dd>
+					</dl>
+				</div>
+				
+			</apex:form>
+		</section>
+		
+		<section class="columns sub-container payment-confirmation" id="paymentconfirmation">
+			<div class="is-sticky-confirmation" style="">
+				<apex:form id="paymentConfirmationForm" rendered="{!isPaymentTokenValid}">
+					<h2 class="section-title">Payment Confirmation</h2>
+					<div class="table-container">
+						<!-- payment confirmation section: the detail and total begin -->
+						<table class="data-table table-payment table-confirmation">
+							<tbody>
+								<tr class="item title">
+									<th>
+										<strong>
+											<apex:outputText rendered="{! (paidProductRatePlan != null) && (!payExactAmount)}">
+												{!paidProductRatePlan.Name}
+											</apex:outputText>
+										</strong>
+									</th>
+									<td class="price">
+									</td>
+								</tr>
+								
+								<apex:repeat id="ratePlanChargeRepeat" value="{!selectedProductRatePlanChargeWrapperList}" var="prpcw">
+									<tr class="item no-space">
+										<th>
+											<apex:outputPanel rendered="{!!payExactAmount}">
+												<div class="charge-name">{!prpcw.Name}</div>
+											</apex:outputPanel>
+											<apex:outputPanel rendered="{!payExactAmount}">
+												<strong>
+													<apex:outputText value="{0,number,###,###,##0} "><apex:param value="{!prpcw.numberOfEmails}"/></apex:outputText>
+												</strong>
+												emails at 
+												<apex:outputText value=" ${0,number,###,###,##0.00} cost/email"><apex:param value="{!prpcw.unitPrice}" /></apex:outputText>
+											</apex:outputPanel>
+										</th>
+										<td class="price">
+											<strong>
+												<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpcw.chargeAmount}" /></apex:outputText>
+											</strong>
+										</td>
+									</tr>
+								
+								</apex:repeat>
+								
+								<tr class="sub-total">
+									<th>
+										Subtotal
+									</th>
+									<td class="price">
+										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!subTotalAmount}" /></apex:outputText>
+									</td>
+								</tr>
+								<tr class="tax">
+									<th>
+										Taxes
+									</th>
+									<td class="price">
+										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!taxAmount}" /></apex:outputText>
+									</td>
+								</tr>
+								<tr class="total">
+									<th>
+										Total
+									</th>
+									<td class="price">
+										<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!totalAmountDue}" /></apex:outputText>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					<!-- payment confirmation section: the detail and total begin -->
+					</div>
+				</apex:form>
+				
+				
+				<apex:form id="footerActionForm" rendered="{!isPaymentTokenValid}">
+					<apex:outputPanel rendered="{!showPaymentButtons}" >
+						<div class="footer-actions">
+							<ul class="list actions">
+								<li><a class="text-link" href="#">Cancel</a></li>
+								<li><a class="button" href="#">Submit payment</a></li>
+							</ul>
+						</div>
+					</apex:outputPanel>
+				</apex:form>
+			</div>
+		</section>
+		
+	</div>
+	
+</apex:component>

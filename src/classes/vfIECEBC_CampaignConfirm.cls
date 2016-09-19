@@ -9,6 +9,7 @@
   *   
   * History: 
   *  - 20160817-sl: initial working version
+  *  - 20160915-sl: payment page url 
   */
 
 
@@ -108,24 +109,24 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		acctEmailBlock.minimumEmailBlockPurchaseSize = Integer.valueOf(ebcCampaign.Number_of_Recipients__c) - Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c);
 	} // end of initialization
 	
-    public Integer numberOfRecipients {
-        get{
-            if (numberOfRecipients == null) {
-                HttpRequest req = new HttpRequest();
-                req.setEndpoint('https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/RecipientsCount/' + ebcCampaign.EBC_Master_Filter__c);
-                req.setMethod('GET');
-                req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
-                
-                Http http = new Http();
-                HTTPResponse res = http.send(req);
-                
-                ebcCampaign.Number_of_Recipients__c = numberOfRecipients = Integer.valueOf(res.getBody());
-                update ebcCampaign;
-            }
-            return numberOfRecipients;
-        }
-        set;
-    }
+	public Integer numberOfRecipients {
+		get{
+			if (numberOfRecipients == null) {
+				HttpRequest req = new HttpRequest();
+				req.setEndpoint('https://3b-customer-portal-iata.cs87.force.com/iec/services/apexrest/RecipientsCount/' + ebcCampaign.EBC_Master_Filter__c);
+				req.setMethod('GET');
+				req.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+				
+				Http http = new Http();
+				HTTPResponse res = http.send(req);
+				
+				ebcCampaign.Number_of_Recipients__c = numberOfRecipients = Integer.valueOf(res.getBody());
+				update ebcCampaign;
+			}
+			return numberOfRecipients;
+		}
+		set;
+	}
 	
 	
 	// ========================================================================
@@ -164,7 +165,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 	// excluding the new to bepurchased email block package
 	public Integer newEmailBalance {
 		get{
-			return ( Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c) - Integer.valueOf(ebcCampaign.Number_of_Recipients__c));
+			return (Math.abs(Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c) - Integer.valueOf(ebcCampaign.Number_of_Recipients__c)));
 		}
 		private set;
 	}
@@ -196,7 +197,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		get{
 			Integer emails =  0;
 			if (payWithExactAmount) {
-				emails = acctEmailBlock.minimumEmailBlockPurchaseSize;
+				emails = Math.max(0,acctEmailBlock.minimumEmailBlockPurchaseSize);
 			} else if ( payWithEmailPackage ) {
 				emails = acctEmailBlock.selectedProductRatePlanWrapper.currentEmailCredits;
 			} else if (payWithRatePlan && acctRatePlan.selectedProductRatePlan != null) {
@@ -239,7 +240,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		get {
 			Decimal amt = 0;
 			if (payWithExactAmount) {
-				amt = acctEmailBlock.minimumEmailBlockPurchaseSize * productRatePlan.EBC_Currency_Cost_Per_Email__c;
+				amt = emailCreditPurchased * productRatePlan.EBC_Currency_Cost_Per_Email__c;
 			} else if (payWithEmailPackage && acctEmailBlock.selectedProductRatePlanWrapper != null) {
 				amt = acctEmailBlock.selectedProductRatePlanWrapper.amount;
 			} else if (payWithRatePlan && acctRatePlan.selectedProductRatePlanWrapper != null) {
@@ -256,7 +257,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 		get{
 			Decimal total = 0;
 			if (payWithExactAmount) {
-				total = productRatePlan.EBC_Currency_Cost_Per_Email__c * acctEmailBlock.minimumEmailBlockPurchaseSize;
+				total = productRatePlan.EBC_Currency_Cost_Per_Email__c * emailCreditPurchased;
 			} else if (payWithEmailPackage) {
 				total = acctEmailBlock.totalNewPurchaseAmount;
 			} else if (payWithRatePlan){
@@ -265,5 +266,38 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 			return total;
 		}
 	} // totalPurchaseAmount getter
-
+	
+	
+	// ========================================================================
+	// the url along with the parameter for the payment
+	// please note that the detail on the product rate plan charge will be recalculated and reselected
+	// this ensure the data integrity and simplify the caller
+	public PageReference goToPaymentPage()
+	{
+		String campaignPaymentOption = payWithExactAmount ? EBC_PAYMENT_CAMPAIGN_EXACT 
+									: ( payWithEmailPackage ? EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE  
+										: ( payWithRatePlan ? EBC_PAYMENT_CAMPAIGN_RATE_PLAN : null )
+									);
+		Id paidProductRatePlanId = (payWithExactAmount) ? productRatePlan.Id
+									: (payWithEmailPackage ? acctEmailBlock.selectedProductRatePlanWrapper.productRatePlan.Id
+										: (payWithRatePlan ? acctRatePlan.selectedProductRatePlanWrapper.productRatePlan.Id : null));
+			
+		String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
+		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
+															, eBroadcast_Payment_Token__c = theToken
+															, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_CAMPAIGN
+															, eBroadcast_Payment_Product_Rate_Plan_Id__c = paidProductRatePlanId
+															, eBroadcast_Payment_Campaign__c = ebcCampaignId 
+															, eBroadcast_Payment_Campaign_Option__c = campaignPaymentOption
+															, eBroadcast_Payment_Email_Credit_Amount__c = emailCreditPurchased
+															);
+		update paymentBillingAccount;
+			
+		PageReference paymentPage = Page.IECEBC_CampaignPayment;
+		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
+		
+		return paymentPage;
+	}
+	
+	
 }

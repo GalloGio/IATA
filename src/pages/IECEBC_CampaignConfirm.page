@@ -416,7 +416,10 @@
 										
 										<ul class="list actions">
 											<li><apex:commandLink action="{!previous}" styleClass="button" value="Previous" /></li>
+											<!--
 											<li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" /></li>
+											-->
+											<li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Send" /></li>
 											<li><apex:commandLink action="{!submitForApproval}" value="Submit for approval" /></li>
 											<li>
 												<apex:commandButton value="Buy now" action="{!addToCart}">

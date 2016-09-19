@@ -47,7 +47,7 @@
 												</strong>
 											</p>
 											
-                                            <apex:outputPanel id="alertBestValuePlan" rendered="{!!showUpgradeOption}">
+											<apex:outputPanel id="alertBestValuePlan" rendered="{!!showUpgradeOption}">
 												<div class="alert warning">
 													<p>You currently have the best value plan.</p>
 												</div>
@@ -100,10 +100,10 @@
 												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
 											</apex:actionFunction>
 											
-                                            <ul class="list plan-list js-checkbox-list">
+											<ul class="list plan-list js-checkbox-list">
 												<apex:repeat id="productRatePlanRepeat" value="{!productRatePlanWrapperUpgradeList}" var="prpw">
-                                                    <li class="list-item" >
-                                                        <apex:outputPanel id="upgradeSelectablePanel" rendered="{!allowSelectUpgrade}" > 
+													<li class="list-item" >
+														<apex:outputPanel id="upgradeSelectablePanel" rendered="{!allowSelectUpgrade}" > 
 															<div class="checkbox-box">
 																<div class="custom-user-input checkbox" >
 																	<apex:inputCheckbox id="upgradeCheck" value="{!prpw.selected}" styleClass="user-input checkbox" 
@@ -116,8 +116,8 @@
 																<label class="input-label" for="{!$Component.upgradeCheck}">Get this plan</label>
 															</div>
 														</apex:outputPanel>
-
-                                                        <apex:outputPanel id="callToUpgradePanel" rendered="{!!allowSelectUpgrade}">
+														
+														<apex:outputPanel id="callToUpgradePanel" rendered="{!!allowSelectUpgrade}">
 															<a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>																
  														</apex:outputPanel>
 														<div class="plan-box">
@@ -199,7 +199,7 @@
 														<div class="footer-actions">
 															<ul class="list actions">
 																<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountRatePlan)}">Cancel</a></li>
-																<li><a class="button" href="#">Submit payment</a></li>
+																<li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Submit payment" /></li>
 															</ul>
 														</div>
 													</apex:outputPanel>

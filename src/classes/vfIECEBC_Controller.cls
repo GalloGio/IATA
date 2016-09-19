@@ -9,6 +9,7 @@
  *   20160809-sl: modify productRatePlanIdUpgradeList
  *   20160811-sl: add currentAddon
  *   20160824-sl: modify the query for EbcAddOn rate plans to comply with technical design: select based on EBC_Setup instead of zqu__ZProduct.ProductCategory__c 
+ *   20160915-sl: add payment related constants and rereadBillingAccount method 
  *
  **/
 
@@ -17,6 +18,28 @@ public virtual class vfIECEBC_Controller {
 	// contants for zqu__ProductRatePlan.EBC_SubscriptionType__c
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';
+	
+	// ===================================================================================
+	// this is used as url parameter for the EBC Payment pages 
+	public static final String EBC_PAYMENT_PARAM_PAYMENT_TOKEN = 'paymentToken';
+	public static final String EBC_PAYMENT_PARAM_CAMPAIGN_OPTION = 'campaignPaymentOption';
+	public static final String EBC_PAYMENT_PARAM_PAYMENT_TARGET = 'target';
+	public static final String EBC_PAYMENT_PARAM_RATE_PLAN_ID = 'ratePlanId';
+	public static final String EBC_PAYMENT_PARAM_EMAIL_CREDIT_PURCHASED = 'emailCreditAmount';
+	
+	// values for URL parameter campaignPaymentOption / eBroadcast_Payment_Campaign_Option__c
+	public static final String EBC_PAYMENT_CAMPAIGN_NONE = '';//'None'; 
+	public static final String EBC_PAYMENT_CAMPAIGN_EXACT = 'Exact Amount'; 
+	public static final String EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE = 'Email Package'; 
+	public static final String EBC_PAYMENT_CAMPAIGN_RATE_PLAN = 'Prepaid Rate Plan';
+	
+	// values for URL parameter target / eBroadcast_Payment_Target__c
+	public static final String EBC_PAYMENT_TARGET_CAMPAIGN = 'campaign';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN = 'rateplan';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE = 'email';
+	public static final String EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON = 'addon';
+	public static final String EBC_PAYMENT_TARGET_RENEWAL = 'renewal';
+	
 	
 	// Zuora__CustomerAccount__c.ClientType__c picklist value, this was used to determine if a billing account is of a member
 	//private static final String BILLING_ACCOUNT_CLIENT_TYPE_MEMBER_AIRLINE = 'Member Airline'; 
@@ -39,7 +62,14 @@ public virtual class vfIECEBC_Controller {
 			if (billingAccount == null) billingAccount = vfIECEBC.billingAccount;
 			return billingAccount;
 		}
-		set;
+		private set;
+	}
+	// Reread billing account associated with the current user
+	public Zuora__CustomerAccount__c rereadBillingAccount()
+	{
+		billingAccount = null;
+		vfIECEBC.rereadBillingAccount(); 
+		return billingAccount;
 	}
 	
 	// The zuora subscription associated with the current billing account

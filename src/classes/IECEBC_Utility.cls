@@ -1,4 +1,16 @@
+/*  
+  * IECEBC_Utility: Collection of misc static utilities for eBroadcast
+  * 
+  * Description:
+  *   
+  * History: 
+  *  - 20160915-sl: add generatePaymentToken()
+  *
+  */
+
 public class IECEBC_Utility {
+	public static final Integer EBC_PAYMENT_TOKEN_MAX_LENGTH = 250; // no more than max length of zqu__CustomerAccount__c.eBroadcast_Payment_Token__c 
+	
     public static String generateRandomString(Integer len) {
         final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         String randStr = '';
@@ -118,7 +130,19 @@ public class IECEBC_Utility {
         query += 'From ' + table + ' ';
         
         List<String> queryWhereClauses = new List<String>();
+        // Remove exclusions
         queryWhereClauses.add(emailField + ' != null');
+        
+        //queryWhereClauses.add('Id NOT IN (Select Email__c From EBC_Email_Exclusion__c Where Unsubscribe_From__c = NULL OR Unsubscribe_From__c = \'' + masterFilter.Billing_Account__c + '\')');
+        
+        
+        if (masterFilter.Audience__c == 'Agent') {
+            queryWhereClauses.add('Opt_in__c = true');
+        } else {
+            queryWhereClauses.add('GDP_Opt_In__c = true');            
+        }
+        
+         
         
         if (masterFilter.Audience__c == 'Custom') {
             if (!String.isBlank(masterFilter.IATA_Codes__c)) {
@@ -361,5 +385,18 @@ public class IECEBC_Utility {
             return theUrl;
         }
     } // end of renewalPageUrl getter
+    
+    
+	// ========================================================================
+	// generate payment token, 
+	// used by EBC Payment process to set value in zqu__CustomerAccount__c.eBroadcast_Payment_Token__c
+	// additionalText can be the related campaignId, ratePlanId, etc. 
+	public static String generatePaymentToken(String additionalText)
+	{
+		String baseText = UserInfo.getUserId() + '-' + additionalText + '-' + DateTime.now().format('YYYYMMDD-HH:mm:ss.0');
+		String result = IECUtil.EncryptParameter(baseText);
+		result = (result.length() <= EBC_PAYMENT_TOKEN_MAX_LENGTH) ? result : result.substring(0, EBC_PAYMENT_TOKEN_MAX_LENGTH);
+		return result;
+	} // end of generatePaymentToken
     
 }

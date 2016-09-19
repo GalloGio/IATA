@@ -3,6 +3,7 @@
  * 
  * Change log:
  *   20160826-sl: move ebcSetup out to IECEBC_Utility, add isSubscriptionRenewable
+ *   20160915-sl: payment support: add queried fields from billingAccount
  *
  **/
 
@@ -11,13 +12,52 @@ public class vfIECEBC extends IECPageController {
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO = 'Pay-As-You-Go';
 	public static final String EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PRE_PAID = 'Pre-Paid';	
 	
+	
 	public static User usr = [Select ContactId, Contact.AccountId from User where id = :Userinfo.getUserid()];
+	public static Zuora__CustomerAccount__c rereadBillingAccount()
+	{
+		billingAccount = null;
+		return billingAccount;
+	}
 	public static Zuora__CustomerAccount__c billingAccount {
 		get {
 			if (billingAccount == null) {
-				billingAccount = [Select Id, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  
+				billingAccount = [Select Id, Name
+									, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  
+									, eBroadcast_Payment_Token__c
+									, eBroadcast_Payment_Target__c
+									, eBroadcast_Payment_Product_Rate_Plan_Id__c
+									, eBroadcast_Payment_Campaign__c
+									, eBroadcast_Payment_Campaign_Option__c
+									, eBroadcast_Payment_Email_Credit_Amount__c
+									, Zuora__DefaultPaymentMethod__c // text, e.g. Credit Card
+									, Zuora__Default_Payment_Method__c // lookup
+									, Zuora__Default_Payment_Method__r.Zuora__External_Id__c
+									, Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationMonth__c
+									, Zuora__Default_Payment_Method__r.Zuora__CreditCardExpirationYear__c
+									, Zuora__Default_Payment_Method__r.Zuora__CreditCardHolderName__c
+									, Zuora__Default_Payment_Method__r.Zuora__CreditCardMaskNumber__c
+									, Zuora__Default_Payment_Method__r.Zuora__CreditCardType__c
+									, Zuora__Default_Payment_Method__r.Zuora__Type__c
+									, ICHCode__c 
 									, ClientType__c
+									, Contact__c
+									, Contact__r.Id
 									, Contact__r.IATA_Code__c
+									, Contact__r.Name
+									, Contact__r.FirstName
+									, Contact__r.LastName
+									, Contact__r.Title
+									, Contact__r.Phone
+									, Contact__r.Email
+									//, Zuora__BillToName__c
+									//, Zuora__BillToAddress1__c
+									//, Zuora__BillToAddress2__c
+									//, Zuora__BillToState__c
+									//, Zuora__BillToPostalCode__c
+									//, Zuora__BillToCountry__c
+									//, Zuora__BillToWorkPhone__c
+									//, Zuora__BillToWorkEmail__c
 									from Zuora__CustomerAccount__c 
 									where Contact__c = :usr.ContactId LIMIT 1];
 			}
@@ -106,8 +146,8 @@ public class vfIECEBC extends IECPageController {
 		}
 		//private set;
 	} // end of isSubscriptionRenewable getter
-    
-    
+	
+	
 	/*
 	public static vfIECSubscriptionInfo subscriptionInfo {
 		get {
@@ -191,4 +231,5 @@ public class vfIECEBC extends IECPageController {
 		return null;
 	}
 */
+
 }

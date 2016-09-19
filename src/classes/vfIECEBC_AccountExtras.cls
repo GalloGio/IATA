@@ -172,6 +172,31 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 	
 	
 	// ========================================================================
+	// go to the payment page, the information is passed on the billingAccount record
+	// use paymentToken as Url Parameter to ensure the communication integrity between pages.
+	// the detail on the product rate plan charge will be recalculated and reselected
+	// this ensure the data integrity and simplify the caller
+	public PageReference goToPaymentPage()
+	{
+		String theToken = IECEBC_Utility.generatePaymentToken( selectedProductRatePlan.Id + '-' + EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON);
+		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
+														, eBroadcast_Payment_Token__c = theToken
+														, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON
+														, eBroadcast_Payment_Product_Rate_Plan_Id__c = selectedProductRatePlan.Id
+														, eBroadcast_Payment_Campaign__c = null 
+														, eBroadcast_Payment_Campaign_Option__c = EBC_PAYMENT_CAMPAIGN_NONE
+														, eBroadcast_Payment_Email_Credit_Amount__c = 0
+														);
+		update paymentBillingAccount;
+		
+		PageReference paymentPage = Page.IECEBC_Payment; 
+		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
+			
+		return paymentPage;
+	} // end of goToPaymentPage
+	
+	
+	// ========================================================================
 	// inner wrapper class definition below
 	// ------------------------------------------------------------------------
 	
