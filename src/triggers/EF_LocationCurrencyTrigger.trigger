@@ -15,6 +15,7 @@ trigger EF_LocationCurrencyTrigger on EF_Location_Currency__c (
         } else if(Trigger.isBefore && Trigger.isUpdate){ 
             EF_LocationCurrencyHandler.manageNewLocationCurrency(Trigger.new, 'update');
         }
+
           if (Trigger.isBefore) {     
 	    	//Delete billing currency from contract
 	    	EF_LocationCurrencyHandler.validateLocationCurrencyRemoval(Trigger.new, Trigger.oldMap);
