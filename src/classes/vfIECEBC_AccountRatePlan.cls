@@ -9,7 +9,8 @@
   *   
   * History: 
   *  - 20160729-sl: initial working version
-  *  - 20160915-sl: add payment
+  *  - 20160919-sl: add payment link and hide submit payment if no PrepaidRate Plan has been selected.
+  *
   */
 
 
@@ -112,10 +113,11 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 				selectedProductRatePlanWrapper = prpw;
 				newSubscriptionProductCharge.Zuora__Price__c = prpw.amountOneTime + prpw.amountRecurring;
 				
-				prpcList = selectedProductRatePlan.zqu__R00N40000001mFVKEA2__r;
+				prpcList = prpw.firstTimeProductRatePlanChargeList;
+				
 				if ( prpcList != null & prpcList.size()>0)
 				{
-					newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = prpcList[0].Id; // get the first product rate plan charge
+					newSubscriptionProductCharge.Product_Rate_Plan_Charge__c = prpcList[0].Id; // get the first product rate plan charge ???
 				}
 				updateNewPurchasedRatePlanChargeList(prpcList);
 			} else {
@@ -234,7 +236,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 					, EBC_Currency_Cost_Per_Email__c
 					, EBC_PrePaid_Emails__c
 					, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
-					   		, zqu__RecurringPeriod__c
+							, zqu__RecurringPeriod__c
 						from zqu__R00N40000001mFVKEA2__r order by Id)
 						//from zqu__ProductRatePlanCharge__r order by Id)
 					, (select Id, Name, Product_Rate_Plan__c, Long_Description__c
@@ -296,6 +298,7 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 		public List<String> descriptions {get; private set;}
 		public String billingPeriod {get;set;} // based on ProductRatePlanCharge recurring period (zqu__RecurringPeriod__c)
 		
+		public List<zqu__ProductRatePlanCharge__c> firstTimeProductRatePlanChargeList; // the productRatePlanCharge list that is relevant for the first time purchase
 		public Decimal amount {get; set;} // amount
 		public Decimal amountOneTime  {get;set;}
 		public Decimal amountRecurring {get;set;}
@@ -316,12 +319,16 @@ public with sharing class vfIECEBC_AccountRatePlan extends vfIECEBC_Controller
 			amountOneTime = 0;
 			amountRecurring = 0;
 			//for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__ProductRatePlanCharge__r)
+			firstTimeProductRatePlanChargeList = new  List<zqu__ProductRatePlanCharge__c>();
+			
 			for (zqu__ProductRatePlanCharge__c prpc : prp.zqu__R00N40000001mFVKEA2__r)
 			{
 				if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_ONE_TIME) {
 					amountOneTime += prpc.zqu__ListPrice__c;
+					firstTimeProductRatePlanChargeList.add(prpc);
 				} else if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_RECURRING ) {
 					amountRecurring += prpc.zqu__ListPrice__c; 
+					firstTimeProductRatePlanChargeList.add(prpc);
 					if (prpc.zqu__RecurringPeriod__c != null) {
 						billingPeriod = prpc.zqu__RecurringPeriod__c;
 					}

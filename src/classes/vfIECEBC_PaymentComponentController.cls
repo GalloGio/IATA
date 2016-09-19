@@ -9,7 +9,7 @@
   *  - 
   *   
   * History: 
-  *  - 20160918-sl: initial dev version
+  *  - 20160919-sl: initial dev version
   *  
   */
 
@@ -189,6 +189,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	public void onChangeBillingCountry()
 	{
 		// do nothing
+		oBillingAddress.ISO_State__c = null; // reset the state, as the selected country changed
 	}
 	
 	// ========================================================================
@@ -339,7 +340,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	public Boolean showPaymentButtons
 	{
 		get{
-			Boolean result = (! editMode 
+			Boolean result = ( !editMode 
 								&& !(String.isBlank(oPaymentBillingContact.FirstName))
 								&& !(String.isBlank(oPaymentBillingContact.LastName))
 								&& !(String.isBlank(oPaymentBillingContact.Title))
@@ -348,7 +349,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 								&& !(String.isBlank(oBillingAddress.Street__c))
 								&& !(String.isBlank(oBillingAddress.ISO_Country__c))
 							);
-			return true;
+			return result;
 		}
 	} // end of showPaymentButtons getter
 	

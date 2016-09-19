@@ -315,9 +315,9 @@
                                                                             <div class="box plan-description">
                                                                                 <ul class="list check-circle-list">
                                                                                     <!--
-<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
-<li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
--->
+                                                                                    <li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__Description__c}</li>
+                                                                                    <li class="icon check-circle">{!prpc.productRatePlanCharge.zqu__ProductRatePlan__r.zqu__Description__c}</li>
+                                                                                    -->
                                                                                     <apex:repeat id="selectionDescriptionRepeat" value="{!prpw.descriptions}" var="descriptionLine">
                                                                                         <li class="icon check-circle">{!descriptionLine}</li>
                                                                                     </apex:repeat>
@@ -371,9 +371,9 @@
                                                         <tr class="item">
                                                             <th>
                                                                 <!--
-<apex:outputText value="Please made the selection!" rendered="{!showPurchasedSelectionMessage}"/>
-<apex:outputText value="{!selectedProductRatePlanWrapper.name}" rendered="{!!showPurchasedSelectionMessage}"/>
--->
+                                                                <apex:outputText value="Please made the selection!" rendered="{!showPurchasedSelectionMessage}"/>
+                                                                <apex:outputText value="{!selectedProductRatePlanWrapper.name}" rendered="{!!showPurchasedSelectionMessage}"/>
+                                                                -->
                                                                 <apex:outputPanel id="paymentItemMessagePanel" rendered="{!showPaymentItemMessage}">
                                                                     <strong>
                                                                         <apex:outputText value="{!paymentItemDescription}" rendered="{!showPaymentItemMessage}"/>
@@ -439,15 +439,17 @@
                                             <ul class="list actions">
                                                 <li><apex:commandLink action="{!previous}" styleClass="button" value="Previous" /></li>
                                                 <!--
-<li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" /></li>
--->
+                                                <li><apex:commandLink action="{!saveAndContinue}" styleClass="button" value="Send" /></li>
+                                                -->
                                                 <apex:outputText rendered="{!newEmailBalance < 0}">
                                                     <li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Send" /></li>
+                                                    <!-- 
                                                     <li>
                                                         <apex:commandButton value="Buy now" action="{!addToCart}">
                                                             <apex:param name="selectedratePlanInformationId" value="a4S8E0000000gdj" assignTo="{!selectedRatePlanInformationId}"/>
                                                         </apex:commandButton>
                                                     </li>
+                                                     -->
                                                 </apex:outputText>
                                                 <apex:outputText rendered="{!newEmailBalance >= 0}">
                                                     <li><apex:commandLink action="{!debitCredits}" styleClass="button" value="Confirm your payment" /></li>
