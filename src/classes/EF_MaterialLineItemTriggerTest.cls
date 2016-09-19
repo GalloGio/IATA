@@ -4,7 +4,7 @@ public class EF_MaterialLineItemTriggerTest {
     @testSetup 
     static void setup() {
         
-        User u = EF_TestDataFactory.getEfStaffUser('Head, Client Services');
+        User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
         EF_TestDataFactory.createCustomSettings();
         
     	System.runAs(u){
