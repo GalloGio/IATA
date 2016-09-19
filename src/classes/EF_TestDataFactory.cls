@@ -130,22 +130,4 @@ public with sharing class EF_TestDataFactory
         insert u1;
         return u1;
     }
-
-    public static User getEfStaffUser(String efUserRole)
-    {
-        User manager = [select id from User limit 1].get(0);
-        Id pr = [select id from Profile where name = 'E&F staff' limit 1].Id;
-        System.debug('@@@@ '+pr);
-        User u1 = new User(FirstName='Test1 User',Division='UnitTest',Manager=manager,
-                           EF_Billing_Agreement_Approver__c=manager.Id,
-                           EF_Contract_Approver__c=manager.Id, 
-                           EF_User_Role__c=efUserRole,License_Cost_Center__c='AAA000AA00',
-                           Username='efUnit@test.ch', LastName='Test1', 
-                           Email='test1@iata.org', Alias='Test1', CommunityNickname='Test1', 
-                           TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US', 
-                           EmailEncodingKey='UTF-8', ProfileId=pr, LanguageLocaleKey='en_US');
-        insert u1;
-        return u1;
-    }
-
 }
