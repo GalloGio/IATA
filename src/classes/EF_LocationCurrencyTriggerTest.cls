@@ -3,7 +3,7 @@ private class EF_LocationCurrencyTriggerTest {
 
     @testSetup 
     static void setup() {
-        User u = EF_TestDataFactory.getEfStaffUser('Client Services Specialists');
+        User u = EF_TestDataFactory.getEfProfileAndRole(0, 2);
         System.runAs(u){
            EF_TestDataFactory.createBaseDataWithoutLocCurr(); 
         }
