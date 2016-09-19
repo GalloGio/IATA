@@ -303,7 +303,7 @@ public class CampaignMember_Svc
             
             Contact contact = contactsById.get(item.Order.BillToContactId);
             //If contact is not deleted create CampaignMember
-            if(!contact.IsDeleted){
+            if(contact != null && !contact.IsDeleted){
                 List<OrderItem> tmp = (itemsByContactId.containsKey(contact.Id)) 
                     ?   itemsByContactId.get(contact.Id)
                     :   new List<OrderItem>(); 
