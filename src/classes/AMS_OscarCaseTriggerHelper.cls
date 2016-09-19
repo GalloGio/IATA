@@ -311,60 +311,46 @@ public class AMS_OscarCaseTriggerHelper {
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
 
-
         Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 
-        List<Case> oscarCases = new List<Case>();
+        List<Case> newOscarCases = new List<Case>();
+        List<Case> updatedOscarCases = new List<Case>();
         Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c>();
 
         for(Case c : (List<Case>) Trigger.New){
             if(
                 c.RecordTypeID == OSCARCaseRecordTypeID
                 && c.OSCAR__c != null
-                && (Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c))
-            ){
-            
-                oscarCases.add(c);
-                oscars.put(c.Oscar__c, null);
-            }
-            else{ // this is only for update  AMS-1667
-
-            if(
-                c.RecordTypeID == OSCARCaseRecordTypeID
-                && c.OSCAR__c != null
-                && Trigger.isUpdate 
             ){
 
-                oscarCases.add(c);
+                updatedOscarCases.add(c);
+
+                //cases that just received an OSCAR
+                if(Trigger.isInsert || (Trigger.isUpdate && oldMap.get(c.Id).Oscar__c != c.Oscar__c)) newOscarCases.add(c);
+
                 oscars.put(c.Oscar__c, null);
-
-            }
-            
-
             }
         }
 
-        if(oscarCases.isEmpty()) return;
+        if(newOscarCases.isEmpty() && updatedOscarCases.isEmpty()) return;
 
         oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c , Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
-        for(Case c : oscarCases){
+        for(Case c : newOscarCases){
             
-            if(c.OwnerId != oscars.get(c.Oscar__c).OwnerId)
-                c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            c.Status = oscars.get(c.Oscar__c).Status__c;
+
             
-            if(c.Status != oscars.get(c.Oscar__c).Status__c)
-                c.Status = oscars.get(c.Oscar__c).Status__c;
+            if(c.Origin != 'Portal'){
+                c.Subject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
+            }
+        }
+
+        for(Case c : updatedOscarCases){
 
             String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscars.get(c.Oscar__c).Account__r.Location_Type__c,oscars.get(c.Oscar__c).Account__r.Category__c);
-
-            if(typeOfCustomer != null && typeOfCustomer != c.Type_of_customer__c)
-                c.Type_of_customer__c = typeOfCustomer;
-
-            String newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
-
-            if(c.Subject != newCaseSubject)
-                c.Subject = newCaseSubject;
+            if(typeOfCustomer != null) c.Type_of_customer__c = typeOfCustomer;
         }
     }
 }
