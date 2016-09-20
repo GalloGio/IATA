@@ -40390,6 +40390,14 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_Contract_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_MassUpdateBAContacts</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -41527,10 +41535,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>UploadPageiFrame</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
      <pageAccesses>
