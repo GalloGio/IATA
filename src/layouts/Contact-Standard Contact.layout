@@ -6,6 +6,7 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
+    <customButtons>APXTConga4__Conga_Mail_Merge</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
@@ -26,15 +27,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>AM_First_Name_Latin_Char__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AM_Last_Name_Latin_Char__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Title</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AM_Job_Title_English__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>AccountId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Membership_Main_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -76,15 +85,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Function__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>UIR__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>VER_Number_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Function__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Membership_Main_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIS_Contact_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -149,6 +166,14 @@
                 <behavior>Edit</behavior>
                 <field>ISO_Country__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BillTo_Location__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ShipTo_Location__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -171,10 +196,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EF_Account_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SIS_Contact_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -202,7 +223,7 @@
                 <field>User_IECPortal_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <height>50</height>
+                <height>200</height>
                 <page>ISSP_Contact_User</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -706,6 +727,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Full_Address__c</fields>
+        <fields>Type__c</fields>
+        <fields>SAP_Id__c</fields>
+        <fields>Active__c</fields>
+        <fields>Email__c</fields>
+        <fields>Phone__c</fields>
+        <relatedList>Location__c.Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>System__c</fields>
         <fields>Method__c</fields>
         <fields>Success__c</fields>
@@ -716,7 +747,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>EF_Airline_Billing_Agreement__c</fields>
         <fields>Status__c</fields>
+        <fields>Role__c</fields>
         <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
