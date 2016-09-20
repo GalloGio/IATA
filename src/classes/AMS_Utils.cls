@@ -1495,9 +1495,11 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         //invalid range
         if(maxRange-minRange <= 0)
             return -1;
+        
         //no available slots
-        if(orderedSlotsOccupied.size() >= maxRange-minRange)
+        if(orderedSlotsOccupied.size() > maxRange-minRange)
             return -1;
+
 
         if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
             availableNumberInRange = minRange;
