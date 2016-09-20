@@ -9,10 +9,9 @@ EBulletin is a CSV dispatch 3 main informatory activities about IATA agencies:
 
 public class AMS_EBulletinReportHelper {
 
-	private static List<AMS_EBulletin_Setting__mdt> EBulletinSettingsList{get;set;}
 	public static String fieldsQuery{get;set;}
 	public static String headerCSV{get;set;}
-	
+
 	public static List<String> fieldsList{
 		get{ 
 			if(fieldsList == null) fieldsList = new List<String>();return fieldsList;
@@ -26,13 +25,36 @@ public class AMS_EBulletinReportHelper {
 		set;}
 
 
+	private static List<AMS_CustomSettingsUtils.AMS_EBulletinSetting> EBulletinSettingsList{get;set;}
+	
+	private static final Map <String,String>  typeEBulletinMap = new Map<String, String>{ 'D' => 'Daily__c', 'W' => 'Weekly__c' };
+
+	// Countries to override value with State Account__r.IATA_ISO_Country__c
+	private static final Set <String> countryConditionsSet =  new Set< String>{ 'US', 'AU', 'CA' };
+
+
 	/** 
 		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
 	*/
-	private static void getEBulletinSettings()
+	private static void getEBulletinSettings(String typeEBulletin)
 	{
 
-		EBulletinSettingsList = Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_EBulletin_Setting__mdt','In_Use__c=true ORDER BY Number_Order__c',false));
+		Map<String, AMSEBulletinSettings__c> eBulletinSettingsMap = AMSEBulletinSettings__c.getAll();
+		
+		
+		for(AMSEBulletinSettings__c setting : eBulletinSettingsMap.values()){
+			EBulletinSettingsList.add( new AMS_CustomSettingsUtils.AMS_EBulletinSetting(setting,'Number_Order__c') );
+
+		}
+		EBulletinSettingsList.sort();
+
+	
+
+
+
+		//EBulletinSettingsList = Database.query(AMS_QueryUtils.getAllFieldQuery('AMSEBulletinSettings__c',typeEBulletinMap.get(typeEBulletin)+'=true ORDER BY Number_Order__c',false));
+
+
 
 		System.debug('E Bulletin Settings to recover: ' + EBulletinSettingsList);
 	}
@@ -40,40 +62,51 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Generate CSV Header with the recovered metadata records 
 	*/
-	public static void getEBulletinFields(String csvFormat , String objectBaseQuery)
+	public static void getEBulletinFields(String typeEBulletin, String objectBaseQuery,String csvFormat )
 	{
-		getEBulletinSettings();
+		getEBulletinSettings(typeEBulletin);
 
+		/****** Alternative method to recover directly the field labels to use has columns headers ****
+		
 		Map<String, Schema.SObjectField> fieldMap  = Schema.getGlobalDescribe().get(objectBaseQuery).getDescribe().Fields.getMap();
 
 		List<wrapperLabel> wLList = new List<wrapperLabel>();
 
 		Set<String> uniqueObj = new set <String>{objectBaseQuery};
+		
+		****** Alternative method to recover directly the field labels to use has columns headers ****/
 
 
-		for (AMS_EBulletin_Setting__mdt EBulletinSetting : EBulletinSettingsList)
+		for (AMS_CustomSettingsUtils.AMS_EBulletinSetting eBulletinSettingG : EBulletinSettingsList)
 		{
-			fieldsList.add(EBulletinSetting.Label);
-				
-			system.debug('EBulletinSetting.Label: ' + EBulletinSetting.Label);
+			fieldsList.add(eBulletinSettingG.eBulletinSetting.API_Name__c);
+			headersList.add(eBulletinSettingG.eBulletinSetting.Name);
 
-			wrapperLabel wL = new wrapperLabel(objectBaseQuery,EBulletinSetting.Label,fieldMap);
+			system.debug('EBulletinSetting.API_Name__c: ' + eBulletinSettingG.eBulletinSetting.API_Name__c);
+			
+			/****** Alternative method to recover directly the field labels to use has columns headers ****
+			wrapperLabel wL = new wrapperLabel(objectBaseQuery,EBulletinSetting.API_Name__c,fieldMap);
+
 
 			wLList.add(wL);
 
-			//Objects to Recover Field Mapping
+			Objects to Recover Field Mapping
 			uniqueObj.add(wL.sObjName); 
-
-			//headersList.add(fieldMap.get(EBulletinSetting.Label).getDescribe().getLabel());
+		
+			****** Alternative method to recover directly the field labels to use has columns headers ****/
+	
 			
 		}
 
-		// Object , FieldMap
-
+		/******* Alternative method to recover directly the field labels to use has columns headers ****
+	
+		 Object , FieldMap
 		for(wrapperLabel wL : processFieldMaps(wLList,uniqueObj)) headersList.add(wL.fieldLabel);
-
-		system.debug('wdList: ' + wLList);
+	
 		
+		system.debug('wdList: ' + wLList);
+		****** Alternative method to recover directly the field labels to use has columns headers ****/
+	
 
 		fieldsQuery = convertToCSV(fieldsList, ',');
 		headerCSV   = convertToCSV(headersList, csvFormat);
@@ -85,12 +118,14 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 process EBulletin Records 
 	*/
-	public String processEBulletinRecords(String objectBaseQuery ,String csvFormat)
+	public String processEBulletinRecords(String typeEBulletin , String objectBaseQuery ,String csvFormat)
 	{
-		system.debug('query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ''));
 
+		system.debug('Records query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ''));
+	
 		List <Agency_Applied_Change_code__c> ccHistList = Database.query(AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ''));
 
+		system.debug('ccHistList: ' + ccHistList);
 
 		String recordsCSV = '';	
 
@@ -128,39 +163,82 @@ public class AMS_EBulletinReportHelper {
 	/** 
 		 Process Parent Objects fields (up to 5 Parents?)
 	*/
-	private List<String> processParentDependecies(List<String> fieldsListToProcess,Agency_Applied_Change_code__c ccHist)
+	private List<String> processParentDependecies(List<String> fieldsListToProcess, Agency_Applied_Change_code__c ccHist)
 	{
-		List<String> recordList = new List <String>();
+		List<String> recordsList = new List <String>();
 
 		for (String field : fieldsListToProcess)
 		{	
 			//if(	Schema.getGlobalDescribe().get(objectBaseQuery).getDescribe().Fields.getMap().get(field).getDescribe().getType() == Schema.DisplayType.Reference)
+			
+			//TODO 
+			//field = processExtraFieldsConditions(field.split('\\,'),ccHist);
+
+			recordsList.add(getRecordFromField(field,ccHist));
+
+		
+		}
+		return recordsList;
+	}
+
+
+	/** 
+		 Process Extra Fields Conditions
+	*/
+	private String processExtraFieldsConditions(List <String> extraFields , Agency_Applied_Change_code__c ccHist)
+	{
+		if(extraFields.size() == 1)  
+			return extraFields.get(0);
+
+		else
+		{
+			for (String field : extraFields)
+			{
+				getRecordFromField(field , ccHist);
+
+			}
+
+			return null;
+		}
+	}
+
+
+	/** 
+		 Get Record Value from Field
+	*/
+	private String getRecordFromField(String field , Agency_Applied_Change_code__c ccHist)
+	{
 			sObject sObj = ccHist;
 
 			if(field.contains('.'))
 			{
+				//Get the Object directly related to the field
 				wrapperData wDObj = new wrapperData(sObj,field);
 				
-				recordList.add(
+				return
 					String.valueOf(
-						(wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
+						(
+							wDObj.sObj == null || wDObj.sObj.get(wDObj.fieldName) == null ) ? '' :wDObj.sObj.get(wDObj.fieldName)
 						)
-					);
+					;
 			}
-			else
-				recordList.add(
-					String.valueOf(
-						(ccHist.get(field) == null) ? '' : ccHist.get(field)
-						)
-					);
 
-		}
-		return recordList;
+			else
+				return
+					String.valueOf(
+						(
+							ccHist.get(field) == null) ? '' : ccHist.get(field)
+						)
+					;
 	}
-/** 
+
+
+
+
+	/** 
 		 Process Field Maps
 	*/
-	private static List<wrapperLabel> processFieldMaps(List<wrapperLabel> wLList, Set<String> uniqueObj)
+	private List<wrapperLabel> processFieldMaps(List<wrapperLabel> wLList, Set<String> uniqueObj)
 	{
 		Map<String,Map<String, Schema.SObjectField>> usedFieldMaps = new Map<String,Map<String, Schema.SObjectField>> ();
 
@@ -231,12 +309,13 @@ public class AMS_EBulletinReportHelper {
 
 
 			if (lastPos>0) 
-				{
+			{
 				if(strList.get(lastPos -1 ) == 'Parent')
 					lastPos--;
+
 				sObjName  = fieldMap.get(strList.get(lastPos -1 ).replace('__r','__c')).getDescribe().getReferenceTo()[0].getDescribe().Name;
 				system.debug('strList.get(lastPos -1 ): ' + strList.get(lastPos -1 ));
-				}
+			}
 
 			system.debug('sObjName: ' + sObjName);
 			this.sObjName   = sObjName;
@@ -249,7 +328,5 @@ public class AMS_EBulletinReportHelper {
         }
 
 	}
-
-
 
 }
