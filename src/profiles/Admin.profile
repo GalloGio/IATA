@@ -22416,6 +22416,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>EF_Location_Currency__c.location_Id_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>EF_Location_Currency__c.Requested_Changes__c</field>
         <readable>true</readable>
