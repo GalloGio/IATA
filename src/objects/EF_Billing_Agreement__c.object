@@ -106,6 +106,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Billing Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -153,6 +154,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Data Currency</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -183,6 +185,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>E&amp;F Status</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -216,6 +219,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Invoice_Distribution</globalPicklist>
         <label>Invoice Distribution Method</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -271,6 +275,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -280,6 +285,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Currency</globalPicklist>
         <label>Payment Currency</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -319,6 +325,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Method</globalPicklist>
         <label>Payment Method</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -358,6 +365,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Payment_Terms</globalPicklist>
         <label>Payment Terms</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -398,6 +406,7 @@
         <externalId>false</externalId>
         <globalPicklist>EF_Status</globalPicklist>
         <label>Status</label>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -417,17 +426,6 @@
     <pluralLabel>E&amp;F Airline Billing Agreements</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
-    <webLinks>
-        <fullName>Edit_All</fullName>
-        <availability>online</availability>
-        <displayType>massActionButton</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Edit All</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <requireRowSelection>false</requireRowSelection>
-        <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
-    </webLinks>
     <validationRules>
         <fullName>EF_Prevent_For_Not_Allowed_Contracts</fullName>
         <active>true</active>
@@ -451,4 +449,26 @@
 )</errorConditionFormula>
         <errorMessage>Business Development Managers and E&amp;F General Access roles are not allowed to update or create Airline Billing Agreements.</errorMessage>
     </validationRules>
+    <webLinks>
+        <fullName>Edit_All</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Edit_All_Airline_BA</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All Airline BA</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_MassUpdateAirlineBillingAgreements?id={!Account.Id}&apos;);</url>
+    </webLinks>
 </CustomObject>
