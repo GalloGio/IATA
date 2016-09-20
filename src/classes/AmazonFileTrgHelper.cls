@@ -27,7 +27,7 @@ public class AmazonFileTrgHelper {
     };
     
     public static Set<String> expiredRequired = new Set<String>{
-        'Contractual.Contract/Amendment','Operational Calendars.BSP','Operational Calendars.ICH','Operational Calendars.Client'
+        ''
     };
     
     /*
