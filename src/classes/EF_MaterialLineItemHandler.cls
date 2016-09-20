@@ -106,6 +106,25 @@ public class EF_MaterialLineItemHandler {
                     }
                 }
             }
+
+            if(mat.Id != null && materialLineItemOldMap == null)
+            {
+                // Send a notification on insert
+                relevantProductIds.add(mat.EF_Material__c);
+
+                // For Contracts, only the ones edited by Customer Services Spealists should be put to approval processing
+                if(mat.Contract__c != null && isCsSpecialist)
+                {
+                    toApproveList.add(mat);
+                }
+                else if(mat.EF_Relationship__c != null)
+                {
+                    // Billing Agreements might require an approval based on related Contract__r.EF_Allow_Billing_Agreements__c value (Allowed with Approval)
+                    baMaterials.add(mat);
+                    relatedBaIdSet.add(mat.Id);
+                }                
+            }
+
         }
 
         if(toApproveList.size() == 0 && baMaterials.size() == 0)
@@ -159,19 +178,44 @@ public class EF_MaterialLineItemHandler {
         String baBody = emailBody;
         boolean sendContract = false;
         boolean sendBa = false;
+        boolean isInsert = false;
 
         // Go through the list of all changed Material Line Items and create an table row per item based on if the material line is related to a Contract or a BA
         for(EF_Material_Line_Item__c line : changeList)
         {
+            if(materialLineItemOldMap != null)
+            {
+                if(materialLineItemOldMap.get(line.Id) != null)
+                    isInsert = false;
+            }
+            else
+            {
+                isInsert = true;
+            }
+
             if(line.Contract__c != null)
             {
                 sendContract = true;
-                contractBody = contractBody + constructEmailRow(line, relevantProducts.get(materialLineItemOldMap.get(line.Id).EF_Material__c), relevantProducts.get(line.EF_Material__c), baseUrl);
+                if(isInsert)
+                {
+                    contractBody = contractBody + constructEmailRow(line, null, relevantProducts.get(line.EF_Material__c), baseUrl);
+                } else
+                {
+                    contractBody = contractBody + constructEmailRow(line, relevantProducts.get(materialLineItemOldMap.get(line.Id).EF_Material__c), relevantProducts.get(line.EF_Material__c), baseUrl);
+                }
             }
             else if(line.EF_Material__c != null)
             {
                 sendBa = true;
-                baBody = baBody + constructEmailRow(line, relevantProducts.get(materialLineItemOldMap.get(line.Id).EF_Material__c), relevantProducts.get(line.EF_Material__c), baseUrl);
+                if(isInsert)
+                {
+                    baBody = baBody + constructEmailRow(line, null, relevantProducts.get(line.EF_Material__c), baseUrl);
+                }
+                else
+                {
+                    baBody = baBody + constructEmailRow(line, relevantProducts.get(materialLineItemOldMap.get(line.Id).EF_Material__c), relevantProducts.get(line.EF_Material__c), baseUrl);
+                }
+                
             }
         }
 
@@ -194,7 +238,11 @@ public class EF_MaterialLineItemHandler {
     // Can be used to add more items per line apart from Material Name. If so, add the fields also to query on line 42.
     private static String constructEmailRow(EF_Material_Line_Item__c line, Product2 oldValue, Product2 newValue, String baseUrl)
     {
-        String htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">'+oldValue.Name+'</td><td border="1">'+newValue.Name+'</td></tr>';
+        String htmlRow;
+        if(oldValue != null)
+            htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">'+oldValue.Name+'</td><td border="1">'+newValue.Name+'</td></tr>';
+        else
+            htmlRow = '<tr><td border="1"><a href="'+baseUrl+'/'+line.Id+'">'+line.Name+'</a></td><td border="1">--</td><td border="1">'+newValue.Name+'</td></tr>';
         return htmlRow;
     }
 
