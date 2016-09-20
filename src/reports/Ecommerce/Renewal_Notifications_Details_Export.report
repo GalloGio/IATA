@@ -85,7 +85,7 @@
         <field>ORDER_ITEM_UNITPRICE</field>
     </columns>
     <columns>
-        <field>OrderItem.SubTotal__c</field>
+        <field>Order.SubTotal_Amount__c</field>
     </columns>
     <columns>
         <field>Order.Total_handling_charges__c</field>
@@ -97,6 +97,9 @@
         <field>Order.Taxes__c</field>
     </columns>
     <columns>
+        <field>Order.Total_Amount__c</field>
+    </columns>
+    <columns>
         <field>Order.Renewal_Notification_URL__c</field>
     </columns>
     <currency>USD</currency>
@@ -104,7 +107,7 @@
         <criteriaItems>
             <column>Order.Campaign_ID__c</column>
             <operator>equals</operator>
-            <value>701g0000000hFWW</value>
+            <value>701g0000000hDuS</value>
         </criteriaItems>
         <criteriaItems>
             <column>ORDER_TYPE</column>
