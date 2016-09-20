@@ -41178,6 +41178,7 @@
         <apexPage>EF_Contract_Attachment_List</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_MassUpdateBAContacts</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
