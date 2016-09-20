@@ -235,10 +235,6 @@
                 <behavior>Edit</behavior>
                 <field>Tax_ID_2__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SAP_Number__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
