@@ -303,6 +303,10 @@
         <name>Address_Line_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- Address_Line_2 --></label>
+        <name>Address_Line_2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Address creation error --></label>
         <name>Address_creation_error</name>
     </customLabels>
@@ -727,7 +731,7 @@
         <name>Cybersource_ProfileId_USD</name>
     </customLabels>
     <customLabels>
-        <label><!-- Cybersource Security key CAD --></label>
+        <label><!-- Cybersource_SecurityKey --></label>
         <name>Cybersource_SecurityKey</name>
     </customLabels>
     <customLabels>
@@ -3515,7 +3519,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Association --></label>
+        <label>Asociación</label>
         <name>ISSP_AMS_LS_Association</name>
     </customLabels>
     <customLabels>
@@ -3523,11 +3527,11 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_LS_Co_operative</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Corporation --></label>
+        <label>Sociedad anónima</label>
         <name>ISSP_AMS_LS_Corporation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Government --></label>
+        <label>Empresa Pública/Estatal</label>
         <name>ISSP_AMS_LS_Government</name>
     </customLabels>
     <customLabels>
@@ -3547,7 +3551,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_LS_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Sole Owner --></label>
+        <label>Propiedad Unica</label>
         <name>ISSP_AMS_LS_Sole_Owner</name>
     </customLabels>
     <customLabels>
@@ -5670,6 +5674,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label><!-- ISSP Display Records per page --></label>
         <name>ISSP_Display_Records_per_page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Document_Category --></label>
+        <name>ISSP_Document_Category</name>
     </customLabels>
     <customLabels>
         <label>Documentos</label>

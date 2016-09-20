@@ -17108,6 +17108,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <columns>ACCOUNT.ADDRESS1_COUNTRY</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>SoldTo_Location__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>ACCOUNT.NAME</field>
