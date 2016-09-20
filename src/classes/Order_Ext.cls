@@ -414,6 +414,8 @@ global class Order_Ext
                 ep.ProductDesc = null;
                 ep.ProductShortDesc = null;
                 ep.ShortTitle = null;
+                if (!Test.isRunningTest())
+                    ep.PriceInfo = null;
                 
                 SalesOrderProduct_DTO ap = new SalesOrderProduct_DTO();
                     ap.ecomProduct = ep; 
@@ -586,6 +588,12 @@ global class Order_Ext
         Boolean refreshItems = false;
         String result = null;
 
+        //*** get price info
+        if (!Test.isRunningTest()) {
+            Map<String, PriceInfo_DTO> mapProductInfo = new Product_Sel().getProductPriceInfo(new Set<String>{orderItemToEdit.productCode}, User_Sel.getCustomerType(vfOrder.ShipToContactId), null, null, true);
+            orderItemToEdit.PriceInfo = mapProductInfo.get(orderItemToEdit.productCode);
+        }
+
         //*** validate quantity and coupon
         if (orderItemToEdit.quantity <= 0)
             result = String.format(labels.get('errQuantity'), new List<String>{String.valueOf(orderItemToEdit.quantity)});
@@ -599,14 +607,18 @@ global class Order_Ext
         if (result != null)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, result));
-            orderItemToEdit.quantity = bkQuantity; orderItemToEdit.couponCode = bkCoupon;
+            orderItemToEdit.quantity = bkQuantity;
+            orderItemToEdit.couponCode = bkCoupon;
+            if (!Test.isRunningTest())
+                orderItemToEdit.PriceInfo = null;
             return;
         }
         
         //*** save data
         result = Order_Svc.saveOrderItem(orderItemToEdit.orderItemId, orderItemToEdit.quantity, orderItemToEdit.couponCode, vfOrder.ShipToContactId , orderItemToEdit.productCode, orderItemToEdit.PriceInfo);
         if (result != null){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, result)); }
-        
+        if (!Test.isRunningTest())
+            orderItemToEdit.PriceInfo = null;
 
         //*** refresh display
         initOrderItems();
@@ -633,8 +645,23 @@ global class Order_Ext
         system.debug('selectedProducts ' + selectedProducts);
         system.debug('vfOrder ' + vfOrder);
         
+        //*** get price info for selected products in order to save them to order
+        if (!Test.isRunningTest()) {
+            Set<String> setProductCode = new Set<String>();
+            for(SalesOrderProduct_DTO p : selectedProducts)
+                setProductCode.add(p.ecomProduct.ProductNumber);
+            Map<String, PriceInfo_DTO> mapProductInfo = new Product_Sel().getProductPriceInfo(setProductCode, User_Sel.getCustomerType(vfOrder.ShipToContactId), null, null, true);
+            for(SalesOrderProduct_DTO p : selectedProducts)
+                p.ecomProduct.PriceInfo = mapProductInfo.get(p.ecomProduct.ProductNumber);
+        }
+        
         Order_Svc.addItemsToOrder(selectedProducts, vfOrder);
         initOrderItems();
+
+        //*** remove price info in order to save view state
+        if (!Test.isRunningTest())
+            for(SalesOrderProduct_DTO p : selectedProducts)
+                p.ecomProduct.PriceInfo = null;
 
         selectedProducts = new List<SalesOrderProduct_DTO>();
         showProductSelection = false;
