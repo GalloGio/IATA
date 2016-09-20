@@ -5225,14 +5225,26 @@
     <classAccesses>
         <apexClass>vfIEC_CACWDetail_Test</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>AmazonFile</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>vfIEC_CACWKey</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>AmazonFileTrgHelper</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>vfIEC_CACWKey_test</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>EF_AttachmentListController</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>vfIEC_CACWMonthlyConsumption</apexClass>
@@ -5241,10 +5253,18 @@
     <classAccesses>
         <apexClass>vfIEC_CACWMonthlyConsumptionTest</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>EF_BillingAgreementHandler</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>vfIEC_CACW_test</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>EF_MaterialLineItemHandler</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>vfIECreCAPTCHA</apexClass>
@@ -5253,10 +5273,18 @@
     <classAccesses>
         <apexClass>vfIECreCAPTCHA_tst</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>RelatedListController</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>vfISSP_FAQ2Case</apexClass>
         <enabled>false</enabled>
+	</classAccesses>
+	<classAccesses>
+        <apexClass>WrapperAttach</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <custom>true</custom>
     <description>Used for staff within E&amp;F Management</description>
@@ -13441,39 +13469,79 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Description__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Document_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Expired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Expiry_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_SAP_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Skip_Validation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.EF_Subcategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AmazonFile__c.File_Identifier__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.File_Identifier_picklist__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Review_Status__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Size_MB__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Source__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.isPublic__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AmazonFile__c.sObject_Id__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -38469,6 +38537,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AmazonFile__c-AmazonFile Layout</layout>
+        <recordType>AmazonFile__c.EF_File</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AmazonFile__c-AmazonFile Layout</layout>
         <recordType>AmazonFile__c.File</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -40282,6 +40354,15 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>AmazonFile__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
@@ -41090,11 +41171,22 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_Contract_Attachment_List</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
         <apexPage>EF_MassUpdateBAContacts</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>EF_MassUpdateContract</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -42761,6 +42853,12 @@
         <default>false</default>
         <recordType>AmazonFile__c.AMS_File</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>AmazonFile__c.EF_File</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
