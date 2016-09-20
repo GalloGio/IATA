@@ -25,9 +25,17 @@
                                     </apex:outputText>
                                 </div>
                                 <div class="col-md-4">
-                                    <span style="display:{!IF(reqRequired!=null,'','none')}">
-                                        <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';" />
-                                    </span>
+                                    <apex:variable var="reviewStatuses" value="{!''}{!reviewStatusMap}" />
+                                    <apex:variable var="FileIdInReviewStatusus" value="{!reqIdentifier}=true"/>
+                                    
+                                    <apex:outputText rendered="{!reqRequired!=null}">
+                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', !CONTAINS(reviewStatuses, FileIdInReviewStatusus))}">
+                                            <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';"/>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', CONTAINS(reviewStatuses, FileIdInReviewStatusus))}">
+                                            <input type="file" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent';" disabled="true"/>
+                                        </apex:outputText>
+                                    </apex:outputText>
                                 </div>
                                 <div class="col-md-2">
                                     {!CASE(reqRequired, 'Mandatory', '*', 'Optional', '(', '')}{!CASE(reqRequired, 'Mandatory', $Label.ISSP_Mandatory, 'Optional', $Label.ISSP_Optional, '')}{!CASE(reqRequired, 'Optional', ')', '')}
@@ -36,8 +44,8 @@
         <div class="progress" style="height:8px;display:{!IF(reqRequired!=null,'','none')}"><div class="uploadbar-{!reqCnt} progress-bar progress-bar-success progress-bar-striped"></div></div>
         </form>
         <div class="row">
-                            <div class="col-md-6">&nbsp;</div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">&nbsp;</div>
+                            <div class="col-md-8">
                         <apex:form >
                         <div id="loading-{!reqCnt}" style="display:none; width:100%">
                             <div style="border:1px solid black; background:white; text-align:center;
@@ -67,18 +75,21 @@
                                     removeTextFromFile();
                                 </script>
                                 <apex:dataTable id="tablefileones" styleClass="table table-striped" value="{!amazonFileMap[identifierName]}" var="theFile"> 
-                                    <apex:column style="color:rgb(88,88,88)">
+                                    <apex:column rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC')}" >
+                                        <span class="{!CASE(theFile.status,'Rejected','glyphicon glyphicon-remove','Rejected Closed','glyphicon glyphicon-remove','Accepted','glyphicon glyphicon-ok','')}" style="color:{!CASE(theFile.status,'Rejected','red','Rejected Closed','red','Accepted','green','')}" aria-hidden="true"></span>
+                                    </apex:column>
+                                    <apex:column style="color:rgb(88,88,88);width:80%">
                                         <apex:outputText value="{!JSEncode(theFile.name)}"/>
                                     </apex:column>
-                                    <apex:column style="width:30%">
+                                    <apex:column >
                                       <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                       <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!theFile.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >{!$Label.ISSP_View}</a> 
-                                       {!if(caseStatus=='Draft',' | ','')}
-                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(caseStatus=='Draft',"inline","none")}"></span>
+                                       {!If(OR(caseStatus=='Draft',caseStatus=='Open - EDMC'),' | ','')}
+                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC'),"inline","none")}"></span>
                                        <apex:commandLink value="{!$Label.IDCard_Delete}"
                                             action="{!deleteThisFile}"
                                             onclick="if(!confirm('{!$Label.ISSP_Confirm_File_Delete}'))return false;"
-                                            rendered="{!caseStatus=='Draft'}" 
+                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC')}" 
                                             status="WaitingStatus"
                                             reRender="AmazonDocs"
                                            oncomplete="location.reload();"
@@ -156,10 +167,19 @@
                       	if(currentAmazonFilesArray.indexOf(fn) > -1) {
                         	uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
                          }
+                        
+                        console.log('File size: '+ data.originalFiles[0]['size']);   
+                        console.log('File length: '+ data.originalFiles[0]['name'].length);
                             
-        				if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > maxFileSize) {
+        				if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
             				uploadErrors.push('Filesize is too big');
         				}
+                         
+                        if(data.originalFiles[0]['name'] && data.originalFiles[0]['name'].length > 80) {
+            				uploadErrors.push('Filename is too long (Max. 80 characters)');
+        				}
+                       
+                            
         				if(uploadErrors.length > 0) {
             				alert(uploadErrors.join("\n"));
                             if(isIE()) {

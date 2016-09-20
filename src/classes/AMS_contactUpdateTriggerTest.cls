@@ -13,11 +13,11 @@ private class AMS_contactUpdateTriggerTest {
         Account acc = new Account(type = 'IATA Passenger Sales Agent', Location_Class__c = 'R', IATA_ISO_Country__c = isoc.id,Name='Test Agency', IATAcode__c = '1234567', Short_Name__c = 'Test Agency', AIMS_ID__c = '12345678', Is_AIMS_Account__c = true,Location_Type__c = 'HO');
         insert acc;
 
-        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com',
+        Contact c1 = new Contact(AccountId = acc.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test1@test.com',
                                     Financial_Assessment_Contact__c = false);
-        Contact c2 = new Contact(AccountId = acc.id, Firstname = 'teste2', Lastname='test2',Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com',
+        Contact c2 = new Contact(AccountId = acc.id, Firstname = 'teste2', Lastname='test2',Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com',
                                     Financial_Assessment_Contact__c = true);
-        Contact c3 = new Contact(AccountId = acc.id, Firstname = 'teste3', Lastname='test3',Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com',
+        Contact c3 = new Contact(AccountId = acc.id, Firstname = 'teste3', Lastname='test3',Phone = '911111111', MobilePhone = '911111111', Email = 'test3@test.com',
                                     Financial_Assessment_Contact__c = false, User_Portal_Status__c = 'Approved Admin');
 
         List<Contact> listOfContacts = new List<Contact>();
@@ -62,22 +62,26 @@ private class AMS_contactUpdateTriggerTest {
         
         List<AMS_Person__c> listofPersons = [select id, Email__c, Phone__c, DOB__c, Mobile__c, Fax__c from AMS_Person__c];
         
+        integer y = 0;
         for(AMS_Person__c p:listOfPersons){
-            p.Email__c = 'test2@gmail.com';
+             p.Email__c = 'test2' + y +'@gmail.com';
             p.Phone__c = '123';
             p.Mobile__c = '123';
             p.Fax__c = '123';
+            y++;
         }
         
         update listofPersons;
         
         List<Contact> allContacts = [select id,Phone,email,MobilePhone,Fax from Contact WHERE Id IN (SELECT Contact__c FROM AMS_Account_Role__c)];
         
+        integer z = 0;
         for(Contact c:allContacts){
-            system.assertEquals('test2@gmail.com', c.email);
+            system.assertEquals('test2' + z +'@gmail.com', c.email);
             system.assertEquals('123', c.Phone);
             system.assertEquals('123', c.MobilePhone);
             system.assertEquals('123', c.Fax);
+            z++;
         }
         
         Test.stopTest();

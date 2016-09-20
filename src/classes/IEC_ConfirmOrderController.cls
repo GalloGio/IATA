@@ -223,6 +223,11 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 
 				try{
 					Map<Id,String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(subscribeSub,iecOrderId_paymentMethod);
+					for(Id ordItem : orderItemsResponse.keySet())
+						if (orderItemsResponse.get(ordItem) != 'Success') {
+							addErrorMessage(Label.Order_transaction_failed_message);
+							return null;
+						}
 				}catch(Exception ex){
 					addErrorMessage(Label.Order_transaction_failed_message);
 					return null;

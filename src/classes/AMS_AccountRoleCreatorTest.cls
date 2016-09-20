@@ -719,7 +719,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
     }
 
      @isTest static void test_RoleCreationForCorrectionProcess(){
-		Test.startTest();
+    Test.startTest();
         Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
         Id correctionOSCARRecTypeId = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
 
