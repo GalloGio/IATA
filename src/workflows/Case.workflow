@@ -13165,7 +13165,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>updates the last default action date when the reason for default is changed</description>
-        <formula>AND(OR(RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED( Reason_for_Default__c ) )</formula>
+        <formula>AND(OR(RecordType.DeveloperName = &quot;SIDRA&quot;, RecordType.DeveloperName = &quot;SIDRA_Lite&quot;), ISCHANGED( Reason_for_Default__c ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13207,7 +13207,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND(OR( RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED(  AG_Request_DEF_Withdrawal__c  ),  NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND(OR(RecordType.DeveloperName = &quot;SIDRA&quot;, RecordType.DeveloperName = &quot;SIDRA_Lite&quot;), ISCHANGED(  AG_Request_DEF_Withdrawal__c  ),  NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13222,7 +13222,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND(OR( RecordTypeId = &quot;012200000000DD9&quot;,RecordTypeId = &quot;0128E0000000Oob&quot;), ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND(OR(RecordType.DeveloperName = &quot;SIDRA&quot;, RecordType.DeveloperName = &quot;SIDRA_Lite&quot;), ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

@@ -165,6 +165,11 @@
         <columns>UPDATEDBY_USER</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account__c</field>
+            <operation>equals</operation>
+            <value>MOVEMAX SYSTEM INC.</value>
+        </filters>
         <label>AMS Agency Updates laurentiu</label>
         <language>en_US</language>
     </listViews>
