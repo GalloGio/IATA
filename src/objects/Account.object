@@ -10265,6 +10265,10 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <fullName>New Airline joining CASS</fullName>
                 <default>false</default>
             </picklistValues>
+			<picklistValues>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </picklistValues>
             <picklistValues>
                 <fullName>Other</fullName>
                 <default>false</default>
@@ -38263,6 +38267,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Other</fullName>
                 <default>false</default>
@@ -44714,6 +44722,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>New airline joining BSP</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65264,6 +65276,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Other</fullName>
                 <default>false</default>
@@ -70335,6 +70351,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>New airline joining BSP</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>New for E%26F</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Other</fullName>
                 <default>false</default>
@@ -74553,6 +74573,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>New airline joining BSP</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
             <values>
