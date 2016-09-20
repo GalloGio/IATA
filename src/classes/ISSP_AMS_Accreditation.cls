@@ -986,12 +986,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Pagereference save() {
         SYSTEM.DEBUG('Saving Record - STEP A');
-        if (newCase.Status == 'Open - EDMC') {
-            if (con.Account.Category__c == 'IATA Cargo Agent')
-                amsLocationType = 'New HO - IATA Cargo Agent';
-            else if (con.Account.Category__c == 'IATA Passenger Sales Agent')
-                amsLocationType = 'New HO - IATA Passenger Sales Agent';
-        }
+        
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
             return null;
@@ -1000,6 +995,13 @@ public without sharing class ISSP_AMS_Accreditation {
             //Defining default values for the case
             //create case with RT SAAM
             String agentType;
+            if (newCase.Status == 'Open - EDMC') {
+            if (con.Account.Category__c == 'IATA Cargo Agent')
+                amsLocationType = 'New HO - IATA Cargo Agent';
+            else if (con.Account.Category__c == 'IATA Passenger Sales Agent')
+                amsLocationType = 'New HO - IATA Passenger Sales Agent';
+        	}
+            
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 
             newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
@@ -1122,7 +1124,10 @@ public without sharing class ISSP_AMS_Accreditation {
             **/
             
             newCase.Origin = 'Portal';
-            newCase.Status = 'Draft';
+
+            if (newCase.Status != 'Open - EDMC') {
+                newCase.Status = 'Draft';
+            }
             
             if (isBankAccountChange) {
                 newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId;
@@ -1204,7 +1209,7 @@ public without sharing class ISSP_AMS_Accreditation {
             upsert newForm;
             
             //Ownership area
-            if (isNewCase) {
+            if (isNewCase || newCase.Status == 'Open - EDMC') {
                 setOwners('NoC');
             }   
             
@@ -2766,6 +2771,9 @@ public without sharing class ISSP_AMS_Accreditation {
         } else if (newCase.Region__c.contains('Africa')) {
             fromaddress = 'IATA Customer Service - Africa (noreply@iata.org)';
             emailTemplateName = 'MENA_Case confirmation - online HTML (English)';
+         } else if (newCase.BSPCountry__c == null) {
+            emailTemplateName = 'EUR_Case confirmation - online HTML (English) - Europe';
+            fromaddress = 'IATA (noreply@iata.org)';
         } else {
             emailTemplateName = 'A&P_Case confirmation - online HTML (English)- Singapore';
             fromaddress = 'ISS Operations & Service Centre - Asia & Pacific (' + newCase.BSPCountry__c + ') (noreply@iata.org)';
@@ -6239,39 +6247,47 @@ public without sharing class ISSP_AMS_Accreditation {
         Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
         Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 
-        
-        List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
-            Employee_Name__c,Employee_type__c,Id,
-            Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
-            Owner_Name__c,Percentage__c,
-            Position__c,RecordTypeId,Title__c,Valid__c, 
-            Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
-            Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
-            Legacy_External_ID__c
-            FROM AMS_Account_Role__c
-            where Account__c = :vHQAccountId 
-            and RecordTypeId = :rtAccRoleOwnership
-            and Active__c = true];
 
-        System.debug('amsOwners: ' + amsOwners);
-        
-        for(AMS_Account_Role__c accRole : amsOwners){
+        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id FROM AMS_Accreditation_Contact__c
+                                                                                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
 
-            if(type.equalsIgnoreCase('NoC')){
-
-                lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
-                lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
-            }
-
-            if(type.equalsIgnoreCase('Branch')){
-
-                lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
-                
-            }
+        //Only create the owners if no owners exists
+        if(countAccreditationContact.size() == 0){        
             
-        } 
+            List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
+                Employee_Name__c,Employee_type__c,Id,
+                Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
+                Owner_Name__c,Percentage__c,
+                Position__c,RecordTypeId,Title__c,Valid__c, 
+                Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
+                Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
+                Legacy_External_ID__c
+                FROM AMS_Account_Role__c
+                where Account__c = :vHQAccountId 
+                and RecordTypeId = :rtAccRoleOwnership
+                and Active__c = true];
 
-        upsert lstAccreditationContact; 
+            System.debug('amsOwners: ' + amsOwners);
+            
+            for(AMS_Account_Role__c accRole : amsOwners){
+
+                if(type.equalsIgnoreCase('NoC')){
+
+                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
+                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
+                }
+
+                if(type.equalsIgnoreCase('Branch')){
+
+                    lstAccreditationContact.add( setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
+                    
+                }
+                
+            } 
+            System.debug('lstAccreditationContact: ' + lstAccreditationContact);
+
+            upsert lstAccreditationContact; 
+        }
     }
 
 
@@ -6285,7 +6301,8 @@ public without sharing class ISSP_AMS_Accreditation {
             auxAccreditCont.AMS_Pax_Accreditation_Form__c = newFormId;
             auxAccreditCont.Legacy_External_Id__c = accRole.Legacy_External_ID__c;
             auxAccreditCont.First_name__c = '';
-            auxAccreditCont.Last_name__c = accRole.Owner_Name__c;
+            //auxAccreditCont.Last_name__c = accRole.Owner_Name__c;
+            auxAccreditCont.Last_name__c = accRole.Owner_Name__c != null ? accRole.Owner_Name__c : accRole.Employee_Name__c ;
             auxAccreditCont.Name = accRole.Owner_Name__c;
             auxAccreditCont.Financial_interest__c = accRole.Percentage__c;
             auxAccreditCont.Agency_owner__c = true;
