@@ -127,19 +127,20 @@
 													</div>
 												</div>
 												<div class="field-group select inline">
-													<apex:outputPanel id="panelBillingStatesProvince" rendered="true">
-														<span class="input-label">State / Province</span>
-														<div class="custom-user-input select">
-															<i class="icon angle-down"></i>
+													<apex:outputPanel id="panelBillingStatesProvince">
+                                                        <apex:outputPanel rendered="{!bStateAvailable}">
+															<span class="input-label">State / Province</span>
+															<div class="custom-user-input select">
+																<i class="icon angle-down"></i>
 															
-															<apex:selectList style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}"
-																title="Country" 
-																value="{!oBillingAddress.ISO_State__c}" 
-																size="1"  styleClass="user-input select">
-																<apex:selectOptions value="{!lstStateProvince}" />
-															</apex:selectList>  
-														</div>
-														
+																<apex:selectList style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}"
+																	title="Country" 
+																	value="{!oBillingAddress.ISO_State__c}" 
+																	size="1"  styleClass="user-input select">
+																	<apex:selectOptions value="{!lstStateProvince}" />
+																</apex:selectList>  
+															</div>
+                                                        </apex:outputPanel>
 													</apex:outputPanel>
 												</div>
 												
@@ -187,7 +188,7 @@
 													reRender="campaignConfirmBillingDetailForm,footerActionForm,msg"
 													status="statusId"
 													styleClass="button secondary"/>
-								</div>
+							</div>
 						</dd>
 						<dt class="accordion-title is-open" data-index="2">Terms and conditions</dt>
 						<dd class="accordion-panel is-open" data-index="2">
@@ -440,6 +441,23 @@
 									</tr>
 								
 								</apex:repeat>
+								
+								<apex:outputPanel id="subscriptionDescriptionPanel" rendered="{!isSubscriptionDescriptionVisible}">
+									<tr class="item less-space">
+										<th class="item-details" colspan="2">
+											<div class="title-label"><i class="fa fa-info-circle" aria-hidden="true"></i> Your subscription parameters will be</div>
+											<div class="item-box">New Start Date:
+												<apex:outputText value="${0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermStartDate}" /></apex:outputText>
+											</div>
+											<div class="item-box">New End Date:
+												<apex:outputText value="${0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermEndDate}" /></apex:outputText>
+											</div>
+											<div class="item-box">Email credits added to your account 
+												<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!emailCreditAddition}" /></apex:outputText>
+											</div>
+										</th>
+									</tr>
+								</apex:outputPanel>
 								
 								<tr class="sub-total">
 									<th>

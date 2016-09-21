@@ -441,4 +441,48 @@ public virtual class vfIECEBC_Controller {
 		private set;
 	} // currentEbcAddOnSubscriptionProductChargeList getter/setter
 	
+	
+	
+	// ========================================================================
+	// this is the core of goToPaymentPage
+	// pass the eBroadcast_Payment_* fields from the page calling the payment to the payment page.
+	//  - paymentPageBase: Page.IECEBC_Payment or Page.IECECBC_CampaignPayment
+	//  - ebcPaymentTarget : Zuora__CustomerAccount__c.eBroadcast_Payment_Target__c ( EBC_PAYMENT_TARGET_* )
+	//  - ebcPaymentCampaignOption : Zuora__CustomerAccount__c.eBroadcast_Payment_Campaign_Option__c (EBC_PAYMENT_CAMPAIGN_*)
+	//  - token will be calculated
+	// the amount detail on the product rate plan charge will be recalculated and reselected
+	// this ensure the data integrity and simplify the caller
+	public PageReference goToPaymentPageBase( PageReference paymentPageBase 
+					, String ebcPaymentTarget
+					, String ebcPaymentCampaignOption
+					, Id subscriptionId
+					, Id productRatePlanId
+					, Id campaignId 
+					, Integer creditAmount
+ 		)
+	{
+		//String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
+		String objectId = (subscriptionId == null) ? '' : subscriptionId;
+		objectId += (productRatePlanId == null) ? '' : productRatePlanId;
+		objectId += (ebcPaymentCampaignOption == null) ? '' : ('-' + ebcPaymentCampaignOption); 
+		
+		String theToken = IECEBC_Utility.generatePaymentToken( objectId + ebcPaymentTarget);
+		
+		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
+														, eBroadcast_Payment_Token__c = theToken
+														, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_RENEWAL
+														, eBroadcast_Payment_Subscription__c = subscriptionId
+														, eBroadcast_Payment_Product_Rate_Plan__c = productRatePlanId
+														, eBroadcast_Payment_Campaign__c = campaignId //null 
+														, eBroadcast_Payment_Campaign_Option__c = ebcPaymentCampaignOption // EBC_PAYMENT_CAMPAIGN_NONE
+														, eBroadcast_Payment_Email_Credit_Amount__c = creditAmount
+														);
+		update paymentBillingAccount;
+		
+		PageReference paymentPage = paymentPageBase;  
+		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
+			
+		return paymentPage;
+	} // end of goToRenewalPaymentPage
+	
 } // end of vfIECEBC_Controller

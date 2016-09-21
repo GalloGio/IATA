@@ -13,6 +13,8 @@
   * History: 
   *  - 20160809-sl: initial workable version.
   *  - 20160815-sl: change wrapper to have disable flag
+  *  - 20160920-sl: add payment link and hide submit payment if no Email Block has been selected.
+  *
   */
 
 global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_Controller 
@@ -176,20 +178,13 @@ global virtual with sharing class vfIECEBC_AccountEmailBlocks extends vfIECEBC_C
 	// this ensure the data integrity and simplify the caller
 	public PageReference goToPaymentPage()
 	{
-		String theToken = IECEBC_Utility.generatePaymentToken( selectedProductRatePlanWrapper.productRatePlan.Id + '-' + EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE);
-		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
-														, eBroadcast_Payment_Token__c = theToken
-														, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE
-														, eBroadcast_Payment_Product_Rate_Plan_Id__c = selectedProductRatePlanWrapper.productRatePlan.Id
-														, eBroadcast_Payment_Campaign__c = null 
-														, eBroadcast_Payment_Campaign_Option__c = EBC_PAYMENT_CAMPAIGN_NONE
-														, eBroadcast_Payment_Email_Credit_Amount__c = 0
-														);
-		update paymentBillingAccount;
+		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, EBC_PAYMENT_TARGET_ACCOUNT_EMAIL_PACKAGE, EBC_PAYMENT_CAMPAIGN_NONE
+							, null // subscription.Id
+							, selectedProductRatePlanWrapper.productRatePlan.Id // productRatePlanId
+							, null // campaignId
+							, 0 // emailCreditAmount
+							);
 		
-		PageReference paymentPage = Page.IECEBC_Payment; 
-		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
-			
 		return paymentPage;
 	} // end of goToPaymentPage
 	

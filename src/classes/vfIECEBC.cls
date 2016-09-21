@@ -26,7 +26,8 @@ public class vfIECEBC extends IECPageController {
 									, eBroadcast_Trusted_Sender__c, eBroadcast_Email_Balance__c, Zuora__Account__c  
 									, eBroadcast_Payment_Token__c
 									, eBroadcast_Payment_Target__c
-									, eBroadcast_Payment_Product_Rate_Plan_Id__c
+									, eBroadcast_Payment_Product_Rate_Plan__c
+									, eBroadcast_Payment_Subscription__c
 									, eBroadcast_Payment_Campaign__c
 									, eBroadcast_Payment_Campaign_Option__c
 									, eBroadcast_Payment_Email_Credit_Amount__c

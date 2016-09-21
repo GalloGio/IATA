@@ -381,8 +381,9 @@ public class IECEBC_Utility {
     // renewalPageUrl return the complete URL for the renewal page from the community page
     public static String renewalPageUrl {
         get {
-            String theUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECProductViewer?ProductCode=' + IECUtil.EncryptEncodeParameter(IECConstants.ProductCategory_SF_EBROADCAST);
-            return theUrl;
+            //String theUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECProductViewer?ProductCode=' + IECUtil.EncryptEncodeParameter(IECConstants.ProductCategory_SF_EBROADCAST);
+			String theUrl =  IECEBC_Utility.ebcSetup.E_Commerce_Base_Url__c + '/IECEBC_SubscriptionRenewal';
+			return theUrl;
         }
     } // end of renewalPageUrl getter
     

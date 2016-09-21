@@ -120,7 +120,7 @@
 																		</tr>
 																	</apex:outputPanel>
 																	<apex:repeat id="purchaseItemRepeat" value="{!productRatePlanWrapperAddonNewPurchaseList}" var="purchaseItem">
-																		<tr class="item">
+																		<tr class="item no-space">
 																			<th>
 																				<strong> {!purchaseItem.name}</strong>
 																				<!--
@@ -149,7 +149,7 @@
 														<div class="footer-actions">
 															<ul class="list actions">
 																<li><a class="text-link" href="{!URLFOR($Page.IECEBC_AccountExtras)}">Cancel</a></li>
-																<li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Submit payment" /></li>
+																<li><apex:commandLink action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
 															</ul>
 														</div>
     												</apex:outputPanel>
