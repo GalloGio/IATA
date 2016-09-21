@@ -442,6 +442,23 @@
 								
 								</apex:repeat>
 								
+								<apex:outputPanel id="subscriptionDescriptionPanel" rendered="{!isSubscriptionDescriptionVisible}">
+									<tr class="item less-space">
+										<th class="item-details" colspan="2">
+											<div class="title-label"><i class="fa fa-info-circle" aria-hidden="true"></i> Your subscription parameters will be</div>
+											<div class="item-box">New Start Date:
+												<apex:outputText value="${0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermStartDate}" /></apex:outputText>
+											</div>
+											<div class="item-box">New End Date:
+												<apex:outputText value="${0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermEndDate}" /></apex:outputText>
+											</div>
+											<div class="item-box">Email credits added to your account 
+												<apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!emailCreditAddition}" /></apex:outputText>
+											</div>
+										</th>
+									</tr>
+								</apex:outputPanel>
+								
 								<tr class="sub-total">
 									<th>
 										Subtotal
