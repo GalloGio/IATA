@@ -34,8 +34,8 @@ public class CampaignCustomers_Ctrl
     public Decimal minVolume{get;set;}
     public Decimal maxVolume{get;set;} 
 
-    public String msg {get; set;}
-    public List<String> prodWithoutStdPrice {get;set;}
+    //public String msg {get; set;}
+    //public List<String> prodWithoutStdPrice {get;set;}
     
     public CampaignCustomers_Ctrl()
     {
@@ -86,11 +86,11 @@ public class CampaignCustomers_Ctrl
     public void generateCampaignMembers()
     {   
 
-        msg = '';
-        prodWithoutStdPrice = new List<String>();
+        //msg = '';
+        //prodWithoutStdPrice = new List<String>();
 
         //-- Build SOQL to retrieve OrderItems 
-        String query = 'SELECT Order.BillToContactId, Product__c, Quantity, Invoice_Date__c FROM OrderItem WHERE Order.Type in (\'Order\', \'History\') ';
+        String query = 'SELECT Order.BillToContactId, Product__c, Quantity, Invoice_Date__c FROM OrderItem WHERE Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' ';
 
         //-- Products criteria
         if(selectedProducts != null && selectedProducts.size() > 0)
@@ -106,7 +106,7 @@ public class CampaignCustomers_Ctrl
             Boolean selectedProductWithStdPrice = true;
             
             //Get the products price info
-            Map<String, PriceInfo_DTO> priceMap = new Product_Sel().getProductPriceInfo(new Set<String>(selectedProductNumbers), null, null, null, true);
+            /*Map<String, PriceInfo_DTO> priceMap = new Product_Sel().getProductPriceInfo(new Set<String>(selectedProductNumbers), null, null, null, true);
             for(String prodNumber : selectedProductNumbers){
                 PriceInfo_DTO priceInfo = priceMap.get(prodNumber);
                 //Verified if the product have Standard price
@@ -118,7 +118,7 @@ public class CampaignCustomers_Ctrl
             if(prodWithoutStdPrice.size() > 0){
                 msg = 'Make sure these products have standard prices <br /> ' + String.join(prodWithoutStdPrice, ', ') + '<br /> <br /> ';
                 return;
-            }
+            }*/
 
             //-- Find selected products last ersions 
             Set<Id> productsOrdered = new Set<Id>(); 
