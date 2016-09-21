@@ -10255,10 +10255,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <fullName>New Airline joining CASS</fullName>
                 <default>false</default>
             </picklistValues>
-			<picklistValues>
-                <fullName>New for E%26F</fullName>
-                <default>false</default>
-            </picklistValues>
             <picklistValues>
                 <fullName>New for E&amp;F</fullName>
                 <default>false</default>
