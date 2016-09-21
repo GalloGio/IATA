@@ -7528,11 +7528,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EF_Billing_Agreement__c.Require_Approval__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>EF_Billing_Agreement__c.Send_to_SAP__c</field>
         <readable>true</readable>
     </fieldPermissions>
