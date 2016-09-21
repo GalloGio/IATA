@@ -67,78 +67,83 @@ public class vfIECEBC_TestSuite {
         insert oPref;
     }
     
-    
-    
-    /*
-    public static void testPageLoadLoginRequired() {
-		PageReference pageRef = Page.IECEBC_Dashboard;
-        Test.setCurrentPage(pageRef);
-        
-        vfIECEBC layoutController = new vfIECEBC();
-        
-        PageReference pr = layoutController.pageLoad();
-        pr.getParameters().clear();
-        
-        System.assertEquals(Page.IECLogin.getUrl().toLowerCase(), pr.getUrl().toLowerCase());
-        
-    }
-    public static void testPageLoadUnauthorized() {
-		PageReference pageRef = Page.IECEBC_Dashboard;
-        Test.setCurrentPage(pageRef);
-        
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        
-        System.runAs(usr) {
-        	vfIECEBC layoutController = new vfIECEBC();
-            
-        	PageReference pr = layoutController.pageLoad();
-            pr.getParameters().clear();
-            
-            System.assertEquals(Page.IECUnauthorized.getUrl().toLowerCase(), pr.getUrl().toLowerCase());
-        }
-        
-    }
+    //////////////////// TESTS /////////////////////
     public static void testPageLoadDashboard() {
 		PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef);
         
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        setup(true);
+        User usr = initPreRunAs(true);
         System.runAs(usr) {
-            init();
+            initPostRunAs();
+        	Test.startTest();
             
         	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             
             System.assertEquals(null, layoutController.pageLoad());
         }
     }
+    public static void testCampaignSetup() {
+		PageReference pageRef = Page.IECEBC_Campaign;
+        Test.setCurrentPage(pageRef);
+
+        User usr = initPreRunAs(true);
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            EBC_Campaign__c camp = new EBC_Campaign__c();
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            
+            camp.Name = 'Foo Bar';
+            camp.Subject__c = 'Foo Subject';
+            camp.From_Name__c = 'Foo From Name';
+            camp.Is_Google_Analytics_Tracker_Active__c = true;
+            camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+            
+            PageReference pr = campaignExtCon.saveAndContinue();
+             
+            System.assertNotEquals(null, campaignExtCon.con.getId());
+            System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
+            System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
+        }
+    }
+    
     public static void testCampaignListing() {
 		PageReference pageRef = Page.IECEBC_CampaignList;
         Test.setCurrentPage(pageRef);
         
-        Account hw = new Account();
-        hw.Name = 'Hello World';
-        insert hw;
+        Account newAccount = new Account();
+        newAccount.Name = 'Hello World';
+        insert newAccount;
+        Contact newContact = new Contact();
+        newContact.LastName = 'w00t';
+        insert newContact;
         
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        Zuora__CustomerAccount__c otherBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
+        insert otherBillingAccount;  
+        
+        User usr = initPreRunAs(true);
         
         List<EBC_Campaign__c> campaigns = new List<EBC_Campaign__c>{
-            new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Account__c = IECTestUtil.PortalUserAccountId),
-            new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Account__c = IECTestUtil.PortalUserAccountId),
-            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Account__c = IECTestUtil.PortalUserAccountId),
-            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Account__c = IECTestUtil.PortalUserAccountId),
-            new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Account__c = hw.Id)
+            new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Billing_Account__c = otherBillingAccount.Id)
         };
             
         insert campaigns;
         
         System.runAs(usr) {
-            Test.startTest();
+            initPostRunAs();
+        	Test.startTest();
             
-            init();
-            
-            // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_CampaignList campaignListCon = new vfIECEBC_CampaignList();
@@ -178,48 +183,18 @@ public class vfIECEBC_TestSuite {
             campaignListCon.sortBy = campaignListCon.getSortByOptions()[1].getValue();
         }
     }
-*/
     
-    public static void testCampaignSetup() {
-		PageReference pageRef = Page.IECEBC_Campaign;
-        Test.setCurrentPage(pageRef);
-
-        User usr = initPreRunAs(true);
-        System.runAs(usr) {
-            initPostRunAs();
-        	Test.startTest();
-            
-            // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
-            System.assertEquals(null, layoutController.pageLoad());
-            
-            EBC_Campaign__c camp = new EBC_Campaign__c();
-            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
-            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            
-            camp.Account__c = IECTestUtil_Account.Id;
-            camp.Name = 'Foo Bar';
-            camp.Subject__c = 'Foo Subject';
-            camp.From_Name__c = 'Foo From Name';
-            camp.Is_Google_Analytics_Tracker_Active__c = true;
-            camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-            
-            PageReference pr = campaignExtCon.saveAndContinue();
-             
-            System.assertNotEquals(null, campaignExtCon.con.getId());
-            System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
-            System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
-        }
-    }
-    
-    /*
     public static void testCampaignScheduling() {
+        
 		PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
         
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        User usr = initPreRunAs(true);
+        
         EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        masterFilter.Audience__c = 'Agency';
         insert masterFilter;
+        
         EBC_Template__c tpl = new EBC_Template__c();
         insert tpl;
         
@@ -229,22 +204,24 @@ public class vfIECEBC_TestSuite {
         camp.From_Name__c = 'Foo From Name';
         camp.Is_Google_Analytics_Tracker_Active__c = true;
         camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        camp.Account__c = IECTestUtil.PortalUserAccountId;
+        System.debug(IECTestUtil_Account.Id);
+        camp.Billing_Account__c = oBillingAccount.Id;
         camp.EBC_Master_Filter__c = masterFilter.Id;
         camp.EBC_Design__c = tpl.Id;
         insert camp;
         
         System.runAs(usr) {
-            Test.startTest();
-            
-            init();
+            initPostRunAs();
+        	Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            
+            System.debug(campaignExtCon.campaign);
             vfIECEBC_CampaignSchedule scheduleExtCon = new vfIECEBC_CampaignSchedule(sc);
             
             System.assert(scheduleExtCon.getUserTimezoneOffset() == '-04:00' || scheduleExtCon.getUserTimezoneOffset() == '-05:00');
@@ -274,18 +251,63 @@ public class vfIECEBC_TestSuite {
             
             PageReference pr = campaignExtCon.saveAndContinue();
             
-            System.assertEquals(null, JSON.serialize(ApexPages.getMessages()));
+        	System.assertEquals(0, ApexPages.getMessages().size());
             
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
         }
     }
+    
+    public static void testCampaignPreview() {
+		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        Test.setCurrentPage(pageRef);
+        
+
+        User usr = initPreRunAs(true);
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        masterFilter.Audience__c = 'Agency';
+        insert masterFilter;
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        String attchBody = 'this is my preview';
+        Attachment attch = new Attachment();
+        attch.ParentId = tpl.Id;
+        attch.Body = Blob.valueOf(attchBody);
+        attch.ContentType = 'text/html';
+        attch.Name = 'template.xml';
+        insert attch;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.EBC_Master_Filter__c = masterFilter.Id;
+        camp.EBC_Design__c = tpl.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(tpl);
+            vfIECEBC_CampaignPreview campaignExtCon = new vfIECEBC_CampaignPreview(sc);
+            
+            System.assertEquals(attchBody, campaignExtCon.getBody());
+        }
+    }
+    
     public static void testCampaignRecipientsExistingList() {
 		PageReference pageRef = Page.IECEBC_CampaignRecipients;
         Test.setCurrentPage(pageRef);
         
-        
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        User usr = initPreRunAs(true);
         
         List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
             new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id),
@@ -300,16 +322,15 @@ public class vfIECEBC_TestSuite {
         camp.From_Name__c = 'Foo From Name';
         camp.Is_Google_Analytics_Tracker_Active__c = true;
         camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        camp.Account__c = IECTestUtil.PortalUserAccountId;
+        camp.Billing_Account__c = oBillingAccount.Id;
         insert camp;
         
         System.runAs(usr) {
-            Test.startTest();
-            
-            init();
+            initPostRunAs();
+        	Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -320,117 +341,45 @@ public class vfIECEBC_TestSuite {
             
             scheduleExtCon.campaign.EBC_Master_Filter__c = existingFilters[2].Id;
             Integer lastFilterRecipientCount = vfIECEBC_CampaignRecipient.getExistingFilterCnt(existingFilters[2].Id);
-            System.assertEquals(1, lastFilterRecipientCount);
+            System.assert(lastFilterRecipientCount >= 1);
             
             PageReference pr = campaignExtCon.saveAndContinue();
-            System.assertEquals(null, JSON.serialize(ApexPages.getMessages()));
+            System.assertEquals(0, ApexPages.getMessages().size()); 
             
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(3, true).getUrl(), pr.getUrl());
         }
     }
-    public static void testCampaignPreview() {
-		PageReference pageRef = Page.IECEBC_CampaignPreview;
-        Test.setCurrentPage(pageRef);
-        
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
-        insert masterFilter;
-        EBC_Template__c tpl = new EBC_Template__c();
-        insert tpl;
-        
-        String attchBody = 'this is my preview';
-        Attachment attch = new Attachment();
-        attch.ParentId = tpl.Id;
-        attch.Body = Blob.valueOf(attchBody);
-        attch.ContentType = 'text/html';
-        attch.Name = 'template.xml';
-        insert attch;
-        
-        EBC_Campaign__c camp = new EBC_Campaign__c();
-        camp.Name = 'Foo Bar';
-        camp.Subject__c = 'Foo Subject';
-        camp.From_Name__c = 'Foo From Name';
-        camp.Is_Google_Analytics_Tracker_Active__c = true;
-        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        camp.Account__c = IECTestUtil.PortalUserAccountId;
-        camp.EBC_Master_Filter__c = masterFilter.Id;
-        camp.EBC_Design__c = tpl.Id;
-        insert camp;
-        
-        System.runAs(usr) {
-            Test.startTest();
-            
-            init();
-            
-            // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
-            System.assertEquals(null, layoutController.pageLoad());
-            
-            ApexPages.StandardController sc = new ApexPages.StandardController(tpl);
-            vfIECEBC_CampaignPreview campaignExtCon = new vfIECEBC_CampaignPreview(sc);
-            
-            System.assertEquals(attchBody, campaignExtCon.getBody());
-        }
-    }
     
-    public static void testCampaignApproval() {
-		PageReference pageRef = Page.IECEBC_CampaignPreview;
+    
+    /*
+    public static void testPageLoadLoginRequired() {
+		PageReference pageRef = Page.IECEBC_Dashboard;
+        Test.setCurrentPage(pageRef);
+        
+        vfIECEBC layoutController = new vfIECEBC();
+        
+        PageReference pr = layoutController.pageLoad();
+        pr.getParameters().clear();
+        
+        System.assertEquals(Page.IECLogin.getUrl().toLowerCase(), pr.getUrl().toLowerCase());
+        
+    }
+    public static void testPageLoadUnauthorized() {
+		PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef);
         
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
-        insert masterFilter;
-        EBC_Template__c tpl = new EBC_Template__c();
-        insert tpl;
-        
-        String attchBody = 'this is my preview';
-        Attachment attch = new Attachment();
-        attch.ParentId = tpl.Id;
-        attch.Body = Blob.valueOf(attchBody);
-        attch.ContentType = 'text/html';
-        attch.Name = 'template.xml';
-        insert attch;
-        
-        EBC_Campaign__c camp = new EBC_Campaign__c();
-        camp.Name = 'Foo Bar';
-        camp.Subject__c = 'Foo Subject';
-        camp.From_Name__c = 'Foo From Name';
-        camp.Is_Google_Analytics_Tracker_Active__c = true;
-        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        camp.Account__c = IECTestUtil.PortalUserAccountId;
-        camp.EBC_Master_Filter__c = masterFilter.Id;
-        camp.EBC_Design__c = tpl.Id;
         
         System.runAs(usr) {
-        insert camp;
-            Test.startTest();
-            
-            init();
-            
-            // Layout PageLoad
         	vfIECEBC layoutController = new vfIECEBC();
-            System.assertEquals(null, layoutController.pageLoad());
             
-            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
-            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            campaignExtCon.submitForApproval();
+        	PageReference pr = layoutController.pageLoad();
+            pr.getParameters().clear();
+            
+            System.assertEquals(Page.IECUnauthorized.getUrl().toLowerCase(), pr.getUrl().toLowerCase());
         }
         
-        EBC_Campaign__c campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
-        
-        System.assertEquals('PENDING_APPROVAL', campResult.Status__c);
-        
-		pageRef = Page.EBC_CampaignApproval;
-        Test.setCurrentPage(pageRef); 
-         
-        ApexPages.StandardController adminSc = new ApexPages.StandardController(camp);
-        vfEBC_CampaignApproval campaignApprovalExtCon = new vfEBC_CampaignApproval(adminSc);
-        campaignApprovalExtCon.Approve();
-        
-        campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
-        
-        System.assertEquals('APPROVED', campResult.Status__c);
     }
     
     public static void testCampaignApprovalRejected() {
@@ -524,6 +473,65 @@ public class vfIECEBC_TestSuite {
             
             System.assertEquals(null, pr);
         }
+    }
+
+    public static void testCampaignApproval() {
+		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
+        masterFilter.Audience__c = 'Agency';
+        insert masterFilter;
+        EBC_Template__c tpl = new EBC_Template__c();
+        insert tpl;
+        
+        String attchBody = 'this is my preview';
+        Attachment attch = new Attachment();
+        attch.ParentId = tpl.Id;
+        attch.Body = Blob.valueOf(attchBody);
+        attch.ContentType = 'text/html';
+        attch.Name = 'template.xml';
+        insert attch;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.EBC_Master_Filter__c = masterFilter.Id;
+        camp.EBC_Design__c = tpl.Id;
+        
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+        	Test.startTest();
+            
+            // Layout PageLoad
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            System.assertEquals(null, layoutController.pageLoad());
+            
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
+            campaignExtCon.submitForApproval();
+        }
+        
+        EBC_Campaign__c campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
+        
+        System.assertEquals('PENDING_APPROVAL', campResult.Status__c);
+        
+		pageRef = Page.EBC_CampaignApproval;
+        Test.setCurrentPage(pageRef); 
+         
+        ApexPages.StandardController adminSc = new ApexPages.StandardController(camp);
+        vfEBC_CampaignApproval campaignApprovalExtCon = new vfEBC_CampaignApproval(adminSc);
+        campaignApprovalExtCon.Approve();
+        
+        campResult = [Select Id, Status__c From EBC_Campaign__c Where Id = :camp.Id];
+        
+        System.assertEquals('APPROVED', campResult.Status__c);
     }
 */
 }
