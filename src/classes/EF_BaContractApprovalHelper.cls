@@ -34,7 +34,7 @@ public with sharing class EF_BaContractApprovalHelper
 	// Copies approved, future values of a Contract onto the Contract record from Temp Storage and then deleted the temp record
 	public static void copyValuesFromTempStorageOnContractApproval(List<Contract> approvedList, List<String> fieldList)
 	{
-		Set<Id> approvedIds = new Set<Id>();
+		/*Set<Id> approvedIds = new Set<Id>();
 		for(Contract approvedRecord : approvedList)
 		{
 			approvedIds.add(approvedRecord.Id);
@@ -68,6 +68,7 @@ public with sharing class EF_BaContractApprovalHelper
 	    }
 
 	    delete storageList;
+*/
 	}
 
 	// Copies approved, future values of a Billing Agreement onto the Billing Agreement record from Temp Storage and then deleted the temp record

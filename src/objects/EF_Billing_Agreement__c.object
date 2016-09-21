@@ -462,4 +462,15 @@
         <requireRowSelection>false</requireRowSelection>
         <url>window.open(&apos;/apex/EF_Mass_Update_Billing_Agreements?id={!Contract.Id}&apos;);</url>
     </webLinks>
+    <webLinks>
+        <fullName>Edit_All_Airline_BA</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All Airline BA</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_MassUpdateAirlineBillingAgreements?id={!Account.Id}&apos;);</url>
+    </webLinks>
 </CustomObject>
