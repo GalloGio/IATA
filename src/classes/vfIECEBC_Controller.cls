@@ -470,7 +470,7 @@ public virtual class vfIECEBC_Controller {
 		
 		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
 														, eBroadcast_Payment_Token__c = theToken
-														, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_RENEWAL
+														, eBroadcast_Payment_Target__c = ebcPaymentTarget
 														, eBroadcast_Payment_Subscription__c = subscriptionId
 														, eBroadcast_Payment_Product_Rate_Plan__c = productRatePlanId
 														, eBroadcast_Payment_Campaign__c = campaignId //null 

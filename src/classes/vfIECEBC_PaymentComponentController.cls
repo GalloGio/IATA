@@ -9,8 +9,8 @@
   *  - 
   *   
   * History: 
-  *  - 20160919-sl: initial dev version
   *  - 20160920-sl: initial version, covering payment for Campaign, Account Manage, Renewal
+  *  - 20160921-ab: initial integration with credit card functionality
   */
 
 
@@ -20,8 +20,11 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	private static final String RATE_PLAN_CHARGE_TYPE_ONE_TIME = 'One-Time';
 	private static final String RATE_PLAN_CHARGE_TYPE_RECURRING = 'Recurring';
 	private static final String RATE_PLAN_CHARGE_TYPE_USAGE = 'Usage';
-	private static String EBC_PAYMENT_MESSAGE_TOKEN_INVALID_ERROR = 'This eBroadcast Payment is accessed with invalid token. Please redo from the previous page.';
+	private static final String EBC_PAYMENT_MESSAGE_TOKEN_INVALID_ERROR = 'This eBroadcast Payment is accessed with invalid token. Please redo from the previous page.';
 	
+	// zqu__ProductRatePlanCharge__c.zqu__Model__c should be defined in IECConstants.ChargeModel_Zuora_*, however there some inactive values in SF
+	private static final String RATE_PLAN_CHARGE_MODEL_PER_UNIT = 'Per Unit';  // this is used for additional inactive options
+	private static final String RATE_PLAN_CHARGE_MODEL_FLAT_FEE = 'Flat Fee';  // this is used for additional inactive options
 
 	// ======================================================================== 
 	// incoming component parameters are set directly by the caller
@@ -295,8 +298,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	// bank transfer payment is only for non pay as you go
 	public Boolean isPayableWithBankTransfer {
 		get{
-			Boolean result = (productRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO)
-							|| (paidProductRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO);
+			Boolean result = (((productRatePlan != null) && (productRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO))
+								|| ((paidProductRatePlan != null) && (paidProductRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO)));
 			return result;
 		}
 	} 
@@ -425,10 +428,18 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	
 	public Integer emailCreditAddition{
 		get{
-			Integer newEmailCredit = 3000; // dummy, should read this from productRatePlan
+			Integer newEmailCredit = 0;
+            if (isRenewal && productRatePlan != null && productRatePlan.EBC_PrePaid_Emails__c!=null) {
+				String newEmailCreditStr = productRatePlan.EBC_PrePaid_Emails__c;
+				newEmailCredit = Integer.valueOf(newEmailCreditStr);
+			} else if ((payNewRatePlan && paidProductRatePlan != null && paidProductRatePlan.EBC_PrePaid_Emails__c != null)) {
+				String newEmailCreditStr =  paidProductRatePlan.EBC_PrePaid_Emails__c;
+				newEmailCredit = Integer.valueOf(newEmailCreditStr);
+			}
 			return newEmailCredit; 
 		}
 	}
+    
 	// ========================================================================	
 	// selectedProductRatePlanChargeWrapperList contains the items to pay
 	// for renewal the input is : currentEbcSubscriptionProductChargeList
@@ -467,19 +478,42 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	private List<ProductRatePlanChargeWrapper> createProductRatePlanChargeWrapperList(List<zqu__ProductRatePlanCharge__c> prpcList)
 	{
 		Set<String> prpcTypeSet = new Set<String>();
-		if (payExactAmount) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_USAGE);
-		if (payEmailCredit) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
-		if (payNewRatePlan) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
-		if (payNewRatePlan) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
-		if (payAddOn) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
+		Set<String> prpcModelSet = new Set<String>();
+		
 		if (payAddOn) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
-		if (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
+		
+		// pcpcTypeSet / zqu__Type__c
+		
+		if (payAddOn || payExactAmount || payNewRatePlan || payEmailCredit) 
+		{
+			prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
+		}
+		
+		if (isRenewal || payAddOn || payNewRatePlan) 
+		{ 
+			prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
+		}
+		
+		// prpcModelSet / zqu__Model__c 
+		if (payExactAmount) 
+		{
+			prpcModelSet.add(IECConstants.ChargeModel_Zuora_PerUnitPricing);
+			prpcModelSet.add(RATE_PLAN_CHARGE_MODEL_PER_UNIT); // this is used for additional inactive options
+		}
+		
+		if (isRenewal || payAddOn || payNewRatePlan 
+			|| payEmailCredit ) 
+		{
+			prpcModelSet.add(IECConstants.ChargeModel_Zuora_FlatFeePricing);
+		}
 		
 		List<ProductRatePlanChargeWrapper> prpcwList = new List<ProductRatePlanChargeWrapper>();
+		
 		// copy releveant PRP from those listed in product rate plan
 		for (zqu__ProductRatePlanCharge__c prpc : prpcList)
 		{
-			if ( prpcTypeSet.contains(prpc.zqu__Type__c)) // selected type
+			if ((prpcTypeSet.contains(prpc.zqu__Type__c))
+				&& (prpcModelSet.contains(prpc.zqu__Model__c))) 
 			{
 				prpcwList.add(new ProductRatePlanChargeWrapper(prpc,emailCreditPurchased));
 			}
@@ -497,7 +531,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 			if (paidProductRatePlan == null){
 				if (selectedRatePlanId != null) {
 					List<zqu__ProductRatePlan__c> prpList = [select Id, Name 
-															, EBC_SubscriptionType__c
+															, EBC_SubscriptionType__c, EBC_PrePaid_Emails__c
 															, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c
 																	, zqu__Type__c
 																	, zqu__Model__c
@@ -571,6 +605,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 						, zqu__ListPrice__c
 						, zqu__Description__c
 						, zqu__Type__c
+						, zqu__Model__c
 				from zqu__ProductRatePlanCharge__c
 				where zqu__ProductRatePlan__c in : prpIdSet 
 			]; 
@@ -631,7 +666,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		{
 			name = prpc.Name;
 			unitPrice = (prpc.zqu__ListPrice__c == null) ? 0 : prpc.zqu__ListPrice__c;
-			chargeAmount = (prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_USAGE) 
+            
+			chargeAmount = ( (prpc.zqu__Model__c == IECConstants.ChargeModel_Zuora_PerUnitPricing) 
+                            || (prpc.zqu__Model__c == RATE_PLAN_CHARGE_MODEL_PER_UNIT) )
 							? unitPrice * numOfUnits
 							: unitPrice;
 			numberOfEmails = numOfUnits;
@@ -640,6 +677,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		
 	} // end class  ProductRatePlanChargeWrapper
     
+	// ========================================================================
+	
     /**
      * Specify extra HPM parameters that can be used to (1) Preload field values (2) Override default HPM properties.  Please see 
      * HPM Implementation Guide for a complete list of HPM parameters.
