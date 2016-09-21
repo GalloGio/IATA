@@ -7185,19 +7185,6 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>SAP_Number__c</fullName>
-        <description>E&amp;F CRM Project. Field needed because ACLI SAP can't be used.</description>
-        <externalId>false</externalId>
-        <inlineHelpText></inlineHelpText>
-        <label>SAP Number</label>
-        <length>12</length>
-        <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>EF_Airline_ID__c</fullName>
         <description>E&amp;F CRM Project. Front end Airline ID number (legacy) in CRM</description>
         <externalId>false</externalId>
@@ -38295,10 +38282,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>New for E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -44752,10 +44735,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
 			<values>
-                <fullName>New for E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
@@ -65312,10 +65291,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>New for E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -70391,10 +70366,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>New for E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other</fullName>
                 <default>false</default>
             </values>
@@ -74615,10 +74586,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
 			<values>
-                <fullName>New for E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>New for E%26F</fullName>
                 <default>false</default>
             </values>
