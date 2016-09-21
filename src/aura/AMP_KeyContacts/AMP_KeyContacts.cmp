@@ -33,7 +33,7 @@
         <aura:iteration items="{!v.contacts}" var="contact">
          <tr>
              <!-- <td><c:AMP_EditSaveMenu /></td> -->
-           <td>{!contact.Name}</td>
+           <td><a href="{!'/'+contact.Id}" target="_blank">{!contact.Name}</a></td>
            <td> <aura:unescapedHtml value="{!contact.Airline_Contact_Type__c}"/></td>
            <td>{!contact.Membership_Function__c}</td>
            <td>{!contact.Title}</td>
