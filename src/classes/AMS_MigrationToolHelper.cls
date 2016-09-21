@@ -55,6 +55,8 @@ public with sharing class AMS_MigrationToolHelper {
 
 		caseToProcess.RecordTypeId = rtCommCase;
 
+        update caseToProcess;
+        
 		AMS_Pax_Accreditation_Form__c accreditationObj = fetchAccreditation(caseToProcess.Id);
 
 		String processType = processTypeMap.get(caseToProcess.Reason1__c);
@@ -71,7 +73,10 @@ public with sharing class AMS_MigrationToolHelper {
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(caseToProcess.AccountId, accreditationObj.Id, processType, caseToProcess.Id);
 
 		cont.oscarId = oscarId;
+		cont.oscarCreated = new AMS_OSCAR__c(Id = oscarId, Name = caseToProcess.CaseNumber);
+
 		cont.oscarCaseId = caseToProcess.Id;
+		cont.caseCreated = caseToProcess;
 		cont.processing = false;
 		cont.migrated = true;
 
