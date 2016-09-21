@@ -765,14 +765,4 @@ TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
         <errorDisplayField>Subject__c</errorDisplayField>
         <errorMessage>The Subject can only be changed when the campaign status is Draft</errorMessage>
     </validationRules>
-    <webLinks>
-        <fullName>Show_Tracking</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>page</linkType>
-        <masterLabel>Show Tracking</masterLabel>
-        <openType>replace</openType>
-        <page>IECEBC_ETCampaignGraph</page>
-        <protected>false</protected>
-    </webLinks>
 </CustomObject>
