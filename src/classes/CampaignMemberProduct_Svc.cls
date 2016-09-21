@@ -39,8 +39,8 @@ public class CampaignMemberProduct_Svc
                 {
                     //-- If item Invoice Date is more recent the update qty 
                     Campaign_Member_Product__c cmp = cmpByKey.get(key);
-                    if(item.Invoice_Date__c > cmp.Invoice_Date__c)
-                        cmp.Quantity__c = item.Quantity;
+                    //if(item.Invoice_Date__c > cmp.Invoice_Date__c)
+                        cmp.Quantity__c += item.Quantity;
                 }
                 else
                 {
@@ -57,7 +57,7 @@ public class CampaignMemberProduct_Svc
         }
         
         //-- Check in existing CMP if there is no duplicates with the one we are about to save 
-        Map<String, Campaign_Member_Product__c> existingCMPByKey = new CampaignMemberProduct_Sel().getCampaignMemberProductByKey(cmpSearchKeys);
+        Map<String, Campaign_Member_Product__c> existingCMPByKey = new CampaignMemberProduct_Sel().getCampaignMemberProductByKey(cmpByKey.keySet());
         
         List<Campaign_Member_Product__c> cmpToInsert = new List<Campaign_Member_Product__c>();
         List<Campaign_Member_Product__c> cmpToUpdate = new List<Campaign_Member_Product__c>();
@@ -69,12 +69,12 @@ public class CampaignMemberProduct_Svc
             if(existingCMPByKey.containsKey(key))
             {
                 Campaign_Member_Product__c existingCMP = existingCMPByKey.get(key);
-                if(cmp.Invoice_Date__c > existingCMP.Invoice_Date__c)
-                {
+                //if(cmp.Invoice_Date__c > existingCMP.Invoice_Date__c)
+                //{
                     //CMP more recent than the existing  => update the existing qty 
-                    existingCMP.Quantity__c = cmp.Quantity__c;
+                    existingCMP.Quantity__c += cmp.Quantity__c;
                     cmpToUpdate.add(existingCMP);
-                }
+                //}
             }
             else
             {
