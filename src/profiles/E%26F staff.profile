@@ -22517,7 +22517,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>EF_Contact_Relationship__c.Role__c</field>
         <readable>true</readable>
     </fieldPermissions>
