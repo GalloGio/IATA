@@ -14,7 +14,8 @@ public class vfIECEBC_TemplateCreation extends vfIECEBC_Controller
                     FROM EBC_Template__c
                     WHERE
                         Recordtype.DeveloperName = 'Global' AND 
-                        Audience__c = :audience
+                        Audience__c = :audience AND
+                    	(NOT External_Id__c LIKE '%customhtml-%')
                 ];
             }
             

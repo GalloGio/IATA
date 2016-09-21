@@ -79,7 +79,7 @@
                 }
                 
                 
-                <apex:outputText rendered="{!isCustomHtml}">
+                <apex:outputText rendered="{!false == true}">
                     ko.bindingHandlers.wysiwyg.fullOptions = {
                         toolbar1: 'code',
                         plugins: ["code"]
@@ -220,11 +220,18 @@
                                             console.log(e);
                                             
                                             viewModel.notifier.clear();
+                                            
                                             if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceNotReady_Exception') != -1) {
                                                 viewModel.notifier.error(viewModel.t('Some of the images you are using are not yet ready.'));
                                                 console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('ResourceMissing_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Some of the images has been deleted. Please repleace them by existing resources.'));
+                                                console.log(e);
                                             } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('RejectedSubscriber_Exception') != -1) {
                                                 viewModel.notifier.error(viewModel.t('Email Address has been rejected'));
+                                                console.log(e);
+                                            } else if ('undefined' != typeof(e.faultstring) && e.faultstring.indexOf('DailyLimitReached_Exception') != -1) {
+                                                viewModel.notifier.error(viewModel.t('Daily limit of 10 tests for this design/template has been reached.'));
                                                 console.log(e);
                                             } else {
                                                 viewModel.notifier.error(viewModel.t('Unknown error!'));
@@ -244,7 +251,7 @@
                             viewModel.test = testCmd;
                         },
                         
-                        <apex:outputText rendered="{!isCustomHtml}">
+                        <apex:outputText rendered="{!false == true}">
                         function(viewModel) {
                             viewModel.showToolbox = false;
                         
@@ -279,7 +286,7 @@
                 
                 
                 </script>
-                <apex:outputText rendered="{!isCustomHtml}">
+                <apex:outputText rendered="{!false == true}">
                     <style>
                         #showGallery,
                         [for="showGallery"],

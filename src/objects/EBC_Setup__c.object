@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -65,6 +65,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -78,20 +79,9 @@
         <precision>5</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ET_Last_EventDate__c</fullName>
-        <externalId>false</externalId>
-        <inlineHelpText>Last EventDate of the SOAP API call to ExactTarget</inlineHelpText>
-        <label>ET Last EventDate</label>
-        <length>30</length>
-        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -102,6 +92,7 @@
         <inlineHelpText>This is the community base url for the eBroadcast pages</inlineHelpText>
         <label>E-Commerce Base Url</label>
         <required>true</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
@@ -116,6 +107,7 @@
         <relationshipLabel>EBC Setups (Enhanced Reporting Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups1</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -129,6 +121,7 @@
         <precision>5</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -144,6 +137,7 @@
         <relationshipLabel>EBC Setups for Member Email Block Product</relationshipLabel>
         <relationshipName>Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -158,6 +152,7 @@
         <relationshipLabel>EBC Setups (Member Enterprise Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups4</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -172,6 +167,7 @@
         <relationshipLabel>EBC Setups (Member Premium Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups5</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -186,6 +182,7 @@
         <relationshipLabel>EBC Setups (Member Pro Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups3</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -200,6 +197,7 @@
         <relationshipLabel>EBC Setups (Member Starter Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups2</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -214,6 +212,7 @@
         <relationshipLabel>EBC Setups (Non Member Member Email Block Product)</relationshipLabel>
         <relationshipName>Non_Member_Email_Block_EBC_Setups</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -228,6 +227,7 @@
         <relationshipLabel>EBC Setups (Non-Member Enterprise Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups8</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -242,6 +242,7 @@
         <relationshipLabel>EBC Setups (Non-Member Premium Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups9</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -256,6 +257,7 @@
         <relationshipLabel>EBC Setups (Non-Member Pro Product Rate Plan)</relationshipLabel>
         <relationshipName>EBC_Setups7</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -287,6 +289,7 @@ This is used to get details such as Renewal_Window used for sending renewal offe
         <relationshipLabel>EBC Setups</relationshipLabel>
         <relationshipName>EBC_Setups</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -305,6 +308,7 @@ This is defined in Product Category.</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -320,6 +324,7 @@ This is defined in Product Category.</inlineHelpText>
         <relationshipLabel>EBC Setups</relationshipLabel>
         <relationshipName>EBC_Setups</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -344,6 +349,7 @@ This is defined in Product Category.</inlineHelpText>
     </listViews>
     <nameField>
         <label>EBC Setup Name</label>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Setups</pluralLabel>
@@ -355,4 +361,5 @@ This is defined in Product Category.</inlineHelpText>
         <customTabListAdditionalFields>Maximum_File_Size_Upload__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
 </CustomObject>

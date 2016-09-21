@@ -111,6 +111,31 @@ public class vfIECEBC_TemplateList extends vfIECEBC_Abstract_List {
         }
         set;
     }
+    
+    
+    public EBC_Template__c customHtmlTemplate {
+        get {
+            
+            if(customHtmlTemplate == null) {
+                customHtmlTemplate = [
+                    SELECT
+                        Id,
+                        Name,
+                        (Select Id, Name From Attachments where Name = '/edres/_full.png')
+                    FROM EBC_Template__c
+                    WHERE
+                        Recordtype.DeveloperName = 'Global' AND 
+                        Audience__c = :newTemplate.Audience__c AND
+                    	External_Id__c LIKE 'customhtml-%'
+                    LIMIT 1
+                ];
+            }
+            
+            return customHtmlTemplate;
+        }
+        set;
+    }
+    
     public Boolean isSaved {
         get {
             if (isSaved == null) isSaved = false;
