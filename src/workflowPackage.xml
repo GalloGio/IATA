@@ -4,7 +4,11 @@
         <members>*</members>
         <name>ApprovalProcess</name>
     </types>
-	<types>
+    <types>
+        <members>*</members>
+        <name>Report</name>
+    </types>
+    <types>
         <members>*</members>
         <name>Workflow</name>
     </types>

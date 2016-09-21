@@ -265,7 +265,7 @@ public class EF_MaterialLineItemHandler {
             
             if ((mli.EF_Relationship__c != null && materialLineItemOldMap == null) || 
                 (materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Relationship__c != materialLineItemOldMap.get(mli.Id).EF_Relationship__c) ||
-                (materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Material__c != materialLineItemOldMap.get(mli.Id).EF_Material__c) 
+                (materialLineItemOldMap != null && materialLineItemOldMap.containsKey(mli.Id) && mli.EF_Material__c != materialLineItemOldMap.get(mli.Id).EF_Material__c && mli.EF_Relationship__c != null) 
                ) {
                    
                 workdata.add(mli);
