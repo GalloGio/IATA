@@ -264,20 +264,13 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
 									: (payWithEmailPackage ? acctEmailBlock.selectedProductRatePlanWrapper.productRatePlan.Id
 										: (payWithRatePlan ? acctRatePlan.selectedProductRatePlanWrapper.productRatePlan.Id : null));
 			
-		String theToken = IECEBC_Utility.generatePaymentToken(ebcCampaignId + '-' + paidProductRatePlanId + '-' + campaignPaymentOption);
-		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
-															, eBroadcast_Payment_Token__c = theToken
-															, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_CAMPAIGN
-															, eBroadcast_Payment_Product_Rate_Plan_Id__c = paidProductRatePlanId
-															, eBroadcast_Payment_Campaign__c = ebcCampaignId 
-															, eBroadcast_Payment_Campaign_Option__c = campaignPaymentOption
-															, eBroadcast_Payment_Email_Credit_Amount__c = emailCreditPurchased
-															);
-		update paymentBillingAccount;
-			
-		PageReference paymentPage = Page.IECEBC_CampaignPayment;
-		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
 		
+		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_CampaignPayment, EBC_PAYMENT_TARGET_CAMPAIGN, campaignPaymentOption
+							, null // subscription.Id
+							, paidProductRatePlanId // productRatePlanId
+							, ebcCampaignId // campaignId
+							, emailCreditPurchased // emailCreditAmount
+							);
 		return paymentPage;
 	}
 	

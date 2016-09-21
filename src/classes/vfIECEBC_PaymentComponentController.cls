@@ -10,7 +10,7 @@
   *   
   * History: 
   *  - 20160919-sl: initial dev version
-  *  
+  *  - 20160920-sl: initial version, covering payment for Campaign, Account Manage, Renewal
   */
 
 
@@ -31,6 +31,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	private String paymentTarget {get;set;}
 	private String campaignPaymentOption {get;set;}
 	private String selectedRatePlanId {get;set;}
+	private String selectedEbcSubscriptionId {get;private set;}
 	private Integer emailCreditPurchased {get;set;}
 	private Id ebcCampaignId {get;set;} // EBCEBC_Campaign__c.Id, used only for IECEBC_CampaignPayment.page
 	
@@ -81,7 +82,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		
 		paymentTarget = billingAccount.eBroadcast_Payment_Target__c;
 		campaignPaymentOption = billingAccount.eBroadcast_Payment_Campaign_Option__c;
-		selectedRatePlanId = billingAccount.eBroadcast_Payment_Product_Rate_Plan_Id__c;
+		selectedRatePlanId = billingAccount.eBroadcast_Payment_Product_Rate_Plan__c;
+		selectedEbcSubscriptionId = billingAccount.eBroadcast_Payment_Subscription__c;
 		emailCreditPurchased = Integer.valueOf(billingAccount.eBroadcast_Payment_Email_Credit_Amount__c);
 		ebcCampaignId = billingAccount.eBroadcast_Payment_Campaign__c;
 	} // end of initialization
@@ -293,7 +295,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	// bank transfer payment is only for non pay as you go
 	public Boolean isPayableWithBankTransfer {
 		get{
-			Boolean result = (paidProductRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO);
+			Boolean result = (productRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO)
+							|| (paidProductRatePlan.EBC_SubscriptionType__c != EBC_PRODUCT_RATE_PLAN_SUBSCRIPTION_TYPE_PAY_AS_YOU_GO);
 			return result;
 		}
 	} 
@@ -389,13 +392,105 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		
 	private Boolean isRenewal{
 		get{
-			return false;
+			Boolean result = (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL);
+			return result;
+		}
+	}
+	
+	public Boolean isSubscriptionDescriptionVisible{
+		get{
+			Boolean result = (isRenewal || payNewRatePlan);
+			return result;
 		}
 	}
 	
 	
 	// ========================================================================
-	// ProductRatePlan and relevant ProductRatePlanCharge for what to be displayed in Payment Confirmation 
+	// values to be displayed in Payment Confirmation
+	
+	// newSubscriptionTermStartDate 
+	public Date newSubscriptionTermStartDate{
+		get{
+			Date newDate = (isSubscriptionDescriptionVisible && subscription.Zuora__TermEndDate__c != null) ? subscription.Zuora__TermEndDate__c.addDays(1) : Date.today();
+			return newDate; 
+		}
+	}
+	
+	public Date newSubscriptionTermEndDate{
+		get{
+			Date newDate = (isSubscriptionDescriptionVisible && subscription.Zuora__TermEndDate__c != null) ? subscription.Zuora__TermEndDate__c.addMonths(12) : Date.today().addMonths(12).addDays(-1);
+			return newDate; 
+		}
+	}
+	
+	public Integer emailCreditAddition{
+		get{
+			Integer newEmailCredit = 3000; // dummy, should read this from productRatePlan
+			return newEmailCredit; 
+		}
+	}
+	// ========================================================================	
+	// selectedProductRatePlanChargeWrapperList contains the items to pay
+	// for renewal the input is : currentEbcSubscriptionProductChargeList
+	// for campaign and account rate plan/add on/email block purchases, the input is paidProductRatePlan
+	public List<ProductRatePlanChargeWrapper> selectedProductRatePlanChargeWrapperList
+	{
+		get{
+			if (selectedProductRatePlanChargeWrapperList == null) 
+			{
+				List<ProductRatePlanChargeWrapper> prpcwList = new List<ProductRatePlanChargeWrapper>();
+				if (!isRenewal) 
+				{
+					prpcwList = createProductRatePlanChargeWrapperList(paidProductRatePlan.zqu__R00N40000001mFVKEA2__r);
+				} else if (isRenewal) 
+				{
+					// collect all product rate plan charge from the EBC Subscription Product Charge List (some will be excluded by createProductRatePlanChargeWrapperList )
+					List<zqu__ProductRatePlanCharge__c> prpcList = new List<zqu__ProductRatePlanCharge__c>();
+					for (Zuora__SubscriptionProductCharge__c spc : currentEbcSubscriptionProductChargeList)
+					{
+						prpcList.add( spc.Product_Rate_Plan_Charge__r);
+					}
+					prpcwList = createProductRatePlanChargeWrapperList(prpcList);
+				}
+				
+				selectedProductRatePlanChargeWrapperList = prpcwList;
+			}
+			
+			return selectedProductRatePlanChargeWrapperList;
+		}
+		set;
+	} // end of selectedProductRatePlanChargeWrapperList getter
+	
+	
+	// ========================================================================	
+	// create ProductRatePlanChargeWrapperList based on given productRatePlanChargeList and payment target
+	private List<ProductRatePlanChargeWrapper> createProductRatePlanChargeWrapperList(List<zqu__ProductRatePlanCharge__c> prpcList)
+	{
+		Set<String> prpcTypeSet = new Set<String>();
+		if (payExactAmount) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_USAGE);
+		if (payEmailCredit) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
+		if (payNewRatePlan) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
+		if (payNewRatePlan) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
+		if (payAddOn) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
+		if (payAddOn) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
+		if (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
+		
+		List<ProductRatePlanChargeWrapper> prpcwList = new List<ProductRatePlanChargeWrapper>();
+		// copy releveant PRP from those listed in product rate plan
+		for (zqu__ProductRatePlanCharge__c prpc : prpcList)
+		{
+			if ( prpcTypeSet.contains(prpc.zqu__Type__c)) // selected type
+			{
+				prpcwList.add(new ProductRatePlanChargeWrapper(prpc,emailCreditPurchased));
+			}
+		}
+		return prpcwList;
+	} // end of createProductRatePlanChargeWrapperList
+	
+	
+	// ========================================================================
+	// ProductRatePlan and relevant ProductRatePlanCharge that is part of the payment
+	// use for Campaign, Account_Rate_Plan, Account_Email_Blocks, Account_Extras payments
 	public zqu__ProductRatePlan__c paidProductRatePlan
 	{
 		get{
@@ -403,7 +498,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 				if (selectedRatePlanId != null) {
 					List<zqu__ProductRatePlan__c> prpList = [select Id, Name 
 															, EBC_SubscriptionType__c
-															, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c, zqu__Type__c
+															, (select Id, Name, zqu__ProductRatePlan__c, zqu__ListPrice__c, zqu__Description__c
+																	, zqu__Type__c
+																	, zqu__Model__c
 																	from zqu__R00N40000001mFVKEA2__r order by Id)
 															from zqu__ProductRatePlan__c
 															where Id = : selectedRatePlanId 
@@ -414,51 +511,72 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 			return paidProductRatePlan;
 		}
 		private set;
-	}
+	} // end of paidProductRatePlan
 	
-	// ========================================================================	
-	// selectedProductRatePlanChargeWrapperList contains the items to pay
-	public List<ProductRatePlanChargeWrapper> selectedProductRatePlanChargeWrapperList
-	{
-		get{
-			if (selectedProductRatePlanChargeWrapperList == null) {
-				
-				Set<String> prpcTypeSet = new Set<String>();
-				if (payExactAmount) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_USAGE);
-				if (payEmailCredit) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
-				if (payNewRatePlan) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
-				if (payNewRatePlan) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
-				if (payAddOn) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_ONE_TIME);
-				if (payAddOn) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
-				if (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL) prpcTypeSet.add(RATE_PLAN_CHARGE_TYPE_RECURRING);
-				
-				List<ProductRatePlanChargeWrapper> prpcwList = new List<ProductRatePlanChargeWrapper>();
-				// copy releveant PRP from those listed in product rate plan
-				for (zqu__ProductRatePlanCharge__c prpc : paidProductRatePlan.zqu__R00N40000001mFVKEA2__r)
-				{
-					if ( prpcTypeSet.contains(prpc.zqu__Type__c)) // selected type
-					{
-						prpcwList.add(new ProductRatePlanChargeWrapper(prpc,emailCreditPurchased));
-					}
-				}
-				// 
-				selectedProductRatePlanChargeWrapperList = prpcwList;
-			}
-			
-			return selectedProductRatePlanChargeWrapperList;
-		}
-		set;
-	}
 	
 	// ========================================================================
-	// the total taxAmount which will be provided from Zuora
-	public Decimal taxAmount{
+	// currentEbcSubscriptionProductChargeList return currently subscribed ProductRatePlan, the prepaid and Add On
+	// used for renewal payment
+	// input: current user (billing account)
+	// assumption:
+	//   - relationship between Subscription and SubscriptionProductCharge is 1:n 
+	//   - selecting on EBC Add On category is based on ProductCategory__c from zqu__ZProduct not Zuora__Product.
+	//
+	// This model will not add any new product rate plan charge previously not available in subscrption in the subscription renewal.
+	// 
+	private List<Zuora__SubscriptionProductCharge__c> currentEbcSubscriptionProductChargeList{
 		get{
-			if (taxAmount == null) taxAmount = 0;
-			return taxAmount;
+			if (currentEbcSubscriptionProductChargeList==null)
+			{
+				List<Zuora__SubscriptionProductCharge__c> subsProductChargeList = [select Id
+						, Product_Rate_Plan_Charge__r.Id
+						, Product_Rate_Plan_Charge__r.Name
+						, Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c
+						, Product_Rate_Plan_Charge__r.zqu__ListPrice__c
+						, Product_Rate_Plan_Charge__r.zqu__Description__c
+						, Product_Rate_Plan_Charge__r.zqu__Type__c
+						, Product_Rate_Plan_Charge__r.zqu__Model__c
+						, Zuora__Subscription__r.Zuora__TermEndDate__c
+					from Zuora__SubscriptionProductCharge__c 
+					where Zuora__Subscription__r.Zuora__CustomerAccount__c = : billingAccount.Id
+						and Zuora__Subscription__r.Zuora__TermEndDate__c >= TODAY
+						and Zuora__Subscription__c = : selectedEbcSubscriptionId
+					order by Zuora__Subscription__r.Zuora__Status__c DESC, Zuora__Subscription__r.LastModifiedDate
+				];
+				currentEbcSubscriptionProductChargeList = subsProductChargeList;
+			}
+			return currentEbcSubscriptionProductChargeList;
 		}
-		set;
-	}
+		private set;
+	} // currentEbcSubscriptionProductChargeList getter/setter
+	
+	
+	// ========================================================================
+	// currentSubscriptionProductRatePlanChargeList 
+	// used for renewal payment, if we want to use the most recent product rate plan charges related to the product rate plan 
+	// assumption:
+	//  - new relevant product rate plan charge added after the subscription charge has been created might be included
+	//  - on the renewal, it is possible to use different recurring charge than the previous subscription
+	//  - this might not be used, based on the information from the BA 
+	private List<zqu__ProductRatePlanCharge__c> currentSubscriptionProductRateChargePlanList()
+	{
+		Set<Id> prpIdSet = new set<Id>();
+		for (Zuora__SubscriptionProductCharge__c spc : currentEbcSubscriptionProductChargeList)
+		{
+			prpIdSet.add(spc.Product_Rate_Plan_Charge__r.zqu__ProductRatePlan__c);
+		}
+		
+		List<zqu__ProductRatePlanCharge__c> prpcList = [select Id, Name
+						, zqu__ProductRatePlan__c
+						, zqu__ListPrice__c
+						, zqu__Description__c
+						, zqu__Type__c
+				from zqu__ProductRatePlanCharge__c
+				where zqu__ProductRatePlan__c in : prpIdSet 
+			]; 
+		return prpcList;
+	} // currentSubscriptionProductRatePlanList
+	
 	
 	// ========================================================================
 	// subTotalAmount is the toal amount of charge prior to the tax
@@ -473,6 +591,20 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 			return sumOfListPrice;
 		}
 		//private set;
+	}
+	
+	
+	// ========================================================================
+	// Calculation for tax and total
+	
+	// ========================================================================
+	// the total taxAmount which will be provided from Zuora
+	public Decimal taxAmount{
+		get{
+			if (taxAmount == null) taxAmount = 0;
+			return taxAmount;
+		}
+		set;
 	}
 	
 	// ========================================================================

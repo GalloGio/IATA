@@ -1118,21 +1118,42 @@ This is used only for Campaign Payment.</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>eBroadcast_Payment_Product_Rate_Plan_Id__c</fullName>
-        <description>Selected ProductRatePlan.Id related to this payment. 
-Used by the IECEBC_Payment to get the Product Rate Plan Charges.
-It can be from EBC Product Rate Plan subscription, Add On Product Rate Plan, Email Credit Product Rate Plan, etc, that is selected from the IECEBC_Campaign_Confirm page,or  IECEBC_Account_* pages.</description>
+        <fullName>eBroadcast_Payment_Product_Rate_Plan__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Selected ProductRatePlan related to this payment. 
+Used by the IECEBC_Payment to get the Product Rate Plan Charges. 
+It can be from EBC Product Rate Plan subscription, Add On Product Rate Plan, Email Credit Product Rate Plan, etc, that is selected from the IECEBC_Campaign_Confirm page,or IECEBC_Account_* pages.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Selected ProductRatePlan.Id related to this payment. 
-Used by the IECEBC_Payment to get the Product Rate Plan Charges.
-It can be from EBC Product Rate Plan subscription, Add On Product Rate Plan, Email Credit Product Rate Plan, etc.</inlineHelpText>
-        <label>eBroadcast Payment Product Rate Plan Id</label>
-        <length>18</length>
+        <inlineHelpText>Selected ProductRatePlan related to this payment. 
+Used by the IECEBC_Payment to get the Product Rate Plan Charges. 
+It can be from EBC Product Rate Plan subscription, Add On Product Rate Plan, Email Credit Product Rate Plan, etc, that is selected from</inlineHelpText>
+        <label>eBroadcast Payment Product Rate Plan</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>Billing Accounts</relationshipLabel>
+        <relationshipName>Rate_Plan_Payment_Billing_Accounts</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>eBroadcast_Payment_Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Selected EBC Subscription related to this renewal payment. 
+Used by the IECEBC_Payment to get the Product Rate Plan Charges.
+This should be set by calling Payment for renewal.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Selected EBC Subscription related to this renewal payment. 
+Used by the IECEBC_Payment to get the Product Rate Plan Charges.
+This should be set by calling Payment for renewal.</inlineHelpText>
+        <label>eBroadcast Payment Subscription</label>
+        <referenceTo>Zuora__Subscription__c</referenceTo>
+        <relationshipLabel>Billing Accounts</relationshipLabel>
+        <relationshipName>Subscription_Payment_Billing_Accounts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>eBroadcast_Payment_Target__c</fullName>

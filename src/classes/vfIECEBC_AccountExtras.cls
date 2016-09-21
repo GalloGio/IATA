@@ -9,6 +9,7 @@
   * History: 
   *  - 20160729-sl: initial version
   *  - 20160811-sl: move some methods and properties to vfIECEBC_Controller
+  *  - 20160920-sl: add payment link and hide submit payment if no Add On has been selected.
   */
 
 
@@ -178,20 +179,13 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 	// this ensure the data integrity and simplify the caller
 	public PageReference goToPaymentPage()
 	{
-		String theToken = IECEBC_Utility.generatePaymentToken( selectedProductRatePlan.Id + '-' + EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON);
-		Zuora__CustomerAccount__c paymentBillingAccount = new Zuora__CustomerAccount__c( Id = billingAccount.Id
-														, eBroadcast_Payment_Token__c = theToken
-														, eBroadcast_Payment_Target__c = EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON
-														, eBroadcast_Payment_Product_Rate_Plan_Id__c = selectedProductRatePlan.Id
-														, eBroadcast_Payment_Campaign__c = null 
-														, eBroadcast_Payment_Campaign_Option__c = EBC_PAYMENT_CAMPAIGN_NONE
-														, eBroadcast_Payment_Email_Credit_Amount__c = 0
-														);
-		update paymentBillingAccount;
+		PageReference paymentPage = goToPaymentPageBase( Page.IECEBC_Payment, EBC_PAYMENT_TARGET_ACCOUNT_RATE_PLAN, EBC_PAYMENT_CAMPAIGN_NONE
+							, null // subscription.Id
+							, selectedProductRatePlan.Id // productRatePlanId
+							, null // campaignId
+							, 0 // emailCreditAmount
+							);
 		
-		PageReference paymentPage = Page.IECEBC_Payment; 
-		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);
-			
 		return paymentPage;
 	} // end of goToPaymentPage
 	
