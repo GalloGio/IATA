@@ -7416,6 +7416,11 @@
         <field>EF_Approval__c.SAP_Contract_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Approval__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Airline__c</field>
@@ -7594,6 +7599,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Material_Line_Item__c.Requested_Changes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Material_Line_Item__c.Require_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
