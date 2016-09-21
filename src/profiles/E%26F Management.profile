@@ -41091,6 +41091,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EF_MassUpdateMaterialLI_BillingAgreement</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EasyUploadAttachment</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
