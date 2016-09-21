@@ -1,4 +1,10 @@
 public class vfIECEBC_TestSuite {
+    public static Account IECTestUtil_Account;
+    public static Contact IECTestUtil_Contact;
+    public static User IECTestUtil_User;
+    public static Id IECTestUtil_UserId;
+    public static Zuora__CustomerAccount__c IECTestUtil_BillingAccount;
+    
     private static Product_Category__c oProductCategory;
     private static Product_Information__c oProductInfo;
     private static zqu__ZProduct__c oProduct;
@@ -7,21 +13,25 @@ public class vfIECEBC_TestSuite {
     private static Product_Rate_Plan_Information__c oProductRatePlanInfo;
     private static Zuora__Subscription__c subscription;
     private static Zuora__SubscriptionProductCharge__c subscriptionCharge;
-    private static Zuora__CustomerAccount__c oBillingAccount;
+    private static Zuora__CustomerAccount__c oBillingAccount {
+        get { return IECTestUtil_BillingAccount; }
+    }
     private static EBC_Preference__c oPref;
     
     private static IECCustomer currentCustomer;
-/*
-    
-    static void setup(Boolean grantEBCAccess) {
-	    oBillingAccount = [Select Id From Zuora__CustomerAccount__c Where Zuora__Account__c  = :IECTestUtil.PortalUserAccountId];        
+
+    public static User initPreRunAs(Boolean grantEBCAccess) {
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+
         if (grantEBCAccess) {
             oBillingAccount.eBroadcast_Product_Access__c = true;
             update oBillingAccount;
         }
+        
+        return usr;
     }
-
-    static void init() {
+    
+    static void initPostRunAs() {
         oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_EBROADCAST, true);
         insert oProductCategory;
         
@@ -39,12 +49,12 @@ public class vfIECEBC_TestSuite {
         insert oProductRatePlanCharge;
         
         oProductRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('Starter Edition', false, oProductRatePlan, oProductInfo);
-        insert oProductRatePlanInfo;
+        insert oProductRatePlanInfo; 
         
-        currentCustomer = IECCustomer.getCurrentIECCustomer();
+        currentCustomer = IECCustomer.getCurrentIECCustomer(); 
         
         // create dummy subscription
-        subscription = IECTestUtil.createSampleSubscription(currentCustomer.RelatedAccount.Id, currentCustomer.RelatedBillingAccount.Id, 'Subs 01', Date.today().addMonths(6));
+        subscription = IECTestUtil.createSampleSubscription(IECTestUtil_Account.Id, IECTestUtil_BillingAccount.Id, 'Subs 01', Date.today().addMonths(6));
         subscription.Product_Rate_Plan_Information__c = oProductRatePlanInfo.Id;
         insert subscription;
         
@@ -52,17 +62,14 @@ public class vfIECEBC_TestSuite {
         subscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(subscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
         insert subscriptionCharge;
         
-        oPref = new EBC_Preference__c(Billing_Account__c = oBillingAccount.Id, PrimaryContact_Email__c = 'hello@world.com', Default_From_Name__c = 'w00t', PrimaryContact_Name__c = 'w00t');
+        oPref = new EBC_Preference__c(Billing_Account__c = IECTestUtil_BillingAccount.Id, PrimaryContact_Email__c = 'hello@world.com', Default_From_Name__c = 'w00t', PrimaryContact_Name__c = 'w00t');
         
-        System.debug(UserInfo.getProfileId());
-        insert oPref;        
-        
-        System.debug('Unit Test: Finish: Init');
+        insert oPref;
     }
     
     
     
-    
+    /*
     public static void testPageLoadLoginRequired() {
 		PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef);
@@ -96,10 +103,11 @@ public class vfIECEBC_TestSuite {
         Test.setCurrentPage(pageRef);
         
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        setup(true);
         System.runAs(usr) {
             init();
             
-        	vfIECEBC layoutController = new vfIECEBC();
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             
             System.assertEquals(null, layoutController.pageLoad());
         }
@@ -170,23 +178,26 @@ public class vfIECEBC_TestSuite {
             campaignListCon.sortBy = campaignListCon.getSortByOptions()[1].getValue();
         }
     }
+*/
     
     public static void testCampaignSetup() {
 		PageReference pageRef = Page.IECEBC_Campaign;
         Test.setCurrentPage(pageRef);
 
-        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        User usr = initPreRunAs(true);
         System.runAs(usr) {
-            init();
+            initPostRunAs();
+        	Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
+        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             EBC_Campaign__c camp = new EBC_Campaign__c();
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
             
+            camp.Account__c = IECTestUtil_Account.Id;
             camp.Name = 'Foo Bar';
             camp.Subject__c = 'Foo Subject';
             camp.From_Name__c = 'Foo From Name';
@@ -194,20 +205,14 @@ public class vfIECEBC_TestSuite {
             camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
             
             PageReference pr = campaignExtCon.saveAndContinue();
-            
-            
-            List<ApexPages.Message> messages = ApexPages.getMessages();
-            String stringMessages = '';
-            for(ApexPages.Message m : messages) {
-                stringMessages += m.getSummary() + '\n';
-            }
-            System.assertEquals('Apex Messages: ', stringMessages);
-            
+             
             System.assertNotEquals(null, campaignExtCon.con.getId());
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(2, true).getUrl(), pr.getUrl());
         }
     }
+    
+    /*
     public static void testCampaignScheduling() {
 		PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
