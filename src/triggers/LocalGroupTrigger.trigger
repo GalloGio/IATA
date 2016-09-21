@@ -51,19 +51,72 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
             }
         }
     }
+
+
+    // For Account Management project, update the Under field if not filled in
+    // Rules:
+    //   * don't change the Under if Under != null
+    //   * if the group is top level group, Under = null, ELSE
+    //   * if parent is top level group, Under = null, ELSE
+    //   * if parent's Reporting To is top level group, Under = parentId, ELSE
+    //   * else Under = parent's Under__c
+
+    set<Id> setReportingToIds = new set<Id>();
+    
+    for ( LocalGovernance__c lg : Trigger.new) {
+        if (lg.AM_Under__c == null && !lg.AM_Top_Level_Group__c && lg.Reporting_to__c != null) {
+            setReportingToIds.add(lg.Reporting_to__c);
+        }
+    }
+
+    if (!setReportingToIds.isEmpty()) {
+        map<Id, LocalGovernance__c> mapReportingToGroupsPerId = new map<Id, LocalGovernance__c>([SELECT Id, AM_Top_Level_Group__c, AM_Under__c, Reporting_to__c, Reporting_to__r.AM_Top_Level_Group__c 
+                                                                                                 FROM LocalGovernance__c 
+                                                                                                 WHERE Id IN :setReportingToIds
+                                                                                                 AND AM_Top_Level_Group__c = false]);
+        for (LocalGovernance__c lg : Trigger.new) {
+            if (lg.AM_Under__c == null && !lg.AM_Top_Level_Group__c && lg.Reporting_to__c != null) {
+
+                LocalGovernance__c parentGroup = mapReportingToGroupsPerId.get( lg.Reporting_to__c );
+                
+                if (parentGroup != null) {
+                    if (parentGroup.Reporting_to__c != null && parentGroup.Reporting_to__r.AM_Top_Level_Group__c == true) {
+                        lg.AM_Under__c = parentGroup.Id;
+                    } else {
+                        lg.AM_Under__c = parentGroup.AM_Under__c;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
   }  
-    // Local Groups can be deleted only for System Administrators
+    // Industry Groups can be deleted only for System Administrators
    /*/ localGroupsToDelete =  trigger.isDelete? trigger.old : trigger.New;*/
     //localGroupsToDelete.size()>0
-    if( Trigger.isDelete ){   
+    if( Trigger.isDelete ){
         
         for(LocalGovernance__c g : trigger.Old){
             if(UserInfo.getProfileId() == sysAdminId[0].Id){
-                system.debug('[LocalGroupTrigger] delete local group:  ' + g.Id);
+                system.debug('[LocalGroupTrigger] delete industry group:  ' + g.Id);
             }
             else {
-                g.addError('<b>Local groups can only be deleted by System Administrators.</b>', false);
+                g.addError('<b>Industry Groups can only be deleted by System Administrators.</b>', false);
             }   
+        }
+        
+
+        // do not allow the deletion of groups that have groups reporting to them
+        set<Id> lstNoDeletionGroupIds = new set<Id>();
+        for (LocalGovernance__c lg : [SELECT Id, Reporting_To__c from LocalGovernance__c WHERE Reporting_To__c IN :trigger.oldMap.keyset()]) {
+            lstNoDeletionGroupIds.add(lg.Reporting_to__c);
+        }
+
+        for (Id groupId : lstNoDeletionGroupIds) {
+            trigger.oldMap.get(groupId).addError('This Industry Groups cannot be deleted because there are groups reporting to it.');
         }
         
     }

@@ -20,9 +20,9 @@ public virtual class IEC_PageController
 	public String currentPageName{get{
 		String pageName = ApexPages.CurrentPage().getUrl();  
 		pageName = pageName.replaceFirst('/apex/','');         
-		pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');  
+		/*pageName = EncodingUtil.urlEncode(pageName, 'UTF-8');  
 		string[] pageNameExtra = pageName.split('%3F',0);   
-		pageName = pageNameExtra[0]; 
+		pageName = pageNameExtra[0]; */
 
 		return pageName;
 	}set;}  
@@ -45,6 +45,8 @@ public virtual class IEC_PageController
         {
             //-- Available products
             String customerType = loggedCustomer.sfAccount.Customer_Type__c; 
+            if (String.isBlank(customerType))
+                customerType = IECConstants.PARAM_CUSTOMERTYPE_DEFAULT;
             List<Product2> lst_products =[
                 SELECT Id, Restricted_Customer_Type__c, SAP_Material_Number__c
                 FROM Product2 
@@ -138,7 +140,7 @@ public virtual class IEC_PageController
 	
 	//-- Mega Menu Items 
 	public Map<String, String> mega_menus{get{
-		if(mega_menus == null) mega_menus = Utility.getPicklistValue_Label('Product2', 'Mega_Menu__c');
+		//if(mega_menus == null) mega_menus = Utility.getPicklistValue_Label('Product2', 'Mega_Menu__c');
 		return mega_menus;
 	}set;}
 	public String selected_mega_menu{get;set;}
@@ -200,8 +202,11 @@ public virtual class IEC_PageController
 	public IEC_PageController() 
 	{
 		//-- Init Logged Customer 
+		system.debug('IEC_PageController');
 		loggedCustomer = Customer_DTO.getLoggedCustomer();	
 		String url = Site.getBaseUrl();	
+
+		Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=10');
 	}
 
 	public void addErrorMessage(String message)

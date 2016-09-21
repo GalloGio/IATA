@@ -1,0 +1,32 @@
+<apex:page standardController="LocalGovernance__c" extensions="AMP_GroupHierarchyExtension" >
+		<head>
+		  <apex:stylesheet value="{!URLFOR($Resource.SLDS102, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+		</head>
+
+		<div class="slds">
+			<!-- <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1"> -->
+			  <div class="slds-tabs--path" role="application">
+					<ol class="slds-breadcrumb slds-list--horizontal" id="hierarchy-breadcrump">
+					</ol>
+				</div>
+		</div>
+
+		<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+		<script>
+			var recordId = '{!recordId}';
+			var hierarchy = jQuery.parseJSON('{!JSONHierarchy}');
+			hierarchy.forEach(function(item,index){
+
+				var link = $('<a  href="/'+item.Id+'">' + item.Name + '</a>');
+				var listItem = $('<li class="slds-list__item slds-text-heading--label "></li>').append(link); // slds-is-incomplete
+				if(recordId === item.Id) listItem.addClass('amp-is-current');
+
+				$('#hierarchy-breadcrump').append(listItem);
+			});
+		</script>
+
+		<style>
+			.amp-is-current { font-weight: bold;}
+		</style>
+
+</apex:page>

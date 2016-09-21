@@ -33,17 +33,17 @@ public with sharing class EComProduct_DTO
 
     public String Discount { get; set; }
 
-	// Fix to avoid having trailing zeros in the UI
+    // Fix to avoid having trailing zeros in the UI
     public Decimal OrderQuantity { get; set; }
-	public Decimal OrderQuantityStripped {
-    	get {
-    			return decimal.valueOf(OrderQuantity.stripTrailingZeros().toPlainString());
-    	}
-    	set {
-    		OrderQuantity = value;
-    	}
-	}
-	
+    public Decimal OrderQuantityStripped {
+        get {
+                return decimal.valueOf(OrderQuantity.stripTrailingZeros().toPlainString());
+        }
+        set {
+            OrderQuantity = value;
+        }
+    }
+    
     public Boolean IsQuantityInteger { get; set; }
     public String InventoryStatus { get; set; }
     public Date AvailabilityDate { get; set; }
@@ -83,7 +83,7 @@ public with sharing class EComProduct_DTO
         Edition = prod.Edition__c;
         Portfolio = prod.Product_Segment__c;
         Media = mapPickList_Label.get('Media').get(prod.Media__c);
-        ImageName = (prod.Image__c == null) ? Utility.getTextSetting('Default Product Image Name').toLowerCase() : 'media-' + prod.Image__c + '.gif'.toLowerCase();
+        ImageName = ((prod.Image__c == null) ? ((prod.Media__c == null) ? Utility.getTextSetting('Default Product Image Name') : (prod.Media__c + '.gif')) : (prod.Image__c + '.gif')).toLowerCase().replace(' ', '-');
         
         Language = mapPickList_Label.get('Language').get(prod.Language__c);
         InventoryStatus = mapPickList_Label.get('InvStatus').get(prod.Inventory_Status__c);

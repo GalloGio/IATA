@@ -468,6 +468,14 @@
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <relatedList>RelatedOrderList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
@@ -533,6 +541,10 @@
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -623,6 +635,14 @@
         <fields>SAP_ID__c</fields>
         <fields>SAP_Account_type__c</fields>
         <relatedList>SAP_Account__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Address__c</fields>
+        <fields>Country__c</fields>
+        <fields>Type__c</fields>
+        <relatedList>Location__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

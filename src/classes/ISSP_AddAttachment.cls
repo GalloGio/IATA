@@ -7,11 +7,13 @@ public class ISSP_AddAttachment {
   public Boolean isCase {get; set;}
   public Boolean isClaim {get; set;}
   public boolean isOSCARCase {get; set;} //AS - ISSP AMS SP09
+  public boolean isOnlineOSCARCase {get; set;}
 
   public ISSP_AddAttachment() {
     isCase = false;
     isClaim = false;
     isOSCARCase = false;
+    isOnlineOSCARCase = false;
 
     String CaseId = ApexPages.currentPage().getParameters().get('Caseid');
     List<Case_excluded_w_status_action_needed__c> recordTypesToExclude = Case_excluded_w_status_action_needed__c.getall().values();
@@ -41,7 +43,13 @@ public class ISSP_AddAttachment {
       }
 
       //Verify if the case is a OSCAR Communication or SAAM Case
-      if (tmpCase.RecordType.name == 'SAAM' || tmpCase.RecordType.name == 'OSCAR Communication') {isOSCARCase = true;}
+      if (tmpCase.RecordType.name == 'SAAM' || tmpCase.RecordType.name == 'OSCAR Communication' || tmpCase.RecordType.name == 'SIDRA') {
+      	isOSCARCase = true;
+      	List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId];
+      		if (!amsList.isEmpty()) {
+          		isOnlineOSCARCase = true; //SAAM, OSCAR case has associated online form and so was submitted via Portal (cannot use case origin since converted Case Queries also have Origin=Portal)    
+        	}
+      }
     }
 
     /**

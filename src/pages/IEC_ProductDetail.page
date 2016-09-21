@@ -70,7 +70,7 @@
 					                </div>
 					            </div>
 					            <!-- Overview -->
-								<section class="section-container overview" id="overview">
+								<section class="section-container overview" id="overview" style="min-height:270px;">
 					                <h2 class="section-title">Overview</h2>
 					                <apex:outputText value="{!ecomProduct.ProductDesc}" escape="false" />
 					            </section>
@@ -197,25 +197,26 @@
 			                            <apex:outputPanel rendered="{!pc.Name=='CACPRO'}">
 			                                <li>
 			                                    Difference between CAC Evaluation and CAC Professional 
-			                                    <a href="javascript:void(window.open('https://{!$Site.Domain}{!$Page.IECCACCompare}','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
-			                                </li>                                                       
+			                                    <a href="javascript:void(window.open('{!$Site.BaseURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
+			                               </li>
+	                                                                   
 			                            </apex:outputPanel>
 			                        
 			                            <apex:variable value="{!$User}" var="u" rendered="{!bResource1Show}">
 			                                <li>
-			                                    {!sResource1Description} <a href="{!sResource1File}">(download now)</a>
+			                                    {!sResource1Description} <a href="{!sResource1File}">(click Here)</a>
 			                                </li>
 			                            </apex:variable>
 
 			                            <apex:variable value="{!$User}" var="u" rendered="{!bResource2Show}">
 			                                <li>
-			                                    {!sResource2Description}<a href="{!sResource2File}">(download now)</a>
+			                                    {!sResource2Description}<a href="{!sResource2File}">(click Here)</a>
 			                                </li>
 			                            </apex:variable>
 
 			                            <apex:variable value="{!$User}" var="u" rendered="{!bResource3Show}">
 			                                <li>
-			                                    {!sResource3Description}<a href="{!sResource3File}">(download now)</a>
+			                                    {!sResource3Description}<a href="{!sResource3File}">(click Here)</a>
 			                                </li>
 			                            </apex:variable>
 

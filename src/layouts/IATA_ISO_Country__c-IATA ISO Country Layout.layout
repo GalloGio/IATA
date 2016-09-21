@@ -117,6 +117,10 @@
                 <behavior>Edit</behavior>
                 <field>Case_BSP_Country__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_COUNTRY_EN__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -193,6 +197,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>original_bank_details_not_required__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Enable_Minor_Changes_from_Portal__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -305,6 +313,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Location_Class__c</fields>
+        <fields>Threshold__c</fields>
+        <relatedList>AMS_Country_Specific_Attribute__c.IATA_ISO_Country__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Product__c</fields>

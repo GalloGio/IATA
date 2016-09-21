@@ -55,6 +55,10 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reporting_to__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -90,6 +94,7 @@
     <relatedLists>
         <fields>Participant_Type__c</fields>
         <fields>Head_Quartier__c</fields>
+        <fields>Representing__c</fields>
         <fields>Contact.ISSP_Contact_Name__c</fields>
         <fields>Title__c</fields>
         <fields>Contact.CNTC_EMAIL</fields>

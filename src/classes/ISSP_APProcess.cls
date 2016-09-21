@@ -544,12 +544,16 @@ public without sharing class ISSP_APProcess {
                 if (!airlineList.isEmpty()){
                     newCase.IATAcode__c = airlineList[0].IATACode__c;
                     newCase.Provider__c = con.AccountId;  //Put GSSA as Provider for backwards compatibility
-                    newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c, hqAccount.Airline_Prefix__c, apCountryisocode, airlineList[0].Name, airlineList[0].Id);
+                    newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c, 
+                                                                            hqAccount.Airline_Prefix__c, 
+                                                                            apCountryisocode, airlineList[0].Name, airlineList[0].Id);
                 }
             }
         } else {
             newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
-            newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c, con.Account.IATACode__c, apCountryisocode, con.Account.Name, vHqAccountId);
+            newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c, 
+                                                                    con.Account.IATACode__c, 
+                                                                    apCountryisocode, con.Account.Name, vHqAccountId);
         }
         
         //Defining default values for the case
@@ -690,7 +694,7 @@ public without sharing class ISSP_APProcess {
             strReasonMembership= ' - Non-Member';
         }
         
-        if(isGSSAUser) {
+        if(isGSSAUser && category <> 'IBCS consolidator') {
             if (strType=='CASS Import') {
                 strReason='CASS Import via GHA' + strReasonMembership;
             } else {
@@ -1112,7 +1116,12 @@ public without sharing class ISSP_APProcess {
         Id accountConcernedId;
         String airlinesite_BR;
         
-        airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+        //airlinesite_BR = DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+
+        airlinesite_BR = (IATACode == null && hq.Airline_Prefix__c != null)? 
++                            DesignatorCode + ' ' + hq.Airline_Prefix__c + ' ' + CountryCode : 
++                            DesignatorCode + ' ' + IATACode + ' ' + CountryCode;
+
         System.debug('AL BR Site:' + airlinesite_BR);
         
         List <Account> concernedAccount = [
@@ -1135,6 +1144,7 @@ public without sharing class ISSP_APProcess {
             airlineBR.Site_index__c = airlineSite_BR;
             airlineBR.Airline_designator__c = DesignatorCode;
             airlineBR.IATACode__c = IATACode;
+            airlineBR.Airline_Prefix__c = hq.Airline_Prefix__c;
             airlineBR.IATA_ISO_Country__c = countryRequirement.Country__c;
             airlineBR.Sector__c = hq.Sector__c;
             airlineBR.Category__c = hq.Category__c;

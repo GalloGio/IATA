@@ -35,6 +35,9 @@ public with sharing class IDCARD_VFEmailTemplateController {
 
   public List<ID_Card_Application__c> singleApps {get; set;}
 
+  //EM - INC269266
+  public boolean hiderenewal {get;set;}
+
   public void  IDCARD_VFEmailTemplateController() {
 
     thisDay = Date.Today();
@@ -151,11 +154,16 @@ public with sharing class IDCARD_VFEmailTemplateController {
         cc = [ Select c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Name, c.Date_of_Birth__c, id, c.AccountId, c.Account.type, c.Account.BillingStreet, c.Account.BillingCity, c.Account.IATACode__c, c.Account.BillingCountry, c.Account.Name, c.Account.Short_Name__c From Contact c where id = : myID ];
         String contactID = cc.Id;
         // get last ID Card
-        ID_Card__c idcard = [Select Valid_To_Date__c From ID_Card__c c where c.Related_Contact__r.Id = :contactID AND c.Card_Status__c = : IDCardUtil.CARDSTATUS_PRINTED_DELIVERED
+        ID_Card__c idcard = [Select Valid_To_Date__c, Related_Contact__r.Account.IDCard_Key_Account__c From ID_Card__c c where c.Related_Contact__r.Id = :contactID AND c.Card_Status__c = : IDCardUtil.CARDSTATUS_PRINTED_DELIVERED
                              AND c.Valid_To_Date__c != null  order by c.Valid_To_Date__c desc limit 1];
 
         //set expiry date of last IDCard
         expDate = idcard.Valid_To_Date__c;
+
+        if (idcard.related_contact__r.account != null && idcard.related_contact__r.account.IDCard_Key_Account__c == true)
+           hiderenewal = true;
+        else
+           hiderenewal = false;
 
 
         //Get the template to be used based on the prefered language

@@ -204,11 +204,6 @@
             <fieldNames>Subject</fieldNames>
             <objectName>Case</objectName>
         </pushNotification>
-        <pushNotification>
-            <fieldNames>LastModifiedBy</fieldNames>
-            <fieldNames>LastModifiedDate</fieldNames>
-            <objectName>Contact__c</objectName>
-        </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Account</tab>
@@ -217,6 +212,7 @@
     <tab>standard-Dashboard</tab>
     <tab>IATA_Code_Loader</tab>
     <tab>Code_Range__c</tab>
+    <tab>standard-Chatter</tab>
     <workspaceMappings>
         <mapping>
             <tab>Code_Range__c</tab>
@@ -229,6 +225,9 @@
         </mapping>
         <mapping>
             <tab>standard-Case</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Chatter</tab>
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>
