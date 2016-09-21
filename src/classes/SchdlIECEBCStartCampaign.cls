@@ -24,7 +24,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
-        EBC_Campaign__c c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c From EBC_Campaign__c Where Id = :campaignId];
+        EBC_Campaign__c c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
         
         String senderProfileCustomerKey = c.Id + '_'+IECEBC_Utility.generateRandomString(11);
         
@@ -137,12 +137,12 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     }
     
     global void finish(Database.BatchableContext BC) {
-        EBC_Campaign__c c = new EBC_Campaign__c();
-        c.Id = campaignId;
+        EBC_Campaign__c c = [Select Id, Send_Datetime__c, Name From EBC_Campaign__c Where Id = :campaignId];
         c.Status__c = 'SENT';
         c.External_Id__c = mailingId;
-        
         update c;
+        
+        IECEBC_ETCampaignTrackingAsync.initCampaignTrackingRecords(c); 
     }
     
     
@@ -151,6 +151,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         List<EBC_Campaign__c> campaigns = [Select Id, EBC_Master_Filter__c, Audience__c, EBC_Design__r.External_Id__c From EBC_Campaign__c Where OwnerId = '0058E000001Lwad' AND Status__c = 'APPROVED' AND (Scheduled_Date__c <= :Datetime.now() or Scheduled_Date__c = null)];
         for(EBC_Campaign__c campaign : campaigns) {
             campaign.Status__c = 'STARTED';
+            campaign.Send_Datetime__c = Datetime.now();
             List<String> columns;
             if (campaign.Audience__c == 'Agent') {
                 columns = new List<String>{

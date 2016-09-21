@@ -1,8 +1,11 @@
 global class SchdlEBCImportHardBounce implements Database.AllowsCallouts, Schedulable {
     // Schedulable
     global void execute(SchedulableContext SC)  {
-        EBC_Setup__c s = [Select ET_Last_EventDate__c From EBC_Setup__c];
-        IECEBC_ETSubscriberBouncedRetrieve.RetrieveBouncedSubscriber('HardBounce', s.ET_Last_EventDate__c);
+        List<EBC_Email_Exclusion__c> existingEE = [Select Event_Date_Timestamp__c From EBC_Email_Exclusion__c Where Type__c = 'HARDBOUNCE' AND Event_Date_Timestamp__c != null ORDER BY Event_Date_Timestamp__c DESC LIMIT 1];
+        Datetime lastEventDate = Datetime.newInstance(2016, 09, 01, 01, 00, 00);
+        if (existingEE.size() > 0) lastEventDate = Datetime.newInstance((Long)existingEE[0].Event_Date_Timestamp__c);
+        
+        IECEBC_ETSubscriberBouncedRetrieve.RetrieveHardBounceFuture(lastEventDate);
     }
     global static void cancel() {
         cancel('SchdlEBCImportHardBounce');
@@ -14,6 +17,6 @@ global class SchdlEBCImportHardBounce implements Database.AllowsCallouts, Schedu
     
     global static void Schedule() {
         SchdlEBCImportHardBounce a = new SchdlEBCImportHardBounce();
-        System.schedule('SchdlEBCImportHardBounce', '0 0 * * * ?', a);
+        System.schedule('SchdlEBCImportHardBounce', '0 15 * * * ?', a);
     }
 }

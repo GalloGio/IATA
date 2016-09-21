@@ -69,6 +69,7 @@ public class vfIECEBC_Template extends vfIECEBC_Controller {
         
         mo = p.matcher(body);
         while (mo.find()) {
+            if (!attachmentIdToUrl.containsKey(mo.group(1))) throw new ResourceMissing_Exception('Resource has been deleted.');
             body = body.replace(mo.group(), attachmentIdToUrl.get(mo.group(1)));
             
             mo = p.matcher(body);
@@ -76,6 +77,8 @@ public class vfIECEBC_Template extends vfIECEBC_Controller {
         
         return body;
     }
+    
+    public class ResourceMissing_Exception extends Exception {}
     
     public String getBody() {
         String body;

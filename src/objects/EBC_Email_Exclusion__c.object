@@ -63,6 +63,28 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Event_Date_Timestamp__c</fullName>
+        <description>Event Date in milliseconds since 1970</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Event Date in milliseconds since 1970</inlineHelpText>
+        <label>Event Date Timestamp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Date__c</fullName>
+        <defaultValue>now()</defaultValue>
+        <externalId>false</externalId>
+        <label>Event Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Other_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Other Reason</label>
@@ -155,8 +177,14 @@
     <label>EBC Email Exclusion</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>Email__c</columns>
+        <columns>Type__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Other_Reason__c</columns>
+        <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>EBC Exclusion Name</label>

@@ -10,7 +10,101 @@
         </apex:define>
         <apex:define name="pageContent">
             <!-- Start of Page Content -->
-            ...
+            
+            <main class="main-content manage-reports">
+            	<div class="inner-wrapper">
+        		<h1 class="page-title">Reports</h1>        
+                <table class="data-table campaign">
+                    <tr>
+                    <td class="name">
+                        <ul class="list campaign">
+                            <li><a href="?page=IECEBC_ManageReportsDetails" class="js-campaign-name">Campaign (copy 01)</a></li>
+                            <li><strong>Regular - IP, AS &amp; LD</strong></li>
+                            <li>Sun Feb 28, 2016 7:00 pm</li>
+                        </ul>
+                    </td>
+                    <td class="recipients">
+                                                <strong class="value">3</strong> 
+                        <span class="label">Recipients</span>
+                                            </td>
+                    <td class="opens">
+                                                <strong class="value">100%</strong>
+                        <span class="label">Opens</span>
+                                            </td>
+                    <td class="clicks">
+                                                <strong class="value">66.7%</strong>
+                        <span class="label">Clicks</span>
+                                            </td>
+                    <td class="action">
+                        <a href="?page=manage_reports_details" class="button">View report</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td class="name">
+                        <ul class="list campaign">
+                            <li><a href="?page=manage_reports_details" class="js-campaign-name">Campaign 1</a></li>
+                            <li><strong>Regular - IP, AS &amp; LD</strong></li>
+                            <li>Sun Feb 28, 2016 7:00 pm</li>
+                        </ul>
+                    </td>
+                    <td class="recipients">
+                                                <strong class="value">3</strong> 
+                        <span class="label">Recipients</span>
+                                            </td>
+                    <td class="opens">
+                                                <strong class="value">100%</strong>
+                        <span class="label">Opens</span>
+                                            </td>
+                    <td class="clicks">
+                                                <strong class="value">66.7%</strong>
+                        <span class="label">Clicks</span>
+                                            </td>
+                    <td class="action">
+                        <a href="?page=manage_reports_details" class="button">View report</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td class="name">
+                        <ul class="list campaign">
+                            <li><a href="?page=manage_reports_details" class="js-campaign-name">Campaign 2</a></li>
+                            <li><strong>Regular - IP, AS &amp; LD</strong></li>
+                            <li>Sun Feb 28, 2016 7:00 pm</li>
+                        </ul>
+                    </td>
+                    <td class="recipients">
+                                                <strong class="value">3</strong> 
+                        <span class="label">Recipients</span>
+                                            </td>
+                    <td class="opens">
+                                                <strong class="value">100%</strong>
+                        <span class="label">Opens</span>
+                                            </td>
+                    <td class="clicks">
+                                                <strong class="value">66.7%</strong>
+                        <span class="label">Clicks</span>
+                                            </td>
+                    <td class="action">
+                        <a href="?page=manage_reports_details" class="button">View report</a>
+                    </td>
+                </tr>
+                    </table>
+
+        <div class="pagination">
+            <div class="page-number">
+                Page
+                <div class="custom-user-input select">
+                    <i class="icon angle-down"></i>
+                    <select class="user-input select">
+                        <option value="1">1</option>
+                    </select>
+                </div>
+                of 3
+            </div>
+        </div>
+    </div>
+
+</main>
+        
             <!-- End of Page Content -->
         </apex:define>
     </apex:composition>
