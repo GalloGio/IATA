@@ -212,6 +212,7 @@
     <tab>standard-Dashboard</tab>
     <tab>IATA_Code_Loader</tab>
     <tab>Code_Range__c</tab>
+    <tab>standard-Chatter</tab>
     <workspaceMappings>
         <mapping>
             <tab>Code_Range__c</tab>
@@ -224,6 +225,9 @@
         </mapping>
         <mapping>
             <tab>standard-Case</tab>
+        </mapping>
+        <mapping>
+            <tab>standard-Chatter</tab>
         </mapping>
         <mapping>
             <tab>standard-Dashboard</tab>

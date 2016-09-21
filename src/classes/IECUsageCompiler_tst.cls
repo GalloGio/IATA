@@ -16,15 +16,19 @@ private class IECUsageCompiler_tst {
         insert oAccount;
         
         oContact1 = IECTestUtil.createSampleContact(oAccount);
+        oContact1.Email = 'testIECGuest1@test.iata.org';
         insert oContact1;
         
         oContact2 = IECTestUtil.createSampleContact(oAccount);
+        oContact2.Email = 'testIECGuest2@test.iata.org';
         insert oContact2;
         
         oContact3 = IECTestUtil.createSampleContact(oAccount);
+        oContact3.Email = 'testIECGuest3@test.iata.org';
         insert oContact3;
         
         oContact4 = IECTestUtil.createSampleContact(oAccount);
+        oContact4.Email = 'testIECGuest4@test.iata.org';
         insert oContact4;
     }
 

@@ -27,7 +27,8 @@ global class IEC_Event_Renewal_CreateOrders_Batch implements Database.Batchable<
         query = 'SELECT id, Product__c, Quantity__c, Subscriber__c, Default_Payment_Type__c ' +
                 ' from IEC_Event_Subscription__c ' + 
                 'where Active__c = true and Material_Number__c = \'' + iecEventRelease.Material_Number__c + '\' ' +
-                ' and Customer_Type__c in (\'' + iecEventRelease.Customer_Type__c.replace(';', '\',\'') + '\') ' +
+                ' and (Customer_Type__c in (\'' + iecEventRelease.Customer_Type__c.replace(';', '\',\'') + '\') ' +
+                (iecEventRelease.Customer_Type__c.containsIgnoreCase(IECConstants.PARAM_CUSTOMERTYPE_DEFAULT) ? ' or Customer_Type__c = null' : '') + ') ' +
                 ((excludeProductId == null) ? '' : ' and Product__c != \'' + excludeProductId + '\' ') +
                 ((reprocessSubscriptionIds == null) ? '' : ' and Id in (' + reprocessSubscriptionIds + ') ') +
                 'order by Subscriber__c ' + queryLimit;
