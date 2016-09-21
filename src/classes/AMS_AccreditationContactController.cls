@@ -54,20 +54,30 @@ public with sharing class AMS_AccreditationContactController {
             {
                 
                 // Need to go over the list to get to know if any Companies belong to the ownership to get a map of Ac.Id and Account
-                Set<Id> accountsToLoadSet = new Set<Id>();
-                for(AMS_Accreditation_Contact__c acTemp : acList)
-                {
-                    if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company')
-                    {
-                        accountsToLoadSet.add(acTemp.Company__c);
+                Set<Id> accountsToLoadSetId = new Set<Id>();
+                Set<String> accountsToLoadSetNumber = new Set<String>();
+                Set<String> accountsToLoadSetIATACode = new Set<String>();
+
+                for(AMS_Accreditation_Contact__c acTemp : acList){
+
+                    if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company'){
+                        if(acTemp.Company__c != null) accountsToLoadSetId.add(acTemp.Company__c);
+                        if(acTemp.Registration_number__c != null) accountsToLoadSetNumber.add(acTemp.Registration_number__c);
+                        if(acTemp.IATACode__c != null) accountsToLoadSetIATACode.add(acTemp.IATACode__c);
                     }
                 }
                 
-                Map<Id, Account> accList = new Map<Id, Account>();
-                if(accountsToLoadSet.size() > 0)
-                {
-                    accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
+                Map<Id, Account> accListId = new Map<Id, Account>();
+                Map<String, Account> accListNumber = new Map<String, Account>();
+                Map<String, Account> accListIATACode = new Map<String, Account>();
+                if(accountsToLoadSetNumber.size() > 0){
+                    for(Account acc : [select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c, Registration_Number__c from Account where Id in :accountsToLoadSetId OR Registration_number__c in :accountsToLoadSetNumber OR IATACode__c IN :accountsToLoadSetIATACode]){
+                        accListId.put(acc.Id, acc);
+                        if(acc.Registration_Number__c != null) accListNumber.put(acc.Registration_Number__c, acc);
+                        if(acc.IATACode__c != null) accListIATACode.put(acc.IATACode__c, acc);
+                    }
                 }
+
                 
                 AccreditationContactWrapper wrapper;
                 AccountWrapper accWrapper;
@@ -79,10 +89,20 @@ public with sharing class AMS_AccreditationContactController {
                         acWrapper.add(wrapper); 
                     } else
                     {
-                        if(accList.get(ac.Company__c) != null)
+                        if(accListId.get(ac.Company__c) != null)
                         {
-                            System.debug('********************* company found: '+accList.get(ac.Company__c));
-                            accWrapper = new AccountWrapper(ac, accList.get(ac.Company__c), accList.get(ac.Company__c).Id, false);
+                            System.debug('********************* company found with Id: '+accListId.get(ac.Company__c));
+                            accWrapper = new AccountWrapper(ac, accListId.get(ac.Company__c), accListId.get(ac.Company__c).Id, false);
+                        }
+                        else if(accListIATACode.get(ac.IATACode__c) != null)
+                        {
+                            System.debug('********************* company found with IATA Code: '+accListIATACode.get(ac.IATACode__c));
+                            accWrapper = new AccountWrapper(ac, accListIATACode.get(ac.IATACode__c), accListIATACode.get(ac.IATACode__c).Id, false);
+                        }
+                        else if(accListNumber.get(ac.Registration_number__c) != null)
+                        {
+                            System.debug('********************* company found with Registration Number: '+accListId.get(ac.Registration_number__c));
+                            accWrapper = new AccountWrapper(ac, accListNumber.get(ac.Registration_number__c), accListId.get(ac.Registration_number__c).Id, false);
                         }
                         else
                         {
@@ -277,29 +297,14 @@ public with sharing class AMS_AccreditationContactController {
             if(accountWrapper.size() > 0)
             {
                 Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
-                List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 for(AccountWrapper aw : accountWrapper)
                 {
                     aw.accountAc.Financial_interest__c = aw.financialInterest;
                     aw.accountAc.Registration_number__c = aw.registrationNumber;
-                    
-                    if(aw.account.Id == null)
-                    {
-                        aw.account.Name = aw.account.Legal_Name__c;
-                        aw.account.RecordTypeId = standardAccountRtId;
-                        accountInsertList.add(aw.account);
-                    }
+
                     aw.accountAc.Agency_owner__c = true;
-                }
-                
-                if(accountInsertList.size() > 0)
-                {
-                    insert accountInsertList;
-                }
-                
-                for(AccountWrapper aw : accountWrapper)
-                {
+
                     aw.accountAc.Company__c = aw.account.Id;
                     aw.accountAc.Name = aw.account.Legal_Name__c;
                     acUpsertList.add(aw.accountAc);
@@ -474,27 +479,38 @@ public with sharing class AMS_AccreditationContactController {
             {
                 splitValues = wrapped.dateJoined.split('-');
                 wrapped.ac.Date_joined_agency__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Date_joined_agency__c = null;
             }
             if(wrapped.prev1From != null && wrapped.prev1From != '')
             {
                 splitValues = wrapped.prev1From.split('-');
                 wrapped.ac.Prev_Job1_From__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job1_From__c = null;
             }
             if(wrapped.prev1To != null && wrapped.prev1To != '')
             {
                 splitValues = wrapped.prev1To.split('-');
                 wrapped.ac.Prev_Job1_To__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job1_To__c = null;
             }
             if(wrapped.prev2From != null && wrapped.prev2From != '')
             {
                 splitValues = wrapped.prev2From.split('-');
                 wrapped.ac.Prev_Job2_From__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job2_From__c = null;
             }
             if(wrapped.prev2To != null && wrapped.prev2To != '')
             {
                 splitValues = wrapped.prev2To.split('-');
                 wrapped.ac.Prev_Job2_To__c = Date.newInstance(Integer.valueOf(splitValues[0]), Integer.valueOf(splitValues[1]), Integer.valueOf(splitValues[2]));
+            }else{
+                wrapped.ac.Prev_Job2_To__c = null;
             }
+
         }
     }
     
