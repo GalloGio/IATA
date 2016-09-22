@@ -11,12 +11,6 @@
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
-        <approvalActions>
-            <action>
-                <name>AMS_Notify_Managers_of_Pending_Approval</name>
-                <type>Alert</type>
-            </action>
-        </approvalActions>
         <assignedApprover>
             <approver>
                 <name>FDS_Agency_Assistant_Managers</name>
@@ -57,6 +51,12 @@
         </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>AMS_Notify_OSCAR_Owner_on_case_Rejection_by_Manager</name>
+            <type>Alert</type>
+        </action>
+    </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <label>AMS OSCAR Management Approval</label>
     <recordEditability>AdminOnly</recordEditability>
