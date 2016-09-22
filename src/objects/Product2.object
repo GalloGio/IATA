@@ -10516,7 +10516,6 @@ The product will only appear on the Online Store when the date entered in this f
         <lookupDialogsAdditionalFields>Product_Segment__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
