@@ -179,7 +179,6 @@
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
-        <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>MEMBER_TYPE</fields>
@@ -211,7 +210,6 @@
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>Geographic_Region__c</fields>
-        <relatedList>RelatedOpportunityList</relatedList>
         <sortField>Geographic_Region__c</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
