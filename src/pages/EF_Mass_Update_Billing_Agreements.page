@@ -8,6 +8,7 @@
 			updateAllOrNone="false" 
 			defaultEditAll="true" 
 			massUpdateInputs="true"
-			hideActionLinkEdit="true"/>
+			hideActionLinkEdit="true"
+			filter="Status__c='Active'"/>
 	</apex:form>
 </apex:page>

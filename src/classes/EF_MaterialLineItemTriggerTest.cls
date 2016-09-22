@@ -154,7 +154,7 @@ public class EF_MaterialLineItemTriggerTest {
                 Payment_Method__c = 'Credit Card',
                 Location_Code__c = '1234',
                 Airline__c = customer.id,
-                EF_Status__c = 'Active',
+                Status__c = 'Active',
                 Billing_Currency__c = 'AED',
                 Payment_Currency__c = 'AED',
                 Payment_Terms__c = '30 days after invoice date',
