@@ -160,6 +160,16 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EF_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Approver Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Location_ID__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -189,6 +199,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EF_Submitter_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Submitter Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Invoice_Distribution_Method_Code__c</fullName>

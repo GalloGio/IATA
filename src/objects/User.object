@@ -418,6 +418,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>EF_Billing_Agreement_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Billing_Agreement_Approver__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EF Billing Agreement Approver Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EF_Billing_Agreement_Approver__c</fullName>
         <externalId>false</externalId>
         <label>E&amp;F Billing Agreement Approver</label>
@@ -425,6 +435,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <restrictedAdminField>false</restrictedAdminField>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>EF_Contract_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>EF_Contract_Approver__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EF Contract Approver Email</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>EF_Contract_Approver__c</fullName>

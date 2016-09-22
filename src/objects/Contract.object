@@ -314,6 +314,24 @@ E&amp;F CRM Project</description>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
+	    <fields>
+        <fullName>EF_Submitter_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F_Submitter_Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Approver_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>E&amp;F Approver Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>EF_BSP_Periods__c</fullName>
         <externalId>false</externalId>
