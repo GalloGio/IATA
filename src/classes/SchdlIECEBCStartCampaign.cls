@@ -113,7 +113,12 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     EBC_Email_Exclusion__c excl = new EBC_Email_Exclusion__c();
                     excl.Email__c = failureKey;
                     excl.Type__c  = 'OTHER';
+                    excl.Event_Date__c = Datetime.now();
                     excl.Other_Reason__c = IECEBC_ETEmailSend.failureDetails.get(failureKey);
+                    if (excl.Type__c == 'OTHER' && excl.Other_Reason__c.indexOf('Error Code: 24 ') == 0) {
+                        excl.Type__c = 'LISTDETECTIVE';
+                        excl.Other_Reason__c = null;
+                    }
                     excl.Source_Campaign__c = campaignId;
                     
                     if (params.containsKey(failureKey) && params.containsKey(failureKey) && params.get(failureKey).containsKey('SFID')) {
@@ -130,6 +135,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                 }
                 System.debug(excls); 
                 if (excls.size() > 0) insert excls;
+                System.debug(excls);
             }
         }
         

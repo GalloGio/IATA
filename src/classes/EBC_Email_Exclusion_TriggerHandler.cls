@@ -1,10 +1,17 @@
 public class EBC_Email_Exclusion_TriggerHandler {
+    // http://help.marketingcloud.com/en/documentation/exacttarget/interactions/email_messages/email_send_error_codes/
+    public static Boolean isEmailExclusionGenerateCredit(EBC_Email_Exclusion__c ee) {
+        if (ee.Type__c == 'HARDBOUNCE') return true;
+        if (ee.Type__c == 'LISTDETECTIVE') return true;
+
+        return false;
+    }
     public static void creditHardBounce(List<EBC_Email_Exclusion__c> ees) {
         
         List<Id> campaignsId = new List<Id>();
         
         for(EBC_Email_Exclusion__c ee : ees) {
-            if (ee.Type__c != 'HARDBOUNCE') continue;
+            if (!isEmailExclusionGenerateCredit(ee)) continue;
             campaignsId.add(ee.Source_Campaign__c);
         }
         
@@ -15,7 +22,7 @@ public class EBC_Email_Exclusion_TriggerHandler {
         Map<Id, EBC_Activity__c> campaignActivity = new Map<Id, EBC_Activity__c>();
         
         for(EBC_Email_Exclusion__c ee : ees) {
-            if (ee.Type__c != 'HARDBOUNCE') continue;
+            if (!isEmailExclusionGenerateCredit(ee)) continue;
             
             EBC_Activity__c a;
             if (campaignActivity.containsKey(ee.Source_Campaign__c)) {
@@ -25,10 +32,12 @@ public class EBC_Email_Exclusion_TriggerHandler {
                     Activity_Date_Time__c = ee.Event_Date__c,
                     Activity_Type__c = 'Adjustment',
                     EBC_Campaign__c = ee.Source_Campaign__c,
-                    Total_Count__c = 1,
+                    Total_Count__c = 0,
                     Related_Billing_Account__c = campaigns.get(ee.Source_Campaign__c).Billing_Account__c
                 );
             }
+            
+            a.Total_Count__c++;
             
             campaignActivity.put(ee.Source_Campaign__c, a);
         }
