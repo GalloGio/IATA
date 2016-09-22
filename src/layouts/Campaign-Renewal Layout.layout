@@ -189,32 +189,6 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>Product__c</fields>
-        <fields>Product_Number__c</fields>
-        <fields>Product_Last_Version__c</fields>
-        <fields>Last_Version_Number__c</fields>
-        <fields>Swapping_Product__c</fields>
-        <fields>Swapping_Number__c</fields>
-        <relatedList>Campaign_Product__c.Campaign__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Order__c</fields>
-        <fields>Error_Message__c</fields>
-        <fields>Member__c</fields>
-        <relatedList>IEC_Renewal_notice_log__c.Campaign__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ORDERS.ORDER_NUMBER</fields>
-        <fields>SALES.ACCOUNT.NAME</fields>
-        <fields>ORDERS.STATUS</fields>
-        <fields>ORDERS.TYPE</fields>
-        <fields>IEC_Order_Quantity__c</fields>
-        <fields>ORDERS.TOTAL_AMOUNT</fields>
-        <fields>ORDER.BILL_TO_CONTACT</fields>
-        <relatedList>Order.Campaign__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -222,6 +196,17 @@
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>Geographic_Region__c</fields>
+        <relatedList>RelatedOpportunityList</relatedList>
+        <sortField>Geographic_Region__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CAMPAIGN.NAME</fields>
@@ -251,12 +236,38 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>Product__c</fields>
+        <fields>Product_Number__c</fields>
+        <fields>Product_Last_Version__c</fields>
+        <fields>Last_Version_Number__c</fields>
+        <fields>Swapping_Product__c</fields>
+        <fields>Swapping_Number__c</fields>
+        <relatedList>Campaign_Product__c.Campaign__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Contact.ISSP_Contact_Name__c</fields>
         <fields>Quantity__c</fields>
         <fields>Product__c</fields>
         <fields>Invoice_Date__c</fields>
         <relatedList>Campaign_Member_Product__c.Campaign__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Order__c</fields>
+        <fields>Error_Message__c</fields>
+        <fields>Member__c</fields>
+        <relatedList>IEC_Renewal_notice_log__c.Campaign__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>SALES.ACCOUNT.NAME</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.TYPE</fields>
+        <fields>IEC_Order_Quantity__c</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <fields>ORDER.BILL_TO_CONTACT</fields>
+        <relatedList>Order.Campaign__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
