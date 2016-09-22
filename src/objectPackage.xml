@@ -37,23 +37,9 @@
         <members>User</members>
         <name>CustomObject</name>
     </types>
-    <types>
-		<members>E_F_Services/EF_Contract_Rejected</members>
-        <members>E_F_Services/EF_Contract_Approval_Request</members>
-        <members>E_F_Services/EF_Contract_Approved</members>
-		<members>E_F_Services/EF_Billing_Agreement_Rejected</members>
-        <members>E_F_Services/EF_Billing_Agreement_Approval_Request</members>
-        <members>E_F_Services/EF_Billing_Agreement_Approved</members>
-        <members>unfiled$public/EF_Contact_Deactivation_Notification</members>
-        <name>EmailTemplate</name>
-    </types>
 	<types>
         <members>*</members>
         <name>CustomTab</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Layout</name>
     </types>
     <types>
         <members>*</members>
