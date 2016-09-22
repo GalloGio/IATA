@@ -286,7 +286,7 @@
         <fullName>Group_Owner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <inlineHelpText>If empty this field will be populated with the country manager.</inlineHelpText>
+        <inlineHelpText>For local groups, if empty, this field will be populated with the country manager</inlineHelpText>
         <label>Group Owner</label>
         <referenceTo>User</referenceTo>
         <relationshipName>Local_Groups</relationshipName>
