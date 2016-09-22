@@ -38,6 +38,7 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>E_F_Services/EF_Doc_Expired_Notification</members>
 		<members>E_F_Services/EF_Contract_Rejected</members>
         <members>E_F_Services/EF_Contract_Approval_Request</members>
         <members>E_F_Services/EF_Contract_Approved</members>
