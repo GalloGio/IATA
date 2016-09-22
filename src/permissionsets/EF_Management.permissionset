@@ -7106,6 +7106,11 @@
         <field>Contract.EF_Allow_Billing_Agreements__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_Approver_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_BSP_Periods__c</field>
@@ -7204,6 +7209,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.EF_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.EF_Submitter_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7431,6 +7441,11 @@
         <field>EF_Billing_Agreement__c.Allow_Billing_Agreements__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.EF_Approver_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>EF_Billing_Agreement__c.Base_URL__c</field>
@@ -7539,6 +7554,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>EF_Billing_Agreement__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EF_Billing_Agreement__c.EF_Submitter_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7716,9 +7736,19 @@
         <field>User.EF_Billing_Agreement_Approver__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>User.EF_Billing_Agreement_Approver_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>User.EF_Contract_Approver__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.EF_Contract_Approver_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
