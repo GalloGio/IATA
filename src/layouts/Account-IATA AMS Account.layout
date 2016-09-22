@@ -445,6 +445,14 @@
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Address__c</fields>
+        <fields>Country__c</fields>
+        <fields>Type__c</fields>
+        <relatedList>Location__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
@@ -577,6 +585,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Accreditation_Endorsement_organisation__c</fields>
+        <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>OSCAR__c</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -408,6 +408,8 @@ private class AMS_UtilsTest {
                          Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
                          );
+
+        insert A1;
                          
         Contact C1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = A1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
 

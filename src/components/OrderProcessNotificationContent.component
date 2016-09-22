@@ -102,6 +102,10 @@
 
 
     </table>
+	
+    <apex:outputPanel rendered="{!ord.Payment_Type__c == 'Bank Transfer'}">
+    	<apex:outputText escape="false" value="{!$Label.Bank_Transfer_Payment_terms}" />
+    </apex:outputPanel>
 
     <p>Best regards,<br />
     IATA Online Store Support Team

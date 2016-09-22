@@ -159,8 +159,8 @@
         </defaultShortcut>
         <defaultShortcut>
             <action>TOGGLE_APP_LEVEL_COMPONENTS</action>
-            <active>false</active>
-            <keyCommand>Z</keyCommand>
+            <active>true</active>
+            <keyCommand>CTRL+ALT+I</keyCommand>
         </defaultShortcut>
         <defaultShortcut>
             <action>REOPEN_LAST_TAB</action>
@@ -205,22 +205,21 @@
             <fieldNames>Subject</fieldNames>
             <objectName>Case</objectName>
         </pushNotification>
-        <pushNotification>
-            <fieldNames>LastModifiedBy</fieldNames>
-            <fieldNames>LastModifiedDate</fieldNames>
-            <objectName>Contact__c</objectName>
-        </pushNotification>
     </pushNotifications>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Chatter</tab>
     <tab>My_Status</tab>
     <tab>standard-Case</tab>
+    <tab>standard-Dashboard</tab>
+    <tab>Agents__c</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
     <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
     <tab>Operational_Improvements__c</tab>
     <workspaceMappings>
+        <mapping>
+            <tab>Agents__c</tab>
+        </mapping>
         <mapping>
             <tab>My_Status</tab>
         </mapping>

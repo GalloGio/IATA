@@ -1,6 +1,9 @@
 public without sharing class ISSP_Ctrl_AccountStatements {
 
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
+
+	public ContentVersion faq {get;set;}
+	public ContentVersion document {get;set;}
 	public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
@@ -43,10 +46,17 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		return pageref;
 	}
 
+	public String getInstance() {
+		return URL.getSalesforceBaseUrl().toExternalForm();
+	}
+
 	/**
 		CONSTRUCTOR
 	**/
 	public ISSP_Ctrl_AccountStatements() {
+		this.faq = getContentDoc('IATA Customer E-Statement (ICE)');
+		this.document = getContentDoc('IATA Customer E-Statement (ICE) User Guide');
+
 		this.listMessages = new list<String>();
 		// get current user
 		this.currentUser = [
@@ -55,7 +65,8 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 			Where id = :UserInfo.getUserId()];
 
 		// check account status before doing anything to allow or reject access to info
-		if (this.currentUser.Contact.Account.Status__c != 'Approved') {
+		if (this.currentUser.Contact.Account.Status__c != 'Approved' &&
+			this.currentUser.Contact.Account.Status__c != 'Changes Processed') {
 			this.listMessages.add(Label.ISSP_Account_not_approved);
 			return;
 		}
@@ -80,7 +91,7 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		this.lastUpdatedOn = Datetime.newInstance(1900, 1, 1);
 		for (Account_Statement__c statement: this.listStatements) {
 			//String key = statement.Period__c + statement.Group__c + statement.Operation__c;
-			String key = statement.Period__c + statement.Group__c;
+			String key = statement.Period__c + statement.Group__c + statement.CurrencyIsoCode;
 			WrapperStatement wrapper = mapWrapper.get(key);
 			if (wrapper == null) {
 				wrapper = new WrapperStatement(statement);
@@ -101,6 +112,23 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		markLastUpdated();
 		markFirstOldPeriod();
         initListCurrency();
+	}
+
+	/**
+		Get File document object from the library with given name
+	**/
+	private ContentVersion getContentDoc(String name) {
+		try {
+			return [
+				Select Id
+				From ContentVersion
+				Where isLatest = true
+				And title = :name
+				Limit 1];
+		} catch (Exception e) {
+			System.debug('ERROR, document "' + name + '" not found: ' + e.getMessage());
+			return null;
+		}
 	}
 
 	/**

@@ -57,10 +57,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Previous_Phone2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Previous_Fax2__c</field>
             </layoutItems>
             <layoutItems>

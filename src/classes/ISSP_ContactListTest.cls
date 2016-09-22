@@ -218,6 +218,7 @@ private class ISSP_ContactListTest {
         
 		Contact con = ISSP_ObjectFactory.createNewContact();
 		con.Senior_Contact_Email__c = 'senior@dev.com';
+		con.Email = 'test1@iata.org';
 		con.AccountId= acc.Id;
 		con.User_Portal_Status__c = 'Active';
 		insert con;
@@ -225,6 +226,7 @@ private class ISSP_ContactListTest {
 		
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.Senior_Contact_Email__c = 'senior@dev.com';
+		con2.Email = 'test2@iata.org';
 		con2.AccountId= acc.Id;
 		con2.User_Portal_Status__c = 'Active';
 		insert con2;
@@ -268,6 +270,7 @@ private class ISSP_ContactListTest {
         
 		Contact con = ISSP_ObjectFactory.createNewContact();
 		con.Senior_Contact_Email__c = 'senior@dev.com';
+		con.Email = 'test1@iata.org';
 		con.AccountId= acc.Id;
 		con.User_Portal_Status__c = 'Active';
 		insert con;
@@ -275,6 +278,7 @@ private class ISSP_ContactListTest {
 		
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.Senior_Contact_Email__c = 'senior@dev.com';
+		con2.Email = 'test2@iata.org';
 		con2.AccountId= acc.Id;
 		con2.User_Portal_Status__c = 'Active';
 		insert con2;

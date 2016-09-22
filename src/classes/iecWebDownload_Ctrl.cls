@@ -28,7 +28,7 @@ public class iecWebDownload_Ctrl extends IEC_PageController {
 		if(loggedCustomer == null){
 
 			//redirect user to login page
-			pageRef = new PageReference('/IECConnection?returl=/iecWebDownload?itemNumber=' + itemNumber);
+			pageRef = new PageReference('/IEC_Login?returl=/iecWebDownload?itemNumber=' + itemNumber);
 			pageRef.setRedirect(true);
 			return pageRef;
 

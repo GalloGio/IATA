@@ -1260,15 +1260,18 @@
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_DP01_KAM_case_created_assign</fullName>
-        <ccEmails>madsceacc@iata.org</ccEmails>
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
+            <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>batagliaf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1280,11 +1283,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinyuks@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>saremyt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schuchardm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3773,6 +3784,15 @@
         <field>Status</field>
         <literalValue>Closed_Rejected</literalValue>
         <name>Ad-hoc calendar rejection - status updat</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Airline_Master_List</fullName>
+        <field>Reason1__c</field>
+        <literalValue>Airline Master List and Details</literalValue>
+        <name>Airline Master List</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -11363,6 +11383,29 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Email from ibsps%40acca%2Ecom%2Ecn</fullName>
+        <actions>
+            <name>Airline_Master_List</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>DPC_Update_case_area</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.SuppliedEmail</field>
+            <operation>equals</operation>
+            <value>ibsps@acca.com.cn</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Process</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
         <fullName>External split for OPS Mgt cases</fullName>
         <actions>
             <name>External_OPS_Mgt_cases</name>
@@ -13399,7 +13442,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4),  AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6),  AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8),  AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10),  AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
+        <formula>AND( NOT(SIDRA_workflow_flag__c), RecordType.Name = &quot;SIDRA&quot;, OR(AND(ISPICKVAL(Total_Irregularities__c,&quot;4&quot;), Acc_IRR_leading_to_DEF__c = 4), AND(ISPICKVAL(Total_Irregularities__c,&quot;6&quot;), Acc_IRR_leading_to_DEF__c = 6), AND(ISPICKVAL(Total_Irregularities__c,&quot;8&quot;), Acc_IRR_leading_to_DEF__c = 8), AND(ISPICKVAL(Total_Irregularities__c,&quot;10&quot;), Acc_IRR_leading_to_DEF__c = 10), AND( REI_Previous_12_Months_CASS_only__c , ispickval( Region__c ,&quot;europe&quot;))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

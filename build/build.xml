@@ -11,63 +11,7 @@
     <property file="${basedir}/build/build.properties"/>
     <property environment="env"/>
 
-  
-  
- 
-    <target name="deployRetrieveToQA">
-      <echo level="info">Testing the deploy</echo>
-      <sf:deploy
-          logType="Detail"
-          username="${sfdc.username}"
-          password="${sfdc.password}"
-          serverurl="${sfdc.serverurl}"
-          deployRoot="${basedir}/retrieve"
-          pollWaitMillis="${sfdc.pollWaitMillis}"
-          maxPoll="${sfdc.maxPoll}" 
-        />
-    </target>
-      
 
-<target name="retrieveToDeploy">
-      <echo level="info">Retrieving the server's version of code</echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="retrieve/package.xml"/>
-
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="deploy"/>
-
-  </target>
-
-
-<target name="retrieveToRetrieve">
-      <echo level="info">Retrieving the server's version of code</echo>
-      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
-      <sf:retrieve
-        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        unpackaged="retrieve/package.xml"/>
-
-      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="retrieve"/>
-
-  </target>
-
-    <target name="specificDeploy">
-      <echo level="info">Performing the deploy of files in folder deploy</echo>
-      <sf:deploy
-        autoUpdatePackage = "true"
-        username="${sfdc.username}"
-        password="${sfdc.password}"
-        serverurl="${sfdc.serverurl}"
-        deployRoot="${basedir}/deploy"
-        pollWaitMillis="${sfdc.pollWaitMillis}"
-        maxPoll="${sfdc.maxPoll}"/>
-    </target>
 
 <target name="checkCodeFolder">
   <condition property="deldir">
@@ -87,18 +31,15 @@
 
 
 <target name="deployCode"> 
-  <echo level="info">creating new folder</echo>
-  <antcallback target="deldir" />
-   <mkdir dir="${basedir}/Code"/>
+    <echo level="info">creating new folder</echo>
+    <antcallback target="deldir" />
+    <mkdir dir="${basedir}/Code"/>
+    
+    
+    <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
+    <antcallback target="deployStaticResource" />
   
-
-
- <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
-
-      
-      <antcallback target="deployLabelFolder" />
-  
-  </target> 
+</target> 
 
 
 <target name="deployCodeProd"> 
@@ -165,6 +106,26 @@
       <antcallback target="deployCodeLocal" />
   </target>
 
+  
+<target name="deployStaticResource"> 
+    <echo level="info">deploy static resources</echo>
+    <antcallback target="deldir" />
+    <mkdir dir="${basedir}/Code"/>
+    
+    <for list="${staticResource.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+             <fileset dir="${basedir}/src/@{param}">
+             </fileset>
+          </move>
+       </sequential>
+    </for>
+    
+    <move file="${basedir}/src/staticPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+    <antcallback target="deployLabelFolder" />
+</target> 
+
+
 <target name="deployLabelFolder"> 
   <echo level="info">creating new label folder</echo>
   <antcallback target="deldir" />
@@ -200,7 +161,7 @@
    <antcallback target="deldir" />
    <mkdir dir="${basedir}/Code"/>
   
-      <for list="${code.listfolders}" param="param" >
+      <for list="${workflowPackage.listfolders}" param="param" >
         <sequential>
              <mkdir dir="${basedir}/Code/@{param}"/>
        </sequential>
@@ -341,6 +302,8 @@
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
         <antcallback target="getLabel" />
     </target>
+
+
 
 
 
