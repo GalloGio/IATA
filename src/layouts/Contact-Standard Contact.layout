@@ -4,6 +4,9 @@
     <customButtons>Change_Owner</customButtons>
     <customButtons>Community</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
+    <customButtons>SAP_Airline_Request</customButtons>
+    <customButtons>SIS_Airline_Request</customButtons>
+    <customButtons>APXTConga4__Conga_Mail_Merge</customButtons>
     <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
@@ -96,6 +99,10 @@
                 <behavior>Edit</behavior>
                 <field>Membership_Main_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIS_Contact_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -174,6 +181,37 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>E&amp;F Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Role__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Account_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Services_Used__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EF_Signatory__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Customer Portal</label>
         <layoutColumns>
             <layoutItems>
@@ -185,7 +223,7 @@
                 <field>User_IECPortal_Status__c</field>
             </layoutItems>
             <layoutItems>
-                <height>50</height>
+                <height>200</height>
                 <page>ISSP_Contact_User</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -706,6 +744,13 @@
         <relatedList>ISSP_Web_Service_Log__c.Contact__c</relatedList>
         <sortField>Finished__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EF_Airline_Billing_Agreement__c</fields>
+        <fields>Status__c</fields>
+        <fields>Role__c</fields>
+        <relatedList>EF_Contact_Relationship__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

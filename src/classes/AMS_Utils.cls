@@ -63,7 +63,7 @@ public without sharing class AMS_Utils {
     public static final String MAJ_SHAREHOLDING = 'Major Shareholding';
     public static final String MIN_SHAREHOLDING = 'Minor Shareholding';
     public static final String NAME = 'Name';
-    public static final String LEGAL_STATUS = 'Legal Status';
+    public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VFMR';
 
 
@@ -91,6 +91,10 @@ public without sharing class AMS_Utils {
     public static final String COR              = 'CORRECTION.1.0'  ;
     public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
 
+    //Record Types
+    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
 
 
@@ -106,6 +110,12 @@ public without sharing class AMS_Utils {
     public static final String ACC_S7_UNDERREVIEW = 'Under review';
     public static final String ACC_S8_CHANGESPROCESSED = 'Changes processed';
     public static final String ACC_S9_APPROVED = 'Approved';
+
+    public static final String AACC_INPROGRESS = 'in progress';
+    public static final String AACC_FINALIZED = 'finalized';
+    public static final String AACC_WITHDRAWAL = 'withdrawn';
+    public static final String AACC_DISAPPROVED = 'disapproved';
+    public static final Set<String> AACC_FINALS = new Set<String>{AACC_FINALIZED, AACC_DISAPPROVED, AACC_WITHDRAWAL};
      
     public static final String CHLOCTYPEBEHAVIOR_NOSWAP = 'Don’t change the parent';        
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
@@ -310,12 +320,12 @@ public without sharing class AMS_Utils {
         String sRes = '';
 
         if (sChangeCode.equalsIgnoreCase('NEW')) {
-            sRes = 'in progress';
+            sRes = AACC_INPROGRESS;
         } else if (sChangeCode.equalsIgnoreCase('FIN')) {
-            sRes = 'finalized';
+            sRes = AACC_FINALIZED;
         }
         else if (sChangeCode.equalsIgnoreCase('DIS')) {
-            sRes = 'disapproved';
+            sRes = AACC_DISAPPROVED;
         }
         
         return sRes;
@@ -523,7 +533,7 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-
+/* DESCOUTINUED - TO BE REMOVED AFTER TESTING
 
     public static List<Account> createAAChangeCodes(List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Account> oscarAgencies, Boolean isToUpdateAccounts) {
 
@@ -583,12 +593,11 @@ public without sharing class AMS_Utils {
         if (oscar != null)
             oscarId = oscar.Id;
 
-        System.debug('Creating a new Agency Applied Change Code for Account ' + oscarAgency.Id + ' with flag active set to ' + isActive);
-
         Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(Active__c = isActive, Account__c = oscarAgency.Id, Change_Code__c = changeCode.name,
                 OSCAR__c = oscarId, Bulletin_Information__c = changeCode.memoText,
                 Reason_Code__c = changeCode.reasonCode, Reason_Description__c = changeCode.reasonDesc);
 
+        System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
 
 
@@ -596,9 +605,9 @@ public without sharing class AMS_Utils {
         String newVal = getIATAReadableStatus(changeCode.status);
 
 
-        System.debug('Change code status is ' + changeCode.status);
-        System.debug('Account status is ' + oscarAgency.Status__c);
-        System.debug('New val is ' + newVal);
+        System.debug(loggingLevel.ERROR, 'Change code status is ' + changeCode.status);
+        System.debug(loggingLevel.ERROR, 'Account status is ' + oscarAgency.Status__c);
+        System.debug(loggingLevel.ERROR, 'New val is ' + newVal);
 
 
         if (newVal <> oscarAgency.Status__c && newVal != null) {
@@ -607,14 +616,33 @@ public without sharing class AMS_Utils {
             toReturn = oscarAgency;
         }
 
-        if( aacNEW.Change_Code__c == 'FIN' ){
+        if(oscar != null){
+
+        if( aacNEW.Change_Code__c == 'NEW' ){
+            oscar.First_Step_Completed__c = true;
+
+                if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
+        }
+
+        if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+        if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+        if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+            for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+        }
+        }        
+
+        if( aacNEW.Change_Code__c == 'FIN'){
             
             oscarAgency.Is_AIMS_Account__c = true;
+
+            oscarAgency.Accreditation_Date__c = Date.Today();            
+
             toReturn = oscarAgency;
         }
 
         return new ChangeCodeStruct(aacNEW, toReturn);
     }
+    */
 
     public static String getIATAReadableStatus(String endorsmentCode) {
 
@@ -755,8 +783,6 @@ public without sharing class AMS_Utils {
     public static void copyDataToAccount(List<AMS_OSCAR__c> oscars, Boolean runOwnershipMigration) {
 
         AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
-
-        ID changeRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
 
         System.debug('Copying Data from Staging to Account');
 
@@ -909,15 +935,19 @@ public without sharing class AMS_Utils {
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static List<Account> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+
+        System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
         Set<String> fieldsToMigrate = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(typesOfChange);
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        List<Account> accountsToUpdate = new List<Account>();
+        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
+
         //DT: Reindented and added 3 fields for addresses
+        // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
                                                                     ,'IATACode__c' => 'IATACode__c'
                                                                     ,'Short_Name__c' => 'Short_Name__c'
@@ -984,20 +1014,46 @@ public without sharing class AMS_Utils {
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
+
+
                 for(Id accId: accountsAffected){
+
+                    List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
                     Account acc = accounts.get(accId);
 
                     for(String accFieldApiName: accountFieldNewValue.keySet())
-                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    {
+                        
+                        Schema.SObjectField field = Schema.SObjectType.Account.fields.getMap().get(accFieldApiName);
+                        Schema.DisplayType fldType = field.getDescribe().getType();
+                        
+                        system.debug('Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('Field Type to migrate to account: ' + fldType);
 
-                    accountsToUpdate.add(acc);
+                     
+                        //Add Account Changes to be used when generating the Change Codes History Entities
+                           
+                        String oldValue = String.valueOf(acc.get(accFieldApiName));
+                        String newValue =  String.valueOf(accountFieldNewValue.get(accFieldApiName));
+                        
+                        if (oldValue != newValue)
+                            objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue));
+                            
+
+                        acc.put(accFieldApiName, accountFieldNewValue.get(accFieldApiName));
+                    }
+
+                    AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
+ 
+                    accountsToUpdate.put(acc,acctChangesStruct);
                 }
 
         }
 
     return accountsToUpdate;
 
-}
+    }
 
 //get Inspections from oscar
     public static void UpdateInspectionsFromOscar(List<AMS_OSCAR__c> oscars){
@@ -1452,5 +1508,163 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
+
+
+    public static Integer binarySearchGapFinder(List<Integer> orderedSlotsOccupied){
+
+        Integer first = 0;
+        Integer last = orderedSlotsOccupied.size()-1;
+        Integer mid = (first+last)/2;
+
+        while(first < last){
+            //check for gaps in first half of the list
+            if(orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] != (mid - first)){
+                //found a gap
+                if ((mid-first) == 1 && (orderedSlotsOccupied[mid]-orderedSlotsOccupied[first] > 1)) {
+                    return (orderedSlotsOccupied[first]+1);
+                }   
+                last = mid;
+            }
+            //check for gaps in second half of the list
+            else if ((orderedSlotsOccupied[last]-orderedSlotsOccupied[mid]) != (last-mid)) {
+                //found a gap
+                if ((last-mid) == 1 && (orderedSlotsOccupied[last]-orderedSlotsOccupied[mid] > 1)) {
+                    return (orderedSlotsOccupied[mid]+1);
+                }   
+                first = mid;
+            }   
+            else
+                return -1; 
+
+            mid = (first+last)/2;
+
+        }
+
+        return -1;
+
+    }
+
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+
+        Integer availableNumberInRange = -1;
+
+        //invalid range
+        if(maxRange-minRange <= 0)
+            return -1;
+        
+        //no available slots
+        if(orderedSlotsOccupied.size() > maxRange-minRange)
+            return -1;
+
+
+        if(orderedSlotsOccupied.isEmpty() || (!orderedSlotsOccupied.isEmpty() && orderedSlotsOccupied[0] > minRange))
+            availableNumberInRange = minRange;
+        else
+            availableNumberInRange = binarySearchGapFinder(orderedSlotsOccupied);
+
+        if(availableNumberInRange == -1 && orderedSlotsOccupied[orderedSlotsOccupied.size()-1] < maxRange)
+            availableNumberInRange = orderedSlotsOccupied[orderedSlotsOccupied.size()-1] +1;
+
+        return availableNumberInRange;
+
+    }
+
+    
+
+
+    public static final Date knownSunday = date.newInstance(2012, 7, 1);
+    
+    private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
+        get{
+            if(weekendDaysPerBusinessHours == null) weekendDaysPerBusinessHours = new Map<String, Set<Integer>>();
+            return weekendDaysPerBusinessHours;
+        }
+        set;
+    }
+
+    private static Set<Integer> addBusinessHours(String businessHours){
+        String findBusinessHours = (businessHours == null ? 'Default' : businessHours);
+
+        if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+            List<BusinessHours> hs = [SELECT Id, Name, isDefault, isActive, SundayStartTime, MondayStartTime, TuesdayStartTime, WednesdayStartTime, ThursdayStartTime, FridayStartTime, SaturdayStartTime FROM BusinessHours WHERE isActive = true AND (Name = :findBusinessHours OR isDefault = true)];
+
+            Set<Integer> weekendDays = new Set<Integer>();
+            if(hs.isEmpty()){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found -- using Sunday and Saturday ');
+                weekendDays.add(0);
+                weekendDays.add(6);
+                weekendDaysPerBusinessHours.put(findBusinessHours, weekendDays);
+            }else{
+                for(BusinessHours h : hs){
+                    weekendDays = new Set<Integer>();
+                    if(h.SundayStartTime == null) weekendDays.add(0);
+                    if(h.MondayStartTime == null) weekendDays.add(1);
+                    if(h.TuesdayStartTime == null) weekendDays.add(2);
+                    if(h.WednesdayStartTime == null) weekendDays.add(3);
+                    if(h.ThursdayStartTime == null) weekendDays.add(4);
+                    if(h.FridayStartTime == null) weekendDays.add(5);
+                    if(h.SaturdayStartTime == null) weekendDays.add(6);
+                    
+                    if(h.Name == findBusinessHours) weekendDaysPerBusinessHours.put(h.Name, weekendDays);
+                    else if(h.isDefault) weekendDaysPerBusinessHours.put('Default', weekendDays);
+                }
+                //if we went through all business hours and didn't find the desired one, copy the default
+                if(!weekendDaysPerBusinessHours.containsKey(findBusinessHours)){
+                System.debug(loggingLevel.ERROR, '____ [cls AMS_Utils - addBusinessHours] ************ no businessHours found for region -- copying default one ');
+                    weekendDaysPerBusinessHours.put(findBusinessHours, weekendDaysPerBusinessHours.get('Default'));
+                }
+            }           
+        }
+
+        return weekendDaysPerBusinessHours.get(findBusinessHours);
+    }
+    
+
+    public static Boolean IsWeekendDay(Date dateParam, String businessHours){
+        return IsWeekendDay(DateTime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0)), businessHours);
+    }
+
+    public static Boolean IsWeekendDay(Datetime dateParam, String businessHours){
+       //Integer dayOfWeek  = Integer.valueOf(dateParam.format('u'));
+       //Integer dayOfWeek = dateParam.date().toStartOfWeek().daysBetween(dateParam.date());
+       Integer dayOfWeek = Math.mod(knownSunday.daysBetween(dateParam.date()), 7);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] dateParam - ' + dateParam);
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] dayOfWeek - ' + dayOfWeek);
+
+       Set<Integer> weekendDays = new Set<Integer>();
+       if(weekendDaysPerBusinessHours.containsKey(businessHours)) weekendDays = weekendDaysPerBusinessHours.get(businessHours);
+       else weekendDays = addBusinessHours(businessHours);
+
+       System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - IsWeekendDay] weekendDays - ' + weekendDays);
+
+       return weekendDays.contains(dayOfWeek);
+    }
+
+    public static Date AddBusinessDays(Date d, Integer businessDaysToAdd, String businessHours){
+        return AddBusinessDays(Datetime.newInstance(d, Time.newInstance(0, 0, 0, 0)), businessDaysToAdd, businessHours).date();
+    }
+
+    public static Datetime AddBusinessDays(Datetime d, Integer businessDaysToAdd, String businessHours){
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] d - ' + d);
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] businessHours - ' + businessHours);
+
+        Datetime finalDate = d;
+
+        //Add or decrease in businessDaysToAdd days 
+        Integer direction = businessDaysToAdd < 0 ? -1 : 1;
+
+        while(businessDaysToAdd != 0){
+            finalDate = finalDate.AddDays(direction);
+            if (!isWeekendDay(finalDate, businessHours)) businessDaysToAdd -= direction;
+        }
+
+        System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
+        return finalDate;
+    } 
+
+    public static Date lastDayOfMonth(Date dateField) {
+        return dateField.addMonths(1).toStartOfMonth().addDays(-1);
+    }
 
 }

@@ -973,16 +973,25 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         Map<String, Contact> newContactsToInsert = new Map<String, Contact>();
+        Map<String, Account> newAccountsToInsert = new Map<String, Account>();
 
         // for bulk reasons, we need to first create all contacts and then create the AMS Account Roles with the Id from the contacts created.
         for(AMS_Accreditation_Contact__c ac: toCreateEntities){ 
 
-            if(newContactsToInsert.get(ac.email__c) == null && (ac.Email__c != null ||(ac.Phone__c != null && ac.Phone__c != '-'))){
+
+            if(AMS_AccreditationContactController.accreditationContactRT.get(ac.RecordTypeId) != 'Company' && newContactsToInsert.get(ac.email__c) == null && (ac.Email__c != null ||(ac.Phone__c != null && ac.Phone__c != '-'))){
 
                 Contact con = new Contact();
-
                 con = AMS_AccreditationContactHelper.populateNewContactFields(con, ac);
+                
                 newContactsToInsert.put(con.Email, con);
+
+            }else if(AMS_AccreditationContactController.accreditationContactRT.get(ac.RecordTypeId) == 'Company' && newContactsToInsert.get(ac.Registration_number__c) == null && String.isNotEmpty(ac.Registration_number__c)){
+
+                Account acc = new Account();
+                acc = AMS_AccreditationContactHelper.populateNewAccountFields(acc, ac);
+
+                newAccountsToInsert.put(acc.Registration_number__c, acc);
 
             }
 
@@ -992,15 +1001,18 @@ public with sharing class AMS_AccountRoleCreator
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
         }
 
-        // now that we have the contacts inserted, let's create the roles with this contacts.
+        if(!newAccountsToInsert.isEmpty()) insert newAccountsToInsert.values();
+
+
+        // now that we have the contacts and accounts inserted, let's create the roles with this contacts.
 
         for(Id accountId: accounts) {
-
             for(AMS_Accreditation_Contact__c ac: toCreateEntities){
 
-                AMS_Account_Role__c role;
+                Contact con = newContactsToInsert.get(ac.Email__c);
+                Account acc = newAccountsToInsert.get(ac.Registration_number__c);
 
-                role = new AMS_Account_Role__c();
+                AMS_Account_Role__c role = new AMS_Account_Role__c();
 
                 role.RecordTypeId       = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
                 role.Account__c         = accountId;
@@ -1011,18 +1023,20 @@ public with sharing class AMS_AccountRoleCreator
                 role.Percentage__c      = ac.Financial_Interest__c;
                 role.Position__c        = ac.Job_title__c;
                 role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
-                if(newContactsToInsert.get(ac.Email__c) != null)
-                    role.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
+
+                if(con != null) role.Contact__c = con.Id;
+                if(acc != null) role.Owner_Account__c = acc.Id;
+
                 role.Legacy_External_Id__c = ac.Legacy_External_Id__c;
                 rolesToInsert.add(role);
 
-                if(newContactsToInsert.get(ac.Email__c) != null  && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId)
-                    ac.Contact__c = newContactsToInsert.get(ac.Email__c).Id;
-                
-                if(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId)
+                if(ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId){
+                    
+                    if(con != null) ac.Contact__c = con.Id;
+                    if(acc != null) ac.Company__c = acc.Id;
+
                     accreditationsToUpdate.put(ac,role); // adding now to update the Accreditation Contact with the new ID from the AMS Account Role.
-
-
+                }
             }
         }
 
