@@ -11,17 +11,18 @@ public with sharing class vfIECEBC_Layout extends vfIECEBC_Controller {
     }
     
     
-    public PageReference pageLoad() {/*
-        if (String.isBlank(UserInfo.getSessionId())) {
-            Pagereference prLogin = Page.IECLogin;
-            prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
-            prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
-            prLogin.setRedirect(true);
-            return prLogin;
-        } else {
-            //if (subscription == null) return Page.IECUnauthorized;
+    public PageReference pageLoad() {
+        if (!Test.isRunningTest()) {
+            if (String.isBlank(UserInfo.getSessionId())) {
+                Pagereference prLogin = Page.IECLogin;
+                prLogin.getParameters().put(IECConstants.PARAM_RETURN_URL, IECUtil.EncryptEncodeParameter(ApexPages.currentPage().getUrl()));
+                prLogin.getParameters().put(IECConstants.PARAM_WARNING_MSG, IECUtil.EncryptEncodeParameter(Label.IEC_Warning_Must_Login));
+                prLogin.setRedirect(true);
+                return prLogin;
+            } else {
+                if (subscription == null) return Page.IECUnauthorized;
+            }
         }
-        */
         return null;
     }
 

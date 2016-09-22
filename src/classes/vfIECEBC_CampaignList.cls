@@ -15,14 +15,14 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
     public EBC_Campaign__c selectedCampaign {
         get {
             if (selectedCampaign == null || selectedCampaign.Id != selectedCampaignId) {
-            	Map<Id, EBC_Campaign__c> campaignsMapping = new Map<Id, EBC_Campaign__c>(campaigns);
+                Map<Id, EBC_Campaign__c> campaignsMapping = new Map<Id, EBC_Campaign__c>(campaigns);
                 selectedCampaign = campaignsMapping.get(selectedCampaignId);
             }
             
             return selectedCampaign;
         }
         set;
-	}
+    }
     public PageReference deleteCampaign() {
         delete selectedCampaign;
         
@@ -66,16 +66,15 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
         EBC_Campaign__c oCampaign = [
             Select
                 Id,
-                Account__c,
                 Billing_Account__c,
-	            EBC_Master_Filter__c,
-                //			EBC_Master_Filter__c,
+                EBC_Master_Filter__c,
+                //          EBC_Master_Filter__c,
                 // Exact_Target_Campaign_Id__c  wtf is that?
                 From_Name__c,
                 Google_Analytics_Tracking_Code__c,
                 Is_Google_Analytics_Tracker_Active__c,
                 Subject__c,
-            	
+                
                 EBC_Design__c
             From EBC_Campaign__c
             Where Id = :selectedCampaign.Id
@@ -135,9 +134,9 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
         get {
             if (sortBy == null) {
                 if (isLimitedComponent) {
-                	sortBy = 'LastModifiedDate DESC';
+                    sortBy = 'LastModifiedDate DESC';
                 } else {
-                	sortBy = 'CreatedDate ASC';
+                    sortBy = 'CreatedDate ASC';
                 }
             }
             
