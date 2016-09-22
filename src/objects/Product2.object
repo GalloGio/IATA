@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -276,6 +272,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -365,6 +362,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -477,6 +475,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -560,6 +559,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1216,6 +1216,7 @@
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1238,6 +1239,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1495,6 +1497,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1566,6 +1569,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -1716,7 +1720,7 @@
         <label>Image</label>
         <picklist>
             <picklistValues>
-                <fullName>Book</fullName>
+                <fullName>book</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1732,11 +1736,11 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Card</fullName>
+                <fullName>card</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CD-ROM</fullName>
+                <fullName>cd-rom</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1748,7 +1752,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>DVD</fullName>
+                <fullName>dvd</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1764,15 +1768,15 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Folder</fullName>
+                <fullName>folder</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Kit</fullName>
+                <fullName>kit</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Labels</fullName>
+                <fullName>labels</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1788,11 +1792,11 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>PDF</fullName>
+                <fullName>pdf</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Poster</fullName>
+                <fullName>poster</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1817,6 +1821,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -1858,6 +1863,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2096,6 +2102,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2147,6 +2154,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2305,6 +2313,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2324,6 +2333,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2388,6 +2398,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2631,6 +2642,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2674,6 +2686,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2724,6 +2737,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2890,6 +2904,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2938,6 +2953,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2969,6 +2985,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -2995,6 +3012,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3061,6 +3079,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -3263,6 +3282,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -3354,6 +3374,7 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -5167,10 +5188,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Image__c</picklist>
             <values>
-                <fullName>Book</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book CD-ROM Web download</fullName>
                 <default>false</default>
             </values>
@@ -5180,18 +5197,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Book and Web Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CD-ROM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DVD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5211,31 +5216,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Folder</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Kit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Memory Stick</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF %26 Excel files</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5247,7 +5232,35 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>cd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>dvd</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5256,6 +5269,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7310,10 +7331,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Image__c</picklist>
             <values>
-                <fullName>Book</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book CD-ROM Web download</fullName>
                 <default>false</default>
             </values>
@@ -7323,18 +7340,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Book and Web Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CD-ROM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DVD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7354,31 +7359,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Folder</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Kit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Memory Stick</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF %26 Excel files</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7390,7 +7375,35 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>cd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>dvd</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7399,6 +7412,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9413,10 +9434,6 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Image__c</picklist>
             <values>
-                <fullName>Book</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book CD-ROM Web download</fullName>
                 <default>false</default>
             </values>
@@ -9426,18 +9443,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Book and Web Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CD-ROM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DVD</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9457,31 +9462,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Folder</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Kit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Labels</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Memory Stick</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF %26 Excel files</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9493,7 +9478,35 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>book</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>cd-rom</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>dvd</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>eBook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>folder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>kit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>labels</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9502,6 +9515,14 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>newsletter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>pdf</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>poster</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10495,7 +10516,6 @@ The product will only appear on the Online Store when the date entered in this f
         <lookupDialogsAdditionalFields>Product_Segment__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
