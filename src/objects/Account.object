@@ -37782,49 +37782,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Company_Type__c</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>L</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>T</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>V</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
                 <fullName>1</fullName>
