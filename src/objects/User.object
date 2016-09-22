@@ -2660,4 +2660,38 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!User.Id}</url>
         <width>625</width>
     </webLinks>
+    <webLinks>
+        <fullName>Provision_Kavi_Access</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Provision Kavi Access</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/37.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/37.0/apex.js&quot;)}
+
+try{
+    var r = confirm(&quot;Are you sure you want to Generate Access for this User to Kavi? &quot;);
+
+ sforce.connection.sessionId=&apos;{!GETSESSIONID()}&apos;;
+
+
+if(r == true)
+{
+    var a = sforce.apex.execute(&quot;ProvisionKaviAccess&quot;,&quot;EnableInternalUserKaviAccess&quot;,{userId:&quot;{!User.Id}&quot;,profileName:&quot;{!User.Profile_Name__c}&quot;, isKaviInternalUser:&quot;{!User.00Nw00000094OWh}&quot;});
+
+    alert(a);
+}
+else
+{
+    alert(&apos;Operation aborted&apos;);
+}
+}
+catch(err){
+    var txt = &quot;Error: &quot;;
+    txt+=err.description+&quot; 11&quot;+err;
+    alert(txt);
+}</url>
+    </webLinks>
 </CustomObject>
