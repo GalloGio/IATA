@@ -120,16 +120,6 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                         excl.Other_Reason__c = null;
                     }
                     excl.Source_Campaign__c = campaignId;
-                    
-                    if (params.containsKey(failureKey) && params.containsKey(failureKey) && params.get(failureKey).containsKey('SFID')) {
-	                    String sfId = params.get(failureKey).get('SFID');
-                        
-                        if (sfId != null && sfId.left(3) == GDP_Products_Account_View__c.sobjecttype.getDescribe().getKeyPrefix()) {
-                            excl.Related_Agency__c = sfId;
-                        } else if (sfId != null && sfId.left(3) == ID_Card__c.sobjecttype.getDescribe().getKeyPrefix()) {
-                            excl.Related_Agent__c = sfId;
-                        }
-                    }
                         
                     excls.add(excl);
                 }

@@ -95,34 +95,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Related_Agency__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>GDP Product Account View that received the email that result in an exclusion</description>
-        <externalId>false</externalId>
-        <inlineHelpText>GDP Product Account View that received the email that result in an exclusion</inlineHelpText>
-        <label>Related Agency</label>
-        <referenceTo>GDP_Products_Account_View__c</referenceTo>
-        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
-        <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Related_Agent__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>ID Card that received the email that result in an exclusion</description>
-        <externalId>false</externalId>
-        <inlineHelpText>ID Card that received the email that result in an exclusion</inlineHelpText>
-        <label>Related Agent</label>
-        <referenceTo>ID_Card__c</referenceTo>
-        <relationshipLabel>EBC Email Exclusions</relationshipLabel>
-        <relationshipName>EBC_Email_Exclusions</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Source_Campaign__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -147,6 +119,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>HARDBOUNCE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LISTDETECTIVE</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -191,6 +167,13 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Email Exclusions</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Email__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Event_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Other_Reason__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Source_Campaign__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Unsubscribe_From__c</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
