@@ -38585,10 +38585,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Internal Use</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Media</fullName>
                 <default>false</default>
             </values>
