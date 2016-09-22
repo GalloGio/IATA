@@ -27,7 +27,6 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-    
     <rules>
         <fullName>AmazonFile_RejectedClosed</fullName>
         <actions>
