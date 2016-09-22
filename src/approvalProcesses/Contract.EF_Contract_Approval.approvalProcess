@@ -68,6 +68,14 @@
             <name>EF_Set_Contract_Approval_to_In_Progress</name>
             <type>FieldUpdate</type>
         </action>
+        <action>
+            <name>Set_Approver_Email</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Set_Submitter_Email</name>
+            <type>FieldUpdate</type>
+        </action>
     </initialSubmissionActions>
     <label>E&amp;F Contract Approval</label>
     <nextAutomatedApprover>

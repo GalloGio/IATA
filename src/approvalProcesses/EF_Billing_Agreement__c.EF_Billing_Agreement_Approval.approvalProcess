@@ -66,7 +66,15 @@
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
         <action>
+            <name>Add_Approver_Email</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
             <name>EF_Set_Approval_to_In_Progress</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Set_Submitter_Email</name>
             <type>FieldUpdate</type>
         </action>
     </initialSubmissionActions>
