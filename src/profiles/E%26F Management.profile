@@ -41192,19 +41192,14 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>EF_UpdateBillingAgreement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>EF_Billing_Agreement_Attachment_List</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
+		<enabled>true</enabled>
+    </pageAccesses>
+        <apexPage>EF_MassUpdateMaterialLI_BillingAgreement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -43112,9 +43107,9 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

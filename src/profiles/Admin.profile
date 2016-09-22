@@ -42463,6 +42463,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>EF_MassUpdateMaterialLI_BillingAgreement</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>EF_UpdateBillingAgreement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
