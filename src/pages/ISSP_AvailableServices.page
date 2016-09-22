@@ -11,10 +11,9 @@
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
 
-    function newAppReq(appId){
-        $('#myModal').modal('toggle');
+    function newAppReq(appId,appName){
         $('#ModalNewServiceRequest').modal('toggle');
-        ISSP_AvailableServices.newAppsRequest(appId,'{!conId}',newAppReqCallback);
+        ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}',newAppReqCallback);
         //closeDialog();
         //location.reload(true);
         //refresh(); 
@@ -60,6 +59,11 @@
        text-decoration: none;
        background-color: #C6E1FF;
        color: #000000 !important;
+    }
+
+    .tos_label {
+       font-size: 11px;
+       color: #015BA7 !important;
     }
     </style>
     <h4>{!$Label.ISSP_services}  <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
@@ -209,6 +213,14 @@
           </div>
           <div class="modal-body" style="display:{!if(true,'','none')}">
             <!-- <h5>Services list:</h5><br/> -->
+            <apex:outputPanel id="display_messages"> 
+                <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+                  <strong>{!$Label.ISSP_Error} </strong>
+                  <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                      <p><apex:outputText value="{!er}" escape="false" /></p>
+                  </apex:repeat>
+                </div>  
+              </apex:outputPanel>
             <ul class="external_links clearfix nav">
 
                 <li> 
@@ -231,17 +243,43 @@
                 </script>
 
             </ul>
+
+              <apex:outputPanel rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}"> 
+                <div class="checkbox">
+                  <label class="tos_label">
+                    {!$Label.ISSP_KAVI_Terms_Conditions_Part1}
+                  </label>
+                  <br/><br/>
+                  <label class="tos_label">
+                    {!$Label.ISSP_KAVI_Terms_Conditions_Part3}
+                  </label>
+                  <br/><br/>
+                  <label class="tos_label">
+                    {!$Label.ISSP_KAVI_Terms_Conditions_Part2}
+                  </label>
+                  <br/><br/>
+                  <label class="tos_label">
+                    <apex:inputCheckbox style="margin-top:-0.1px" value="{!accept}"  selected="false"/>
+                    <a>{!$Label.ISSP_AcceptTermsAndConditions}</a>
+                  </label>
+                </div> 
+                
+              </apex:outputPanel> 
           </div>
 
           <div class="modal-footer">
               <div class="row">
                   
               <div class="col-md-6">
-                  
-                 
-              <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}');"   class="btn_iata_success btn-block btn">
-                 {!$label.ISSP_Confirm}
-              </a>
+            
+              <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" value="{!$Label.ISSP_Confirm}" styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');}" rerender="display_messages"/>
+
+              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace'}"> 
+                <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');"    class="btn_iata_success btn-block btn">
+                   {!$Label.ISSP_Confirm}
+                </a>
+              </apex:outputPanel> 
+
  </div>
                   <div class="col-md-6">
               <a onclick="closeDialog()"   class="btn_iata_cancel btn-block btn">

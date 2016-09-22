@@ -2552,6 +2552,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Kato Christophe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Laurent Delarue</fullName>
                 <default>false</default>
             </picklistValues>
@@ -9981,6 +9985,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Karim Ayari</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kato Christophe</fullName>
                 <default>false</default>
             </values>
             <values>

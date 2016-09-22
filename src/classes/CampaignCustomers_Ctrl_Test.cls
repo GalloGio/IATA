@@ -91,6 +91,7 @@ public class CampaignCustomers_Ctrl_Test
 		Test.startTest();
 			ctrl.generateCampaignMembers();
 		
+		/*
 		//Create Campaign Members
 		CampaignMember cm = new CampaignMember(
 			CampaignId = campaigns[0].Id,
@@ -152,6 +153,7 @@ public class CampaignCustomers_Ctrl_Test
 		
 		Campaign_Svc.generateRenewalNotice(campaign.Id, campaign.Campaign_AutoNumber__c);
 Test.stopTest();
+*/
 		//Cover generateRenewalNotice
 		//Campaign_Svc.generateRenewalNotice(campaigns[0].Id, campaigns[0].Campaign_AutoNumber__c);
 

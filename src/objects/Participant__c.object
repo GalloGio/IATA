@@ -76,7 +76,7 @@
         <externalId>false</externalId>
         <label>Contact</label>
         <lookupFilter>
-            <active>true</active>
+            <active>false</active>
             <booleanFilter>(1 AND 2) OR 3 OR (4 AND 5 AND 2)</booleanFilter>
             <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
             <filterItems>
