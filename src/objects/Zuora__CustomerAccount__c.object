@@ -1014,10 +1014,22 @@ IF(  ISPICKVAL(Zuora__Default_Payment_Method__r.Zuora__CreditCardType__c, &quot;
     <fields>
         <fullName>eBroadcast_Add_On_Access__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>For eBroadcast application, the field designates if the account is given access to the specific add-on (one time payment required, usage forever)</description>
+        <description>For eBroadcast application, the field designates if the account is given access to the Extra Storage Add-on (one time payment required, usage forever)</description>
         <externalId>false</externalId>
-        <inlineHelpText>For eBroadcast application, the field designates if the account is given access to the specific add-on (one time payment required, usage forever)</inlineHelpText>
+        <inlineHelpText>For eBroadcast application, the field designates if the account is given access to the Extra Storage Add-on (one time payment required, usage forever)</inlineHelpText>
         <label>eBroadcast Add-On Access</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>eBroadcast_Add_On_Advanced_Reporting__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This is checked if the EBC Subscription ever has the Advanced Reporting Add On.
+The flag is set upon the payment.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is checked if the EBC Subscription ever has the Advanced Reporting Add On.</inlineHelpText>
+        <label>eBroadcast Add On Advanced Reporting</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
