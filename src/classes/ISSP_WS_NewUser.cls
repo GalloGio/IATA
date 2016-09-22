@@ -568,20 +568,20 @@ global class ISSP_WS_NewUser {
                             else{
                                 List <Account> accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
                                         FROM Account
-                                        WHERE IATACode__c =: userIataCode
+                                        WHERE (IATACode__c =: userIataCode OR Airline_Prefix__c =: userIataCode)
                                         AND RecordType.DeveloperName IN
                                         ('IATA_Agency', 'IATA_Airline_BR', 'IATA_Airline')];
                                 if (accountList.isEmpty() && userIataCode != 'RA'){
                                     accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
                                         FROM Account
-                                        WHERE Site =: userIataCode
+                                        WHERE (Site =: userIataCode OR Airline_Prefix__c =: userIataCode)
                                         AND RecordType.DeveloperName IN
                                         ('IATA_Agency', 'IATA_Airline_BR', 'IATA_Airline')];
                                 }
                                 if (accountList.isEmpty() && userIataCode != 'RA'){
                                     accountList = [SELECT Id, RecordType.DeveloperName, IATA_ISO_Country__r.ISO_Code__c
                                         FROM Account
-                                        WHERE BSPlink_code__c =: userIataCode
+                                        WHERE (BSPlink_code__c =: userIataCode OR Airline_Prefix__c =: userIataCode)
                                         AND RecordType.DeveloperName IN
                                         ('IATA_Agency', 'IATA_Airline_BR', 'IATA_Airline')];
                                 }

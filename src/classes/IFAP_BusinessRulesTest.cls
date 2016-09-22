@@ -512,13 +512,13 @@ private class IFAP_BusinessRulesTest {
                     (i == 11 && (j == 5 || j == 7 || j == 16)) ||
                     (i == 16 && (j == 14))
                 ) {
-                    System.assert(IFAP_BusinessRules.IsStatusCanBeSelected(false, false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
+                    System.assert(IFAP_BusinessRules.IsStatusCanBeSelected(false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
                     continue;
                 }
 
                 System.debug('##STATUS CHECK### old status ' + allIfapCaseStatus[i].Status + ' new status ' + allIfapCaseStatus[j].Status);
                 //combinations not stated avove should not be allowed
-                System.assert(!IFAP_BusinessRules.IsStatusCanBeSelected(false, false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
+                System.assert(!IFAP_BusinessRules.IsStatusCanBeSelected(false, allIfapCaseStatus[j], allIfapCaseStatus[i], p, false));
             }
 
 

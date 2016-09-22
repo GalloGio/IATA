@@ -6608,6 +6608,17 @@ TotalRows-Successes-Errors</description>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Kavi_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Kavi_User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>LCAG_Member__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
