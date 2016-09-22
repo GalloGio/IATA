@@ -1,29 +1,13 @@
-<apex:page standardController="EF_Contact_Relationship__c" recordSetVar="bacs" tabStyle="EF_Contact_Relationship__c" extensions="tenPageExtension">
+<apex:page standardController="EF_Billing_Agreement__c">
     <apex:form >
-        <apex:pageBlock title="EditBilling Agreement " mode="edit">
-             <apex:pageMessages />
-            <apex:pageBlockButtons location="top">
-                <apex:commandButton value="Save" action="{!save}"/>
-                <apex:commandButton value="Cancel" action="{!cancel}"/>
-            </apex:pageBlockButtons>
-            
-            
-            <apex:pageBlockTable value="{!selected}" var="bac">
-                <apex:column value="{!bac.Contact__c}"/>
-                <apex:column value="{!bac.Contact_Account__c}"/>
-                <apex:column headerValue="Role">
-                    <apex:inputField value="{!bac.Role__c}"/>
-                </apex:column>
-                <apex:column headerValue="Status">
-                    <apex:inputField value="{!bac.Status__c}"/>
-                </apex:column>
-            </apex:pageBlockTable>  
-            
-             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton value="Save" action="{!save}"/>
-                <apex:commandButton value="Cancel" action="{!cancel}"/>
-            </apex:pageBlockButtons>
-            
-        </apex:pageBlock>
+        <c:RelatedList objectName="EF_Contact_Relationship__c"
+            parentFieldName="EF_Airline_Billing_Agreement__c"
+            parentFieldId="{!EF_Billing_Agreement__c.Id}"       
+            fieldsCSV="Contact__c,Contact_Account__c,Role__c,Status__c" 
+            editableFieldsCSV="Role__c,Status__c" 
+            updateAllOrNone="false" 
+            defaultEditAll="true" 
+            massUpdateInputs="true"
+            hideActionLinkEdit="true"/>
     </apex:form>
-    </apex:page>
+</apex:page>

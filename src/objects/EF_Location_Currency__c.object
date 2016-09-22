@@ -78,6 +78,17 @@ It contains a currency to make the correspondance between contract + location + 
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Location_ID_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Location_ID__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location ID Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Location_ID__c</fullName>
         <description>E&amp;F Project. Master Detail Relationship to look locations present under Record Type Location, on the E&amp;F Related Records object.</description>
         <externalId>false</externalId>

@@ -90,16 +90,6 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <fields>
-        <fullName>Requested_Changes__c</fullName>
-        <externalId>false</externalId>
-        <label>Requested Changes</label>
-        <length>10000</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Html</type>
-        <visibleLines>10</visibleLines>
-    </fields>
     <label>E&amp;F Material Line Item</label>
     <nameField>
         <displayFormat>E&amp;F MLI-{0000}{MM}{YY}</displayFormat>
@@ -122,4 +112,15 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <webLinks>
+        <fullName>Edit_All</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>window.open(&apos;/apex/EF_MassUpdateMaterialLI_BillingAgreement?id={!EF_Billing_Agreement__c.Id}&apos;);</url>
+    </webLinks>
 </CustomObject>
