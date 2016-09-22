@@ -4223,7 +4223,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_PAX_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS PAX Issuing Address --></label>
+        <label>Su dirección de emisión (de billetaje aéreo)</label>
         <name>ISSP_AMS_PAX_Issuing_Address</name>
     </customLabels>
     <customLabels>

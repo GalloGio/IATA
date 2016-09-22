@@ -4235,7 +4235,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_PAX_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS PAX Issuing Address --></label>
+        <label>Votre adresse d&apos;émission (des billets d&apos;avion)</label>
         <name>ISSP_AMS_PAX_Issuing_Address</name>
     </customLabels>
     <customLabels>
