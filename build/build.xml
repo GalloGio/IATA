@@ -179,7 +179,7 @@
      </for>
 
  <move file="${basedir}/src/workflowPackage.xml" tofile="${basedir}/Code/package.xml"/>  
-      <!--<antcallback target="bulkRetrieveEmailTemplate" />-->
+      
       <antcallback target="deployCodeLocal" />
         <antcallback target="deployCodeLocalFolder" />
 
@@ -349,7 +349,7 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-      <antcallback target="bulkRetrieveEmailTemplate" />
+<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
 
     </target>
 
@@ -408,7 +408,7 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/workflowPackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
-      <antcallback target="bulkRetrieveEmailTemplate" />
+<!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
 
     </target>
 
