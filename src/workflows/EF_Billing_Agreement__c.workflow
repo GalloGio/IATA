@@ -76,4 +76,22 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+	<fieldUpdates>
+        <fullName>Set_Approver_Email</fullName>
+        <field>EF_Approver_Email__c</field>
+        <formula>$User.EF_Billing_Agreement_Approver_Email__c</formula>
+        <name>Set Approver Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+	<fieldUpdates>
+        <fullName>Set_Submitter_Email</fullName>
+        <field>EF_Submitter_Email__c</field>
+        <formula>$User.Email</formula>
+        <name>Set Submitter Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
 </Workflow>
