@@ -2545,6 +2545,21 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <type>Text</type>
         <unique>false</unique>
     </fields>
+	<fields>
+	    <fullName>Account_Management_Key_Contact__c</fullName>
+        <description>This formula evaluates whether the contact represents a key contact, from the perspective of the Account Management project.</description>
+        <externalId>false</externalId>
+        <formula>OR (
+		  TEXT(CEO_CFO__c) = &quot;CEO&quot;,
+		  TEXT(CEO_CFO__c) = &quot;CFO&quot;,
+		  TEXT(CEO_CFO__c) = &quot;COO&quot;,
+		  Membership_Main_Contact__c,
+		  NOT(ISBLANK(Function__c))
+		)</formula>
+        <label>Account Management Key Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Account_site__c</fullName>
         <externalId>false</externalId>
@@ -19925,6 +19940,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
         </picklistValues>
+		<picklistValues>
+			<picklist>CEO_CFO__c</picklist>
+            <values>
+				<fullName>COO</fullName>
+				<default>false</default>
+			</values>
+        </picklistValues>
         <picklistValues>
             <picklist>Call_Status__c</picklist>
             <values>
@@ -21081,6 +21103,73 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
                 <default>false</default>
             </values>
         </picklistValues>
+		         <picklistValues>
+            <picklist>Function__c</picklist>
+            <values>
+                <fullName>Aeropolitical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gen%2EManagement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing%26Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security%26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Functional_Interest__c</picklist>
             <values>
@@ -22221,6 +22310,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Ticketing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+		<picklistValues>
+            <picklist>CEO_CFO__c</picklist>
+            <values>
+                <fullName>COO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23408,6 +23504,73 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Unknown</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+		<picklistValues>
+            <picklist>Function__c</picklist>
+            <values>
+                <fullName>Aeropolitical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gen%2EManagement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing%26Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security%26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25962,6 +26125,73 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Function__c</picklist>
+            <values>
+                <fullName>Aeropolitical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gen%2EManagement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing%26Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security%26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Functional_Interest__c</picklist>
             <values>
                 <fullName>Accounting</fullName>
@@ -27178,6 +27408,26 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <errorDisplayField>User_Portal_Status__c</errorDisplayField>
         <errorMessage>You should deactivate a user before changing his license</errorMessage>
     </validationRules>
+	<validationRules>
+        <fullName>Change_id_card_holder_cont_name</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Contact_Name__c )
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_id_card_holder_cont_name_portal</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( 
+ISPICKVAL($User.UserType,&quot;PowerPartner&quot;), 
+ID_Card_Holder__c=true,
+ISCHANGED(ISSP_Contact_Name__c )
+)</errorConditionFormula>
+        <errorMessage>This contact is an ID Card holder. To change the contact name, please contact to IATA Customer Service team.</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Comment_data_quality_feedback_Mandatory</fullName>
         <active>true</active>
@@ -27222,6 +27472,27 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
          NOT(ISPICKVAL(Account.Type , &apos;Import Agent&apos;)) &amp;&amp;
          NOT(ISPICKVAL(Account.Category__c , &apos;Import Agent&apos;))), true ,false)</errorConditionFormula>
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
+    </validationRules>
+	<validationRules>
+        <fullName>Key_Contacts_Data_Quality</fullName>
+        <active>true</active>
+        <description>Put in place for the Account Management Project, this rule is meant to ensure data quality for the key contacts.</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;Standard_Contact&apos;,
+OR(
+ TEXT(CEO_CFO__c)=&quot;CEO&quot;,
+ TEXT(CEO_CFO__c)=&quot;CFO&quot;,
+ TEXT(CEO_CFO__c)=&quot;COO&quot;,
+ Membership_Main_Contact__c,
+ NOT(ISBLANK(Function__c))
+),
+OR(
+ ISBLANK(FirstName ) ,
+ ISBLANK(LastName),
+ ISBLANK(Title ) ,
+ ISBLANK(Email) ,
+ ISBLANK(AccountId ) ))</errorConditionFormula>
+        <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Job Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Phone_or_email_mandatory</fullName>
