@@ -225,6 +225,14 @@ src="https://www.facebook.com/tr?id=1640623029558775&ev=PageView&noscript=1"
                             </td>
                         </tr>
                         </table>
+
+                        <br></br>
+                            <p>
+                             <div style="text-align: left; height: :40px;">
+                                 <a href="https://www.surveymonkey.com/r/PDLXTV2" style="color:#2d5986" styleClass="newLink" target="_blank">Your feedback on our website will allow us to enhance the Online ID Card Application process and experience.</a>
+                             </div>
+                         </p>
+                        <br></br>
                         <div class="pbBottomButtons" style="text-align:center; height:40px;">
                             <apex:commandLink action="{!terminate}" id="btnNext2" styleClass="btn-BlueButtonWAR" >
                                 <span>{!$Label.IDCard_Close}</span>
