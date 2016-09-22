@@ -11,11 +11,10 @@
                 <apex:commandButton action="{!save}" id="saveButton" value="Save" style="display:none" />
                 <apex:commandButton onclick="return resetInlineEdit();" id="cancelButton" value="Cancel" style="display:none"/>
                 <apex:commandButton id="approveButton" value="Approve" action="{!approve}" rendered="{!piWorkItem != null}" />
-           		<apex:commandButton id="rejectButton" value="Reject" action="{!reject}" rendered="{!piWorkItem != null}" />
+                <apex:commandButton id="rejectButton" value="Reject" action="{!reject}" rendered="{!piWorkItem != null}" />
             </apex:pageBlockButtons>
             <apex:pageBlockSection title="Requester" columns="2">
                 <apex:outputField value="{!EBC_Campaign__c.Owner.Name}" />
-                <apex:outputField value="{!EBC_Campaign__c.Account__c}" />
                 <apex:inlineEditSupport showOnEdit="saveButton, cancelButton"
                             hideOnEdit="editButton" event="ondblclick"
                             changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
