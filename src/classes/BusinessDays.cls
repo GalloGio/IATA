@@ -185,4 +185,40 @@ public class BusinessDays {
 
         }
     }
+
+    /**
+        add n working days to input date based on given BusinessHours
+    **/
+    public static DateTime addWorkingDays(DateTime inputDate, Integer addDays, BusinessHours bh) {
+    	DateTime currentDate = inputDate;
+    	for ( integer i = 0; i<addDays; i++) {
+    		currentDate = getNextWorkingDay(currentDate, bh);
+    	}
+    	return currentDate;
+    }
+
+    /**
+        Return next working day based on given BusinessHours
+    **/
+    public static DateTime getNextWorkingDay(DateTime inputDate, BusinessHours bh) {
+        DateTime currentDay = inputDate.addDays(1);
+    	while (!isWorkingDay(currentDay, bh)) {
+    		currentDay = currentDay.addDays(1);
+    	}
+    	return currentDay;
+    }
+
+    /**
+        Returns true if input date is a working day based on given BusinessHours
+        checking only weekends, not holydays
+    **/
+    public static Boolean isWorkingDay(DateTime inputDate, BusinessHours bh) {
+        try {
+            String weekDay = inputDate.format('EEEE');
+            return bh.get(weekDay + 'StartTime') != null;
+    	} catch (Exception e) {
+            System.debug('BusinessDays.isWorkingDay() ERROR: ' + e.getMessage());
+            return true;
+        }
+    }
 }

@@ -42,7 +42,7 @@ global class WSSidraLite {
             Select Id, RecordtypeId, Decision__c, Suspension_Date__c, Region__c, BSPCountry__c, AccountId, Bank_Guarantee_deadline__c, Reason1__c, ContactId,
                 Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c,
                 OSCAR__r.Id, OSCAR__r.RPM_Approval__c,
-                (Select Id, CaseNumber from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE and Status != 'Closed' )
+                (Select Id, CaseNumber from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
             from Case
             where id = :caseId];
 
@@ -79,9 +79,11 @@ global class WSSidraLite {
             newCase.Region__c = cse.Region__c;
             newCase.BSPCountry__c = cse.BSPCountry__c;
             newCase.SIDRA_Lite_Reason__c = 'Prejudiced Collection of Funds';
+            newCase.Reason_for_Default__c = 'Suspension - Prejudiced Collection of Funds';
             newCase.SIDRA_Lite_Default_Date__c = Date.Today();
             newCase.Confirmation_moneys_not_received__c = Date.today();
             newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+            newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
             newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
             if ( SidraLiteUtil.isPassenger(cse.account) ) {
                 newCase.BSP_CASS__c = 'BSP';
@@ -139,49 +141,6 @@ global class WSSidraLite {
     }
 
     /**
-        Create a sidra lite case from a SAAM case
-    **/
-    /*
-    private static Case createCaseFromSAAM(Case cse){
-        try {
-            if (cse.Cases != null && ! cse.Cases.isEmpty()) {
-                throw new SidraLiteException('SIDRA Lite case already created, cannot create another one');
-            }
-            set<String> listValidReasons = new set<String>{'Financial Security Renewal','Financial Security Request','Financial Security Update'};
-            if (!listValidReasons.contains(cse.Reason1__c)) {
-                throw new SidraLiteException('SIDRA Lite reason must be one of these: ' + listValidReasons);
-            }
-            if ( cse.Bank_Guarantee_deadline__c != null && cse.Bank_Guarantee_deadline__c > Date.today() ) {
-                throw new SidraLiteException('You cannot create a SIDRA Lite for future Deadline date');
-            }
-            Case newCase = new Case();
-            newCase.RecordTypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE;
-            newCase.Subject = 'SIDRA Lite – Financial Security Non-compliance';
-            newCase.ParentId = cse.Id;
-            newCase.Region__c = cse.Region__c;
-            newCase.BSPCountry__c = cse.BSPCountry__c;
-            newCase.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
-            newCase.AccountId = cse.AccountId;
-            newCase.ContactId = cse.ContactId;
-            newCase.IRR_Approval_Rejection__c = 'Approved';
-            newCase.IRR_Type__c = 'Double Irregularity';
-            newCase.Propose_Irregularity__c = DateTime.now();
-            newCase.SIDRA_Lite_Default_Date__c = Date.Today();
-            newCase.Reason_for_Default__c = 'Suspension - FS Non Compliance';
-            if ( SidraLiteUtil.isPassenger(cse.account) ) {
-                newCase.BSP_CASS__c = 'BSP';
-            } else {
-                newCase.BSP_CASS__c = 'CASS';
-            }
-            return newCase;
-
-        } catch(Exception e) {
-            throw new SidraLiteException(e.getMessage());
-        }
-    }
-    */
-
-    /**
         Check Sidra lite bussines Rules and returns a case with default values to set in the layout
     **/
     webservice static Case checkBussinesRules(Id caseId){
@@ -221,9 +180,7 @@ global class WSSidraLite {
             Case foundChildCase = SidraLiteManager.getRelatedCase(parentCase);
             list<Case> listUpdate = updateSidraLiteAndParent(parentCase, foundChildCase);
             update listUpdate;
-            if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_IFAP) {
-                insertComments(listUpdate);
-            }
+            insertComments(listUpdate);
 
         } catch (Exception e) {
             throw new SidraLiteException(e.getMessage());
@@ -261,7 +218,11 @@ global class WSSidraLite {
                 if (SidraLiteUtil.isAccountActive(parentCase.account)) {
                     returnCase.SIDRA_Lite_Default_Date__c = Date.today();
                     returnCase.IRR_Approval_Rejection__c = 'Approved';
+                    returnCase.Propose_Irregularity__c = DateTime.now();
+                    returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
                     returnCase.IRR_Type__c =  'Double Irregularity';
+                } else {
+                    returnCase.IRR_Withdrawal_Reason__c  = 'Default Prev';
                 }
             }
             if ( SidraLiteUtil.isCargoCASS(parentCase.account) ) {
@@ -275,6 +236,8 @@ global class WSSidraLite {
                     } else {
                         returnCase.IRR_Withdrawal_Reason__c  = '';
                         returnCase.IRR_Approval_Rejection__c = 'Approved';
+                        returnCase.Propose_Irregularity__c = DateTime.now();
+                        returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
                         returnCase.IRR_Type__c = 'Single Irregularity';
                     }
                 } else {
@@ -291,6 +254,8 @@ global class WSSidraLite {
                 returnCase.BSP_CASS__c = 'BSP';
                 if (SidraLiteUtil.isAccountActive(parentCase.account)) {
                     returnCase.IRR_Approval_Rejection__c = 'Approved';
+                    returnCase.Propose_Irregularity__c = DateTime.now();
+                    returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
                     returnCase.IRR_Type__c =  'Double Irregularity';
                     returnCase.IRR_Withdrawal_Reason__c = '';
                 } else {
@@ -310,6 +275,8 @@ global class WSSidraLite {
                 }
             }
         }
+        returnCase.Termination_date_manual_entry__c = getTerminationDateFromRelatedCase(parentCase.account);
+
         return returnCase;
     }
 
@@ -326,14 +293,43 @@ global class WSSidraLite {
         newCase.AccountId = parentCase.AccountId;
         newCase.ContactId = parentCase.ContactId;
         newCase.IRR_Approval_Rejection__c = 'Approved';
-        newCase.IRR_Type__c = 'Double Irregularity';
         newCase.Propose_Irregularity__c = DateTime.now();
+        newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
         newCase.SIDRA_Lite_Default_Date__c = Date.Today();
         newCase.Reason_for_Default__c = 'Suspension - FS Non Compliance';
-        newCase.BSP_CASS__c = SidraLiteUtil.isPassenger(parentCase.account)? 'BSP': 'CASS';
+        if (SidraLiteUtil.isPassenger(parentCase.account)) {
+            newCase.BSP_CASS__c = 'BSP';
+            newCase.IRR_Type__c = 'Double Irregularity';
+        } else {
+            newCase.BSP_CASS__c = 'CASS';
+            newCase.IRR_Type__c = 'Single Irregularity';
+        }
+        newCase.Termination_date_manual_entry__c = getTerminationDateFromRelatedCase(parentCase.account);
         return newCase;
     }
 
+    /**
+        get Termination date from a related case if conditions are met
+    **/
+    public static Date getTerminationDateFromRelatedCase(Account account) {
+        try {
+            if ( SidraLiteUtil.isAccountActive(account) )  return null;
+
+            Case relatedCase = [
+                Select Termination_date__c
+                from Case
+                where RecordtypeId in (:SidraLiteManager.RECORDTYPE_SIDRA_LITE,:SidraLiteManager.RECORDTYPE_SIDRA)
+                and AccountId = :account.Id
+                and DEF_Approval_Rejection__c = 'Approved'
+                and Update_AIMS_DEF__c != null
+                order by Update_AIMS_DEF__c desc
+                limit 1];
+            return relatedCase.Termination_date__c;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
         This mehtod throws an exception contaning a mesage to use in a confirm()
@@ -518,27 +514,24 @@ global class WSSidraLite {
     public static void insertComments(list<Case> listCases) {
         try {
             map<Id,Case> mapAccountIdChildCase = new map<Id,Case>();
-            //map<Id,Case> mapAccountIdParentCase = new map<Id,Case>();
             list<Id> listAccountId = new list<Id>();
             for (Case cse: listCases) {
                 listAccountId.add(cse.AccountId);
                 if (cse.RecordtypeId == SidraLiteManager.RECORDTYPE_SIDRA_LITE) {
                     mapAccountIdChildCase.put(cse.AccountId, cse);
                 }
-                //if (cse.RecordtypeId == SidraLiteManager.RECORDTYPE_IFAP) {
-                //    mapAccountIdParentCase.put(cse.AccountId, cse);
-                //}
             }
 
             // get all related accounts with some other SIDRA case DEF approved
             list<Account> listAccount = [
                 Select Id, Status__c, Accumulated_Irregularities__c,
-                    (Select id, caseNumber, Comments__c
+                    (Select id, caseNumber, Comments__c, Termination_date__c
                     from Cases
                     where RecordtypeId in (:SidraLiteManager.RECORDTYPE_SIDRA_LITE,:SidraLiteManager.RECORDTYPE_SIDRA)
                     and DEF_Approval_Rejection__c = 'Approved'
+                    and Update_AIMS_DEF__c != null
                     and Id not in :listCases
-                    order by CreatedDate desc
+                    order by Update_AIMS_DEF__c desc
                     limit 1)
                 From Account
                 Where id in :listAccountId];
@@ -573,17 +566,37 @@ global class WSSidraLite {
                 ));
             } else {
                 Case relatedCase = account.Cases.get(0);
+
                 listNewComments.add(new CaseComment(
                     ParentId = sidraLiteCase.Id,
                     CommentBody = 'Agent is already in default, please update Sidra/Sidra Lite ' + relatedCase.caseNumber + ' with the new reinstatement requirements'
                 ));
                 listNewComments.add(new CaseComment(
                     ParentId = relatedCase.Id,
-                    CommentBody = 'A new SIDRA lite case ' + sidraLiteCase.caseNumber + ' has been created please update the agent with the aditional reinstatement requirements'
+                    CommentBody = 'A new SIDRA lite case for ' + sidraLiteCase.SIDRA_lite_Reason__c + ' number ' + sidraLiteCase.caseNumber + ' has been created please update the agent with the aditional reinstatement requirements'
                 ));
+
+                // patch to set the terminated manual entry in new case, taking it from the termination date in realted Case
+                updateTerminationDate(sidraLiteCase.id, relatedCase.Termination_date__c);
             }
         }
         return listNewComments;
     }
+
+    /**
+        Update termination date manual entry in input case
+    **/
+    @future
+    public static void updateTerminationDate(Id caseId, Date newTerminationDate) {
+        try {
+            Case cse = [Select CaseNumber, Termination_date_manual_entry__c from Case where id = :caseId];
+            cse.Termination_date_manual_entry__c = newTerminationDate;
+            update cse;
+
+        } catch (Exception e) {
+            System.debug('tried to change Termination date Manual Entry in case ' + caseId + ': ' + e.getMessage());
+        }
+    }
+
 
 }

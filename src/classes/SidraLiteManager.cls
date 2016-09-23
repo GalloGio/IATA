@@ -26,7 +26,7 @@ public with sharing class SidraLiteManager {
         if (listSidraLite.isEmpty()) return;
 
         updateUserFieldsOnInsert(listSidraLite);
-        list<Case> listUpdateParent = insertSidraLiteWithIFAPParent(listSidraLite);
+        list<Case> listUpdateParent = processInsertSidraLite(listSidraLite);
 
         // if there are parents to update then update them now
         if (!listUpdateParent.isEmpty()) {
@@ -113,9 +113,8 @@ public with sharing class SidraLiteManager {
         process input SIDRA lite cases when insert
         it updates some fields in SIDRA liste cases and some other fields in parent Cases
         return a list of parent cases ready to update
-        but throw an error if exist another opened case in parent IFAP case
     **/
-    public static list<Case> insertSidraLiteWithIFAPParent(list<Case> listCases) {
+    public static list<Case> processInsertSidraLite(list<Case> listCases) {
         list<Id> listParentId = new list<Id>();
         list<Id> listAccountId = new list<Id>();
         for (Case cse: listCases) {
@@ -125,7 +124,8 @@ public with sharing class SidraLiteManager {
         // get parent IFAP cases with their Sidra lite children
         map<Id,Case> mapParents = new map<Id,Case>(
             [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c, FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c, secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c, BSPCountry__c,
-            (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE and Status != 'Closed' )
+            BusinessHours.MondayStartTime, BusinessHours.TuesdayStartTime, BusinessHours.WednesdayStartTime, BusinessHours.ThursdayStartTime, BusinessHours.FridayStartTime, BusinessHours.SaturdayStartTime, BusinessHours.SundayStartTime,
+            (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
             from Case
             where RecordtypeId in (:RECORDTYPE_IFAP,:RECORDTYPE_SMAP,:RECORDTYPE_SAAM,:RECORDTYPE_OSCAR)
             and id in :listParentId]);
@@ -332,8 +332,13 @@ public with sharing class SidraLiteManager {
         cse.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
         cse.Reason_for_Default__c = 'Disapproval of Change';
-        cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
         cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
+        if (parentCase.BusinessHours == null) {
+            cse.NOT_Date__c = DateTime.now().addDays(5).date();
+        } else {
+            cse.NOT_Date__c = BusinessDays.addWorkingDays(DateTime.now(),5,parentCase.BusinessHours).date();
+        }
+        cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(cse.NOT_Date__c.addMonths(1));
         cse.BSP_CASS__c = SidraLiteUtil.isPassenger(account)? 'BSP': 'CASS';
     }
 
@@ -355,6 +360,7 @@ public with sharing class SidraLiteManager {
         cse.IRR_Approval_Rejection__c = 'Approved';
         cse.IRR_Type__c = 'Double Irregularity';
         cse.Propose_Irregularity__c = DateTime.now();
+        cse.IRR_Approval_Rejection_Date__c = DateTime.now();
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
         cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
         cse.BSP_CASS__c = SidraLiteUtil.isPassenger(account)? 'BSP': 'CASS';
