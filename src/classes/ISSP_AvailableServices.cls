@@ -16,6 +16,10 @@ public with sharing class ISSP_AvailableServices{
     
     public Boolean hasPremiumTD {get; set;}
 
+    public String TOCdocumentId {get; set;}
+    public list<String> errorMessage {get; set;}
+    public boolean accept {get; set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {
@@ -59,6 +63,10 @@ public with sharing class ISSP_AvailableServices{
             initServiceListViewMap();
             String currentUserProfileId = UserInfo.getProfileId();
             List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
+            errorMessage = new list<string>();
+            accept = false;
+            //if(!Test.isRunningTest())
+            //    TOCdocumentId = [Select Id From Document Where DeveloperName='Kavi_Terms_and_Conditions' limit 1].Id;
             if (!profileList.isEmpty()){
                 String currentUserProfileName = profileList[0].Name;
                 system.debug('currentUserProfileName: ' + currentUserProfileName);
@@ -439,10 +447,22 @@ public with sharing class ISSP_AvailableServices{
         system.debug('XXX Serv : '+Serv);
         return null ;
     }
+
+    public Void submitRequest(){
+        errorMessage.clear();
+
+        if(!accept){
+            errorMessage.add('Please accept the Terms & Conditions');
+        }
+       
+    }
    
     @RemoteAction
-    public static string newAppsRequest (string applicationId, string contactId){
-        insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = 'Access Requested');
+    public static string newAppsRequest (string applicationId, string applicationName, string contactId){
+        String appRight = 'Access Requested';
+        if(applicationName=='Standards Setting Workspace')
+            appRight = 'Access Granted';
+        insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
         return 'ok';
     }
    
