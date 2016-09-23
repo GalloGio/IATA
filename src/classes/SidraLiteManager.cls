@@ -123,8 +123,7 @@ public with sharing class SidraLiteManager {
         }
         // get parent IFAP cases with their Sidra lite children
         map<Id,Case> mapParents = new map<Id,Case>(
-            [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c, FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c, secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c, BSPCountry__c,
-            BusinessHours.MondayStartTime, BusinessHours.TuesdayStartTime, BusinessHours.WednesdayStartTime, BusinessHours.ThursdayStartTime, BusinessHours.FridayStartTime, BusinessHours.SaturdayStartTime, BusinessHours.SundayStartTime,
+            [Select Id, RecordtypeId, Deadline_Date__c, FA_Letter_Sent__c, FA_Second_Deadline_Date__c, FirstFAnonComplianceDate__c, FirstFSnonComplianceDate__c, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, Status, FS_Letter_Sent__c, secondFAnonComplianceDate__c, secondFSnonComplianceDate__c, FA_Third_Deadline_Date__c, FS_Third_Deadline_Date__c, Third_FA_non_Compliance_Date__c, Region__c, BSPCountry__c, BusinessHoursId,
             (Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
             from Case
             where RecordtypeId in (:RECORDTYPE_IFAP,:RECORDTYPE_SMAP,:RECORDTYPE_SAAM,:RECORDTYPE_OSCAR)
@@ -242,7 +241,7 @@ public with sharing class SidraLiteManager {
         if ( parentCase.Bank_Guarantee_deadline__c == null ) {
             throw new SidraLiteException('You cannot create a SIDRA Lite without Financial Security Deadline');
         }
-        if ( parentCase.Bank_Guarantee_deadline__c > Date.today() ) {
+        if ( parentCase.Bank_Guarantee_deadline__c >= Date.today() ) {
             throw new SidraLiteException('You cannot create a SIDRA Lite for future Financial Security Deadline');
         }
         if (!SidraLiteUtil.isAccountActive(parentCase.account)) {
@@ -333,10 +332,10 @@ public with sharing class SidraLiteManager {
         cse.SIDRA_Lite_Default_Date__c = Date.Today();
         cse.Reason_for_Default__c = 'Disapproval of Change';
         cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
-        if (parentCase.BusinessHours == null) {
+        if (parentCase.BusinessHoursId == null) {
             cse.NOT_Date__c = DateTime.now().addDays(5).date();
         } else {
-            cse.NOT_Date__c = BusinessDays.addWorkingDays(DateTime.now(),5,parentCase.BusinessHours).date();
+            cse.NOT_Date__c = BusinessDays.addNBusinessDays(DateTime.now(),5,parentCase.BusinessHoursId).date();
         }
         cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(cse.NOT_Date__c.addMonths(1));
         cse.BSP_CASS__c = SidraLiteUtil.isPassenger(account)? 'BSP': 'CASS';

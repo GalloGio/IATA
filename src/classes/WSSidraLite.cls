@@ -598,5 +598,50 @@ global class WSSidraLite {
         }
     }
 
+/*
+    webservice static DateTime callCongaToAttachFile(Id caseId){
+        Id congaTemplate = '01Hw0000000cFjS';
+
+        PageReference pageref = new PageReference(SIDRAliteMassEmailBatch.CONGA_URL);
+        pageref.getParameters().put('sessionId', UserInfo.getSessionId());
+        pageref.getParameters().put('serverUrl', SIDRAliteMassEmailBatch.SOAP_URL_290);
+        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('TemplateId', congaTemplate);
+        pageref.getParameters().put('DefaultPDF', '1');
+        //pageref.getParameters().put('OFN', 'file name');
+
+        // create attachment
+        pageref.getParameters().put('ds7', '1');
+		pageref.getParameters().put('sc0', '1');
+		pageref.getParameters().put('sc1', 'Attachments');
+
+        System.debug('**URL ' + pageref.getURL() );
+        Datetime startTime = DateTime.now();
+        // make a http call to Generated URL
+        try {
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(pageref.getURL());
+            req.setMethod('GET');
+            new Http().send(req);
+
+        } catch (Exception e) {
+            //Conga Composer always returns a time out error
+            // the only way we can get a result is checking email related list in current case
+            System.debug('**sendCongaMail ' + e.getMessage());
+        }
+        return DateTime.now();
+    }
+
+    webservice static String getAttachment(Id caseId, DateTime startTime){
+        try {
+            Attachment att = [Select Id From Attachment
+                Where ParentId = :caseId
+                And CreatedDate > :startTime
+                Order By CreatedDate desc limit 1];
+            return att.Id;
+        } catch (Exception e) {
+            return '';
+        }
+    }*/
 
 }
