@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -105,11 +101,26 @@
         <label>Enhanced Reporting Product Rate Plan</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Enhanced Reporting Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups1</relationshipName>
+        <relationshipName>EBC_Addon_Enhanced_Reporting_Setups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Extra_Storage_Capacity__c</fullName>
+        <defaultValue>20</defaultValue>
+        <description>The amount of storage given as part of enabling the Extra Storage Add-On.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount of storage given as part of enabling the Extra Storage Add-On.</inlineHelpText>
+        <label>Extra Storage Capacity</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Maximum_File_Size_Upload__c</fullName>
@@ -142,6 +153,25 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Member_Pay_As_You_Go_Plan__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Pay As You Go Rate Plan for member. 
+This is used for the member subscriber who do not choose the Prepaid Plan or has subscription expired. 
+There is no recurring charge for this.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Pay As You Go Rate Plan for member. 
+This is used for the member subscriber who do not choose the Prepaid Plan or has subscription expired. 
+There is no recurring charge for this.</inlineHelpText>
+        <label>Member Pay-As-You-Go Plan</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Member Pay-As-You-Go Plan)</relationshipLabel>
+        <relationshipName>EBC_Plan_Member_PAYG_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Member_Prepaid_Product_Rate_Plan_01__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EBC Prepaid Rate Plan for member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for member</description>
@@ -150,7 +180,7 @@
         <label>Member Prepaid Product Rate Plan 1</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Member Enterprise Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups4</relationshipName>
+        <relationshipName>EBC_Plan_Member_Prepaid_01_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -165,7 +195,7 @@
         <label>Member Prepaid Product Rate Plan 2</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Member Premium Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups5</relationshipName>
+        <relationshipName>EBC_Plan_Member_Prepaid_02_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -180,7 +210,7 @@
         <label>Member Prepaid Product Rate Plan 3</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Member Pro Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups3</relationshipName>
+        <relationshipName>EBC_Plan_Member_Prepaid_03_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -195,7 +225,7 @@
         <label>Member Prepaid Product Rate Plan 4</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Member Starter Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups2</relationshipName>
+        <relationshipName>EBC_Plan_Member_Prepaid_04_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -217,6 +247,25 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Non_Member_Pay_As_You_Go_Plan__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>EBC Pay As You Go Rate Plan for non-member.
+This is used for the non-member subscriber who do not choose the Prepaid Plan or has subscription expired.
+There is no recurring charge for this.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC Pay As You Go Rate Plan for non-member.
+This is used for the non-member subscriber who do not choose the Prepaid Plan or has subscription expired.
+There is no recurring charge for this.</inlineHelpText>
+        <label>Non-Member Pay-As-You-Go Plan</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Non-Member Pay-As-You-Go Plan)</relationshipLabel>
+        <relationshipName>EBC_Plan_Non_Member_PAYG_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Non_Member_Prepaid_Product_Rate_Plan_01__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EBC Prepaid Rate Plan for non member, Member Prepaid Product Rate Plan 1 is the least sophisticated option available for non member</description>
@@ -225,7 +274,7 @@
         <label>Non-Member Prepaid Product_Rate Plan 1</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Non-Member Enterprise Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups8</relationshipName>
+        <relationshipName>EBC_Plan_Non_Member_Prepaid_01_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -240,7 +289,7 @@
         <label>Non-Member Prepaid Product_Rate Plan 2</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Non-Member Premium Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups9</relationshipName>
+        <relationshipName>EBC_Plan_Non_Member_Prepaid_02_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -255,7 +304,7 @@
         <label>Non-Member Prepaid Product_Rate Plan 3</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Non-Member Pro Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups7</relationshipName>
+        <relationshipName>EBC_Plan_Non_Member_Prepaid_03_Setups</relationshipName>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -270,8 +319,39 @@
         <label>Non-Member Prepaid Product Rate Plan 4</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups (Non-Member Starter Product Rate Plan)</relationshipLabel>
-        <relationshipName>EBC_Setups6</relationshipName>
+        <relationshipName>EBC_Plan_Non_Member_Prepaid_04_Setups</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Pay_Exact_Amount_Member__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>To be used when the eBroadcast member user pays the exact amount for a campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>To be used when the eBroadcast member user pays the exact amount for a campaign.</inlineHelpText>
+        <label>Pay Exact Amount Member</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Pay Exact Amount PAYG Member)</relationshipLabel>
+        <relationshipName>EBC_PEA_Member_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Pay_Exact_Amount_Non_Member__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>To be used when the eBroadcast non-member user pay the exact amount for a campaign.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>To be used when the eBroadcast non-member user pay the exact amount for a campaign.</inlineHelpText>
+        <label>Pay Exact Amount Non Member</label>
+        <referenceTo>zqu__ProductRatePlan__c</referenceTo>
+        <relationshipLabel>EBC Setups (Pay Exact Amount PAYG Non Member)</relationshipLabel>
+        <relationshipName>EBC_PAE_Non_Member_Setups</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -322,7 +402,7 @@ This is defined in Product Category.</inlineHelpText>
         <label>Storage Product Rate Plan</label>
         <referenceTo>zqu__ProductRatePlan__c</referenceTo>
         <relationshipLabel>EBC Setups</relationshipLabel>
-        <relationshipName>EBC_Setups</relationshipName>
+        <relationshipName>EBC_Addon_Storage_Setups</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
