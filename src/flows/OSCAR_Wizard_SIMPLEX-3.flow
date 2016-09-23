@@ -3,8 +3,8 @@
     <actionCalls>
         <name>AMSFillAccreditationLegalStatus</name>
         <label>AMSFillAccreditationLegalStatus</label>
-        <locationX>402</locationX>
-        <locationY>650</locationY>
+        <locationX>442</locationX>
+        <locationY>1044</locationY>
         <actionName>AMS_FillAMSAccreditationLegalStatus</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -24,8 +24,8 @@
     <actionCalls>
         <name>FillAMSAccreditationGDS</name>
         <label>FillAMSAccreditationGDS</label>
-        <locationX>264</locationX>
-        <locationY>652</locationY>
+        <locationX>304</locationX>
+        <locationY>1046</locationY>
         <actionName>AMS_FillAMSAccreditationGDS</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -43,10 +43,26 @@
         </outputParameters>
     </actionCalls>
     <assignments>
+        <name>AccountCategoryValue</name>
+        <label>AccountCategory</label>
+        <locationX>355</locationX>
+        <locationY>317</locationY>
+        <assignmentItems>
+            <assignToReference>AccountCategory</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountToProcess.Category__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsValidProcessAccountDecision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignContactNotFoundMessage</name>
         <label>AssignContactNotFoundMessage</label>
-        <locationX>635</locationX>
-        <locationY>151</locationY>
+        <locationX>675</locationX>
+        <locationY>545</locationY>
         <assignmentItems>
             <assignToReference>errormessagecontactlookup</assignToReference>
             <operator>Assign</operator>
@@ -123,6 +139,14 @@
         </value>
     </choices>
     <choices>
+        <name>NewProcessOscarCorrection</name>
+        <choiceText>Oscar Correction</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CORRECTION.1.0</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>NewProcessSA</name>
         <choiceText>New SA agency accreditation</choiceText>
         <dataType>String</dataType>
@@ -138,11 +162,27 @@
             <stringValue>NEW.TIDS.1.0</stringValue>
         </value>
     </choices>
+    <choices>
+        <name>ProcessWithBSPLink</name>
+        <choiceText>Process with BSPLink</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ProcessWithNOBSPLink</name>
+        <choiceText>Process without BSPLink</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>CheckIfEmailIsFound</name>
         <label>CheckIfEmailIsFound</label>
-        <locationX>855</locationX>
-        <locationY>51</locationY>
+        <locationX>895</locationX>
+        <locationY>445</locationY>
         <defaultConnector>
             <targetReference>ContactChooserScreen</targetReference>
         </defaultConnector>
@@ -164,10 +204,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>DecisionHasBSPLinkProcess</name>
+        <label>DecisionHasBSPLinkProcess</label>
+        <locationX>184</locationX>
+        <locationY>55</locationY>
+        <defaultConnector>
+            <targetReference>AccountToProcessLookup</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>IsBSPLinkProcess</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NewProcessGSA</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NewProcessAHA</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>BSPlinkServicesScreen</targetReference>
+            </connector>
+            <label>IsBSPLinkProcess</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>DoesHierarchyExists</name>
         <label>DoesHierarchyExists</label>
-        <locationX>1168</locationX>
-        <locationY>363</locationY>
+        <locationX>1208</locationX>
+        <locationY>757</locationY>
         <defaultConnector>
             <targetReference>AMS_Agencies_relationship_Creator</targetReference>
         </defaultConnector>
@@ -191,8 +263,8 @@
     <decisions>
         <name>DoesHierarchyExists_0</name>
         <label>DoesHierarchyExists</label>
-        <locationX>1166</locationX>
-        <locationY>467</locationY>
+        <locationX>1206</locationX>
+        <locationY>861</locationY>
         <defaultConnector>
             <targetReference>AMS_Agencies_relationship_Creator</targetReference>
         </defaultConnector>
@@ -216,8 +288,8 @@
     <decisions>
         <name>IsBRorSAandHasParentId</name>
         <label>IsBRorSAandHasParentId</label>
-        <locationX>234</locationX>
-        <locationY>178</locationY>
+        <locationX>362</locationX>
+        <locationY>582</locationY>
         <defaultConnector>
             <targetReference>ContactChooser</targetReference>
         </defaultConnector>
@@ -255,8 +327,8 @@
     <decisions>
         <name>IsHierarchyNeeded</name>
         <label>IsHierarchyNeeded</label>
-        <locationX>698</locationX>
-        <locationY>370</locationY>
+        <locationX>738</locationX>
+        <locationY>764</locationY>
         <defaultConnector>
             <targetReference>OscarRecordTypeLookup</targetReference>
         </defaultConnector>
@@ -282,6 +354,81 @@
                 <targetReference>Parent_Account_Hierarchy_Lookup</targetReference>
             </connector>
             <label>IsABRorBRAbroad</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsOscarCorrection</name>
+        <label>IsOscarCorrection</label>
+        <locationX>364</locationX>
+        <locationY>435</locationY>
+        <defaultConnector>
+            <targetReference>IsBRorSAandHasParentId</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>IsCorrectionProcess</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NewProcessOscarCorrection</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>OscarRecordTypeLookup</targetReference>
+            </connector>
+            <label>IsCorrectionProcess</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsOscarCorrection_0</name>
+        <label>IsOscarCorrection</label>
+        <locationX>900</locationX>
+        <locationY>1040</locationY>
+        <defaultConnector>
+            <targetReference>AMSOnlineAccreditationContactRecordTypeLookup</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>IsCorrectionProcess_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NewProcessOscarCorrection</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AccountRoleOwnerLookup</targetReference>
+            </connector>
+            <label>IsCorrectionProcess</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsValidProcessAccountDecision</name>
+        <label>IsValidProcessAccountDecision</label>
+        <locationX>13</locationX>
+        <locationY>381</locationY>
+        <defaultConnector>
+            <targetReference>IsOscarCorrection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>IsNotValidProcess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsValidProcessFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NOK</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ErrorMessageNoValidProcessScreen</targetReference>
+            </connector>
+            <label>IsNotValidProcess</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
@@ -319,14 +466,34 @@ IF({!Type_of_OSCAR_process} = {!NewProcessBR}  , {!AccountToProcess.Id},
 IF({!Type_of_OSCAR_process} = {!NewProcessBRAbroad}  , {!AccountToProcess.Id} , {!AccountToProcess.Id})))</expression>
     </formulas>
     <formulas>
+        <name>AccountRoleFirstName</name>
+        <dataType>String</dataType>
+        <expression>IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.FirstName} ,IF (AMSAccountRoleToProcess.Person__c &lt;&gt; null , {!AMSAccountRoleToProcess.Person__r.First_Name__c} , &apos;&apos;))</expression>
+    </formulas>
+    <formulas>
+        <name>AccountRoleLastName</name>
+        <dataType>String</dataType>
+        <expression>IF({!AMSAccountRoleToProcess.Contact__c} &lt;&gt; null , {!AMSAccountRoleToProcess.Contact__r.LastName},IF (AMSAccountRoleToProcess.Person__c &lt;&gt; null , IF({!AMSAccountRoleToProcess.Person__r.Lastname__c} = null , &apos;_&apos; , {!AMSAccountRoleToProcess.Person__r.Lastname__c}),&apos;_&apos;))</expression>
+    </formulas>
+    <formulas>
         <name>AccreditationContactNameFormula</name>
         <dataType>String</dataType>
         <expression>{!ContactToProcess.FirstName} &amp; &quot; &quot; &amp; {!ContactToProcess.LastName}</expression>
     </formulas>
     <formulas>
+        <name>AccreditationContactRT</name>
+        <dataType>String</dataType>
+        <expression>If({!AMSAccountRoleToProcess.Owner_Account__c} = null , {!Current_OwnerAccreditationContRT} ,{!Current_Company_OwnerAccreditationContRT})</expression>
+    </formulas>
+    <formulas>
         <name>AreThePremissesInAirportFormula</name>
         <dataType>String</dataType>
         <expression>IF(AccountToProcess.In_a_Airport__c = true,&apos;Yes&apos;,&apos;No&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>CaseOriginFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Type_of_OSCAR_process} = {!NewProcessOscarCorrection} , &apos;Internal Case&apos; , &apos;&apos; )</expression>
     </formulas>
     <formulas>
         <name>CaseReason</name>
@@ -337,10 +504,26 @@ IF({!Type_of_OSCAR_process} = {!NewProcessSA}  , &apos;New SA&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessAHA}  , &apos;New AHA&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessGSSA}  , &apos;New GSSA&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessTIDS} &amp;&amp; {!FinalLocationType} = &apos;HO&apos;, &apos;New TIDS&apos;,
-IF({!Type_of_OSCAR_process} = {!NewProcessTIDS} &amp;&amp; {!FinalLocationType} = &apos;BR&apos; , &apos;“New TIDS branch&apos;,
+IF({!Type_of_OSCAR_process} = {!NewProcessTIDS} &amp;&amp; {!FinalLocationType} = &apos;BR&apos; , &apos;New TIDS branch&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessGSA}  , &apos;New GSA&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessMSO}  , &apos;New MSO&apos;,
-IF({!Type_of_OSCAR_process} = {!NewProcessBRAbroad}  , &apos;New BR Abroad&apos; , &apos;Agency Changes&apos;))))))))))</expression>
+IF({!Type_of_OSCAR_process} = {!NewProcessOscarCorrection}  , &apos;Corrections&apos;,
+IF({!Type_of_OSCAR_process} = {!NewProcessBRAbroad}  , &apos;New BR Abroad&apos; , &apos;Agency Changes&apos;)))))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>ContactIdToUse</name>
+        <dataType>String</dataType>
+        <expression>IF({!DoesContactExists} = null , null , {!ContactToProcess.Id} )</expression>
+    </formulas>
+    <formulas>
+        <name>IsValidProcessFormula</name>
+        <dataType>String</dataType>
+        <expression>IF( ({!Type_of_OSCAR_process} = {!Agency_Changes} &amp;&amp;  {!AccountCategory}  = &apos;TIDS Agent&apos; ) , &apos;NOK&apos; , 
+IF( ({!Type_of_OSCAR_process} = {!Agency_Changes} &amp;&amp;  {!AccountCategory}  = &apos;MSO Member Sales Office&apos; ) , &apos;NOK&apos; , 
+IF( ({!Type_of_OSCAR_process} = {!Agency_Changes} &amp;&amp;  {!AccountCategory}  = &apos;GSA General Sales Agent&apos; ) , &apos;NOK&apos; , 
+IF( ({!Type_of_OSCAR_process} = {!Agency_Changes} &amp;&amp;  {!AccountCategory}  = &apos;GSSA Cargo&apos; ), &apos;NOK&apos; , 
+IF( ({!Type_of_OSCAR_process} = {!Agency_Changes} &amp;&amp;  {!AccountCategory}  = &apos;Handling Agent&apos; ), &apos;NOK&apos; , &apos;OK&apos;
+)))))</expression>
     </formulas>
     <formulas>
         <name>OscarCaseSubjectFormula</name>
@@ -353,17 +536,28 @@ IF({!Type_of_OSCAR_process} = {!NewProcessBRAbroad}  , &apos;New BR Abroad&apos;
         <expression>IF({!Type_of_OSCAR_process} = {!NewProcessHO}  , &apos;NEW.HO.1.0&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessBR}  , &apos;NEW.BR&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessSA}  , &apos;NEW.SA.1.0&apos;,
-IF({!Type_of_OSCAR_process} = {!NewProcessAHA}  , &apos;New AHA&apos;,
-IF({!Type_of_OSCAR_process} = {!NewProcessGSSA}  , &apos;New GSSA&apos;,
+IF(({!Type_of_OSCAR_process} = {!NewProcessAHA} &amp;&amp; {!BSPlinkServicesRb} = {!ProcessWithNOBSPLink}  ) , &apos;NEW.AHA.1.0&apos;,
+IF(({!Type_of_OSCAR_process} = {!NewProcessGSA} &amp;&amp; {!BSPlinkServicesRb} = {!ProcessWithNOBSPLink} ) , &apos;NEW.GSA.1.0&apos;,
+IF(({!Type_of_OSCAR_process} = {!NewProcessAHA} &amp;&amp; {!BSPlinkServicesRb} = {!ProcessWithBSPLink} ) , &apos;NEW.AHA.1.0.BSP&apos;,
+IF(({!Type_of_OSCAR_process} = {!NewProcessGSA} &amp;&amp; {!BSPlinkServicesRb} = {!ProcessWithBSPLink}) , &apos;NEW.GSA.1.0.BSP&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessTIDS}  , &apos;NEW.TIDS.1.0&apos;,
-IF({!Type_of_OSCAR_process} = {!NewProcessGSA}  , &apos;NEW.GSA.1.0&apos;,
+IF({!Type_of_OSCAR_process} = {!NewProcessGSSA}  , &apos;NEW.GSSA.1.0&apos;,
 IF({!Type_of_OSCAR_process} = {!NewProcessMSO}  , &apos;NEW.MSO.1.0&apos;,
-IF({!Type_of_OSCAR_process} = {!NewProcessBRAbroad}  , &apos;NEW.BR.ABROAD&apos; , &apos;MAJOR.CHANGES&apos;)))))))))</expression>
+IF({!Type_of_OSCAR_process} = {!NewProcessOscarCorrection}  , &apos;CORRECTION.1.0&apos;,
+IF({!Type_of_OSCAR_process} = {!NewProcessBRAbroad}  , &apos;NEW.BR.ABROAD&apos; , &apos;MAJOR.CHANGES&apos;))))))))))))</expression>
     </formulas>
     <formulas>
         <name>OscarRecordTypeFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!Type_of_OSCAR_process} = {!Agency_Changes}  , &apos;CHANGE&apos;, &apos;NEW&apos;)</expression>
+        <expression>IF({!Type_of_OSCAR_process} = {!Agency_Changes}  , &apos;CHANGE&apos;, 
+IF({!Type_of_OSCAR_process} = {!NewProcessOscarCorrection}  , &apos;CORRECTION&apos;,
+&apos;NEW&apos;))</expression>
+    </formulas>
+    <formulas>
+        <name>PercentageAdjustmentFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!AMSAccountRoleToProcess.Percentage__c} * 10000</expression>
+        <scale>2</scale>
     </formulas>
     <formulas>
         <name>TypeOfAccreditationRT</name>
@@ -377,13 +571,29 @@ IF(({!Type_of_OSCAR_process} = {!Agency_Changes} ) , &apos;Other_Changes&apos;,
 IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {!NewProcessBRAbroad} ) , &apos;Cargo_Agent_Branch&apos;,&apos;GeneralOnlineAccreditation&apos;
 )))))))</expression>
     </formulas>
+    <interviewLabel>OSCAR Wizard (SIMPLEX) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>OSCAR Wizard (SIMPLEX)</label>
+    <loops>
+        <name>CreateAccreditationContactsLoop</name>
+        <label>CreateAccreditationContactsLoop</label>
+        <locationX>836</locationX>
+        <locationY>1486</locationY>
+        <assignNextValueToReference>AMSAccountRoleToProcess</assignNextValueToReference>
+        <collectionReference>AccountRoles</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AMSOnlineAccreditationContactCreationLoop</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>AMSOSCARAccreditationObjectUpdate</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processType>Flow</processType>
     <recordCreates>
         <name>AMS_Agencies_relationship_Creator</name>
         <label>AMS Agencies relationship Creator</label>
-        <locationX>852</locationX>
-        <locationY>553</locationY>
+        <locationX>892</locationX>
+        <locationY>947</locationY>
         <assignRecordIdToReference>HierarchyRelationshipId</assignRecordIdToReference>
         <connector>
             <targetReference>OscarRecordTypeLookup</targetReference>
@@ -411,8 +621,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordCreates>
         <name>AMS_Hierarchy_Creator</name>
         <label>AMS Hierarchy Creator</label>
-        <locationX>1024</locationX>
-        <locationY>555</locationY>
+        <locationX>1064</locationX>
+        <locationY>949</locationY>
         <assignRecordIdToReference>HierarchyId</assignRecordIdToReference>
         <connector>
             <targetReference>AMS_Agencies_relationship_Creator</targetReference>
@@ -428,8 +638,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordCreates>
         <name>AMSOnlineAccreditationContactCreation</name>
         <label>AMSOnlineAccreditationContactCreation</label>
-        <locationX>1027</locationX>
-        <locationY>647</locationY>
+        <locationX>1398</locationX>
+        <locationY>1038</locationY>
         <assignRecordIdToReference>AccreditationContactId</assignRecordIdToReference>
         <connector>
             <targetReference>PortalAdministratorAMSOnlineAccreditationUpdate</targetReference>
@@ -581,13 +791,72 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
         <object>AMS_Accreditation_Contact__c</object>
     </recordCreates>
     <recordCreates>
+        <name>AMSOnlineAccreditationContactCreationLoop</name>
+        <label>AMSOnlineAccreditationContactCreationLoop</label>
+        <locationX>834</locationX>
+        <locationY>1682</locationY>
+        <assignRecordIdToReference>AccreditationContactId</assignRecordIdToReference>
+        <connector>
+            <targetReference>CreateAccreditationContactsLoop</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AMS_Pax_Accreditation_Form__c</field>
+            <value>
+                <elementReference>AMSOnlineAccreditationId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Company__c</field>
+            <value>
+                <elementReference>AMSAccountRoleToProcess.Owner_Account__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contact_Id__c</field>
+            <value>
+                <elementReference>AMSAccountRoleToProcess.Contact__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Financial_interest__c</field>
+            <value>
+                <elementReference>PercentageAdjustmentFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>First_name__c</field>
+            <value>
+                <elementReference>AccountRoleFirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Last_name__c</field>
+            <value>
+                <elementReference>AccountRoleLastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Person_AMS__c</field>
+            <value>
+                <elementReference>AMSAccountRoleToProcess.Person__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>AccreditationContactRT</elementReference>
+            </value>
+        </inputAssignments>
+        <object>AMS_Accreditation_Contact__c</object>
+    </recordCreates>
+    <recordCreates>
         <name>AMSOnlineAccreditationCreation</name>
         <label>AMSOnlineAccreditationCreation</label>
-        <locationX>692</locationX>
-        <locationY>649</locationY>
+        <locationX>732</locationX>
+        <locationY>1043</locationY>
         <assignRecordIdToReference>AMSOnlineAccreditationId</assignRecordIdToReference>
         <connector>
-            <targetReference>AMSOnlineAccreditationContactRecordTypeLookup</targetReference>
+            <targetReference>IsOscarCorrection_0</targetReference>
         </connector>
         <inputAssignments>
             <field>Abbreviated_Address__c</field>
@@ -828,8 +1097,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordCreates>
         <name>OscarCaseCreation</name>
         <label>OscarCaseCreation</label>
-        <locationX>264</locationX>
-        <locationY>556</locationY>
+        <locationX>304</locationX>
+        <locationY>950</locationY>
         <assignRecordIdToReference>OscarCaseId</assignRecordIdToReference>
         <connector>
             <targetReference>FillAMSAccreditationGDS</targetReference>
@@ -844,6 +1113,12 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
             <field>Account_Concerned__c</field>
             <value>
                 <elementReference>accountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BSPCountry__c</field>
+            <value>
+                <elementReference>AccountToProcess.BillingCountry</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -865,6 +1140,12 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <elementReference>CaseOriginFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Reason1__c</field>
             <value>
                 <elementReference>CaseReason</elementReference>
@@ -874,6 +1155,12 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
             <field>RecordTypeId</field>
             <value>
                 <elementReference>CaseTypeOscarComunication</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Region__c</field>
+            <value>
+                <elementReference>AccountToProcess.Region_formula__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -887,8 +1174,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordCreates>
         <name>OSCARCreation</name>
         <label>OSCARCreation</label>
-        <locationX>546</locationX>
-        <locationY>558</locationY>
+        <locationX>586</locationX>
+        <locationY>952</locationY>
         <assignRecordIdToReference>OscarId</assignRecordIdToReference>
         <connector>
             <targetReference>CaseRecordTypeOSCARLookup</targetReference>
@@ -920,13 +1207,85 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
         <object>AMS_OSCAR__c</object>
     </recordCreates>
     <recordLookups>
+        <name>AccountRoleOwnerLookup</name>
+        <label>AccountRoleOwnerLookup</label>
+        <locationX>836</locationX>
+        <locationY>1261</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AccountRoleOwnerLookup_0</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Ownership</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AMS_Account_Role__c</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>AccountRoleOwnerRT</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>AccountRoleOwnerLookup_0</name>
+        <label>Current_OwnerAccreditationContLookup</label>
+        <locationX>658</locationX>
+        <locationY>1263</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Current_OwnerAccreditationContLookup</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Current_Company_Owner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AMS_Accreditation_Contact__c</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Current_Company_OwnerAccreditationContRT</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>AccountToProcessLookup</name>
         <label>AccountToProcessLookup</label>
-        <locationX>232</locationX>
-        <locationY>52</locationY>
+        <locationX>356</locationX>
+        <locationY>221</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>IsBRorSAandHasParentId</targetReference>
+            <targetReference>AccountCategoryValue</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -979,12 +1338,14 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
         <queriedFields>Financial_Year_End__c</queriedFields>
         <queriedFields>ParentId</queriedFields>
         <queriedFields>Operation__c</queriedFields>
+        <queriedFields>Region__c</queriedFields>
+        <queriedFields>Region_formula__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>AccountToProcessLookup_0</name>
         <label>AccountToProcessLookup</label>
-        <locationX>541</locationX>
-        <locationY>750</locationY>
+        <locationX>581</locationX>
+        <locationY>1144</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AMSOnlineAccreditationCreation</targetReference>
@@ -1044,8 +1405,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>AMSOnlineAccreditationContactRecordTypeLookup</name>
         <label>AMSOnlineAccreditationContactRecordTypeLookup</label>
-        <locationX>852</locationX>
-        <locationY>649</locationY>
+        <locationX>1223</locationX>
+        <locationY>1040</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AMSOnlineAccreditationContactCreation</targetReference>
@@ -1080,8 +1441,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>AMSOnlineAccreditationRecordTypeLookup</name>
         <label>AMSOnlineAccreditationRecordTypeLookup</label>
-        <locationX>545</locationX>
-        <locationY>648</locationY>
+        <locationX>585</locationX>
+        <locationY>1042</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AccountToProcessLookup_0</targetReference>
@@ -1116,8 +1477,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>CaseRecordTypeOSCARLookup</name>
         <label>CaseRecordTypeOSCARLookup</label>
-        <locationX>407</locationX>
-        <locationY>555</locationY>
+        <locationX>447</locationX>
+        <locationY>949</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>OscarCaseCreation</targetReference>
@@ -1152,8 +1513,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>ContactLookup</name>
         <label>ContactLookup</label>
-        <locationX>700</locationX>
-        <locationY>279</locationY>
+        <locationX>740</locationX>
+        <locationY>675</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>IsHierarchyNeeded</targetReference>
@@ -1194,8 +1555,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>ContactRecordLookup</name>
         <label>ContactRecordLookup</label>
-        <locationX>629</locationX>
-        <locationY>50</locationY>
+        <locationX>682</locationX>
+        <locationY>453</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckIfEmailIsFound</targetReference>
@@ -1214,10 +1575,46 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <name>Current_OwnerAccreditationContLookup</name>
+        <label>Current_OwnerAccreditationContLookup</label>
+        <locationX>658</locationX>
+        <locationY>1374</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>SearchAccountRolesOwners</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Current_Owner</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AMS_Accreditation_Contact__c</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>Current_OwnerAccreditationContRT</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>OSCARCreatedLookup</name>
         <label>OSCARCreatedLookup</label>
-        <locationX>688</locationX>
-        <locationY>755</locationY>
+        <locationX>1059</locationX>
+        <locationY>1146</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ResultPage</targetReference>
@@ -1238,8 +1635,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>OscarRecordTypeLookup</name>
         <label>OscarRecordTypeLookup</label>
-        <locationX>696</locationX>
-        <locationY>557</locationY>
+        <locationX>736</locationX>
+        <locationY>951</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>OSCARCreation</targetReference>
@@ -1274,8 +1671,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>Parent_Account_Hierarchy_Lookup</name>
         <label>Parent Account Hierarchy Lookup</label>
-        <locationX>953</locationX>
-        <locationY>366</locationY>
+        <locationX>993</locationX>
+        <locationY>760</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>DoesHierarchyExists</targetReference>
@@ -1296,8 +1693,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordLookups>
         <name>Parent_Account_Hierarchy_Lookup_0</name>
         <label>Parent Account Hierarchy Lookup</label>
-        <locationX>1422</locationX>
-        <locationY>419</locationY>
+        <locationX>1462</locationX>
+        <locationY>813</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>DoesHierarchyExists_0</targetReference>
@@ -1315,11 +1712,51 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
             <field>Hierarchy__c</field>
         </outputAssignments>
     </recordLookups>
+    <recordLookups>
+        <name>SearchAccountRolesOwners</name>
+        <label>SearchAccountRolesOwners</label>
+        <locationX>835</locationX>
+        <locationY>1373</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateAccreditationContactsLoop</targetReference>
+        </connector>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountToProcess.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountRoleOwnerRT</elementReference>
+            </value>
+        </filters>
+        <object>AMS_Account_Role__c</object>
+        <outputReference>AccountRoles</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Contact__c</queriedFields>
+        <queriedFields>Owner_Account__c</queriedFields>
+        <queriedFields>Percentage__c</queriedFields>
+        <queriedFields>Person__c</queriedFields>
+        <queriedFields>Owner_Sequence__c</queriedFields>
+        <queriedFields>Owner_Name__c</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <name>AMSOSCARAccreditationObjectUpdate</name>
         <label>AMSOSCARAccreditationObjectUpdate</label>
-        <locationX>854</locationX>
-        <locationY>758</locationY>
+        <locationX>1225</locationX>
+        <locationY>1149</locationY>
         <connector>
             <targetReference>OSCARCreatedLookup</targetReference>
         </connector>
@@ -1341,8 +1778,8 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <recordUpdates>
         <name>PortalAdministratorAMSOnlineAccreditationUpdate</name>
         <label>PortalAdministratorAMSOnlineAccreditationUpdate</label>
-        <locationX>1027</locationX>
-        <locationY>756</locationY>
+        <locationX>1398</locationX>
+        <locationY>1147</locationY>
         <connector>
             <targetReference>AMSOSCARAccreditationObjectUpdate</targetReference>
         </connector>
@@ -1364,10 +1801,11 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <screens>
         <name>AccountBrandSAWithoutParent</name>
         <label>AccountBrandSAWithoutParent</label>
-        <locationX>235</locationX>
-        <locationY>333</locationY>
+        <locationX>362</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
+        <allowFinish>false</allowFinish>
+        <allowPause>true</allowPause>
         <fields>
             <name>ErrorNoParentIdMessage</name>
             <fieldText>The Account {!AccountToProcess.Name} is marked as {!AccountToProcess.Location_Type__c} and does not have a parent Id. Please close the wizard and fill its Parent Id before continuing.</fieldText>
@@ -1375,12 +1813,39 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
         </fields>
     </screens>
     <screens>
-        <name>ContactChooser</name>
-        <label>ContactChooser</label>
-        <locationX>386</locationX>
-        <locationY>50</locationY>
+        <name>BSPlinkServicesScreen</name>
+        <label>BSPlinkServicesScreen</label>
+        <locationX>438</locationX>
+        <locationY>52</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AccountToProcessLookup</targetReference>
+        </connector>
+        <fields>
+            <name>BSPLinkText</name>
+            <fieldText>For the type of process you have choosen, you need to input if you want to have BSPLink settlement service.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>BSPlinkServicesRb</name>
+            <choiceReferences>ProcessWithBSPLink</choiceReferences>
+            <choiceReferences>ProcessWithNOBSPLink</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Type of process</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+    </screens>
+    <screens>
+        <name>ContactChooser</name>
+        <label>ContactChooser</label>
+        <locationX>530</locationX>
+        <locationY>448</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
         <connector>
             <targetReference>ContactRecordLookup</targetReference>
         </connector>
@@ -1409,10 +1874,11 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
     <screens>
         <name>ContactChooserScreen</name>
         <label>ContactChooserScreen</label>
-        <locationX>856</locationX>
-        <locationY>280</locationY>
+        <locationX>896</locationX>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
         <connector>
             <targetReference>ContactLookup</targetReference>
         </connector>
@@ -1431,14 +1897,32 @@ IF(({!FinalLocationType} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process} = {
         </fields>
     </screens>
     <screens>
-        <name>Process_Chooser</name>
-        <label>Process Chooser</label>
-        <locationX>69</locationX>
-        <locationY>52</locationY>
+        <name>ErrorMessageNoValidProcessScreen</name>
+        <label>ErrorMessageNoValidProcessScreen</label>
+        <locationX>10</locationX>
+        <locationY>240</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
         <connector>
-            <targetReference>AccountToProcessLookup</targetReference>
+            <targetReference>Process_Chooser</targetReference>
+        </connector>
+        <fields>
+            <name>ErrorMessageWrongProcess</name>
+            <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;The wizard for Agency changes isn&amp;apos;t available for TIDS, MSO, GSA, GSSA and AHA Accounts. Please make sure your account is correct or has the correct Category.&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+    <screens>
+        <name>Process_Chooser</name>
+        <label>Process Chooser</label>
+        <locationX>9</locationX>
+        <locationY>56</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>DecisionHasBSPLinkProcess</targetReference>
         </connector>
         <fields>
             <name>ProcessChooserIntroText</name>
@@ -1455,11 +1939,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <choiceReferences>NewProcessBR</choiceReferences>
             <choiceReferences>NewProcessBRAbroad</choiceReferences>
             <choiceReferences>NewProcessSA</choiceReferences>
-            <choiceReferences>NewProcessTIDS</choiceReferences>
-            <choiceReferences>NewProcessMSO</choiceReferences>
-            <choiceReferences>NewProcessGSA</choiceReferences>
-            <choiceReferences>NewProcessGSSA</choiceReferences>
-            <choiceReferences>NewProcessAHA</choiceReferences>
             <choiceReferences>Agency_Changes</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Please choose a process :</fieldText>
@@ -1470,10 +1949,11 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
     <screens>
         <name>ResultPage</name>
         <label>ResultPage</label>
-        <locationX>688</locationX>
-        <locationY>864</locationY>
+        <locationX>1058</locationX>
+        <locationY>1410</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
         <fields>
             <name>RecordsCreated</name>
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;We are all set !&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;You&amp;apos;ve completed the wizard.&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
@@ -1482,11 +1962,33 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
     </screens>
     <startElementReference>Process_Chooser</startElementReference>
     <variables>
+        <name>AccountCategory</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>accountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AccountRoleOwnerRT</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AccountRoles</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AMS_Account_Role__c</objectType>
     </variables>
     <variables>
         <name>AccountToProcess</name>
@@ -1502,6 +2004,14 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AMSAccountRoleToProcess</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AMS_Account_Role__c</objectType>
     </variables>
     <variables>
         <name>AMSAccreditationGDS</name>
@@ -1559,6 +2069,20 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>Current_Company_OwnerAccreditationContRT</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Current_OwnerAccreditationContRT</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>DoesContactExists</name>

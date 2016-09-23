@@ -41199,6 +41199,7 @@
         <apexPage>EF_Mass_Update_Billing_Agreements</apexPage>
 		<enabled>true</enabled>
     </pageAccesses>
+	<pageAccesses>
         <apexPage>EF_MassUpdateMaterialLI_BillingAgreement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>

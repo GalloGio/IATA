@@ -2447,6 +2447,39 @@ Received from AIMS and needed in synchronization file but never displayed and up
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
+	<fields>
+        <fullName>AM_First_Name_Latin_Char__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The transcript of the First Name in latin characters (only if using a different character set)</inlineHelpText>
+        <label>First Name - Latin Char.</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+	<fields>
+        <fullName>AM_Job_Title_English__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The English translation of the job title (only if Job Title is given in another language)</inlineHelpText>
+        <label>Job Title - English</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AM_Last_Name_Latin_Char__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The transcript of the Last Name in latin characters (only if using a different character set)</inlineHelpText>
+        <label>Last Name - Latin Char.</label>
+        <length>128</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>APCS_profile__c</fullName>
         <defaultValue>false</defaultValue>
