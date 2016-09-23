@@ -3,7 +3,7 @@
  * 
  * Change log:
  *   20160826-sl: move ebcSetup out to IECEBC_Utility, add isSubscriptionRenewable
- *   20160915-sl: payment support: add queried fields from billingAccount
+ *   20160923-sl: payment support: add queried fields from billingAccount, add rereadSubscription
  *
  **/
 
@@ -19,6 +19,9 @@ public class vfIECEBC extends IECPageController {
 		billingAccount = null;
 		return billingAccount;
 	}
+	
+	// ========================================================================
+	// current user's billingAccount
 	public static Zuora__CustomerAccount__c billingAccount {
 		get {
 			if (billingAccount == null) {
@@ -70,6 +73,9 @@ public class vfIECEBC extends IECPageController {
 		}
 		private set;
 	}
+	
+	// ========================================================================
+	// user preference for eBroadcast
 	public static EBC_Preference__c pref {
 		get {
 			if (pref == null) {
@@ -90,6 +96,26 @@ public class vfIECEBC extends IECPageController {
 		private set;
 	}
 	
+	
+	// ========================================================================
+	// rereadSubscription will force the getters to reread the subscription record from the database
+	// this is relevant in the case of new purchase related to EBC Subscription
+	public static void rereadSubscription()
+	{
+		// nullify also subscription dependent properties, so getters will update them
+		// start from the least dependent properties
+		//ebcSubscriptionProductChargeList = null;
+		subscription = null;
+		productRatePlan = null;
+		
+	} // rereadSubscription
+	
+	
+	// ========================================================================
+	// EBC Subscription of the current user
+	// this is the subscription related to the Pay As You Go or Prepaid Subscription Plan
+	// that is currently active for this user.
+	// initial version: rely on the assumption that the Zuora__Subscription__r.Product_Rate_Plan_Information__c point to the correct EBC Product Rate Plan.
 	public static Zuora__Subscription__c subscription {
 		get {
 			if (subscription == null) {
@@ -130,7 +156,8 @@ public class vfIECEBC extends IECPageController {
 			return subscription;
 		}
 		private set;
-	}
+	} // end of subscription
+	
 	
 	// ========================================================================
 	// return true if the subscription can still be renewed

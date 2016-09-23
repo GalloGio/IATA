@@ -647,6 +647,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 	
 	private void purchaseFulfillment()
 	{
+		rereadSubscription();
 		if (isRenewal) {
 			deliverRenewal();
 		} else if (payEmailCredit) {
@@ -659,6 +660,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 			deliverNewRatePlan();
 		}
 		
+		rereadBillingAccount();
 	} // end of purchaseFulfillment
 	
 	
@@ -667,7 +669,6 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		EBC_Activity__c ebcAct = newEbcActivity(paidProductRatePlan.EBC_PrePaid_Emails__c);
 		
 		insert ebcAct;
-		rereadBillingAccount();
 	} // end of deliverEmailBlockPurchase
 	
 	private void deliverEmailBlockPurchase()
@@ -675,7 +676,6 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		EBC_Activity__c ebcAct = newEbcActivity(paidProductRatePlan.EBC_Email_Credit_Current_Offering__c);
 		
 		insert ebcAct;
-		rereadBillingAccount();
 	} // end of deliverEmailBlockPurchase
 	
 	private void deliverExactAmountEmailPurchase()
@@ -684,7 +684,6 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		EBC_Activity__c ebcAct = newEbcActivity(numberOfEmail);
 		
 		insert ebcAct;
-		rereadBillingAccount();
 	} // end of deliverExactAmountEmailPurchase
 	
 	// this delivery of new rate plan should remove some functionality of the old trgIECEBC_SubscriptionHandler.processEbcSubscription
@@ -696,7 +695,6 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		EBC_Activity__c ebcAct = newEbcActivity( paidProductRatePlan.EBC_PrePaid_Emails__c);
 		
 		insert ebcAct;
-		rereadBillingAccount();
 	}
 	
 	private void deliverAddOnPurchase()
@@ -705,7 +703,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 		if (paidProductRatePlan.Id == IECEBC_Utility.ebcSetup.Storage_Product_Rate_Plan__c) 
 		{ // increase the value of eBroadcast_Storage__c
 			Decimal ebcStorage = (billingAccount.eBroadcast_Storage__c == null) ? 0 : billingAccount.eBroadcast_Storage__c;
-            Decimal extraStorage = (IECEBC_Utility.ebcSetup.Extra_Storage_Capacity__c == null) ? 0 : IECEBC_Utility.ebcSetup.Extra_Storage_Capacity__c;
+			Decimal extraStorage = (IECEBC_Utility.ebcSetup.Extra_Storage_Capacity__c == null) ? 0 : IECEBC_Utility.ebcSetup.Extra_Storage_Capacity__c;
 			ebcStorage += extraStorage;
 			updatedBillingAccount.eBroadcast_Storage__c = ebcStorage;
 			updatedBillingAccount.eBroadcast_Add_On_Access__c = true;
@@ -714,10 +712,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 			updatedBillingAccount.eBroadcast_Add_On_Advanced_Reporting__c = true;
 		}
 		
-		//updatedBillingAccount
-		
 		update updatedBillingAccount;
-		rereadBillingAccount();
 	} // end of deliverAddOnPurchase
 	
 	

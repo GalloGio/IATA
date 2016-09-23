@@ -3,7 +3,33 @@
  * 
  * It contains various usefull method and properties that can be reused such as
  * as the access to the rate plan, etc.
+ * 
+ * Getter Dependencies
+ *   billingAccount: vfIECEBC.billingAccount. 
+ *   preference: vfIECEBC.preference.
+ *   subscription: vfIECEBC.preferenc.
+ *   productRatePlan: subscription
+ *   isMember: billingAccount, no setter.
+ *   isEbcPrepaid: productRatePlan, no setter.
+ *   productRatePlanCharge: productRatePlan.
+ *   productRatePlanIdUpgradeSet: productRatePlanIdUpgradeList
+ *   productRatePlanIdUpgradeList: productRatePlan, IECEBC_Utility.ebcNonMemberProductRatePlanIdList, ebcMemberProductRatePlanIdList.
+ *   
+ *   allowableEbcAddOnProductRatePlanList: IECEBC_Utility.ebcSetup, allowableEbcAddOnProductRatePlanIdSet.
+ *   allowableEbcAddOnProductRatePlanIdSet: IECEBC_Utility.ebcSetup, productRatePlan.
  *
+ *   currentEbcAddOnProductRatePlanList: currentEbcAddOnProductRatePlanIdToSubscriptionMap
+ *   currentEbcAddOnProductRatePlanIdToSubscriptionMap: currentEbcAddOnSubscriptionProductChargeList
+ *   currentEbcAddOnSubscriptionProductChargeList: IECEBC_Utility.ebcAddOnProductRatePlanAllIdSet
+ *
+ *   hasValidAddOnEnhancedReporting: subscription, no setter.
+ *   
+ *   
+ * Supporting methods  
+ *   rereadBillignAccount()
+ *   goToPaymentPageBase()
+ *   rereadSubscription()
+ *   
  * Change log:
  *   20160704-mb: initial version
  *   20160809-sl: modify productRatePlanIdUpgradeList
@@ -47,6 +73,28 @@ public virtual class vfIECEBC_Controller {
 	// Exception to be thrown by the controllers
 	public class Controller_Exception extends Exception{}
 	
+	// ========================================================================
+	// constructor
+	public vfIECEBC_Controller()
+	{
+	}
+	
+	// ========================================================================
+	// verify and update if needed the value of billingAccount.eBroadcast_Add_On_Advanced_Reporting__c.
+	// this can be called from any controller that might need this.
+	public void verifyAddOnEnhancedReportingFlagValidity()
+	{
+		if (billingAccount.eBroadcast_Add_On_Advanced_Reporting__c != hasValidAddOnEnhancedReporting)  
+		{ // billingAccount needs update
+			Zuora__CustomerAccount__c updatedBillingAccount = new Zuora__CustomerAccount__c(
+					Id = billingAccount.Id
+					,  eBroadcast_Add_On_Advanced_Reporting__c = hasValidAddOnEnhancedReporting
+				); 
+			update updatedBillingAccount;
+			rereadBillingAccount();
+		}
+	} // end of verifyAddOnEnhancedReportingFlagValidity
+	
 	// The current user
 	public User usr {
 		get {
@@ -72,13 +120,40 @@ public virtual class vfIECEBC_Controller {
 		return billingAccount;
 	}
 	
-	// The zuora subscription associated with the current billing account
+	// ========================================================================
+	// rereadSubscription will force the getters to reread the subscription record from the database
+	// this is relevant in the case of new EBC Subscription Prepaid rate plan purchase, renewal, or 
+	// enhanced reporting add on purchase (which link to the EBC Subscription)
+	public void rereadSubscription()
+	{
+		vfIECEBC.rereadSubscription(); // this will reset vfIECEBC.subscription and vfIECEBC.productRatePlan
+		
+		// nullify the following values, so getters will update them
+		// start from the least dependent properties
+		subscription = null;
+		productRatePlan = null;
+		productRatePlanCharge = null;
+		productRatePlanIdUpgradeSet = null;
+		productRatePlanIdUpgradeList = null;
+		
+		allowableEbcAddOnProductRatePlanIdSet = null;
+		allowableEbcAddOnProductRatePlanList = null;
+		
+		currentEbcAddOnSubscriptionProductChargeList = null;
+		currentEbcAddOnProductRatePlanIdToSubscriptionMap = null;
+		currentEbcAddOnProductRatePlanList = null;
+		
+	} // rereadSubscription
+	
+	
+	// ========================================================================
+	// The zuora EBC subscription associated with the current billing account
 	public Zuora__Subscription__c subscription {
 		get {
 			if (subscription == null) subscription = vfIECEBC.subscription;
 			return subscription;
 		}
-		set;
+		private set;
 	}
 	
 	// The zuora rate plan associated with the current subscription
@@ -87,7 +162,7 @@ public virtual class vfIECEBC_Controller {
 			if (productRatePlan == null) productRatePlan = vfIECEBC.productRatePlan;
 			return productRatePlan;
 		}
-		set;
+		private set;
 	}
 	
 	// The zuora rate plan associated with the current subscription
@@ -350,7 +425,7 @@ public virtual class vfIECEBC_Controller {
 			} // end if
 			return allowedSet;
 		}
-		//private set;
+		private set;
 	} // end of allowableEbcAddOnProductRatePlanIdSet getter/setter
 	
 	// =========================================================================
@@ -441,6 +516,17 @@ public virtual class vfIECEBC_Controller {
 		private set;
 	} // currentEbcAddOnSubscriptionProductChargeList getter/setter
 	
+	
+	// ========================================================================
+	// hasValidAddOnEnhancedReporting will check the list of current rate plan on the currently active EBC Subscription
+	// it will return true if it include the rate plan of the Enhanced Reporting Add On.
+	// the rate plan of the Enhanced Reporting Add On is based on what we set in EBC_Setup.
+	public Boolean hasValidAddOnEnhancedReporting
+	{
+		get{
+			return currentEbcAddOnProductRatePlanIdToSubscriptionMap.keySet().contains(IECEBC_Utility.ebcSetup.Enhanced_Reporting_Product_Rate_Plan__c);
+		}
+	}
 	
 	
 	// ========================================================================
