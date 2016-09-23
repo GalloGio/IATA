@@ -15,7 +15,7 @@ public class AmazonFile {
 	public double getSize() {
 		return this.s3File.getSize();
 	}
-
+	
 	public String getName() {
 		return this.s3File.getName();
 	}
@@ -23,7 +23,11 @@ public class AmazonFile {
 	public String getDescription() {
 		return amazonFile==null? '': this.amazonFile.Description__c;
 	}
-
+	
+	public String getInternalComments() {
+		return amazonFile==null? '': this.amazonFile.Internal_Comments__c;
+	}
+	
 	public String getFullName() {
 		return this.s3File.getFullName();
 	}
