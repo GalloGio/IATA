@@ -5,6 +5,7 @@
   *   
   * History: 
   *  - 20160915-sl: add generatePaymentToken()
+  *  - 20160922-sl: update renewalPageUrl (use IECEBC_SubscriptionRenewal), ebcSetup 
   *
   */
 
@@ -299,12 +300,14 @@ public class IECEBC_Utility {
 			{
 				List<EBC_Setup__c> ebcSetupList = [select Id, Name
 								, Member_Email_Block_Product__c
+								, Member_Pay_As_You_Go_Plan__c
 								, Member_Prepaid_Product_Rate_Plan_01__c
 								, Member_Prepaid_Product_Rate_Plan_02__c
 								, Member_Prepaid_Product_Rate_Plan_03__c
 								, Member_Prepaid_Product_Rate_Plan_04__c
-
+								
 								, Non_Member_Email_Block_Product__c
+								, Non_Member_Pay_As_You_Go_Plan__c
 								, Non_Member_Prepaid_Product_Rate_Plan_01__c
 								, Non_Member_Prepaid_Product_Rate_Plan_02__c
 								, Non_Member_Prepaid_Product_Rate_Plan_03__c
@@ -313,6 +316,10 @@ public class IECEBC_Utility {
 								, Enhanced_Reporting_Product_Rate_Plan__c
 								, Storage_Product_Rate_Plan__c
 								
+								, Pay_Exact_Amount_Member__c
+								, Pay_Exact_Amount_Non_Member__c
+								
+								, Extra_Storage_Capacity__c
 								, Default_Storage_Capacity__c
 								, E_Commerce_Base_Url__c
 								, Product_Category__c

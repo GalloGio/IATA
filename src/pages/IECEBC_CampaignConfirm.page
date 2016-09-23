@@ -67,9 +67,9 @@
                                                     <td style="text-align:right;">
                                                         <div class="item-value">
                                                             <strong>
-                                                                <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!newEmailBalance}" /></apex:outputText>
+                                                                <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!absoluteNewEmailBalance}" /></apex:outputText>
                                                             </strong>
-                                                            <span class="unit"> {!IF(newEmailBalance<-1||newEmailBalance>1,'emails',' email')}</span>
+                                                            <span class="unit"> {!IF(absoluteNewEmailBalance>1,'emails',' email')}</span>
                                                             </div>
                                                         </td>
                                                     </tr>
