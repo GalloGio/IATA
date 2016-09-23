@@ -3661,26 +3661,25 @@ public without sharing class Order_Svc
 
         Order order = new Order();
         order.AccountId                             =   contact.BillTo_Location__r.Account__c;
+        order.SoldToAccount_Name__c                 =   contact.BillTo_Location__r.Account_Name__c;
+        order.SoldTo_Location__c                    =   contact.BillTo_Location__r.Account__r.SoldTo_Location__c;
         order.Type                                  =   type;
         order.EffectiveDate                         =   system.today();
         order.Status                                =   Utility.getTextSetting('vfOrder-DefaultStatus');
         order.Source__c                             =   (campaignId != null) ? Utility.getTextSetting('Campaign-DefaultSource') : Utility.getTextSetting('Event Renewal Source');
         order.Order_Channel__c                      =   (campaignId != null) ? Utility.getTextSetting('vfOrder-DefaultChannel') : Utility.getTextSetting('Event Renewal Channel');
         order.Pricebook2Id                          =   new Pricebook_Sel().getStandardPriceBook().Id;
-        order.BillToContactId                       =   contact.BillTo_Location__r.Contact__c;
-        order.ShipToContactId                       =   contact.ShipTo_Location__r.Contact__c;
+        order.BillToContactId                       =   contact.Id;
+        order.ShipToContactId                       =   contact.Id;
         order.Campaign__c                           =   campaignId;
         order.IEC_Event_Release__c                  =   eventReleaseId;
         order.IEC_Event_Subscription__c             =   subscriptionId;
 
-        order.SoldTo_Location__c                    =   contact.Account.SoldTo_Location__c;
-
         //BillTo informations
         order.BillTo_Location__c                    =   billToLocationId;
-        order.BillToAccount__c                      =   contact.BillTo_Location__r.Account__c;
-        order.SoldToAccount_Name__c                 =   contact.BillTo_Location__r.Account_Name__c;
-        order.BillToAccount_Name__c                 =   contact.BillTo_Location__r.Account_Name__c;
-        order.BillToContact_Name__c                 =   contact.BillTo_Location__r.Contact_First_Name__c + ' ' + contact.BillTo_Location__r.Contact_Last_Name__c;
+        order.BillToAccount__c                      =   contact.AccountId;
+        order.BillToAccount_Name__c                 =   contact.Account.Name;
+        order.BillToContact_Name__c                 =   contact.Name;
         order.BillToContact_Phone__c                =   contact.BillTo_Location__r.Phone__c;
         order.BillToContact_Email__c                =   contact.BillTo_Location__r.Email__c;
         order.BillingStreet                         =   contact.BillTo_Location__r.Street__c;
@@ -3692,16 +3691,15 @@ public without sharing class Order_Svc
         order.BillingStateCode__c                   =   contact.BillTo_Location__r.ISO_State_Code__c;
         order.BillToContact_VAT_Number__c           =   contact.BillTo_Location__r.VAT_Number__c;
 
-        order.BillToContact_Salutation__c           =   contact.BillTo_Location__r.Contact_Salutation__c;
-        order.BillToContact_First_Name__c           =   contact.BillTo_Location__r.Contact_First_Name__c;
-        order.BillToContact_Last_Name__c            =   contact.BillTo_Location__r.Contact_Last_Name__c;
-        
+        order.BillToContact_Salutation__c           =   contact.Salutation;
+        order.BillToContact_First_Name__c           =   contact.FirstName;
+        order.BillToContact_Last_Name__c            =   contact.LastName;
 
         //Ship To informations
         order.ShipTo_Location__c                    =   shipToLocationId;
-        order.ShipToAccount__c                      =   contact.ShipTo_Location__r.Account__c;
-        order.ShipToAccount_Name__c                 =   contact.ShipTo_Location__r.Account_Name__c;
-        order.ShipToContact_Name__c                 =   contact.ShipTo_Location__r.Contact_First_Name__c + ' ' + contact.ShipTo_Location__r.Contact_Last_Name__c;
+        order.ShipToAccount__c                      =   contact.AccountId;
+        order.ShipToAccount_Name__c                 =   contact.Account.Name;
+        order.ShipToContact_Name__c                 =   contact.Name;
         order.ShipToContact_Phone__c                =   contact.ShipTo_Location__r.Phone__c;
         order.ShipToContact_Email__c                =   contact.ShipTo_Location__r.Email__c;
         order.ShippingStreet                        =   contact.ShipTo_Location__r.Street__c;
@@ -3712,9 +3710,9 @@ public without sharing class Order_Svc
         order.ShippingState                         =   contact.ShipTo_Location__r.State__c;
         order.ShippingStateCode__c                  =   contact.ShipTo_Location__r.ISO_State_Code__c;
 
-        order.ShipToContact_Salutation__c           =   contact.ShipTo_Location__r.Contact_Salutation__c;
-        order.ShipToContact_First_Name__c           =   order.BillToContact_First_Name__c;
-        order.ShipToContact_Last_Name__c            =   order.BillToContact_Last_Name__c;
+        order.ShipToContact_Salutation__c           =   contact.Salutation;
+        order.ShipToContact_First_Name__c           =   contact.FirstName;
+        order.ShipToContact_Last_Name__c            =   contact.LastName;
 
         if(userId != null)
             order.OwnerId = userId;
