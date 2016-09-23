@@ -208,6 +208,14 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Justification__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Process_es_Affected__c</field>
+            </layoutItems>
+            <layoutItems>
                 <height>35</height>
                 <page>AirlineSuspensionCsTemplateMerge</page>
                 <showLabel>false</showLabel>
