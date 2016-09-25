@@ -91,7 +91,7 @@
 					<apex:outputLink value="/{!container.oscarCreated.Id}">{!container.oscarCreated.Name}</apex:outputLink>
 				</apex:column>
 
-				<apex:column headerValue="Create/Updated Case">
+				<apex:column headerValue="Created/Updated Case">
 					<apex:outputLink value="/{!container.caseCreated.Id}">{!container.caseCreated.CaseNumber}</apex:outputLink>
 				</apex:column>
 
