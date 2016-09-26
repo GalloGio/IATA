@@ -643,27 +643,43 @@ public with sharing class ISSP_PortalUserStatusChange {
         
      }
      
-    @future 
+    @future(callout=true)
     public static void futureUpdateUsers(set<string> conIdSet) {
-        map<Id,Contact> contactMap = new map<Id,Contact>([select Id,email,firstName,lastname,Title,Preferred_Language__c from Contact where Id in:conIdSet]);
+        map<Id,Contact> contactMap = new map<Id,Contact>([select Id,email,firstName,lastname,Title,Preferred_Language__c,Status__c from Contact where Id in:conIdSet]);
         if(!contactMap.values().isEmpty()){
-            list<User> userList = [select Id,ContactId,languagelocalekey,email,firstname,lastname,Title from User where ContactId in:contactMap.keySet() ];
+            list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
             for(User user : userList){
-                Contact con = contactMap.get(user.ContactId);
-//                user.email = con.email; 
+                //Code extension to consider internal users
+                Contact con = new Contact();
+                if (user.ContactId <> null)
+                {
+                    con = contactMap.get(user.ContactId);
+                }
+                if (user.ContactKaviId__c <> null)
+                {
+                    con = contactMap.get(user.ContactKaviId__c);   
+                }
+                //user.email = con.email; 
                 user.firstname = con.firstName;
                 user.lastname = con.lastname;
                 user.Title = con.Title;
                 if(con.Preferred_Language__c!=null && languageMap.containsKey(con.Preferred_Language__c))
                     user.languagelocalekey = ISSP_PortalUserStatusChange.languageMap.get(con.Preferred_Language__c);
-            }
+                if(con.Status__c == 'Inactive' || con.Status__c == 'Retired' || con.Status__c == 'Left Company / Relocated' )
+                    user.IsActive = false;
+                else
+                    user.IsActive = true;
+             }
+
+            ISSP_WS_KAVI.updateKaviUsers(conIdSet, userList);
             update userList;
+            
         }
     }
     
-    @future 
+    @future
     public static void futureDeactivateUsers(set<string> conIdSet) {
-        list<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet];
+        list<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet OR ContactKaviId__c in:conIdSet];
         for(User user : userList){
              user.IsActive = false;
              // TF - Commented to fix SP8-28, user just needs to be inactivated. A batch has been created to change IsPortalEnabled to false

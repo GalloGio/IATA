@@ -15,7 +15,13 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
     public String applicationType {get; set;}
     public String ver {get; set;}
     public String idCardAppID {get; set;}
+    public String[] theAddress {get; set;}
 
+    public cContact selectedContact {get; set;}
+    public Boolean displayPopup {get; set;}
+    public String IATACodeLocation {get; set;}
+    public String inputValue {get; set;}
+    public List<cContact> myContacts {get; set;}
 
     public IDCard_ReplacementNewAgencyInfoCntlr() {
         initialize(false);
@@ -25,12 +31,12 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
         OldAgencySection = false;
 
         try {
-
+            
             oldIataCode = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_IATACODE));
             applicationType = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPLICATIONTYPE));
             ver = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_VER));
             idCardAppID = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
-
+            if (System.currentPageReference().getParameters().containsKey(IDCardUtil.PARAM_IATACODE)) IATACodeLocation = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_IATACODE));
 
             // read the iatacode parameter
 
@@ -42,6 +48,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             Account[] accounts = [Select a.TradeName__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where a.RecordType.Name = 'Agency' AND IATACode__c = : oldIataCode limit 1];
             if (accounts.size() > 0) {
                 theAccount = accounts[0];
+                //selectedContact = accounts[0];
             } else {
                 AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + oldIataCode + '</i>'}));
                 return;
@@ -65,6 +72,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
     }
     */
     public Pagereference Verify() {
+        
         if (NewAgencyCode == null || NewAgencyCode == '') {
             AddError(Label.IDCard_EnterNewAgencyCode);
             return null;
@@ -74,11 +82,29 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             return null;
         }
         try {
-            theAccount = [Select a.Name, a.Short_Name__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Is_AIMS_Account__c, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where RecordType.Name = 'Agency' AND IATACode__c = : NewAgencyCode AND  (Status__c in : IDCardUtil.ALLOWED_ACCOUNT_STATUS ) AND Is_AIMS_Account__c = true AND  (a.type in :IDCardUtil.ALLOWED_ACCOUNT_TYPES) limit 1];
+            theAccount = [Select a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.Name, a.Short_Name__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Is_AIMS_Account__c, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where RecordType.Name = 'Agency' AND IATACode__c = : NewAgencyCode AND  (Status__c in : IDCardUtil.ALLOWED_ACCOUNT_STATUS ) AND Is_AIMS_Account__c = true AND  (a.type in :IDCardUtil.ALLOWED_ACCOUNT_TYPES) limit 1];
             NewAgencySection = true;
             NewAgencyCodeSection = false;
             OldAgencySection = false;
+
+            theAddress = new String[5];
+            
+            //return the shipping address if any of the fields is filled
+            if (theAccount.ShippingStreet != null || theAccount.ShippingState != null || theAccount.ShippingPostalCode != null || theAccount.ShippingCountry != null || theAccount.ShippingCity != null) {
+                theAddress[0] = theAccount.ShippingStreet == null ? '' : theAccount.ShippingStreet;
+                theAddress[1] = theAccount.ShippingState == null ? '' : theAccount.ShippingState;
+                theAddress[2] = theAccount.ShippingPostalCode == null ? '' : theAccount.ShippingPostalCode;
+                theAddress[3] = theAccount.ShippingCountry == null ? '' : theAccount.ShippingCountry;
+                theAddress[4] = theAccount.ShippingCity == null ? '' : theAccount.ShippingCity;
+            } else {
+                theAddress[0] = theAccount.BillingStreet == null ? '' : theAccount.BillingStreet;
+                theAddress[1] = theAccount.BillingState == null ? '' : theAccount.BillingState;
+                theAddress[2] = theAccount.BillingPostalCode == null ? '' : theAccount.BillingPostalCode;
+                theAddress[3] = theAccount.BillingCountry == null ? '' : theAccount.BillingCountry;
+                theAddress[4] = theAccount.BillingCity == null ? '' : theAccount.BillingCity;
+            }
             return null;
+
         } catch (Exception ex) {
             AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + NewAgencyCode + '</i>'}));
             System.debug(ex.getMessage());
@@ -86,8 +112,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
         }
     }
     public Pagereference Confirm() {
-
-
+        
         //update application form with new Data
         try {
             ID_Card_Application__c idCardApp = [Select i.Id, i.RecordTypeId, i.IATA_Code__c, i.VER_Number__c From ID_Card_Application__c i where i.Id = :idCardAppID limit 1];
@@ -129,10 +154,10 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 
 
             return prApplicationForm;*/
-            
+
             //NEW LOGIC-INC184629
             Pagereference prChecklist = Page.IDCard_Checklist;
-            
+
             //set APPLication ID
             prChecklist.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardApp.Id));
             //new IATA CODE
@@ -145,9 +170,9 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             prChecklist.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(idCardApp.VER_Number__c));
 
             prChecklist.setRedirect(true);
-            
+            displayPopup = true;
             return prChecklist;
-            
+
         } catch ( Exception e) {
             AddError(e.getMessage());
             System.debug(e.getMessage());
@@ -182,6 +207,8 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
         }
     }
 
-
+     public void showPopup() {
+        displayPopup = true;
+    } 
 
 }

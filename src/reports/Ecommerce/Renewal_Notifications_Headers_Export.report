@@ -88,6 +88,11 @@
             <operator>equals</operator>
             <value>701g0000000hDuS</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>ORDER_TYPE</column>
+            <operator>equals</operator>
+            <value>Renewal Notification</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Tabular</format>

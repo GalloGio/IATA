@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event template" >
+  <aura:attribute name="bma" type="Objective__c" />
+  <aura:attribute name="comment" type="Comment__c" />
+  <aura:attribute name="index" type="Integer" />
+</aura:event>

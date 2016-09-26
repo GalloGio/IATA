@@ -31,23 +31,21 @@
 
 
 <target name="deployCode"> 
-  <echo level="info">creating new folder</echo>
-  <antcallback target="deldir" />
-   <mkdir dir="${basedir}/Code"/>
+    <echo level="info">creating new folder</echo>
+    <antcallback target="deldir" />
+    <mkdir dir="${basedir}/Code"/>
+    
+    
+    <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
+    <antcallback target="deployStaticResource" />
   
-
-
- <move file="${basedir}/fixingUpdate/" tofile="${basedir}/Code/"/>  
-
-      
-      <antcallback target="deployLabelFolder" />
-  
-  </target> 
+</target> 
 
 
 <target name="deployCodeProd"> 
 
-      <antcallback target="deployLabelFolder" />
+
+      <antcallback target="deployStaticResource" />
   
   </target> 
 
@@ -77,9 +75,42 @@
 
       
       <antcallback target="deployCodeLocal" />
+      <antcallback target="deployTemplate" />
+  
+  </target> 
+
+
+
+<target name="deployTemplate"> 
+  <echo level="info">creating new folder</echo>
+  <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${object.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${listEmailTemplateFolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/templatePackage.xml" tofile="${basedir}/Code/package.xml"/>  
+
+      
+      <antcallback target="deployCodeLocal" />
       <antcallback target="deployWorkflows" />
   
   </target> 
+
 
 <target name="deployLabelsOnly"> 
   <echo level="info">creating new label folder</echo>
@@ -108,6 +139,26 @@
       
       <antcallback target="deployCodeLocal" />
   </target>
+
+  
+<target name="deployStaticResource"> 
+    <echo level="info">deploy static resources</echo>
+    <antcallback target="deldir" />
+    <mkdir dir="${basedir}/Code"/>
+    
+    <for list="${staticResource.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+             <fileset dir="${basedir}/src/@{param}">
+             </fileset>
+          </move>
+       </sequential>
+    </for>
+    
+    <move file="${basedir}/src/staticPackage.xml" tofile="${basedir}/Code/package.xml"/>  
+    <antcallback target="deployLabelFolder" />
+</target> 
+
 
 <target name="deployLabelFolder"> 
   <echo level="info">creating new label folder</echo>
@@ -195,10 +246,40 @@
  <move file="${basedir}/src/codePackage.xml" tofile="${basedir}/Code/package.xml"/>  
       
       <antcallback target="deployCodeLocal" />
-  
+          <antcallback target="deployDontRetrieve" />
+
   </target> 
 
 
+
+
+<target name="deployDontRetrieve"> 
+  <echo level="info">creating new folder</echo>
+   <antcallback target="deldir" />
+   <mkdir dir="${basedir}/Code"/>
+  
+      <for list="${dontRetrieve.listfolders}" param="param" >
+        <sequential>
+             <mkdir dir="${basedir}/Code/@{param}"/>
+       </sequential>
+     </for>
+
+     <echo level="info">moving files</echo>
+      
+      <for list="${dontRetrieve.listfolders}" param="param" delimiter=",">
+        <sequential>
+          <move todir="${basedir}/Code/@{param}">
+            <fileset dir="${basedir}/src/@{param}">
+            </fileset>
+          </move>
+       </sequential>
+     </for>
+
+ <move file="${basedir}/src/dontRetrieve.xml" tofile="${basedir}/Code/package.xml"/>  
+      
+      <antcallback target="deployCodeLocal" />
+  
+  </target> 
 
 
 
@@ -288,6 +369,8 @@
 
 
 
+
+
     <target name="getLabel">
       <echo level="info">Retrieving the server's version of labels</echo>
       <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
@@ -330,12 +413,29 @@
       <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/codePackage.xml"/>
       <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
 
+     <antcallback target="getStaticResource" /> 
+
+    </target>
+
+ 
+    <target name="getStaticResource">
+      <echo level="info">Retrieving the server's version of code</echo>
+      <mkdir dir="${basedir}/${sfdc.retrieveTarget}"/>
+      <sf:retrieve
+        retrieveTarget="${basedir}/${sfdc.retrieveTarget}"
+        username="${sfdc.username}"
+        password="${sfdc.password}"
+        serverurl="${sfdc.serverurl}"
+        unpackaged="src/staticPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/staticPackage.xml"/>
+      <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src"/>
+
 <!-- <antcallback target="bulkRetrieveEmailTemplate" /> -->
 
     </target>
 
  
-
+    
 
 
 

@@ -99,7 +99,11 @@ public without sharing class Order_Sel extends Selector{
             Order.IEC_Credit_Card_Expiration__c,
             Order.IEC_Credit_Card_Holder_Name__c,
             Order.IEC_Credit_Card_Mask_Number__c,
-            Order.IEC_Credit_Card_Type__c 
+            Order.IEC_Credit_Card_Type__c,
+            Order.IEC_Zuora_ST_InvoiceId__c,
+            Order.IEC_Zuora_ST_InvoiceNumber__c,
+            Order.IEC_Zuora_ST_SubscriptionId__c,
+            Order.IEC_Zuora_ST_SubscriptionNumber__c
         };
     }
 
@@ -190,7 +194,7 @@ public without sharing class Order_Sel extends Selector{
                     ShipToContact_First_Name__c,ShipToContact_Last_Name__c,ShipToContact_Email__c,ShipToContact_Phone__c,ShippingCountryCode__c,
                     ShippingCountry,ShippingState,Campaign__c, //IEC_Shipping_Instruction_attention__c,
                     ShippingStateCode__c,ShippingCity,ShippingPostalCode,ShippingStreet,
-                    ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,
+                    ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,ShipToAccount_Name__c,
                     Payment_Type__c,Nb_Payment_Failure__c
                     , BillToAccount_Name__c, BillToContact_Name__c, OrderNumber, Is_Paid__c
                     ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c
@@ -375,8 +379,7 @@ public without sharing class Order_Sel extends Selector{
                                       , BillTo_Location__r.ISO_Country_Code__c, BillTo_Location__r.IEC_Valid_SAP_State__c, BillTo_Location__r.VAT_Number__c
                                       , (select Id, Product__c, Quantity, UnitPrice, Effective_End_Date__c, SAP_Product_Number__c
                                          from OrderItems
-                                         where (PricebookEntry.Product2.Use_Contract_when_ordered__c = true or PricebookEntry.Product2.IEC_Parent_Product__r.Use_Contract_when_ordered__c = true)
-                                           and SAP_Contract_Number__c = null
+                                         where Use_Contract_when_ordered__c = true and SAP_Contract_Number__c = null and Total__c != null and Total__c != 0
                                          order by PricebookEntry.Product2.SAP_Media_Code__c, PricebookEntry.Product2.SAP_SalesOrg__c, PricebookEntry.Product2.SAP_Sales_Channel_Code__c
                                                 , PricebookEntry.Product2.SAP_Division_Code__c, PricebookEntry.Product2.SAP_Contract_OrderReason__c)
                                 from Order where Id in :orderIds];
@@ -718,13 +721,14 @@ public without sharing class Order_Sel extends Selector{
     {
         String type = IECConstants.ORDER_TYPE_RENEWAL_NOTIFICATION;
         String cart_type = 'Cart';
-        String new_status = 'New'; 
+        String new_status = 'New';
 
         return [SELECT Id, OrderNumber, EffectiveDate, EndDate, Total_Amount__c, CreatedDate
             FROM Order
             WHERE (Type = :type OR (Type=:cart_type AND IEC_Order_Previous_Type__c=:type AND Status=:new_status)) AND BillToContactId = :idContact
             ORDER BY EffectiveDate DESC, OrderNumber DESC
         ];
+
     }
 
     public static List<Order> getOrdersByContact(String sType, Id idContact)

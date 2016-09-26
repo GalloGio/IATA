@@ -95,8 +95,16 @@ public without sharing class ISSP_Login {
 			}
         }
         show90Days = false;
+
+        String relayState = ApexPages.currentPage().getParameters().get('RelayState');
+
+        if (relayState!=null)
+            pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
+
 		system.debug('pageLink: ' + pageLink);
-        return Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
+        PageReference ans = Site.login(null != oneUser ? oneUser.Username : username, password, pageLink);
+        system.debug('ans ans '+ans);
+        return ans;
     }
     
     public static void reactivateUser(User thisUser){

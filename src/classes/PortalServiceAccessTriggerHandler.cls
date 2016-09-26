@@ -41,7 +41,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
     System.debug('zZzZ par==>'+par);
             //if (par.Application_Name__c != 'Treasury Dashboard'){
-            if (!par.Application_Name__c.startsWith('Treasury Dashboard')){
+            if (!par.Application_Name__c.startsWith('Treasury Dashboard') && !par.Application_Name__c.startsWith('Standards Setting Workspace')){
                 
                 if(!ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)){
                     continue;

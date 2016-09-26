@@ -1,0 +1,103 @@
+<apex:page standardController="Objective__c" extensions="AMP_KeyAccountPlanExtension"
+    showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" >
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+      <title>Key Account Plan</title>
+      <!-- <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
+      <style>
+        @page { size: A4 landscape; /* A4 landscape (297mm×210mm) */
+                margin: 3%;}
+
+        th { text-align: left;}
+        th.narrowColumn {width: 10%;}
+        td { white-space: normal; word-wrap: break-word; max-width: 10em; vertical-align: top !important; border-width: 1px !important;}
+        /*tr.odd { background: #eee;}*/
+        table.milestones {width: 98%; margin-left: auto; margin-right: auto; border: 1px solid #aaa; margin-bottom: 2em;}
+      </style>
+    </head>
+
+    <body  onload="window.print()">
+        <apex:form >
+        <!-- <apex:outputLink value="/{!accountId}" >back to Account</apex:outputLink> -->
+        <apex:pageBlock id="theBlock" title="Key Account Plan for: {!AccountName}">
+
+
+            <!-- <apex:commandButton action="{!newObjective}" value="New Planned Activity" rendered="{!visibleTab != 'previous'}" reRender="thisPanel"/> -->
+<!-- border="0"-->
+                <table class="list"  cellpadding="0" cellspacing="0" style="width:100%"  >
+                  <apex:variable value="{!-1}" var="ticker" />
+									<apex:repeat value="{!lsObjectives}" var="objective">
+                  <apex:variable value="{!ticker*-1}" var="ticker" />
+                  <tr class="headerRow">
+                    <th>Activity</th>
+                    <th>Description</th>
+                    <th>Overall Status</th>
+                    <th>Account Issue or Priority</th>
+                    <th>Benefits to the Account</th>
+                    <th>Deadline</th>
+                  </tr>
+                  <tr class="dataRow {!IF(ticker==1, 'odd', 'even')}">
+                  <td class="dataCell" ><apex:outputField value="{!objective.Name}"  /></td>
+                  <td class="dataCell"><apex:outputField value="{!objective.Details__c}"  /></td>
+                  <td class="dataCell"><apex:outputField value="{!objective.Status__c}"  /></td>
+                  <td class="dataCell"><apex:outputField value="{!objective.Account_Issue_or_Priority__c}"  /></td>
+                  <td class="dataCell"><apex:outputText value="{!objective.Benefits_to_Account__c}"   /></td>
+                  <td class="dataCell"><apex:outputField value="{!objective.Deadline__c}"  /></td>
+                  </tr>
+                  <tr class="{!IF(ticker==1, 'odd', 'even')}">
+                    <td colspan="6">
+
+                    <table class="milestones" cellpadding="0" cellspacing="0">
+                      <tr><td colspan="7">Milestones</td></tr>
+                      <tr class="headerRow">
+
+                        <th>Milestone</th>
+                        <th>Responsible</th>
+                        <th>Involved</th>
+                        <th>Support</th>
+                        <th class="narrowColumn">Status</th>
+                        <th>Description</th>
+                        <th class="narrowColumn">Deadline</th>
+                      </tr>
+                      <apex:repeat value="{!objective.Tasks}" var="task">
+                      <tr class="dataRow">
+
+                        <td class="dataCell"><apex:outputText value="{!task.Subject}"   /></td>
+                        <td class="dataCell"><apex:outputText value="{!task.AM_Responsible__c}"   /></td>
+                        <td class="dataCell"><apex:outputText value="{!task.AM_Involved__c}"   /></td>
+                        <td class="dataCell"><apex:outputText value="{!task.AM_Support_Required_from_Account__c}"   /></td>
+                        <td class="dataCell"><apex:outputField value="{!task.Status}" /></td>
+                        <td class="dataCell"><apex:outputText value="{!task.Description}"   /></td>
+                        <td class="dataCell"><apex:outputField value="{!task.ActivityDate}" /></td>
+                      </tr>
+                      </apex:repeat>
+                    </table>
+                  </td>
+                  </tr>
+                  </apex:repeat>
+                </table>
+
+
+        </apex:pageBlock>
+    </apex:form>
+
+<!--
+        <style>
+            .inputDiv {display: block;}
+            td.dataCell {vertical-align: top !important;}
+            td.invisible {border: 0px !important}
+            table.dataTable {width: 100%;}
+            a.btn {white-space: nowrap;}
+        </style>
+-->
+        <apex:outputPanel id="js">
+
+
+    </apex:outputPanel>
+    </body>
+
+
+</html>
+</apex:page>

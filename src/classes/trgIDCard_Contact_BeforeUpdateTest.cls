@@ -58,14 +58,16 @@ public class trgIDCard_Contact_BeforeUpdateTest{
             
             insert idCardToInsert; 
             
-            relatedContact[0].LastName = relatedContact[0].LastName + ' Changed';
             relatedContact[0].Allow_Contact_LastName_Change__c = true;
-            relatedContact[1].LastName = relatedContact[0].LastName + ' Changed';
+            relatedContact[0].ID_Card_Holder__c = false;
+            relatedContact[0].VER_Number__c = null;
+            relatedContact[0].LastName = relatedContact[0].LastName + ' Changed';
             relatedContact[1].Allow_Contact_LastName_Change__c = true;
-            
+            relatedContact[1].ID_Card_Holder__c = false;
+            relatedContact[1].VER_Number__c = null;
+            relatedContact[1].LastName = relatedContact[0].LastName + ' Changed';
+
             update relatedContact;
-            
-            
             
         }     
         
